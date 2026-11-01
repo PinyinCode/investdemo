@@ -193,38 +193,38 @@
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
 
-                <!-- OVERLAY DỤNG CỤ: ĐỔI MÃ + KHUNG THỜI GIAN + CHỈ BÁO + MỐC THỜI GIAN + OHLC (GÓC TRÊN TRÁI) -->
-                <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/80 backdrop-blur-md p-1.5 md:p-2 rounded-xl border border-slate-800/90 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-xl max-w-[calc(100%-90px)]">
+                <!-- OVERLAY TRONG SUỐT: ĐỔI MÃ + KHUNG THỜI GIAN + CHỈ BÁO + MỐC THỜI GIAN + OHLC (GÓC TRÊN TRÁI) -->
+                <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1.5 md:p-2 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-90px)]">
                     
-                    <!-- NÚT ĐỔI MÃ CHỨNG KHOÁN -->
+                    <!-- NÚT ĐỔI MÃ CHỨNG KHOÁN TRONG SUỐT -->
                     <div class="relative">
-                        <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs md:text-sm font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30 transition flex items-center gap-1">
+                        <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs md:text-sm font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
                             <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
                         </button>
                         <!-- Dropdown danh sách mã nhanh -->
-                        <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
+                        <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
                             <input type="text" id="dropdown-search" placeholder="Lọc mã..." oninput="filterDropdownSymbols(this.value)" class="w-full px-2.5 py-1.5 mb-1 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500">
                             <div id="dropdown-symbol-list" class="space-y-0.5"></div>
                         </div>
                     </div>
 
-                    <!-- Nút chọn khung thời gian -->
-                    <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 gap-0.5">
+                    <!-- Nút chọn khung thời gian trong suốt -->
+                    <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
                         <button onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
                         <button onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
                     </div>
 
-                    <!-- Nút Bật/Tắt VOL & Chỉ Báo -->
-                    <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 gap-0.5">
-                        <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition">VOL</button>
-                        <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400 transition">MA20</button>
-                        <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition">MA50</button>
-                        <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition">RSI</button>
+                    <!-- Nút Bật/Tắt VOL & Chỉ Báo trong suốt -->
+                    <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
+                        <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VOL</button>
+                        <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition">MA20</button>
+                        <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">MA50</button>
+                        <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">RSI</button>
                     </div>
 
-                    <!-- THÔNG TIN MỐC THỜI GIAN & OHLC CHUNG TRÊN OVERLAY -->
-                    <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 pl-1 border-l border-slate-800 text-[10px]">
+                    <!-- THÔNG TIN MỐC THỜI GIAN & OHLC CHUNG TRÊN OVERLAY TRONG SUỐT -->
+                    <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 pl-1 border-l border-slate-800/40 text-[10px]">
                         <div><span class="text-slate-400">TG:</span> <span id="legend-time" class="font-bold text-white">--</span></div>
                         <div><span class="text-slate-400">O:</span> <span id="legend-open" class="font-bold">--</span></div>
                         <div><span class="text-slate-400">H:</span> <span id="legend-high" class="font-bold">--</span></div>
@@ -234,12 +234,12 @@
                     </div>
                 </div>
 
-                <!-- OVERLAY NÚT PHÓNG TO NỀN & ĐÓNG X (GÓC TRÊN PHẢI CHART) -->
-                <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/80 backdrop-blur-md p-1 rounded-xl border border-slate-800/90 shadow-xl">
-                    <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 transition" title="Phóng to / Thu nhỏ">
+                <!-- OVERLAY TRONG SUỐT NÚT PHÓNG TO NỀN & ĐÓNG X (GÓC TRÊN PHẢI CHART) -->
+                <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/30 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
+                    <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 hover:bg-slate-800/60 transition" title="Phóng to / Thu nhỏ">
                         <i class="fa-solid fa-expand text-xs"></i>
                     </button>
-                    <button onclick="closeChartModal()" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 transition" title="Đóng">
+                    <button onclick="closeChartModal()" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg bg-slate-900/40 hover:bg-slate-800/60 transition" title="Đóng">
                         <i class="fa-solid fa-xmark text-xs"></i>
                     </button>
                 </div>
@@ -687,7 +687,7 @@
             if (isBoldVol) {
                 btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white border border-emerald-400 transition";
             } else {
-                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition";
+                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition";
             }
             if (currentSymbolHistory) {
                 renderChartInstance(currentSymbolHistory);
@@ -698,9 +698,9 @@
             activeIndicators[name] = !activeIndicators[name];
             const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
             if (activeIndicators[name]) {
-                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400 transition";
+                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition";
             } else {
-                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition";
+                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition";
             }
             if (currentSymbolHistory) {
                 renderChartInstance(currentSymbolHistory);
