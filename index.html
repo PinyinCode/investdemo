@@ -127,14 +127,15 @@
         </div>
     </main>
 
-    <!-- MODAL CHI TIẾT AI -->
+    <!-- MODAL CHI TIẾT AI & BCTC -->
     <div id="ai-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-3 md:p-4">
-        <div class="bg-slate-900 border border-slate-700 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
+            <!-- Header Modal -->
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10">
                 <div class="flex items-center space-x-3">
                     <span id="modal-symbol" class="text-2xl font-black text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">--</span>
                     <div>
-                        <h3 class="text-sm font-bold text-white">Chuyên Gia AI Phân Tích</h3>
+                        <h3 class="text-sm font-bold text-white">Hệ Thống Phân Tích Chuyên Sâu & BCTC</h3>
                         <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
                     </div>
                 </div>
@@ -143,7 +144,18 @@
                 </button>
             </div>
             
-            <div class="p-5 overflow-y-auto space-y-4">
+            <!-- Tab Navigation Header -->
+            <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
+                <button onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition">
+                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI Chiến Lược
+                </button>
+                <button onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Tra Cứu BCTC Chi Tiết
+                </button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+                <!-- THÔNG SỐ TỔNG QUAN -->
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
                     <div><span class="text-[10px] text-slate-500 block">Giá</span><span id="modal-price" class="text-sm font-bold text-emerald-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
@@ -153,28 +165,56 @@
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
-                <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
-                    <p id="modal-ai-rec" class="text-lg font-black text-white mb-2"></p>
-                    <div class="bg-slate-900/50 p-2.5 rounded border border-indigo-500/20">
-                        <span class="text-[10px] text-slate-400 block mb-1">Chiến lược hành động:</span>
-                        <p id="modal-ai-price" class="text-sm text-emerald-300 font-medium">--</p>
+                <!-- TAB 1: ĐÁNH GIÁ AI -->
+                <div id="tab-content-eval" class="space-y-4">
+                    <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
+                        <p id="modal-ai-rec" class="text-lg font-black text-white mb-2"></p>
+                        <div class="bg-slate-900/50 p-2.5 rounded border border-indigo-500/20">
+                            <span class="text-[10px] text-slate-400 block mb-1">Chiến lược hành động:</span>
+                            <p id="modal-ai-price" class="text-sm text-emerald-300 font-medium">--</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i> Phân tích Sức khỏe Tài chính & BCTC</h4>
+                        <p id="modal-bctc" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-chart-line text-blue-500 mr-1.5"></i> Định giá & Hành động giá</h4>
+                        <p id="modal-outlook" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-globe text-amber-500 mr-1.5"></i> Vĩ mô & Sóng ngành</h4>
+                        <p id="modal-macro" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
                     </div>
                 </div>
 
-                <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i> Đánh giá BCTC</h4>
-                    <p id="modal-bctc" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
+                <!-- TAB 2: TRA CỨU BCTC CHI TIẾT -->
+                <div id="tab-content-bctc" class="space-y-4 hidden">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-table mr-1.5"></i> Kết quả Kinh doanh Theo Quý</h4>
+                            <span class="text-[10px] text-slate-500">Nguồn: bctc_data/{symbol}.json</span>
+                        </div>
+                        <div id="bctc-income-container" class="overflow-x-auto">
+                            <p class="text-xs text-slate-500 text-center py-4">Đang tải dữ liệu BCTC...</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400"><i class="fa-solid fa-scale-balanced mr-1.5"></i> Cân đối Kế toán Mới Nhất</h4>
+                        </div>
+                        <div id="bctc-balance-container" class="overflow-x-auto">
+                            <p class="text-xs text-slate-500 text-center py-4">Đang tải dữ liệu BCTC...</p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-chart-line text-blue-500 mr-1.5"></i> Định giá & Hành động giá</h4>
-                    <p id="modal-outlook" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
-                </div>
-                <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-globe text-amber-500 mr-1.5"></i> Vĩ mô & Sóng ngành</h4>
-                    <p id="modal-macro" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
-                </div>
+
             </div>
+
+            <!-- Footer Modal -->
             <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center text-[10px] text-slate-500">
                 <span id="modal-time">AI cập nhật: --</span>
                 <button onclick="closeModal()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-bold shadow">Đóng</button>
@@ -191,15 +231,13 @@
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
 
-                <!-- OVERLAY TRONG SUỐT GỌN GÀNG (TÍCH HỢP ĐỔI MÃ, NÚT PREV/NEXT, KHUNG TG, VOL MA & OHLC) -->
+                <!-- OVERLAY TRONG SUỐT GỌN GÀNG -->
                 <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1 md:p-1.5 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
                     
-                    <!-- NÚT CHUYỂN MÃ NHANH PREV (<) -->
                     <button onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã trước">
                         <i class="fa-solid fa-chevron-left text-[9px]"></i>
                     </button>
 
-                    <!-- NÚT ĐỔI MÃ TRONG SUỐT -->
                     <div class="relative">
                         <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs md:text-sm font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
                             <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
@@ -210,19 +248,16 @@
                         </div>
                     </div>
 
-                    <!-- NÚT CHUYỂN MÃ NHANH NEXT (>) -->
                     <button onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã tiếp theo">
                         <i class="fa-solid fa-chevron-right text-[9px]"></i>
                     </button>
 
-                    <!-- KHUNG THỜI GIAN -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
                         <button onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
                         <button onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
                     </div>
 
-                    <!-- CHỈ BÁO & VOL (BỔ SUNG VOL MA) -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VOL</button>
                         <button onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VolMA</button>
@@ -231,7 +266,6 @@
                         <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">RSI</button>
                     </div>
 
-                    <!-- THÔNG TIN RÚT GỌN: THỜI GIAN, GIÁ (C), % BIÊN ĐỘ VÀ KL -->
                     <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 pl-1 border-l border-slate-800/40 text-[10px]">
                         <div><span class="text-slate-400">TG:</span> <span id="legend-time" class="font-bold text-white">--</span></div>
                         <div><span class="text-slate-400">Giá:</span> <span id="legend-close" class="font-bold">--</span></div>
@@ -240,7 +274,6 @@
                     </div>
                 </div>
 
-                <!-- NÚT PHÓNG TO VÀ ĐÓNG (GÓC TRÊN PHẢI) -->
                 <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/30 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
                     <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 hover:bg-slate-800/60 transition" title="Phóng to / Thu nhỏ">
                         <i class="fa-solid fa-expand text-xs"></i>
@@ -545,6 +578,108 @@
             });
         }
 
+        // HÀM CHUYỂN TAB TRONG MODAL AI & BCTC
+        function switchAiTab(tabName) {
+            const btnEval = document.getElementById('tab-btn-eval');
+            const btnBctc = document.getElementById('tab-btn-bctc');
+            const contentEval = document.getElementById('tab-content-eval');
+            const contentBctc = document.getElementById('tab-content-bctc');
+
+            if (tabName === 'eval') {
+                btnEval.className = "px-4 py-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition";
+                btnBctc.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
+                contentEval.classList.remove('hidden');
+                contentBctc.classList.add('hidden');
+            } else {
+                btnBctc.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
+                btnEval.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
+                contentBctc.classList.remove('hidden');
+                contentEval.classList.add('hidden');
+            }
+        }
+
+        // TẢI VÀ HIỂN THỊ DỮ LIỆU BCTC CHI TIẾT TỪ FILE JSON
+        async function loadBctcDetail(symbol) {
+            const incomeContainer = document.getElementById('bctc-income-container');
+            const balanceContainer = document.getElementById('bctc-balance-container');
+            
+            incomeContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
+            balanceContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
+
+            try {
+                const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
+                if (!res.ok) throw new Error('Không tìm thấy file BCTC');
+                const data = await res.json();
+
+                // 1. Render Bảng Kết quả kinh doanh
+                if (data.income_statement && data.income_statement.length > 0) {
+                    let html = `
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 bg-slate-900">
+                                <th class="p-2">Kỳ / Năm</th>
+                                <th class="p-2 text-right">Doanh Thu</th>
+                                <th class="p-2 text-right">Lợi Nhuận Gộp</th>
+                                <th class="p-2 text-right">LN Sau Thuế</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-900">`;
+                    
+                    data.income_statement.slice(0, 6).forEach(row => {
+                        let period = row.period || row.quarter || 'N/A';
+                        let year = row.year || 'N/A';
+                        let rev = row.revenue || row.netRevenue || 0;
+                        let gp = row.grossProfit || 0;
+                        let np = row.profitAfterTax || row.netProfit || 0;
+
+                        html += `
+                        <tr class="hover:bg-slate-900/50">
+                            <td class="p-2 font-bold text-indigo-300">Q${period}/${year}</td>
+                            <td class="p-2 text-right text-slate-200">${formatNumber(rev)}</td>
+                            <td class="p-2 text-right text-slate-200">${formatNumber(gp)}</td>
+                            <td class="p-2 text-right font-bold text-emerald-400">${formatNumber(np)}</td>
+                        </tr>`;
+                    });
+                    html += `</tbody></table>`;
+                    incomeContainer.innerHTML = html;
+                } else {
+                    incomeContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Không có dữ liệu Kết quả kinh doanh.</p>`;
+                }
+
+                // 2. Render Bảng Cân đối kế toán (Kỳ mới nhất)
+                if (data.balance_sheet && data.balance_sheet.length > 0) {
+                    let latest = data.balance_sheet[0];
+                    let period = latest.period || latest.quarter || 'N/A';
+                    let year = latest.year || 'N/A';
+
+                    let html = `
+                    <div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: Q${period}/${year}</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
+
+                    let count = 0;
+                    for (const [key, val] of Object.entries(latest)) {
+                        if (['period', 'quarter', 'year', 'ticker', 'symbol'].includes(key)) continue;
+                        if (count >= 16) break; // Lấy tối đa 16 chỉ tiêu quan trọng
+                        
+                        html += `
+                        <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800/80 text-xs">
+                            <span class="text-slate-400 truncate pr-2">${key}:</span>
+                            <span class="font-bold text-slate-200">${typeof val === 'number' ? formatNumber(val) : val}</span>
+                        </div>`;
+                        count++;
+                    }
+                    html += `</div>`;
+                    balanceContainer.innerHTML = html;
+                } else {
+                    balanceContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Không có dữ liệu Cân đối kế toán.</p>`;
+                }
+
+            } catch (err) {
+                incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Chưa có file dữ liệu BCTC trong thư mục bctc_data/ cho mã này.</p>`;
+                balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Vui lòng chạy script cào BCTC trước.</p>`;
+            }
+        }
+
         function startLiveTrackingForSymbol(symbol) {
             if (realtimeInterval) clearInterval(realtimeInterval);
 
@@ -596,7 +731,6 @@
             realtimeInterval = setInterval(fetchLivePrice, 30000);
         }
 
-        // HÀM CHUYỂN MÃ NHANH QUA LẠI (PREV / NEXT)
         function navigateSymbol(direction) {
             const symbols = Object.keys(stockData).sort();
             const currentIndex = symbols.indexOf(currentSymbol);
@@ -653,6 +787,9 @@
             const item = stockData[symbol];
             if (!item) return;
 
+            // Reset về tab Đánh giá AI mặc định khi mở modal
+            switchAiTab('eval');
+
             document.getElementById('modal-symbol').innerText = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[getSector(item.symbol)]}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close);
@@ -677,6 +814,9 @@
             document.getElementById('modal-time').innerText = `AI cập nhật: ${item.ai_updated_at || 'Chưa chạy'}`;
 
             document.getElementById('ai-modal').classList.remove('hidden');
+
+            // Gọi tải dữ liệu BCTC chi tiết cho tab 2
+            loadBctcDetail(symbol);
         }
 
         function closeModal() {
