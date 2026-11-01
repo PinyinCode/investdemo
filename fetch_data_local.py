@@ -9,6 +9,7 @@ from vnstock import Quote
 
 DATA_FILE = "data.json"
 HISTORY_DIR = "history"
+BCTC_DIR = "bctc_data"
 JS_LIB_FILE = "lightweight-charts.js"
 
 VN100_SYMBOLS = [
@@ -81,16 +82,91 @@ def fetch_history_with_fallback(symbol, start_date, end_date):
     """Thử lần lượt các nguồn TCBS và VCI với cơ chế đổi User-Agent phòng chống chặn"""
     sources = ['TCBS', 'VCI']
     for src in sources:
-        for attempt in range(2): # Thử lại tối đa 2 lần cho mỗi nguồn
+        for attempt in range(2):
             try:
                 quote = Quote(source=src, symbol=symbol)
                 df = quote.history(start=start_date, end=end_date)
                 if df is not None and not df.empty:
                     return df
             except Exception:
-                time.sleep(1) # Nghỉ ngắn khi gặp lỗi trước khi thử lại
+                time.sleep(1)
         time.sleep(0.5)
     return None
+
+def parse_bctc_history(symbol):
+    """Đọc file BCTC JSON chi tiết của mã trong thư mục bctc_data và tính toán toàn bộ chuỗi quý (3 năm)"""
+    filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
+    if not os.path.exists(filepath):
+        return []
+
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return []
+
+    balance_sheet = data.get("balance_sheet", [])
+    income_statement = data.get("income_statement", [])
+    if not balance_sheet or not income_statement:
+        return []
+
+    bs_dict = {}
+    for item in balance_sheet:
+        p = item.get("period")
+        if p not in bs_dict:
+            bs_dict[p] = {}
+        bs_dict[p][item.get("id")] = item.get("value")
+
+    is_dict = {}
+    for item in income_statement:
+        p = item.get("period")
+        if p not in is_dict:
+            is_dict[p] = {}
+        is_dict[p][item.get("id")] = item.get("value")
+
+    periods = sorted(list(set(bs_dict.keys()).intersection(set(is_dict.keys()))), reverse=True)
+    if not periods:
+        return []
+
+    bctc_records = []
+    for idx, curr_p in enumerate(periods):
+        prev_p = periods[idx + 1] if idx + 1 < len(periods) else None
+        year, q_str = curr_p.split("-")
+        yoy_p = f"{int(year) - 1}-{q_str}"
+
+        total_assets = bs_dict[curr_p].get("BS_TOTAL_ASSETS", 0)
+        loans = bs_dict[curr_p].get("BS_LOANS_TO_CUSTOMERS", 0)
+        equity = bs_dict[curr_p].get("BS_EQUITY", 0)
+        nii = is_dict[curr_p].get("IS_NET_INTEREST_INCOME", 0)
+        pat = is_dict[curr_p].get("IS_NET_PROFIT_AFTER_TAX", 0)
+
+        loans_prev = bs_dict.get(prev_p, {}).get("BS_LOANS_TO_CUSTOMERS", 0) if prev_p else 0
+        loans_yoy = bs_dict.get(yoy_p, {}).get("BS_LOANS_TO_CUSTOMERS", 0)
+        credit_growth_qoq = ((loans - loans_prev) / loans_prev * 100) if loans_prev else 0
+        credit_growth_yoy = ((loans - loans_yoy) / loans_yoy * 100) if loans_yoy else 0
+
+        pat_prev = is_dict.get(prev_p, {}).get("IS_NET_PROFIT_AFTER_TAX", 0) if prev_p else 0
+        pat_yoy = is_dict.get(yoy_p, {}).get("IS_NET_PROFIT_AFTER_TAX", 0)
+        pat_growth_qoq = ((pat - pat_prev) / pat_prev * 100) if pat_prev else 0
+        pat_growth_yoy = ((pat - pat_yoy) / pat_yoy * 100) if pat_yoy else 0
+
+        roe_q = (pat / equity * 100) if equity else 0
+
+        bctc_records.append({
+            "period": curr_p,
+            "total_assets": round(total_assets / 1e9, 2),
+            "loans": round(loans / 1e9, 2),
+            "equity": round(equity / 1e9, 2),
+            "net_interest_income": round(nii / 1e9, 2),
+            "net_profit": round(pat / 1e9, 2),
+            "credit_growth_qoq": round(credit_growth_qoq, 2),
+            "credit_growth_yoy": round(credit_growth_yoy, 2),
+            "profit_growth_qoq": round(pat_growth_qoq, 2),
+            "profit_growth_yoy": round(pat_growth_yoy, 2),
+            "roe_quarter": round(roe_q, 2)
+        })
+
+    return bctc_records
 
 def auto_git_push():
     """Tự động đồng bộ dữ liệu lên GitHub"""
@@ -98,10 +174,12 @@ def auto_git_push():
         print("📤 Đang tiến hành đồng bộ dữ liệu lên GitHub...")
         subprocess.run(["git", "add", DATA_FILE], check=True)
         subprocess.run(["git", "add", HISTORY_DIR], check=True)
+        if os.path.exists("bctc_data"):
+            subprocess.run(["git", "add", "bctc_data"], check=True)
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
             
-        commit_msg = f"Auto update safe multi-source data - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update comprehensive multi-source data & BCTC - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
@@ -111,7 +189,7 @@ def auto_git_push():
         print(f"⚠️ Lỗi Git push: {e}")
 
 def main():
-    print("🚀 Bắt đầu cào dữ liệu 2 năm với tốc độ an toàn chống chặn...")
+    print("🚀 Bắt đầu cào dữ liệu Định giá, Kỹ thuật và BCTC đa quý...")
     
     if not os.path.exists(HISTORY_DIR):
         os.makedirs(HISTORY_DIR)
@@ -136,7 +214,6 @@ def main():
         
         try:
             df = fetch_history_with_fallback(symbol, start_date, end_date)
-            
             if df is not None and not df.empty:
                 closes = df['close'].tolist()
                 volumes = df['volume'].tolist()
@@ -199,6 +276,9 @@ def main():
         with open(os.path.join(HISTORY_DIR, f"{symbol}.json"), "w", encoding="utf-8") as sf:
             json.dump(symbol_history_data, sf, ensure_ascii=False)
 
+        # Lấy dữ liệu BCTC đa quý (3 năm) từ thư mục bctc_data
+        bctc_history = parse_bctc_history(symbol)
+
         old_data = stock_db.get(symbol, {})
         
         stock_db[symbol] = {
@@ -214,7 +294,7 @@ def main():
             "recommendation": status,
             "price_zone": detail,
             "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "bctc": old_data.get("bctc", ""),
+            "bctc_history": bctc_history,  # 💡 Đã tích hợp đầy đủ BCTC đa quý vào đây
             "outlook": old_data.get("outlook", ""),
             "ai_recommendation": old_data.get("ai_recommendation", ""),
             "ai_price_zone": old_data.get("ai_price_zone", ""),
@@ -222,12 +302,11 @@ def main():
             "ai_updated_at": old_data.get("ai_updated_at", "")
         }
         
-        # 💡 TĂNG THỜI GIAN NGHỈ AN TOÀN: Nghỉ từ 1.5 đến 2 giây giữa các mã để không bị máy chủ chặn IP
         time.sleep(1.5)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-    print("✅ Đã hoàn tất toàn bộ dữ liệu an toàn!")
+    print("✅ Đã hoàn tất toàn bộ dữ liệu Định giá, Kỹ thuật và BCTC đa quý vào data.json!")
 
     auto_git_push()
 
