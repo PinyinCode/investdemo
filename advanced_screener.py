@@ -3,12 +3,13 @@ import json
 import pandas as pd
 import numpy as np
 import datetime
+import subprocess
 
 DATA_FILE = "data.json"
 OUTPUT_JSON = "screener_results.json"
 OUTPUT_CSV = "screener_summary.csv"
 
-# Phân nhóm ngành VN100
+# Phân nhóm ngành chuẩn cho VN100
 SECTOR_MAPPING = {
     "NGAN_HANG": ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB", "SSB", "LPB", "MSB", "OCB", "EIB"],
     "CHUNG_KHOAN": ["SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"],
@@ -46,34 +47,49 @@ def evaluate_stock(symbol, data):
     fundamental_score = 0
     fund_notes = []
 
-    # Đánh giá theo ngành
     if sector == "NGAN_HANG":
-        if credit_growth_yoy >= 15: fundamental_score += 25; fund_notes.append("Tín dụng tăng trưởng mạnh (>15%)")
-        elif credit_growth_yoy >= 10: fundamental_score += 15; fund_notes.append("Tín dụng tăng trưởng khá")
+        if credit_growth_yoy >= 15: 
+            fundamental_score += 25; fund_notes.append("Tín dụng tăng trưởng mạnh (>15%)")
+        elif credit_growth_yoy >= 10: 
+            fundamental_score += 15; fund_notes.append("Tín dụng tăng trưởng khá")
         
-        if roe >= 18: fundamental_score += 25; fund_notes.append("ROE xuất sắc (>18%)")
-        elif roe >= 14: fundamental_score += 15; fund_notes.append("ROE tốt (>14%)")
+        if roe >= 18: 
+            fundamental_score += 25; fund_notes.append("ROE xuất sắc (>18%)")
+        elif roe >= 14: 
+            fundamental_score += 15; fund_notes.append("ROE tốt (>14%)")
         
     elif sector == "CHUNG_KHOAN":
-        if profit_growth_yoy >= 40: fundamental_score += 25; fund_notes.append("LNST bùng nổ mạnh (>40%)")
-        elif profit_growth_yoy >= 20: fundamental_score += 15; fund_notes.append("LNST tăng trưởng tốt")
+        if profit_growth_yoy >= 40: 
+            fundamental_score += 25; fund_notes.append("LNST bùng nổ mạnh (>40%)")
+        elif profit_growth_yoy >= 20: 
+            fundamental_score += 15; fund_notes.append("LNST tăng trưởng tốt")
         
-        if roe >= 15: fundamental_score += 25; fund_notes.append("ROE chứng khoán cao")
-        elif roe >= 10: fundamental_score += 15; fund_notes.append("ROE khá")
+        if roe >= 15: 
+            fundamental_score += 25; fund_notes.append("ROE chứng khoán cao")
+        elif roe >= 10: 
+            fundamental_score += 15; fund_notes.append("ROE khá")
         
     elif sector == "BAT_DONG_SAN":
-        if net_profit >= 200: fundamental_score += 25; fund_notes.append("Điểm rơi lợi nhuận lớn (>200 tỷ)")
-        elif net_profit >= 50: fundamental_score += 15; fund_notes.append("Có ghi nhận lợi nhuận")
+        if net_profit >= 200: 
+            fundamental_score += 25; fund_notes.append("Điểm rơi lợi nhuận lớn (>200 tỷ)")
+        elif net_profit >= 50: 
+            fundamental_score += 15; fund_notes.append("Có ghi nhận lợi nhuận")
         
-        if profit_growth_yoy >= 50: fundamental_score += 25; fund_notes.append("Tăng trưởng YoY cực cao")
-        elif profit_growth_yoy > 0: fundamental_score += 15; fund_notes.append("Phục hồi YoY")
+        if profit_growth_yoy >= 50: 
+            fundamental_score += 25; fund_notes.append("Tăng trưởng YoY cực cao")
+        elif profit_growth_yoy > 0: 
+            fundamental_score += 15; fund_notes.append("Phục hồi YoY")
         
     else: # Sản xuất, Thép, Bán lẻ, Năng lượng...
-        if profit_growth_yoy >= 30: fundamental_score += 25; fund_notes.append("Tăng trưởng cốt lõi mạnh (>30%)")
-        elif profit_growth_yoy >= 10: fundamental_score += 15; fund_notes.append("Tăng trưởng ổn định")
+        if profit_growth_yoy >= 30: 
+            fundamental_score += 25; fund_notes.append("Tăng trưởng cốt lõi mạnh (>30%)")
+        elif profit_growth_yoy >= 10: 
+            fundamental_score += 15; fund_notes.append("Tăng trưởng ổn định")
         
-        if roe >= 15: fundamental_score += 25; fund_notes.append("Hiệu quả sinh lời ROE cao (>15%)")
-        elif roe >= 10: fundamental_score += 15; fund_notes.append("ROE đạt chuẩn")
+        if roe >= 15: 
+            fundamental_score += 25; fund_notes.append("Hiệu quả sinh lời ROE cao (>15%)")
+        elif roe >= 10: 
+            fundamental_score += 15; fund_notes.append("ROE đạt chuẩn")
 
     # ==========================================
     # 2. CHẤM ĐIỂM PHÂN TÍCH KỸ THUẬT (PTKT - Thang 30 điểm)
@@ -141,7 +157,23 @@ def evaluate_stock(symbol, data):
         "valuation_notes": " | ".join(val_notes)
     }
 
+def auto_git_push():
+    """Tự động commit và push file kết quả lên GitHub"""
+    try:
+        print("\n📤 Đang tiến hành đồng bộ kết quả lên GitHub...")
+        subprocess.run(["git", "add", OUTPUT_JSON, OUTPUT_CSV], check=True)
+        commit_msg = f"Auto update quant screener evaluation results - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+        subprocess.run(["git", "push"], check=True)
+        print("🚀 Đẩy kết quả lọc lên GitHub thành công!")
+    except subprocess.CalledProcessError:
+        print("⚠️ Git: Không có thay đổi mới để push hoặc đã được cập nhật.")
+    except Exception as e:
+        print(f"⚠️ Lỗi Git push: {e}")
+
 def main():
+    print("🚀 Bắt đầu chạy bộ lọc định lượng chuyên sâu (Advanced Quant Screener)...")
+    
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy file {DATA_FILE}")
         return
@@ -165,18 +197,21 @@ def main():
     # 1. Xuất file JSON riêng cho Frontend HTML/JS
     with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
         json.dump(results, jf, ensure_ascii=False, indent=4)
-    print(f"✅ Đã xuất file JSON: {OUTPUT_JSON}")
+    print(f"✅ Đã xuất file JSON thành công: {OUTPUT_JSON}")
 
     # 2. Xuất file CSV tổng hợp báo cáo
     df = pd.DataFrame(results)
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
-    print(f"✅ Đã xuất file CSV: {OUTPUT_CSV}")
+    print(f"✅ Đã xuất file CSV thành công: {OUTPUT_CSV}")
 
     # In mẫu Top 10 mã mạnh nhất ra màn hình console
     print("\n🏆 TOP 10 CỔ PHIẾU ĐẠT ĐIỂM SỐ CAO NHẤT TOÀN THỊ TRƯỜNG:")
     print("=" * 125)
     print(df[['symbol', 'sector', 'total_score', 'potential_zone', 'roe', 'profit_growth_yoy', 'technical_status']].head(10).to_string(index=False))
     print("=" * 125)
+
+    # Tự động đẩy lên git
+    auto_git_push()
 
 if __name__ == "__main__":
     main()
