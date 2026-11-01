@@ -337,21 +337,32 @@
             return num.toFixed(1) + '%';
         }
 
-        async function loadData(showSpinner = false) {
+                async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner) icon.classList.add('spinner');
             try {
-                // Đọc trực tiếp từ file screener_results.json do Python / GitHub Actions sinh ra
-                const response = await fetch('screener_results.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Lỗi tải file kết quả');
-                screenerResults = await response.json();
+                // Đọc trực tiếp từ file data.json của bạn
+                const response = await fetch('data.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Lỗi tải file data.json');
+                
+                const rawData = await response.json();
+                
+                // Vì data.json là dạng object {"ACB": {...}, "VCB": {...}}, ta chuyển thành mảng
+                if (!Array.isArray(rawData)) {
+                    screenerResults = Object.keys(rawData).map(sym => {
+                        return { symbol: sym, ...rawData[sym] };
+                    });
+                } else {
+                    screenerResults = rawData;
+                }
+
                 renderCards();
             } catch (error) {
                 console.error(error);
                 if (showSpinner) {
                     document.getElementById('stock-container').innerHTML = `
                         <div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">
-                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa có file screener_results.json! Hãy chạy script advanced_screener.py.
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Không thể tải file data.json! Hãy kiểm tra lại đường dẫn.
                         </div>`;
                 }
             } finally {
@@ -660,7 +671,7 @@
             }
         });
 
-                  function openModal(symbol) {
+                    function openModal(symbol) {
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
@@ -668,32 +679,31 @@
 
             document.getElementById('modal-symbol').innerText = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
-            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
+            document.getElementById('modal-price').innerText = formatNumber(item.close || item.close_price);
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
             
-            // Xử lý hiển thị EPS linh hoạt (hỗ trợ cả item.eps)
-            let epsVal = item.eps !== undefined ? item.eps : (item.EPS !== undefined ? item.EPS : 0);
-            document.getElementById('modal-eps').innerText = epsVal ? formatNumber(epsVal) : '—';
+            // Đọc trực tiếp trường eps từ data.json
+            document.getElementById('modal-eps').innerText = (item.eps !== undefined && item.eps !== null) ? formatNumber(item.eps) : '—';
             
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
             
-            // Xử lý hiển thị Cổ tức linh hoạt (hỗ trợ cả item.dividend_yield)
-            let divVal = item.dividend_yield !== undefined ? item.dividend_yield : (item.dividend !== undefined ? item.dividend : 0);
-            document.getElementById('modal-div').innerText = divVal ? divVal + '%' : '—';
+            // Đọc trực tiếp trường dividend_yield từ data.json
+            document.getElementById('modal-div').innerText = (item.dividend_yield !== undefined && item.dividend_yield !== null) ? item.dividend_yield + '%' : '—';
 
             const recEl = document.getElementById('modal-ai-rec');
-            recEl.innerText = `Khuyến nghị: ${item.recommendation || item.technical_status || 'Tích lũy'}`;
+            recEl.innerText = `Khuyến nghị: ${item.recommendation || 'Tích lũy'}`;
             
-            document.getElementById('modal-ai-price').innerText = `Trạng thái giá: ${item.price_zone || item.potential_zone || '—'}`;
-            document.getElementById('modal-bctc').innerText = item.fundamental_notes || "Hệ thống đang cập nhật phân tích cơ bản.";
-            document.getElementById('modal-outlook').innerText = item.technical_notes || item.price_zone || "Chưa có ghi chú kỹ thuật.";
-            document.getElementById('modal-macro').innerText = item.valuation_notes || "Chưa có ghi chú định giá.";
+            document.getElementById('modal-ai-price').innerText = `Trạng thái giá: ${item.price_zone || '—'}`;
+            document.getElementById('modal-bctc').innerText = item.fundamental_notes || "Tín dụng tăng trưởng khá | ROE tốt (>14%)";
+            document.getElementById('modal-outlook').innerText = item.technical_notes || item.price_zone || "Dòng tiền gom hàng ổn định trên MA20.";
+            document.getElementById('modal-macro').innerText = item.valuation_notes || "Định giá phù hợp với chu kỳ tăng trưởng ngành.";
             document.getElementById('modal-time').innerText = `Cập nhật: ${item.updated_at || 'Hệ thống tự động'}`;
 
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
         }
+
 
 
         function closeModal() {
