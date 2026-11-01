@@ -337,24 +337,42 @@
             return num.toFixed(1) + '%';
         }
 
-                async function loadData(showSpinner = false) {
+                        async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner) icon.classList.add('spinner');
             try {
-                // Đọc trực tiếp từ file data.json của bạn
-                const response = await fetch('data.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Lỗi tải file data.json');
-                
-                const rawData = await response.json();
-                
-                // Vì data.json là dạng object {"ACB": {...}, "VCB": {...}}, ta chuyển thành mảng
-                if (!Array.isArray(rawData)) {
-                    screenerResults = Object.keys(rawData).map(sym => {
-                        return { symbol: sym, ...rawData[sym] };
-                    });
-                } else {
-                    screenerResults = rawData;
+                // 1. Tải file screener_results.json để lấy tiêu chí sắp xếp, điểm số và ngành
+                const screenerRes = await fetch('screener_results.json?t=' + new Date().getTime());
+                if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
+                let screenerData = await screenerRes.json();
+
+                // 2. Tải thêm file data.json để lấy thông số EPS, Cổ tức, P/E, P/B, v.v.
+                let rawStockData = {};
+                try {
+                    const dataRes = await fetch('data.json?t=' + new Date().getTime());
+                    if (dataRes.ok) {
+                        rawStockData = await dataRes.json();
+                    }
+                } catch (e) {
+                    console.warn("Không tải được data.json phụ trợ:", e);
                 }
+
+                // 3. Gộp dữ liệu: Ưu tiên lấy điểm số/sắp xếp từ screener và nhồi thêm thông số từ data.json
+                screenerResults = screenerData.map(item => {
+                    const sym = item.symbol;
+                    const extraData = rawStockData[sym] || {};
+                    
+                    return {
+                        ...item,
+                        // Nếu data.json có eps hoặc dividend_yield thì ghi đè vào, không thì giữ nguyên
+                        eps: extraData.eps !== undefined ? extraData.eps : item.eps,
+                        dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
+                        pe: extraData.pe !== undefined ? extraData.pe : item.pe,
+                        pb: extraData.pb !== undefined ? extraData.pb : item.pb,
+                        roe: extraData.roe !== undefined ? extraData.roe : item.roe,
+                        close_price: extraData.close !== undefined ? extraData.close : item.close_price
+                    };
+                });
 
                 renderCards();
             } catch (error) {
@@ -362,13 +380,14 @@
                 if (showSpinner) {
                     document.getElementById('stock-container').innerHTML = `
                         <div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">
-                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Không thể tải file data.json! Hãy kiểm tra lại đường dẫn.
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa có file screener_results.json hoặc data.json! Hãy chạy script Python cập nhật.
                         </div>`;
                 }
             } finally {
                 if (showSpinner) icon.classList.remove('spinner');
             }
         }
+
 
         // Lấy điểm số từ kết quả Python để sắp xếp
         function scoreFundamental(item) { return item.fundamental_score || 0; }
