@@ -503,33 +503,29 @@
             }
         }
 
-        // XỬ LÝ BCTC (Hiển thị thông báo khi chưa có dữ liệu)
                 async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
             
-            incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
-            balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
+            if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
+            if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
 
             try {
                 const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
-                if (!res.ok) throw new Error('Không tìm thấy file BCTC');
+                if (!res.ok) throw new Error(`Không tìm thấy file (${res.status})`);
                 const data = await res.json();
 
-                // 1. Xử lý Kết quả kinh doanh (income_statement) từ dạng phẳng sang theo quý
-                if (data.income_statement && Array.isArray(data.income_statement)) {
-                    // Gom nhóm theo kỳ (period)
+                // 1. Xử lý Kết quả kinh doanh an toàn
+                if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
                     data.income_statement.forEach(item => {
-                        if (!groupedByPeriod[item.period]) {
-                            groupedByPeriod[item.period] = {};
+                        if (item && item.period) {
+                            if (!groupedByPeriod[item.period]) groupedByPeriod[item.period] = {};
+                            groupedByPeriod[item.period][item.id] = item.value;
                         }
-                        groupedByPeriod[item.period][item.id] = item.value;
-                        groupedByPeriod[item.period]['name_' + item.id] = item.name;
                     });
 
-                    let periods = Object.keys(groupedByPeriod).sort().reverse(); // Sắp xếp quý mới nhất lên đầu
-
+                    let periods = Object.keys(groupedByPeriod).sort().reverse();
                     if (periods.length > 0) {
                         let html = `
                         <table class="w-full text-left text-xs">
@@ -544,7 +540,7 @@
                             <tbody class="divide-y divide-slate-900">`;
                         
                         periods.slice(0, 6).forEach(p => {
-                            let pData = groupedByPeriod[p];
+                            let pData = groupedByPeriod[p] || {};
                             let netInterest = pData['IS_NET_INTEREST_INCOME'] || 0;
                             let netFee = pData['IS_NET_FEE_AND_COMMISSION_INCOME'] || 0;
                             let netProfit = pData['IS_NET_PROFIT_AFTER_TAX'] || 0;
@@ -559,25 +555,27 @@
                         });
                         html += `</tbody></table>`;
                         incomeContainer.innerHTML = html;
+                    } else {
+                        incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu kỳ báo cáo.</p>`;
                     }
                 } else {
-                    incomeContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Không có dữ liệu kết quả kinh doanh.</p>`;
+                    if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>`;
                 }
 
-                // 2. Xử lý Cân đối kế toán (balance_sheet) kỳ mới nhất
-                if (data.balance_sheet && Array.isArray(data.balance_sheet)) {
+                // 2. Xử lý Cân đối kế toán an toàn
+                if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
                     let groupedBs = {};
                     data.balance_sheet.forEach(item => {
-                        if (!groupedBs[item.period]) {
-                            groupedBs[item.period] = {};
+                        if (item && item.period && item.name) {
+                            if (!groupedBs[item.period]) groupedBs[item.period] = {};
+                            groupedBs[item.period][item.name] = item.value;
                         }
-                        groupedBs[item.period][item.name] = item.value;
                     });
 
                     let periods = Object.keys(groupedBs).sort().reverse();
                     if (periods.length > 0) {
                         let latestPeriod = periods[0];
-                        let latestData = groupedBs[latestPeriod];
+                        let latestData = groupedBs[latestPeriod] || {};
 
                         let html = `
                         <div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${latestPeriod}</div>
@@ -585,25 +583,27 @@
 
                         let count = 0;
                         for (const [name, val] of Object.entries(latestData)) {
-                            if (count >= 12) break; // Lấy tối đa 12 chỉ tiêu đầu tiên
+                            if (count >= 12) break;
                             html += `
                             <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs">
                                 <span class="text-slate-400 truncate pr-2">${name}:</span>
-                                <span class="font-bold text-slate-200">${formatNumber(val)}</span>
+                                <span class="font-bold text-slate-200">${typeof val === 'number' && !isNaN(val) ? formatNumber(val) : (val || '—')}</span>
                             </div>`;
                             count++;
                         }
                         html += `</div>`;
                         balanceContainer.innerHTML = html;
+                    } else {
+                        balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu cân đối kế toán.</p>`;
                     }
                 } else {
-                    balanceContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Không có dữ liệu cân đối kế toán.</p>`;
+                    if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu cân đối kế toán.</p>`;
                 }
 
             } catch (err) {
-                console.error("Lỗi parse BCTC:", err);
-                incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC chi tiết.</p>`;
-                balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC chi tiết.</p>`;
+                console.error("Lỗi tải BCTC chi tiết:", err);
+                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
+                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
             }
         }
 
