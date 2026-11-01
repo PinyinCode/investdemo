@@ -503,29 +503,31 @@
             }
         }
 
-                            async function loadBctcDetail(symbol) {
+                 async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
             
-            if (incomeContainer) {
-                incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
-            }
-            if (balanceContainer) {
-                balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
-            }
+            if (incomeContainer) incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
+            if (balanceContainer) balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
 
             try {
-                const url = `bctc_data/${symbol}.json?t=` + new Date().getTime();
-                const res = await fetch(url);
+                const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
+                if (!res.ok) throw new Error(`Không tìm thấy file ${symbol}.json (Mã lỗi: ${res.status})`);
                 
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
+                // Đọc dạng text trước để phòng ngừa lỗi cú pháp NaN trong JSON gốc
+                const textData = await res.text();
+                // Thay thế tạm thời các chữ NaN thành null để JSON.parse không bị crash
+                const sanitizedText = textData.replace(/:\s*NaN/g, ': null');
+                
+                let data;
+                try {
+                    data = JSON.parse(sanitizedText);
+                } catch (parseErr) {
+                    console.error("Lỗi cú pháp JSON:", parseErr);
+                    throw new Error(`File ${symbol}.json chứa định dạng không hợp lệ.`);
                 }
-                
-                const data = await res.json();
-                if (!data) throw new Error('Dữ liệu JSON trống');
 
-                // 1. Xử lý Kết quả kinh doanh an toàn
+                // 1. Xử lý Kết quả kinh doanh từ mảng phẳng
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
                     let metricNames = {}; 
@@ -566,7 +568,7 @@
                     incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>';
                 }
 
-                // 2. Xử lý Cân đối kế toán an toàn
+                // 2. Xử lý Cân đối kế toán từ mảng phẳng
                 if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
                     let groupedBs = {};
                     data.balance_sheet.forEach(item => {
@@ -599,13 +601,9 @@
                 }
 
             } catch (err) {
-                console.error("Chi tiết lỗi BCTC:", err);
-                if (incomeContainer) {
-                    incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Không thể tải file BCTC (Kiểm tra lại đường dẫn/mạng).</p>`;
-                }
-                if (balanceContainer) {
-                    balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Không thể tải file BCTC.</p>`;
-                }
+                console.error("Lỗi BCTC chi tiết:", err);
+                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">${err.message}</p>`;
+                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">${err.message}</p>`;
             }
         }
 
