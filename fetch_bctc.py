@@ -3,7 +3,7 @@ import json
 import time
 import subprocess
 import datetime
-from vnstock3 import Vnstock
+from vnstock import Fundamental
 
 OUTPUT_DIR = "bctc_data"
 if not os.path.exists(OUTPUT_DIR):
@@ -21,12 +21,13 @@ VN100_SYMBOLS = [
 
 def fetch_financial_reports(symbol):
     try:
-        # Khởi tạo đối tượng Vnstock với nguồn VCI hoặc TCBS
-        stock = Vnstock(symbol=symbol, source='VCI')
+        # Khởi tạo Fundamental chuẩn theo cấu trúc v5
+        fun = Fundamental()
+        stock_obj = fun.equity(symbol)
         
-        # Lấy Bảng cân đối kế toán và Kết quả kinh doanh theo quý
-        df_balance = stock.finance.balance_sheet(period='quarter', lang='vi')
-        df_income = stock.finance.income_statement(period='quarter', lang='vi')
+        # Lấy Bảng cân đối kế toán và Kết quả kinh doanh theo quý (period='quarter')
+        df_balance = stock_obj.balance_sheet(period='quarter')
+        df_income = stock_obj.income_statement(period='quarter')
         
         reports = {}
         if df_balance is not None and not df_balance.empty:
@@ -53,7 +54,7 @@ def auto_git_push_bctc():
     try:
         print("\n📤 Đang đồng bộ thư mục 'bctc_data' lên GitHub...")
         subprocess.run(["git", "add", OUTPUT_DIR], check=True)
-        commit_msg = f"Auto update BCTC data via vnstock3 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update BCTC data via vnstock v5 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
         print("🚀 Đẩy dữ liệu BCTC lên GitHub thành công!")
@@ -62,7 +63,7 @@ def auto_git_push_bctc():
 
 def main():
     total = len(VN100_SYMBOLS)
-    print(f"🚀 Bắt đầu lấy dữ liệu BCTC qua vnstock3 cho {total} mã...")
+    print(f"🚀 Bắt đầu lấy dữ liệu BCTC qua vnstock v5 cho {total} mã...")
     
     success = 0
     for i, symbol in enumerate(VN100_SYMBOLS):
