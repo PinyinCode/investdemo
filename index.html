@@ -191,9 +191,14 @@
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
 
-                <!-- OVERLAY TRONG SUỐT GỌN GÀNG (CHỈ GIỮ THỜI GIAN, GIÁ, % BIÊN ĐỘ VÀ KL) -->
+                <!-- OVERLAY TRONG SUỐT GỌN GÀNG (TÍCH HỢP ĐỔI MÃ, NÚT PREV/NEXT, KHUNG TG, VOL MA & OHLC) -->
                 <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1 md:p-1.5 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
                     
+                    <!-- NÚT CHUYỂN MÃ NHANH PREV (<) -->
+                    <button onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã trước">
+                        <i class="fa-solid fa-chevron-left text-[9px]"></i>
+                    </button>
+
                     <!-- NÚT ĐỔI MÃ TRONG SUỐT -->
                     <div class="relative">
                         <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs md:text-sm font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
@@ -205,6 +210,11 @@
                         </div>
                     </div>
 
+                    <!-- NÚT CHUYỂN MÃ NHANH NEXT (>) -->
+                    <button onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã tiếp theo">
+                        <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                    </button>
+
                     <!-- KHUNG THỜI GIAN -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
@@ -212,9 +222,10 @@
                         <button onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
                     </div>
 
-                    <!-- CHỈ BÁO & VOL -->
+                    <!-- CHỈ BÁO & VOL (BỔ SUNG VOL MA) -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VOL</button>
+                        <button onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VolMA</button>
                         <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition">MA20</button>
                         <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">MA50</button>
                         <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">RSI</button>
@@ -263,6 +274,7 @@
         let realtimeInterval = null;
         let isBoldVol = false;
         let activeIndicators = {
+            VOLMA: false,
             MA20: true,
             MA50: false,
             RSI: false
@@ -584,6 +596,18 @@
             realtimeInterval = setInterval(fetchLivePrice, 30000);
         }
 
+        // HÀM CHUYỂN MÃ NHANH QUA LẠI (PREV / NEXT)
+        function navigateSymbol(direction) {
+            const symbols = Object.keys(stockData).sort();
+            const currentIndex = symbols.indexOf(currentSymbol);
+            if (currentIndex !== -1) {
+                let newIndex = currentIndex + direction;
+                if (newIndex < 0) newIndex = symbols.length - 1;
+                if (newIndex >= symbols.length) newIndex = 0;
+                openChartModal(symbols[newIndex]);
+            }
+        }
+
         function toggleSymbolDropdown() {
             const dropdown = document.getElementById('symbol-dropdown');
             dropdown.classList.toggle('hidden');
@@ -792,6 +816,19 @@
             return result;
         }
 
+        function calculateVolumeMA(data, period = 20) {
+            let result = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i < period - 1) continue;
+                let sum = 0;
+                for (let j = 0; j < period; j++) {
+                    sum += data[i - j].volume;
+                }
+                result.push({ time: data[i].time, value: sum / period, color: '#f59e0b' });
+            }
+            return result;
+        }
+
         function calculateRSI(data, period = 14) {
             let result = [];
             if (data.length <= period) return result;
@@ -886,6 +923,16 @@
                 }));
                 volumeSeriesInstance.setData(volumeData);
 
+                if (activeIndicators.VOLMA) {
+                    const volMaSeries = chartInstance.addLineSeries({
+                        color: '#f59e0b',
+                        lineWidth: 1,
+                        priceScaleId: 'volumeScale',
+                        title: 'VolMA20'
+                    });
+                    volMaSeries.setData(calculateVolumeMA(chartData, 20));
+                }
+
                 if (activeIndicators.MA20) {
                     const ma20Series = chartInstance.addLineSeries({
                         color: '#3b82f6',
@@ -953,7 +1000,6 @@
                     legendTime.innerText = bar.time;
                     legendClose.innerText = formatNumber(bar.close);
                     
-                    // Tính phần trăm thay đổi so với nến trước đó
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
                     if (index > 0) {
