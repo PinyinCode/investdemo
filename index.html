@@ -660,7 +660,7 @@
             }
         });
 
-                function openModal(symbol) {
+                  function openModal(symbol) {
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
@@ -672,13 +672,15 @@
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
             
-            // Lấy trực tiếp EPS từ data tổng quan (nếu có)
-            document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
+            // Xử lý hiển thị EPS linh hoạt (hỗ trợ cả item.eps)
+            let epsVal = item.eps !== undefined ? item.eps : (item.EPS !== undefined ? item.EPS : 0);
+            document.getElementById('modal-eps').innerText = epsVal ? formatNumber(epsVal) : '—';
             
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
             
-            // Lấy trực tiếp Cổ tức (dividend_yield) từ data tổng quan
-            document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
+            // Xử lý hiển thị Cổ tức linh hoạt (hỗ trợ cả item.dividend_yield)
+            let divVal = item.dividend_yield !== undefined ? item.dividend_yield : (item.dividend !== undefined ? item.dividend : 0);
+            document.getElementById('modal-div').innerText = divVal ? divVal + '%' : '—';
 
             const recEl = document.getElementById('modal-ai-rec');
             recEl.innerText = `Khuyến nghị: ${item.recommendation || item.technical_status || 'Tích lũy'}`;
@@ -692,6 +694,7 @@
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
         }
+
 
         function closeModal() {
             document.getElementById('ai-modal').classList.add('hidden');
