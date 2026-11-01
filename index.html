@@ -503,7 +503,7 @@
             }
         }
 
-                async function loadBctcDetail(symbol) {
+                        async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
             
@@ -515,7 +515,10 @@
                 if (!res.ok) throw new Error(`Không tìm thấy file (${res.status})`);
                 const data = await res.json();
 
-                // 1. Xử lý Kết quả kinh doanh an toàn
+                // Kiểm tra xem mã này thuộc Ngân hàng hay Sản xuất/Ngành khác
+                const isBank = symbol === "ACB" || symbol === "BID" || symbol === "CTG" || symbol === "TCB" || symbol === "MBB" || symbol === "STB" || symbol === "VPB" || symbol === "HDB" || symbol === "VIB" || symbol === "TPB" || symbol === "SHB";
+
+                // 1. Xử lý Kết quả kinh doanh linh hoạt theo ngành
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
                     data.income_statement.forEach(item => {
@@ -527,13 +530,16 @@
 
                     let periods = Object.keys(groupedByPeriod).sort().reverse();
                     if (periods.length > 0) {
+                        let headerCol1 = isBank ? "Thu nhập lãi thuần" : "Doanh thu thuần";
+                        let headerCol2 = isBank ? "Lãi thuần dịch vụ" : "Lợi nhuận gộp";
+
                         let html = `
                         <table class="w-full text-left text-xs">
                             <thead>
                                 <tr class="border-b border-slate-800 text-slate-400 bg-slate-900">
                                     <th class="p-2">Kỳ</th>
-                                    <th class="p-2 text-right">Thu nhập lãi thuần</th>
-                                    <th class="p-2 text-right">Lãi thuần dịch vụ</th>
+                                    <th class="p-2 text-right">${headerCol1}</th>
+                                    <th class="p-2 text-right">${headerCol2}</th>
                                     <th class="p-2 text-right">LN Sau Thuế</th>
                                 </tr>
                             </thead>
@@ -541,15 +547,17 @@
                         
                         periods.slice(0, 6).forEach(p => {
                             let pData = groupedByPeriod[p] || {};
-                            let netInterest = pData['IS_NET_INTEREST_INCOME'] || 0;
-                            let netFee = pData['IS_NET_FEE_AND_COMMISSION_INCOME'] || 0;
-                            let netProfit = pData['IS_NET_PROFIT_AFTER_TAX'] || 0;
+                            
+                            // Lấy key tương ứng theo ngành
+                            let val1 = isBank ? (pData['IS_NET_INTEREST_INCOME'] || 0) : (pData['IS_NET_REVENUE'] || pData['IS_REVENUE'] || 0);
+                            let val2 = isBank ? (pData['IS_NET_FEE_AND_COMMISSION_INCOME'] || 0) : (pData['IS_GROSS_PROFIT'] || 0);
+                            let netProfit = pData['IS_NET_PROFIT_AFTER_TAX'] || pData['IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY'] || 0;
 
                             html += `
                             <tr class="hover:bg-slate-900/50">
                                 <td class="p-2 font-bold text-indigo-300">${p}</td>
-                                <td class="p-2 text-right text-slate-200">${formatNumber(netInterest)}</td>
-                                <td class="p-2 text-right text-slate-200">${formatNumber(netFee)}</td>
+                                <td class="p-2 text-right text-slate-200">${formatNumber(val1)}</td>
+                                <td class="p-2 text-right text-slate-200">${formatNumber(val2)}</td>
                                 <td class="p-2 text-right font-bold text-emerald-400">${formatNumber(netProfit)}</td>
                             </tr>`;
                         });
@@ -558,11 +566,9 @@
                     } else {
                         incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu kỳ báo cáo.</p>`;
                     }
-                } else {
-                    if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>`;
                 }
 
-                // 2. Xử lý Cân đối kế toán an toàn
+                // 2. Xử lý Cân đối kế toán (Giữ nguyên phần hiển thị tài sản ngắn hạn/dài hạn đang chạy rất mượt ở hình của bạn)
                 if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
                     let groupedBs = {};
                     data.balance_sheet.forEach(item => {
@@ -593,17 +599,11 @@
                         }
                         html += `</div>`;
                         balanceContainer.innerHTML = html;
-                    } else {
-                        balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu cân đối kế toán.</p>`;
                     }
-                } else {
-                    if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu cân đối kế toán.</p>`;
                 }
 
             } catch (err) {
                 console.error("Lỗi tải BCTC chi tiết:", err);
-                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
-                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
             }
         }
 
