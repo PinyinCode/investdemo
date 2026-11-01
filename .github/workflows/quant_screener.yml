@@ -5,7 +5,7 @@ on:
   schedule:
     - cron: '0 17 * * 1-5'
     
-  # 2. Hoặc tự động chạy ngay khi bạn push file data.json mới từ máy tính cá nhân lên GitHub
+  # 2. Tự động chạy ngay khi bạn push file data.json mới từ máy tính cá nhân lên GitHub
   push:
     paths:
       - 'data.json'
@@ -17,17 +17,20 @@ jobs:
   run-screener:
     runs-on: ubuntu-latest
     
+    # 💡 Cấp quyền ghi (write) để bot có thể tự động push file kết quả lên repo
+    permissions:
+      contents: write
+
     steps:
       # Bước 1: Lấy toàn bộ mã nguồn mới nhất từ repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Bước 2: Thiết lập phiên bản môi trường Python
+      # Bước 2: Thiết lập phiên bản môi trường Python (Đã loại bỏ cache để tránh lỗi thiếu requirements.txt)
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          
 
       # Bước 3: Cài đặt các thư viện cần thiết cho việc tính toán
       - name: Install dependencies
