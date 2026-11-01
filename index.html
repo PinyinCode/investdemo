@@ -183,7 +183,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: TRA CỨU BCTC CHI TIẾT (Xử lý khi chưa tải được dữ liệu) -->
+                <!-- TAB 2: TRA CỨU BCTC CHI TIẾT -->
                 <div id="tab-content-bctc" class="space-y-4 hidden">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
@@ -191,7 +191,7 @@
                             <span class="text-[10px] text-slate-500">Nguồn: bctc_data/{symbol}.json</span>
                         </div>
                         <div id="bctc-income-container" class="overflow-x-auto">
-                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Chưa tải được dữ liệu BCTC chi tiết (Hệ thống sẽ cập nhật sau).</p>
+                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
                         </div>
                     </div>
 
@@ -200,7 +200,7 @@
                             <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400"><i class="fa-solid fa-scale-balanced mr-1.5"></i> Cân đối Kế toán Mới Nhất</h4>
                         </div>
                         <div id="bctc-balance-container" class="overflow-x-auto">
-                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Chưa tải được dữ liệu BCTC chi tiết (Hệ thống sẽ cập nhật sau).</p>
+                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
                         </div>
                     </div>
                 </div>
@@ -337,7 +337,7 @@
             return num.toFixed(1) + '%';
         }
 
-                        async function loadData(showSpinner = false) {
+        async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner) icon.classList.add('spinner');
             try {
@@ -364,7 +364,6 @@
                     
                     return {
                         ...item,
-                        // Nếu data.json có eps hoặc dividend_yield thì ghi đè vào, không thì giữ nguyên
                         eps: extraData.eps !== undefined ? extraData.eps : item.eps,
                         dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
                         pe: extraData.pe !== undefined ? extraData.pe : item.pe,
@@ -388,8 +387,6 @@
             }
         }
 
-
-        // Lấy điểm số từ kết quả Python để sắp xếp
         function scoreFundamental(item) { return item.fundamental_score || 0; }
         function scoreTechnical(item) { return item.technical_score || 0; }
         function scoreCombined(item) { return item.total_score || 0; }
@@ -418,7 +415,6 @@
                 return matchSearch && matchSector && matchBuyZone;
             });
 
-            // Sắp xếp dựa theo số liệu đã được Python chấm điểm sẵn
             if (rankingMode === "FUNDAMENTAL") {
                 filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             } 
@@ -513,7 +509,6 @@
             });
         }
 
-        // HÀM CHUYỂN TAB TRONG MODAL AI & BCTC
         function switchAiTab(tabName) {
             const btnEval = document.getElementById('tab-btn-eval');
             const btnBctc = document.getElementById('tab-btn-bctc');
@@ -533,7 +528,7 @@
             }
         }
 
-                 async function loadBctcDetail(symbol) {
+        async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
             
@@ -542,22 +537,12 @@
 
             try {
                 const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
-                if (!res.ok) throw new Error(`Không tìm thấy file ${symbol}.json (Mã lỗi: ${res.status})`);
+                if (!res.ok) throw new Error(`Không tìm thấy file ${symbol}.json`);
                 
-                // Đọc dạng text trước để phòng ngừa lỗi cú pháp NaN trong JSON gốc
                 const textData = await res.text();
-                // Thay thế tạm thời các chữ NaN thành null để JSON.parse không bị crash
                 const sanitizedText = textData.replace(/:\s*NaN/g, ': null');
-                
-                let data;
-                try {
-                    data = JSON.parse(sanitizedText);
-                } catch (parseErr) {
-                    console.error("Lỗi cú pháp JSON:", parseErr);
-                    throw new Error(`File ${symbol}.json chứa định dạng không hợp lệ.`);
-                }
+                let data = JSON.parse(sanitizedText);
 
-                // 1. Xử lý Kết quả kinh doanh từ mảng phẳng
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
                     let metricNames = {}; 
@@ -594,11 +579,8 @@
                     } else {
                         incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu kỳ báo cáo.</p>';
                     }
-                } else if (incomeContainer) {
-                    incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>';
                 }
 
-                // 2. Xử lý Cân đối kế toán từ mảng phẳng
                 if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
                     let groupedBs = {};
                     data.balance_sheet.forEach(item => {
@@ -623,20 +605,15 @@
                         }
                         html += '</div>';
                         balanceContainer.innerHTML = html;
-                    } else {
-                        balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu cân đối kế toán.</p>';
                     }
-                } else if (balanceContainer) {
-                    balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu cân đối kế toán.</p>';
                 }
 
             } catch (err) {
                 console.error("Lỗi BCTC chi tiết:", err);
-                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">${err.message}</p>`;
-                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">${err.message}</p>`;
+                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
+                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
             }
         }
-
 
         function navigateSymbol(direction) {
             const symbols = screenerResults.map(s => s.symbol).sort();
@@ -690,7 +667,7 @@
             }
         });
 
-                    function openModal(symbol) {
+        function openModal(symbol) {
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
@@ -698,22 +675,17 @@
 
             document.getElementById('modal-symbol').innerText = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
-            document.getElementById('modal-price').innerText = formatNumber(item.close || item.close_price);
+            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
-            
-            // Đọc trực tiếp trường eps từ data.json
             document.getElementById('modal-eps').innerText = (item.eps !== undefined && item.eps !== null) ? formatNumber(item.eps) : '—';
-            
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
-            
-            // Đọc trực tiếp trường dividend_yield từ data.json
             document.getElementById('modal-div').innerText = (item.dividend_yield !== undefined && item.dividend_yield !== null) ? item.dividend_yield + '%' : '—';
 
             const recEl = document.getElementById('modal-ai-rec');
-            recEl.innerText = `Khuyến nghị: ${item.recommendation || 'Tích lũy'}`;
+            recEl.innerText = `Khuyến nghị: ${item.recommendation || item.technical_status || 'Tích lũy'}`;
             
-            document.getElementById('modal-ai-price').innerText = `Trạng thái giá: ${item.price_zone || '—'}`;
+            document.getElementById('modal-ai-price').innerText = `Trạng thái giá: ${item.price_zone || item.potential_zone || '—'}`;
             document.getElementById('modal-bctc').innerText = item.fundamental_notes || "Tín dụng tăng trưởng khá | ROE tốt (>14%)";
             document.getElementById('modal-outlook').innerText = item.technical_notes || item.price_zone || "Dòng tiền gom hàng ổn định trên MA20.";
             document.getElementById('modal-macro').innerText = item.valuation_notes || "Định giá phù hợp với chu kỳ tăng trưởng ngành.";
@@ -722,8 +694,6 @@
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
         }
-
-
 
         function closeModal() {
             document.getElementById('ai-modal').classList.add('hidden');
@@ -839,6 +809,7 @@
             }
         }
 
+        // --- CÁC HÀM TÍNH TOÁN CHỈ BÁO KỸ THUẬT ---
         function calculateMA(data, period) {
             let result = [];
             for (let i = 0; i < data.length; i++) {
@@ -848,6 +819,52 @@
                     sum += data[i - j].close;
                 }
                 result.push({ time: data[i].time, value: sum / period });
+            }
+            return result;
+        }
+
+        function calculateVolumeMA(data, period = 20) {
+            let result = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i < period - 1) continue;
+                let sum = 0;
+                for (let j = 0; j < period; j++) {
+                    sum += data[i - j].volume;
+                }
+                result.push({ time: data[i].time, value: sum / period });
+            }
+            return result;
+        }
+
+        function calculateRSI(data, period = 14) {
+            let result = [];
+            let gains = 0;
+            let losses = 0;
+
+            for (let i = 1; i < data.length; i++) {
+                let change = data[i].close - data[i - 1].close;
+                if (i <= period) {
+                    if (change >= 0) gains += change;
+                    else losses -= change;
+                    if (i === period) {
+                        let avgGain = gains / period;
+                        let avgLoss = losses / period;
+                        let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+                        let rsi = 100 - (100 / (1 + rs));
+                        result.push({ time: data[i].time, value: rsi });
+                    }
+                } else {
+                    let change = data[i].close - data[i - 1].close;
+                    let gain = change >= 0 ? change : 0;
+                    let loss = change < 0 ? -change : 0;
+                    
+                    gains = (gains * (period - 1) + gain) / period;
+                    losses = (losses * (period - 1) + loss) / period;
+                    
+                    let rs = losses === 0 ? 100 : gains / losses;
+                    let rsi = 100 - (100 / (1 + rs));
+                    result.push({ time: data[i].time, value: rsi });
+                }
             }
             return result;
         }
@@ -864,6 +881,7 @@
 
             const width = container.clientWidth || 600;
             const height = container.clientHeight || 380;
+            const hasRSI = activeIndicators.RSI;
 
             chartInstance = LC.createChart(container, {
                 width: width,
@@ -886,7 +904,7 @@
             });
 
             chartInstance.priceScale('volumeScale').applyOptions({
-                scaleMargins: { top: 0.75, bottom: 0 },
+                scaleMargins: { top: hasRSI ? 0.65 : 0.75, bottom: hasRSI ? 0.25 : 0 },
             });
 
             let chartData = [];
@@ -908,12 +926,33 @@
 
                 if (activeIndicators.MA20) {
                     const ma20Series = chartInstance.addLineSeries({
-                        color: '#3b82f6',
-                        lineWidth: 1,
-                        title: 'MA20',
-                        priceScaleId: 'right'
+                        color: '#3b82f6', lineWidth: 1, title: 'MA20', priceScaleId: 'right'
                     });
                     ma20Series.setData(calculateMA(chartData, 20));
+                }
+
+                if (activeIndicators.MA50) {
+                    const ma50Series = chartInstance.addLineSeries({
+                        color: '#eab308', lineWidth: 1, title: 'MA50', priceScaleId: 'right'
+                    });
+                    ma50Series.setData(calculateMA(chartData, 50));
+                }
+
+                if (activeIndicators.VOLMA) {
+                    const volMaSeries = chartInstance.addLineSeries({
+                        color: '#f97316', lineWidth: 1, title: 'VolMA', priceScaleId: 'volumeScale'
+                    });
+                    volMaSeries.setData(calculateVolumeMA(chartData, 20));
+                }
+
+                if (activeIndicators.RSI) {
+                    chartInstance.priceScale('rsiScale').applyOptions({
+                        scaleMargins: { top: 0.8, bottom: 0 },
+                    });
+                    const rsiSeries = chartInstance.addLineSeries({
+                        color: '#a855f7', lineWidth: 1, title: 'RSI(14)', priceScaleId: 'rsiScale'
+                    });
+                    rsiSeries.setData(calculateRSI(chartData, 14));
                 }
 
                 const legendTime = document.getElementById('legend-time');
