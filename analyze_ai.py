@@ -5,15 +5,56 @@ import re
 import json
 
 DATA_FILE = "data.json"
+BCTC_DIR = "bctc_data"  # Thư mục chứa các file JSON BCTC đã cào ở bước trước
 
 ALIBABA_API_KEY = os.getenv("ALIBABA_API_KEY", "").strip()
 API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
 
+def load_bctc_data(symbol):
+    """
+    Đọc dữ liệu BCTC đã cào sẵn từ thư mục bctc_data/{symbol}.json
+    Tóm tắt ngắn gọn các số liệu quý gần nhất để đưa vào prompt cho AI đọc.
+    """
+    file_path = os.path.join(BCTC_DIR, f"{symbol}.json")
+    if not os.path.exists(file_path):
+        return "Không có dữ liệu BCTC chi tiết trong hệ thống."
+    
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            bctc_raw = json.load(f)
+            
+        # Trích xuất gọn gàng để tránh quá tải token của LLM
+        summary_info = []
+        
+        # Xử lý kết quả kinh doanh (income_statement)
+        if 'income_statement' in bctc_raw:
+            inc_data = bctc_raw['income_statement']
+            if isinstance(inc_data, list) and len(inc_data) > 0:
+                summary_info.append("--- KẾT QUẢ KINH DOANH (CÁC QUÝ GẦN NHẤT) ---")
+                # Lấy tối đa 4 quý gần nhất
+                for item in inc_data[:4]:
+                    period = item.get('period', item.get('quarter', 'N/A'))
+                    year = item.get('year', 'N/A')
+                    rev = item.get('revenue', item.get('netRevenue', 0))
+                    profit = item.get('profitAfterTax', item.get('netProfit', 0))
+                    summary_info.append(f"Kỳ {period}/{year}: Doanh thu = {rev:,.0f}, Lợi nhuận sau thuế = {profit:,.0f}")
+
+        # Xử lý bảng cân đối kế toán (balance_sheet)
+        if 'balance_sheet' in bctc_raw:
+            bal_data = bctc_raw['balance_sheet']
+            if isinstance(bal_data, list) and len(bal_data) > 0:
+                summary_info.append("--- CÂN ĐỐI KẾ TOÁN (QUÝ MỚI NHẤT) ---")
+                latest = bal_data[0] # Kỳ mới nhất
+                for k, v in list(latest.items())[:15]: # Lấy 15 chỉ tiêu đầu quan trọng
+                    summary_info.append(f"{k}: {v}")
+
+        return "\n".join(summary_info) if summary_info else "Dữ liệu BCTC trống hoặc không đúng định dạng."
+    except Exception as e:
+        return f"Lỗi đọc file BCTC: {e}"
+
 def check_if_analysis_needed(stock_db):
     """
-    Kiểm tra tự động xem mã nào cần AI phân tích lại:
-    - Chưa có phân tích AI.
-    - Hoặc dữ liệu giá/thông số mới cào từ thị trường mới hơn thời điểm AI quét trước đó.
+    Kiểm tra tự động xem mã nào cần AI phân tích lại.
     """
     for symbol, data in stock_db.items():
         if data.get('close', 0) <= 0:
@@ -33,25 +74,29 @@ def analyze_stock_with_ai(symbol, data):
         print(f"❌ LỖI: Biến môi trường ALIBABA_API_KEY đang bị trống!")
         return None
 
-    # Prompt chuyên sâu: Tự động đổi lăng kính phân tích tùy thuộc vào mô hình kinh doanh cốt lõi của từng doanh nghiệp
+    # Load dữ liệu BCTC thực tế của doanh nghiệp
+    bctc_text = load_bctc_data(symbol)
+
+    # Prompt chuyên sâu kết hợp đọc BCTC thực tế
     prompt = f"""
-    Bạn là một Chuyên gia Phân tích Tài chính Cấp cao kiêm Quản lý Quỹ Đầu tư (Portfolio Manager) xuất sắc. Hãy thực hiện một bản **đánh giá phân tích chiến lược chuyên sâu, bám sát bản chất kinh doanh cốt lõi** đối với mã cổ phiếu: {symbol}.
+    Bạn là một Chuyên gia Phân tích Tài chính Cấp cao kiêm Quản lý Quỹ Đầu tư (Portfolio Manager) xuất sắc. 
+    Hãy thực hiện một bản **đánh giá phân tích chiến lược chuyên sâu, bám sát bản chất kinh doanh cốt lõi VÀ ĐỌC KỸ SỐ LIỆU BÁO CÁO TÀI CHÍNH (BCTC)** của mã cổ phiếu: {symbol}.
 
-    NGUYÊN TẮC BÓC TÁCH ĐỘNG LỰC TĂNG TRƯỞNG CỐT LÕI THEO TỪNG MÔ HÌNH KINH DOANH:
+    --- DỮ LIỆU BÁO CÁO TÀI CHÍNH THỰC TẾ TRÍCH XUẤT TỪ HỆ THỐNG ---
+    {bctc_text}
+    -----------------------------------------------------------------
+
+    NGUYÊN TẮC BÓC TÁCH ĐỘNG LỰC TĂNG TRƯỞNG & ĐỌC BCTC:
     1. **Nếu là BẤT ĐỘNG SẢN / HẠ TẦNG / KHU CÔNG NGHIỆP:** 
-       - Bắt buộc gọi tên các dự án trọng điểm đang triển khai, pháp lý, tiến độ giải phóng mặt bằng, quỹ đất gối đầu và khoản tiền "Người mua trả tiền trước".
+       - Đọc kỹ khoản "Người mua trả tiền trước" / "Doanh thu chưa thực hiện", tiến độ dự án, nợ vay trái phiếu và lượng hàng tồn kho (dở dang).
     2. **Nếu là BÁN LẺ & TIÊU DÙNG:** 
-       - Tập trung vào tốc độ mở rộng chuỗi cửa hàng, hiệu suất hoạt động trên mỗi điểm bán, biên lợi nhuận gộp và sức mua vĩ mô.
+       - Đọc kỹ biên lợi nhuận gộp, vòng quay hàng tồn kho và chi phí bán hàng/quản lý doanh nghiệp (SG&A).
     3. **Nếu là SẢN XUẤT / THÉP / HÓA CHẤT / VẬT LIỆU:** 
-       - Tập trung vào công suất nhà máy, chu kỳ vòng quay hàng tồn kho, biên lợi nhuận gộp và biến động giá nguyên liệu đầu vào trên thị trường thế giới.
+       - Đọc kỹ biến động giá vốn, quy mô hàng tồn kho (rủi ro trích lập dự phòng giá xuống), và đòn bẩy tài chính.
     4. **Nếu là NGÂN HÀNG & CHỨNG KHOÁN:** 
-       - Ngân hàng tập trung vào P/B, nợ xấu (NPL), NIM; Chứng khoán tập trung vào danh mục Tự doanh (FVTPL), dư nợ Margin và thị phần môi giới.
+       - Ngân hàng xem xét NIM, nợ xấu (NPL), tỷ lệ bao phủ nợ xấu (LLR); Chứng khoán xem xét tỷ trọng tự doanh (FVTPL) và cho vay margin.
     5. **Nếu là ĐIỆN & NĂNG LƯỢNG / DẦU KHÍ:** 
-       - Tập trung vào sản lượng phát điện, hiệu suất giàn khoan/khai thác, và giá dầu thô/khí thế giới.
-    6. **Nếu là CÔNG NGHỆ:** 
-       - Tập trung vào doanh thu dịch vụ công nghệ thị trường nước ngoài và biên lợi nhuận cao từ các hợp đồng lớn.
-
-    BỐI CẢNH VĨ MÔ & TẦM NHÌN: Gắn liền với mặt bằng lãi suất, tỷ giá USD/VND, lạm phát và các xu hướng lớn (chuyển đổi số, năng lượng sạch, chuỗi cung ứng).
+       - Xem xét khấu hao tài sản cố định, dòng tiền hoạt động kinh doanh (CFO) có dương và đều đặn không.
 
     DỮ LIỆU THỊ TRƯỜNG & TÀI CHÍNH HIỆN TẠI:
     - Giá đóng cửa hiện tại: {data.get('close', 0)} VNĐ | Khối lượng: {data.get('volume', 0)}
@@ -61,11 +106,11 @@ def analyze_stock_with_ai(symbol, data):
     - Trạng thái kỹ thuật/nến thô: {data.get('recommendation', 'Chưa xác định')} | Vùng giá thô: {data.get('price_zone', 'Chưa có')}
 
     YÊU CẦU TRẢ VỀ BẢN PHÂN TÍCH CHI TIẾT (Dạng JSON thuần túy, tuyệt đối không dùng định dạng markdown như ```json):
-    1. "bctc": Phân tích sức khỏe tài chính chiều sâu (Viết chi tiết từ 4-6 câu): Đánh giá cấu trúc vốn, đòn bẩy và chất lượng dòng tiền. **Phải xoáy sâu vào mảng kinh doanh cốt lõi phù hợp nhất với mô hình của doanh nghiệp này** (Ví dụ: Dự án/Người mua trả tiền trước với BĐS; Hàng tồn kho/Biên gộp với Sản xuất; Hoặc Mở rộng chuỗi với Bán lẻ).
-    2. "outlook": Đánh giá triển vọng định giá và biên an toàn (Viết chi tiết từ 4-6 câu): Phân tích xem mức giá hiện tại so với giá trị thực tế của động lực kinh doanh chính đang là ĐẮT hay RẺ, đã có biên an toàn chưa?
-    3. "recommendation": Đưa ra khuyến nghị hành động sắc bén, chuẩn mực của Quản lý quỹ (Ngắn gọn từ 3-6 từ, ví dụ: "Tích sản dài hạn giá hấp dẫn", "Định giá quá cao - Chờ chiết khấu", "Breakout dòng tiền lớn - Mua gia tăng").
-    4. "price_zone": Vạch rõ chiến lược hành động giá chi tiết: Xác định rõ vùng giá gom hợp lý / vùng định giá rẻ, kèm theo mốc chặn lỗ hoặc điểm gia tăng tỷ trọng khi có dòng tiền lớn xác nhận.
-    5. "macro_view": Phân tích bức tranh vĩ mô toàn cầu & triển vọng ngành tương lai (Viết chi tiết từ 5-7 câu): Đan xen hài hòa giữa vĩ mô hiện tại (lãi suất, tỷ giá, chu kỳ hàng hóa thế giới, địa chính trị) với **tầm nhìn từ mô hình kinh doanh và động lực cốt lõi** tác động trực tiếp ra sao đến dư địa tăng trưởng dài hạn của doanh nghiệp.
+    1. "bctc": **Đọc sâu vào số liệu BCTC ở trên (Viết chi tiết từ 5-7 câu):** Phân tích trực tiếp các con số thực tế về cấu trúc vốn, sức khỏe dòng tiền kinh doanh (CFO), tỷ lệ nợ vay/vốn chủ sở hữu, và chất lượng lợi nhuận. Chỉ rõ doanh nghiệp đang gặp rủi ro tài chính hay có điểm sáng cốt lõi nào từ BCTC quý gần nhất.
+    2. "outlook": Đánh giá triển vọng định giá và biên an toàn (Viết từ 4-6 câu): Phân tích mức giá hiện tại so với giá trị thực dựa trên động lực tài chính chính.
+    3. "recommendation": Đưa ra khuyến nghị hành động sắc bén, chuẩn mực (Ngắn gọn từ 3-6 từ, ví dụ: "Tích sản dài hạn giá hấp dẫn", "Định giá quá cao - Chờ chiết khấu").
+    4. "price_zone": Vạch rõ chiến lược hành động giá chi tiết: Vùng giá gom hợp lý, kèm theo mốc cắt lỗ hoặc điểm gia tăng tỷ trọng.
+    5. "macro_view": Phân tích bức tranh vĩ mô toàn cầu & triển vọng ngành tương lai (Viết từ 5-7 câu): Đan xen hài hòa vĩ mô với năng lực chống chịu thực tế của doanh nghiệp qua BCTC.
 
     BẮT BUỘC TRẢ VỀ ĐỐI TƯỢNG JSON THUẦN TÚY với các khóa chính xác: "bctc", "outlook", "recommendation", "price_zone", "macro_view".
     """
@@ -86,7 +131,7 @@ def analyze_stock_with_ai(symbol, data):
         if response.status_code == 200:
             res_json = response.json()
             content = res_json["choices"][0]["message"]["content"].strip()
-            # Làm sạch chuỗi phản hồi để đảm bảo load JSON an toàn tuyệt đối
+            # Làm sạch chuỗi phản hồi JSON
             content = re.sub(r"^```json\s*", "", content)
             content = re.sub(r"^```\s*", "", content)
             content = re.sub(r"\s*```$", "", content)
@@ -110,7 +155,7 @@ def main():
         print("💤 Dữ liệu không thay đổi. Không cần gọi AI để tiết kiệm tài nguyên.")
         return
 
-    print(f"🤖 Chuyên gia AI đang tiến hành viết bản phân tích chuyên sâu bám sát động lực cốt lõi của từng doanh nghiệp...")
+    print(f"🤖 Chuyên gia AI đang đọc BCTC thực tế và phân tích chuyên sâu...")
     count = 0
     
     for i, (symbol, data) in enumerate(stock_db.items()):
@@ -120,9 +165,8 @@ def main():
         updated_at = data.get("updated_at", "")
         ai_updated_at = data.get("ai_updated_at", "")
         
-        # Chỉ gọi AI khi chưa phân tích hoặc dữ liệu giá/cơ bản mới hơn lần quét trước
         if not data.get("ai_recommendation") or updated_at > ai_updated_at:
-            print(f"[{i+1}/{len(stock_db)}] Đang phân tích chiến lược cốt lõi cho mã: {symbol}...")
+            print(f"[{i+1}/{len(stock_db)}] Đang đọc BCTC & phân tích mã: {symbol}...")
             ai_result = analyze_stock_with_ai(symbol, data)
             
             if ai_result:
@@ -133,7 +177,7 @@ def main():
                 data["macro_view"] = ai_result.get("macro_view", "")
                 data["ai_updated_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
                 count += 1
-                print(f"  -> ✅ Phân tích thành công")
+                print(f"  -> ✅ Phân tích BCTC thành công")
             else:
                 print(f"  -> ❌ Lỗi gọi AI, bỏ qua mã này")
             
@@ -144,7 +188,7 @@ def main():
     if count > 0:
         with open(DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(stock_db, f, ensure_ascii=False, indent=4)
-        print(f"\n🎉 Hoàn thành! Đã cập nhật bản phân tích chuyên sâu theo đúng bản chất từng ngành cho {count} mã vào data.json.")
+        print(f"\n🎉 Hoàn thành! Đã cập nhật bản phân tích BCTC chi tiết cho {count} mã vào data.json.")
     else:
         print("\nℹ️ Không có dữ liệu mới cần chạy.")
 
