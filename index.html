@@ -660,7 +660,7 @@
             }
         });
 
-        function openModal(symbol) {
+                function openModal(symbol) {
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
@@ -668,21 +668,26 @@
 
             document.getElementById('modal-symbol').innerText = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
-            document.getElementById('modal-price').innerText = formatNumber(item.close_price);
+            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
-            document.getElementById('modal-eps').innerText = '—';
-            document.getElementById('modal-roe').innerText = formatPercent(item.roe);
-            document.getElementById('modal-div').innerText = '—';
+            
+            // Lấy trực tiếp EPS từ data tổng quan (nếu có)
+            document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
+            
+            document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
+            
+            // Lấy trực tiếp Cổ tức (dividend_yield) từ data tổng quan
+            document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
             const recEl = document.getElementById('modal-ai-rec');
-            recEl.innerText = `Tổng điểm Quant: ${item.total_score}/100 | Trạng thái: ${item.technical_status}`;
+            recEl.innerText = `Khuyến nghị: ${item.recommendation || item.technical_status || 'Tích lũy'}`;
             
-            document.getElementById('modal-ai-price').innerText = `Vùng giá tiềm năng: ${item.potential_zone}`;
-            document.getElementById('modal-bctc').innerText = item.fundamental_notes || "Chưa có ghi chú cơ bản.";
-            document.getElementById('modal-outlook').innerText = item.technical_notes || "Chưa có ghi chú kỹ thuật.";
+            document.getElementById('modal-ai-price').innerText = `Trạng thái giá: ${item.price_zone || item.potential_zone || '—'}`;
+            document.getElementById('modal-bctc').innerText = item.fundamental_notes || "Hệ thống đang cập nhật phân tích cơ bản.";
+            document.getElementById('modal-outlook').innerText = item.technical_notes || item.price_zone || "Chưa có ghi chú kỹ thuật.";
             document.getElementById('modal-macro').innerText = item.valuation_notes || "Chưa có ghi chú định giá.";
-            document.getElementById('modal-time').innerText = `Hệ thống Quant cập nhật tự động`;
+            document.getElementById('modal-time').innerText = `Cập nhật: ${item.updated_at || 'Hệ thống tự động'}`;
 
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
