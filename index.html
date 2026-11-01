@@ -67,6 +67,7 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-2 md:px-4 py-4">
+        <!-- Bộ lọc -->
         <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4">
             <div class="grid grid-cols-3 gap-1.5 md:gap-3">
                 <div class="relative w-full">
@@ -190,12 +191,15 @@
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
 
+                <!-- OVERLAY TRONG SUỐT GỌN GÀNG (TÍCH HỢP ĐỔI MÃ, NÚT PREV/NEXT, KHUNG TG, VOL MA & OHLC) -->
                 <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1 md:p-1.5 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
                     
+                    <!-- NÚT CHUYỂN MÃ NHANH PREV (<) -->
                     <button onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã trước">
                         <i class="fa-solid fa-chevron-left text-[9px]"></i>
                     </button>
 
+                    <!-- NÚT ĐỔI MÃ TRONG SUỐT -->
                     <div class="relative">
                         <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs md:text-sm font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
                             <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
@@ -206,16 +210,19 @@
                         </div>
                     </div>
 
+                    <!-- NÚT CHUYỂN MÃ NHANH NEXT (>) -->
                     <button onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã tiếp theo">
                         <i class="fa-solid fa-chevron-right text-[9px]"></i>
                     </button>
 
+                    <!-- KHUNG THỜI GIAN -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
                         <button onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
                         <button onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
                     </div>
 
+                    <!-- CHỈ BÁO & VOL (BỔ SUNG VOL MA) -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VOL</button>
                         <button onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VolMA</button>
@@ -224,6 +231,7 @@
                         <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">RSI</button>
                     </div>
 
+                    <!-- THÔNG TIN RÚT GỌN: THỜI GIAN, GIÁ (C), % BIÊN ĐỘ VÀ KL -->
                     <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 pl-1 border-l border-slate-800/40 text-[10px]">
                         <div><span class="text-slate-400">TG:</span> <span id="legend-time" class="font-bold text-white">--</span></div>
                         <div><span class="text-slate-400">Giá:</span> <span id="legend-close" class="font-bold">--</span></div>
@@ -232,6 +240,7 @@
                     </div>
                 </div>
 
+                <!-- NÚT PHÓNG TO VÀ ĐÓNG (GÓC TRÊN PHẢI) -->
                 <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/30 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
                     <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 hover:bg-slate-800/60 transition" title="Phóng to / Thu nhỏ">
                         <i class="fa-solid fa-expand text-xs"></i>
@@ -587,6 +596,7 @@
             realtimeInterval = setInterval(fetchLivePrice, 30000);
         }
 
+        // HÀM CHUYỂN MÃ NHANH QUA LẠI (PREV / NEXT)
         function navigateSymbol(direction) {
             const symbols = Object.keys(stockData).sort();
             const currentIndex = symbols.indexOf(currentSymbol);
@@ -882,9 +892,8 @@
                 priceScaleId: 'volumeScale',
             });
 
-            // TỐI ƯU TỶ LỆ MARGIN CHO VOLUME (KHÔNG BỊ CHE KHUẤT DƯỚI ĐÁY)
             chartInstance.priceScale('volumeScale').applyOptions({
-                scaleMargins: { top: 0.80, bottom: 0.05 },
+                scaleMargins: { top: 0.75, bottom: 0 },
             });
 
             let chartData = [];
@@ -899,7 +908,7 @@
                     });
                 } else {
                     chartInstance.priceScale('right').applyOptions({
-                        scaleMargins: { top: 0.05, bottom: 0.20 },
+                        scaleMargins: { top: 0.05, bottom: 0.1 },
                     });
                 }
 
