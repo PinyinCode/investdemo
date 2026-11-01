@@ -183,7 +183,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: TRA CỨU BCTC CHI TIẾT (Xử lý khi chưa tải được dữ liệu) -->
+                <!-- TAB 2: TRA CỨU BCTC CHI TIẾT -->
                 <div id="tab-content-bctc" class="space-y-4 hidden">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
@@ -191,7 +191,7 @@
                             <span class="text-[10px] text-slate-500">Nguồn: bctc_data/{symbol}.json</span>
                         </div>
                         <div id="bctc-income-container" class="overflow-x-auto">
-                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Chưa tải được dữ liệu BCTC chi tiết (Hệ thống sẽ cập nhật sau).</p>
+                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
                         </div>
                     </div>
 
@@ -200,7 +200,7 @@
                             <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400"><i class="fa-solid fa-scale-balanced mr-1.5"></i> Cân đối Kế toán Mới Nhất</h4>
                         </div>
                         <div id="bctc-balance-container" class="overflow-x-auto">
-                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Chưa tải được dữ liệu BCTC chi tiết (Hệ thống sẽ cập nhật sau).</p>
+                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
                         </div>
                     </div>
                 </div>
@@ -328,7 +328,7 @@
         }
 
         function formatNumber(num) {
-            if (num === undefined || num === null || num === 0) return '—';
+            if (num === undefined || num === null || num === 0 || isNaN(num)) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
             return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
@@ -341,7 +341,6 @@
             const icon = document.getElementById('refresh-icon');
             if (showSpinner) icon.classList.add('spinner');
             try {
-                // Đọc trực tiếp từ file screener_results.json do Python / GitHub Actions sinh ra
                 const response = await fetch('screener_results.json?t=' + new Date().getTime());
                 if (!response.ok) throw new Error('Lỗi tải file kết quả');
                 screenerResults = await response.json();
@@ -359,7 +358,6 @@
             }
         }
 
-        // Lấy điểm số từ kết quả Python để sắp xếp
         function scoreFundamental(item) { return item.fundamental_score || 0; }
         function scoreTechnical(item) { return item.technical_score || 0; }
         function scoreCombined(item) { return item.total_score || 0; }
@@ -388,7 +386,6 @@
                 return matchSearch && matchSector && matchBuyZone;
             });
 
-            // Sắp xếp dựa theo số liệu đã được Python chấm điểm sẵn
             if (rankingMode === "FUNDAMENTAL") {
                 filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             } 
@@ -483,7 +480,6 @@
             });
         }
 
-        // HÀM CHUYỂN TAB TRONG MODAL AI & BCTC
         function switchAiTab(tabName) {
             const btnEval = document.getElementById('tab-btn-eval');
             const btnBctc = document.getElementById('tab-btn-bctc');
@@ -503,7 +499,8 @@
             }
         }
 
-                        async function loadBctcDetail(symbol) {
+        // ĐÃ SỬA: Hàm loadBctcDetail tương thích linh hoạt cho cả Ngân hàng lẫn Sản xuất/BĐS
+        async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
             
@@ -515,10 +512,9 @@
                 if (!res.ok) throw new Error(`Không tìm thấy file (${res.status})`);
                 const data = await res.json();
 
-                // Kiểm tra xem mã này thuộc Ngân hàng hay Sản xuất/Ngành khác
-                const isBank = symbol === "ACB" || symbol === "BID" || symbol === "CTG" || symbol === "TCB" || symbol === "MBB" || symbol === "STB" || symbol === "VPB" || symbol === "HDB" || symbol === "VIB" || symbol === "TPB" || symbol === "SHB";
+                const isBank = ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB"].includes(symbol);
 
-                // 1. Xử lý Kết quả kinh doanh linh hoạt theo ngành
+                // 1. Kết quả kinh doanh
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
                     data.income_statement.forEach(item => {
@@ -548,7 +544,6 @@
                         periods.slice(0, 6).forEach(p => {
                             let pData = groupedByPeriod[p] || {};
                             
-                            // Lấy key tương ứng theo ngành
                             let val1 = isBank ? (pData['IS_NET_INTEREST_INCOME'] || 0) : (pData['IS_NET_REVENUE'] || pData['IS_REVENUE'] || 0);
                             let val2 = isBank ? (pData['IS_NET_FEE_AND_COMMISSION_INCOME'] || 0) : (pData['IS_GROSS_PROFIT'] || 0);
                             let netProfit = pData['IS_NET_PROFIT_AFTER_TAX'] || pData['IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY'] || 0;
@@ -568,7 +563,7 @@
                     }
                 }
 
-                // 2. Xử lý Cân đối kế toán (Giữ nguyên phần hiển thị tài sản ngắn hạn/dài hạn đang chạy rất mượt ở hình của bạn)
+                // 2. Cân đối kế toán
                 if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
                     let groupedBs = {};
                     data.balance_sheet.forEach(item => {
@@ -604,6 +599,8 @@
 
             } catch (err) {
                 console.error("Lỗi tải BCTC chi tiết:", err);
+                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
+                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
             }
         }
 
