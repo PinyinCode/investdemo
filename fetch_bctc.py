@@ -27,24 +27,23 @@ def fetch_financial_reports(symbol):
     reports = {}
     
     try:
-        # Thử gọi API tài chính gốc của TCBS
+        # 1. Thử gọi API Kết quả kinh doanh từ TCBS
         url_income = f"https://apipubaws.tcbs.com.vn/tcs/v2/finance/{symbol}/income-statement?yearly=0&isAll=true"
         r1 = requests.get(url_income, headers=headers, timeout=6)
-        
         if r1.status_code == 200:
             data_income = r1.json()
-            if data_income:  # Chỉ nhận nếu có dữ liệu thực tế
+            if data_income:
                 reports['income_statement'] = data_income
 
+        # 2. Thử gọi API Bảng cân đối kế toán từ TCBS
         url_balance = f"https://apipubaws.tcbs.com.vn/tcs/v2/finance/{symbol}/balance-sheet?yearly=0&isAll=true"
         r2 = requests.get(url_balance, headers=headers, timeout=6)
-        
         if r2.status_code == 200:
             data_balance = r2.json()
             if data_balance:
                 reports['balance_sheet'] = data_balance
 
-        # Nếu cả 2 đều trống, thử gọi sang nguồn API dự phòng (VNDirect ratios/financials)
+        # 3. Nếu nguồn TCBS trống, thử gọi nguồn dự phòng VNDirect
         if not reports:
             url_backup = f"https://api-finfo.vndirect.com.vn/v4/financialStatements?q=symbol:{symbol}~periodType:QUARTER&size=4"
             r3 = requests.get(url_backup, headers={"User-Agent": "Mozilla/5.0"}, timeout=6)
@@ -53,7 +52,7 @@ def fetch_financial_reports(symbol):
                 if bk_data:
                     reports['income_statement'] = bk_data
 
-        # Kiểm tra lần cuối trước khi lưu
+        # Kiểm tra lần cuối trước khi ghi file
         if not reports:
             print(f"⚠️ Không có dữ liệu BCTC cho mã: {symbol}")
             return False
