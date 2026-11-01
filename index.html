@@ -22,7 +22,7 @@
 
         /* Tối ưu chiều cao chuẩn khung hiển thị trình duyệt di động (Dynamic Viewport) */
         #chart-modal-box {
-            max-height: 92dvh;
+            max-height: 94dvh;
         }
         #chart-modal-box.fullscreen {
             position: fixed !important;
@@ -37,12 +37,12 @@
         }
         
         #chart-modal-box:not(.fullscreen) #tv-chart-container {
-            height: calc(92dvh - 150px) !important;
-            min-height: 300px;
+            height: calc(94dvh - 60px) !important;
+            min-height: 350px;
             width: 100% !important;
         }
         #chart-modal-box.fullscreen #tv-chart-container {
-            height: calc(100dvh - 140px) !important;
+            height: calc(100dvh - 55px) !important;
             width: 100% !important;
         }
     </style>
@@ -184,11 +184,21 @@
     </div>
 
     <!-- MODAL BIỂU ĐỒ -->
-    <div id="chart-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm hidden p-2 md:p-4">
+    <div id="chart-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm hidden p-1 md:p-3">
         <div id="chart-modal-box" class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300">
             <div class="bg-slate-950 px-3 py-2 border-b border-slate-800 flex flex-wrap justify-between items-center gap-1.5">
                 <div class="flex items-center space-x-1.5 flex-wrap gap-y-1">
-                    <span id="chart-modal-symbol" class="text-base md:text-lg font-black text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">--</span>
+                    <!-- NÚT BẤM CHỌN/ĐỔI MÃ TRỰC TIẾP -->
+                    <div class="relative">
+                        <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-sm md:text-base font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2.5 py-1 rounded-lg border border-emerald-500/30 transition flex items-center gap-1.5">
+                            <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <!-- Dropdown danh sách mã nhanh -->
+                        <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
+                            <input type="text" id="dropdown-search" placeholder="Lọc mã..." oninput="filterDropdownSymbols(this.value)" class="w-full px-2.5 py-1.5 mb-1 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500">
+                            <div id="dropdown-symbol-list" class="space-y-0.5"></div>
+                        </div>
+                    </div>
                     
                     <!-- Nút chọn khung thời gian -->
                     <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 gap-0.5">
@@ -197,8 +207,8 @@
                         <button onclick="switchInterval('MN')" id="btn-mn" class="px-2 py-0.5 text-[11px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
                     </div>
 
-                    <!-- Nút Bật/Tắt VOL & Chỉ Báo Kỹ Thuật (Mặc định MA20 bật) -->
-                    <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 gap-1 pl-1.5">
+                    <!-- Nút Bật/Tắt VOL & Chỉ Báo Kỹ Thuật -->
+                    <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 gap-1 pl-1">
                         <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-2 py-0.5 text-[10px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition">VOL</button>
                         <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-2 py-0.5 text-[10px] font-bold rounded bg-indigo-600 text-white border border-indigo-400 transition">MA20</button>
                         <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-2 py-0.5 text-[10px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition">MA50</button>
@@ -210,40 +220,37 @@
                     <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Phóng to / Thu nhỏ">
                         <i class="fa-solid fa-expand text-xs"></i>
                     </button>
-                    
                     <button onclick="closeChartModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Đóng">
                         <i class="fa-solid fa-xmark text-xs"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- THANH THÔNG TIN NẾN & MỐC THỜI GIAN NHƯ TRADINGVIEW -->
-            <div id="chart-legend" class="bg-slate-950 px-3 py-1.5 border-b border-slate-800 text-[11px] flex flex-wrap items-center justify-between text-slate-300">
-                <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <div><span class="text-slate-500">O:</span> <span id="legend-open" class="font-bold">--</span></div>
-                    <div><span class="text-slate-500">H:</span> <span id="legend-high" class="font-bold">--</span></div>
-                    <div><span class="text-slate-500">L:</span> <span id="legend-low" class="font-bold">--</span></div>
-                    <div><span class="text-slate-500">C:</span> <span id="legend-close" class="font-bold">--</span></div>
-                    <div><span class="text-slate-500">KL:</span> <span id="legend-vol" class="font-bold text-amber-400">--</span></div>
-                </div>
-                <!-- Mốc thời gian nổi bật bên góc phải thanh header -->
-                <div class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20 font-semibold text-[10px]">
-                    <i class="fa-regular fa-calendar-days mr-1"></i> <span id="legend-time">--</span>
-                </div>
-            </div>
-
-            <div class="p-2 md:p-3 bg-slate-900 flex-grow relative overflow-hidden">
-                <div id="chart-loading" class="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-10 text-emerald-400 text-xs hidden">
+            <!-- CONTAINER BIỂU ĐỒ & LỚP PHỦ OHLC (TRÊN NỀN CHART) -->
+            <div class="p-0 bg-slate-900 flex-grow relative overflow-hidden">
+                <div id="chart-loading" class="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-20 text-emerald-400 text-xs hidden">
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
-                <div id="tv-chart-container" class="relative"></div>
+
+                <!-- OVERLAY THÔNG TIN OHLC VÀ THỜI GIAN NẰM TRÊN NỀN CHART (GÓC TRÊN TRÁI) -->
+                <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 pointer-events-none bg-slate-950/75 backdrop-blur-md px-2.5 py-1.5 rounded-lg border border-slate-800/80 text-[10px] md:text-[11px] flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-slate-300 shadow-lg">
+                    <div><span class="text-emerald-400 font-bold" id="legend-symbol-tag">--</span></div>
+                    <div><span class="text-slate-400">TG:</span> <span id="legend-time" class="font-bold text-white">--</span></div>
+                    <div><span class="text-slate-400">O:</span> <span id="legend-open" class="font-bold">--</span></div>
+                    <div><span class="text-slate-400">H:</span> <span id="legend-high" class="font-bold">--</span></div>
+                    <div><span class="text-slate-400">L:</span> <span id="legend-low" class="font-bold">--</span></div>
+                    <div><span class="text-slate-400">C:</span> <span id="legend-close" class="font-bold">--</span></div>
+                    <div><span class="text-slate-400">KL:</span> <span id="legend-vol" class="font-bold text-amber-400">--</span></div>
+                </div>
+
+                <div id="tv-chart-container" class="w-full h-full"></div>
             </div>
 
-            <div class="bg-slate-950 px-4 py-2 border-t border-slate-800 flex justify-between items-center">
+            <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center">
                 <button id="btn-view-ai" onclick="" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
                     <i class="fa-solid fa-robot"></i> Xem AI chi tiết
                 </button>
-                <button onclick="closeChartModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
+                <button onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
             </div>
         </div>
     </div>
@@ -581,6 +588,49 @@
             realtimeInterval = setInterval(fetchLivePrice, 30000);
         }
 
+        // TÍNH NĂNG CHỌN / ĐỔI MÃ NGAY TRONG MODAL BIỂU ĐỒ
+        function toggleSymbolDropdown() {
+            const dropdown = document.getElementById('symbol-dropdown');
+            dropdown.classList.toggle('hidden');
+            if (!dropdown.classList.contains('hidden')) {
+                document.getElementById('dropdown-search').value = '';
+                renderDropdownSymbolList(Object.keys(stockData));
+                document.getElementById('dropdown-search').focus();
+            }
+        }
+
+        function renderDropdownSymbolList(symbols) {
+            const listContainer = document.getElementById('dropdown-symbol-list');
+            listContainer.innerHTML = '';
+            
+            symbols.sort().forEach(sym => {
+                const item = document.createElement('button');
+                item.className = `w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
+                item.innerHTML = `<span>${sym}</span> <span class="text-[9px] text-slate-400">${SECTOR_NAMES[getSector(sym)] || ''}</span>`;
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    document.getElementById('symbol-dropdown').classList.add('hidden');
+                    openChartModal(sym);
+                };
+                listContainer.appendChild(item);
+            });
+        }
+
+        function filterDropdownSymbols(keyword) {
+            const upper = keyword.toUpperCase();
+            const matched = Object.keys(stockData).filter(sym => sym.includes(upper));
+            renderDropdownSymbolList(matched);
+        }
+
+        // Đóng dropdown khi click ra ngoài
+        window.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('symbol-dropdown');
+            const symbolBtn = document.getElementById('chart-modal-symbol');
+            if (dropdown && !dropdown.contains(e.target) && !symbolBtn.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
         function openModal(symbol) {
             const item = stockData[symbol];
             if (!item) return;
@@ -710,7 +760,10 @@
             currentInterval = 'D1';
             switchInterval('D1');
 
-            document.getElementById('chart-modal-symbol').innerText = symbol;
+            document.getElementById('current-symbol-text').innerText = symbol;
+            document.getElementById('legend-symbol-tag').innerText = symbol;
+            document.getElementById('symbol-dropdown').classList.add('hidden');
+
             document.getElementById('btn-view-ai').onclick = () => {
                 closeChartModal();
                 openModal(symbol);
