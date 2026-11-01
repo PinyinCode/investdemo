@@ -37,12 +37,12 @@
         }
         
         #chart-modal-box:not(.fullscreen) #tv-chart-container {
-            height: calc(92dvh - 120px) !important;
+            height: calc(92dvh - 150px) !important;
             min-height: 300px;
             width: 100% !important;
         }
         #chart-modal-box.fullscreen #tv-chart-container {
-            height: calc(100dvh - 110px) !important;
+            height: calc(100dvh - 140px) !important;
             width: 100% !important;
         }
     </style>
@@ -217,11 +217,26 @@
                 </div>
             </div>
 
+            <!-- THANH THÔNG TIN NẾN & MỐC THỜI GIAN NHƯ TRADINGVIEW -->
+            <div id="chart-legend" class="bg-slate-950 px-3 py-1.5 border-b border-slate-800 text-[11px] flex flex-wrap items-center justify-between text-slate-300">
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <div><span class="text-slate-500">O:</span> <span id="legend-open" class="font-bold">--</span></div>
+                    <div><span class="text-slate-500">H:</span> <span id="legend-high" class="font-bold">--</span></div>
+                    <div><span class="text-slate-500">L:</span> <span id="legend-low" class="font-bold">--</span></div>
+                    <div><span class="text-slate-500">C:</span> <span id="legend-close" class="font-bold">--</span></div>
+                    <div><span class="text-slate-500">KL:</span> <span id="legend-vol" class="font-bold text-amber-400">--</span></div>
+                </div>
+                <!-- Mốc thời gian nổi bật bên góc phải thanh header -->
+                <div class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20 font-semibold text-[10px]">
+                    <i class="fa-regular fa-calendar-days mr-1"></i> <span id="legend-time">--</span>
+                </div>
+            </div>
+
             <div class="p-2 md:p-3 bg-slate-900 flex-grow relative overflow-hidden">
                 <div id="chart-loading" class="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-10 text-emerald-400 text-xs hidden">
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
-                <div id="tv-chart-container"></div>
+                <div id="tv-chart-container" class="relative"></div>
             </div>
 
             <div class="bg-slate-950 px-4 py-2 border-t border-slate-800 flex justify-between items-center">
@@ -244,7 +259,6 @@
 
         let realtimeInterval = null;
         let isBoldVol = false;
-        // Mặc định bật MA20
         let activeIndicators = {
             MA20: true,
             MA50: false,
@@ -516,7 +530,6 @@
             });
         }
 
-        // HÀM CẬP NHẬT REALTIME TRỰC TIẾP CHO MÃ ĐANG MỞ BIỂU ĐỒ (CLIENT-SIDE)
         function startLiveTrackingForSymbol(symbol) {
             if (realtimeInterval) clearInterval(realtimeInterval);
 
@@ -536,13 +549,11 @@
                             const newClose = parseFloat(latest.close) || 0;
                             const newVol = parseInt(latest.volume) || 0;
 
-                            // 1. Cập nhật giá trên Card ngoài màn hình chính nếu có hiển thị
                             const cardPriceEl = document.getElementById(`card-price-${symbol}`);
                             const cardVolEl = document.getElementById(`card-vol-${symbol}`);
                             if (cardPriceEl) cardPriceEl.innerText = formatNumber(newClose);
                             if (cardVolEl) cardVolEl.innerText = `KL: ${formatNumber(newVol)}`;
 
-                            // 2. Cập nhật trực tiếp lên cây nến cuối cùng trên Biểu đồ (Khung D1)
                             if (candleSeriesInstance && currentInterval === 'D1') {
                                 candleSeriesInstance.update({
                                     time: latest.tradingDate || latest.time,
@@ -567,7 +578,7 @@
             };
 
             fetchLivePrice();
-            realtimeInterval = setInterval(fetchLivePrice, 30000); // 30 giây cập nhật 1 lần
+            realtimeInterval = setInterval(fetchLivePrice, 30000);
         }
 
         function openModal(symbol) {
@@ -714,7 +725,6 @@
                 currentSymbolHistory = await res.json();
                 renderChartInstance(currentSymbolHistory);
 
-                // 👉 BẮT ĐẦU CHẠY REALTIME TỪNG PHÚT CHO MÃ NÀY
                 startLiveTrackingForSymbol(symbol);
             } catch (err) {
                 document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
@@ -787,7 +797,6 @@
                 timeScale: { borderColor: '#334155' }
             });
 
-            // 1. Khung nến chính
             candleSeriesInstance = chartInstance.addCandlestickSeries({
                 upColor: '#10b981', downColor: '#f43f5e',
                 borderUpColor: '#10b981', borderDownColor: '#f43f5e',
@@ -795,7 +804,6 @@
                 priceScaleId: 'right'
             });
 
-            // 2. Khối lượng Volume ở phần đáy nến
             volumeSeriesInstance = chartInstance.addHistogramSeries({
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volumeScale',
@@ -885,18 +893,61 @@
                     rsiSeries.setData(calculateRSI(chartData, 14));
                 }
 
-                // TỰ ĐỘNG TÍNH SỐ LƯỢNG NẾN THEO ĐỘ RỘNG MÀN HÌNH (MOBILE / NGANG / PC)
+                const legendTime = document.getElementById('legend-time');
+                const legendOpen = document.getElementById('legend-open');
+                const legendHigh = document.getElementById('legend-high');
+                const legendLow = document.getElementById('legend-low');
+                const legendClose = document.getElementById('legend-close');
+                const legendVol = document.getElementById('legend-vol');
+
+                const latestBar = chartData[chartData.length - 1];
+                if (latestBar) {
+                    updateLegend(latestBar);
+                }
+
+                function updateLegend(bar) {
+                    legendTime.innerText = bar.time;
+                    legendOpen.innerText = formatNumber(bar.open);
+                    legendOpen.className = `font-bold ${bar.open >= (chartData[chartData.indexOf(bar)-1]?.close || bar.open) ? 'text-emerald-400' : 'text-rose-400'}`;
+                    
+                    legendHigh.innerText = formatNumber(bar.high);
+                    legendLow.innerText = formatNumber(bar.low);
+                    
+                    legendClose.innerText = formatNumber(bar.close);
+                    legendClose.className = `font-bold ${bar.close >= bar.open ? 'text-emerald-400' : 'text-rose-400'}`;
+                    
+                    legendVol.innerText = formatNumber(bar.volume);
+                }
+
+                chartInstance.subscribeCrosshairMove(param => {
+                    if (
+                        param.point === undefined ||
+                        !param.time ||
+                        param.point.x < 0 ||
+                        param.point.x > container.clientWidth ||
+                        param.point.y < 0 ||
+                        param.point.y > container.clientHeight
+                    ) {
+                        if (latestBar) updateLegend(latestBar);
+                    } else {
+                        const dataPoint = param.seriesData.get(candleSeriesInstance);
+                        if (dataPoint) {
+                            const barData = {
+                                time: param.time,
+                                open: dataPoint.open,
+                                high: dataPoint.high,
+                                low: dataPoint.low,
+                                close: dataPoint.close,
+                                volume: param.seriesData.get(volumeSeriesInstance)?.value || 0
+                            };
+                            updateLegend(barData);
+                        }
+                    }
+                });
+
                 setTimeout(() => {
                     const totalBars = chartData.length;
-                    
-                    let visibleBarsCount = 50;
-                    if (width > 1200) {
-                        visibleBarsCount = 120; // PC màn hình lớn
-                    } else if (width > 768) {
-                        visibleBarsCount = 90;  // Màn hình ngang hoặc Tablet
-                    } else {
-                        visibleBarsCount = 50;  // Mobile dọc
-                    }
+                    let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
 
                     if (totalBars > visibleBarsCount) {
                         chartInstance.timeScale().setVisibleLogicalRange({
@@ -913,7 +964,7 @@
         }
 
         function closeChartModal() {
-            if (realtimeInterval) clearInterval(realtimeInterval); // Dừng cập nhật ngầm khi đóng modal
+            if (realtimeInterval) clearInterval(realtimeInterval);
 
             const modalBox = document.getElementById('chart-modal-box');
             if (modalBox.classList.contains('fullscreen')) {
@@ -939,10 +990,8 @@
             if (e.target === chartModal) closeChartModal();
         });
 
-        // Tải dữ liệu lần đầu
         loadData(true);
 
-        // Tự động làm mới dữ liệu ngầm sau mỗi 30 phút
         setInterval(() => {
             loadData(false);
         }, 1800000);
