@@ -503,22 +503,32 @@
             }
         }
 
-                    async function loadBctcDetail(symbol) {
+                            async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
             
-            if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
-            if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>`;
+            if (incomeContainer) {
+                incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
+            }
+            if (balanceContainer) {
+                balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
+            }
 
             try {
-                const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
-                if (!res.ok) throw new Error(`Không tìm thấy file (${res.status})`);
+                const url = `bctc_data/${symbol}.json?t=` + new Date().getTime();
+                const res = await fetch(url);
+                
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                
                 const data = await res.json();
+                if (!data) throw new Error('Dữ liệu JSON trống');
 
-                // 1. Xử lý Kết quả kinh doanh tự động từ JSON
+                // 1. Xử lý Kết quả kinh doanh an toàn
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
-                    let metricNames = {}; // Lưu lại tên tiếng Việt của các chỉ tiêu
+                    let metricNames = {}; 
 
                     data.income_statement.forEach(item => {
                         if (item && item.period && item.id) {
@@ -530,44 +540,33 @@
 
                     let periods = Object.keys(groupedByPeriod).sort().reverse();
                     if (periods.length > 0) {
-                        // Lấy ra tối đa 3 chỉ tiêu đầu tiên có trong JSON của mã này để làm cột hiển thị
                         let availableMetrics = Object.keys(metricNames).slice(0, 3);
                         
-                        let html = `
-                        <table class="w-full text-left text-xs">
-                            <thead>
-                                <tr class="border-b border-slate-800 text-slate-400 bg-slate-900">
-                                    <th class="p-2">Kỳ</th>`;
-                        
+                        let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th>';
                         availableMetrics.forEach(mId => {
                             html += `<th class="p-2 text-right">${metricNames[mId]}</th>`;
                         });
-
-                        html += `</tr></thead><tbody class="divide-y divide-slate-900">`;
+                        html += '</tr></thead><tbody class="divide-y divide-slate-900">';
                         
                         periods.slice(0, 6).forEach(p => {
                             let pData = groupedByPeriod[p] || {};
-                            html += `
-                            <tr class="hover:bg-slate-900/50">
-                                <td class="p-2 font-bold text-indigo-300">${p}</td>`;
-                            
+                            html += `<tr class="hover:bg-slate-900/50"><td class="p-2 font-bold text-indigo-300">${p}</td>`;
                             availableMetrics.forEach(mId => {
                                 let val = pData[mId] || 0;
                                 html += `<td class="p-2 text-right text-slate-200">${formatNumber(val)}</td>`;
                             });
-
-                            html += `</tr>`;
+                            html += '</tr>';
                         });
-                        html += `</tbody></table>`;
+                        html += '</tbody></table>';
                         incomeContainer.innerHTML = html;
                     } else {
-                        incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu kỳ báo cáo.</p>`;
+                        incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu kỳ báo cáo.</p>';
                     }
-                } else {
-                    if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>`;
+                } else if (incomeContainer) {
+                    incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>';
                 }
 
-                // 2. Xử lý Cân đối kế toán tự động từ JSON
+                // 2. Xử lý Cân đối kế toán an toàn
                 if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
                     let groupedBs = {};
                     data.balance_sheet.forEach(item => {
@@ -582,33 +581,31 @@
                         let latestPeriod = periods[0];
                         let latestData = groupedBs[latestPeriod] || {};
 
-                        let html = `
-                        <div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${latestPeriod}</div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
+                        let html = `<div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${latestPeriod}</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
 
                         let count = 0;
                         for (const [name, val] of Object.entries(latestData)) {
-                            if (count >= 12) break; // Lấy tối đa 12 chỉ tiêu cân đối kế toán mới nhất
-                            html += `
-                            <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs">
-                                <span class="text-slate-400 truncate pr-2">${name}:</span>
-                                <span class="font-bold text-slate-200">${typeof val === 'number' && !isNaN(val) ? formatNumber(val) : (val || '—')}</span>
-                            </div>`;
+                            if (count >= 12) break;
+                            html += `<div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400 truncate pr-2">${name}:</span><span class="font-bold text-slate-200">${typeof val === 'number' && !isNaN(val) ? formatNumber(val) : (val || '—')}</span></div>`;
                             count++;
                         }
-                        html += `</div>`;
+                        html += '</div>';
                         balanceContainer.innerHTML = html;
                     } else {
-                        balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu cân đối kế toán.</p>`;
+                        balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu cân đối kế toán.</p>';
                     }
-                } else {
-                    if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu cân đối kế toán.</p>`;
+                } else if (balanceContainer) {
+                    balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu cân đối kế toán.</p>';
                 }
 
             } catch (err) {
-                console.error("Lỗi tải BCTC chi tiết:", err);
-                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
-                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
+                console.error("Chi tiết lỗi BCTC:", err);
+                if (incomeContainer) {
+                    incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Không thể tải file BCTC (Kiểm tra lại đường dẫn/mạng).</p>`;
+                }
+                if (balanceContainer) {
+                    balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Không thể tải file BCTC.</p>`;
+                }
             }
         }
 
