@@ -20,7 +20,6 @@
         .glow-top2 { box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }
         .glow-top3 { box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }
 
-        /* Tối ưu chiều cao tối đa cho Modal Biểu đồ */
         #chart-modal-box {
             max-height: 96dvh;
         }
@@ -187,35 +186,33 @@
     <div id="chart-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm hidden p-1 md:p-3">
         <div id="chart-modal-box" class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300">
             
-            <!-- TOÀN BỘ KHUNG CHART (TỐI ƯU 100% DIỆN TÍCH MÀN HÌNH) -->
             <div class="p-0 bg-slate-900 flex-grow relative overflow-hidden">
                 <div id="chart-loading" class="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-20 text-emerald-400 text-xs hidden">
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
 
-                <!-- OVERLAY TRONG SUỐT: ĐỔI MÃ + KHUNG THỜI GIAN + CHỈ BÁO + MỐC THỜI GIAN + OHLC (GÓC TRÊN TRÁI) -->
-                <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1.5 md:p-2 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-90px)]">
+                <!-- OVERLAY TRONG SUỐT GỌN GÀNG (CHỈ GIỮ THỜI GIAN, GIÁ, % BIÊN ĐỘ VÀ KL) -->
+                <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1 md:p-1.5 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
                     
-                    <!-- NÚT ĐỔI MÃ CHỨNG KHOÁN TRONG SUỐT -->
+                    <!-- NÚT ĐỔI MÃ TRONG SUỐT -->
                     <div class="relative">
                         <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs md:text-sm font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
                             <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
                         </button>
-                        <!-- Dropdown danh sách mã nhanh -->
                         <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
                             <input type="text" id="dropdown-search" placeholder="Lọc mã..." oninput="filterDropdownSymbols(this.value)" class="w-full px-2.5 py-1.5 mb-1 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500">
                             <div id="dropdown-symbol-list" class="space-y-0.5"></div>
                         </div>
                     </div>
 
-                    <!-- Nút chọn khung thời gian trong suốt -->
+                    <!-- KHUNG THỜI GIAN -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
                         <button onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
                         <button onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
                     </div>
 
-                    <!-- Nút Bật/Tắt VOL & Chỉ Báo trong suốt -->
+                    <!-- CHỈ BÁO & VOL -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VOL</button>
                         <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition">MA20</button>
@@ -223,18 +220,16 @@
                         <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">RSI</button>
                     </div>
 
-                    <!-- THÔNG TIN MỐC THỜI GIAN & OHLC CHUNG TRÊN OVERLAY TRONG SUỐT -->
+                    <!-- THÔNG TIN RÚT GỌN: THỜI GIAN, GIÁ (C), % BIÊN ĐỘ VÀ KL -->
                     <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 pl-1 border-l border-slate-800/40 text-[10px]">
                         <div><span class="text-slate-400">TG:</span> <span id="legend-time" class="font-bold text-white">--</span></div>
-                        <div><span class="text-slate-400">O:</span> <span id="legend-open" class="font-bold">--</span></div>
-                        <div><span class="text-slate-400">H:</span> <span id="legend-high" class="font-bold">--</span></div>
-                        <div><span class="text-slate-400">L:</span> <span id="legend-low" class="font-bold">--</span></div>
-                        <div><span class="text-slate-400">C:</span> <span id="legend-close" class="font-bold">--</span></div>
+                        <div><span class="text-slate-400">Giá:</span> <span id="legend-close" class="font-bold">--</span></div>
+                        <div><span id="legend-change" class="font-bold">--</span></div>
                         <div><span class="text-slate-400">KL:</span> <span id="legend-vol" class="font-bold text-amber-400">--</span></div>
                     </div>
                 </div>
 
-                <!-- OVERLAY TRONG SUỐT NÚT PHÓNG TO NỀN & ĐÓNG X (GÓC TRÊN PHẢI CHART) -->
+                <!-- NÚT PHÓNG TO VÀ ĐÓNG (GÓC TRÊN PHẢI) -->
                 <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/30 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
                     <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 hover:bg-slate-800/60 transition" title="Phóng to / Thu nhỏ">
                         <i class="fa-solid fa-expand text-xs"></i>
@@ -945,27 +940,31 @@
                 }
 
                 const legendTime = document.getElementById('legend-time');
-                const legendOpen = document.getElementById('legend-open');
-                const legendHigh = document.getElementById('legend-high');
-                const legendLow = document.getElementById('legend-low');
                 const legendClose = document.getElementById('legend-close');
+                const legendChange = document.getElementById('legend-change');
                 const legendVol = document.getElementById('legend-vol');
 
                 const latestBar = chartData[chartData.length - 1];
                 if (latestBar) {
-                    updateLegend(latestBar);
+                    updateLegend(latestBar, chartData);
                 }
 
-                function updateLegend(bar) {
+                function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
-                    legendOpen.innerText = formatNumber(bar.open);
-                    legendOpen.className = `font-bold ${bar.open >= (chartData[chartData.indexOf(bar)-1]?.close || bar.open) ? 'text-emerald-400' : 'text-rose-400'}`;
-                    
-                    legendHigh.innerText = formatNumber(bar.high);
-                    legendLow.innerText = formatNumber(bar.low);
-                    
                     legendClose.innerText = formatNumber(bar.close);
-                    legendClose.className = `font-bold ${bar.close >= bar.open ? 'text-emerald-400' : 'text-rose-400'}`;
+                    
+                    // Tính phần trăm thay đổi so với nến trước đó
+                    const index = dataArr.findIndex(item => item.time === bar.time);
+                    let changePct = 0;
+                    if (index > 0) {
+                        const prevClose = dataArr[index - 1].close;
+                        changePct = ((bar.close - prevClose) / prevClose) * 100;
+                    }
+
+                    const sign = changePct >= 0 ? '+' : '';
+                    legendChange.innerText = `(${sign}${changePct.toFixed(2)}%)`;
+                    legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                    legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     
                     legendVol.innerText = formatNumber(bar.volume);
                 }
@@ -979,19 +978,16 @@
                         param.point.y < 0 ||
                         param.point.y > container.clientHeight
                     ) {
-                        if (latestBar) updateLegend(latestBar);
+                        if (latestBar) updateLegend(latestBar, chartData);
                     } else {
                         const dataPoint = param.seriesData.get(candleSeriesInstance);
                         if (dataPoint) {
                             const barData = {
                                 time: param.time,
-                                open: dataPoint.open,
-                                high: dataPoint.high,
-                                low: dataPoint.low,
                                 close: dataPoint.close,
                                 volume: param.seriesData.get(volumeSeriesInstance)?.value || 0
                             };
-                            updateLegend(barData);
+                            updateLegend(barData, chartData);
                         }
                     }
                 });
