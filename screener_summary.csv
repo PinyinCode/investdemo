@@ -1,71 +1,71 @@
-﻿symbol,sector,close_price,pe,pb,roe,dividend_yield,net_profit_latest,profit_growth_yoy,fundamental_score,technical_score,valuation_score,total_score,potential_zone,technical_status,price_zone_detail,fundamental_notes,technical_notes,valuation_notes
-LPB,NGAN_HANG,34500,8.92,2.31,26.3,8.31,3561.55,28.95,50,10,18,78,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt | ROE cao (>16%) | Cổ tức siêu hấp dẫn (8.31%),Tích lũy nền dài,Định giá hợp lý
-VNM,SAN_XUAT_TIEU_DUNG,56000,10.43,3.45,31.1,8.27,2962.21,17.99,50,10,5,65,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Cổ tức siêu hấp dẫn (8.27%),Tích lũy nền dài,Định giá cao/Cần thận trọng
-GMD,SAN_XUAT_TIEU_DUNG,50700,13.34,2.5,17.3,5.2,586.31,35.58,42,10,18,70,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Cổ tức tốt vượt tiết kiệm (5.2%),Tích lũy nền dài,Định giá hợp lý
-SAB,SAN_XUAT_TIEU_DUNG,41700,11.7,2.62,20.1,11.79,1271.82,-9.4,35,10,18,63,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE đạt chuẩn (>14%) | Cổ tức siêu hấp dẫn (11.79%),Tích lũy nền dài,Định giá hợp lý
-VHM,BAT_DONG_SAN,62000,5.23,1.8,36.6,4.91,23021.01,419.0,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Có chia cổ tức (4.91%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-MBB,NGAN_HANG,18750,5.97,1.24,21.8,4.4,8251.87,42.26,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt | ROE cao (>16%) | Có chia cổ tức (4.4%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-NT2,SAN_XUAT_TIEU_DUNG,22000,4.44,1.26,29.4,3.11,418.61,95.4,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Có chia cổ tức (3.11%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-ACB,NGAN_HANG,20300,7.57,1.17,16.5,2.95,4698.84,9.77,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt | ROE cao (>16%) | Có chia cổ tức (2.95%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-GAS,SAN_XUAT_TIEU_DUNG,77000,14.8,2.74,18.5,2.61,4568.97,74.87,35,10,18,63,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Có chia cổ tức (2.61%),Tích lũy nền dài,Định giá hợp lý
-PHR,BAT_DONG_SAN,28850,8.09,1.62,21.4,2.42,370.24,291.09,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Có chia cổ tức (2.42%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-HPG,SAN_XUAT_TIEU_DUNG,20400,6.46,1.19,19.9,2.16,8265.46,106.01,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Có chia cổ tức (2.16%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-VPB,NGAN_HANG,21550,7.36,1.23,17.0,1.73,8862.91,20.36,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt | ROE cao (>16%) | Có chia cổ tức (1.73%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-MWG,SAN_XUAT_TIEU_DUNG,72400,9.77,2.39,29.5,1.35,3521.13,97.41,35,10,18,63,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Có chia cổ tức (1.35%),Tích lũy nền dài,Định giá hợp lý
-BID,NGAN_HANG,32000,8.05,1.37,18.0,1.22,8473.24,39.2,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt | ROE cao (>16%) | Có chia cổ tức (1.22%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-BSR,SAN_XUAT_TIEU_DUNG,27100,6.94,1.66,40.5,1.09,8969.0,887.13,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%) | Có chia cổ tức (1.09%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-FRT,SAN_XUAT_TIEU_DUNG,138300,23.38,5.07,25.4,0.0,559.08,110.27,30,10,5,45,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%),Tích lũy nền dài,Định giá cao/Cần thận trọng
-HDB,NGAN_HANG,21900,7.63,1.7,24.8,0.0,4065.68,7.02,30,10,30,70,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt | ROE cao (>16%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-VIC,BAT_DONG_SAN,242000,43.18,9.61,24.0,0.0,22759.8,652.31,30,10,5,45,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%),Tích lũy nền dài,Định giá cao/Cần thận trọng
-MSN,SAN_XUAT_TIEU_DUNG,69400,11.29,2.46,20.0,0.0,4551.97,143.98,30,10,18,58,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%),Tích lũy nền dài,Định giá hợp lý
-TPB,NGAN_HANG,12600,5.32,0.86,17.9,0.0,2351.2,54.62,30,10,30,70,VÙNG MUA AN TOÀN (B),ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,Tín dụng tốt | ROE cao (>16%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-POW,SAN_XUAT_TIEU_DUNG,12050,6.29,0.91,15.3,0.0,3525.36,363.04,30,10,30,70,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | ROE đạt chuẩn (>14%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-IDC,BAT_DONG_SAN,32600,7.83,1.97,20.9,7.97,540.37,-44.92,27,10,30,67,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE đạt chuẩn (>14%) | Cổ tức tốt vượt tiết kiệm (7.97%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-ANV,SAN_XUAT_TIEU_DUNG,16600,5.4,1.05,21.1,6.39,206.66,-27.0,27,10,30,67,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE đạt chuẩn (>14%) | Cổ tức tốt vượt tiết kiệm (6.39%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-VIB,NGAN_HANG,13600,6.66,1.03,16.2,5.96,1924.87,18.49,27,10,30,67,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE cao (>16%) | Cổ tức tốt vượt tiết kiệm (5.96%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-HAH,SAN_XUAT_TIEU_DUNG,48250,7.28,1.74,22.5,5.54,365.97,3.69,27,10,30,67,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE đạt chuẩn (>14%) | Cổ tức tốt vượt tiết kiệm (5.54%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-TCB,NGAN_HANG,21400,8.02,1.23,15.4,5.19,8337.29,26.06,27,10,30,67,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt | Cổ tức tốt vượt tiết kiệm (5.19%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-PNJ,SAN_XUAT_TIEU_DUNG,15600,3.25,0.6,12.7,10.23,-257.86,-152.02,20,20,30,70,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN (CẠN CUNG),Khối lượng cạn kiệt ở mức 0.67x MA20.,Cổ tức siêu hấp dẫn (10.23%),Dòng tiền/Kỹ thuật thuận lợi,"Định giá rẻ, biên an toàn cao"
-MBS,CHUNG_KHOAN,14900,12.35,1.33,13.1,10.16,315.18,-5.25,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Cổ tức siêu hấp dẫn (10.16%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-VRE,BAT_DONG_SAN,22950,7.39,1.08,15.1,4.16,1522.07,10.58,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE đạt chuẩn (>14%) | Có chia cổ tức (4.16%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-FPT,SAN_XUAT_TIEU_DUNG,50200,9.66,2.32,24.3,3.43,2729.31,-5.94,20,10,18,48,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE đạt chuẩn (>14%) | Có chia cổ tức (3.43%),Tích lũy nền dài,Định giá hợp lý
-HDG,BAT_DONG_SAN,14600,6.53,0.87,11.4,3.03,282.26,937.17,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt | Có chia cổ tức (3.03%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-CTG,NGAN_HANG,29750,5.86,1.2,22.3,1.03,10871.29,27.71,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE cao (>16%) | Có chia cổ tức (1.03%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-HVN,SAN_XUAT_TIEU_DUNG,20250,14.2,6.82,72.1,0.0,319.67,-56.34,15,10,5,30,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE đạt chuẩn (>14%),Tích lũy nền dài,Định giá cao/Cần thận trọng
-SHB,NGAN_HANG,10400,4.28,0.66,19.0,0.0,4118.85,58.01,15,10,30,55,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,ROE cao (>16%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-MSB,NGAN_HANG,15750,10.04,1.26,14.3,0.0,1649.2,29.43,15,10,30,55,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,Tín dụng tốt,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-PVT,SAN_XUAT_TIEU_DUNG,20600,7.14,1.11,12.9,0.0,489.35,40.23,15,10,30,55,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-BCM,BAT_DONG_SAN,37150,20.42,1.77,8.7,0.0,579.35,37.16,15,10,5,30,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt,Tích lũy nền dài,Định giá cao/Cần thận trọng
-KBC,BAT_DONG_SAN,25950,13.98,0.94,6.5,0.0,937.24,200.47,15,10,30,55,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,LN tăng trưởng tốt,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-TCH,BAT_DONG_SAN,11850,39.82,0.98,5.5,0.0,750.54,1232.07,15,10,5,30,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,LN tăng trưởng tốt,Tích lũy nền dài,Định giá cao/Cần thận trọng
-NKG,SAN_XUAT_TIEU_DUNG,11700,24.08,0.75,3.2,0.0,127.66,157.74,15,10,5,30,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,LN tăng trưởng tốt,Tích lũy nền dài,Định giá cao/Cần thận trọng
-CEO,BAT_DONG_SAN,11000,34.55,1.05,3.0,0.0,53.17,34.2,15,10,5,30,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,LN tăng trưởng tốt,Tích lũy nền dài,Định giá cao/Cần thận trọng
-STB,NGAN_HANG,65099,81.94,1.95,2.5,0.0,1346.68,-53.58,15,10,5,30,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Tín dụng tốt,Tích lũy nền dài,Định giá cao/Cần thận trọng
-SSI,CHUNG_KHOAN,18850,13.01,1.48,12.2,7.9,1124.99,-23.76,12,10,30,52,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Cổ tức tốt vượt tiết kiệm (7.9%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-SZC,BAT_DONG_SAN,19000,21.66,1.14,5.1,5.17,21.61,3.81,12,10,5,27,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,Cổ tức tốt vượt tiết kiệm (5.17%),Tích lũy nền dài,Định giá cao/Cần thận trọng
-VCG,SAN_XUAT_TIEU_DUNG,15100,9.21,0.88,8.9,5.11,371.06,-88.77,12,10,30,52,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,Cổ tức tốt vượt tiết kiệm (5.11%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-VHC,SAN_XUAT_TIEU_DUNG,47500,8.55,1.1,12.2,4.26,229.32,-49.65,5,10,30,45,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (4.26%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-VCI,CHUNG_KHOAN,18450,15.21,1.26,8.5,2.99,367.41,-12.58,5,10,18,33,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (2.99%),Tích lũy nền dài,Định giá hợp lý
-HCM,CHUNG_KHOAN,23150,26.97,2.19,8.6,2.71,297.22,-32.53,5,10,5,20,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (2.71%),Tích lũy nền dài,Định giá cao/Cần thận trọng
-FTS,CHUNG_KHOAN,18250,16.98,1.53,9.1,2.54,35.83,-34.99,5,20,18,43,THEO DÕI THÊM,SẴN SÀNG BREAKOUT (NỔ VOL),Khối lượng bùng nổ đạt 1.53x MA20 kèm giá tăng.,Có chia cổ tức (2.54%),Dòng tiền/Kỹ thuật thuận lợi,Định giá hợp lý
-NLG,BAT_DONG_SAN,21150,17.29,0.85,4.2,2.21,5.35,-97.71,5,10,18,33,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (2.21%),Tích lũy nền dài,Định giá hợp lý
-REE,SAN_XUAT_TIEU_DUNG,44950,10.28,1.26,10.9,1.89,925.96,12.26,5,10,30,45,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (1.89%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-PVD,SAN_XUAT_TIEU_DUNG,17700,18.4,0.97,5.2,1.7,81.74,-70.5,5,10,18,33,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (1.7%),Tích lũy nền dài,Định giá hợp lý
-CTD,SAN_XUAT_TIEU_DUNG,63800,9.08,0.74,8.4,1.42,146.79,-27.17,5,10,30,45,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (1.42%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-KDH,BAT_DONG_SAN,13300,9.76,0.91,8.2,1.31,168.79,-67.9,5,10,30,45,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (1.31%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-OCB,NGAN_HANG,10150,7.15,0.87,13.0,0.01,1313.85,7.0,5,10,30,45,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,Có chia cổ tức (0.01%),Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-PVS,SAN_XUAT_TIEU_DUNG,29800,8.92,1.19,12.8,0.0,340.87,2.05,0,10,30,40,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-PC1,SAN_XUAT_TIEU_DUNG,18500,6.59,1.1,12.4,0.0,416.35,5.55,0,10,30,40,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-VJC,SAN_XUAT_TIEU_DUNG,132300,46.49,3.84,8.7,0.0,349.01,-46.52,0,10,5,15,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,,Tích lũy nền dài,Định giá cao/Cần thận trọng
-BSI,CHUNG_KHOAN,27850,15.21,1.23,8.4,0.0,165.03,-23.45,0,20,18,38,THEO DÕI THÊM,SẴN SÀNG BREAKOUT (NỔ VOL),Khối lượng bùng nổ đạt 2.51x MA20 kèm giá tăng.,,Dòng tiền/Kỹ thuật thuận lợi,Định giá hợp lý
-DIG,BAT_DONG_SAN,9490,10.52,0.8,8.2,0.0,69.16,-64.21,0,10,30,40,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-SSB,NGAN_HANG,15000,17.49,1.21,7.8,0.0,1051.97,34.96,0,10,18,28,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,Định giá hợp lý
-NVL,BAT_DONG_SAN,10350,7.9,0.59,7.4,0.0,1102.27,-195.58,0,20,30,50,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN (CẠN CUNG),Khối lượng cạn kiệt ở mức 0.59x MA20.,,Dòng tiền/Kỹ thuật thuận lợi,"Định giá rẻ, biên an toàn cao"
-VIX,CHUNG_KHOAN,11800,18.43,0.94,6.5,0.0,173.84,-92.9,0,10,18,28,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,Định giá hợp lý
-HSG,SAN_XUAT_TIEU_DUNG,10300,13.35,0.74,5.7,0.0,55.6,-36.93,0,10,30,40,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-HHV,SAN_XUAT_TIEU_DUNG,9170,8.5,0.47,5.1,0.0,171.82,13.47,0,10,30,40,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,"Định giá rẻ, biên an toàn cao"
-ORS,CHUNG_KHOAN,14000,25.42,1.12,5.0,0.0,86.39,-35.27,0,10,5,15,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,Định giá cao/Cần thận trọng
-PDR,BAT_DONG_SAN,11150,18.41,0.9,5.0,0.0,13.7,-84.04,0,10,18,28,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,Định giá hợp lý
-CTS,CHUNG_KHOAN,21300,51.32,2.0,3.9,0.0,4.98,-98.16,0,10,5,15,THEO DÕI THÊM,ĐANG GOM HÀNG,Dòng tiền duy trì ổn định trên MA20.,,Tích lũy nền dài,Định giá cao/Cần thận trọng
-EIB,NGAN_HANG,16050,156.87,1.13,0.7,0.0,144.0,-67.62,0,10,5,15,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,Định giá cao/Cần thận trọng
-DXG,BAT_DONG_SAN,9860,66.65,0.89,0.6,0.0,3.2,-98.04,0,10,5,15,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Đang siết nền tích lũy biên độ hẹp.,,Tích lũy nền dài,Định giá cao/Cần thận trọng
+﻿symbol,sector,close_price,pe,pb,roe,dividend_yield,profit_growth_yoy,fundamental_score,technical_score,valuation_score,total_score,potential_zone,technical_status,fundamental_notes
+VHM,BAT_DONG_SAN,62000,5.23,1.8,36.6,4.91,419.0,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%)
+VNM,SAN_XUAT_TIEU_DUNG_PHONG_THU,56000,10.43,3.45,31.1,8.27,17.99,50,10,18,78,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | Cổ tức tiền mặt cao (8.27%)
+MWG,CONG_NGHE_BAN_LE,72400,9.77,2.39,29.5,1.35,97.41,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tăng trưởng lõi mạnh (>=20%) | ROE xuất sắc
+LPB,NGAN_HANG,34500,8.92,2.31,26.3,8.31,28.95,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%)
+FRT,CONG_NGHE_BAN_LE,138300,23.38,5.07,25.4,0.0,110.27,50,10,5,65,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Tăng trưởng lõi mạnh (>=20%) | ROE xuất sắc
+HDB,NGAN_HANG,21900,7.63,1.7,24.8,0.0,7.02,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%)
+VIC,BAT_DONG_SAN,242000,43.18,9.61,24.0,0.0,652.31,50,10,5,65,VÙNG MUA AN TOÀN (B),ĐANG GOM HÀNG,LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%)
+MBB,NGAN_HANG,18750,5.97,1.24,21.8,4.4,42.26,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%)
+PHR,BAT_DONG_SAN,28850,8.09,1.62,21.4,2.42,291.09,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%)
+HPG,NGUYEN_VAT_LIEU_CHU_KY,20400,6.46,1.19,19.9,2.16,106.01,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Hưởng lợi chu kỳ / LN tăng mạnh | ROE chu kỳ tốt
+BID,NGAN_HANG,32000,8.05,1.37,18.0,1.22,39.2,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%)
+VRE,BAT_DONG_SAN,22950,7.39,1.08,15.1,4.16,10.58,50,10,30,90,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%)
+GMD,SAN_XUAT_TIEU_DUNG_PHONG_THU,50700,13.34,2.5,17.3,5.2,35.58,45,10,18,73,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | Cổ tức tốt (5.2%)
+BSR,SAN_XUAT_TIEU_DUNG_PHONG_THU,27100,6.94,1.66,40.5,1.09,887.13,40,10,30,80,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | Có cổ tức (1.09%)
+SHB,NGAN_HANG,10400,4.28,0.66,19.0,0.0,58.01,40,10,30,80,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng khá | ROE xuất sắc (>=18%)
+TPB,NGAN_HANG,12600,5.32,0.86,17.9,0.0,54.62,40,10,30,80,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG GOM HÀNG,Tín dụng mạnh (>=12%) | ROE tốt (>=14%)
+VPB,NGAN_HANG,21550,7.36,1.23,17.0,1.73,20.36,40,10,30,80,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%) | ROE tốt (>=14%)
+ACB,NGAN_HANG,20300,7.57,1.17,16.5,2.95,9.77,40,10,30,80,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%) | ROE tốt (>=14%)
+TCB,NGAN_HANG,21400,8.02,1.23,15.4,5.19,26.06,40,10,30,80,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%) | ROE tốt (>=14%)
+MSB,NGAN_HANG,15750,10.04,1.26,14.3,0.0,29.43,40,10,30,80,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG GOM HÀNG,Tín dụng mạnh (>=12%) | ROE tốt (>=14%)
+NKG,NGUYEN_VAT_LIEU_CHU_KY,11700,24.08,0.75,3.2,0.0,157.74,40,10,5,55,THEO DÕI THÊM,ĐANG GOM HÀNG,Hưởng lợi chu kỳ / LN tăng mạnh
+NT2,DIEN_NUOC_HA_TANG,22000,4.44,1.26,29.4,3.11,95.4,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Có chia cổ tức (3.11%) | ROE ổn định phòng thủ
+HAH,SAN_XUAT_TIEU_DUNG_PHONG_THU,48250,7.28,1.74,22.5,5.54,3.69,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN ổn định | ROE sản xuất cao (>=14%) | Cổ tức tốt (5.54%)
+MSN,SAN_XUAT_TIEU_DUNG_PHONG_THU,69400,11.29,2.46,20.0,0.0,143.98,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN tăng trưởng tốt | ROE sản xuất cao (>=14%)
+GAS,DIEN_NUOC_HA_TANG,77000,14.8,2.74,18.5,2.61,74.87,35,10,18,63,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Có chia cổ tức (2.61%) | ROE ổn định phòng thủ
+HDG,BAT_DONG_SAN,14600,6.53,0.87,11.4,3.03,937.17,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN duy trì tăng trưởng | Có lãi dương
+REE,DIEN_NUOC_HA_TANG,44950,10.28,1.26,10.9,1.89,12.26,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,Có chia cổ tức (1.89%) | ROE ổn định phòng thủ
+BCM,BAT_DONG_SAN,37150,20.42,1.77,8.7,0.0,37.16,35,10,18,63,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,LN duy trì tăng trưởng | Có lãi dương
+KBC,BAT_DONG_SAN,25950,13.98,0.94,6.5,0.0,200.47,35,10,30,75,VÙNG TÍCH SẢN ĐẦU TƯ (A+),ĐANG TÍCH LŨY NỀN,LN duy trì tăng trưởng | Có lãi dương
+TCH,BAT_DONG_SAN,11850,39.82,0.98,5.5,0.0,1232.07,35,10,5,50,THEO DÕI THÊM,ĐANG GOM HÀNG,LN duy trì tăng trưởng | Có lãi dương
+CEO,BAT_DONG_SAN,11000,34.55,1.05,3.0,0.0,34.2,35,10,5,50,THEO DÕI THÊM,ĐANG GOM HÀNG,LN duy trì tăng trưởng | Có lãi dương
+SAB,SAN_XUAT_TIEU_DUNG_PHONG_THU,41700,11.7,2.62,20.1,11.79,-9.4,30,10,18,58,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,ROE sản xuất cao (>=14%) | Cổ tức tiền mặt cao (11.79%)
+VIB,NGAN_HANG,13600,6.66,1.03,16.2,5.96,18.49,30,10,30,70,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,Tín dụng khá | ROE tốt (>=14%)
+PVT,SAN_XUAT_TIEU_DUNG_PHONG_THU,20600,7.14,1.11,12.9,0.0,40.23,28,10,30,68,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,LN tăng trưởng tốt | ROE khá
+CTG,NGAN_HANG,29750,5.86,1.2,22.3,1.03,27.71,25,10,30,65,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,ROE xuất sắc (>=18%)
+ANV,SAN_XUAT_TIEU_DUNG_PHONG_THU,16600,5.4,1.05,21.1,6.39,-27.0,25,10,30,65,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,ROE sản xuất cao (>=14%) | Cổ tức tốt (6.39%)
+IDC,BAT_DONG_SAN,32600,7.83,1.97,20.9,7.97,-44.92,25,10,30,65,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,ROE BĐS đạt chuẩn (>=12%)
+STB,NGAN_HANG,65099,81.94,1.95,2.5,0.0,-53.58,25,10,5,40,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Tín dụng mạnh (>=12%)
+FPT,CONG_NGHE_BAN_LE,50200,9.66,2.32,24.3,3.43,-5.94,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,ROE xuất sắc
+POW,DIEN_NUOC_HA_TANG,12050,6.29,0.91,15.3,0.0,363.04,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,ROE ổn định phòng thủ
+PC1,DIEN_NUOC_HA_TANG,18500,6.59,1.1,12.4,0.0,5.55,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,ROE ổn định phòng thủ
+HHV,SAN_XUAT_TIEU_DUNG_PHONG_THU,9170,8.5,0.47,5.1,0.0,13.47,20,10,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN,LN tăng trưởng tốt
+PVS,SAN_XUAT_TIEU_DUNG_PHONG_THU,29800,8.92,1.19,12.8,0.0,2.05,18,10,30,58,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,LN ổn định | ROE khá
+VHC,SAN_XUAT_TIEU_DUNG_PHONG_THU,47500,8.55,1.1,12.2,4.26,-49.65,18,10,30,58,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,ROE khá | Cổ tức tốt (4.26%)
+HVN,SAN_XUAT_TIEU_DUNG_PHONG_THU,20250,14.2,6.82,72.1,0.0,-56.34,15,10,5,30,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,ROE sản xuất cao (>=14%)
+OCB,NGAN_HANG,10150,7.15,0.87,13.0,0.01,7.0,15,10,30,55,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Tín dụng khá
+SSB,NGAN_HANG,15000,17.49,1.21,7.8,0.0,34.96,15,10,18,43,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Tín dụng khá
+MBS,CHUNG_KHOAN,14900,12.35,1.33,13.1,10.16,-5.25,10,10,30,50,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,ROE ổn định
+PNJ,CONG_NGHE_BAN_LE,15600,3.25,0.6,12.7,10.23,-152.02,10,20,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN (CẠN CUNG),ROE tốt
+SSI,CHUNG_KHOAN,18850,13.01,1.48,12.2,7.9,-23.76,10,10,30,50,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,ROE ổn định
+VCG,SAN_XUAT_TIEU_DUNG_PHONG_THU,15100,9.21,0.88,8.9,5.11,-88.77,10,10,30,50,THEO DÕI THÊM,ĐANG GOM HÀNG,Cổ tức tốt (5.11%)
+DIG,BAT_DONG_SAN,9490,10.52,0.8,8.2,0.0,-64.21,10,10,30,50,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Có lãi dương
+KDH,BAT_DONG_SAN,13300,9.76,0.91,8.2,1.31,-67.9,10,10,30,50,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Có lãi dương
+NVL,BAT_DONG_SAN,10350,7.9,0.59,7.4,0.0,-195.58,10,20,30,60,VÙNG MUA AN TOÀN (B),ĐANG TÍCH LŨY NỀN (CẠN CUNG),Có lãi dương
+HSG,NGUYEN_VAT_LIEU_CHU_KY,10300,13.35,0.74,5.7,0.0,-36.93,10,10,30,50,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,
+SZC,BAT_DONG_SAN,19000,21.66,1.14,5.1,5.17,3.81,10,10,18,38,THEO DÕI THÊM,ĐANG GOM HÀNG,Có lãi dương
+PDR,BAT_DONG_SAN,11150,18.41,0.9,5.0,0.0,-84.04,10,10,18,38,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Có lãi dương
+NLG,BAT_DONG_SAN,21150,17.29,0.85,4.2,2.21,-97.71,10,10,18,38,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Có lãi dương
+DXG,BAT_DONG_SAN,9860,66.65,0.89,0.6,0.0,-98.04,10,10,5,25,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Có lãi dương
+CTD,SAN_XUAT_TIEU_DUNG_PHONG_THU,63800,9.08,0.74,8.4,1.42,-27.17,5,10,30,45,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Có cổ tức (1.42%)
+PVD,SAN_XUAT_TIEU_DUNG_PHONG_THU,17700,18.4,0.97,5.2,1.7,-70.5,5,10,18,33,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,Có cổ tức (1.7%)
+FTS,CHUNG_KHOAN,18250,16.98,1.53,9.1,2.54,-34.99,0,20,18,38,THEO DÕI THÊM,SẴN SÀNG BREAKOUT (NỔ VOL),
+VJC,SAN_XUAT_TIEU_DUNG_PHONG_THU,132300,46.49,3.84,8.7,0.0,-46.52,0,10,5,15,THEO DÕI THÊM,ĐANG GOM HÀNG,
+HCM,CHUNG_KHOAN,23150,26.97,2.19,8.6,2.71,-32.53,0,10,5,15,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,
+VCI,CHUNG_KHOAN,18450,15.21,1.26,8.5,2.99,-12.58,0,10,30,40,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,
+BSI,CHUNG_KHOAN,27850,15.21,1.23,8.4,0.0,-23.45,0,20,30,50,THEO DÕI THÊM,SẴN SÀNG BREAKOUT (NỔ VOL),
+VIX,CHUNG_KHOAN,11800,18.43,0.94,6.5,0.0,-92.9,0,10,18,28,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,
+ORS,CHUNG_KHOAN,14000,25.42,1.12,5.0,0.0,-35.27,0,10,5,15,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,
+CTS,CHUNG_KHOAN,21300,51.32,2.0,3.9,0.0,-98.16,0,10,5,15,THEO DÕI THÊM,ĐANG GOM HÀNG,
+EIB,NGAN_HANG,16050,156.87,1.13,0.7,0.0,-67.62,0,10,5,15,THEO DÕI THÊM,ĐANG TÍCH LŨY NỀN,
