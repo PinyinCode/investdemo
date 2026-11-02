@@ -9,12 +9,27 @@ DATA_FILE = "data.json"
 OUTPUT_JSON = "screener_results.json"
 OUTPUT_CSV = "screener_summary.csv"
 
-# Phân nhóm ngành chuẩn cho VN100
+# Phân nhóm ngành chuẩn cho đủ 100 mã VN100
 SECTOR_MAPPING = {
-    "NGAN_HANG": ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB", "SSB", "LPB", "MSB", "OCB", "EIB"],
-    "CHUNG_KHOAN": ["SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"],
-    "BAT_DONG_SAN": ["VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR"],
-    "SAN_XUAT_TIEU_DUNG": ["HPG", "HSG", "NKG", "CTD", "VCG", "HHV", "FPT", "MWG", "PNJ", "FRT", "VNM", "MSN", "SAB", "GAS", "PVD", "PVS", "BSR", "POW", "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "VJC", "HVN", "VHC", "ANV"]
+    "NGAN_HANG": [
+        "ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB",
+        "SHB", "SSB", "LPB", "MSB", "OCB", "EIB", "VCB"
+    ],
+    "CHUNG_KHOAN": [
+        "SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"
+    ],
+    "BAT_DONG_SAN": [
+        "VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG",
+        "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR", "SJS", "VPI"
+    ],
+    "SAN_XUAT_TIEU_DUNG": [
+        "HPG", "HSG", "NKG", "CTD", "VCG", "HHV", "FPT", "MWG", "PNJ", "FRT",
+        "VNM", "MSN", "SAB", "GAS", "PVD", "PVS", "BSR", "POW", "REE", "PC1",
+        "NT2", "GMD", "HAH", "PVT", "VJC", "HVN", "VHC", "ANV", "BVH", "GVR",
+        "PLX", "APH", "ASM", "DBC", "DCM", "DPM", "GEX", "KDC", "LIG", "MSH",
+        "PAN", "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "DHC", "IMP", "SBA",
+        "TID", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
+    ]
 }
 
 def get_sector(symbol):
@@ -172,7 +187,7 @@ def auto_git_push():
         print(f"⚠️ Lỗi Git push: {e}")
 
 def main():
-    print("🚀 Bắt đầu chạy bộ lọc định lượng chuyên sâu (Advanced Quant Screener)...")
+    print("🚀 Bắt đầu chạy bộ lọc định lượng chuyên sâu (Advanced Quant Screener) cho VN100...")
     
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy file {DATA_FILE}")
@@ -192,10 +207,6 @@ def main():
         return
 
     # SẮP XẾP ƯU TIÊN TUYỆT ĐỐI THEO CHẤT LƯỢNG CƠ BẢN:
-    # 1. fundamental_score (Điểm cơ bản cao nhất)
-    # 2. roe (Khả năng sinh lời tốt nhất)
-    # 3. net_profit_latest (Quy mô lợi nhuận lớn nhất)
-    # 4. total_score (Tổng điểm chung dự phòng)
     results = sorted(
         results, 
         key=lambda x: (
