@@ -77,7 +77,7 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     3. "risks": Chỉ ra các rủi ro trọng yếu có thể làm xói mòn giá trị doanh nghiệp hoặc đe dọa chính sách cổ tức (3-4 câu).
     4. "outlook": Đánh giá biên an toàn (Margin of Safety) của mức định giá hiện tại (P/E {pe}, P/B {pb}) dưới góc nhìn đầu tư dài hạn (4-5 câu).
     5. "recommendation": Khuyến nghị hành động tích sản sắc bén (Ví dụ: "Tích sản dài hạn - Tỷ trọng 20%").
-    6. "price_zone": Vạch rõ chiến lược tích sản: Vùng gom giá trị (giá rẻ an toàn), Vùng chặn lỗ/quản trị rủi ro, và Kỳ vọng dài hạn.
+    6. "price_zone": Vạch rõ chiến lược tích sản dạng văn bản liền mạch (Ví dụ: "Vùng gom giá trị: dưới 20k, Vùng chặn lỗ: thủng 18k, Kỳ vọng dài hạn: tăng trưởng 25%"). TUYỆT ĐỐI KHÔNG TRẢ VỀ DẠNG DICTIONARY/OBJECT.
     7. "macro_view": Phân tích chu kỳ ngành và vĩ mô tác động đến dòng tiền của doanh nghiệp (5-6 câu).
 
     BẮT BUỘC KHÓA JSON: "bctc", "catalyst", "risks", "outlook", "recommendation", "price_zone", "macro_view".
@@ -102,7 +102,20 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
             content = re.sub(r"^```json\s*", "", content)
             content = re.sub(r"^```\s*", "", content)
             content = re.sub(r"\s*```$", "", content)
-            return json.loads(content)
+            
+            parsed_data = json.loads(content)
+            
+            # 🛡️ BỔ SUNG BƯỚC AN TOÀN: Chuẩn hóa price_zone luôn là chuỗi string
+            raw_pz = parsed_data.get("price_zone", "")
+            if isinstance(raw_pz, dict):
+                # Nếu AI lỡ trả về object, gom các giá trị lại thành chuỗi văn bản
+                parsed_data["price_zone"] = " | ".join([f"{k}: {v}" for k, v in raw_pz.items()])
+            elif isinstance(raw_pz, list):
+                parsed_data["price_zone"] = " - ".join([str(i) for i in raw_pz])
+            else:
+                parsed_data["price_zone"] = str(raw_pz)
+                
+            return parsed_data
         else:
             print(f"[{symbol}] Lỗi HTTP {response.status_code}")
     except Exception as e:
@@ -144,7 +157,6 @@ def main():
             industry_groups[sector].append(item)
 
         for sector, items in industry_groups.items():
-            # Sắp xếp ưu tiên theo điểm cơ bản & tỷ suất cổ tức cao nhất trong từng ngành
             items_sorted = sorted(
                 items, 
                 key=lambda x: (
