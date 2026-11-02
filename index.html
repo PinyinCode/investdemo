@@ -851,7 +851,7 @@
             return result;
         }
 
-        function renderChartInstance(historyDataObj) {
+                function renderChartInstance(historyDataObj) {
             const container = document.getElementById('tv-chart-container');
             container.innerHTML = '';
 
@@ -872,7 +872,7 @@
                 layout: { background: { color: '#0f172a' }, textColor: '#94a3b8' },
                 grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
                 timeScale: { borderColor: '#334155' },
-                panes: hasRSI ? [ { height: 0.7 }, { height: 0.3 } ] : undefined
+                panes: hasRSI ? [ { height: 0.7 }, { height: 0.3 } ] : undefined // Phân chia tỷ lệ không gian khung
             });
 
             candleSeriesInstance = chartInstance.addCandlestickSeries({
@@ -939,14 +939,14 @@
                     volMaSeries.setData(calculateVolumeMA(chartData, 20));
                 }
 
-                // GÁN RSI XUỐNG PANE PHÍA DƯỚI ĐỘC LẬP
+                // GÁN RSI XUỐNG PANE PHÍA DƯỚI MỘT CÁCH AN TOÀN
                 if (hasRSI) {
                     const rsiSeries = chartInstance.addLineSeries({
                         color: '#a855f7', 
                         lineWidth: 1.5, 
                         title: 'RSI(14)', 
                         priceScaleId: 'rsiScale',
-                        pane: 1
+                        pane: 1 // Đẩy xuống khung thứ 2 ở dưới
                     });
 
                     chartInstance.priceScale('rsiScale').applyOptions({
@@ -1025,6 +1025,7 @@
                 container.innerHTML = `<div class="flex items-center justify-center h-full text-slate-500 text-xs">Chưa có dữ liệu cho khung này.</div>`;
             }
         }
+
 
         function closeChartModal() {
             if (realtimeInterval) clearInterval(realtimeInterval);
