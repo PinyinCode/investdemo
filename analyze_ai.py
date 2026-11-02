@@ -11,7 +11,7 @@ ALIBABA_API_KEY = os.getenv("ALIBABA_API_KEY", "").strip()
 INPUT_SYMBOLS = os.getenv("INPUT_SYMBOLS", "").strip()
 API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
 
-# Phân nhóm ngành chuẩn chi tiết cho 7 nhóm ngành VN100
+# Phân nhóm ngành chuẩn chi tiết cho 7 nhóm ngành VN100 (Mỗi nhóm lấy Top 5)
 SECTOR_MAPPING = {
     "NGAN_HANG": [
         "ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB",
@@ -63,20 +63,19 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     total_score = screener_item.get('total_score', 0)
     fund_notes = screener_item.get('fundamental_notes', '')
 
-    # Xây dựng hướng dẫn riêng cho AI tùy theo đặc thù từng nhóm ngành
     sector_guidance = ""
     if sector == "NGAN_HANG":
-        sector_guidance = "Đặc thù ngành Ngân hàng: Tập trung đánh giá chất lượng tài sản, tăng trưởng tín dụng, biên lãi ròng (NIM) và ROE. Lưu ý chính sách cổ tức bằng cổ phiếu/giữ vốn để tăng trưởng thay vì đòi hỏi cổ tức tiền mặt cao."
+        sector_guidance = "Đặc thù ngành Ngân hàng: Tập trung đánh giá chất lượng tài sản, tăng trưởng tín dụng, biên lãi ròng (NIM) và ROE. Lưu ý chính sách giữ vốn để tăng trưởng thay vì đòi hỏi cổ tức tiền mặt cao."
     elif sector == "CHUNG_KHOAN":
         sector_guidance = "Đặc thù ngành Chứng khoán: Nhạy bén theo chu kỳ thanh khoản thị trường, mảng tự doanh, cho vay margin và doanh thu môi giới. Đánh giá khả năng quản trị rủi ro danh mục."
     elif sector == "BAT_DONG_SAN":
         sector_guidance = "Đặc thù ngành Bất động sản: Đánh giá quỹ đất sạch, năng lực pháp lý dự án, người mua trả tiền trước và cơ cấu nợ vay/đòn bẩy tài chính thay vì chỉ nhìn P/E ngắn hạn."
     elif sector == "CONG_NGHE_BAN_LE":
-        sector_guidance = "Đặc thù ngành Công nghệ & Bán lẻ: Trọng tâm là tốc độ tăng trưởng doanh thu cốt lõi, thị phần, biên lợi nhuận và tiềm năng mở rộng quy mô (Scalability)."
+        sector_guidance = "Đặc thù ngành Công nghệ & Bán lẻ: Trọng tâm là tốc độ tăng trưởng doanh thu cốt lõi, thị phần, biên lợi nhuận và tiềm năng mở rộng quy mô."
     elif sector == "DIEN_NUOC_HA_TANG":
         sector_guidance = "Đặc thù ngành Tiện ích/Hạ tầng: Dòng tiền phòng thủ ổn định, ít rủi ro suy thoái kinh tế. Trọng tâm đánh giá tính đều đặn của cổ tức tiền mặt và dòng tiền kinh doanh cốt lõi (CFO)."
     elif sector == "NGUYEN_VAT_LIEU_CHU_KY":
-        sector_guidance = "Đặc thù ngành Vật liệu chu kỳ (Thép, Hóa chất...): Nhìn nhận qua góc độ chu kỳ giá hàng hóa (commodity cycle), P/B, biên lợi nhuận gộp theo từng quý thay vì bẫy P/E thấp ở đỉnh lợi nhuận."
+        sector_guidance = "Đặc thù ngành Vật liệu chu kỳ (Thép, Hóa chất...): Nhìn nhận qua góc độ chu kỳ giá hàng hóa (commodity cycle), P/B, biên lợi nhuận gộp theo từng quý."
     else:
         sector_guidance = "Đặc thù ngành Sản xuất & Tiêu dùng: Đánh giá sức khỏe thương hiệu (Economic Moat), thị phần nội địa, hiệu quả chuỗi cung ứng và lịch sử chi trả cổ tức tiền mặt đều đặn."
 
@@ -113,7 +112,7 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     }
     
     payload = {
-        "model": "qwen-max",
+        "model": "qwen3.7-max",  # Đã chuyển sang model đời mới còn nguyên quota
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.2
     }
@@ -129,7 +128,7 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
             
             parsed_data = json.loads(content)
             
-            # 🛡️ BỔ SUNG BƯỚC AN TOÀN: Chuẩn hóa price_zone luôn là chuỗi string
+            # 🛡️ AN TOÀN TUYỆT ĐỐI: Chuẩn hóa price_zone luôn là chuỗi string để tránh [object Object]
             raw_pz = parsed_data.get("price_zone", "")
             if isinstance(raw_pz, dict):
                 parsed_data["price_zone"] = " | ".join([f"{k}: {v}" for k, v in raw_pz.items()])
@@ -170,7 +169,6 @@ def main():
             else:
                 print(f"⚠️ Mã {symbol} không có trong dữ liệu screener, bỏ qua.")
     else:
-        # Gom nhóm và phân bổ: Tất cả 7 nhóm ngành đều lấy Top 5 tiêu biểu nhất
         industry_groups = {}
         for symbol, item in screener_map.items():
             sector = get_sector(symbol)
@@ -189,7 +187,7 @@ def main():
                 ), 
                 reverse=True
             )
-            limit_count = 5  # Đồng loạt lấy Top 5 cho tất cả các nhóm ngành
+            limit_count = 5  # Lấy Top 5 cho toàn bộ 7 nhóm ngành
             selected_items = items_sorted[:limit_count]
             for itm in selected_items:
                 top_symbols_to_analyze[itm['symbol']] = sector
