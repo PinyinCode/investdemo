@@ -11,7 +11,7 @@
         "dividend_yield": 2.95,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:02:49",
+        "updated_at": "2026-11-02 20:57:38",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -136,7 +136,7 @@
         "dividend_yield": 1.22,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:02:56",
+        "updated_at": "2026-11-02 20:58:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -247,8 +247,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 30,000 - 32,000 VNĐ; Cắt lỗ: Dưới 29,000 VNĐ; Gia tăng tỷ trọng: Trên 33,000 VNĐ.",
         "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của BID dự kiến sẽ tiếp tục duy trì ở mức cao. Chính sách tiền tệ linh hoạt và nhu cầu vốn của doanh nghiệp đang thúc đẩy tăng trưởng của ngành ngân hàng. Tuy nhiên, cần theo dõi sát sao các rủi ro từ biến động lãi suất và tỷ lệ nợ xấu.",
-        "ai_updated_at": "2026-11-02 10:12:33",
-        "bctc": "BID đã chứng minh sức khỏe tài chính vững chắc với lợi nhuận mới nhất đạt 8,473 tỷ VNĐ, tăng trưởng YoY ấn tượng ở mức 39.2%. Hiệu quả sinh lời ROE đạt 18.0%, cho thấy ngân hàng đang sử dụng vốn chủ sở hữu một cách hiệu quả. Mức EPS = 4,430 VNĐ phản ánh khả năng tạo ra lợi nhuận trên mỗi cổ phiếu tốt, góp phần vào sự ổn định và tăng trưởng của BID."
+        "ai_updated_at": "2026-11-02 10:12:33"
     },
     "CTG": {
         "symbol": "CTG",
@@ -262,7 +261,7 @@
         "dividend_yield": 1.03,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:03",
+        "updated_at": "2026-11-02 20:59:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -373,8 +372,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng giá gom hợp lý từ 28.000 - 30.000 VNĐ. Mốc cắt lỗ đặt ở 27.000 VNĐ. Nếu giá vượt qua mốc 31.000 VNĐ, có thể gia tăng tỷ trọng đầu tư.",
         "macro_view": "Trong bối cảnh vĩ mô, ngành ngân hàng Việt Nam đang phải đối mặt với nhiều thách thức như áp lực tăng lãi suất và rủi ro nợ xấu. Tuy nhiên, CTG với quy mô lớn và vị thế vững chắc có thể tận dụng cơ hội từ chính sách hỗ trợ của Chính phủ và Ngân hàng Nhà nước. Năng lực cạnh tranh và quản trị rủi ro sẽ là yếu tố quyết định sự phát triển bền vững của CTG.",
-        "ai_updated_at": "2026-11-02 09:15:29",
-        "bctc": "Dựa trên BCTC quý gần nhất, CTG có tổng tài sản đạt 2.951.844,765 tỷ VNĐ, cho thấy quy mô hoạt động lớn. Tuy nhiên, dữ liệu về doanh thu/thu nhập lãi thuần và lợi nhuận sau thuế trong 4 quý gần nhất đều là 0, gây khó khăn trong việc đánh giá hiệu quả kinh doanh. Cần xem xét kỹ các chỉ số như tốc độ tăng trưởng tín dụng, biên lãi ròng (NIM), tỷ lệ nợ xấu (NPL) và tỷ lệ bao phủ nợ xấu (LLR) để có cái nhìn toàn diện hơn."
+        "ai_updated_at": "2026-11-02 09:15:29"
     },
     "TCB": {
         "symbol": "TCB",
@@ -388,7 +386,7 @@
         "dividend_yield": 5.19,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:10",
+        "updated_at": "2026-11-02 21:07:04",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -513,7 +511,7 @@
         "dividend_yield": 4.4,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:17",
+        "updated_at": "2026-11-02 21:03:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -624,8 +622,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 18,000 - 18,500 VNĐ; Cắt lỗ: Dưới 17,500 VNĐ; Gia tăng tỷ trọng: Trên 19,000 VNĐ.",
         "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của MBB dự kiến sẽ tiếp tục duy trì ở mức cao. Chính sách tiền tệ linh hoạt và nhu cầu vốn của doanh nghiệp đang thúc đẩy tăng trưởng tín dụng. Tuy nhiên, cần theo dõi sát sao các rủi ro về nợ xấu và biến động lãi suất có thể ảnh hưởng đến biên lợi nhuận.",
-        "ai_updated_at": "2026-11-02 10:12:14",
-        "bctc": "MBB đã chứng minh sức khỏe tài chính vững chắc với lợi nhuận mới nhất đạt 8,252 tỷ VNĐ, tăng trưởng YoY ấn tượng ở mức 42.26%. Hiệu quả sinh lời ROE đạt 21.8%, cho thấy ngân hàng đang sử dụng vốn chủ sở hữu một cách hiệu quả. Mức EPS 3,232 VNĐ phản ánh khả năng tạo ra lợi nhuận trên mỗi cổ phiếu tốt, góp phần vào sự ổn định và tăng trưởng của ngân hàng."
+        "ai_updated_at": "2026-11-02 10:12:14"
     },
     "STB": {
         "symbol": "STB",
@@ -639,7 +636,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:24",
+        "updated_at": "2026-11-02 21:06:49",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -764,7 +761,7 @@
         "dividend_yield": 1.73,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:31",
+        "updated_at": "2026-11-02 21:09:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -889,7 +886,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:38",
+        "updated_at": "2026-11-02 21:01:46",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1000,8 +997,7 @@
         "ai_recommendation": "Tích sản dài hạn",
         "ai_price_zone": "Vùng gom: 21,000 - 21,500 VNĐ; Cắt lỗ: Dưới 20,500 VNĐ; Gia tăng tỷ trọng: Trên 22,500 VNĐ.",
         "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của ngành ngân hàng dự kiến sẽ tiếp tục duy trì ở mức cao. HDB với vị thế vững chắc và hiệu quả hoạt động tốt có thể tận dụng cơ hội này để mở rộng quy mô và nâng cao lợi nhuận. Tuy nhiên, cần theo dõi sát sao các chính sách tiền tệ và rủi ro từ biến động lãi suất.",
-        "ai_updated_at": "2026-11-02 10:12:05",
-        "bctc": "HDB đã chứng minh sức khỏe lợi nhuận ổn định với lợi nhuận mới nhất đạt 4,066 tỷ VNĐ, tăng trưởng YoY ở mức 7.02%, cho thấy khả năng duy trì và phát triển trong điều kiện thị trường hiện tại. Hiệu quả sinh lời ROE đạt 24.8% phản ánh hiệu quả sử dụng vốn của ngân hàng. Mức EPS = 3,815 VNĐ là khá tốt, thể hiện khả năng tạo ra lợi nhuận trên mỗi cổ phiếu."
+        "ai_updated_at": "2026-11-02 10:12:05"
     },
     "VIB": {
         "symbol": "VIB",
@@ -1015,7 +1011,7 @@
         "dividend_yield": 5.96,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:45",
+        "updated_at": "2026-11-02 21:08:32",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1140,7 +1136,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:03:52",
+        "updated_at": "2026-11-02 21:07:40",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1265,7 +1261,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:03:59",
+        "updated_at": "2026-11-02 21:06:20",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1376,8 +1372,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 10,000 - 10,400 VNĐ; Cắt lỗ: Dưới 9,500 VNĐ; Gia tăng tỷ trọng: Trên 11,000 VNĐ.",
         "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của ngành ngân hàng dự kiến sẽ tiếp tục duy trì ở mức cao. SHB với tốc độ tăng trưởng tín dụng và lợi nhuận ấn tượng có thể tận dụng cơ hội này để mở rộng quy mô và nâng cao hiệu quả hoạt động. Tuy nhiên, cần theo dõi chặt chẽ các chính sách tiền tệ và rủi ro liên quan đến nợ xấu.",
-        "ai_updated_at": "2026-11-02 10:12:24",
-        "bctc": "SHB đã chứng minh sức khỏe lợi nhuận mạnh mẽ với lợi nhuận mới nhất đạt 4,119 tỷ VNĐ, tăng trưởng YoY ấn tượng ở mức 58.01%. Hiệu quả sinh lời ROE đạt 19.0%, cho thấy ngân hàng đang sử dụng vốn chủ sở hữu một cách hiệu quả. Mức EPS = 2,796 VNĐ phản ánh khả năng tạo ra lợi nhuận trên mỗi cổ phiếu tốt, góp phần vào sự ổn định và tăng trưởng của ngân hàng."
+        "ai_updated_at": "2026-11-02 10:12:24"
     },
     "SSB": {
         "symbol": "SSB",
@@ -1391,7 +1386,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:04:06",
+        "updated_at": "2026-11-02 21:06:34",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2017,7 +2012,7 @@
         "dividend_yield": 7.9,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:04:42",
+        "updated_at": "2026-11-02 21:06:42",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2128,8 +2123,7 @@
         "ai_recommendation": "Theo dõi ngắn hạn, chờ cơ hội",
         "ai_price_zone": "Vùng gom: 18,000 - 18,500 VNĐ; Cắt lỗ: Dưới 17,500 VNĐ; Gia tăng tỷ trọng: Trên 19,500 VNĐ",
         "macro_view": "Trong bối cảnh kinh tế vĩ mô, ngành chứng khoán đang chịu áp lực do biến động của thị trường tài chính toàn cầu. Tuy nhiên, triển vọng dài hạn vẫn tích cực với các chính sách hỗ trợ từ Chính phủ. SSI, với vị thế hàng đầu, có tiềm năng phục hồi mạnh mẽ khi thị trường ổn định trở lại. Cần theo dõi sát sao các yếu tố vĩ mô và nội bộ để nắm bắt cơ hội.",
-        "ai_updated_at": "2026-11-02 10:12:50",
-        "bctc": "SSI đang thể hiện sức khỏe lợi nhuận ổn định với mức EPS đạt 1,483 VNĐ, tương đương ROE là 12.2%, cho thấy hiệu quả sử dụng vốn chủ sở hữu tốt. Tuy nhiên, tốc độ tăng trưởng YoY giảm 23.76% so với cùng kỳ năm trước, phản ánh áp lực từ thị trường chung. Lợi nhuận mới nhất đạt 1,125 tỷ VNĐ, nhưng xu hướng giảm cần được theo dõi chặt chẽ để đánh giá khả năng phục hồi."
+        "ai_updated_at": "2026-11-02 10:12:50"
     },
     "VCI": {
         "symbol": "VCI",
@@ -2143,7 +2137,7 @@
         "dividend_yield": 2.99,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:04:49",
+        "updated_at": "2026-11-02 21:08:03",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2268,7 +2262,7 @@
         "dividend_yield": 2.71,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:04:55",
+        "updated_at": "2026-11-02 21:01:39",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2393,7 +2387,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:05:02",
+        "updated_at": "2026-11-02 21:08:47",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2518,7 +2512,7 @@
         "dividend_yield": 10.16,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:05:09",
+        "updated_at": "2026-11-02 21:03:23",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2629,8 +2623,7 @@
         "ai_recommendation": "Tích sản giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 14,000 - 14,500 VNĐ; Cắt lỗ: Dưới 13,500 VNĐ; Gia tăng tỷ trọng: Trên 15,500 VNĐ.",
         "macro_view": "Ngành chứng khoán đang chịu áp lực từ nhiều yếu tố vĩ mô như lãi suất và tình hình kinh tế vĩ mô. Tuy nhiên, MBS với vị thế vững chắc và hiệu quả hoạt động tốt có thể vượt qua những thách thức này. Triển vọng dài hạn của MBS phụ thuộc vào khả năng thích ứng và tận dụng cơ hội từ thị trường.",
-        "ai_updated_at": "2026-11-02 10:12:41",
-        "bctc": "MBS đang thể hiện sức khỏe lợi nhuận ổn định với lợi nhuận ròng mới nhất đạt 315 tỷ VNĐ, mặc dù tốc độ tăng trưởng YoY giảm 5.25%. ROE ở mức 13.1% cho thấy hiệu quả sử dụng vốn cổ đông khá tốt. EPS đạt 1,214 VNĐ, phản ánh khả năng sinh lời trên mỗi cổ phiếu vẫn duy trì ở mức chấp nhận được."
+        "ai_updated_at": "2026-11-02 10:12:41"
     },
     "FTS": {
         "symbol": "FTS",
@@ -2644,7 +2637,7 @@
         "dividend_yield": 2.54,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.53x MA20 kèm giá tăng.",
-        "updated_at": "2026-11-02 15:05:16",
+        "updated_at": "2026-11-02 21:00:46",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2755,8 +2748,7 @@
         "ai_recommendation": "Theo dõi ngắn hạn, mua dài hạn",
         "ai_price_zone": "Vùng gom: 17,000 - 17,500 VNĐ; Cắt lỗ: Dưới 16,500 VNĐ; Gia tăng tỷ trọng: Trên 18,500 VNĐ.",
         "macro_view": "Ngành chứng khoán thường nhạy cảm với biến động thị trường và điều kiện kinh tế vĩ mô. Hiện tại, mặc dù FTS đang đối mặt với thách thức về tăng trưởng, nhưng nếu nền kinh tế phục hồi, thanh khoản thị trường cải thiện, triển vọng của FTS có thể sẽ tốt hơn. Cần chú ý đến các chính sách tài chính và xu hướng đầu tư của nhà đầu tư trong thời gian tới.",
-        "ai_updated_at": "2026-11-02 10:12:59",
-        "bctc": "Lợi nhuận ròng mới nhất của FTS đạt 36 tỷ VNĐ, giảm 34.99% so với cùng kỳ năm trước, cho thấy công ty đang gặp khó khăn trong việc duy trì mức tăng trưởng. Tuy nhiên, ROE vẫn ở mức chấp nhận được là 9.1%, thể hiện hiệu quả sử dụng vốn chủ sở hữu. EPS đạt 1,054 VNĐ, tương đương với P/E = 16.98, phản ánh mức giá cổ phiếu có thể đã phản ánh phần nào triển vọng lợi nhuận."
+        "ai_updated_at": "2026-11-02 10:12:59"
     },
     "BSI": {
         "symbol": "BSI",
@@ -2770,7 +2762,7 @@
         "dividend_yield": 0.0,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.51x MA20 kèm giá tăng.",
-        "updated_at": "2026-11-02 15:05:23",
+        "updated_at": "2026-11-02 20:58:32",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2895,7 +2887,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:05:30",
+        "updated_at": "2026-11-02 20:59:24",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3020,7 +3012,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:05:37",
+        "updated_at": "2026-11-02 21:04:29",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3145,7 +3137,7 @@
         "dividend_yield": 4.91,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:05:44",
+        "updated_at": "2026-11-02 21:08:25",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3256,8 +3248,7 @@
         "ai_recommendation": "Tích lũy dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 58,000 - 60,000 VNĐ; Cắt lỗ: Dưới 55,000 VNĐ; Gia tăng tỷ trọng: Trên 65,000 VNĐ. Chiến lược này giúp tối ưu hóa lợi nhuận và giảm thiểu rủi ro trong bối cảnh thị trường hiện nay.",
         "macro_view": "Ngành bất động sản Việt Nam đang trải qua giai đoạn phục hồi mạnh mẽ sau đại dịch, với nhu cầu nhà ở và đầu tư tăng cao. Chính sách hỗ trợ từ chính phủ, như giảm lãi suất và thúc đẩy phát triển hạ tầng, cũng góp phần thúc đẩy tăng trưởng. Trong bối cảnh này, VHM với lợi nhuận và tăng trưởng ấn tượng có cơ hội lớn để tiếp tục mở rộng và duy trì vị thế hàng đầu.",
-        "ai_updated_at": "2026-11-02 10:11:09",
-        "bctc": "Với lợi nhuận mới nhất đạt 23,021 tỷ VNĐ và tăng trưởng YoY lên đến 419.0%, VHM đang thể hiện sức mạnh vượt trội trong khả năng sinh lời. ROE ở mức 36.6% cho thấy hiệu quả sử dụng vốn cổ đông rất cao, đồng thời EPS = 12,038 VNĐ phản ánh mức lợi nhuận trên mỗi cổ phiếu hấp dẫn, củng cố vị thế của VHM trong ngành bất động sản."
+        "ai_updated_at": "2026-11-02 10:11:09"
     },
     "VIC": {
         "symbol": "VIC",
@@ -3271,7 +3262,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:05:51",
+        "updated_at": "2026-11-02 21:08:39",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3382,8 +3373,7 @@
         "ai_recommendation": "Tích sản dài hạn",
         "ai_price_zone": "Vùng gom: 230,000 - 240,000 VNĐ; Cắt lỗ: Dưới 220,000 VNĐ; Gia tăng tỷ trọng: Trên 250,000 VNĐ.",
         "macro_view": "Ngành bất động sản đang trải qua giai đoạn phục hồi sau những khó khăn do đại dịch. Chính sách hỗ trợ từ chính phủ và nhu cầu nhà ở tăng cao tạo điều kiện thuận lợi cho VIC. Tuy nhiên, rủi ro từ biến động lãi suất và chính sách vĩ mô vẫn cần được theo dõi chặt chẽ.",
-        "ai_updated_at": "2026-11-02 10:11:17",
-        "bctc": "Lợi nhuận mới nhất của VIC đạt 22,760 tỷ VNĐ, tăng trưởng YoY lên đến 652.31%, cho thấy sự phục hồi mạnh mẽ và khả năng sinh lời vượt trội. ROE ở mức 24.0% phản ánh hiệu quả sử dụng vốn cổ đông tốt, trong khi EPS là 5,581 VNĐ, tương đương với mức lợi nhuận trên mỗi cổ phiếu khá hấp dẫn."
+        "ai_updated_at": "2026-11-02 10:11:17"
     },
     "VRE": {
         "symbol": "VRE",
@@ -3397,7 +3387,7 @@
         "dividend_yield": 4.16,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:05:58",
+        "updated_at": "2026-11-02 21:09:38",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3522,7 +3512,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.59x MA20.",
-        "updated_at": "2026-11-02 15:06:05",
+        "updated_at": "2026-11-02 21:04:22",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3647,7 +3637,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:06:12",
+        "updated_at": "2026-11-02 21:04:51",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3772,7 +3762,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:06:19",
+        "updated_at": "2026-11-02 21:00:01",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3897,7 +3887,7 @@
         "dividend_yield": 2.21,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:06:26",
+        "updated_at": "2026-11-02 21:04:00",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4022,7 +4012,7 @@
         "dividend_yield": 1.31,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:06:33",
+        "updated_at": "2026-11-02 21:03:01",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4147,7 +4137,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:06:40",
+        "updated_at": "2026-11-02 20:58:54",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -4272,7 +4262,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:06:47",
+        "updated_at": "2026-11-02 21:00:24",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4397,7 +4387,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:06:54",
+        "updated_at": "2026-11-02 21:07:18",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4522,7 +4512,7 @@
         "dividend_yield": 3.03,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:07:01",
+        "updated_at": "2026-11-02 21:01:53",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -4633,8 +4623,7 @@
         "ai_recommendation": "Tích sản dài hạn",
         "ai_price_zone": "Vùng gom: 14,000 - 14,500 VNĐ; Cắt lỗ: Dưới 13,500 VNĐ; Gia tăng tỷ trọng: Trên 15,000 VNĐ.",
         "macro_view": "Ngành Bất động sản đang trong giai đoạn phục hồi sau những khó khăn do đại dịch. Chính sách hỗ trợ từ chính phủ và nhu cầu nhà ở tăng cao tạo điều kiện thuận lợi cho sự phát triển của HDG. Tuy nhiên, rủi ro về lãi suất và chính sách vĩ mô vẫn cần được theo dõi chặt chẽ.",
-        "ai_updated_at": "2026-11-02 09:42:03",
-        "bctc": "HDG đã ghi nhận lợi nhuận mới nhất ở mức 282 tỷ VNĐ, với tốc độ tăng trưởng YoY lên đến 937.17%, cho thấy sự phục hồi mạnh mẽ và khả năng sinh lời tốt. Tuy nhiên, EPS hiện tại là 0 VNĐ, có thể do việc phát hành thêm cổ phiếu hoặc các yếu tố khác. ROE đạt 11.4%, phản ánh hiệu quả sử dụng vốn của công ty."
+        "ai_updated_at": "2026-11-02 09:42:03"
     },
     "KBC": {
         "symbol": "KBC",
@@ -4648,7 +4637,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:07:08",
+        "updated_at": "2026-11-02 21:02:46",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4759,8 +4748,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 24,000 - 26,000 VNĐ; Cắt lỗ: Dưới 23,000 VNĐ; Gia tăng tỷ trọng: Trên 27,000 VNĐ.",
         "macro_view": "Ngành bất động sản đang chịu ảnh hưởng bởi các chính sách thắt chặt tín dụng và kiểm soát thị trường, nhưng nhu cầu nhà ở vẫn ổn định. KBC với lợi nhuận tăng trưởng mạnh và định giá hợp lý có thể tận dụng được cơ hội từ nhu cầu thị trường. Tuy nhiên, cần theo dõi sát sao các chính sách vĩ mô và biến động thị trường.",
-        "ai_updated_at": "2026-11-02 10:25:02",
-        "bctc": "KBC đã ghi nhận lợi nhuận mới nhất ở mức 937 tỷ VNĐ, tăng trưởng YoY lên đến 200.47%, cho thấy sự phục hồi mạnh mẽ và khả năng sinh lời tốt. Tuy nhiên, ROE chỉ ở mức 6.5%, thấp hơn so với mặt bằng chung của ngành, phản ánh hiệu quả sử dụng vốn chưa thực sự cao. EPS đạt 1,859 VNĐ, tương đương với P/E là 13.98, cho thấy mức định giá hợp lý."
+        "ai_updated_at": "2026-11-02 10:25:02"
     },
     "IDC": {
         "symbol": "IDC",
@@ -4774,7 +4762,7 @@
         "dividend_yield": 7.97,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:07:15",
+        "updated_at": "2026-11-02 21:02:31",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4899,7 +4887,7 @@
         "dividend_yield": 5.17,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:07:22",
+        "updated_at": "2026-11-02 21:06:56",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5024,7 +5012,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:07:30",
+        "updated_at": "2026-11-02 20:58:09",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5149,7 +5137,7 @@
         "dividend_yield": 2.42,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:07:37",
+        "updated_at": "2026-11-02 21:04:59",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -5260,8 +5248,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 27,000 - 28,500 VNĐ; Cắt lỗ: Dưới 26,000 VNĐ; Gia tăng tỷ trọng: Trên 29,500 VNĐ.",
         "macro_view": "Ngành bất động sản đang trải qua giai đoạn phục hồi sau thời kỳ suy thoái do đại dịch. Chính sách hỗ trợ từ chính phủ và nhu cầu nhà ở tăng cao sẽ thúc đẩy tăng trưởng. PHR với lợi nhuận và tăng trưởng mạnh mẽ có thể tận dụng cơ hội này để mở rộng thị trường và nâng cao giá trị cổ đông.",
-        "ai_updated_at": "2026-11-02 10:11:29",
-        "bctc": "Công ty PHR đã đạt được lợi nhuận mới nhất là 370 tỷ VNĐ, với tốc độ tăng trưởng YoY lên đến 291.09%, cho thấy sự phục hồi mạnh mẽ và khả năng sinh lời tốt. ROE ở mức 21.4% phản ánh hiệu quả sử dụng vốn của công ty, trong khi EPS = 6,901 VNĐ thể hiện sức mạnh thu nhập trên mỗi cổ phiếu, góp phần vào giá trị thực của cổ phiếu."
+        "ai_updated_at": "2026-11-02 10:11:29"
     },
     "HPG": {
         "symbol": "HPG",
@@ -5275,7 +5262,7 @@
         "dividend_yield": 2.16,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:07:44",
+        "updated_at": "2026-11-02 21:02:08",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5400,7 +5387,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:07:51",
+        "updated_at": "2026-11-02 21:02:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5525,7 +5512,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:07:58",
+        "updated_at": "2026-11-02 21:03:53",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5650,7 +5637,7 @@
         "dividend_yield": 1.42,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:08:05",
+        "updated_at": "2026-11-02 20:59:09",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -5775,7 +5762,7 @@
         "dividend_yield": 5.11,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:08:12",
+        "updated_at": "2026-11-02 21:07:55",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5900,7 +5887,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:08:19",
+        "updated_at": "2026-11-02 21:02:01",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -6025,7 +6012,7 @@
         "dividend_yield": 3.43,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:08:26",
+        "updated_at": "2026-11-02 21:00:32",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6150,7 +6137,7 @@
         "dividend_yield": 1.35,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:08:33",
+        "updated_at": "2026-11-02 21:03:45",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6261,8 +6248,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 68,000 - 70,000 VNĐ; Cắt lỗ: Dưới 65,000 VNĐ; Gia tăng tỷ trọng: Trên 75,000 VNĐ.",
         "macro_view": "Ngành sản xuất/bán lẻ tiêu dùng đang phục hồi mạnh mẽ sau đại dịch, với nhu cầu tiêu dùng trong nước tăng cao. MWG, với vị thế hàng đầu, sẽ tiếp tục tận dụng xu hướng này. Tăng trưởng GDP và thu nhập bình quân đầu người cũng hỗ trợ triển vọng của MWG.",
-        "ai_updated_at": "2026-11-02 09:58:34",
-        "bctc": "MWG đã chứng minh sức mạnh lợi nhuận đáng kinh ngạc với mức tăng trưởng YoY lên đến 97.41%, đạt 3,521 tỷ VNĐ. Hiệu quả ROE ở mức 29.5% cho thấy khả năng sinh lời vượt trội so với ngành. Tuy nhiên, EPS = 0 VNĐ có thể phản ánh việc công ty đang tái đầu tư vào hoạt động kinh doanh hoặc có sự thay đổi về cấu trúc vốn."
+        "ai_updated_at": "2026-11-02 09:58:34"
     },
     "PNJ": {
         "symbol": "PNJ",
@@ -6276,7 +6262,7 @@
         "dividend_yield": 10.23,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.67x MA20.",
-        "updated_at": "2026-11-02 15:08:40",
+        "updated_at": "2026-11-02 21:05:13",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6401,7 +6387,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:08:47",
+        "updated_at": "2026-11-02 21:00:39",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6526,7 +6512,7 @@
         "dividend_yield": 8.27,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:08:54",
+        "updated_at": "2026-11-02 21:09:01",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6637,8 +6623,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng giá gom hợp lý: 50,000 - 55,000 VNĐ. Mốc cắt lỗ: 48,000 VNĐ. Gia tăng tỷ trọng khi giá giảm về vùng 50,000 - 52,000 VNĐ.",
         "macro_view": "Ngành sản xuất tiêu dùng đang chịu ảnh hưởng bởi biến động kinh tế vĩ mô, nhưng VNM vẫn duy trì vị thế cạnh tranh mạnh mẽ. Dòng tiền ổn định và hiệu quả quản lý tài chính là điểm mạnh của VNM. Triển vọng ngành trong trung hạn vẫn tích cực, đặc biệt khi nhu cầu tiêu dùng nội địa tiếp tục tăng.",
-        "ai_updated_at": "2026-11-02 09:17:59",
-        "bctc": "Dựa trên BCTC quý gần nhất, VNM có tài sản ngắn hạn đạt 408.025 tỷ VNĐ, cho thấy khả năng thanh khoản tốt. Tuy nhiên, doanh thu và lợi nhuận sau thuế trong 4 quý gần nhất đều bằng 0, điều này cần được xem xét kỹ lưỡng. Cần phân tích thêm về biên lợi nhuận gộp, vòng quay hàng tồn kho, đòn bẩy tài chính (tỷ lệ Nợ vay/Vốn chủ sở hữu) và dòng tiền thuần từ hoạt động kinh doanh (CFO) để đánh giá toàn diện."
+        "ai_updated_at": "2026-11-02 09:17:59"
     },
     "MSN": {
         "symbol": "MSN",
@@ -6652,7 +6637,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:01",
+        "updated_at": "2026-11-02 21:03:38",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6777,7 +6762,7 @@
         "dividend_yield": 11.79,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:08",
+        "updated_at": "2026-11-02 21:05:58",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6902,7 +6887,7 @@
         "dividend_yield": 2.61,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:16",
+        "updated_at": "2026-11-02 21:00:54",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7027,7 +7012,7 @@
         "dividend_yield": 1.7,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:25",
+        "updated_at": "2026-11-02 21:05:28",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7152,7 +7137,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:32",
+        "updated_at": "2026-11-02 21:05:36",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7277,7 +7262,7 @@
         "dividend_yield": 1.09,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:39",
+        "updated_at": "2026-11-02 20:58:39",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7388,8 +7373,7 @@
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 25,000 - 27,000 VNĐ; Cắt lỗ: Dưới 24,000 VNĐ; Gia tăng tỷ trọng: Trên 28,000 VNĐ",
         "macro_view": "Ngành sản xuất tiêu dùng đang chứng kiến sự phục hồi mạnh mẽ sau đại dịch, với nhu cầu trong nước tăng cao. BSR, với vị thế vững chắc trong ngành, có thể tận dụng xu hướng này để duy trì và mở rộng quy mô kinh doanh. Triển vọng vĩ mô ổn định, cùng với chính sách hỗ trợ từ Chính phủ, sẽ tiếp tục thúc đẩy tăng trưởng của ngành và doanh nghiệp.",
-        "ai_updated_at": "2026-11-02 09:58:05",
-        "bctc": "BSR đã ghi nhận lợi nhuận mới nhất đạt 8,969 tỷ VNĐ, tăng trưởng mạnh mẽ 887.13% so với cùng kỳ năm trước, cho thấy sự phục hồi nhanh chóng và hiệu quả hoạt động của doanh nghiệp. Tuy nhiên, EPS được báo cáo là 0 VNĐ có thể do việc phát hành thêm cổ phiếu hoặc các yếu tố khác cần được làm rõ. Hiệu quả ROE đạt 40.5%, phản ánh khả năng sinh lời vượt trội từ vốn chủ sở hữu, một dấu hiệu tích cực cho sức khỏe tài chính."
+        "ai_updated_at": "2026-11-02 09:58:05"
     },
     "POW": {
         "symbol": "POW",
@@ -7403,7 +7387,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:46",
+        "updated_at": "2026-11-02 21:05:21",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -7528,7 +7512,7 @@
         "dividend_yield": 1.89,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:09:53",
+        "updated_at": "2026-11-02 21:05:50",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7653,7 +7637,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:00",
+        "updated_at": "2026-11-02 21:04:44",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7778,7 +7762,7 @@
         "dividend_yield": 3.11,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:07",
+        "updated_at": "2026-11-02 21:04:07",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7889,8 +7873,7 @@
         "ai_recommendation": "Tích lũy dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 20,000 - 22,000 VNĐ; Cắt lỗ: Dưới 19,000 VNĐ; Gia tăng tỷ trọng: Trên 23,000 VNĐ. Chiến lược này giúp tối ưu hóa lợi nhuận và giảm thiểu rủi ro.",
         "macro_view": "Ngành sản xuất tiêu dùng đang có triển vọng tích cực nhờ vào nhu cầu nội địa ổn định và xu hướng tiêu dùng ngày càng tăng. NT2, với vị thế vững chắc, sẽ tiếp tục hưởng lợi từ những yếu tố vĩ mô này. Tuy nhiên, cần theo dõi sát sao các biến động về chính sách kinh tế và cạnh tranh để đảm bảo chiến lược đầu tư phù hợp.",
-        "ai_updated_at": "2026-11-02 10:10:12",
-        "bctc": "NT2 đang thể hiện sức khỏe lợi nhuận mạnh mẽ với lợi nhuận mới nhất đạt 419 tỷ VNĐ, tăng trưởng YoY lên đến 95.4%, cho thấy sự phục hồi nhanh chóng và hiệu quả hoạt động. ROE ở mức 29.4% phản ánh khả năng sinh lời vượt trội so với ngành, đồng thời EPS = 5,068 VNĐ cũng là một chỉ số tích cực, cho thấy công ty đang tạo ra giá trị đáng kể cho cổ đông."
+        "ai_updated_at": "2026-11-02 10:10:12"
     },
     "GMD": {
         "symbol": "GMD",
@@ -7904,7 +7887,7 @@
         "dividend_yield": 5.2,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:14",
+        "updated_at": "2026-11-02 21:01:09",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8029,7 +8012,7 @@
         "dividend_yield": 5.54,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:21",
+        "updated_at": "2026-11-02 21:01:31",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8154,7 +8137,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:28",
+        "updated_at": "2026-11-02 21:05:43",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8279,7 +8262,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 15:10:35",
+        "updated_at": "2026-11-02 21:08:54",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -8404,7 +8387,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:42",
+        "updated_at": "2026-11-02 21:02:24",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8515,8 +8498,7 @@
         "ai_recommendation": "Chờ chiết khấu",
         "ai_price_zone": "Vùng giá gom hợp lý: 18,000 - 19,000 VNĐ. Mốc cắt lỗ: 17,000 VNĐ. Gia tăng tỷ trọng nếu giá giảm xuống dưới 18,000 VNĐ.",
         "macro_view": "Ngành sản xuất tiêu dùng đang chịu ảnh hưởng bởi nhiều yếu tố vĩ mô như lạm phát, lãi suất và sức mua của người dân. HVN với vị thế là một trong những công ty hàng đầu trong ngành, có tiềm năng tăng trưởng tốt nhưng cũng cần lưu ý rủi ro từ biến động thị trường. Triển vọng ngành trong dài hạn vẫn tích cực, nhưng ngắn hạn cần theo dõi sát sao các yếu tố vĩ mô.",
-        "ai_updated_at": "2026-11-02 09:18:17",
-        "bctc": "Dựa trên BCTC quý gần nhất, HVN có tài sản ngắn hạn lên đến 40.179 tỷ VNĐ, cho thấy khả năng thanh khoản tốt trong ngắn hạn. Tuy nhiên, dữ liệu về doanh thu và lợi nhuận sau thuế của 4 quý gần nhất đều là 0, gây khó khăn trong việc đánh giá hiệu quả hoạt động kinh doanh. Cần xem xét kỹ hơn các chỉ số như biên lợi nhuận gộp, vòng quay hàng tồn kho, đòn bẩy tài chính (tỷ lệ Nợ vay/Vốn chủ sở hữu) và dòng tiền thuần từ hoạt động kinh doanh (CFO) để có cái nhìn toàn diện."
+        "ai_updated_at": "2026-11-02 09:18:17"
     },
     "VHC": {
         "symbol": "VHC",
@@ -8530,7 +8512,7 @@
         "dividend_yield": 4.26,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:49",
+        "updated_at": "2026-11-02 21:08:17",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8655,7 +8637,7 @@
         "dividend_yield": 6.39,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 15:10:56",
+        "updated_at": "2026-11-02 20:57:46",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8767,5 +8749,665 @@
         "ai_price_zone": "Vùng giá gom hợp lý từ 15000 - 16000 VNĐ. Nếu giá giảm xuống dưới 15000 VNĐ, đây là vùng giá rất hấp dẫn để gia tăng tỷ trọng. Mốc chặn lỗ đặt ở 14500 VNĐ. Khi giá xác nhận breakout trên 17000 VNĐ, có thể xem xét mua thêm.",
         "macro_view": "Bối cảnh vĩ mô hiện tại với lãi suất ổn định và tỷ giá USD/VND không biến động quá lớn tạo điều kiện thuận lợi cho hoạt động sản xuất và kinh doanh của ANV. Giá thép thế giới có xu hướng tăng nhẹ, nhưng ANV đã chuẩn bị sẵn nguồn cung ổn định và đa dạng hóa nhà cung cấp. Triển vọng ngành thép vẫn tích cực, đặc biệt khi nhu cầu xây dựng và hạ tầng tiếp tục tăng. Chuyển đổi số và năng lượng sạch cũng là xu hướng mà ANV đang đầu tư, giúp nâng cao hiệu quả sản xuất và giảm chi phí. Địa chính trị ổn định trong khu vực cũng hỗ trợ cho sự phát triển bền vững của công ty.",
         "ai_updated_at": "2026-10-31 15:24:45"
+    },
+    "APH": {
+        "symbol": "APH",
+        "close": 6700,
+        "volume": 473100,
+        "pe": 6.79,
+        "pb": 0.6,
+        "eps": 1004,
+        "roe": 4.1,
+        "roa": 1.9,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:57:54",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "ASM": {
+        "symbol": "ASM",
+        "close": 4370,
+        "volume": 482900,
+        "pe": 13.01,
+        "pb": 0.33,
+        "eps": 348,
+        "roe": 1.7,
+        "roa": 0.6,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:58:01",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "BMP": {
+        "symbol": "BMP",
+        "close": 136200,
+        "volume": 91700,
+        "pe": 8.99,
+        "pb": 3.55,
+        "eps": 15292,
+        "roe": 41.1,
+        "roa": 34.3,
+        "dividend_yield": 10.81,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:58:24",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "BVH": {
+        "symbol": "BVH",
+        "close": 66300,
+        "volume": 1047000,
+        "pe": 15.43,
+        "pb": 2.0,
+        "eps": 4472,
+        "roe": 12.9,
+        "roa": 1.1,
+        "dividend_yield": 1.57,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:58:47",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "CSM": {
+        "symbol": "CSM",
+        "close": 11800,
+        "volume": 111200,
+        "pe": 22.09,
+        "pb": 0.9,
+        "eps": -34,
+        "roe": -0.3,
+        "roa": -0.1,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:59:01",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "DBC": {
+        "symbol": "DBC",
+        "close": 15200,
+        "volume": 2160100,
+        "pe": 6.56,
+        "pb": 0.76,
+        "eps": 2347,
+        "roe": 12.1,
+        "roa": 6.1,
+        "dividend_yield": 1.13,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:59:31",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "DCM": {
+        "symbol": "DCM",
+        "close": 32200,
+        "volume": 2437800,
+        "pe": 6.49,
+        "pb": 1.49,
+        "eps": 5131,
+        "roe": 24.2,
+        "roa": 14.3,
+        "dividend_yield": 6.01,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:59:39",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "DHC": {
+        "symbol": "DHC",
+        "close": 36500,
+        "volume": 835700,
+        "pe": 6.53,
+        "pb": 1.59,
+        "eps": 5637,
+        "roe": 25.4,
+        "roa": 15.7,
+        "dividend_yield": 4.94,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:59:46",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "DHG": {
+        "symbol": "DHG",
+        "close": 84800,
+        "volume": 19500,
+        "pe": 13.33,
+        "pb": 3.23,
+        "eps": 6519,
+        "roe": 21.8,
+        "roa": 16.8,
+        "dividend_yield": 11.51,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 20:59:54",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "DPM": {
+        "symbol": "DPM",
+        "close": 19350,
+        "volume": 5036300,
+        "pe": 8.79,
+        "pb": 1.22,
+        "eps": 2319,
+        "roe": 13.7,
+        "roa": 8.6,
+        "dividend_yield": 7.29,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:00:09",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "DRC": {
+        "symbol": "DRC",
+        "close": 8970,
+        "volume": 188000,
+        "pe": 14.13,
+        "pb": 0.73,
+        "eps": 643,
+        "roe": 5.2,
+        "roa": 2.5,
+        "dividend_yield": 5.47,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:00:16",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "GEX": {
+        "symbol": "GEX",
+        "close": 21750,
+        "volume": 9684700,
+        "pe": 29.14,
+        "pb": 1.45,
+        "eps": 761,
+        "roe": 3.1,
+        "roa": 1.3,
+        "dividend_yield": 2.49,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:01:01",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "GVR": {
+        "symbol": "GVR",
+        "close": 29100,
+        "volume": 3867200,
+        "pe": 17.84,
+        "pb": 2.07,
+        "eps": 1751,
+        "roe": 10.9,
+        "roa": 8.1,
+        "dividend_yield": 1.28,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:01:16",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "HAG": {
+        "symbol": "HAG",
+        "close": 13950,
+        "volume": 5613200,
+        "pe": 5.41,
+        "pb": 1.14,
+        "eps": 2615,
+        "roe": 23.3,
+        "roa": 12.3,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:01:24",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "IMP": {
+        "symbol": "IMP",
+        "close": 35000,
+        "volume": 4800,
+        "pe": 15.01,
+        "pb": 2.27,
+        "eps": 2385,
+        "roe": 15.8,
+        "roa": 12.7,
+        "dividend_yield": 1.68,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:02:38",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "KDC": {
+        "symbol": "KDC",
+        "close": 50200,
+        "volume": 61500,
+        "pe": 24.83,
+        "pb": 2.4,
+        "eps": 1927,
+        "roe": 7.8,
+        "roa": 4.2,
+        "dividend_yield": 2.51,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:02:53",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "LIG": {
+        "symbol": "LIG",
+        "close": 3100,
+        "volume": 49300,
+        "pe": 25.42,
+        "pb": 0.3,
+        "eps": 121,
+        "roe": 0.9,
+        "roa": 0.2,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
+        "price_zone": "Khối lượng cạn kiệt ở mức 0.60x MA20.",
+        "updated_at": "2026-11-02 21:03:08",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "MSH": {
+        "symbol": "MSH",
+        "close": 34950,
+        "volume": 264400,
+        "pe": 6.21,
+        "pb": 1.95,
+        "eps": 5631,
+        "roe": 27.2,
+        "roa": 13.3,
+        "dividend_yield": 16.75,
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 21:03:31",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "NTC": {
+        "symbol": "NTC",
+        "close": 127000,
+        "volume": 22200,
+        "pe": 9.48,
+        "pb": 2.05,
+        "eps": 13505,
+        "roe": 24.6,
+        "roa": 5.2,
+        "dividend_yield": 0.08,
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 21:04:14",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "PAN": {
+        "symbol": "PAN",
+        "close": 16600,
+        "volume": 1170900,
+        "pe": 3.46,
+        "pb": 0.77,
+        "eps": 4918,
+        "roe": 13.4,
+        "roa": 7.5,
+        "dividend_yield": 14.7,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:04:37",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "PLX": {
+        "symbol": "PLX",
+        "close": 33000,
+        "volume": 3447500,
+        "pe": 13.45,
+        "pb": 1.78,
+        "eps": 2528,
+        "roe": 11.1,
+        "roa": 3.5,
+        "dividend_yield": 3.29,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:05:06",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "SBA": {
+        "symbol": "SBA",
+        "close": 23600,
+        "volume": 900,
+        "pe": 10.7,
+        "pb": 1.49,
+        "eps": 2316,
+        "roe": 13.7,
+        "roa": 12.6,
+        "dividend_yield": 7.21,
+        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
+        "price_zone": "Khối lượng cạn kiệt ở mức 0.21x MA20.",
+        "updated_at": "2026-11-02 21:06:05",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "SBT": {
+        "symbol": "SBT",
+        "close": 20700,
+        "volume": 1096000,
+        "pe": 22.98,
+        "pb": 1.64,
+        "eps": 907,
+        "roe": 7.1,
+        "roa": 2.3,
+        "dividend_yield": 0.48,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:06:12",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "SJS": {
+        "symbol": "SJS",
+        "close": 53200,
+        "volume": 24200,
+        "pe": 10.0,
+        "pb": 3.33,
+        "eps": 5441,
+        "roe": 42.5,
+        "roa": 19.8,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:06:27",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "TCD": {
+        "symbol": "TCD",
+        "close": 1000,
+        "volume": 1664800,
+        "pe": 9.25,
+        "pb": 0.19,
+        "eps": -1304,
+        "roe": -21.3,
+        "roa": -5.7,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:07:11",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "TID": {
+        "symbol": "TID",
+        "close": 18300,
+        "volume": 100,
+        "pe": 23.08,
+        "pb": 1.25,
+        "eps": 792,
+        "roe": 3.3,
+        "roa": 0.9,
+        "dividend_yield": 6.55,
+        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
+        "price_zone": "Khối lượng cạn kiệt ở mức 0.02x MA20.",
+        "updated_at": "2026-11-02 21:07:26",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "TLG": {
+        "symbol": "TLG",
+        "close": 52500,
+        "volume": 248500,
+        "pe": 11.02,
+        "pb": 2.07,
+        "eps": 4762,
+        "roe": 18.4,
+        "roa": 12.5,
+        "dividend_yield": 6.49,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:07:33",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "VCB": {
+        "symbol": "VCB",
+        "close": 53600,
+        "volume": 14009100,
+        "pe": 11.29,
+        "pb": 1.85,
+        "eps": 4985,
+        "roe": 17.6,
+        "roa": 1.6,
+        "dividend_yield": 1.6,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:07:48",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "VDP": {
+        "symbol": "VDP",
+        "close": 31950,
+        "volume": 100,
+        "pe": 15.25,
+        "pb": 1.28,
+        "eps": 2065,
+        "roe": 8.6,
+        "roa": 6.1,
+        "dividend_yield": 1.49,
+        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
+        "price_zone": "Khối lượng cạn kiệt ở mức 0.07x MA20.",
+        "updated_at": "2026-11-02 21:08:10",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "VOS": {
+        "symbol": "VOS",
+        "close": 10300,
+        "volume": 1253100,
+        "pe": 4.46,
+        "pb": 0.77,
+        "eps": 2422,
+        "roe": 16.6,
+        "roa": 8.6,
+        "dividend_yield": 14.55,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:09:09",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "VPG": {
+        "symbol": "VPG",
+        "close": 990,
+        "volume": 108200,
+        "pe": 4.54,
+        "pb": 0.1,
+        "eps": -8092,
+        "roe": -59.7,
+        "roa": -17.8,
+        "dividend_yield": 0.0,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:09:23",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "VPI": {
+        "symbol": "VPI",
+        "close": 57900,
+        "volume": 1850900,
+        "pe": 50.27,
+        "pb": 3.74,
+        "eps": 1258,
+        "roe": 7.4,
+        "roa": 2.8,
+        "dividend_yield": 0.02,
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 21:09:31",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
+    },
+    "VTO": {
+        "symbol": "VTO",
+        "close": 10100,
+        "volume": 620600,
+        "pe": 4.94,
+        "pb": 0.7,
+        "eps": 2105,
+        "roe": 14.2,
+        "roa": 10.7,
+        "dividend_yield": 10.57,
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 21:09:45",
+        "bctc_history": [],
+        "outlook": "",
+        "ai_recommendation": "",
+        "ai_price_zone": "",
+        "macro_view": "",
+        "ai_updated_at": ""
     }
 }
