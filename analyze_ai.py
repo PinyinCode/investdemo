@@ -134,18 +134,33 @@ def main():
             else:
                 print(f"⚠️ Mã {symbol} không có trong dữ liệu screener, bỏ qua.")
     else:
-        # Tự động chọn Top các mã có điểm cơ bản và cổ tức hấp dẫn nhất
-        sorted_candidates = sorted(
-            screener_data, 
-            key=lambda x: (x.get('fundamental_score', 0), x.get('dividend_yield', 0)), 
-            reverse=True
-        )
-        selected_items = sorted_candidates[:15] # Lấy Top 15 mã chất lượng cao nhất
-        for itm in selected_items:
-            top_symbols_to_analyze[itm['symbol']] = itm.get('sector', get_sector(itm['symbol']))
-        print(f"📌 Tự động chọn Top 15 mã tiềm năng tích sản nhất để phân tích.")
+        # Gom nhóm và phân bổ: Ngân hàng lấy Top 5, các ngành khác lấy Top 3
+        industry_groups = {}
+        for symbol, item in screener_map.items():
+            sector = get_sector(symbol)
+            item['sector'] = sector
+            if sector not in industry_groups:
+                industry_groups[sector] = []
+            industry_groups[sector].append(item)
 
-    print(f"\n🤖 Bắt đầu chạy AI phân tích tích sản giá trị & chống bẫy cổ tức cho: {list(top_symbols_to_analyze.keys())}")
+        for sector, items in industry_groups.items():
+            # Sắp xếp ưu tiên theo điểm cơ bản & tỷ suất cổ tức cao nhất trong từng ngành
+            items_sorted = sorted(
+                items, 
+                key=lambda x: (
+                    x.get('fundamental_score', 0), 
+                    x.get('dividend_yield', 0), 
+                    x.get('roe', 0)
+                ), 
+                reverse=True
+            )
+            limit_count = 5 if sector == "NGAN_HANG" else 3
+            selected_items = items_sorted[:limit_count]
+            for itm in selected_items:
+                top_symbols_to_analyze[itm['symbol']] = sector
+            print(f"📌 Nhóm ngành [{sector}] - Chọn Top {limit_count}: {[i['symbol'] for i in selected_items]}")
+
+    print(f"\n🤖 Bắt đầu chạy AI phân tích tích sản giá trị cho các mã: {list(top_symbols_to_analyze.keys())}")
     count = 0
     
     for symbol, sector in top_symbols_to_analyze.items():
@@ -179,7 +194,7 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI tích sản cho {count} mã và ghi vào {DATA_FILE}.")
+    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI tích sản cho {count} mã theo đúng định mức ngành và ghi vào {DATA_FILE}.")
 
 if __name__ == "__main__":
     main()
