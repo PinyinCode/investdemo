@@ -2,8 +2,6 @@ import os
 import json
 import pandas as pd
 import numpy as np
-import datetime
-import subprocess
 
 DATA_FILE = "data.json"
 OUTPUT_JSON = "screener_results.json"
@@ -143,17 +141,6 @@ def evaluate_stock(symbol, data):
         "valuation_notes": " | ".join(val_notes)
     }
 
-def auto_git_push():
-    try:
-        print("\n📤 Đang đồng bộ kết quả định lượng lên GitHub...")
-        subprocess.run(["git", "add", OUTPUT_JSON, OUTPUT_CSV], check=True)
-        commit_msg = f"Auto update value-dividend screener results by sector - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        subprocess.run(["git", "push"], check=True)
-        print("🚀 Đẩy kết quả lên GitHub thành công!")
-    except Exception as e:
-        print(f"⚠️ Lỗi Git push: {e}")
-
 def main():
     print("🚀 Chạy bộ lọc định lượng Đầu tư Giá trị & Cổ tức (Phân theo nhóm ngành)...")
     
@@ -171,6 +158,7 @@ def main():
             results.append(res)
 
     if not results:
+        print("⚠️ Không có dữ liệu để đánh giá.")
         return
 
     # Sắp xếp toàn thị trường theo điểm cơ bản & cổ tức giảm dần
@@ -187,9 +175,11 @@ def main():
     # 1. Xuất file JSON & CSV
     with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
         json.dump(results, jf, ensure_ascii=False, indent=4)
+    print(f"✅ Đã xuất thành công: {OUTPUT_JSON}")
         
     df = pd.DataFrame(results)
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
+    print(f"✅ Đã xuất thành công: {OUTPUT_CSV}")
 
     # 2. Hiển thị kết quả chi tiết chia theo từng nhóm ngành trên Console
     industry_groups = {}
@@ -203,13 +193,11 @@ def main():
         limit_count = 5 if sector == "NGAN_HANG" else 3
         top_items = items[:limit_count]
         
-        print(f"\n📌 NHÓM NGÀNH: [{sector}] - LẤY TOP {limit_count} HÀNG ĐẦU:")
+        print(f"\n📌 NHÓM NGÀNH: [{sector}] - TOP {limit_count} HÀNG ĐẦU:")
         print("=" * 115)
         df_sector = pd.DataFrame(top_items)
         print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'total_score', 'potential_zone']].to_string(index=False))
         print("=" * 115)
-
-    auto_git_push()
 
 if __name__ == "__main__":
     main()
