@@ -40,57 +40,47 @@ def get_sector(symbol):
             return sector
     return "SAN_XUAT_TIEU_DUNG"
 
-def get_sector_specific_guideline(sector):
-    if sector == "NGAN_HANG":
-        return "* ĐẶC THÙ NGÀNH NGÂN HÀNG: Tập trung phân tích tốc độ tăng trưởng tín dụng, hiệu quả sinh lời ROE và biên định giá P/B, P/E."
-    elif sector == "CHUNG_KHOAN":
-        return "* ĐẶC THÙ NGÀNH CHỨNG KHOÁN: Tập trung phân tích lợi nhuận ròng, tốc độ tăng trưởng YoY và độ nhạy thanh khoản thị trường."
-    elif sector == "BAT_DONG_SAN":
-        return "* ĐẶC THÙ NGÀNH BẤT ĐỘNG SẢN: Tập trung phân tích điểm rơi lợi nhuận (`net_profit_latest`), tăng trưởng YoY đột biến và định giá."
-    else:
-        return "* ĐẶC THÙ NGÀNH SẢN XUẤT/BÁN LẺ: Tập trung phân tích quy mô lợi nhuận, hiệu quả ROE và tốc độ phục hồi lợi nhuận kinh doanh."
-
 def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     if not ALIBABA_API_KEY:
         print(f"❌ LỖI: Biến môi trường ALIBABA_API_KEY đang trống!")
         return None
-
-    sector_guideline = get_sector_specific_guideline(sector)
 
     close_price = stock_metrics.get('close', stock_metrics.get('close_price', 0))
     pe = stock_metrics.get('pe', 0)
     pb = stock_metrics.get('pb', 0)
     roe = stock_metrics.get('roe', 0)
     eps = stock_metrics.get('eps', 0)
+    dividend_yield = stock_metrics.get('dividend_yield', 0)
     
     net_profit = screener_item.get('net_profit_latest', 0)
     growth_yoy = screener_item.get('profit_growth_yoy', 0)
     total_score = screener_item.get('total_score', 0)
-    tech_status = screener_item.get('technical_status', 'Tích lũy')
+    fund_notes = screener_item.get('fundamental_notes', '')
 
     prompt = f"""
-    Bạn là một Chuyên gia Phân tích Tài chính Cấp cao kiêm Quản lý Quỹ Đầu tư xuất sắc. 
-    Hãy thực hiện một bản **đánh giá phân tích chuyên sâu theo ĐẶC THÙ NGÀNH ({sector})**, dựa trực tiếp trên các chỉ số tài chính định lượng của mã: {symbol}.
+    Bạn là một Chuyên gia Đầu tư Giá trị (Value & Dividend Investor) kỳ cựu theo trường phái Graham & Buffett. 
+    Hãy thực hiện một bản **đánh giá tích sản dài hạn chuyên sâu** cho mã cổ phiếu: {symbol} thuộc ngành {sector}.
 
-    --- DỮ LIỆU TÀI CHÍNH TỪ HỆ THỐNG ---
-    - Mã CK: {symbol} | Ngành: {sector} | Tổng điểm: {total_score}/100
-    - Giá đóng cửa: {close_price:,.0f} VNĐ
-    - Chỉ số định giá (từ data.json): P/E = {pe} | P/B = {pb}
-    - Khả năng sinh lời (từ data.json): ROE = {roe}% | EPS = {eps:,.0f} VNĐ
-    - Dữ liệu BCTC & Tăng trưởng (từ screener): Lợi nhuận mới nhất = {net_profit:,.0f} Tỷ VNĐ | Tăng trưởng YoY = {growth_yoy}%
-    - Trạng thái kỹ thuật: {tech_status}
+    --- DỮ LIỆU TÀI CHÍNH & ĐỊNH LƯỢNG ---
+    - Mã CK: {symbol} | Điểm chất lượng: {total_score}/100 ({fund_notes})
+    - Giá thị trường: {close_price:,.0f} VNĐ
+    - Định giá: P/E = {pe} | P/B = {pb}
+    - Cổ tức & Sinh lời: Tỷ suất cổ tức gần nhất = {dividend_yield}%/năm | ROE = {roe}% | EPS = {eps:,.0f} VNĐ
+    - Tăng trưởng gần nhất: LNST = {net_profit:,.0f} Tỷ | Tăng trưởng YoY = {growth_yoy}%
     --------------------------------------------------------------
 
-    {sector_guideline}
+    * LƯU Ý QUAN TRỌNG VỀ CỔ TỨC: Dữ liệu hệ thống hiện ghi nhận tỷ suất cổ tức năm gần nhất là {dividend_yield}%. Hãy dùng chuyên môn tài chính để phân tích xem mức cổ tức này có tính **bền vững dài hạn** hay chỉ là **đột biến một lần** (như bán tài sản, hoàn nhập dự phòng, hoặc lợi nhuận bất thường), dựa trên bối cảnh ngành và kết quả kinh doanh cốt lõi của doanh nghiệp. Tránh mắc bẫy cổ tức (dividend trap).
 
     YÊU CẦU TRẢ VỀ JSON THUẦN TÚY (TUYỆT ĐỐI KHÔNG DÙNG ```json):
-    1. "bctc": Phân tích sâu sát về sức khỏe lợi nhuận, tốc độ tăng trưởng YoY, hiệu quả ROE và đánh giá mức EPS = {eps:,.0f} VNĐ (5-7 câu).
-    2. "outlook": Đánh giá triển vọng định giá (P/E = {pe}, P/B = {pb}) và biên an toàn (4-6 câu).
-    3. "recommendation": Khuyến nghị hành động sắc bén (Ngắn gọn 3-6 từ, ví dụ: "Tích sản dài hạn giá hấp dẫn").
-    4. "price_zone": Vạch rõ chiến lược giá chi tiết (vùng gom, cắt lỗ, gia tăng tỷ trọng).
-    5. "macro_view": Phân tích vĩ mô & triển vọng ngành liên hệ với số liệu doanh nghiệp (5-7 câu).
+    1. "bctc": Phân tích sức khỏe tài chính cốt lõi, đánh giá tính bền vững của mức cổ tức {dividend_yield}% (có đều đặn từ kinh doanh thực hay chỉ là đột biến một lần?) (6-8 câu).
+    2. "catalyst": Xác định lợi thế cạnh tranh dài hạn (Economic Moat) và động lực tăng trưởng nội tại trong 2-3 năm tới (4-5 câu).
+    3. "risks": Chỉ ra các rủi ro trọng yếu có thể làm xói mòn giá trị doanh nghiệp hoặc đe dọa chính sách cổ tức (3-4 câu).
+    4. "outlook": Đánh giá biên an toàn (Margin of Safety) của mức định giá hiện tại (P/E {pe}, P/B {pb}) dưới góc nhìn đầu tư dài hạn (4-5 câu).
+    5. "recommendation": Khuyến nghị hành động tích sản sắc bén (Ví dụ: "Tích sản dài hạn - Tỷ trọng 20%").
+    6. "price_zone": Vạch rõ chiến lược tích sản: Vùng gom giá trị (giá rẻ an toàn), Vùng chặn lỗ/quản trị rủi ro, và Kỳ vọng dài hạn.
+    7. "macro_view": Phân tích chu kỳ ngành và vĩ mô tác động đến dòng tiền của doanh nghiệp (5-6 câu).
 
-    BẮT BUỘC KHÓA JSON: "bctc", "outlook", "recommendation", "price_zone", "macro_view".
+    BẮT BUỘC KHÓA JSON: "bctc", "catalyst", "risks", "outlook", "recommendation", "price_zone", "macro_view".
     """
 
     headers = {
@@ -135,7 +125,6 @@ def main():
 
     top_symbols_to_analyze = {}
 
-    # KIỂM TRA NẾU NGƯỜI DÙNG NHẬP TRỰC TIẾP CÁC MÃ QUA WORKFLOW INPUT
     if INPUT_SYMBOLS:
         custom_list = [s.strip().upper() for s in INPUT_SYMBOLS.split(",") if s.strip()]
         print(f"🎯 Phát hiện danh sách mã nhập thủ công: {custom_list}")
@@ -145,33 +134,18 @@ def main():
             else:
                 print(f"⚠️ Mã {symbol} không có trong dữ liệu screener, bỏ qua.")
     else:
-        # Mặc định: Ngân hàng lấy Top 5, các ngành khác lấy Top 3 theo điểm cơ bản
-        industry_groups = {}
-        for symbol, item in screener_map.items():
-            sector = get_sector(symbol)
-            item['sector'] = sector
-            if sector not in industry_groups:
-                industry_groups[sector] = []
-            industry_groups[sector].append(item)
+        # Tự động chọn Top các mã có điểm cơ bản và cổ tức hấp dẫn nhất
+        sorted_candidates = sorted(
+            screener_data, 
+            key=lambda x: (x.get('fundamental_score', 0), x.get('dividend_yield', 0)), 
+            reverse=True
+        )
+        selected_items = sorted_candidates[:15] # Lấy Top 15 mã chất lượng cao nhất
+        for itm in selected_items:
+            top_symbols_to_analyze[itm['symbol']] = itm.get('sector', get_sector(itm['symbol']))
+        print(f"📌 Tự động chọn Top 15 mã tiềm năng tích sản nhất để phân tích.")
 
-        for sector, items in industry_groups.items():
-            items_sorted = sorted(
-                items, 
-                key=lambda x: (
-                    x.get('fundamental_score', 0), 
-                    x.get('roe', 0), 
-                    x.get('net_profit_latest', 0),
-                    x.get('total_score', 0)
-                ), 
-                reverse=True
-            )
-            limit_count = 5 if sector == "NGAN_HANG" else 3
-            selected_items = items_sorted[:limit_count]
-            for itm in selected_items:
-                top_symbols_to_analyze[itm['symbol']] = sector
-            print(f"📌 Nhóm ngành [{sector}] - Tự động chọn Top {limit_count}: {[i['symbol'] for i in selected_items]}")
-
-    print(f"\n🤖 Bắt đầu chạy phân tích chuyên sâu cho các mã: {list(top_symbols_to_analyze.keys())}")
+    print(f"\n🤖 Bắt đầu chạy AI phân tích tích sản giá trị & chống bẫy cổ tức cho: {list(top_symbols_to_analyze.keys())}")
     count = 0
     
     for symbol, sector in top_symbols_to_analyze.items():
@@ -188,6 +162,8 @@ def main():
         
         if ai_result:
             stock_metrics["bctc"] = ai_result.get("bctc", "")
+            stock_metrics["catalyst"] = ai_result.get("catalyst", "")
+            stock_metrics["risks"] = ai_result.get("risks", "")
             stock_metrics["outlook"] = ai_result.get("outlook", "")
             stock_metrics["ai_recommendation"] = ai_result.get("recommendation", "")
             stock_metrics["ai_price_zone"] = ai_result.get("price_zone", "")
@@ -203,7 +179,7 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI cho {count} mã và ghi vào {DATA_FILE}.")
+    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI tích sản cho {count} mã và ghi vào {DATA_FILE}.")
 
 if __name__ == "__main__":
     main()
