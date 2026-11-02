@@ -63,7 +63,6 @@ def evaluate_stock(symbol, data):
     fundamental_score = 0
     fund_notes = []
 
-    # Tiêu chí sinh lời & Tăng trưởng cốt lõi (30 điểm)
     if sector == "NGAN_HANG":
         if credit_growth_yoy >= 12: 
             fundamental_score += 15; fund_notes.append("Tín dụng tốt")
@@ -75,7 +74,7 @@ def evaluate_stock(symbol, data):
         if roe >= 14: 
             fundamental_score += 15; fund_notes.append("ROE đạt chuẩn (>14%)")
 
-    # Tiêu chí Cổ tức tiền mặt - "Chất lượng dòng tiền" (20 điểm)
+    # Điểm cổ tức tiền mặt (Chất lượng dòng tiền)
     if dividend_yield >= 8.0:
         fundamental_score += 20
         fund_notes.append(f"Cổ tức siêu hấp dẫn ({dividend_yield}%)")
@@ -106,7 +105,7 @@ def evaluate_stock(symbol, data):
 
     if 0 < pe < 14 and 0 < pb < 2.0:
         valuation_score += 30
-        val_notes.append("Định giá rẻ, biên an toàn cao (P/E & P/B thấp)")
+        val_notes.append("Định giá rẻ, biên an toàn cao")
     elif 0 < pe < 20 and 0 < pb < 3.0:
         valuation_score += 18
         val_notes.append("Định giá hợp lý")
@@ -114,10 +113,8 @@ def evaluate_stock(symbol, data):
         valuation_score += 5
         val_notes.append("Định giá cao/Cần thận trọng")
 
-    # Tổng điểm tổng hợp (Max 100 điểm)
     total_score = fundamental_score + technical_score + valuation_score
 
-    # Xác định trạng thái Vùng giá tích sản
     potential_zone = "THEO DÕI THÊM"
     if total_score >= 75:
         potential_zone = "VÙNG TÍCH SẢN ĐẦU TƯ (A+)"
@@ -147,21 +144,18 @@ def evaluate_stock(symbol, data):
     }
 
 def auto_git_push():
-    """Tự động commit và push file kết quả lên GitHub"""
     try:
-        print("\n📤 Đang tiến hành đồng bộ kết quả định lượng lên GitHub...")
+        print("\n📤 Đang đồng bộ kết quả định lượng lên GitHub...")
         subprocess.run(["git", "add", OUTPUT_JSON, OUTPUT_CSV], check=True)
-        commit_msg = f"Auto update value-dividend screener results - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update value-dividend screener results by sector - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
-        print("🚀 Đẩy kết quả lọc lên GitHub thành công!")
-    except subprocess.CalledProcessError:
-        print("⚠️ Git: Không có thay đổi mới để push hoặc đã được cập nhật.")
+        print("🚀 Đẩy kết quả lên GitHub thành công!")
     except Exception as e:
         print(f"⚠️ Lỗi Git push: {e}")
 
 def main():
-    print("🚀 Bắt đầu chạy bộ lọc định lượng định hướng Đầu tư Giá trị & Cổ tức cho VN100...")
+    print("🚀 Chạy bộ lọc định lượng Đầu tư Giá trị & Cổ tức (Phân theo nhóm ngành)...")
     
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy file {DATA_FILE}")
@@ -177,13 +171,9 @@ def main():
             results.append(res)
 
     if not results:
-        print("⚠️ Không có dữ liệu đánh giá.")
         return
 
-    # SẮP XẾP ƯU TIÊN TUYỆT ĐỐI THEO CHẤT LƯỢNG CƠ BẢN & CỔ TỨC:
-    # 1. fundamental_score (Điểm cơ bản & cổ tức cao nhất)
-    # 2. dividend_yield (Tỷ suất cổ tức hấp dẫn nhất)
-    # 3. roe (Khả năng sinh lời tốt nhất)
+    # Sắp xếp toàn thị trường theo điểm cơ bản & cổ tức giảm dần
     results = sorted(
         results, 
         key=lambda x: (
@@ -194,23 +184,31 @@ def main():
         reverse=True
     )
 
-    # 1. Xuất file JSON cho Frontend
+    # 1. Xuất file JSON & CSV
     with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
         json.dump(results, jf, ensure_ascii=False, indent=4)
-    print(f"✅ Đã xuất file JSON thành công: {OUTPUT_JSON}")
-
-    # 2. Xuất file CSV tổng hợp
+        
     df = pd.DataFrame(results)
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
-    print(f"✅ Đã xuất file CSV thành công: {OUTPUT_CSV}")
 
-    # In mẫu Top 10 mã giá trị & cổ tức tốt nhất ra màn hình console
-    print("\n🏆 TOP 10 CỔ PHIẾU GIÁ TRỊ & CỔ TỨC HÀNG ĐẦU TOÀN THỊ TRƯỜNG:")
-    print("=" * 135)
-    print(df[['symbol', 'sector', 'dividend_yield', 'pe', 'roe', 'total_score', 'potential_zone']].head(10).to_string(index=False))
-    print("=" * 135)
+    # 2. Hiển thị kết quả chi tiết chia theo từng nhóm ngành trên Console
+    industry_groups = {}
+    for item in results:
+        sec = item['sector']
+        if sec not in industry_groups:
+            industry_groups[sec] = []
+        industry_groups[sec].append(item)
 
-    # Tự động đẩy lên git
+    for sector, items in industry_groups.items():
+        limit_count = 5 if sector == "NGAN_HANG" else 3
+        top_items = items[:limit_count]
+        
+        print(f"\n📌 NHÓM NGÀNH: [{sector}] - LẤY TOP {limit_count} HÀNG ĐẦU:")
+        print("=" * 115)
+        df_sector = pd.DataFrame(top_items)
+        print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'total_score', 'potential_zone']].to_string(index=False))
+        print("=" * 115)
+
     auto_git_push()
 
 if __name__ == "__main__":
