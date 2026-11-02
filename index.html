@@ -540,26 +540,34 @@
         }
 
         async function openAccountModal() {
-            const user = auth.currentUser;
-            if (!user) return;
+    const user = auth.currentUser;
+    if (!user) return;
 
-            document.getElementById('account-modal').classList.remove('hidden');
-            document.getElementById('acc-modal-email').innerText = user.email || '--';
-            document.getElementById('acc-modal-uid').innerText = user.uid;
-            document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
-            document.getElementById('acc-modal-role').innerText = 'Đang tải...';
+    document.getElementById('account-modal').classList.remove('hidden');
+    document.getElementById('acc-modal-email').innerText = user.email || '--';
+    document.getElementById('acc-modal-uid').innerText = user.uid;
+    document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
+    document.getElementById('acc-modal-role').innerText = 'Đang tải...';
 
-            try {
-                const doc = await db.collection('users').doc(user.uid).get();
-                if (doc.exists) {
-                    const data = doc.data();
-                    document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
-                    document.getElementById('acc-modal-expire').innerText = data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : 'Vô thời hạn';
-                }
-            } catch (err) {
-                document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
-            }
+    try {
+        // Truy vấn vào allowed_users theo email viết thường (khớp với rule function userEmail())
+        const emailKey = user.email.toLowerCase();
+        const doc = await db.collection('allowed_users').doc(emailKey).get();
+        
+        if (doc.exists) {
+            const data = doc.data();
+            document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
+            document.getElementById('acc-modal-expire').innerText = data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : 'Vô thời hạn';
+        } else {
+            document.getElementById('acc-modal-role').innerText = 'USER (Mới)';
+            document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập hạn';
         }
+    } catch (err) {
+        console.error("Lỗi lấy thông tin:", err);
+        document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
+    }
+}
+
 
         function closeAccountModal() {
             document.getElementById('account-modal').classList.add('hidden');
