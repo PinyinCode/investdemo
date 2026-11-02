@@ -4755,11 +4755,12 @@
                 "roe_quarter": 0.12
             }
         ],
-        "outlook": "Mức P/E = 13.98 và P/B = 0.94 cho thấy KBC đang được định giá ở mức trung bình so với ngành. Tuy nhiên, với triển vọng mở rộng công suất và nâng cao hiệu quả hoạt động, cổ phiếu có thể được xem là rẻ. Biên an toàn hiện tại đã xuất hiện, nhưng cần theo dõi sát sao các yếu tố vĩ mô và nội bộ để xác định thời điểm mua vào phù hợp.",
+        "outlook": "Với P/E = 13.98, KBC đang được định giá ở mức trung bình so với ngành, trong khi P/B = 0.94 cho thấy cổ phiếu đang được định giá thấp hơn giá trị sổ sách. Điều này tạo ra biên an toàn nhất định, nhưng cần theo dõi thêm để đảm bảo rằng tăng trưởng lợi nhuận có thể duy trì.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý từ 25.000 - 26.000 VNĐ, đây là vùng hỗ trợ mạnh. Mốc chặn lỗ đặt ở 24.500 VNĐ. Nếu có dòng tiền lớn xác nhận, có thể gia tăng tỷ trọng ở mức 27.000 - 28.000 VNĐ.",
-        "macro_view": "Trong bối cảnh lãi suất toàn cầu có xu hướng tăng, áp lực lên chi phí vốn của doanh nghiệp cũng tăng. Tuy nhiên, nhu cầu tiêu dùng trong nước vẫn ổn định, tạo điều kiện thuận lợi cho KBC. Giá nguyên liệu đầu vào trên thị trường thế giới có biến động, nhưng KBC đã có chiến lược dự trữ và quản lý chuỗi cung ứng hiệu quả. Địa chính trị và chu kỳ hàng hóa thế giới cũng ảnh hưởng đến giá nguyên liệu, nhưng KBC có khả năng thích ứng linh hoạt. Triển vọng ngành trong dài hạn vẫn tích cực, đặc biệt khi KBC tiếp tục mở rộng công suất và nâng cao hiệu quả sản xuất.",
-        "ai_updated_at": "2026-10-31 15:17:12"
+        "ai_price_zone": "Vùng gom: 24,000 - 26,000 VNĐ; Cắt lỗ: Dưới 23,000 VNĐ; Gia tăng tỷ trọng: Trên 27,000 VNĐ.",
+        "macro_view": "Ngành bất động sản đang chịu ảnh hưởng bởi các chính sách thắt chặt tín dụng và kiểm soát thị trường, nhưng nhu cầu nhà ở vẫn ổn định. KBC với lợi nhuận tăng trưởng mạnh và định giá hợp lý có thể tận dụng được cơ hội từ nhu cầu thị trường. Tuy nhiên, cần theo dõi sát sao các chính sách vĩ mô và biến động thị trường.",
+        "ai_updated_at": "2026-11-02 10:25:02",
+        "bctc": "KBC đã ghi nhận lợi nhuận mới nhất ở mức 937 tỷ VNĐ, tăng trưởng YoY lên đến 200.47%, cho thấy sự phục hồi mạnh mẽ và khả năng sinh lời tốt. Tuy nhiên, ROE chỉ ở mức 6.5%, thấp hơn so với mặt bằng chung của ngành, phản ánh hiệu quả sử dụng vốn chưa thực sự cao. EPS đạt 1,859 VNĐ, tương đương với P/E là 13.98, cho thấy mức định giá hợp lý."
     },
     "IDC": {
         "symbol": "IDC",
