@@ -43,8 +43,7 @@
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
 
     <!-- MÀN HÌNH ĐĂNG NHẬP / XÁC THỰC -->
-<div id="auth-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md p-4">
-
+    <div id="auth-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl p-6 relative">
             <div class="text-center mb-6">
                 <div class="inline-block bg-emerald-600 text-white p-3 rounded-xl shadow-lg shadow-emerald-500/30 mb-2">
@@ -55,8 +54,8 @@
             </div>
 
             <div class="flex border-b border-slate-800 mb-6">
-                <button onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">Đăng Nhập</button>
-                <button onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition">Đăng Ký Tài Khoản</button>
+                <button type="button" onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">Đăng Nhập</button>
+                <button type="button" onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition">Đăng Ký Tài Khoản</button>
             </div>
 
             <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
@@ -102,47 +101,75 @@
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-left mb-4 text-xs space-y-1">
                 <div><span class="text-slate-500">Mã tài khoản (UID):</span> <span id="user-uid-text" class="text-indigo-400 font-mono">--</span></div>
             </div>
-            <button onclick="handleLogout()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold text-xs transition">
+            <button type="button" onclick="handleLogout()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold text-xs transition">
                 Đăng Xuất
             </button>
         </div>
     </div>
 
-    <!-- MODAL ADMIN PANEL (Đã tối ưu type="button") -->
-<div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
-        <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-user-shield text-amber-400"></i>
-                <h3 class="text-sm font-bold text-white">Quản Trị Hệ Thống (Admin Panel)</h3>
+    <!-- MODAL ADMIN PANEL -->
+    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
+            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i>
+                    <h3 class="text-sm font-bold text-white">Quản Trị Hệ Thống (Admin Panel)</h3>
+                </div>
+                <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-            <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-        <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
-                    <thead>
-                        <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
-                            <th class="p-3">Email</th>
-                            <th class="p-3">Hạn sử dụng</th>
-                            <th class="p-3">Quyền</th>
-                            <th class="p-3 text-right">Thao tác gia hạn (+30 ngày)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-users-list" class="divide-y divide-slate-800">
-                        <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
-                    </tbody>
-                </table>
+            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
+                                <th class="p-3">Email</th>
+                                <th class="p-3">Hạn sử dụng</th>
+                                <th class="p-3">Quyền</th>
+                                <th class="p-3 text-right">Thao tác gia hạn (+30 ngày)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-users-list" class="divide-y divide-slate-800">
+                            <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
-            <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
+                <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
+            </div>
         </div>
     </div>
-</div>
 
+    <!-- MODAL THÔNG TIN TÀI KHOẢN CÁ NHÂN -->
+    <div id="account-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-user-gear text-emerald-400"></i>
+                    <h3 class="text-sm font-bold text-white">Thông Tin Tài Khoản</h3>
+                </div>
+                <button type="button" onclick="closeAccountModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-5 space-y-4 text-xs">
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <div class="flex justify-between"><span class="text-slate-400">Email đăng nhập:</span> <span id="acc-modal-email" class="font-semibold text-white">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Loại tài khoản:</span> <span id="acc-modal-role" class="font-bold text-amber-400">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Thời hạn sử dụng:</span> <span id="acc-modal-expire" class="font-semibold text-emerald-400">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Mã UID:</span> <span id="acc-modal-uid" class="font-mono text-indigo-400">--</span></div>
+                </div>
+            </div>
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center">
+                <button type="button" onclick="handleLogout()" class="px-4 py-2 bg-rose-600/20 hover:bg-rose-600/30 border border-rose-500/40 text-rose-300 rounded-lg font-semibold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất
+                </button>
+                <button type="button" onclick="closeAccountModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold">Đóng</button>
+            </div>
+        </div>
+    </div>
 
     <!-- HEADER CHÍNH -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
@@ -158,14 +185,14 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <button onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
+                <button type="button" onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
                 </button>
-                <button id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
+                <button type="button" id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
                     <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline">Admin</span>
                 </button>
-                <button onclick="handleLogout()" class="px-3 py-2 bg-rose-600/20 border border-rose-500/40 text-rose-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Đăng xuất">
-                    <i class="fa-solid fa-right-from-bracket"></i>
+                <button type="button" onclick="openAccountModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Tài khoản cá nhân">
+                    <i class="fa-solid fa-user-gear text-emerald-400"></i> <span class="hidden md:inline">Tài khoản</span>
                 </button>
             </div>
         </div>
@@ -236,16 +263,16 @@
                         <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
                     </div>
                 </div>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
-                <button onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition">
+                <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition">
                     <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI Chiến Lược
                 </button>
-                <button onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
+                <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Tra Cứu BCTC Chi Tiết
                 </button>
             </div>
@@ -308,7 +335,7 @@
 
             <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center text-[10px] text-slate-500">
                 <span id="modal-time">AI cập nhật: --</span>
-                <button onclick="closeModal()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-bold shadow">Đóng</button>
+                <button type="button" onclick="closeModal()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-bold shadow">Đóng</button>
             </div>
         </div>
     </div>
@@ -322,10 +349,10 @@
                 </div>
 
                 <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/35 backdrop-blur-sm p-1.5 rounded-xl border border-slate-800/40 text-[10px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
-                    <button onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-left text-[9px]"></i></button>
+                    <button type="button" onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-left text-[9px]"></i></button>
 
                     <div class="relative">
-                        <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
+                        <button type="button" onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
                             <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
                         </button>
                         <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
@@ -334,19 +361,19 @@
                         </div>
                     </div>
 
-                    <button onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-right text-[9px]"></i></button>
+                    <button type="button" onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-right text-[9px]"></i></button>
 
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
-                        <button onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
-                        <button onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
-                        <button onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
+                        <button type="button" onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
+                        <button type="button" onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
+                        <button type="button" onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
                     </div>
 
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
-                        <button onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">VolMA</button>
-                        <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white transition">MA20</button>
-                        <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">MA50</button>
-                        <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">RSI</button>
+                        <button type="button" onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">VolMA</button>
+                        <button type="button" onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white transition">MA20</button>
+                        <button type="button" onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">MA50</button>
+                        <button type="button" onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">RSI</button>
                     </div>
 
                     <div class="flex items-center gap-2 pl-1 border-l border-slate-800/40 text-[10px]">
@@ -358,18 +385,18 @@
                 </div>
 
                 <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/35 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
-                    <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 transition" title="Phóng to / Thu nhỏ"><i class="fa-solid fa-expand text-xs"></i></button>
-                    <button onclick="closeChartModal()" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg bg-slate-900/40 transition" title="Đóng"><i class="fa-solid fa-xmark text-xs"></i></button>
+                    <button type="button" onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 transition" title="Phóng to / Thu nhỏ"><i class="fa-solid fa-expand text-xs"></i></button>
+                    <button type="button" onclick="closeChartModal()" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg bg-slate-900/40 transition" title="Đóng"><i class="fa-solid fa-xmark text-xs"></i></button>
                 </div>
 
                 <div id="tv-chart-container" class="w-full h-full"></div>
             </div>
 
             <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center">
-                <button id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
+                <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
                     <i class="fa-solid fa-robot"></i> Xem AI chi tiết
                 </button>
-                <button onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
+                <button type="button" onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
             </div>
         </div>
     </div>
@@ -512,31 +539,72 @@
             window.location.reload();
         }
 
+        async function openAccountModal() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            document.getElementById('account-modal').classList.remove('hidden');
+            document.getElementById('acc-modal-email').innerText = user.email || '--';
+            document.getElementById('acc-modal-uid').innerText = user.uid;
+            document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
+            document.getElementById('acc-modal-role').innerText = 'Đang tải...';
+
+            try {
+                const doc = await db.collection('users').doc(user.uid).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
+                    document.getElementById('acc-modal-expire').innerText = data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : 'Vô thời hạn';
+                }
+            } catch (err) {
+                document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
+            }
+        }
+
+        function closeAccountModal() {
+            document.getElementById('account-modal').classList.add('hidden');
+        }
+
         async function openAdminModal() {
-            document.getElementById('admin-modal').classList.remove('hidden');
+            const adminModal = document.getElementById('admin-modal');
+            if (adminModal) {
+                adminModal.classList.remove('hidden');
+            }
+            
             const listEl = document.getElementById('admin-users-list');
-            listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>`;
+            if (listEl) {
+                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
+            }
 
             try {
                 const snapshot = await db.collection('users').get();
-                listEl.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const uid = doc.id;
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-slate-800/50 transition";
-                    tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white">${data.email || '—'}</td>
-                        <td class="p-3 text-slate-300">${data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : '—'}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
-                        <td class="p-3 text-right">
-                            <button onclick="extendUserTrial('${uid}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
-                        </td>
-                    `;
-                    listEl.appendChild(tr);
-                });
+                if (listEl) {
+                    listEl.innerHTML = '';
+                    if (snapshot.empty) {
+                        listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
+                        return;
+                    }
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        const uid = doc.id;
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-slate-800/50 transition";
+                        tr.innerHTML = `
+                            <td class="p-3 font-semibold text-white">${data.email || '—'}</td>
+                            <td class="p-3 text-slate-300">${data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : '—'}</td>
+                            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                            <td class="p-3 text-right">
+                                <button type="button" onclick="extendUserTrial('${uid}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
+                            </td>
+                        `;
+                        listEl.appendChild(tr);
+                    });
+                }
             } catch (err) {
-                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Lỗi tải danh sách người dùng.</td></tr>`;
+                console.error("Lỗi Admin Panel:", err);
+                if (listEl) {
+                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Lỗi tải danh sách (Kiểm tra Firestore Rules).</td></tr>`;
+                }
             }
         }
 
@@ -721,7 +789,7 @@
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
                                     <span class="text-xl font-black text-white">${item.symbol}</span>
-                                    <button onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
+                                    <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
                                         <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
                                     <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
@@ -898,6 +966,7 @@
             listContainer.innerHTML = '';
             symbols.sort().forEach(sym => {
                 const item = document.createElement('button');
+                item.type = 'button';
                 item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
                 item.innerHTML = `<span>${sym}</span>`;
                 item.onclick = (e) => {
