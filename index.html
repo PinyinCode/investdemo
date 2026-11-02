@@ -974,7 +974,13 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
-            document.getElementById('modal-ai-price').innerText = item.ai_price_zone || item.potential_zone || '—';
+            let priceZoneText = item.ai_price_zone;
+if (typeof priceZoneText === 'object' && priceZoneText !== null) {
+    // Nếu AI trả về dạng object, tự động trích xuất các trường phổ biến hoặc chuyển về chuỗi JSON đẹp
+    priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
+}
+document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
+
             document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
