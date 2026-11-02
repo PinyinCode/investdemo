@@ -851,7 +851,7 @@
             return result;
         }
 
-                function renderChartInstance(historyDataObj) {
+        function renderChartInstance(historyDataObj) {
             const container = document.getElementById('tv-chart-container');
             container.innerHTML = '';
 
@@ -872,7 +872,7 @@
                 layout: { background: { color: '#0f172a' }, textColor: '#94a3b8' },
                 grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
                 timeScale: { borderColor: '#334155' },
-                panes: hasRSI ? [ { height: 0.7 }, { height: 0.3 } ] : undefined // Phân chia tỷ lệ không gian khung
+                panes: hasRSI ? [ { height: 0.7 }, { height: 0.3 } ] : undefined
             });
 
             candleSeriesInstance = chartInstance.addCandlestickSeries({
@@ -939,14 +939,14 @@
                     volMaSeries.setData(calculateVolumeMA(chartData, 20));
                 }
 
-                // GÁN RSI XUỐNG PANE PHÍA DƯỚI MỘT CÁCH AN TOÀN
+                // GÁN RSI XUỐNG PANE PHÍA DƯỚI ĐỘC LẬP
                 if (hasRSI) {
                     const rsiSeries = chartInstance.addLineSeries({
                         color: '#a855f7', 
                         lineWidth: 1.5, 
                         title: 'RSI(14)', 
                         priceScaleId: 'rsiScale',
-                        pane: 1 // Đẩy xuống khung thứ 2 ở dưới
+                        pane: 1
                     });
 
                     chartInstance.priceScale('rsiScale').applyOptions({
@@ -965,66 +965,6 @@
                 if (latestBar) {
                     updateLegend(latestBar, chartData);
                 }
-
-                function updateLegend(bar, dataArr) {
-                    legendTime.innerText = bar.time;
-                    legendClose.innerText = formatNumber(bar.close);
-                    
-                    const index = dataArr.findIndex(item => item.time === bar.time);
-                    let changePct = 0;
-                    if (index > 0) {
-                        const prevClose = dataArr[index - 1].close;
-                        changePct = ((bar.close - prevClose) / prevClose) * 100;
-                    }
-
-                    const sign = changePct >= 0 ? '+' : '';
-                    legendChange.innerText = `(${sign}${changePct.toFixed(2)}%)`;
-                    legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-                    legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-                    
-                    legendVol.innerText = formatNumber(bar.volume);
-                }
-
-                chartInstance.subscribeCrosshairMove(param => {
-                    if (
-                        param.point === undefined ||
-                        !param.time ||
-                        param.point.x < 0 ||
-                        param.point.x > container.clientWidth ||
-                        param.point.y < 0 ||
-                        param.point.y > container.clientHeight
-                    ) {
-                        if (latestBar) updateLegend(latestBar, chartData);
-                    } else {
-                        const dataPoint = param.seriesData.get(candleSeriesInstance);
-                        if (dataPoint) {
-                            const barData = {
-                                time: param.time,
-                                close: dataPoint.close,
-                                volume: param.seriesData.get(volumeSeriesInstance)?.value || 0
-                            };
-                            updateLegend(barData, chartData);
-                        }
-                    }
-                });
-
-                setTimeout(() => {
-                    const totalBars = chartData.length;
-                    let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
-
-                    if (totalBars > visibleBarsCount) {
-                        chartInstance.timeScale().setVisibleLogicalRange({
-                            from: totalBars - visibleBarsCount,
-                            to: totalBars - 1,
-                        });
-                    } else {
-                        chartInstance.timeScale().fitContent();
-                    }
-                }, 50);
-            } else {
-                container.innerHTML = `<div class="flex items-center justify-center h-full text-slate-500 text-xs">Chưa có dữ liệu cho khung này.</div>`;
-            }
-        }
 
                 function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
