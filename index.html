@@ -123,13 +123,13 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
-                                <th class="p-3">Email</th>
-                                <th class="p-3">Hạn sử dụng</th>
-                                <th class="p-3">Quyền</th>
-                                <th class="p-3 text-right">Thao tác gia hạn (+30 ngày)</th>
-                            </tr>
-                        </thead>
+                          <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
+                           <th class="p-3">Email</th>
+                           <th class="p-3">Hạn sử dụng</th>
+                           <th class="p-3">Quyền</th>
+                          </tr>
+                         </thead>
+
                         <tbody id="admin-users-list" class="divide-y divide-slate-800">
                             <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
                         </tbody>
@@ -597,7 +597,7 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
     
     const listEl = document.getElementById('admin-users-list');
     if (listEl) {
-        listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
+        listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
     }
 
     try {
@@ -605,7 +605,7 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
         if (listEl) {
             listEl.innerHTML = '';
             if (snapshot.empty) {
-                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
+                listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
                 return;
             }
             snapshot.forEach(doc => {
@@ -622,9 +622,6 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
                     <td class="p-3 font-semibold text-white">${data.email || emailId}</td>
                     <td class="p-3 text-slate-300">${dateStr}</td>
                     <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
-                    <td class="p-3 text-right">
-                        <button type="button" onclick="extendUserTrial('${emailId}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
-                    </td>
                 `;
                 listEl.appendChild(tr);
             });
@@ -632,7 +629,7 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
     } catch (err) {
         console.error("Lỗi Admin Panel:", err);
         if (listEl) {
-            listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
+            listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
         }
     }
 }
