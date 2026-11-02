@@ -368,11 +368,12 @@
                 "roe_quarter": 6.65
             }
         ],
-        "outlook": "Mức P/E hiện tại ở 5.86, thấp hơn đáng kể so với trung bình ngành, cho thấy CTG đang được định giá rẻ. Biên an toàn đã xuất hiện, đặc biệt khi EPS đạt 5172 VNĐ, cao hơn nhiều so với mức cổ tức 1.03%. Điều này cho thấy tiềm năng tăng trưởng trong tương lai, đặc biệt khi ngân hàng tiếp tục mở rộng hoạt động và cải thiện chất lượng dịch vụ.",
+        "outlook": "Với P/E = 5.86 và P/B = 1.2, CTG đang được định giá ở mức thấp so với mặt bằng chung của ngành ngân hàng. Điều này có thể phản ánh triển vọng tăng trưởng hạn chế hoặc rủi ro tiềm ẩn. Tuy nhiên, nếu công ty có thể cải thiện hiệu quả kinh doanh và giảm thiểu rủi ro, tỷ lệ P/E và P/B hiện tại có thể coi là hợp lý.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý từ 29.000 - 30.000 VNĐ, đây là vùng hỗ trợ mạnh. Mốc chặn lỗ đặt ở 28.000 VNĐ. Khi có dòng tiền lớn xác nhận, điểm gia tăng tỷ trọng có thể ở 31.000 - 32.000 VNĐ.",
-        "macro_view": "Trong bối cảnh lãi suất đang có xu hướng giảm, điều này sẽ tạo thuận lợi cho hoạt động cho vay và thu hút khách hàng của CTG. Tỷ giá USD/VND tương đối ổn định, giảm thiểu rủi ro về biến động tỷ giá. Lạm phát được kiểm soát tốt, tạo điều kiện cho tăng trưởng kinh tế. Xu hướng chuyển đổi số và nhu cầu sử dụng dịch vụ ngân hàng trực tuyến tăng lên cũng là cơ hội để CTG mở rộng thị phần và nâng cao hiệu quả hoạt động. Trong dài hạn, CTG có dư địa tăng trưởng lớn nhờ vào vị thế độc tôn và chiến lược phát triển bền vững.",
-        "ai_updated_at": "2026-10-31 15:08:36"
+        "ai_price_zone": "Vùng giá gom hợp lý từ 28.000 - 30.000 VNĐ. Mốc cắt lỗ đặt ở 27.000 VNĐ. Nếu giá vượt qua mốc 31.000 VNĐ, có thể gia tăng tỷ trọng đầu tư.",
+        "macro_view": "Trong bối cảnh vĩ mô, ngành ngân hàng Việt Nam đang phải đối mặt với nhiều thách thức như áp lực tăng lãi suất và rủi ro nợ xấu. Tuy nhiên, CTG với quy mô lớn và vị thế vững chắc có thể tận dụng cơ hội từ chính sách hỗ trợ của Chính phủ và Ngân hàng Nhà nước. Năng lực cạnh tranh và quản trị rủi ro sẽ là yếu tố quyết định sự phát triển bền vững của CTG.",
+        "ai_updated_at": "2026-11-02 09:15:29",
+        "bctc": "Dựa trên BCTC quý gần nhất, CTG có tổng tài sản đạt 2.951.844,765 tỷ VNĐ, cho thấy quy mô hoạt động lớn. Tuy nhiên, dữ liệu về doanh thu/thu nhập lãi thuần và lợi nhuận sau thuế trong 4 quý gần nhất đều là 0, gây khó khăn trong việc đánh giá hiệu quả kinh doanh. Cần xem xét kỹ các chỉ số như tốc độ tăng trưởng tín dụng, biên lãi ròng (NIM), tỷ lệ nợ xấu (NPL) và tỷ lệ bao phủ nợ xấu (LLR) để có cái nhìn toàn diện hơn."
     },
     "TCB": {
         "symbol": "TCB",
@@ -993,11 +994,12 @@
                 "roe_quarter": 5.71
             }
         ],
-        "outlook": "Mức P/E hiện tại ở 7.63, thấp hơn đáng kể so với trung bình ngành, cho thấy HDB có thể đang được định giá rẻ. Với EPS đạt 3815 VNĐ, mức giá hiện tại 22400 VNĐ tương đương với P/E khoảng 5.9 lần, thấp hơn nhiều so với mức trung bình của ngành ngân hàng. Điều này cho thấy biên an toàn khá lớn, đặc biệt khi kết hợp với triển vọng tăng trưởng ổn định và quản lý rủi ro tốt. Tuy nhiên, cần theo dõi sát sao các yếu tố vĩ mô và chính sách tiền tệ để đảm bảo không có biến động đột ngột.",
+        "outlook": "Với P/E = 7.63 và P/B = 1.7, HDB đang được định giá ở mức hợp lý so với triển vọng ngành ngân hàng. Tuy nhiên, cần lưu ý rằng EPS = 3,815 VNĐ và ROE = 24.8% cho thấy hiệu quả sinh lời tốt, nhưng cổ tức = 0.0% có thể làm giảm hấp dẫn đối với nhà đầu tư tìm kiếm thu nhập từ cổ tức. Tổng thể, định giá hiện tại phản ánh một mức độ an toàn tương đối.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý: 21000 - 22000 VNĐ. Mốc chặn lỗ: 20000 VNĐ. Điểm gia tăng tỷ trọng: Khi giá vượt qua 23000 VNĐ và có dòng tiền lớn xác nhận.",
-        "macro_view": "Trong bối cảnh lãi suất đang có xu hướng tăng nhẹ, điều này có thể ảnh hưởng đến chi phí vốn của HDB. Tuy nhiên, ngân hàng đã chứng minh khả năng quản lý rủi ro lãi suất hiệu quả. Tỷ giá USD/VND tương đối ổn định, giảm thiểu rủi ro về biến động tỷ giá. Lạm phát ở mức thấp, tạo điều kiện thuận lợi cho hoạt động kinh doanh. Xu hướng chuyển đổi số và tăng cường công nghệ trong lĩnh vực ngân hàng sẽ tiếp tục thúc đẩy hiệu quả hoạt động và mở rộng dịch vụ. Triển vọng ngành ngân hàng vẫn tích cực, với nhu cầu tín dụng tăng và cơ hội từ các dự án hạ tầng và bất động sản.",
-        "ai_updated_at": "2026-10-31 15:10:15"
+        "ai_price_zone": "Vùng giá gom hợp lý: 21,000 - 22,000 VNĐ. Mốc cắt lỗ: 20,000 VNĐ. Gia tăng tỷ trọng khi giá dưới 21,000 VNĐ.",
+        "macro_view": "Trong bối cảnh vĩ mô, ngành ngân hàng Việt Nam đang trải qua giai đoạn tăng trưởng ổn định, với chính sách tiền tệ linh hoạt và nhu cầu vốn của nền kinh tế. HDB, với quy mô lớn và mạng lưới rộng khắp, có vị thế cạnh tranh tốt. Tuy nhiên, cần theo dõi chặt chẽ các yếu tố rủi ro như tỷ lệ nợ xấu và chi phí dự phòng rủi ro tín dụng để đảm bảo tính bền vững.",
+        "ai_updated_at": "2026-11-02 09:15:39",
+        "bctc": "Dựa trên BCTC quý gần nhất, tổng tài sản của HDB đạt 1.142.906 tỷ VNĐ, cho thấy quy mô hoạt động lớn. Tuy nhiên, doanh thu và lợi nhuận sau thuế trong 4 quý gần nhất đều bằng 0, điều này có thể là do lỗi dữ liệu hoặc tình hình kinh doanh thực sự gặp khó khăn. Cần xem xét kỹ các chỉ số như tốc độ tăng trưởng tín dụng, biên lãi ròng (NIM), tỷ lệ nợ xấu (NPL) và tỷ lệ bao phủ nợ xấu (LLR) để đánh giá chất lượng tài sản và khả năng sinh lời."
     },
     "VIB": {
         "symbol": "VIB",
@@ -2118,11 +2120,12 @@
                 "roe_quarter": 1.63
             }
         ],
-        "outlook": "Mức giá hiện tại 19300 VNĐ với P/E = 13.01 cho thấy SSI đang được định giá ở mức hợp lý, không quá đắt nhưng cũng chưa phải rẻ. Biên an toàn tương đối tốt, đặc biệt khi xem xét triển vọng tăng trưởng của thị trường chứng khoán Việt Nam. Tuy nhiên, cần theo dõi sát sao các biến động vĩ mô và xu hướng thị trường để xác định cơ hội mua vào hoặc điều chỉnh tỷ trọng.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý nằm trong khoảng 18000-19000 VNĐ, đây là vùng hỗ trợ mạnh và có biên an toàn tốt. Mốc chặn lỗ nên đặt ở mức 17500 VNĐ. Khi có sự xác nhận từ dòng tiền lớn, điểm gia tăng tỷ trọng có thể ở mức 20000-21000 VNĐ, đây là vùng kháng cự gần nhất.",
-        "macro_view": "Bối cảnh vĩ mô hiện nay với lãi suất ổn định và tỷ giá USD/VND được kiểm soát chặt chẽ tạo điều kiện thuận lợi cho hoạt động của SSI. Lạm phát thấp giúp duy trì sức mua và thúc đẩy hoạt động đầu tư. Xu hướng chuyển đổi số và phát triển công nghệ tài chính cũng mở ra nhiều cơ hội cho SSI trong việc mở rộng dịch vụ và nâng cao hiệu quả kinh doanh. Tuy nhiên, cần chú ý đến các rủi ro địa chính trị và biến động của thị trường thế giới, đặc biệt là chu kỳ hàng hóa, có thể ảnh hưởng đến tâm lý nhà đầu tư và hoạt động của SSI.",
-        "ai_updated_at": "2026-10-31 15:12:33"
+        "outlook": "P/E = 13.01 và P/B = 1.48 của SSI đang ở mức hợp lý so với triển vọng ngành chứng khoán. Tuy nhiên, với doanh thu và lợi nhuận sau thuế bằng 0, cần thận trọng khi đánh giá triển vọng định giá. Biên an toàn hiện tại chưa rõ ràng do thiếu thông tin về hoạt động kinh doanh.",
+        "ai_recommendation": "Chờ chiết khấu",
+        "ai_price_zone": "Vùng giá gom hợp lý: 17,000 - 18,000 VNĐ. Mốc cắt lỗ: 16,500 VNĐ. Gia tăng tỷ trọng khi giá giảm xuống dưới 17,000 VNĐ.",
+        "macro_view": "Trong bối cảnh vĩ mô, thị trường chứng khoán Việt Nam đang có xu hướng hồi phục nhưng vẫn còn nhiều rủi ro. SSI với vị thế là một trong những công ty chứng khoán hàng đầu, có tiềm năng tăng trưởng tốt nếu thị trường ổn định. Tuy nhiên, cần theo dõi sát sao biến động thanh khoản và chính sách lãi suất để đánh giá đúng năng lực cạnh tranh và triển vọng dài hạn.",
+        "ai_updated_at": "2026-11-02 09:16:53",
+        "bctc": "Dựa trên BCTC quý gần nhất, SSI có tài sản ngắn hạn lên đến 886.463 tỷ VNĐ, cho thấy khả năng thanh khoản tốt. Tuy nhiên, doanh thu và lợi nhuận sau thuế trong 4 quý gần nhất đều là 0, điều này cần được xem xét kỹ lưỡng. Đặc biệt, cần đánh giá thêm về quy mô cho vay Margin, hiệu quả danh mục đầu tư tự doanh (FVTPL) và thị phần môi giới để có cái nhìn toàn diện hơn."
     },
     "VCI": {
         "symbol": "VCI",
@@ -2618,11 +2621,12 @@
                 "roe_quarter": 2.39
             }
         ],
-        "outlook": "Tại mức P/E = 12.35 và P/B = 1.33, MBS đang được định giá ở mức hợp lý so với tiềm năng tăng trưởng của công ty. EPS = 1214 VNĐ và ROE = 13.1% cho thấy công ty đang hoạt động hiệu quả và sinh lời tốt. Tuy nhiên, cần chú ý đến biến động của thị trường bất động sản và lãi suất, những yếu tố có thể ảnh hưởng đến biên an toàn. Hiện tại, mức giá 15000 VNĐ vẫn còn một khoảng cách an toàn nhất định so với giá trị thực tế, nhưng nhà đầu tư nên cân nhắc kỹ lưỡng trước khi quyết định.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý nằm trong khoảng 14000 - 14500 VNĐ, đây là vùng giá mà MBS đã tích lũy trong thời gian dài. Mốc chặn lỗ có thể đặt ở 13500 VNĐ để bảo vệ vốn. Nếu có dấu hiệu breakout lên trên 15500 VNĐ với khối lượng giao dịch lớn, đó sẽ là cơ hội để gia tăng tỷ trọng.",
-        "macro_view": "Trong bối cảnh vĩ mô hiện tại, lãi suất đang có xu hướng ổn định, nhưng vẫn cần theo dõi sát sao vì nó có thể tác động trực tiếp đến khả năng vay vốn và chi phí vốn của MBS. Tỷ giá USD/VND cũng đang ở mức tương đối ổn định, nhưng cần lưu ý đến các biến động địa chính trị có thể gây áp lực lên tỷ giá. Lạm phát đang được kiểm soát tốt, tạo điều kiện thuận lợi cho hoạt động kinh doanh. Xu hướng chuyển đổi số và năng lượng sạch cũng mở ra nhiều cơ hội cho MBS trong việc phát triển các dự án hạ tầng và khu công nghiệp xanh, nâng cao giá trị và sức cạnh tranh của công ty. Tổng thể, triển vọng ngành bất động sản và hạ tầng vẫn rất lạc quan, đặc biệt khi nhu cầu về nhà ở và không gian làm việc chất lượng cao vẫn đang tăng.",
-        "ai_updated_at": "2026-10-31 15:13:42"
+        "outlook": "Với P/E = 12.35 và P/B = 1.33, MBS được định giá ở mức trung bình so với ngành chứng khoán. Tuy nhiên, triển vọng tăng trưởng và hiệu quả sinh lời hiện tại (EPS = 1,214 VNĐ, ROE = 13.1%, ROA = 3.8%) cần được xem xét kỹ lưỡng. Cổ tức 10.16% là một điểm tích cực, nhưng cần cân nhắc rủi ro từ biến động thị trường.",
+        "ai_recommendation": "Chờ chiết khấu",
+        "ai_price_zone": "Vùng giá gom hợp lý: 14,000 - 14,500 VNĐ. Mốc cắt lỗ: 13,500 VNĐ. Gia tăng tỷ trọng khi giá giảm xuống dưới 14,000 VNĐ.",
+        "macro_view": "Trong bối cảnh vĩ mô, thị trường chứng khoán Việt Nam đang chịu ảnh hưởng bởi nhiều yếu tố như lãi suất, chính sách tiền tệ, và biến động kinh tế toàn cầu. MBS, với vị thế là công ty chứng khoán lớn, có tiềm năng cạnh tranh tốt nếu duy trì hiệu quả hoạt động và quản lý rủi ro. Tuy nhiên, cần theo dõi sát sao các yếu tố vĩ mô và nội bộ để đưa ra quyết định đầu tư phù hợp.",
+        "ai_updated_at": "2026-11-02 09:17:09",
+        "bctc": "Dựa trên BCTC quý gần nhất, MBS đang có tài sản ngắn hạn lên đến 34.999 tỷ VNĐ, cho thấy khả năng thanh khoản tốt. Tuy nhiên, doanh thu và lợi nhuận sau thuế trong 4 quý gần nhất đều bằng 0, điều này có thể phản ánh tình hình kinh doanh không ổn định hoặc có vấn đề về báo cáo. Cần xem xét kỹ hơn về quy mô cho vay Margin, hiệu quả danh mục đầu tư tự doanh (FVTPL) và thị phần môi giới để đánh giá toàn diện."
     },
     "FTS": {
         "symbol": "FTS",
@@ -2743,11 +2747,12 @@
                 "roe_quarter": 3.87
             }
         ],
-        "outlook": "Mức P/E hiện tại là 16.98, khá cao so với trung bình ngành, nhưng vẫn nằm trong giới hạn hợp lý nếu xem xét tiềm năng tăng trưởng dài hạn. P/B = 1.53 cho thấy cổ phiếu đang được định giá ở mức trung bình. Với ROE = 9.1% và ROA = 2.9%, FTS đang tạo ra lợi nhuận tốt từ vốn đầu tư. Mức giá hiện tại có thể coi là hợp lý, nhưng chưa phải là rẻ, cần theo dõi thêm để tìm cơ hội mua ở mức giá hấp dẫn hơn.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý: 17.000 - 17.500 VNĐ. Vùng định giá rẻ: dưới 16.500 VNĐ. Mốc chặn lỗ: 16.000 VNĐ. Điểm gia tăng tỷ trọng khi có dòng tiền lớn xác nhận: trên 18.000 VNĐ.",
-        "macro_view": "Trong bối cảnh lãi suất toàn cầu đang có xu hướng tăng, điều này có thể tác động tiêu cực đến chi phí vốn của FTS. Tuy nhiên, nhu cầu về sản phẩm của FTS vẫn duy trì ở mức cao, đặc biệt trong bối cảnh chuyển đổi số và phát triển hạ tầng. Giá nguyên liệu đầu vào có xu hướng tăng, nhưng FTS đã chứng minh khả năng kiểm soát chi phí tốt. Địa chính trị và chu kỳ hàng hóa thế giới cũng cần được theo dõi chặt chẽ, nhưng tổng thể, triển vọng ngành vẫn tích cực, hỗ trợ cho dư địa tăng trưởng dài hạn của FTS.",
-        "ai_updated_at": "2026-10-31 15:13:53"
+        "outlook": "P/E ở mức 16.98 và P/B là 1.53, cả hai đều ở mức trung bình so với ngành. Tuy nhiên, với triển vọng kinh doanh hiện tại không rõ ràng, các chỉ số định giá này có thể bị đánh giá cao. Cần theo dõi thêm để xác định liệu mức định giá này có hợp lý hay không.",
+        "ai_recommendation": "Chờ chiết khấu",
+        "ai_price_zone": "Vùng giá gom hợp lý: 17,000 - 17,500 VNĐ. Mốc cắt lỗ: 16,500 VNĐ. Nếu giá tăng lên trên 18,500 VNĐ, có thể gia tăng tỷ trọng.",
+        "macro_view": "Trong bối cảnh vĩ mô, thị trường chứng khoán đang chịu ảnh hưởng từ nhiều yếu tố như lãi suất, biến động kinh tế toàn cầu. FTS cần cải thiện năng lực cạnh tranh và đa dạng hóa dịch vụ để duy trì vị thế. Tuy nhiên, với tình hình kinh doanh hiện tại, triển vọng ngắn hạn của FTS còn nhiều rủi ro.",
+        "ai_updated_at": "2026-11-02 09:17:18",
+        "bctc": "Dựa trên BCTC quý gần nhất, FTS có tài sản ngắn hạn đạt 13.483.783.557.565 VNĐ, cho thấy khả năng thanh khoản tốt. Tuy nhiên, doanh thu và lợi nhuận sau thuế trong 4 quý gần nhất đều bằng 0, điều này cần được xem xét kỹ lưỡng. Đặc biệt, không có thông tin về dư nợ cho vay margin, hiệu quả danh mục đầu tư tự doanh (FVTPL) và thị phần môi giới, những yếu tố quan trọng đối với ngành chứng khoán."
     },
     "BSI": {
         "symbol": "BSI",
@@ -3243,11 +3248,12 @@
                 "roe_quarter": 6.56
             }
         ],
-        "outlook": "Mức giá hiện tại của VHM ở mức P/E = 5.23 và P/B = 1.8, cho thấy cổ phiếu đang được định giá hấp dẫn so với tiềm năng tăng trưởng và chất lượng tài chính. EPS đạt 12038 VNĐ và ROE 36.6% phản ánh sức mạnh lợi nhuận và hiệu quả sử dụng vốn. Tuy nhiên, cần chú ý đến biến động của thị trường bất động sản và vĩ mô. Mức giá hiện tại đã tạo biên an toàn đáng kể, nhưng vẫn cần theo dõi sát sao các yếu tố ngoại vi để đảm bảo tính bền vững.",
+        "outlook": "Với P/E ở mức 5.23 và P/B là 1.8, cổ phiếu VHM đang được định giá khá hấp dẫn so với triển vọng ngành bất động sản. ROE và ROA lần lượt đạt 36.6% và 10.1%, cho thấy hiệu quả sinh lời cao. Cổ tức 4.91% cũng là một điểm cộng. Tuy nhiên, cần theo dõi sát sao diễn biến kinh doanh và tài chính trong thời gian tới.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá hợp lý để gom cổ phiếu là từ 60000 - 63000 VNĐ. Nếu giá giảm xuống dưới 60000 VNĐ, đây sẽ là cơ hội tốt để gia tăng tỷ trọng. Điểm chặn lỗ nên đặt ở mức 57000 VNĐ. Khi giá vượt qua vùng 65000 VNĐ, có thể xem xét mua thêm nếu có dòng tiền lớn xác nhận xu hướng tăng.",
-        "macro_view": "Bối cảnh vĩ mô hiện tại với lãi suất ổn định và tỷ giá USD/VND không biến động quá lớn tạo điều kiện thuận lợi cho hoạt động kinh doanh của VHM. Lạm phát được kiểm soát tốt, hỗ trợ sức mua của người dân. Xu hướng chuyển đổi số và phát triển đô thị thông minh cũng mở ra nhiều cơ hội cho VHM trong việc nâng cao giá trị sản phẩm và dịch vụ. Tuy nhiên, cần lưu ý đến các rủi ro địa chính trị và chu kỳ hàng hóa thế giới, đặc biệt là giá nguyên liệu xây dựng, có thể ảnh hưởng đến chi phí đầu vào. Dù vậy, với quỹ đất dồi dào và dự án đang triển khai, VHM có dư địa tăng trưởng dài hạn.",
-        "ai_updated_at": "2026-10-31 15:14:43"
+        "ai_price_zone": "Vùng giá gom hợp lý từ 60.000 - 62.000 VNĐ. Mốc cắt lỗ đặt ở 58.000 VNĐ. Nếu giá tăng vượt qua 65.000 VNĐ, có thể gia tăng tỷ trọng.",
+        "macro_view": "Trong bối cảnh vĩ mô, thị trường bất động sản Việt Nam vẫn tiếp tục phát triển ổn định, đặc biệt là tại các thành phố lớn. VHM, với vị thế là một trong những nhà phát triển bất động sản hàng đầu, có tiềm năng tăng trưởng mạnh mẽ. Tuy nhiên, cần lưu ý đến rủi ro từ chính sách vĩ mô và áp lực nợ vay trái phiếu.",
+        "ai_updated_at": "2026-11-02 09:17:28",
+        "bctc": "Dựa trên BCTC quý gần nhất, VHM có tài sản ngắn hạn lên đến 930.807.696.000.000 VNĐ, cho thấy khả năng thanh khoản tốt trong ngắn hạn. Tuy nhiên, doanh thu và lợi nhuận sau thuế của 4 quý gần nhất đều bằng 0, điều này có thể phản ánh sự chậm trễ trong việc công bố hoặc thực hiện các dự án. Cần chú ý đến khoản 'Người mua trả tiền trước' và 'Doanh thu chưa thực hiện', cũng như quy mô hàng tồn kho để đánh giá chính xác hơn về tình hình tài chính."
     },
     "VIC": {
         "symbol": "VIC",
@@ -3368,11 +3374,12 @@
                 "roe_quarter": 0.78
             }
         ],
-        "outlook": "Mức P/E hiện tại là 43,18, cao hơn đáng kể so với trung bình ngành, phản ánh kỳ vọng tăng trưởng mạnh mẽ. Tuy nhiên, với ROE và ROA tốt, cùng tiềm năng tăng trưởng từ các dự án bất động sản, mức giá này vẫn có thể coi là hợp lý. Biên an toàn chưa thực sự rõ ràng, nhưng nếu các dự án tiếp tục triển khai đúng tiến độ, VIC có thể duy trì đà tăng trưởng. Mức P/B = 9,61 cũng cho thấy thị trường đánh giá cao về tiềm năng tăng trưởng dài hạn của VIC.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý nằm trong khoảng 220.000 - 230.000 VNĐ, đây là vùng hỗ trợ kỹ thuật mạnh. Vùng định giá rẻ có thể ở mức 200.000 - 210.000 VNĐ, nơi có nhiều cơ hội để mua vào. Mốc chặn lỗ nên đặt ở 210.000 VNĐ. Khi có dòng tiền lớn xác nhận, điểm gia tăng tỷ trọng có thể ở mức 250.000 - 260.000 VNĐ.",
-        "macro_view": "Bối cảnh vĩ mô hiện nay với lãi suất đang ở mức cao và tỷ giá USD/VND biến động có thể ảnh hưởng đến nhu cầu bất động sản trong ngắn hạn. Tuy nhiên, xu hướng chuyển đổi số và phát triển đô thị thông minh sẽ tiếp tục thúc đẩy nhu cầu về bất động sản chất lượng cao. Lạm phát được kiểm soát tốt, tạo điều kiện cho sức mua ổn định. Trong dài hạn, các dự án hạ tầng và khu công nghiệp của VIC sẽ tiếp tục hưởng lợi từ chính sách phát triển kinh tế và thu hút đầu tư nước ngoài. Địa chính trị và chu kỳ hàng hóa thế giới cũng cần được theo dõi chặt chẽ để điều chỉnh chiến lược kinh doanh kịp thời.",
-        "ai_updated_at": "2026-10-31 15:14:56"
+        "outlook": "Chỉ số P/E ở mức 43.18 và P/B ở mức 9.61 cho thấy VIC đang được định giá cao so với thị trường. Tuy nhiên, nếu triển vọng ngành bất động sản tiếp tục tốt và VIC duy trì được hiệu quả kinh doanh, mức định giá này có thể là hợp lý. Cần theo dõi sát sao các chỉ số tài chính và tình hình kinh doanh để xác định biên an toàn.",
+        "ai_recommendation": "Định giá cao - Chờ chiết khấu",
+        "ai_price_zone": "Vùng giá gom hợp lý có thể nằm trong khoảng 220,000 - 230,000 VNĐ. Mốc cắt lỗ nên được đặt ở mức 210,000 VNĐ. Nếu giá cổ phiếu giảm xuống dưới mốc này, nhà đầu tư nên cân nhắc bán ra để tránh rủi ro. Gia tăng tỷ trọng khi giá cổ phiếu phục hồi và vượt qua mốc 250,000 VNĐ.",
+        "macro_view": "Trong bối cảnh vĩ mô, ngành bất động sản Việt Nam đang trải qua giai đoạn phát triển mạnh mẽ với nhu cầu nhà ở và cơ sở hạ tầng tăng cao. Chính sách hỗ trợ từ chính phủ và sự cải thiện của nền kinh tế sẽ tạo điều kiện thuận lợi cho VIC. Tuy nhiên, rủi ro về biến động lãi suất và áp lực cạnh tranh từ các đối thủ khác cũng cần được chú ý. VIC với vị thế là một trong những tập đoàn bất động sản hàng đầu, có khả năng tận dụng tốt cơ hội và duy trì năng lực cạnh tranh.",
+        "ai_updated_at": "2026-11-02 09:17:40",
+        "bctc": "Báo cáo tài chính quý 3/2026 của VIC cho thấy doanh thu/thu nhập lãi thuần và lợi nhuận sau thuế đều bằng 0, điều này có thể phản ánh một số vấn đề về việc ghi nhận doanh thu hoặc có thể là do thời điểm báo cáo. Tuy nhiên, tài sản ngắn hạn đạt 1,123,267 tỷ VNĐ, cho thấy công ty đang nắm giữ một lượng lớn tiền mặt và các khoản tương đương tiền mặt, giúp tăng cường khả năng thanh khoản. Cần xem xét kỹ hơn về 'Người mua trả tiền trước' (tiền khách hàng đặt cọc dự án) và quy mô hàng tồn kho (dự án dở dang) để đánh giá đúng tiềm năng sinh lời trong tương lai. Áp lực nợ vay trái phiếu cũng cần được phân tích kỹ lưỡng để đảm bảo khả năng tất toán."
     },
     "VRE": {
         "symbol": "VRE",
@@ -5243,11 +5250,12 @@
                 "roe_quarter": 2.55
             }
         ],
-        "outlook": "Mức P/E = 8.09 và P/B = 1.62 cho thấy cổ phiếu PHR đang được định giá ở mức hấp dẫn so với ngành. EPS = 6901 VNĐ và ROE = 21.4% cho thấy khả năng sinh lời tốt. Tuy nhiên, cần chú ý đến biến động giá nguyên liệu đầu vào, có thể ảnh hưởng đến biên lợi nhuận gộp. Tổng hợp, mức giá hiện tại 31.000 VNĐ đã phản ánh phần lớn giá trị thực tế, nhưng vẫn còn dư địa tăng trưởng nếu công ty tiếp tục tối ưu hóa hoạt động sản xuất và kiểm soát chi phí.",
+        "outlook": "Với P/E = 8.09 và P/B = 1.62, PHR được định giá ở mức hợp lý so với mặt bằng chung của ngành bất động sản. Tuy nhiên, cần chú ý đến triển vọng tăng trưởng và khả năng sinh lời trong tương lai, đặc biệt là khi doanh thu và lợi nhuận sau thuế gần đây không phản ánh đúng tiềm năng thực sự của công ty.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý từ 29.000 - 30.000 VNĐ, đây là vùng hỗ trợ mạnh và có thể là điểm mua tốt. Mốc chặn lỗ đặt ở 28.000 VNĐ để bảo vệ vốn. Khi có dòng tiền lớn xác nhận, có thể gia tăng tỷ trọng ở mức 32.000 - 33.000 VNĐ, đây là vùng kháng cự gần nhất.",
-        "macro_view": "Bối cảnh vĩ mô toàn cầu đang chịu áp lực từ lãi suất cao và tỷ giá USD/VND biến động. Điều này có thể tác động đến chi phí vốn và giá nguyên liệu đầu vào, nhưng cũng tạo cơ hội cho các doanh nghiệp như PHR có khả năng quản lý chi phí hiệu quả. Xu hướng chuyển đổi số và năng lượng sạch đang thúc đẩy nhu cầu thép chất lượng cao, tạo điều kiện cho PHR mở rộng thị trường. Địa chính trị và chu kỳ hàng hóa thế giới cũng cần được theo dõi chặt chẽ, nhưng triển vọng dài hạn của PHR vẫn rất lạc quan nhờ vào vị trí vững chắc trong ngành và chiến lược phát triển bền vững.",
-        "ai_updated_at": "2026-10-31 15:18:19"
+        "ai_price_zone": "Vùng giá gom hợp lý từ 27.000 - 28.500 VNĐ. Mốc cắt lỗ đặt ở 26.000 VNĐ. Nếu giá vượt qua vùng 29.000 - 30.000 VNĐ, có thể xem xét gia tăng tỷ trọng.",
+        "macro_view": "Trong bối cảnh vĩ mô, thị trường bất động sản Việt Nam đang trải qua giai đoạn phục hồi sau cú sốc kinh tế. Chính sách hỗ trợ từ chính phủ và nhu cầu nhà ở vẫn duy trì ở mức cao. PHR với vị thế vững chắc trong ngành và khả năng quản lý nợ hiệu quả, có thể tận dụng cơ hội này để phát triển. Tuy nhiên, cần theo dõi sát sao các yếu tố rủi ro như lãi suất và áp lực cạnh tranh.",
+        "ai_updated_at": "2026-11-02 09:17:50",
+        "bctc": "Dựa trên BCTC quý gần nhất, PHR đang có tài sản ngắn hạn lên đến 36.624 tỷ VNĐ, cho thấy khả năng thanh khoản tốt trong ngắn hạn. Tuy nhiên, doanh thu và lợi nhuận sau thuế của 4 quý gần nhất đều bằng 0, điều này có thể phản ánh một số vấn đề về việc ghi nhận doanh thu hoặc các dự án đang trong giai đoạn triển khai. Cần xem xét kỹ hơn về khoản 'Người mua trả tiền trước' và quy mô hàng tồn kho để đánh giá chính xác tình hình tài chính."
     },
     "HPG": {
         "symbol": "HPG",
@@ -6618,11 +6626,12 @@
                 "roe_quarter": 5.93
             }
         ],
-        "outlook": "Mức P/E = 10.43 và P/B = 3.45 của VNM cho thấy cổ phiếu đang được định giá ở mức hợp lý so với ngành. Tuy nhiên, với triển vọng tăng trưởng dài hạn và biên lợi nhuận ổn định, mức giá hiện tại vẫn còn tiềm năng tăng. Động lực tăng trưởng từ mở rộng chuỗi cửa hàng và cải thiện hiệu suất hoạt động tại các điểm bán sẽ tiếp tục hỗ trợ giá trị thực tế của VNM. Hiện tại, cổ phiếu đã có biên an toàn nhất định, nhưng cần theo dõi thêm để xác nhận xu hướng tích cực.",
+        "outlook": "Với P/E = 10.43 và P/B = 3.45, VNM đang được định giá ở mức hợp lý so với triển vọng ngành. EPS = 5,454 VNĐ, ROE = 31.1%, và ROA = 20.4% cho thấy hiệu quả sinh lời tốt. Tuy nhiên, cần chú ý đến sự ổn định của các chỉ số này trong tương lai.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý nằm trong khoảng 54,000 - 56,000 VNĐ, đây là vùng giá có hỗ trợ kỹ thuật mạnh. Mốc chặn lỗ nên đặt ở 53,000 VNĐ. Khi có dấu hiệu breakout lên trên 58,000 VNĐ, nhà đầu tư có thể gia tăng tỷ trọng, đặc biệt khi có dòng tiền lớn xác nhận xu hướng.",
-        "macro_view": "Trong bối cảnh lãi suất đang có xu hướng tăng nhẹ, tỷ giá USD/VND tương đối ổn định, và lạm phát được kiểm soát, VNM có cơ hội tận dụng sức mua vĩ mô ổn định. Chuyển đổi số và xu hướng tiêu dùng sạch cũng tạo điều kiện thuận lợi cho VNM trong việc mở rộng và tối ưu hóa chuỗi cung ứng. Địa chính trị và chu kỳ hàng hóa thế giới có thể ảnh hưởng đến giá nguyên liệu, nhưng VNM đã chứng minh khả năng thích ứng linh hoạt. Triển vọng ngành tiêu dùng nội địa vẫn rất tích cực, với dư địa tăng trưởng dài hạn nhờ vào sự phát triển của tầng lớp trung lưu và nhu cầu tiêu dùng chất lượng cao.",
-        "ai_updated_at": "2026-10-31 15:20:58"
+        "ai_price_zone": "Vùng giá gom hợp lý: 50,000 - 55,000 VNĐ. Mốc cắt lỗ: 48,000 VNĐ. Gia tăng tỷ trọng khi giá giảm về vùng 50,000 - 52,000 VNĐ.",
+        "macro_view": "Ngành sản xuất tiêu dùng đang chịu ảnh hưởng bởi biến động kinh tế vĩ mô, nhưng VNM vẫn duy trì vị thế cạnh tranh mạnh mẽ. Dòng tiền ổn định và hiệu quả quản lý tài chính là điểm mạnh của VNM. Triển vọng ngành trong trung hạn vẫn tích cực, đặc biệt khi nhu cầu tiêu dùng nội địa tiếp tục tăng.",
+        "ai_updated_at": "2026-11-02 09:17:59",
+        "bctc": "Dựa trên BCTC quý gần nhất, VNM có tài sản ngắn hạn đạt 408.025 tỷ VNĐ, cho thấy khả năng thanh khoản tốt. Tuy nhiên, doanh thu và lợi nhuận sau thuế trong 4 quý gần nhất đều bằng 0, điều này cần được xem xét kỹ lưỡng. Cần phân tích thêm về biên lợi nhuận gộp, vòng quay hàng tồn kho, đòn bẩy tài chính (tỷ lệ Nợ vay/Vốn chủ sở hữu) và dòng tiền thuần từ hoạt động kinh doanh (CFO) để đánh giá toàn diện."
     },
     "MSN": {
         "symbol": "MSN",
@@ -7368,11 +7377,12 @@
                 "roe_quarter": -0.15
             }
         ],
-        "outlook": "Mức P/E hiện tại là 6.94, thấp hơn đáng kể so với trung bình ngành, cho thấy cổ phiếu BSR đang được định giá rẻ. Tuy nhiên, cần chú ý đến biến động giá nguyên liệu đầu vào, có thể ảnh hưởng đến biên lợi nhuận gộp. ROE và ROA đều ở mức rất cao, phản ánh hiệu quả sử dụng vốn và sinh lời tốt. Với triển vọng tăng trưởng ổn định và cơ hội mở rộng thị trường, BSR có tiềm năng tăng giá trong tương lai. Biên an toàn hiện tại là hợp lý, nhưng cần theo dõi sát sao các yếu tố vĩ mô và ngành.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý từ 26.000 - 27.000 VNĐ, đây là vùng hỗ trợ mạnh và có khối lượng cạn kiệt. Mốc chặn lỗ đặt ở 25.000 VNĐ để bảo vệ vốn. Khi có dòng tiền lớn xác nhận, điểm gia tăng tỷ trọng là 28.000 - 29.000 VNĐ, đây là vùng kháng cự gần nhất.",
-        "macro_view": "Trong bối cảnh lãi suất toàn cầu đang có xu hướng tăng, điều này có thể gây áp lực lên chi phí vốn và giảm sức mua. Tuy nhiên, BSR đã chứng minh khả năng quản lý rủi ro tài chính tốt. Tỷ giá USD/VND ổn định, giúp giảm rủi ro biến động giá nguyên liệu nhập khẩu. Lạm phát ở mức kiểm soát, tạo điều kiện thuận lợi cho tiêu dùng. Xu hướng chuyển đổi số và năng lượng sạch đang thúc đẩy nhu cầu về sản phẩm công nghệ và giải pháp tiết kiệm năng lượng, tạo cơ hội cho BSR mở rộng thị trường. Địa chính trị ổn định, đặc biệt là quan hệ thương mại giữa Việt Nam và các đối tác lớn, cũng góp phần tạo môi trường kinh doanh thuận lợi.",
-        "ai_updated_at": "2026-10-31 15:22:21"
+        "outlook": "Chỉ số P/E = 6.94 và P/B = 1.66 cho thấy cổ phiếu BSR đang được định giá ở mức thấp so với triển vọng ngành. Tuy nhiên, việc doanh thu và lợi nhuận sau thuế bằng 0 trong 4 quý gần nhất gây lo ngại. Cần theo dõi sát sao các báo cáo tài chính tiếp theo để xác nhận xu hướng.",
+        "ai_recommendation": "Chờ chiết khấu",
+        "ai_price_zone": "Vùng giá gom hợp lý: 26,000 - 27,000 VNĐ. Mốc cắt lỗ: 25,000 VNĐ. Gia tăng tỷ trọng khi giá giảm về vùng 25,000 - 26,000 VNĐ.",
+        "macro_view": "Ngành sản xuất tiêu dùng đang chịu áp lực từ biến động giá nguyên liệu và sức mua của người tiêu dùng. Tuy nhiên, BSR có tiềm năng tăng trưởng nhờ vào chiến lược đa dạng hóa sản phẩm và mở rộng thị trường. Bối cảnh vĩ mô ổn định, lãi suất thấp và chính sách hỗ trợ doanh nghiệp sẽ tạo điều kiện thuận lợi cho BSR phát triển.",
+        "ai_updated_at": "2026-11-02 09:18:07",
+        "bctc": "Dựa trên BCTC quý gần nhất, BSR có tài sản ngắn hạn lên đến 106.594 tỷ VNĐ, cho thấy khả năng thanh khoản tốt trong ngắn hạn. Tuy nhiên, doanh thu và lợi nhuận sau thuế của 4 quý gần nhất đều bằng 0, điều này cần được xem xét kỹ lưỡng. Cần phân tích thêm về biên lợi nhuận gộp, vòng quay hàng tồn kho, đòn bẩy tài chính (tỷ lệ Nợ vay/Vốn chủ sở hữu) và dòng tiền thuần từ hoạt động kinh doanh (CFO) để đánh giá toàn diện."
     },
     "POW": {
         "symbol": "POW",
@@ -8493,11 +8503,12 @@
                 "roe_quarter": -18.13
             }
         ],
-        "outlook": "Mức P/E hiện tại ở mức 14.2, tương đối hấp dẫn so với ngành và thị trường, nhưng P/B ở mức 6.82 lại khá cao, phản ánh sự đánh giá cao của thị trường về tiềm năng tăng trưởng. EPS đạt 1460 VNĐ, cho thấy khả năng sinh lời tốt. Tuy nhiên, cổ tức 0% có thể làm giảm sức hấp dẫn đối với nhà đầu tư tìm kiếm thu nhập. Tổng thể, HVN đang được định giá ở mức hợp lý, nhưng cần theo dõi sát sao biến động giá nhiên liệu và tình hình kinh tế vĩ mô.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng giá gom hợp lý: 20,000 - 21,000 VNĐ. Mốc chặn lỗ: 19,500 VNĐ. Điểm gia tăng tỷ trọng khi có dòng tiền lớn xác nhận: 22,000 VNĐ.",
-        "macro_view": "Trong bối cảnh lãi suất toàn cầu đang tăng, điều này có thể ảnh hưởng đến chi phí vốn của HVN. Tuy nhiên, nhu cầu du lịch và vận chuyển hàng hóa vẫn tiếp tục phục hồi sau đại dịch, tạo cơ hội tăng trưởng. Giá nhiên liệu thế giới, một yếu tố quan trọng, đã bắt đầu ổn định, giúp cải thiện biên lợi nhuận. Địa chính trị và chu kỳ hàng hóa thế giới cũng cần được theo dõi chặt chẽ, đặc biệt là các vấn đề liên quan đến cung ứng nhiên liệu. Trong dài hạn, xu hướng chuyển đổi số và phát triển bền vững sẽ là động lực tăng trưởng quan trọng cho HVN, thông qua việc tối ưu hóa hoạt động và mở rộng dịch vụ.",
-        "ai_updated_at": "2026-10-31 15:24:10"
+        "outlook": "P/E ở mức 14.2 và P/B ở mức 6.82, tương đối cao so với mặt bằng chung của ngành sản xuất tiêu dùng. Điều này có thể phản ánh kỳ vọng tăng trưởng mạnh mẽ hoặc định giá quá mức. Tuy nhiên, với ROE đạt 72.1% và ROA 6.2%, HVN vẫn thể hiện hiệu quả sinh lời tốt. Cần cân nhắc kỹ lưỡng trước khi đưa ra quyết định đầu tư.",
+        "ai_recommendation": "Chờ chiết khấu",
+        "ai_price_zone": "Vùng giá gom hợp lý: 18,000 - 19,000 VNĐ. Mốc cắt lỗ: 17,000 VNĐ. Gia tăng tỷ trọng nếu giá giảm xuống dưới 18,000 VNĐ.",
+        "macro_view": "Ngành sản xuất tiêu dùng đang chịu ảnh hưởng bởi nhiều yếu tố vĩ mô như lạm phát, lãi suất và sức mua của người dân. HVN với vị thế là một trong những công ty hàng đầu trong ngành, có tiềm năng tăng trưởng tốt nhưng cũng cần lưu ý rủi ro từ biến động thị trường. Triển vọng ngành trong dài hạn vẫn tích cực, nhưng ngắn hạn cần theo dõi sát sao các yếu tố vĩ mô.",
+        "ai_updated_at": "2026-11-02 09:18:17",
+        "bctc": "Dựa trên BCTC quý gần nhất, HVN có tài sản ngắn hạn lên đến 40.179 tỷ VNĐ, cho thấy khả năng thanh khoản tốt trong ngắn hạn. Tuy nhiên, dữ liệu về doanh thu và lợi nhuận sau thuế của 4 quý gần nhất đều là 0, gây khó khăn trong việc đánh giá hiệu quả hoạt động kinh doanh. Cần xem xét kỹ hơn các chỉ số như biên lợi nhuận gộp, vòng quay hàng tồn kho, đòn bẩy tài chính (tỷ lệ Nợ vay/Vốn chủ sở hữu) và dòng tiền thuần từ hoạt động kinh doanh (CFO) để có cái nhìn toàn diện."
     },
     "VHC": {
         "symbol": "VHC",
