@@ -7,12 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDK (Dùng cho module đăng nhập & quản lý user) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    
     <script src="./lightweight-charts.js"></script>
+
 
     <style>
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -53,112 +49,6 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
 
-    <!-- MÀN HÌNH ĐĂNG NHẬP / XÁC THỰC (HIỂN THỊ KHI CHƯA LOGIN) -->
-    <div id="auth-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md hidden p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl p-6 relative">
-            <div class="text-center mb-6">
-                <div class="inline-block bg-emerald-600 text-white p-3 rounded-xl shadow-lg shadow-emerald-500/30 mb-2">
-                    <i class="fa-solid fa-scale-balanced text-xl"></i>
-                </div>
-                <h2 class="text-xl font-black text-white">Pro Quant Screener</h2>
-                <p class="text-xs text-slate-400 mt-1">Đăng nhập để sử dụng hệ thống lọc & phân tích AI</p>
-            </div>
-
-            <!-- Tab chọn Đăng nhập / Đăng ký -->
-            <div class="flex border-b border-slate-800 mb-6">
-                <button onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">Đăng Nhập</button>
-                <button onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition">Đăng Ký Tài Khoản</button>
-            </div>
-
-            <!-- Form Đăng Nhập -->
-            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Email</label>
-                    <input type="email" id="login-email" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Mật khẩu</label>
-                    <input type="password" id="login-password" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
-                </div>
-                <div id="login-error" class="text-xs text-rose-400 hidden"></div>
-                <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition text-sm shadow-lg shadow-emerald-600/30">
-                    Đăng Nhập Ngay
-                </button>
-            </form>
-
-            <!-- Form Đăng Ký -->
-            <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Email đăng ký</label>
-                    <input type="email" id="reg-email" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Mật khẩu (ít nhất 6 ký tự)</label>
-                    <input type="password" id="reg-password" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
-                </div>
-                <div id="register-error" class="text-xs text-rose-400 hidden"></div>
-                <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition text-sm shadow-lg shadow-indigo-600/30">
-                    Đăng Ký Trải Nghiệm
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL THÔNG BÁO HẾT HẠN / TRIAL -->
-    <div id="expired-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md hidden p-4">
-        <div class="bg-slate-900 border border-rose-500/40 w-full max-w-md rounded-2xl shadow-2xl p-6 text-center">
-            <div class="inline-block bg-rose-500/10 text-rose-400 p-3 rounded-full mb-3 border border-rose-500/20">
-                <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-1">Tài Khoản Đã Hết Hạn Dùng Thử</h3>
-            <p id="expired-desc" class="text-xs text-slate-400 mb-6">Thời gian sử dụng dịch vụ của bạn đã kết thúc. Vui lòng liên hệ Admin để gia hạn tài khoản tiếp tục sử dụng hệ thống Pro Quant.</p>
-            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-left mb-4 text-xs space-y-1">
-                <div><span class="text-slate-500">Mã tài khoản (UID):</span> <span id="user-uid-text" class="text-indigo-400 font-mono">--</span></div>
-                <div><span class="text-slate-500">Trạng thái:</span> <span class="text-rose-400 font-bold">Cần kích hoạt/gia hạn</span></div>
-            </div>
-            <button onclick="handleLogout()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold text-xs transition">
-                Đăng Xuất Tài Khoản Khác
-            </button>
-        </div>
-    </div>
-
-    <!-- MODAL ADMIN PANEL (QUẢN LÝ USER & GIA HẠN) -->
-    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
-        <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
-            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-user-shield text-amber-400"></i>
-                    <h3 class="text-sm font-bold text-white">Quản Trị Hệ Thống (Admin Panel)</h3>
-                </div>
-                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <p class="text-xs text-slate-400">Quản lý danh sách người dùng đăng ký, phân quyền Admin và cấp phép gia hạn thời gian sử dụng.</p>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead>
-                            <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
-                                <th class="p-3">Email</th>
-                                <th class="p-3">Hạn sử dụng</th>
-                                <th class="p-3">Quyền</th>
-                                <th class="p-3 text-right">Thao tác gia hạn (+30 ngày)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-users-list" class="divide-y divide-slate-800">
-                            <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách người dùng...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
-                <button onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- HEADER CHÍNH -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
@@ -171,21 +61,9 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-2">
-                <button onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
-                    <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
-                </button>
-                
-                <!-- Nút mở Admin Panel (Chỉ hiện khi user là Admin) -->
-                <button id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
-                    <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline">Admin</span>
-                </button>
-
-                <!-- Nút Đăng xuất -->
-                <button onclick="handleLogout()" class="px-3 py-2 bg-rose-600/20 border border-rose-500/40 text-rose-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Đăng xuất">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
-            </div>
+            <button onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
+                <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
+            </button>
         </div>
     </header>
 
@@ -246,6 +124,7 @@
     <!-- MODAL CHI TIẾT AI & BCTC -->
     <div id="ai-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-3 md:p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
+            <!-- Header Modal -->
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10">
                 <div class="flex items-center space-x-3">
                     <span id="modal-symbol" class="text-2xl font-black text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">--</span>
@@ -259,6 +138,7 @@
                 </button>
             </div>
             
+            <!-- Tab Navigation Header -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition">
                     <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI Chiến Lược
@@ -269,6 +149,7 @@
             </div>
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+                <!-- THÔNG SỐ TỔNG QUAN -->
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
                     <div><span class="text-[10px] text-slate-500 block">Giá</span><span id="modal-price" class="text-sm font-bold text-emerald-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
@@ -278,6 +159,7 @@
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
+                <!-- TAB 1: ĐÁNH GIÁ AI -->
                 <div id="tab-content-eval" class="space-y-4">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
@@ -302,6 +184,7 @@
                     </div>
                 </div>
 
+                <!-- TAB 2: TRA CỨU BCTC CHI TIẾT -->
                 <div id="tab-content-bctc" class="space-y-4 hidden">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
@@ -322,8 +205,10 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
+            <!-- Footer Modal -->
             <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center text-[10px] text-slate-500">
                 <span id="modal-time">AI cập nhật: --</span>
                 <button onclick="closeModal()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-bold shadow">Đóng</button>
@@ -334,12 +219,15 @@
     <!-- MODAL BIỂU ĐỒ -->
     <div id="chart-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm hidden p-1 md:p-3">
         <div id="chart-modal-box" class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300">
+            
             <div class="p-0 bg-slate-900 flex-grow relative overflow-hidden">
                 <div id="chart-loading" class="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-20 text-emerald-400 text-xs hidden">
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
 
+                <!-- OVERLAY TRONG SUỐT GỌN GÀNG -->
                 <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1 md:p-1.5 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
+                    
                     <button onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã trước">
                         <i class="fa-solid fa-chevron-left text-[9px]"></i>
                     </button>
@@ -401,189 +289,6 @@
     </div>
 
     <script>
-        // --- 1. CẤU HÌNH FIREBASE & XÁC THỰC ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyD-EXAMPLE-KEY-REPLACE-WITH-YOURS",
-            authDomain: "your-app.firebaseapp.com",
-            projectId: "your-app",
-            storageBucket: "your-app.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123:web:abc"
-        };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Kiểm tra trạng thái đăng nhập
-        auth.onAuthStateChanged(async (user) => {
-            const authOverlay = document.getElementById('auth-overlay');
-            const expiredModal = document.getElementById('expired-modal');
-
-            if (user) {
-                authOverlay.classList.add('hidden');
-                // Kiểm tra thông tin trong Firestore (Hạn sử dụng & Role)
-                const userDocRef = db.collection('users').doc(user.uid);
-                const doc = await userDocRef.get();
-
-                let userData = {};
-                if (!doc.exists) {
-                    // Tạo mới user trial 7 ngày nếu chưa có trong DB
-                    const expireDate = new Date();
-                    expireDate.setDate(expireDate.getDate() + 7);
-                    userData = {
-                        email: user.email,
-                        role: 'user',
-                        expiresAt: expireDate.toISOString()
-                    };
-                    await userDocRef.set(userData);
-                } else {
-                    userData = doc.data();
-                }
-
-                // Kiểm tra hạn sử dụng
-                const now = new Date();
-                const expireTime = new Date(userData.expiresAt);
-                
-                if (now > expireTime && userData.role !== 'admin') {
-                    expiredModal.classList.remove('hidden');
-                    document.getElementById('user-uid-text').innerText = user.uid;
-                    return;
-                } else {
-                    expiredModal.classList.add('hidden');
-                }
-
-                // Phân quyền Admin
-                if (userData.role === 'admin') {
-                    document.getElementById('btn-admin-panel').classList.remove('hidden');
-                    document.getElementById('btn-admin-panel').classList.add('flex');
-                }
-
-                loadData(true);
-            } else {
-                authOverlay.classList.remove('hidden');
-                expiredModal.classList.add('hidden');
-            }
-        });
-
-        function switchAuthTab(tab) {
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-            const loginBtn = document.getElementById('tab-login-btn');
-            const registerBtn = document.getElementById('tab-register-btn');
-
-            if (tab === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                loginBtn.className = "flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
-                registerBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            } else {
-                loginForm.classList.add('hidden');
-                registerForm.classList.remove('hidden');
-                registerBtn.className = "flex-1 pb-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition";
-                loginBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            }
-        }
-
-        async function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-password').value;
-            const errBox = document.getElementById('login-error');
-            errBox.classList.add('hidden');
-
-            try {
-                await auth.signInWithEmailAndPassword(email, pass);
-            } catch (err) {
-                errBox.innerText = "Lỗi đăng nhập: " + err.message;
-                errBox.classList.remove('hidden');
-            }
-        }
-
-        async function handleRegister(e) {
-            e.preventDefault();
-            const email = document.getElementById('reg-email').value;
-            const pass = document.getElementById('reg-password').value;
-            const errBox = document.getElementById('register-error');
-            errBox.classList.add('hidden');
-
-            try {
-                const cred = await auth.createUserWithEmailAndPassword(email, pass);
-                const expireDate = new Date();
-                expireDate.setDate(expireDate.getDate() + 7); // Mặc định dùng thử 7 ngày
-
-                await db.collection('users').doc(cred.user.uid).set({
-                    email: email,
-                    role: 'user',
-                    expiresAt: expireDate.toISOString()
-                });
-                alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
-            } catch (err) {
-                errBox.innerText = "Lỗi đăng ký: " + err.message;
-                errBox.classList.remove('hidden');
-            }
-        }
-
-        async function handleLogout() {
-            await auth.signOut();
-            window.location.reload();
-        }
-
-        // --- ADMIN PANEL FUNCTIONS ---
-        async function openAdminModal() {
-            document.getElementById('admin-modal').classList.remove('hidden');
-            const listEl = document.getElementById('admin-users-list');
-            listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>`;
-
-            try {
-                const snapshot = await db.collection('users').get();
-                listEl.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const uid = doc.id;
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-slate-800/50 transition";
-                    tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white">${data.email || '—'}</td>
-                        <td class="p-3 text-slate-300">${data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : '—'}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
-                        <td class="p-3 text-right">
-                            <button onclick="extendUserTrial('${uid}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
-                        </td>
-                    `;
-                    listEl.appendChild(tr);
-                });
-            } catch (err) {
-                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Lỗi tải danh sách người dùng.</td></tr>`;
-            }
-        }
-
-        function closeAdminModal() {
-            document.getElementById('admin-modal').classList.add('hidden');
-        }
-
-        async function extendUserTrial(uid) {
-            try {
-                const userDocRef = db.collection('users').doc(uid);
-                const doc = await userDocRef.get();
-                if (doc.exists) {
-                    const currentExpire = doc.data().expiresAt ? new Date(doc.data().expiresAt) : new Date();
-                    const now = new Date();
-                    let baseDate = currentExpire > now ? currentExpire : now;
-                    baseDate.setDate(baseDate.getDate() + 30);
-
-                    await userDocRef.update({ expiresAt: baseDate.toISOString() });
-                    alert("Đã gia hạn thành công thêm 30 ngày!");
-                    openAdminModal();
-                }
-            } catch (err) {
-                alert("Lỗi gia hạn: " + err.message);
-            }
-        }
-
-        // --- 2. LOGIC TRANG SCREENER & BIỂU ĐỒ ---
         let screenerResults = [];
         let currentSymbolHistory = null;
         let chartInstance = null;
@@ -661,6 +366,7 @@
                         pb: extraData.pb !== undefined ? extraData.pb : item.pb,
                         roe: extraData.roe !== undefined ? extraData.roe : item.roe,
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
+                        // Ánh xạ đầy đủ các trường Phân tích AI từ data.json
                         bctc: extraData.bctc !== undefined ? extraData.bctc : item.bctc,
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
                         ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
@@ -683,6 +389,10 @@
                 if (showSpinner) icon.classList.remove('spinner');
             }
         }
+
+        function scoreFundamental(item) { return item.fundamental_score || 0; }
+        function scoreTechnical(item) { return item.technical_score || 0; }
+        function scoreCombined(item) { return item.total_score || 0; }
 
         function isinBuyZone(item) {
             return item.potential_zone && item.potential_zone.includes("VÙNG MUA");
@@ -975,6 +685,7 @@
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
             document.getElementById('modal-div').innerText = (item.dividend_yield !== undefined && item.dividend_yield !== null) ? item.dividend_yield + '%' : '—';
 
+            // Đổ dữ liệu phân tích AI chi tiết vào các phần tử Modal
             const recEl = document.getElementById('modal-ai-rec');
             recEl.innerText = item.ai_recommendation || item.recommendation || item.technical_status || 'Tích lũy';
             
@@ -1089,6 +800,7 @@
             }
         }
 
+        // --- CÁC HÀM TÍNH TOÁN CHỈ BÁO KỸ THUẬT ---
         function calculateMA(data, period) {
             let result = [];
             for (let i = 0; i < data.length; i++) {
@@ -1161,6 +873,7 @@
             const height = container.clientHeight || 380;
             const hasRSI = activeIndicators.RSI;
 
+            // 1. Khởi tạo biểu đồ chính (Dark mode)
             chartInstance = LC.createChart(container, {
                 width: width,
                 height: height,
@@ -1169,6 +882,7 @@
                 timeScale: { borderColor: '#334155' }
             });
 
+            // 2. Thêm Candlestick Series ở Pane 0 (Default)
             candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {
                 upColor: '#10b981', downColor: '#f43f5e',
                 borderUpColor: '#10b981', borderDownColor: '#f43f5e',
@@ -1176,6 +890,7 @@
                 title: 'Giá'
             }, 0);
 
+            // 3. Thêm Volume Histogram Series ở Pane 0
             volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
                 priceFormat: { type: 'volume' },
                 priceScaleId: 'volumeScale'
@@ -1200,6 +915,7 @@
                 }));
                 volumeSeriesInstance.setData(volumeData);
 
+                // Thêm MA20 & MA50 vào Pane 0
                 if (activeIndicators.MA20) {
                     const ma20Series = chartInstance.addSeries(LC.LineSeries, {
                         color: '#3b82f6', lineWidth: 1, title: 'MA20'
@@ -1221,19 +937,36 @@
                     volMaSeries.setData(calculateVolumeMA(chartData, 20));
                 }
 
+                // 4. CHỈ BÁO RSI HIỂN THỊ Ở PANE 1 (CỬA SỔ RIÊNG BÊN DƯỚI)
                 if (hasRSI) {
                     const rsiSeries = chartInstance.addSeries(LC.LineSeries, {
                         color: '#a855f7', 
                         lineWidth: 1.5, 
                         title: 'RSI (14)',
-                        priceFormat: { type: 'price', precision: 2, minMove: 0.01 }
-                    }, 1);
+                        priceFormat: {
+                            type: 'price',
+                            precision: 2,
+                            minMove: 0.01,
+                        }
+                    }, 1); // <--- Tách biệt sang Pane 1
+
+                    // Thêm mốc Quá Mua / Quá Bán cho RSI
+                    rsiSeries.createPriceLine({
+                        price: 70,
+                        color: '#ef5350',
+                        lineWidth: 1,
+                        lineStyle: LC.LineStyle.Dashed,
+                        axisLabelVisible: true,
+                        title: 'OB 70',
+                    });
 
                     rsiSeries.createPriceLine({
-                        price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: 'OB 70'
-                    });
-                    rsiSeries.createPriceLine({
-                        price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: 'OS 30'
+                        price: 30,
+                        color: '#26a69a',
+                        lineWidth: 1,
+                        lineStyle: LC.LineStyle.Dashed,
+                        axisLabelVisible: true,
+                        title: 'OS 30',
                     });
 
                     rsiSeries.setData(calculateRSI(chartData, 14));
@@ -1245,7 +978,9 @@
                 const legendVol = document.getElementById('legend-vol');
 
                 const latestBar = chartData[chartData.length - 1];
-                if (latestBar) updateLegend(latestBar, chartData);
+                if (latestBar) {
+                    updateLegend(latestBar, chartData);
+                }
 
                 function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
@@ -1262,6 +997,7 @@
                     legendChange.innerText = `(${sign}${changePct.toFixed(2)}%)`;
                     legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                    
                     legendVol.innerText = formatNumber(bar.volume);
                 }
 
@@ -1319,6 +1055,8 @@
         document.getElementById('search-input').addEventListener('input', renderCards);
         document.getElementById('sector-filter').addEventListener('change', renderCards);
         document.getElementById('ranking-filter').addEventListener('change', renderCards);
+
+        loadData(true);
     </script>
 </body>
 </html>
