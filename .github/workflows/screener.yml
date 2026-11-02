@@ -1,11 +1,15 @@
 name: Render UI Automatically
 
 on:
-  workflow_dispatch: # Cho phép bấm chạy thủ công trên GitHub bất cứ lúc nào
+  workflow_dispatch: 
   push:
     paths:
       - 'render_ui.py'
       - 'screener_results.json'
+
+# 👇 THÊM PHẦN PERMISSIONS NÀY VÀO ĐỂ CẤP QUYỀN GHI CHO BOT
+permissions:
+  contents: write
 
 jobs:
   render-frontend:
