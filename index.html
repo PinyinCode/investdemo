@@ -252,7 +252,6 @@
                     </div>
 
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
-                        <button onclick="toggleBoldVol()" id="btn-bold-vol" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VOL</button>
                         <button onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VolMA</button>
                         <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition">MA20</button>
                         <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">MA50</button>
@@ -298,7 +297,6 @@
         let currentInterval = 'D1';
 
         let realtimeInterval = null;
-        let isBoldVol = false;
         let activeIndicators = {
             VOLMA: false,
             MA20: true,
@@ -341,12 +339,10 @@
             const icon = document.getElementById('refresh-icon');
             if (showSpinner) icon.classList.add('spinner');
             try {
-                // 1. Tải file screener_results.json để lấy tiêu chí sắp xếp, điểm số và ngành
                 const screenerRes = await fetch('screener_results.json?t=' + new Date().getTime());
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
                 let screenerData = await screenerRes.json();
 
-                // 2. Tải thêm file data.json để lấy thông số EPS, Cổ tức, P/E, P/B, v.v.
                 let rawStockData = {};
                 try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
@@ -357,7 +353,6 @@
                     console.warn("Không tải được data.json phụ trợ:", e);
                 }
 
-                // 3. Gộp dữ liệu: Ưu tiên lấy điểm số/sắp xếp từ screener và nhồi thêm thông số từ data.json
                 screenerResults = screenerData.map(item => {
                     const sym = item.symbol;
                     const extraData = rawStockData[sym] || {};
@@ -718,19 +713,6 @@
             }
         }
 
-        function toggleBoldVol() {
-            isBoldVol = !isBoldVol;
-            const btn = document.getElementById('btn-bold-vol');
-            if (isBoldVol) {
-                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white border border-emerald-400 transition";
-            } else {
-                btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition";
-            }
-            if (currentSymbolHistory) {
-                renderChartInstance(currentSymbolHistory);
-            }
-        }
-
         function toggleIndicator(name) {
             activeIndicators[name] = !activeIndicators[name];
             const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
@@ -903,9 +885,27 @@
                 priceScaleId: 'volumeScale',
             });
 
-            chartInstance.priceScale('volumeScale').applyOptions({
-                scaleMargins: { top: hasRSI ? 0.65 : 0.75, bottom: hasRSI ? 0.25 : 0 },
-            });
+            // Tùy chỉnh tỷ lệ khung nhìn: Nếu bật RSI thì dồn nến và volume lên trên, nhường khoảng trống bên dưới cho RSI
+            if (hasRSI) {
+                chartInstance.priceScale('right').applyOptions({
+                    scaleMargins: { top: 0.1, bottom: 0.35 },
+                });
+                chartInstance.priceScale('volumeScale').applyOptions({
+                    scaleMargins: { top: 0.7, bottom: 0.25 },
+                });
+                
+                // Cấu hình thang đo riêng cho RSI từ 0 đến 100 ở cửa sổ phía dưới
+                chartInstance.priceScale('rsiScale').applyOptions({
+                    scaleMargins: { top: 0.8, bottom: 0.02 },
+                });
+            } else {
+                chartInstance.priceScale('right').applyOptions({
+                    scaleMargins: { top: 0.1, bottom: 0.2 },
+                });
+                chartInstance.priceScale('volumeScale').applyOptions({
+                    scaleMargins: { top: 0.75, bottom: 0 },
+                });
+            }
 
             let chartData = [];
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
@@ -918,9 +918,7 @@
                 const volumeData = chartData.map(row => ({
                     time: row.time,
                     value: row.volume,
-                    color: row.close >= row.open 
-                        ? (isBoldVol ? 'rgba(16, 185, 129, 0.9)' : 'rgba(16, 185, 129, 0.5)') 
-                        : (isBoldVol ? 'rgba(244, 63, 94, 0.9)' : 'rgba(244, 63, 94, 0.5)')
+                    color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
                 }));
                 volumeSeriesInstance.setData(volumeData);
 
@@ -945,12 +943,9 @@
                     volMaSeries.setData(calculateVolumeMA(chartData, 20));
                 }
 
-                if (activeIndicators.RSI) {
-                    chartInstance.priceScale('rsiScale').applyOptions({
-                        scaleMargins: { top: 0.8, bottom: 0 },
-                    });
+                if (hasRSI) {
                     const rsiSeries = chartInstance.addLineSeries({
-                        color: '#a855f7', lineWidth: 1, title: 'RSI(14)', priceScaleId: 'rsiScale'
+                        color: '#a855f7', lineWidth: 1.5, title: 'RSI(14)', priceScaleId: 'rsiScale'
                     });
                     rsiSeries.setData(calculateRSI(chartData, 14));
                 }
