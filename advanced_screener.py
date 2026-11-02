@@ -43,7 +43,6 @@ def evaluate_stock(symbol, data):
     roe = data.get("roe", 0)
     dividend_yield = data.get("dividend_yield", 0)
     recommendation = data.get("recommendation", "")
-    price_zone = data.get("price_zone", "")
     close_price = data.get("close", 0)
     
     bctc_history = data.get("bctc_history", [])
@@ -55,61 +54,84 @@ def evaluate_stock(symbol, data):
     profit_growth_yoy = latest.get("profit_growth_yoy", 0)
     credit_growth_yoy = latest.get("credit_growth_yoy", 0)
 
-    # ==========================================
-    # 1. CHẤM ĐIỂM PHÂN TÍCH CƠ BẢN & CỔ TỨC (Thang 50 điểm)
-    # ==========================================
+    # =========================================================================
+    # 1. CHẤM ĐIỂM CƠ BẢN (50 điểm) - THIẾT KẾ RIÊNG BIỆT THEO TỪNG NHÓM NGÀNH
+    # =========================================================================
     fundamental_score = 0
     fund_notes = []
 
     if sector == "NGAN_HANG":
+        # Ngân hàng: Ưu tiên Tín dụng mạnh (25đ) và ROE cao (25đ). Ít xét cổ tức do cần giữ vốn.
         if credit_growth_yoy >= 12: 
-            fundamental_score += 15; fund_notes.append("Tín dụng tốt")
-        if roe >= 16: 
-            fundamental_score += 15; fund_notes.append("ROE cao (>16%)")
-    else:
-        if profit_growth_yoy >= 15: 
-            fundamental_score += 15; fund_notes.append("LN tăng trưởng tốt")
-        if roe >= 14: 
-            fundamental_score += 15; fund_notes.append("ROE đạt chuẩn (>14%)")
+            fundamental_score += 25; fund_notes.append("Tín dụng mạnh (>=12%)")
+        elif credit_growth_yoy >= 8:
+            fundamental_score += 15; fund_notes.append("Tín dụng khá")
+            
+        if roe >= 18: 
+            fundamental_score += 25; fund_notes.append("ROE xuất sắc (>=18%)")
+        elif roe >= 14: 
+            fundamental_score += 15; fund_notes.append("ROE tốt (>=14%)")
 
-    # Điểm cổ tức tiền mặt (Chất lượng dòng tiền)
-    if dividend_yield >= 8.0:
-        fundamental_score += 20
-        fund_notes.append(f"Cổ tức siêu hấp dẫn ({dividend_yield}%)")
-    elif dividend_yield >= 5.0:
-        fundamental_score += 12
-        fund_notes.append(f"Cổ tức tốt vượt tiết kiệm ({dividend_yield}%)")
-    elif dividend_yield > 0:
-        fundamental_score += 5
-        fund_notes.append(f"Có chia cổ tức ({dividend_yield}%)")
+    elif sector == "CHUNG_KHOAN":
+        # Chứng khoán: Ưu tiên tốc độ tăng trưởng lợi nhuận đột phá (30đ) và Biên sinh lời ROE (20đ)
+        if profit_growth_yoy >= 20: 
+            fundamental_score += 30; fund_notes.append("LN tăng trưởng mạnh (>=20%)")
+        elif profit_growth_yoy >= 10:
+            fundamental_score += 15; fund_notes.append("LN hồi phục tốt")
+            
+        if roe >= 15: 
+            fundamental_score += 20; fund_notes.append("ROE chứng khoán cao (>=15%)")
+        elif roe >= 10:
+            fundamental_score += 10; fund_notes.append("ROE ổn định")
+
+    elif sector == "BAT_DONG_SAN":
+        # Bất động sản: Ưu tiên biên an toàn vốn, khả năng giữ vững quy mô lợi nhuận và ROE cơ bản
+        if profit_growth_yoy >= 10: 
+            fundamental_score += 25; fund_notes.append("LN giữ nhịp tăng trưởng")
+        if roe >= 12: 
+            fundamental_score += 25; fund_notes.append("ROE BĐS đạt chuẩn (>=12%)")
+        elif roe > 0:
+            fundamental_score += 10; fund_notes.append("Có lãi dương")
+
+    else: 
+        # NHÓM SẢN XUẤT & TIÊU DÙNG: TRỌNG TÂM LÀ CỔ TỨC TIỀN MẶT + ROE + TĂNG TRƯỞNG
+        if profit_growth_yoy >= 15: 
+            fundamental_score += 20; fund_notes.append("LN tăng trưởng tốt")
+        elif profit_growth_yoy >= 0:
+            fundamental_score += 10; fund_notes.append("LN ổn định")
+
+        if roe >= 15: 
+            fundamental_score += 15; fund_notes.append("ROE sản xuất cao (>=15%)")
+        elif roe >= 10:
+            fundamental_score += 8; fund_notes.append("ROE khá")
+
+        # Cổ tức tiền mặt là vua đối với nhóm sản xuất/tiêu dùng/điện/nước
+        if dividend_yield >= 8.0:
+            fundamental_score += 15; fund_notes.append(f"Cổ tức siêu khủng ({dividend_yield}%)")
+        elif dividend_yield >= 5.0:
+            fundamental_score += 10; fund_notes.append(f"Cổ tức tốt ({dividend_yield}%)")
+        elif dividend_yield > 0:
+            fundamental_score += 5; fund_notes.append(f"Có cổ tức ({dividend_yield}%)")
 
     # ==========================================
-    # 2. CHẤM ĐIỂM PHÂN TÍCH KỸ THUẬT (Thang 20 điểm)
+    # 2. CHẤM ĐIỂM KỸ THUẬT (20 điểm)
     # ==========================================
     technical_score = 0
-    tech_notes = []
-    if "BREAKOUT" in recommendation or "CẠN CUNG" in recommendation:
+    if "BREAKOUT" in recommendation or "CẠN CUNG" in recommendation or "MUA" in recommendation:
         technical_score += 20
-        tech_notes.append("Dòng tiền/Kỹ thuật thuận lợi")
     else:
         technical_score += 10
-        tech_notes.append("Tích lũy nền dài")
 
     # ==========================================
-    # 3. ĐÁNH GIÁ ĐỊNH GIÁ AN TOÀN (Thang 30 điểm)
+    # 3. ĐÁNH GIÁ ĐỊNH GIÁ AN TOÀN (30 điểm)
     # ==========================================
     valuation_score = 0
-    val_notes = []
-
-    if 0 < pe < 14 and 0 < pb < 2.0:
+    if 0 < pe < 15 and 0 < pb < 2.5:
         valuation_score += 30
-        val_notes.append("Định giá rẻ, biên an toàn cao")
-    elif 0 < pe < 20 and 0 < pb < 3.0:
+    elif 0 < pe < 22 and 0 < pb < 3.5:
         valuation_score += 18
-        val_notes.append("Định giá hợp lý")
     else:
         valuation_score += 5
-        val_notes.append("Định giá cao/Cần thận trọng")
 
     total_score = fundamental_score + technical_score + valuation_score
 
@@ -135,14 +157,11 @@ def evaluate_stock(symbol, data):
         "total_score": total_score,
         "potential_zone": potential_zone,
         "technical_status": recommendation,
-        "price_zone_detail": price_zone,
-        "fundamental_notes": " | ".join(fund_notes),
-        "technical_notes": " | ".join(tech_notes),
-        "valuation_notes": " | ".join(val_notes)
+        "fundamental_notes": " | ".join(fund_notes)
     }
 
 def main():
-    print("🚀 Chạy bộ lọc định lượng Đầu tư Giá trị & Cổ tức (Phân theo nhóm ngành)...")
+    print("🚀 Chạy bộ lọc định lượng thông minh (Tiêu chuẩn phân hóa theo từng nhóm ngành)...")
     
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy file {DATA_FILE}")
@@ -158,30 +177,18 @@ def main():
             results.append(res)
 
     if not results:
-        print("⚠️ Không có dữ liệu để đánh giá.")
         return
 
-    # Sắp xếp toàn thị trường theo điểm cơ bản & cổ tức giảm dần
-    results = sorted(
-        results, 
-        key=lambda x: (
-            x.get('fundamental_score', 0), 
-            x.get('dividend_yield', 0), 
-            x.get('roe', 0)
-        ), 
-        reverse=True
-    )
+    # Sắp xếp tổng thể để xuất file
+    results = sorted(results, key=lambda x: (x.get('fundamental_score', 0), x.get('roe', 0)), reverse=True)
 
-    # 1. Xuất file JSON & CSV
     with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
         json.dump(results, jf, ensure_ascii=False, indent=4)
-    print(f"✅ Đã xuất thành công: {OUTPUT_JSON}")
         
     df = pd.DataFrame(results)
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
-    print(f"✅ Đã xuất thành công: {OUTPUT_CSV}")
 
-    # 2. Hiển thị kết quả chi tiết chia theo từng nhóm ngành trên Console
+    # In kết quả phân tách theo ngành rõ ràng
     industry_groups = {}
     for item in results:
         sec = item['sector']
@@ -193,10 +200,10 @@ def main():
         limit_count = 5 if sector == "NGAN_HANG" else 3
         top_items = items[:limit_count]
         
-        print(f"\n📌 NHÓM NGÀNH: [{sector}] - TOP {limit_count} HÀNG ĐẦU:")
+        print(f"\n📌 NHÓM NGÀNH: [{sector}] - TOP {limit_count} TIÊU BIỂU:")
         print("=" * 115)
         df_sector = pd.DataFrame(top_items)
-        print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'total_score', 'potential_zone']].to_string(index=False))
+        print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'fundamental_score', 'total_score', 'potential_zone']].to_string(index=False))
         print("=" * 115)
 
 if __name__ == "__main__":
