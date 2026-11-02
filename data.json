@@ -2,7 +2,7 @@
     "ACB": {
         "symbol": "ACB",
         "close": 20300,
-        "volume": 7791400,
+        "volume": 17542800,
         "pe": 7.57,
         "pb": 1.17,
         "eps": 2773,
@@ -11,7 +11,7 @@
         "dividend_yield": 2.95,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:43:27",
+        "updated_at": "2026-11-02 15:02:49",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -126,8 +126,8 @@
     },
     "BID": {
         "symbol": "BID",
-        "close": 32750,
-        "volume": 2245700,
+        "close": 32000,
+        "volume": 9322100,
         "pe": 8.05,
         "pb": 1.37,
         "eps": 4430,
@@ -136,7 +136,7 @@
         "dividend_yield": 1.22,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:43:34",
+        "updated_at": "2026-11-02 15:02:56",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -251,17 +251,17 @@
     },
     "CTG": {
         "symbol": "CTG",
-        "close": 29850,
-        "volume": 3410300,
+        "close": 29750,
+        "volume": 10921000,
         "pe": 5.86,
         "pb": 1.2,
         "eps": 5172,
         "roe": 22.3,
         "roa": 1.4,
         "dividend_yield": 1.03,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.48x MA20.",
-        "updated_at": "2026-11-02 10:43:41",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:03:03",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -376,8 +376,8 @@
     },
     "TCB": {
         "symbol": "TCB",
-        "close": 20900,
-        "volume": 8876600,
+        "close": 21400,
+        "volume": 25386500,
         "pe": 8.02,
         "pb": 1.23,
         "eps": 4041,
@@ -386,7 +386,7 @@
         "dividend_yield": 5.19,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:43:48",
+        "updated_at": "2026-11-02 15:03:10",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -501,8 +501,8 @@
     },
     "MBB": {
         "symbol": "MBB",
-        "close": 19000,
-        "volume": 6208400,
+        "close": 18750,
+        "volume": 23936700,
         "pe": 5.97,
         "pb": 1.24,
         "eps": 3232,
@@ -511,7 +511,7 @@
         "dividend_yield": 4.4,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:43:55",
+        "updated_at": "2026-11-02 15:03:17",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -626,17 +626,17 @@
     },
     "STB": {
         "symbol": "STB",
-        "close": 65600,
-        "volume": 1807800,
+        "close": 65099,
+        "volume": 4170100,
         "pe": 81.94,
         "pb": 1.95,
         "eps": 809,
         "roe": 2.5,
         "roa": 0.2,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.57x MA20.",
-        "updated_at": "2026-11-02 10:44:02",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:03:24",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -751,8 +751,8 @@
     },
     "VPB": {
         "symbol": "VPB",
-        "close": 22200,
-        "volume": 6260900,
+        "close": 21550,
+        "volume": 19691800,
         "pe": 7.36,
         "pb": 1.23,
         "eps": 3118,
@@ -761,7 +761,7 @@
         "dividend_yield": 1.73,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:44:09",
+        "updated_at": "2026-11-02 15:03:31",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -876,8 +876,8 @@
     },
     "HDB": {
         "symbol": "HDB",
-        "close": 21800,
-        "volume": 6562200,
+        "close": 21900,
+        "volume": 23084700,
         "pe": 7.63,
         "pb": 1.7,
         "eps": 3815,
@@ -886,7 +886,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:44:16",
+        "updated_at": "2026-11-02 15:03:38",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1001,17 +1001,17 @@
     },
     "VIB": {
         "symbol": "VIB",
-        "close": 13700,
-        "volume": 3772600,
+        "close": 13600,
+        "volume": 9445700,
         "pe": 6.66,
         "pb": 1.03,
         "eps": 2071,
         "roe": 16.2,
         "roa": 1.4,
         "dividend_yield": 5.96,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.56x MA20.",
-        "updated_at": "2026-11-02 10:44:23",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:03:45",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1126,17 +1126,17 @@
     },
     "TPB": {
         "symbol": "TPB",
-        "close": 12500,
-        "volume": 5265700,
+        "close": 12600,
+        "volume": 11323900,
         "pe": 5.32,
         "pb": 0.86,
         "eps": 3046,
         "roe": 17.9,
         "roa": 1.6,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.37x MA20.",
-        "updated_at": "2026-11-02 10:44:31",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:03:52",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1251,17 +1251,17 @@
     },
     "SHB": {
         "symbol": "SHB",
-        "close": 10500,
-        "volume": 11384200,
+        "close": 10400,
+        "volume": 52790000,
         "pe": 4.28,
         "pb": 0.66,
         "eps": 2796,
         "roe": 19.0,
         "roa": 1.5,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.27x MA20.",
-        "updated_at": "2026-11-02 10:44:37",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:03:59",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1376,17 +1376,17 @@
     },
     "SSB": {
         "symbol": "SSB",
-        "close": 15050,
-        "volume": 808100,
+        "close": 15000,
+        "volume": 2274000,
         "pe": 17.49,
         "pb": 1.21,
         "eps": 939,
         "roe": 7.8,
         "roa": 0.8,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.37x MA20.",
-        "updated_at": "2026-11-02 10:44:44",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:04:06",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1501,8 +1501,8 @@
     },
     "LPB": {
         "symbol": "LPB",
-        "close": 35200,
-        "volume": 939400,
+        "close": 34500,
+        "volume": 4249000,
         "pe": 8.92,
         "pb": 2.31,
         "eps": 4047,
@@ -1511,7 +1511,7 @@
         "dividend_yield": 8.31,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:44:51",
+        "updated_at": "2026-11-02 15:04:13",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1627,16 +1627,16 @@
     "MSB": {
         "symbol": "MSB",
         "close": 15750,
-        "volume": 3708000,
+        "volume": 10867600,
         "pe": 10.04,
         "pb": 1.26,
         "eps": 1673,
         "roe": 14.3,
         "roa": 1.5,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.36x MA20.",
-        "updated_at": "2026-11-02 10:44:58",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:04:20",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1751,17 +1751,17 @@
     },
     "OCB": {
         "symbol": "OCB",
-        "close": 10300,
-        "volume": 698600,
+        "close": 10150,
+        "volume": 3146500,
         "pe": 7.15,
         "pb": 0.87,
         "eps": 1482,
         "roe": 13.0,
         "roa": 1.3,
         "dividend_yield": 0.01,
-        "recommendation": "ĐANG GOM HÀNG",
-        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 10:45:06",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:04:28",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1877,16 +1877,16 @@
     "EIB": {
         "symbol": "EIB",
         "close": 16050,
-        "volume": 2167700,
+        "volume": 6624300,
         "pe": 156.87,
         "pb": 1.13,
         "eps": 102,
         "roe": 0.7,
         "roa": 0.1,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.43x MA20.",
-        "updated_at": "2026-11-02 10:45:13",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:04:35",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2001,17 +2001,17 @@
     },
     "SSI": {
         "symbol": "SSI",
-        "close": 19100,
-        "volume": 7004600,
+        "close": 18850,
+        "volume": 27277400,
         "pe": 13.01,
         "pb": 1.48,
         "eps": 1483,
         "roe": 12.2,
         "roa": 4.7,
         "dividend_yield": 7.9,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.41x MA20.",
-        "updated_at": "2026-11-02 10:45:20",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:04:42",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2126,17 +2126,17 @@
     },
     "VCI": {
         "symbol": "VCI",
-        "close": 18300,
-        "volume": 2937300,
+        "close": 18450,
+        "volume": 9240900,
         "pe": 15.21,
         "pb": 1.26,
         "eps": 1216,
         "roe": 8.5,
         "roa": 3.8,
         "dividend_yield": 2.99,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.40x MA20.",
-        "updated_at": "2026-11-02 10:45:27",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:04:49",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2251,8 +2251,8 @@
     },
     "HCM": {
         "symbol": "HCM",
-        "close": 22800,
-        "volume": 1042100,
+        "close": 23150,
+        "volume": 3975500,
         "pe": 26.97,
         "pb": 2.19,
         "eps": 1070,
@@ -2261,7 +2261,7 @@
         "dividend_yield": 2.71,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:45:34",
+        "updated_at": "2026-11-02 15:04:55",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2377,7 +2377,7 @@
     "VIX": {
         "symbol": "VIX",
         "close": 11800,
-        "volume": 9974800,
+        "volume": 42021400,
         "pe": 18.43,
         "pb": 0.94,
         "eps": 650,
@@ -2386,7 +2386,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:45:41",
+        "updated_at": "2026-11-02 15:05:02",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2501,17 +2501,17 @@
     },
     "MBS": {
         "symbol": "MBS",
-        "close": 14800,
-        "volume": 824700,
+        "close": 14900,
+        "volume": 3179300,
         "pe": 12.35,
         "pb": 1.33,
         "eps": 1214,
         "roe": 13.1,
         "roa": 3.8,
         "dividend_yield": 10.16,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.31x MA20.",
-        "updated_at": "2026-11-02 10:45:48",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:05:09",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2626,17 +2626,17 @@
     },
     "FTS": {
         "symbol": "FTS",
-        "close": 17750,
-        "volume": 360500,
+        "close": 18250,
+        "volume": 1274600,
         "pe": 16.98,
         "pb": 1.53,
         "eps": 1054,
         "roe": 9.1,
         "roa": 2.9,
         "dividend_yield": 2.54,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.46x MA20.",
-        "updated_at": "2026-11-02 10:45:55",
+        "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
+        "price_zone": "Khối lượng bùng nổ đạt 1.53x MA20 kèm giá tăng.",
+        "updated_at": "2026-11-02 15:05:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2751,17 +2751,17 @@
     },
     "BSI": {
         "symbol": "BSI",
-        "close": 26850,
-        "volume": 238300,
+        "close": 27850,
+        "volume": 1197700,
         "pe": 15.21,
         "pb": 1.23,
         "eps": 1749,
         "roe": 8.4,
         "roa": 2.6,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.56x MA20.",
-        "updated_at": "2026-11-02 10:46:02",
+        "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
+        "price_zone": "Khối lượng bùng nổ đạt 2.51x MA20 kèm giá tăng.",
+        "updated_at": "2026-11-02 15:05:23",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2876,17 +2876,17 @@
     },
     "CTS": {
         "symbol": "CTS",
-        "close": 20650,
-        "volume": 447900,
+        "close": 21300,
+        "volume": 2637100,
         "pe": 51.32,
         "pb": 2.0,
         "eps": 409,
         "roe": 3.9,
         "roa": 0.9,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN",
-        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:46:09",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:05:30",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3001,17 +3001,17 @@
     },
     "ORS": {
         "symbol": "ORS",
-        "close": 13950,
-        "volume": 1681600,
+        "close": 14000,
+        "volume": 4065900,
         "pe": 25.42,
         "pb": 1.12,
         "eps": 556,
         "roe": 5.0,
         "roa": 2.4,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.34x MA20.",
-        "updated_at": "2026-11-02 10:46:16",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:05:37",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3126,17 +3126,17 @@
     },
     "VHM": {
         "symbol": "VHM",
-        "close": 63700,
-        "volume": 3113000,
+        "close": 62000,
+        "volume": 8588600,
         "pe": 5.23,
         "pb": 1.8,
         "eps": 12038,
         "roe": 36.6,
         "roa": 10.1,
         "dividend_yield": 4.91,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.38x MA20.",
-        "updated_at": "2026-11-02 10:46:23",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:05:44",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3251,17 +3251,17 @@
     },
     "VIC": {
         "symbol": "VIC",
-        "close": 244200,
-        "volume": 952700,
+        "close": 242000,
+        "volume": 2503200,
         "pe": 43.18,
         "pb": 9.61,
         "eps": 5581,
         "roe": 24.0,
         "roa": 3.4,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.35x MA20.",
-        "updated_at": "2026-11-02 10:46:30",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:05:51",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3376,17 +3376,17 @@
     },
     "VRE": {
         "symbol": "VRE",
-        "close": 23900,
-        "volume": 1092100,
+        "close": 22950,
+        "volume": 4386800,
         "pe": 7.39,
         "pb": 1.08,
         "eps": 3254,
         "roe": 15.1,
         "roa": 12.0,
         "dividend_yield": 4.16,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.34x MA20.",
-        "updated_at": "2026-11-02 10:46:37",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:05:58",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3501,8 +3501,8 @@
     },
     "NVL": {
         "symbol": "NVL",
-        "close": 10400,
-        "volume": 4123900,
+        "close": 10350,
+        "volume": 13111800,
         "pe": 7.9,
         "pb": 0.59,
         "eps": 1755,
@@ -3510,8 +3510,8 @@
         "roa": 1.7,
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.19x MA20.",
-        "updated_at": "2026-11-02 10:46:44",
+        "price_zone": "Khối lượng cạn kiệt ở mức 0.59x MA20.",
+        "updated_at": "2026-11-02 15:06:05",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3626,8 +3626,8 @@
     },
     "PDR": {
         "symbol": "PDR",
-        "close": 10900,
-        "volume": 3399600,
+        "close": 11150,
+        "volume": 7965000,
         "pe": 18.41,
         "pb": 0.9,
         "eps": 613,
@@ -3636,7 +3636,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:46:51",
+        "updated_at": "2026-11-02 15:06:12",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3751,8 +3751,8 @@
     },
     "DIG": {
         "symbol": "DIG",
-        "close": 9310,
-        "volume": 2027900,
+        "close": 9490,
+        "volume": 6737300,
         "pe": 10.52,
         "pb": 0.8,
         "eps": 962,
@@ -3761,7 +3761,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:46:58",
+        "updated_at": "2026-11-02 15:06:19",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3876,8 +3876,8 @@
     },
     "NLG": {
         "symbol": "NLG",
-        "close": 21400,
-        "volume": 454800,
+        "close": 21150,
+        "volume": 2075000,
         "pe": 17.29,
         "pb": 0.85,
         "eps": 1272,
@@ -3886,7 +3886,7 @@
         "dividend_yield": 2.21,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:47:05",
+        "updated_at": "2026-11-02 15:06:26",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4001,8 +4001,8 @@
     },
     "KDH": {
         "symbol": "KDH",
-        "close": 13350,
-        "volume": 2312400,
+        "close": 13300,
+        "volume": 6641700,
         "pe": 9.76,
         "pb": 0.91,
         "eps": 1512,
@@ -4011,7 +4011,7 @@
         "dividend_yield": 1.31,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:47:12",
+        "updated_at": "2026-11-02 15:06:33",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4127,16 +4127,16 @@
     "CEO": {
         "symbol": "CEO",
         "close": 11000,
-        "volume": 1783200,
+        "volume": 9808300,
         "pe": 34.55,
         "pb": 1.05,
         "eps": 321,
         "roe": 3.0,
         "roa": 2.1,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.26x MA20.",
-        "updated_at": "2026-11-02 10:47:19",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:06:40",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -4251,8 +4251,8 @@
     },
     "DXG": {
         "symbol": "DXG",
-        "close": 9900,
-        "volume": 1962500,
+        "close": 9860,
+        "volume": 6991500,
         "pe": 66.65,
         "pb": 0.89,
         "eps": 90,
@@ -4261,7 +4261,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:47:26",
+        "updated_at": "2026-11-02 15:06:47",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4376,17 +4376,17 @@
     },
     "TCH": {
         "symbol": "TCH",
-        "close": 11700,
-        "volume": 2965700,
+        "close": 11850,
+        "volume": 9484700,
         "pe": 39.82,
         "pb": 0.98,
         "eps": 793,
         "roe": 5.5,
         "roa": 3.7,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.50x MA20.",
-        "updated_at": "2026-11-02 10:47:33",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:06:54",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4501,8 +4501,8 @@
     },
     "HDG": {
         "symbol": "HDG",
-        "close": 14650,
-        "volume": 404100,
+        "close": 14600,
+        "volume": 1159200,
         "pe": 6.53,
         "pb": 0.87,
         "eps": 2297,
@@ -4511,7 +4511,7 @@
         "dividend_yield": 3.03,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:47:40",
+        "updated_at": "2026-11-02 15:07:01",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -4626,8 +4626,8 @@
     },
     "KBC": {
         "symbol": "KBC",
-        "close": 25600,
-        "volume": 198000,
+        "close": 25950,
+        "volume": 1133900,
         "pe": 13.98,
         "pb": 0.94,
         "eps": 1859,
@@ -4636,7 +4636,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:47:47",
+        "updated_at": "2026-11-02 15:07:08",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4751,8 +4751,8 @@
     },
     "IDC": {
         "symbol": "IDC",
-        "close": 33200,
-        "volume": 308600,
+        "close": 32600,
+        "volume": 1073900,
         "pe": 7.83,
         "pb": 1.97,
         "eps": 4365,
@@ -4761,7 +4761,7 @@
         "dividend_yield": 7.97,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:47:54",
+        "updated_at": "2026-11-02 15:07:15",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4876,8 +4876,8 @@
     },
     "SZC": {
         "symbol": "SZC",
-        "close": 18750,
-        "volume": 450800,
+        "close": 19000,
+        "volume": 912600,
         "pe": 21.66,
         "pb": 1.14,
         "eps": 891,
@@ -4886,7 +4886,7 @@
         "dividend_yield": 5.17,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 10:48:01",
+        "updated_at": "2026-11-02 15:07:22",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5001,17 +5001,17 @@
     },
     "BCM": {
         "symbol": "BCM",
-        "close": 37900,
-        "volume": 156600,
+        "close": 37150,
+        "volume": 827700,
         "pe": 20.42,
         "pb": 1.77,
         "eps": 1880,
         "roe": 8.7,
         "roa": 3.2,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.27x MA20.",
-        "updated_at": "2026-11-02 10:48:08",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:07:30",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5126,8 +5126,8 @@
     },
     "PHR": {
         "symbol": "PHR",
-        "close": 30100,
-        "volume": 498700,
+        "close": 28850,
+        "volume": 1933300,
         "pe": 8.09,
         "pb": 1.62,
         "eps": 6901,
@@ -5136,7 +5136,7 @@
         "dividend_yield": 2.42,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:48:15",
+        "updated_at": "2026-11-02 15:07:37",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -5251,17 +5251,17 @@
     },
     "HPG": {
         "symbol": "HPG",
-        "close": 20850,
-        "volume": 6120400,
+        "close": 20400,
+        "volume": 25465100,
         "pe": 6.46,
         "pb": 1.19,
         "eps": 3250,
         "roe": 19.9,
         "roa": 10.4,
         "dividend_yield": 2.16,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.35x MA20.",
-        "updated_at": "2026-11-02 10:48:22",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:07:44",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5376,8 +5376,8 @@
     },
     "HSG": {
         "symbol": "HSG",
-        "close": 10450,
-        "volume": 2955000,
+        "close": 10300,
+        "volume": 6681600,
         "pe": 13.35,
         "pb": 0.74,
         "eps": 812,
@@ -5386,7 +5386,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:48:29",
+        "updated_at": "2026-11-02 15:07:51",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5501,8 +5501,8 @@
     },
     "NKG": {
         "symbol": "NKG",
-        "close": 11600,
-        "volume": 4010100,
+        "close": 11700,
+        "volume": 8861200,
         "pe": 24.08,
         "pb": 0.75,
         "eps": 494,
@@ -5511,7 +5511,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "2026-11-02 10:48:37",
+        "updated_at": "2026-11-02 15:07:58",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5626,17 +5626,17 @@
     },
     "CTD": {
         "symbol": "CTD",
-        "close": 64000,
-        "volume": 197200,
+        "close": 63800,
+        "volume": 694400,
         "pe": 9.08,
         "pb": 0.74,
         "eps": 7049,
         "roe": 8.4,
         "roa": 2.3,
         "dividend_yield": 1.42,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.40x MA20.",
-        "updated_at": "2026-11-02 10:48:44",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:08:05",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -5751,17 +5751,17 @@
     },
     "VCG": {
         "symbol": "VCG",
-        "close": 14900,
-        "volume": 1070800,
+        "close": 15100,
+        "volume": 3787300,
         "pe": 9.21,
         "pb": 0.88,
         "eps": 1606,
         "roe": 8.9,
         "roa": 3.8,
         "dividend_yield": 5.11,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.42x MA20.",
-        "updated_at": "2026-11-02 10:48:54",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:08:12",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5876,17 +5876,17 @@
     },
     "HHV": {
         "symbol": "HHV",
-        "close": 9250,
-        "volume": 1245900,
+        "close": 9170,
+        "volume": 3634100,
         "pe": 8.5,
         "pb": 0.47,
         "eps": 1149,
         "roe": 5.1,
         "roa": 1.5,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.40x MA20.",
-        "updated_at": "2026-11-02 10:49:01",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:08:19",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -6001,8 +6001,8 @@
     },
     "FPT": {
         "symbol": "FPT",
-        "close": 51200,
-        "volume": 3956300,
+        "close": 50200,
+        "volume": 12293400,
         "pe": 9.66,
         "pb": 2.32,
         "eps": 5455,
@@ -6011,7 +6011,7 @@
         "dividend_yield": 3.43,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:49:08",
+        "updated_at": "2026-11-02 15:08:26",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6126,8 +6126,8 @@
     },
     "MWG": {
         "symbol": "MWG",
-        "close": 72100,
-        "volume": 1657000,
+        "close": 72400,
+        "volume": 4855000,
         "pe": 9.77,
         "pb": 2.39,
         "eps": 7576,
@@ -6136,7 +6136,7 @@
         "dividend_yield": 1.35,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:49:15",
+        "updated_at": "2026-11-02 15:08:33",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6251,8 +6251,8 @@
     },
     "PNJ": {
         "symbol": "PNJ",
-        "close": 15650,
-        "volume": 5021900,
+        "close": 15600,
+        "volume": 9059600,
         "pe": 3.25,
         "pb": 0.6,
         "eps": 3302,
@@ -6260,8 +6260,8 @@
         "roa": 8.6,
         "dividend_yield": 10.23,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.38x MA20.",
-        "updated_at": "2026-11-02 10:49:22",
+        "price_zone": "Khối lượng cạn kiệt ở mức 0.67x MA20.",
+        "updated_at": "2026-11-02 15:08:40",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6376,8 +6376,8 @@
     },
     "FRT": {
         "symbol": "FRT",
-        "close": 139900,
-        "volume": 355300,
+        "close": 138300,
+        "volume": 1055800,
         "pe": 23.38,
         "pb": 5.07,
         "eps": 7598,
@@ -6386,7 +6386,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:49:29",
+        "updated_at": "2026-11-02 15:08:47",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6501,8 +6501,8 @@
     },
     "VNM": {
         "symbol": "VNM",
-        "close": 56300,
-        "volume": 1863200,
+        "close": 56000,
+        "volume": 4335400,
         "pe": 10.43,
         "pb": 3.45,
         "eps": 5454,
@@ -6511,7 +6511,7 @@
         "dividend_yield": 8.27,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:49:36",
+        "updated_at": "2026-11-02 15:08:54",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6626,17 +6626,17 @@
     },
     "MSN": {
         "symbol": "MSN",
-        "close": 69100,
-        "volume": 2435400,
+        "close": 69400,
+        "volume": 7110500,
         "pe": 11.29,
         "pb": 2.46,
         "eps": 6199,
         "roe": 20.0,
         "roa": 7.1,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.46x MA20.",
-        "updated_at": "2026-11-02 10:49:43",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:09:01",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6751,17 +6751,17 @@
     },
     "SAB": {
         "symbol": "SAB",
-        "close": 42450,
-        "volume": 183700,
+        "close": 41700,
+        "volume": 698000,
         "pe": 11.7,
         "pb": 2.62,
         "eps": 3622,
         "roe": 20.1,
         "roa": 14.8,
         "dividend_yield": 11.79,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.63x MA20.",
-        "updated_at": "2026-11-02 10:49:50",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:09:08",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6876,17 +6876,17 @@
     },
     "GAS": {
         "symbol": "GAS",
-        "close": 77400,
-        "volume": 195500,
+        "close": 77000,
+        "volume": 776600,
         "pe": 14.8,
         "pb": 2.74,
         "eps": 5269,
         "roe": 18.5,
         "roa": 13.5,
         "dividend_yield": 2.61,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.21x MA20.",
-        "updated_at": "2026-11-02 10:49:57",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:09:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7001,17 +7001,17 @@
     },
     "PVD": {
         "symbol": "PVD",
-        "close": 17800,
-        "volume": 1310200,
+        "close": 17700,
+        "volume": 6974600,
         "pe": 18.4,
         "pb": 0.97,
         "eps": 975,
         "roe": 5.2,
         "roa": 3.1,
         "dividend_yield": 1.7,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.35x MA20.",
-        "updated_at": "2026-11-02 10:50:06",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:09:25",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7126,8 +7126,8 @@
     },
     "PVS": {
         "symbol": "PVS",
-        "close": 29700,
-        "volume": 563600,
+        "close": 29800,
+        "volume": 2978000,
         "pe": 8.92,
         "pb": 1.19,
         "eps": 3417,
@@ -7136,7 +7136,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:50:13",
+        "updated_at": "2026-11-02 15:09:32",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7251,17 +7251,17 @@
     },
     "BSR": {
         "symbol": "BSR",
-        "close": 27750,
-        "volume": 2722400,
+        "close": 27100,
+        "volume": 7973000,
         "pe": 6.94,
         "pb": 1.66,
         "eps": 5583,
         "roe": 40.5,
         "roa": 27.9,
         "dividend_yield": 1.09,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.32x MA20.",
-        "updated_at": "2026-11-02 10:50:20",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:09:39",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7376,17 +7376,17 @@
     },
     "POW": {
         "symbol": "POW",
-        "close": 12200,
-        "volume": 3055400,
+        "close": 12050,
+        "volume": 9105500,
         "pe": 6.29,
         "pb": 0.91,
         "eps": 1940,
         "roe": 15.3,
         "roa": 6.4,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.64x MA20.",
-        "updated_at": "2026-11-02 10:50:27",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:09:46",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -7502,16 +7502,16 @@
     "REE": {
         "symbol": "REE",
         "close": 44950,
-        "volume": 228600,
+        "volume": 592600,
         "pe": 10.28,
         "pb": 1.26,
         "eps": 4416,
         "roe": 10.9,
         "roa": 6.7,
         "dividend_yield": 1.89,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.69x MA20.",
-        "updated_at": "2026-11-02 10:50:34",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:09:53",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7626,17 +7626,17 @@
     },
     "PC1": {
         "symbol": "PC1",
-        "close": 18300,
-        "volume": 226600,
+        "close": 18500,
+        "volume": 879500,
         "pe": 6.59,
         "pb": 1.1,
         "eps": 2704,
         "roe": 12.4,
         "roa": 4.6,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.30x MA20.",
-        "updated_at": "2026-11-02 10:50:41",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:10:00",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7751,8 +7751,8 @@
     },
     "NT2": {
         "symbol": "NT2",
-        "close": 21950,
-        "volume": 387700,
+        "close": 22000,
+        "volume": 1223900,
         "pe": 4.44,
         "pb": 1.26,
         "eps": 5068,
@@ -7761,7 +7761,7 @@
         "dividend_yield": 3.11,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:50:48",
+        "updated_at": "2026-11-02 15:10:07",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7876,8 +7876,8 @@
     },
     "GMD": {
         "symbol": "GMD",
-        "close": 51000,
-        "volume": 1005300,
+        "close": 50700,
+        "volume": 3018700,
         "pe": 13.34,
         "pb": 2.5,
         "eps": 6015,
@@ -7886,7 +7886,7 @@
         "dividend_yield": 5.2,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:50:56",
+        "updated_at": "2026-11-02 15:10:14",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8001,8 +8001,8 @@
     },
     "HAH": {
         "symbol": "HAH",
-        "close": 48700,
-        "volume": 82700,
+        "close": 48250,
+        "volume": 466900,
         "pe": 7.28,
         "pb": 1.74,
         "eps": 6819,
@@ -8011,7 +8011,7 @@
         "dividend_yield": 5.54,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:51:03",
+        "updated_at": "2026-11-02 15:10:21",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8126,8 +8126,8 @@
     },
     "PVT": {
         "symbol": "PVT",
-        "close": 20550,
-        "volume": 2647600,
+        "close": 20600,
+        "volume": 7466500,
         "pe": 7.14,
         "pb": 1.11,
         "eps": 2976,
@@ -8136,7 +8136,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:51:10",
+        "updated_at": "2026-11-02 15:10:28",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8251,17 +8251,17 @@
     },
     "VJC": {
         "symbol": "VJC",
-        "close": 131900,
-        "volume": 421800,
+        "close": 132300,
+        "volume": 962800,
         "pe": 46.49,
         "pb": 3.84,
         "eps": 2830,
         "roe": 8.7,
         "roa": 1.7,
         "dividend_yield": 0.0,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.46x MA20.",
-        "updated_at": "2026-11-02 10:51:18",
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "2026-11-02 15:10:35",
         "bctc_history": [
             {
                 "period": "2026-Q2",
@@ -8376,8 +8376,8 @@
     },
     "HVN": {
         "symbol": "HVN",
-        "close": 20350,
-        "volume": 324800,
+        "close": 20250,
+        "volume": 609800,
         "pe": 14.2,
         "pb": 6.82,
         "eps": 1460,
@@ -8386,7 +8386,7 @@
         "dividend_yield": 0.0,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:51:26",
+        "updated_at": "2026-11-02 15:10:42",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8501,8 +8501,8 @@
     },
     "VHC": {
         "symbol": "VHC",
-        "close": 48700,
-        "volume": 310800,
+        "close": 47500,
+        "volume": 710100,
         "pe": 8.55,
         "pb": 1.1,
         "eps": 5881,
@@ -8511,7 +8511,7 @@
         "dividend_yield": 4.26,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 10:51:33",
+        "updated_at": "2026-11-02 15:10:49",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8626,17 +8626,17 @@
     },
     "ANV": {
         "symbol": "ANV",
-        "close": 16050,
-        "volume": 351100,
+        "close": 16600,
+        "volume": 1338700,
         "pe": 5.4,
         "pb": 1.05,
         "eps": 2961,
         "roe": 21.1,
         "roa": 12.8,
         "dividend_yield": 6.39,
-        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "price_zone": "Khối lượng cạn kiệt ở mức 0.24x MA20.",
-        "updated_at": "2026-11-02 10:51:40",
+        "recommendation": "ĐANG TÍCH LŨY NỀN",
+        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
+        "updated_at": "2026-11-02 15:10:56",
         "bctc_history": [
             {
                 "period": "2026-Q3",
