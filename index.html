@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDK (Dùng cho module đăng nhập & quản lý user) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
@@ -25,35 +25,24 @@
         .glow-top2 { box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }
         .glow-top3 { box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }
 
-        #chart-modal-box {
-            max-height: 96dvh;
-        }
+        #chart-modal-box { max-height: 96dvh; }
         #chart-modal-box.fullscreen {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100vw !important;
-            height: 100dvh !important;
-            max-width: none !important;
-            max-height: none !important;
-            border-radius: 0 !important;
-            z-index: 9999 !important;
+            position: fixed !important; top: 0 !important; left: 0 !important;
+            width: 100vw !important; height: 100dvh !important;
+            max-width: none !important; max-height: none !important;
+            border-radius: 0 !important; z-index: 9999 !important;
         }
-        
         #chart-modal-box:not(.fullscreen) #tv-chart-container {
-            height: calc(96dvh - 50px) !important;
-            min-height: 380px;
-            width: 100% !important;
+            height: calc(96dvh - 50px) !important; min-height: 380px; width: 100% !important;
         }
         #chart-modal-box.fullscreen #tv-chart-container {
-            height: calc(100dvh - 45px) !important;
-            width: 100% !important;
+            height: calc(100dvh - 45px) !important; width: 100% !important;
         }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
 
-    <!-- MÀN HÌNH ĐĂNG NHẬP / XÁC THỰC (HIỂN THỊ KHI CHƯA LOGIN) -->
+    <!-- MÀN HÌNH ĐĂNG NHẬP / XÁC THỰC -->
     <div id="auth-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md hidden p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl p-6 relative">
             <div class="text-center mb-6">
@@ -64,13 +53,11 @@
                 <p class="text-xs text-slate-400 mt-1">Đăng nhập để sử dụng hệ thống lọc & phân tích AI</p>
             </div>
 
-            <!-- Tab chọn Đăng nhập / Đăng ký -->
             <div class="flex border-b border-slate-800 mb-6">
                 <button onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">Đăng Nhập</button>
                 <button onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition">Đăng Ký Tài Khoản</button>
             </div>
 
-            <!-- Form Đăng Nhập -->
             <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Email</label>
@@ -86,7 +73,6 @@
                 </button>
             </form>
 
-            <!-- Form Đăng Ký -->
             <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
                 <div>
                     <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Email đăng ký</label>
@@ -104,25 +90,24 @@
         </div>
     </div>
 
-    <!-- MODAL THÔNG BÁO HẾT HẠN / TRIAL -->
+    <!-- MODAL THÔNG BÁO HẾT HẠN -->
     <div id="expired-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md hidden p-4">
         <div class="bg-slate-900 border border-rose-500/40 w-full max-w-md rounded-2xl shadow-2xl p-6 text-center">
             <div class="inline-block bg-rose-500/10 text-rose-400 p-3 rounded-full mb-3 border border-rose-500/20">
                 <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
             </div>
             <h3 class="text-lg font-bold text-white mb-1">Tài Khoản Đã Hết Hạn Dùng Thử</h3>
-            <p id="expired-desc" class="text-xs text-slate-400 mb-6">Thời gian sử dụng dịch vụ của bạn đã kết thúc. Vui lòng liên hệ Admin để gia hạn tài khoản tiếp tục sử dụng hệ thống Pro Quant.</p>
+            <p class="text-xs text-slate-400 mb-6">Thời gian sử dụng dịch vụ của bạn đã kết thúc. Vui lòng liên hệ Admin để gia hạn.</p>
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-left mb-4 text-xs space-y-1">
                 <div><span class="text-slate-500">Mã tài khoản (UID):</span> <span id="user-uid-text" class="text-indigo-400 font-mono">--</span></div>
-                <div><span class="text-slate-500">Trạng thái:</span> <span class="text-rose-400 font-bold">Cần kích hoạt/gia hạn</span></div>
             </div>
             <button onclick="handleLogout()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold text-xs transition">
-                Đăng Xuất Tài Khoản Khác
+                Đăng Xuất
             </button>
         </div>
     </div>
 
-    <!-- MODAL ADMIN PANEL (QUẢN LÝ USER & GIA HẠN) -->
+    <!-- MODAL ADMIN PANEL -->
     <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
@@ -135,7 +120,6 @@
                 </button>
             </div>
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <p class="text-xs text-slate-400">Quản lý danh sách người dùng đăng ký, phân quyền Admin và cấp phép gia hạn thời gian sử dụng.</p>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
                         <thead>
@@ -147,7 +131,7 @@
                             </tr>
                         </thead>
                         <tbody id="admin-users-list" class="divide-y divide-slate-800">
-                            <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách người dùng...</td></tr>
+                            <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -175,13 +159,9 @@
                 <button onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
                 </button>
-                
-                <!-- Nút mở Admin Panel (Chỉ hiện khi user là Admin) -->
                 <button id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
                     <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline">Admin</span>
                 </button>
-
-                <!-- Nút Đăng xuất -->
                 <button onclick="handleLogout()" class="px-3 py-2 bg-rose-600/20 border border-rose-500/40 text-rose-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Đăng xuất">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
@@ -339,13 +319,11 @@
                     <i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải dữ liệu biểu đồ...
                 </div>
 
-                <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/30 backdrop-blur-sm p-1 md:p-1.5 rounded-xl border border-slate-800/40 text-[10px] md:text-[11px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
-                    <button onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã trước">
-                        <i class="fa-solid fa-chevron-left text-[9px]"></i>
-                    </button>
+                <div id="chart-overlay-legend" class="absolute top-2 left-2 z-10 bg-slate-950/35 backdrop-blur-sm p-1.5 rounded-xl border border-slate-800/40 text-[10px] flex flex-wrap items-center gap-1.5 text-slate-300 shadow-lg max-w-[calc(100%-80px)]">
+                    <button onclick="navigateSymbol(-1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-left text-[9px]"></i></button>
 
                     <div class="relative">
-                        <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs md:text-sm font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
+                        <button onclick="toggleSymbolDropdown()" id="chart-modal-symbol" class="text-xs font-black text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/20 transition flex items-center gap-1">
                             <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
                         </button>
                         <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
@@ -354,9 +332,7 @@
                         </div>
                     </div>
 
-                    <button onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition" title="Mã tiếp theo">
-                        <i class="fa-solid fa-chevron-right text-[9px]"></i>
-                    </button>
+                    <button onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-right text-[9px]"></i></button>
 
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
@@ -365,13 +341,13 @@
                     </div>
 
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
-                        <button onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">VolMA</button>
-                        <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition">MA20</button>
-                        <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">MA50</button>
-                        <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition">RSI</button>
+                        <button onclick="toggleIndicator('VOLMA')" id="btn-ind-volma" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">VolMA</button>
+                        <button onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white transition">MA20</button>
+                        <button onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">MA50</button>
+                        <button onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">RSI</button>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 pl-1 border-l border-slate-800/40 text-[10px]">
+                    <div class="flex items-center gap-2 pl-1 border-l border-slate-800/40 text-[10px]">
                         <div><span class="text-slate-400">TG:</span> <span id="legend-time" class="font-bold text-white">--</span></div>
                         <div><span class="text-slate-400">Giá:</span> <span id="legend-close" class="font-bold">--</span></div>
                         <div><span id="legend-change" class="font-bold">--</span></div>
@@ -379,21 +355,17 @@
                     </div>
                 </div>
 
-                <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/30 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
-                    <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 hover:bg-slate-800/60 transition" title="Phóng to / Thu nhỏ">
-                        <i class="fa-solid fa-expand text-xs"></i>
-                    </button>
-                    <button onclick="closeChartModal()" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg bg-slate-900/40 hover:bg-slate-800/60 transition" title="Đóng">
-                        <i class="fa-solid fa-xmark text-xs"></i>
-                    </button>
+                <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/35 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
+                    <button onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 transition" title="Phóng to / Thu nhỏ"><i class="fa-solid fa-expand text-xs"></i></button>
+                    <button onclick="closeChartModal()" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg bg-slate-900/40 transition" title="Đóng"><i class="fa-solid fa-xmark text-xs"></i></button>
                 </div>
 
                 <div id="tv-chart-container" class="w-full h-full"></div>
             </div>
 
             <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center">
-                <button id="btn-view-ai" onclick="" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-robot"></i> Xem AI chi tiết [Đã tích hợp]
+                <button id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-robot"></i> Xem AI chi tiết
                 </button>
                 <button onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
             </div>
@@ -403,15 +375,14 @@
     <script>
         // --- 1. CẤU HÌNH FIREBASE & XÁC THỰC ---
         const firebaseConfig = {
-    apiKey: "AIzaSyA8VlFQvE_om-51pxffgd7hd2Ud6hQm11k",
-    authDomain: "hoc-tieng-trung-64b8d.firebaseapp.com",
-    projectId: "hoc-tieng-trung-64b8d",
-    storageBucket: "hoc-tieng-trung-64b8d.appspot.com",
-    messagingSenderId: "614326539390",
-    appId: "1:614326539390:web:57344a021d7cbc7b18b42f",
-    databaseURL: "https://hoc-tieng-trung-64b8d-default-rtdb.asia-southeast1.firebasedatabase.app"
-};
-
+            apiKey: "AIzaSyA8VlFQvE_om-51pxffgd7hd2Ud6hQm11k",
+            authDomain: "hoc-tieng-trung-64b8d.firebaseapp.com",
+            projectId: "hoc-tieng-trung-64b8d",
+            storageBucket: "hoc-tieng-trung-64b8d.appspot.com",
+            messagingSenderId: "614326539390",
+            appId: "1:614326539390:web:57344a021d7cbc7b18b42f",
+            databaseURL: "https://hoc-tieng-trung-64b8d-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
 
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -426,44 +397,50 @@
 
             if (user) {
                 authOverlay.classList.add('hidden');
-                // Kiểm tra thông tin trong Firestore (Hạn sử dụng & Role)
-                const userDocRef = db.collection('users').doc(user.uid);
-                const doc = await userDocRef.get();
-
-                let userData = {};
-                if (!doc.exists) {
-                    // Tạo mới user trial 7 ngày nếu chưa có trong DB
-                    const expireDate = new Date();
-                    expireDate.setDate(expireDate.getDate() + 7);
-                    userData = {
-                        email: user.email,
-                        role: 'user',
-                        expiresAt: expireDate.toISOString()
-                    };
-                    await userDocRef.set(userData);
-                } else {
-                    userData = doc.data();
-                }
-
-                // Kiểm tra hạn sử dụng
-                const now = new Date();
-                const expireTime = new Date(userData.expiresAt);
                 
-                if (now > expireTime && userData.role !== 'admin') {
-                    expiredModal.classList.remove('hidden');
-                    document.getElementById('user-uid-text').innerText = user.uid;
-                    return;
-                } else {
-                    expiredModal.classList.add('hidden');
+                try {
+                    const userDocRef = db.collection('users').doc(user.uid);
+                    const doc = await userDocRef.get();
+
+                    let userData = {};
+                    if (!doc.exists) {
+                        const expireDate = new Date();
+                        expireDate.setDate(expireDate.getDate() + 7); // Trial 7 ngày
+                        userData = {
+                            email: user.email,
+                            role: 'user',
+                            expiresAt: expireDate.toISOString()
+                        };
+                        await userDocRef.set(userData);
+                    } else {
+                        userData = doc.data();
+                    }
+
+                    const now = new Date();
+                    const expireTime = new Date(userData.expiresAt);
+                    
+                    if (now > expireTime && userData.role !== 'admin') {
+                        expiredModal.classList.remove('hidden');
+                        document.getElementById('user-uid-text').innerText = user.uid;
+                        return;
+                    } else {
+                        expiredModal.classList.add('hidden');
+                    }
+
+                    if (userData.role === 'admin') {
+                        const adminBtn = document.getElementById('btn-admin-panel');
+                        if (adminBtn) {
+                            adminBtn.classList.remove('hidden');
+                            adminBtn.classList.add('flex');
+                        }
+                    }
+                } catch (err) {
+                    console.warn("⚠️ Lỗi kiểm tra Firestore, tiếp tục tải ứng dụng:", err);
                 }
 
-                // Phân quyền Admin
-                if (userData.role === 'admin') {
-                    document.getElementById('btn-admin-panel').classList.remove('hidden');
-                    document.getElementById('btn-admin-panel').classList.add('flex');
-                }
-
+                // TẢI DỮ LIỆU SAU KHI XÁC THỰC THÀNH CÔNG
                 loadData(true);
+
             } else {
                 authOverlay.classList.remove('hidden');
                 expiredModal.classList.add('hidden');
@@ -514,7 +491,7 @@
             try {
                 const cred = await auth.createUserWithEmailAndPassword(email, pass);
                 const expireDate = new Date();
-                expireDate.setDate(expireDate.getDate() + 7); // Mặc định dùng thử 7 ngày
+                expireDate.setDate(expireDate.getDate() + 7);
 
                 await db.collection('users').doc(cred.user.uid).set({
                     email: email,
@@ -533,7 +510,6 @@
             window.location.reload();
         }
 
-        // --- ADMIN PANEL FUNCTIONS ---
         async function openAdminModal() {
             document.getElementById('admin-modal').classList.remove('hidden');
             const listEl = document.getElementById('admin-users-list');
@@ -585,7 +561,7 @@
             }
         }
 
-        // --- 2. LOGIC TRANG SCREENER & BIỂU ĐỒ ---
+        // --- 2. LOGIC GỐC SCREENER & BIỂU ĐỒ ---
         let screenerResults = [];
         let currentSymbolHistory = null;
         let chartInstance = null;
@@ -594,13 +570,7 @@
         let currentSymbol = null;
         let currentInterval = 'D1';
 
-        let realtimeInterval = null;
-        let activeIndicators = {
-            VOLMA: false,
-            MA20: true,
-            MA50: false,
-            RSI: false
-        };
+        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
 
         const SECTOR_MAPPING = {
             "NGAN_HANG": ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB", "SSB", "LPB", "MSB", "OCB", "EIB"],
@@ -609,19 +579,9 @@
             "SAN_XUAT_TIEU_DUNG": ["HPG", "HSG", "NKG", "CTD", "VCG", "HHV", "FPT", "MWG", "PNJ", "FRT", "VNM", "MSN", "SAB", "GAS", "PVD", "PVS", "BSR", "POW", "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "VJC", "HVN", "VHC", "ANV"]
         };
         const SECTOR_NAMES = { 
-            "NGAN_HANG": "Ngân hàng", 
-            "CHUNG_KHOAN": "Chứng khoán", 
-            "BAT_DONG_SAN": "Bất động sản", 
-            "SAN_XUAT_TIEU_DUNG": "Sản xuất & Tiêu dùng", 
-            "KHAC": "Khác" 
+            "NGAN_HANG": "Ngân hàng", "CHUNG_KHOAN": "Chứng khoán", 
+            "BAT_DONG_SAN": "Bất động sản", "SAN_XUAT_TIEU_DUNG": "Sản xuất & Tiêu dùng", "KHAC": "Khác" 
         };
-
-        function getSector(symbol) {
-            for (const [sectorKey, symbols] of Object.entries(SECTOR_MAPPING)) {
-                if (symbols.includes(symbol)) return sectorKey;
-            }
-            return "KHAC";
-        }
 
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
@@ -635,7 +595,7 @@
 
         async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
-            if (showSpinner) icon.classList.add('spinner');
+            if (showSpinner && icon) icon.classList.add('spinner');
             try {
                 const screenerRes = await fetch('screener_results.json?t=' + new Date().getTime());
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
@@ -644,9 +604,7 @@
                 let rawStockData = {};
                 try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
-                    if (dataRes.ok) {
-                        rawStockData = await dataRes.json();
-                    }
+                    if (dataRes.ok) rawStockData = await dataRes.json();
                 } catch (e) {
                     console.warn("Không tải được data.json phụ trợ:", e);
                 }
@@ -654,7 +612,6 @@
                 screenerResults = screenerData.map(item => {
                     const sym = item.symbol;
                     const extraData = rawStockData[sym] || {};
-                    
                     return {
                         ...item,
                         eps: extraData.eps !== undefined ? extraData.eps : item.eps,
@@ -675,14 +632,15 @@
                 renderCards();
             } catch (error) {
                 console.error(error);
-                if (showSpinner) {
-                    document.getElementById('stock-container').innerHTML = `
+                const container = document.getElementById('stock-container');
+                if (container && showSpinner) {
+                    container.innerHTML = `
                         <div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">
-                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa có file screener_results.json hoặc data.json! Hãy chạy script Python cập nhật.
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa có file screener_results.json hoặc data.json!
                         </div>`;
                 }
             } finally {
-                if (showSpinner) icon.classList.remove('spinner');
+                if (showSpinner && icon) icon.classList.remove('spinner');
             }
         }
 
@@ -701,27 +659,14 @@
             let filtered = screenerResults.filter(item => {
                 let matchSearch = item.symbol.includes(searchTerm);
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
-                let matchBuyZone = true;
-
-                if (rankingMode === "BUY_ZONE") {
-                    matchBuyZone = isinBuyZone(item);
-                }
-
+                let matchBuyZone = rankingMode === "BUY_ZONE" ? isinBuyZone(item) : true;
                 return matchSearch && matchSector && matchBuyZone;
             });
 
-            if (rankingMode === "FUNDAMENTAL") {
-                filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
-            } 
-            else if (rankingMode === "TECHNICAL") {
-                filtered.sort((a, b) => b.technical_score - a.technical_score);
-            }
-            else if (rankingMode === "ALL_SCORE" || rankingMode === "BUY_ZONE") {
-                filtered.sort((a, b) => b.total_score - a.total_score);
-            } 
-            else {
-                filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
-            }
+            if (rankingMode === "FUNDAMENTAL") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
+            else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
+            else if (rankingMode === "ALL_SCORE" || rankingMode === "BUY_ZONE") filtered.sort((a, b) => b.total_score - a.total_score);
+            else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
 
             if (filtered.length === 0) {
                 container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">Không tìm thấy mã nào phù hợp.</div>`;
@@ -732,7 +677,6 @@
             filtered.forEach((item, index) => {
                 let statusColor = "text-slate-400 bg-slate-800";
                 let borderColor = "border-slate-700";
-                
                 let displayRec = item.technical_status || "Tích lũy";
                 if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {
                     statusColor = "text-emerald-400 bg-emerald-500/10";
@@ -764,9 +708,7 @@
                     </div>`;
                 }
 
-                const sectorCode = item.sector;
                 const card = document.createElement('div');
-                
                 card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
                 card.onclick = () => openChartModal(item.symbol);
                 
@@ -782,7 +724,7 @@
                                     </button>
                                     <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[sectorCode] || sectorCode}</span>
+                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
                             </div>
                             <div class="text-right">
                                 <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
@@ -790,14 +732,13 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50">
-                            <div class="text-center"><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${item.pe > 0 ? item.pe.toFixed(1) : '—'}</span></div>
-                            <div class="text-center border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${item.pb > 0 ? item.pb.toFixed(1) : '—'}</span></div>
-                            <div class="text-center border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
-                            <div class="text-center border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
+                        <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50 text-center">
+                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${item.pe > 0 ? item.pe.toFixed(1) : '—'}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${item.pb > 0 ? item.pb.toFixed(1) : '—'}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
                         </div>
                     </div>
-                    
                     ${scoreHtml}
                 `;
                 container.appendChild(card);
@@ -832,11 +773,10 @@
 
             try {
                 const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
-                if (!res.ok) throw new Error(`Không tìm thấy file ${symbol}.json`);
+                if (!res.ok) throw new Error();
                 
                 const textData = await res.text();
-                const sanitizedText = textData.replace(/:\s*NaN/g, ': null');
-                let data = JSON.parse(sanitizedText);
+                let data = JSON.parse(textData.replace(/:\s*NaN/g, ': null'));
 
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
@@ -853,11 +793,8 @@
                     let periods = Object.keys(groupedByPeriod).sort().reverse();
                     if (periods.length > 0) {
                         let availableMetrics = Object.keys(metricNames).slice(0, 3);
-                        
                         let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th>';
-                        availableMetrics.forEach(mId => {
-                            html += `<th class="p-2 text-right">${metricNames[mId]}</th>`;
-                        });
+                        availableMetrics.forEach(mId => { html += `<th class="p-2 text-right">${metricNames[mId]}</th>`; });
                         html += '</tr></thead><tbody class="divide-y divide-slate-900">';
                         
                         periods.slice(0, 6).forEach(p => {
@@ -889,9 +826,7 @@
                     if (periods.length > 0) {
                         let latestPeriod = periods[0];
                         let latestData = groupedBs[latestPeriod] || {};
-
                         let html = `<div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${latestPeriod}</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
-
                         let count = 0;
                         for (const [name, val] of Object.entries(latestData)) {
                             if (count >= 12) break;
@@ -902,13 +837,38 @@
                         balanceContainer.innerHTML = html;
                     }
                 }
-
             } catch (err) {
-                console.error("Lỗi BCTC chi tiết:", err);
                 if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
                 if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Lỗi tải dữ liệu BCTC.</p>`;
             }
         }
+
+        function openModal(symbol) {
+            const item = screenerResults.find(s => s.symbol === symbol);
+            if (!item) return;
+
+            switchAiTab('eval');
+            document.getElementById('modal-symbol').innerText = item.symbol;
+            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
+            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
+            document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
+            document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
+            document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
+            document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
+            document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
+
+            document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
+            document.getElementById('modal-ai-price').innerText = item.ai_price_zone || item.potential_zone || '—';
+            document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
+            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
+            document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
+            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
+
+            document.getElementById('ai-modal').classList.remove('hidden');
+            loadBctcDetail(symbol);
+        }
+
+        function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
 
         function navigateSymbol(direction) {
             const symbols = screenerResults.map(s => s.symbol).sort();
@@ -934,7 +894,6 @@
         function renderDropdownSymbolList(symbols) {
             const listContainer = document.getElementById('dropdown-symbol-list');
             listContainer.innerHTML = '';
-            
             symbols.sort().forEach(sym => {
                 const item = document.createElement('button');
                 item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
@@ -962,105 +921,47 @@
             }
         });
 
-        function openModal(symbol) {
-            const item = screenerResults.find(s => s.symbol === symbol);
-            if (!item) return;
-
-            switchAiTab('eval');
-
-            document.getElementById('modal-symbol').innerText = item.symbol;
-            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
-            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
-            document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
-            document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
-            document.getElementById('modal-eps').innerText = (item.eps !== undefined && item.eps !== null) ? formatNumber(item.eps) : '—';
-            document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
-            document.getElementById('modal-div').innerText = (item.dividend_yield !== undefined && item.dividend_yield !== null) ? item.dividend_yield + '%' : '—';
-
-            const recEl = document.getElementById('modal-ai-rec');
-            recEl.innerText = item.ai_recommendation || item.recommendation || item.technical_status || 'Tích lũy';
-            
-            document.getElementById('modal-ai-price').innerText = item.ai_price_zone || item.price_zone || item.potential_zone || '—';
-            document.getElementById('modal-bctc').innerText = item.bctc || item.fundamental_notes || "Chưa có đánh giá BCTC chuyên sâu từ AI.";
-            document.getElementById('modal-outlook').innerText = item.outlook || item.technical_notes || "Chưa có đánh giá triển vọng từ AI.";
-            document.getElementById('modal-macro').innerText = item.macro_view || item.valuation_notes || "Chưa có góc nhìn vĩ mô từ AI.";
-            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || item.updated_at || 'Hệ thống tự động'}`;
-
-            document.getElementById('ai-modal').classList.remove('hidden');
-            loadBctcDetail(symbol);
-        }
-
-        function closeModal() {
-            document.getElementById('ai-modal').classList.add('hidden');
-        }
-
         function switchInterval(interval) {
             currentInterval = interval;
-            
             ['d1', 'w1', 'mn'].forEach(i => {
                 const btn = document.getElementById(`btn-${i}`);
                 if (btn) {
-                    if (i === interval.toLowerCase()) {
-                        btn.className = "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition";
-                    } else {
-                        btn.className = "px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition";
-                    }
+                    btn.className = i === interval.toLowerCase() 
+                        ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
+                        : "px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition";
                 }
             });
-
-            if (currentSymbolHistory) {
-                renderChartInstance(currentSymbolHistory);
-            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
         }
 
         function toggleIndicator(name) {
             activeIndicators[name] = !activeIndicators[name];
             const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
             if (btn) {
-                if (activeIndicators[name]) {
-                    btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition";
-                } else {
-                    btn.className = "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white border border-slate-700/50 transition";
-                }
+                btn.className = activeIndicators[name]
+                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition"
+                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
             }
-            if (currentSymbolHistory) {
-                renderChartInstance(currentSymbolHistory);
-            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
         }
 
         function resizeChart() {
             if (chartInstance) {
                 const container = document.getElementById('tv-chart-container');
-                if (container) {
-                    chartInstance.applyOptions({
-                        width: container.clientWidth,
-                        height: container.clientHeight
-                    });
-                }
+                if (container) chartInstance.applyOptions({ width: container.clientWidth, height: container.clientHeight });
             }
         }
 
         function toggleFullscreen() {
             const modalBox = document.getElementById('chart-modal-box');
             const fsBtnIcon = document.querySelector('#fullscreen-btn i');
-            
             modalBox.classList.toggle('fullscreen');
-            
-            if (modalBox.classList.contains('fullscreen')) {
-                fsBtnIcon.className = "fa-solid fa-compress text-xs";
-                document.getElementById('fullscreen-btn').title = "Thu nhỏ màn hình";
-            } else {
-                fsBtnIcon.className = "fa-solid fa-expand text-xs";
-                document.getElementById('fullscreen-btn').title = "Phóng to màn hình";
-            }
-
+            fsBtnIcon.className = modalBox.classList.contains('fullscreen') ? "fa-solid fa-compress text-xs" : "fa-solid fa-expand text-xs";
             setTimeout(resizeChart, 200);
         }
 
         window.addEventListener('resize', () => {
-            if (!document.getElementById('chart-modal').classList.contains('hidden')) {
-                setTimeout(resizeChart, 300);
-            }
+            if (!document.getElementById('chart-modal').classList.contains('hidden')) setTimeout(resizeChart, 300);
         });
 
         async function openChartModal(symbol) {
@@ -1070,18 +971,14 @@
 
             document.getElementById('current-symbol-text').innerText = symbol;
             document.getElementById('symbol-dropdown').classList.add('hidden');
-
-            document.getElementById('btn-view-ai').onclick = () => {
-                closeChartModal();
-                openModal(symbol);
-            };
+            document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
 
             document.getElementById('chart-modal').classList.remove('hidden');
             document.getElementById('chart-loading').classList.remove('hidden');
 
             try {
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
-                if (!res.ok) throw new Error('Không tìm thấy file lịch sử');
+                if (!res.ok) throw new Error();
                 currentSymbolHistory = await res.json();
                 renderChartInstance(currentSymbolHistory);
             } catch (err) {
@@ -1096,9 +993,7 @@
             for (let i = 0; i < data.length; i++) {
                 if (i < period - 1) continue;
                 let sum = 0;
-                for (let j = 0; j < period; j++) {
-                    sum += data[i - j].close;
-                }
+                for (let j = 0; j < period; j++) sum += data[i - j].close;
                 result.push({ time: data[i].time, value: sum / period });
             }
             return result;
@@ -1109,9 +1004,7 @@
             for (let i = 0; i < data.length; i++) {
                 if (i < period - 1) continue;
                 let sum = 0;
-                for (let j = 0; j < period; j++) {
-                    sum += data[i - j].volume;
-                }
+                for (let j = 0; j < period; j++) sum += data[i - j].volume;
                 result.push({ time: data[i].time, value: sum / period });
             }
             return result;
@@ -1119,31 +1012,21 @@
 
         function calculateRSI(data, period = 14) {
             let result = [];
-            let gains = 0;
-            let losses = 0;
-
+            let gains = 0, losses = 0;
             for (let i = 1; i < data.length; i++) {
                 let change = data[i].close - data[i - 1].close;
                 if (i <= period) {
-                    if (change >= 0) gains += change;
-                    else losses -= change;
+                    if (change >= 0) gains += change; else losses -= change;
                     if (i === period) {
-                        let avgGain = gains / period;
-                        let avgLoss = losses / period;
+                        let avgGain = gains / period, avgLoss = losses / period;
                         let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
-                        let rsi = 100 - (100 / (1 + rs));
-                        result.push({ time: data[i].time, value: rsi });
+                        result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
                     }
                 } else {
-                    let gain = change >= 0 ? change : 0;
-                    let loss = change < 0 ? -change : 0;
-                    
-                    gains = (gains * (period - 1) + gain) / period;
-                    losses = (losses * (period - 1) + loss) / period;
-                    
+                    gains = (gains * (period - 1) + (change >= 0 ? change : 0)) / period;
+                    losses = (losses * (period - 1) + (change < 0 ? -change : 0)) / period;
                     let rs = losses === 0 ? 100 : gains / losses;
-                    let rsi = 100 - (100 / (1 + rs));
-                    result.push({ time: data[i].time, value: rsi });
+                    result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
                 }
             }
             return result;
@@ -1152,20 +1035,15 @@
         function renderChartInstance(historyDataObj) {
             const container = document.getElementById('tv-chart-container');
             container.innerHTML = '';
-
-            const LC = window.LightweightCharts || window.LightCategory;
-            if (!LC) {
-                container.innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Lỗi thư viện biểu đồ!</div>`;
-                return;
-            }
+            const LC = window.LightweightCharts;
+            if (!LC) return;
 
             const width = container.clientWidth || 600;
             const height = container.clientHeight || 380;
             const hasRSI = activeIndicators.RSI;
 
             chartInstance = LC.createChart(container, {
-                width: width,
-                height: height,
+                width: width, height: height,
                 layout: { background: { type: 'solid', color: '#0f172a' }, textColor: '#94a3b8' },
                 grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
                 timeScale: { borderColor: '#334155' }
@@ -1175,7 +1053,6 @@
                 upColor: '#10b981', downColor: '#f43f5e',
                 borderUpColor: '#10b981', borderDownColor: '#f43f5e',
                 wickUpColor: '#10b981', wickDownColor: '#f43f5e',
-                title: 'Giá'
             }, 0);
 
             volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
@@ -1183,9 +1060,7 @@
                 priceScaleId: 'volumeScale'
             }, 0);
 
-            chartInstance.priceScale('volumeScale').applyOptions({
-                scaleMargins: { top: 0.75, bottom: 0 },
-            });
+            chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.75, bottom: 0 } });
 
             let chartData = [];
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
@@ -1194,50 +1069,24 @@
 
             if (chartData && chartData.length > 0) {
                 candleSeriesInstance.setData(chartData);
-                
-                const volumeData = chartData.map(row => ({
-                    time: row.time,
-                    value: row.volume,
+                volumeSeriesInstance.setData(chartData.map(row => ({
+                    time: row.time, value: row.volume,
                     color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
-                }));
-                volumeSeriesInstance.setData(volumeData);
+                })));
 
                 if (activeIndicators.MA20) {
-                    const ma20Series = chartInstance.addSeries(LC.LineSeries, {
-                        color: '#3b82f6', lineWidth: 1, title: 'MA20'
-                    }, 0);
-                    ma20Series.setData(calculateMA(chartData, 20));
+                    chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
                 }
-
                 if (activeIndicators.MA50) {
-                    const ma50Series = chartInstance.addSeries(LC.LineSeries, {
-                        color: '#eab308', lineWidth: 1, title: 'MA50'
-                    }, 0);
-                    ma50Series.setData(calculateMA(chartData, 50));
+                    chartInstance.addSeries(LC.LineSeries, { color: '#eab308', lineWidth: 1 }, 0).setData(calculateMA(chartData, 50));
                 }
-
                 if (activeIndicators.VOLMA) {
-                    const volMaSeries = chartInstance.addSeries(LC.LineSeries, {
-                        color: '#f97316', lineWidth: 1, title: 'VolMA', priceScaleId: 'volumeScale'
-                    }, 0);
-                    volMaSeries.setData(calculateVolumeMA(chartData, 20));
+                    chartInstance.addSeries(LC.LineSeries, { color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }, 0).setData(calculateVolumeMA(chartData, 20));
                 }
-
                 if (hasRSI) {
-                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, {
-                        color: '#a855f7', 
-                        lineWidth: 1.5, 
-                        title: 'RSI (14)',
-                        priceFormat: { type: 'price', precision: 2, minMove: 0.01 }
-                    }, 1);
-
-                    rsiSeries.createPriceLine({
-                        price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: 'OB 70'
-                    });
-                    rsiSeries.createPriceLine({
-                        price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: 'OS 30'
-                    });
-
+                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, { color: '#a855f7', lineWidth: 1.5 }, 1);
+                    rsiSeries.createPriceLine({ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
+                    rsiSeries.createPriceLine({ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
                     rsiSeries.setData(calculateRSI(chartData, 14));
                 }
 
@@ -1252,69 +1101,36 @@
                 function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
                     legendClose.innerText = formatNumber(bar.close);
-                    
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
-                    if (index > 0) {
-                        const prevClose = dataArr[index - 1].close;
-                        changePct = ((bar.close - prevClose) / prevClose) * 100;
-                    }
-
-                    const sign = changePct >= 0 ? '+' : '';
-                    legendChange.innerText = `(${sign}${changePct.toFixed(2)}%)`;
+                    if (index > 0) changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
+                    
+                    legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
                     legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendVol.innerText = formatNumber(bar.volume);
                 }
 
                 chartInstance.subscribeCrosshairMove(param => {
-                    if (
-                        param.point === undefined ||
-                        !param.time ||
-                        param.point.x < 0 ||
-                        param.point.x > container.clientWidth ||
-                        param.point.y < 0 ||
-                        param.point.y > container.clientHeight
-                    ) {
-                        if (latestBar) updateLegend(latestBar, chartData);
-                    } else {
+                    if (!param.point || !param.time) { if (latestBar) updateLegend(latestBar, chartData); }
+                    else {
                         const dataPoint = param.seriesData.get(candleSeriesInstance);
-                        if (dataPoint) {
-                            const barData = {
-                                time: param.time,
-                                close: dataPoint.close,
-                                volume: param.seriesData.get(volumeSeriesInstance)?.value || 0
-                            };
-                            updateLegend(barData, chartData);
-                        }
+                        if (dataPoint) updateLegend({ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }, chartData);
                     }
                 });
 
                 setTimeout(() => {
                     const totalBars = chartData.length;
                     let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
-
-                    if (totalBars > visibleBarsCount) {
-                        chartInstance.timeScale().setVisibleLogicalRange({
-                            from: totalBars - visibleBarsCount,
-                            to: totalBars - 1,
-                        });
-                    } else {
-                        chartInstance.timeScale().fitContent();
-                    }
+                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
+                    else chartInstance.timeScale().fitContent();
                 }, 50);
-            } else {
-                container.innerHTML = `<div class="flex items-center justify-center h-full text-slate-500 text-xs">Chưa có dữ liệu cho khung này.</div>`;
             }
         }
 
         function closeChartModal() {
-            if (realtimeInterval) clearInterval(realtimeInterval);
             document.getElementById('chart-modal').classList.add('hidden');
-            if (chartInstance) {
-                chartInstance.remove();
-                chartInstance = null;
-            }
+            if (chartInstance) { chartInstance.remove(); chartInstance = null; }
             currentSymbolHistory = null;
         }
 
