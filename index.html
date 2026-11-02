@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script src="./lightweight-charts.js"></script>
+    <script src="./lightweight-charts.standalone.production (1).js"></script>
 
     <style>
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -836,7 +836,6 @@
                         result.push({ time: data[i].time, value: rsi });
                     }
                 } else {
-                    let change = data[i].close - data[i - 1].close;
                     let gain = change >= 0 ? change : 0;
                     let loss = change < 0 ? -change : 0;
                     
@@ -851,11 +850,11 @@
             return result;
         }
 
-                function renderChartInstance(historyDataObj) {
+        function renderChartInstance(historyDataObj) {
             const container = document.getElementById('tv-chart-container');
             container.innerHTML = '';
 
-            const LC = window.LightCategory || window.LightweightCharts;
+            const LC = window.LightweightCharts || window.LightCategory;
             if (!LC) {
                 container.innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Lỗi thư viện biểu đồ!</div>`;
                 return;
@@ -865,43 +864,32 @@
             const height = container.clientHeight || 380;
             const hasRSI = activeIndicators.RSI;
 
-            // Khởi tạo biểu đồ, nếu có RSI thì tự động phân tách số lượng pane (2 pane)
+            // 1. Khởi tạo biểu đồ chính (Dark mode)
             chartInstance = LC.createChart(container, {
                 width: width,
                 height: height,
-                layout: { background: { color: '#0f172a' }, textColor: '#94a3b8' },
+                layout: { background: { type: 'solid', color: '#0f172a' }, textColor: '#94a3b8' },
                 grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
-                timeScale: { borderColor: '#334155' },
-                panes: hasRSI ? [ { height: 0.7 }, { height: 0.3 } ] : undefined // Phân chia tỷ lệ không gian khung
+                timeScale: { borderColor: '#334155' }
             });
 
-            candleSeriesInstance = chartInstance.addCandlestickSeries({
+            // 2. Thêm Candlestick Series ở Pane 0 (Default)
+            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {
                 upColor: '#10b981', downColor: '#f43f5e',
                 borderUpColor: '#10b981', borderDownColor: '#f43f5e',
                 wickUpColor: '#10b981', wickDownColor: '#f43f5e',
-                priceScaleId: 'right'
-            });
+                title: 'Giá'
+            }, 0);
 
-            volumeSeriesInstance = chartInstance.addHistogramSeries({
+            // 3. Thêm Volume Histogram Series ở Pane 0
+            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
                 priceFormat: { type: 'volume' },
-                priceScaleId: 'volumeScale',
-            });
+                priceScaleId: 'volumeScale'
+            }, 0);
 
-            if (hasRSI) {
-                chartInstance.priceScale('right').applyOptions({
-                    scaleMargins: { top: 0.1, bottom: 0.2 },
-                });
-                chartInstance.priceScale('volumeScale').applyOptions({
-                    scaleMargins: { top: 0.7, bottom: 0.1 },
-                });
-            } else {
-                chartInstance.priceScale('right').applyOptions({
-                    scaleMargins: { top: 0.1, bottom: 0.2 },
-                });
-                chartInstance.priceScale('volumeScale').applyOptions({
-                    scaleMargins: { top: 0.75, bottom: 0 },
-                });
-            }
+            chartInstance.priceScale('volumeScale').applyOptions({
+                scaleMargins: { top: 0.75, bottom: 0 },
+            });
 
             let chartData = [];
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
@@ -918,39 +906,58 @@
                 }));
                 volumeSeriesInstance.setData(volumeData);
 
+                // Thêm MA20 & MA50 vào Pane 0
                 if (activeIndicators.MA20) {
-                    const ma20Series = chartInstance.addLineSeries({
-                        color: '#3b82f6', lineWidth: 1, title: 'MA20', priceScaleId: 'right'
-                    });
+                    const ma20Series = chartInstance.addSeries(LC.LineSeries, {
+                        color: '#3b82f6', lineWidth: 1, title: 'MA20'
+                    }, 0);
                     ma20Series.setData(calculateMA(chartData, 20));
                 }
 
                 if (activeIndicators.MA50) {
-                    const ma50Series = chartInstance.addLineSeries({
-                        color: '#eab308', lineWidth: 1, title: 'MA50', priceScaleId: 'right'
-                    });
+                    const ma50Series = chartInstance.addSeries(LC.LineSeries, {
+                        color: '#eab308', lineWidth: 1, title: 'MA50'
+                    }, 0);
                     ma50Series.setData(calculateMA(chartData, 50));
                 }
 
                 if (activeIndicators.VOLMA) {
-                    const volMaSeries = chartInstance.addLineSeries({
+                    const volMaSeries = chartInstance.addSeries(LC.LineSeries, {
                         color: '#f97316', lineWidth: 1, title: 'VolMA', priceScaleId: 'volumeScale'
-                    });
+                    }, 0);
                     volMaSeries.setData(calculateVolumeMA(chartData, 20));
                 }
 
-                // GÁN RSI XUỐNG PANE PHÍA DƯỚI MỘT CÁCH AN TOÀN
+                // 4. CHỈ BÁO RSI HIỂN THỊ Ở PANE 1 (CỬA SỔ RIÊNG BÊN DƯỚI)
                 if (hasRSI) {
-                    const rsiSeries = chartInstance.addLineSeries({
+                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, {
                         color: '#a855f7', 
                         lineWidth: 1.5, 
-                        title: 'RSI(14)', 
-                        priceScaleId: 'rsiScale',
-                        pane: 1 // Đẩy xuống khung thứ 2 ở dưới
+                        title: 'RSI (14)',
+                        priceFormat: {
+                            type: 'price',
+                            precision: 2,
+                            minMove: 0.01,
+                        }
+                    }, 1); // <--- Tách biệt sang Pane 1
+
+                    // Thêm mốc Quá Mua / Quá Bán cho RSI
+                    rsiSeries.createPriceLine({
+                        price: 70,
+                        color: '#ef5350',
+                        lineWidth: 1,
+                        lineStyle: LC.LineStyle.Dashed,
+                        axisLabelVisible: true,
+                        title: 'OB 70',
                     });
 
-                    chartInstance.priceScale('rsiScale').applyOptions({
-                        scaleMargins: { top: 0.2, bottom: 0.2 },
+                    rsiSeries.createPriceLine({
+                        price: 30,
+                        color: '#26a69a',
+                        lineWidth: 1,
+                        lineStyle: LC.LineStyle.Dashed,
+                        axisLabelVisible: true,
+                        title: 'OS 30',
                     });
 
                     rsiSeries.setData(calculateRSI(chartData, 14));
@@ -1025,7 +1032,6 @@
                 container.innerHTML = `<div class="flex items-center justify-center h-full text-slate-500 text-xs">Chưa có dữ liệu cho khung này.</div>`;
             }
         }
-
 
         function closeChartModal() {
             if (realtimeInterval) clearInterval(realtimeInterval);
