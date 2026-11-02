@@ -6254,11 +6254,12 @@
                 "roe_quarter": 3.03
             }
         ],
-        "outlook": "Chỉ số P/E = 9.77 và P/B = 2.39 cho thấy MWG được định giá khá hấp dẫn so với tiềm năng tăng trưởng. Biên an toàn hiện tại là tốt, nhưng cần theo dõi chặt chẽ để đảm bảo không bỏ lỡ cơ hội mua vào khi thị trường điều chỉnh.",
+        "outlook": "Với P/E 9.77 và P/B 2.39, MWG đang được định giá hợp lý so với ngành sản xuất/bán lẻ. Biên an toàn tương đối tốt, tạo cơ hội đầu tư hấp dẫn cho nhà đầu tư dài hạn. Tuy nhiên, cần theo dõi sát diễn biến thị trường để điều chỉnh chiến lược.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 68,000 - 70,000 VNĐ; Cắt lỗ: Dưới 65,000 VNĐ; Gia tăng tỷ trọng: Trên 75,000 VNĐ.",
-        "macro_view": "Ngành sản xuất/bán lẻ tiêu dùng đang phục hồi mạnh mẽ sau đại dịch, với nhu cầu tiêu dùng trong nước tăng cao. MWG, với vị thế hàng đầu, sẽ tiếp tục tận dụng xu hướng này. Tăng trưởng GDP và thu nhập bình quân đầu người cũng hỗ trợ triển vọng của MWG.",
-        "ai_updated_at": "2026-11-02 09:58:34"
+        "ai_price_zone": "Vùng gom: 68,000 - 72,000 VNĐ; Cắt lỗ: Dưới 65,000 VNĐ; Gia tăng tỷ trọng: Trên 75,000 VNĐ",
+        "macro_view": "Ngành sản xuất/bán lẻ đang phục hồi mạnh mẽ sau đại dịch, nhu cầu tiêu dùng nội địa tăng cao. MWG có vị thế vững chắc trong ngành, với mạng lưới phân phối rộng khắp và danh mục sản phẩm đa dạng. Triển vọng kinh tế vĩ mô tích cực sẽ tiếp tục hỗ trợ tăng trưởng của MWG.",
+        "ai_updated_at": "2026-11-02 14:22:09",
+        "bctc": "MWG thể hiện sức khỏe lợi nhuận mạnh mẽ với lợi nhuận mới nhất đạt 3,521 tỷ VNĐ, tăng trưởng YoY ấn tượng 97.41%. Hiệu quả ROE cao 29.5% cho thấy khả năng sử dụng vốn chủ sở hữu hiệu quả. Mức EPS 7,576 VNĐ phản ánh sự ổn định và tăng trưởng bền vững của doanh nghiệp."
     },
     "PNJ": {
         "symbol": "PNJ",
