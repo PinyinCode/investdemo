@@ -425,57 +425,66 @@
         const db = firebase.firestore();
 
         auth.onAuthStateChanged(async (user) => {
-            const authOverlay = document.getElementById('auth-overlay');
-            const expiredModal = document.getElementById('expired-modal');
+    const authOverlay = document.getElementById('auth-overlay');
+    const expiredModal = document.getElementById('expired-modal');
 
-            if (user) {
-                authOverlay.classList.add('hidden');
-                try {
-                    const emailKey = user.email.toLowerCase();
-                    const userDocRef = db.collection('allowed_users').doc(emailKey);
-                    const doc = await userDocRef.get();
+    if (user) {
+        try {
+            const emailKey = user.email.toLowerCase();
+            const userDocRef = db.collection('allowed_users').doc(emailKey);
+            const doc = await userDocRef.get();
 
-                    let userData = {};
-                    if (!doc.exists) {
-                        const expireDate = new Date();
-                        expireDate.setDate(expireDate.getDate() + 7);
-                        userData = {
-                            email: user.email,
-                            role: 'user',
-                            expiresAt: expireDate.toISOString()
-                        };
-                        await userDocRef.set(userData);
-                    } else {
-                        userData = doc.data();
-                    }
-
-                    const now = new Date();
-                    const expireTime = parseDate(userData.expiresAt);
-
-                    if (expireTime && now > expireTime && userData.role !== 'admin') {
-                        expiredModal.classList.remove('hidden');
-                        document.getElementById('user-uid-text').innerText = user.uid;
-                        return;
-                    } else {
-                        expiredModal.classList.add('hidden');
-                    }
-
-                    if (userData.role === 'admin') {
-                        const adminBtn = document.getElementById('btn-admin-panel');
-                        if (adminBtn) {
-                            adminBtn.classList.remove('hidden');
-                            adminBtn.classList.add('flex');
-                        }
-                    }
-                } catch (err) {
-                    console.warn("⚠️ Lỗi kiểm tra Firestore:", err);
-                }
-                loadData(true);
+            let userData = {};
+            if (!doc.exists) {
+                // Nếu chưa có dữ liệu hạn dùng, tự động khởi tạo 7 ngày
+                const expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 7);
+                userData = {
+                    email: user.email,
+                    role: 'user',
+                    expiresAt: expireDate.toISOString()
+                };
+                await userDocRef.set(userData);
             } else {
-                authOverlay.classList.remove('hidden');
+                userData = doc.data();
+            }
+
+            const now = new Date();
+            const expireTime = parseDate(userData.expiresAt);
+
+            // KIỂM TRA HẠN DÙNG: Nếu hết hạn và không phải Admin -> Khóa ngay lập tức
+            if (expireTime && now > expireTime && userData.role !== 'admin') {
+                authOverlay.classList.add('hidden');
+                expiredModal.classList.remove('hidden');
+                document.getElementById('user-uid-text').innerText = user.uid;
+                
+                // Đăng xuất Firebase Auth ngay để chặn các truy vấn tiếp theo
+                await auth.signOut();
+                return;
+            } else {
+                authOverlay.classList.add('hidden');
                 expiredModal.classList.add('hidden');
             }
-        });
+
+            if (userData.role === 'admin') {
+                const adminBtn = document.getElementById('btn-admin-panel');
+                if (adminBtn) {
+                    adminBtn.classList.remove('hidden');
+                    adminBtn.classList.add('flex');
+                }
+            }
+        } catch (err) {
+            console.warn("⚠️ Lỗi kiểm tra Firestore:", err);
+        }
+
+        loadData(true);
+
+    } else {
+        authOverlay.classList.remove('hidden');
+        expiredModal.classList.add('hidden');
+    }
+});
+
 
         function parseDate(val) {
             if (!val) return null;
@@ -518,26 +527,30 @@
         }
 
         async function handleRegister(e) {
-            e.preventDefault();
-            const email = document.getElementById('reg-email').value;
-            const pass = document.getElementById('reg-password').value;
-            const errBox = document.getElementById('register-error');
-            errBox.classList.add('hidden');
-            try {
-                const cred = await auth.createUserWithEmailAndPassword(email, pass);
-                const expireDate = new Date();
-                expireDate.setDate(expireDate.getDate() + 7);
-                await db.collection('allowed_users').doc(email.toLowerCase()).set({
-                    email: email,
-                    role: 'user',
-                    expiresAt: expireDate.toISOString()
-                });
-                alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
-            } catch (err) {
-                errBox.innerText = "Lỗi đăng ký: " + err.message;
-                errBox.classList.remove('hidden');
-            }
-        }
+    e.preventDefault();
+    const email = document.getElementById('reg-email').value;
+    const pass = document.getElementById('reg-password').value;
+    const errBox = document.getElementById('register-error');
+    errBox.classList.add('hidden');
+
+    try {
+        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+        const expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 7); // Mặc định 7 ngày dùng thử
+
+        // Ghi chính xác vào bảng allowed_users bằng emailKey
+        await db.collection('allowed_users').doc(email.toLowerCase()).set({
+            email: email,
+            role: 'user',
+            expiresAt: expireDate.toISOString()
+        });
+        alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
+    } catch (err) {
+        errBox.innerText = "Lỗi đăng ký: " + err.message;
+        errBox.classList.remove('hidden');
+    }
+}
+
 
         async function handleLogout() {
             await auth.signOut();
