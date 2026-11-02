@@ -34,35 +34,36 @@ def get_sector_specific_guideline(sector):
     else:
         return "* ĐẶC THÙ NGÀNH SẢN XUẤT/BÁN LẺ: Tập trung phân tích quy mô lợi nhuận, hiệu quả ROE và tốc độ phục hồi lợi nhuận kinh doanh."
 
-def analyze_stock_with_ai(item, sector):
+def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     if not ALIBABA_API_KEY:
         print(f"❌ LỖI: Biến môi trường ALIBABA_API_KEY đang trống!")
         return None
 
-    symbol = item.get('symbol')
     sector_guideline = get_sector_specific_guideline(sector)
 
-    # Lấy toàn bộ chỉ số chuẩn từ screener_results.json
-    close_price = item.get('close_price', 0)
-    pe = item.get('pe', 0)
-    pb = item.get('pb', 0)
-    roe = item.get('roe', 0)
-    eps = item.get('eps', 0)
-    net_profit = item.get('net_profit_latest', 0)
-    growth_yoy = item.get('profit_growth_yoy', 0)
-    total_score = item.get('total_score', 0)
-    tech_status = item.get('technical_status', 'Tích lũy')
+    # Lấy các chỉ số định lượng trực tiếp từ data.json (stock_metrics)
+    close_price = stock_metrics.get('close', stock_metrics.get('close_price', 0))
+    pe = stock_metrics.get('pe', 0)
+    pb = stock_metrics.get('pb', 0)
+    roe = stock_metrics.get('roe', 0)
+    eps = stock_metrics.get('eps', 0)
+    
+    # Lấy thông tin BCTC từ screener_results.json
+    net_profit = screener_item.get('net_profit_latest', 0)
+    growth_yoy = screener_item.get('profit_growth_yoy', 0)
+    total_score = screener_item.get('total_score', 0)
+    tech_status = screener_item.get('technical_status', 'Tích lũy')
 
     prompt = f"""
     Bạn là một Chuyên gia Phân tích Tài chính Cấp cao kiêm Quản lý Quỹ Đầu tư xuất sắc. 
     Hãy thực hiện một bản **đánh giá phân tích chuyên sâu theo ĐẶC THÙ NGÀNH ({sector})**, dựa trực tiếp trên các chỉ số tài chính định lượng của mã: {symbol}.
 
-    --- DỮ LIỆU TÀI CHÍNH TỪ HỆ THỐNG SCREENER ---
+    --- DỮ LIỆU TÀI CHÍNH TỪ HỆ THỐNG ---
     - Mã CK: {symbol} | Ngành: {sector} | Tổng điểm: {total_score}/100
     - Giá đóng cửa: {close_price:,.0f} VNĐ
-    - Chỉ số định giá: P/E = {pe} | P/B = {pb}
-    - Khả năng sinh lời: ROE = {roe}% | EPS = {eps:,.0f} VNĐ
-    - Lợi nhuận mới nhất: {net_profit:,.0f} Tỷ VNĐ | Tăng trưởng lợi nhuận YoY = {growth_yoy}%
+    - Chỉ số định giá (từ data.json): P/E = {pe} | P/B = {pb}
+    - Khả năng sinh lời (từ data.json): ROE = {roe}% | EPS = {eps:,.0f} VNĐ
+    - Dữ liệu BCTC & Tăng trưởng (từ screener): Lợi nhuận mới nhất = {net_profit:,.0f} Tỷ VNĐ | Tăng trưởng YoY = {growth_yoy}%
     - Trạng thái kỹ thuật: {tech_status}
     --------------------------------------------------------------
 
@@ -70,7 +71,7 @@ def analyze_stock_with_ai(item, sector):
 
     YÊU CẦU TRẢ VỀ JSON THUẦN TÚY (TUYỆT ĐỐI KHÔNG DÙNG ```json):
     1. "bctc": Phân tích sâu sát về sức khỏe lợi nhuận, tốc độ tăng trưởng YoY, hiệu quả ROE và đánh giá mức EPS = {eps:,.0f} VNĐ (5-7 câu).
-    2. "outlook": Đánh giá triển vọng định giá (P/E, P/B) và biên an toàn (4-6 câu).
+    2. "outlook": Đánh giá triển vọng định giá (P/E = {pe}, P/B = {pb}) và biên an toàn (4-6 câu).
     3. "recommendation": Khuyến nghị hành động sắc bén (Ngắn gọn 3-6 từ, ví dụ: "Tích sản dài hạn giá hấp dẫn").
     4. "price_zone": Vạch rõ chiến lược giá chi tiết (vùng gom, cắt lỗ, gia tăng tỷ trọng).
     5. "macro_view": Phân tích vĩ mô & triển vọng ngành liên hệ với số liệu doanh nghiệp (5-7 câu).
@@ -110,24 +111,34 @@ def main():
         print(f"❌ Không tìm thấy file {SCREENER_FILE}!")
         return
 
+    if not os.path.exists(DATA_FILE):
+        print(f"❌ Không tìm thấy file {DATA_FILE}!")
+        return
+
     with open(SCREENER_FILE, "r", encoding="utf-8") as f:
         screener_data = json.load(f)
 
-    # 1. Gom nhóm ngành
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        stock_db = json.load(f)
+
+    # 1. Gom nhóm ngành dựa trên screener_results.json để lọc Top điểm cơ bản
     industry_groups = {}
+    screener_map = {}
     for item in screener_data:
         symbol = item.get('symbol')
         if item.get('close_price', 0) <= 0:
             continue
         sector = get_sector(symbol)
         item['sector'] = sector
+        screener_map[symbol] = item
+        
         if sector not in industry_groups:
             industry_groups[sector] = []
         industry_groups[sector].append(item)
 
     top_symbols_to_analyze = {}
     for sector, items in industry_groups.items():
-        # Sắp xếp ưu tiên tuyệt đối theo chất lượng cơ bản: Điểm cơ bản -> ROE -> Lợi nhuận -> Tổng điểm
+        # Sắp xếp ưu tiên tuyệt đối theo chất lượng cơ bản
         items_sorted = sorted(
             items, 
             key=lambda x: (
@@ -139,9 +150,7 @@ def main():
             reverse=True
         )
         
-        # PHÂN BỔ SỐ LƯỢNG LẤY PHÂN TÍCH AI:
-        # - Ngân hàng lấy Top 5
-        # - Các ngành khác lấy Top 3
+        # Ngân hàng lấy Top 5, các ngành khác lấy Top 3
         limit_count = 5 if sector == "NGAN_HANG" else 3
         selected_items = items_sorted[:limit_count]
         
@@ -149,59 +158,47 @@ def main():
             top_symbols_to_analyze[itm['symbol']] = sector
         print(f"📌 Nhóm ngành [{sector}] - Lấy Top {limit_count} cơ bản tốt nhất phân tích AI: {[i['symbol'] for i in selected_items]}")
 
-    # Đọc file data.json hiện tại để ghi ngược thông tin AI vào
-    stock_db = {}
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            stock_db = json.load(f)
-
-    print(f"\n🤖 Bắt đầu chạy phân tích chuyên sâu cho danh sách đã chọn từ screener_results.json...")
+    print(f"\n🤖 Bắt đầu chạy phân tích chuyên sâu cho danh sách ưu tiên...")
     count = 0
     
-    for item in screener_data:
-        symbol = item.get('symbol')
-        if item.get('close_price', 0) <= 0:
+    for symbol, sector in top_symbols_to_analyze.items():
+        if symbol not in stock_db:
+            stock_db[symbol] = {}
+        if symbol not in screener_map:
             continue
             
-        # Chỉ gọi AI nếu mã nằm trong danh sách được chọn (Top 5 Ngân hàng hoặc Top 3 các ngành khác)
-        if symbol in top_symbols_to_analyze:
-            sector = top_symbols_to_analyze[symbol]
+        stock_metrics = stock_db[symbol]
+        screener_item = screener_map[symbol]
+        
+        updated_at = stock_metrics.get("updated_at", "")
+        ai_updated_at = stock_metrics.get("ai_updated_at", "")
+        
+        if not stock_metrics.get("ai_recommendation") or updated_at > ai_updated_at:
+            print(f"🔍 [{sector}] Đang phân tích AI mã: {symbol}...")
+            ai_result = analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector)
             
-            if symbol not in stock_db:
-                stock_db[symbol] = {}
-                
-            data_entry = stock_db[symbol]
-            updated_at = data_entry.get("updated_at", "")
-            ai_updated_at = data_entry.get("ai_updated_at", "")
-            
-            if not data_entry.get("ai_recommendation") or updated_at > ai_updated_at:
-                print(f"🔍 [{sector}] Đang phân tích AI mã: {symbol}...")
-                ai_result = analyze_stock_with_ai(item, sector)
-                
-                if ai_result:
-                    # Ghi ngược kết quả phân tích AI vào data.json
-                    data_entry["bctc"] = ai_result.get("bctc", "")
-                    data_entry["outlook"] = ai_result.get("outlook", "")
-                    data_entry["ai_recommendation"] = ai_result.get("recommendation", "")
-                    data_entry["ai_price_zone"] = ai_result.get("price_zone", "")
-                    data_entry["macro_view"] = ai_result.get("macro_view", "")
-                    data_entry["ai_updated_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
-                    count += 1
-                    print(f"  -> ✅ Ghi ngược thành công vào data.json cho {symbol}")
-                else:
-                    print(f"  -> ❌ Lỗi gọi AI cho {symbol}")
-                
-                time.sleep(1.5)
+            if ai_result:
+                # Ghi ngược kết quả phân tích AI vào data.json
+                stock_metrics["bctc"] = ai_result.get("bctc", "")
+                stock_metrics["outlook"] = ai_result.get("outlook", "")
+                stock_metrics["ai_recommendation"] = ai_result.get("recommendation", "")
+                stock_metrics["ai_price_zone"] = ai_result.get("price_zone", "")
+                stock_metrics["macro_view"] = ai_result.get("macro_view", "")
+                stock_metrics["ai_updated_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+                count += 1
+                print(f"  -> ✅ Ghi ngược thành công vào data.json cho {symbol}")
             else:
-                print(f"💤 Bỏ qua {symbol} (Đã có phân tích AI mới nhất).")
+                print(f"  -> ❌ Lỗi gọi AI cho {symbol}")
+            
+            time.sleep(1.5)
         else:
-            pass
+            print(f"💤 Bỏ qua {symbol} (Đã có phân tích AI mới nhất).")
 
     # Lưu lại file data.json sau khi đã cập nhật
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI cho {count} mã thuộc danh sách ưu tiên và ghi ngược vào {DATA_FILE}.")
+    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI cho {count} mã và ghi ngược vào {DATA_FILE}.")
 
 if __name__ == "__main__":
     main()
