@@ -1,57 +1,37 @@
-name: Pro Quant Screener Workflow
+name: 1. Run Quant Screener
 
 on:
-  # 1. Tự động chạy định kỳ vào lúc 17:00 UTC (00:00 đêm giờ Việt Nam) từ Thứ Hai đến Thứ Sáu
   schedule:
-    - cron: '0 17 * * 1-5'
-    
-  # 2. Tự động chạy ngay khi bạn push file data.json mới từ máy tính cá nhân lên GitHub
-  push:
-    paths:
-      - 'data.json'
-
-  # 3. Cho phép bạn bấm nút chạy thủ công bất cứ lúc nào tại tab Actions trên GitHub
-  workflow_dispatch:
+    # Chạy vào lúc 01:00 sáng thứ Sáu hàng tuần (giờ VN là sáng thứ Bảy UTC) hoặc tùy chỉnh
+    - cron: '0 18 * * 5'
+  workflow_dispatch: # Cho phép chạy thủ công
 
 jobs:
-  run-screener:
+  screener:
     runs-on: ubuntu-latest
-    
-    # 💡 Cấp quyền ghi (write) để bot có thể tự động push file kết quả lên repo
     permissions:
       contents: write
 
     steps:
-      # Bước 1: Lấy toàn bộ mã nguồn mới nhất từ repository
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # Bước 2: Thiết lập phiên bản môi trường Python (Đã loại bỏ cache để tránh lỗi thiếu requirements.txt)
-      - name: Set up Python 3.10
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
-      # Bước 3: Cài đặt các thư viện cần thiết cho việc tính toán
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas numpy
+          pip install pandas numpy requests
 
-      # Bước 4: Chạy script bộ lọc chuyên sâu và chấm điểm
       - name: Run Advanced Quant Screener
-        run: |
-          python advanced_screener.py
+        run: python advanced_screener.py
 
-      # Bước 5: Tự động commit và đẩy file kết quả lọc mới nhất lên Git
-      - name: Commit and Push Results
+      - name: Commit and push screener results
         run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "actions@github.com"
-          
-          # Chỉ định các file kết quả do advanced_screener.py sinh ra
-          git add screener_results.json screener_summary.csv
-          
-          # Kiểm tra nếu có thay đổi thực sự thì tiến hành commit và push
-          git diff --staged --quiet || git commit -m "🤖 Auto-run Quant Screener evaluation and update reports [skip ci]"
-          git push
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+          git add screener_results.json screener_summary.csv data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📊 [Screener] Cập nhật kết quả định lượng mới [$(date +'%Y-%m-%d')]" && git push)
