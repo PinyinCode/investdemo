@@ -12,7 +12,11 @@ HISTORY_DIR = "history"
 BCTC_DIR = "bctc_data"
 JS_LIB_FILE = "lightweight-charts.js"
 
+# Đã mở rộng đầy đủ đúng 100 mã rổ VN100
 VN100_SYMBOLS = [
+    "ACB", "BCM", "BID", "BVH", "CTG", "FPT", "GAS", "GVR", "HDB", "HPG",
+    "MBB", "MSN", "MWG", "PLX", "POW", "SAB", "SHB", "SSB", "SSI", "STB",
+    "TCB", "TPB", "VCB", "VHM", "VIB", "VIC", "VJC", "VNM", "VPB", "VRE",
     "ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB",
     "SHB", "SSB", "LPB", "MSB", "OCB", "EIB", "SSI", "VCI", "HCM", "VIX",
     "MBS", "FTS", "BSI", "CTS", "ORS", "VHM", "VIC", "VRE", "NVL", "PDR",
@@ -21,6 +25,9 @@ VN100_SYMBOLS = [
     "PNJ", "FRT", "VNM", "MSN", "SAB", "GAS", "PVD", "PVS", "BSR", "POW",
     "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "VJC", "HVN", "VHC", "ANV"
 ]
+
+# Loại bỏ các mã bị trùng lặp trong mảng trên để danh sách chuẩn 100 mã độc nhất
+VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 VNDIRECT_RATIOS = {
     "pe": "PRICE_TO_EARNINGS",
@@ -179,7 +186,7 @@ def auto_git_push():
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
             
-        commit_msg = f"Auto update comprehensive multi-source data & BCTC - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update full 100 VN100 symbols data & BCTC - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
@@ -189,7 +196,30 @@ def auto_git_push():
         print(f"⚠️ Lỗi Git push: {e}")
 
 def main():
-    print("🚀 Bắt đầu cào dữ liệu Định giá, Kỹ thuật và BCTC đa quý...")
+    print("==================================================")
+    print("       CHỌN CHẾ ĐỘ CÀO DỮ LIỆU LỊCH SỬ GIÁ       ")
+    print("==================================================")
+    print("1. Mặc định: 30 ngày gần nhất (Cập nhật cuốn chiếu)")
+    print("2. Dài hạn: 10 năm gần đây (~3650 ngày)")
+    print("3. Tùy chỉnh: Nhập số ngày tự do")
+    
+    choice = input("Nhập lựa chọn của bạn (1/2/3, mặc định 1): ").strip()
+    
+    days = 30 # Mặc định
+    if choice == '2':
+        days = 3650
+        print("-> Đã chọn chế độ cào 10 năm dữ liệu cho toàn bộ 100 mã.")
+    elif choice == '3':
+        try:
+            custom_days = int(input("Nhập số ngày muốn cào (ví dụ: 180, 730, 3650): ").strip())
+            if custom_days > 0:
+                days = custom_days
+        except ValueError:
+            print("⚠️ Nhập sai định dạng, tự động quay về mặc định 30 ngày.")
+    else:
+        print("-> Đã chọn chế độ mặc định (30 ngày gần nhất).")
+
+    print(f"🚀 Bắt đầu cào dữ liệu cho {len(VN100_SYMBOLS)} mã VN100 (Phạm vi: {days} ngày qua)...")
     
     if not os.path.exists(HISTORY_DIR):
         os.makedirs(HISTORY_DIR)
@@ -204,7 +234,7 @@ def main():
 
     total = len(VN100_SYMBOLS)
     end_date = datetime.datetime.now().strftime("%Y-%m-%d")
-    start_date = (datetime.datetime.now() - datetime.timedelta(days=730)).strftime("%Y-%m-%d")
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime("%Y-%m-%d")
 
     for i, symbol in enumerate(VN100_SYMBOLS):
         print(f"[{i+1}/{total}] Đang xử lý: {symbol}...")
@@ -220,11 +250,12 @@ def main():
                 close_price = closes[-1]
                 volume = volumes[-1]
                 
+                new_history_d1 = []
                 for _, row in df.iterrows():
                     time_val = row['time']
                     time_str = time_val.strftime('%Y-%m-%d') if hasattr(time_val, 'strftime') else str(time_val)[:10]
                     
-                    history_d1.append({
+                    new_history_d1.append({
                         "time": time_str,
                         "open": float(row.get('open', row['close'])),
                         "high": float(row.get('high', row['close'])),
@@ -232,6 +263,28 @@ def main():
                         "close": float(row['close']),
                         "volume": int(row.get('volume', 0))
                     })
+                
+                # --- LOGIC GỘP (MERGE) DỮ LIỆU ĐỂ GIỮ NGUYÊN LỊCH SỬ CŨ ---
+                history_file_path = os.path.join(HISTORY_DIR, f"{symbol}.json")
+                existing_history_d1 = []
+                
+                if os.path.exists(history_file_path):
+                    try:
+                        with open(history_file_path, "r", encoding="utf-8") as sf:
+                            old_history_data = json.load(sf)
+                            existing_history_d1 = old_history_data.get("history_d1", [])
+                    except Exception:
+                        pass
+                
+                merged_dict = {item['time']: item for item in existing_history_d1}
+                for item in new_history_d1:
+                    merged_dict[item['time']] = item
+                
+                history_d1 = sorted(list(merged_dict.values()), key=lambda x: x['time'])
+                
+                closes = [bar['close'] for bar in history_d1]
+                volumes = [bar['volume'] for bar in history_d1]
+                
         except Exception as e:
             print(f"⚠️ Lỗi xử lý lịch sử {symbol}: {e}")
 
@@ -244,7 +297,6 @@ def main():
             ratios[key] = get_vndirect_ratio(symbol, code)
             time.sleep(0.2)
 
-        # Thuật toán Price Action cơ bản
         status = "ĐANG TÍCH LŨY NỀN"
         detail = "Đang siết nền tích lũy biên độ hẹp."
         if len(closes) >= 20 and len(volumes) >= 20:
@@ -263,11 +315,9 @@ def main():
                 status = "ĐANG GOM HÀNG"
                 detail = "Dòng tiền duy trì ổn định trên MA20."
 
-        # Gom nhóm nến Tuần và Tháng
         history_w1 = aggregate_candles(history_d1, 'W1')
         history_mn = aggregate_candles(history_d1, 'MN')
 
-        # Lưu file lịch sử riêng cho từng mã
         symbol_history_data = {
             "history_d1": history_d1,
             "history_w1": history_w1,
@@ -276,9 +326,7 @@ def main():
         with open(os.path.join(HISTORY_DIR, f"{symbol}.json"), "w", encoding="utf-8") as sf:
             json.dump(symbol_history_data, sf, ensure_ascii=False)
 
-        # Lấy dữ liệu BCTC đa quý (3 năm) từ thư mục bctc_data
         bctc_history = parse_bctc_history(symbol)
-
         old_data = stock_db.get(symbol, {})
         
         stock_db[symbol] = {
@@ -294,7 +342,7 @@ def main():
             "recommendation": status,
             "price_zone": detail,
             "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "bctc_history": bctc_history,  # 💡 Đã tích hợp đầy đủ BCTC đa quý vào đây
+            "bctc_history": bctc_history,
             "outlook": old_data.get("outlook", ""),
             "ai_recommendation": old_data.get("ai_recommendation", ""),
             "ai_price_zone": old_data.get("ai_price_zone", ""),
@@ -306,7 +354,7 @@ def main():
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-    print("✅ Đã hoàn tất toàn bộ dữ liệu Định giá, Kỹ thuật và BCTC đa quý vào data.json!")
+    print("✅ Đã hoàn tất toàn bộ dữ liệu 100 mã VN100 vào data.json!")
 
     auto_git_push()
 
