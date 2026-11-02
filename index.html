@@ -129,7 +129,7 @@
                 <div class="flex items-center space-x-3">
                     <span id="modal-symbol" class="text-2xl font-black text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">--</span>
                     <div>
-                        <h3 class="text-sm font-bold text-white">Hệ Thống Phân Tích Chuyên Sâu & BCTC</h3>
+                        <h3 class="text-sm font-bold text-white">Hệ Thống Phân Tích Chuyên Sâu & BCTC [Đã tích hợp AI]</h3>
                         <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
                     </div>
                 </div>
@@ -171,15 +171,15 @@
                     </div>
 
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i> Phân tích Sức khỏe Tài chính & BCTC</h4>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i> Phân tích Sức khỏe Tài chính & BCTC [AI]</h4>
                         <p id="modal-bctc" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-chart-line text-blue-500 mr-1.5"></i> Định giá & Hành động giá</h4>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-chart-line text-blue-500 mr-1.5"></i> Định giá & Hành động giá [AI]</h4>
                         <p id="modal-outlook" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-globe text-amber-500 mr-1.5"></i> Vĩ mô & Sóng ngành</h4>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-globe text-amber-500 mr-1.5"></i> Vĩ mô & Sóng ngành [AI]</h4>
                         <p id="modal-macro" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
                     </div>
                 </div>
@@ -281,7 +281,7 @@
 
             <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center">
                 <button id="btn-view-ai" onclick="" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-robot"></i> Xem AI chi tiết
+                    <i class="fa-solid fa-robot"></i> Xem AI chi tiết [Đã tích hợp]
                 </button>
                 <button onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
             </div>
@@ -365,7 +365,14 @@
                         pe: extraData.pe !== undefined ? extraData.pe : item.pe,
                         pb: extraData.pb !== undefined ? extraData.pb : item.pb,
                         roe: extraData.roe !== undefined ? extraData.roe : item.roe,
-                        close_price: extraData.close !== undefined ? extraData.close : item.close_price
+                        close_price: extraData.close !== undefined ? extraData.close : item.close_price,
+                        // Ánh xạ đầy đủ các trường Phân tích AI từ data.json
+                        bctc: extraData.bctc !== undefined ? extraData.bctc : item.bctc,
+                        outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
+                        ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
+                        ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
+                        macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
+                        ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at
                     };
                 });
 
@@ -479,7 +486,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="text-xl font-black text-white">${item.symbol}</span>
                                     <button onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
-                                        <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant</span>
+                                        <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
                                     <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
                                 </div>
@@ -678,14 +685,15 @@
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
             document.getElementById('modal-div').innerText = (item.dividend_yield !== undefined && item.dividend_yield !== null) ? item.dividend_yield + '%' : '—';
 
+            // Đổ dữ liệu phân tích AI chi tiết vào các phần tử Modal
             const recEl = document.getElementById('modal-ai-rec');
-            recEl.innerText = `Khuyến nghị: ${item.recommendation || item.technical_status || 'Tích lũy'}`;
+            recEl.innerText = item.ai_recommendation || item.recommendation || item.technical_status || 'Tích lũy';
             
-            document.getElementById('modal-ai-price').innerText = `Trạng thái giá: ${item.price_zone || item.potential_zone || '—'}`;
-            document.getElementById('modal-bctc').innerText = item.fundamental_notes || "Tín dụng tăng trưởng khá | ROE tốt (>14%)";
-            document.getElementById('modal-outlook').innerText = item.technical_notes || item.price_zone || "Dòng tiền gom hàng ổn định trên MA20.";
-            document.getElementById('modal-macro').innerText = item.valuation_notes || "Định giá phù hợp với chu kỳ tăng trưởng ngành.";
-            document.getElementById('modal-time').innerText = `Cập nhật: ${item.updated_at || 'Hệ thống tự động'}`;
+            document.getElementById('modal-ai-price').innerText = item.ai_price_zone || item.price_zone || item.potential_zone || '—';
+            document.getElementById('modal-bctc').innerText = item.bctc || item.fundamental_notes || "Chưa có đánh giá BCTC chuyên sâu từ AI.";
+            document.getElementById('modal-outlook').innerText = item.outlook || item.technical_notes || "Chưa có đánh giá triển vọng từ AI.";
+            document.getElementById('modal-macro').innerText = item.macro_view || item.valuation_notes || "Chưa có góc nhìn vĩ mô từ AI.";
+            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || item.updated_at || 'Hệ thống tự động'}`;
 
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
