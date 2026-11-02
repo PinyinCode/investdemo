@@ -1,12 +1,14 @@
-name: Pro Quant Screener Automation
+name: Render UI Automatically
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * 1' # Chạy định kỳ hàng tuần vào Thứ Hai
+  workflow_dispatch: # Cho phép bấm chạy thủ công trên GitHub bất cứ lúc nào
+  push:
+    paths:
+      - 'render_ui.py'
+      - 'screener_results.json'
 
 jobs:
-  run-screener:
+  render-frontend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,25 +19,13 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          pip install requests pandas numpy
-
-      - name: Run Quantitative Screener
-        run: python screener.py
-
-      - name: Run AI Deep Analysis (Qwen 3.7 max)
-        env:
-          ALIBABA_API_KEY: ${{ secrets.ALIBABA_API_KEY }}
-        run: python ai_screener.py
-
-      - name: Generate Frontend UI Automatically via Python
+      - name: Run UI Renderer Script
         run: python render_ui.py
 
-      - name: Commit and push results to repository
+      - name: Commit and push generated HTML
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add screener_results.json data.json index.html
-          git commit -m "🤖 Auto-update Quant Screener & UI via Python Workflow" || exit 0
+          git add index.html
+          git commit -m "🎨 Auto-render index.html via Python" || exit 0
           git push
