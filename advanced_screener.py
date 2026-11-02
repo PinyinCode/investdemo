@@ -191,8 +191,21 @@ def main():
         print("⚠️ Không có dữ liệu đánh giá.")
         return
 
-    # Sắp xếp theo tổng điểm giảm dần
-    results = sorted(results, key=lambda x: x['total_score'], reverse=True)
+    # SẮP XẾP ƯU TIÊN TUYỆT ĐỐI THEO CHẤT LƯỢNG CƠ BẢN:
+    # 1. fundamental_score (Điểm cơ bản cao nhất)
+    # 2. roe (Khả năng sinh lời tốt nhất)
+    # 3. net_profit_latest (Quy mô lợi nhuận lớn nhất)
+    # 4. total_score (Tổng điểm chung dự phòng)
+    results = sorted(
+        results, 
+        key=lambda x: (
+            x.get('fundamental_score', 0), 
+            x.get('roe', 0), 
+            x.get('net_profit_latest', 0), 
+            x.get('total_score', 0)
+        ), 
+        reverse=True
+    )
 
     # 1. Xuất file JSON riêng cho Frontend HTML/JS
     with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
@@ -204,10 +217,10 @@ def main():
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
     print(f"✅ Đã xuất file CSV thành công: {OUTPUT_CSV}")
 
-    # In mẫu Top 10 mã mạnh nhất ra màn hình console
-    print("\n🏆 TOP 10 CỔ PHIẾU ĐẠT ĐIỂM SỐ CAO NHẤT TOÀN THỊ TRƯỜNG:")
+    # In mẫu Top 10 mã cơ bản mạnh nhất ra màn hình console
+    print("\n🏆 TOP 10 CỔ PHIẾU CƠ BẢN TỐT NHẤT TOÀN THỊ TRƯỜNG:")
     print("=" * 125)
-    print(df[['symbol', 'sector', 'total_score', 'potential_zone', 'roe', 'profit_growth_yoy', 'technical_status']].head(10).to_string(index=False))
+    print(df[['symbol', 'sector', 'fundamental_score', 'roe', 'net_profit_latest', 'total_score', 'potential_zone']].head(10).to_string(index=False))
     print("=" * 125)
 
     # Tự động đẩy lên git
