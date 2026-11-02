@@ -11,7 +11,7 @@ ALIBABA_API_KEY = os.getenv("ALIBABA_API_KEY", "").strip()
 INPUT_SYMBOLS = os.getenv("INPUT_SYMBOLS", "").strip()
 API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
 
-# Phân nhóm ngành chuẩn cho đủ 100 mã VN100
+# Phân nhóm ngành chuẩn chi tiết cho 7 nhóm ngành VN100
 SECTOR_MAPPING = {
     "NGAN_HANG": [
         "ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB",
@@ -24,13 +24,19 @@ SECTOR_MAPPING = {
         "VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG",
         "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR", "SJS", "VPI"
     ],
-    "SAN_XUAT_TIEU_DUNG": [
-        "HPG", "HSG", "NKG", "CTD", "VCG", "HHV", "FPT", "MWG", "PNJ", "FRT",
-        "VNM", "MSN", "SAB", "GAS", "PVD", "PVS", "BSR", "POW", "REE", "PC1",
-        "NT2", "GMD", "HAH", "PVT", "VJC", "HVN", "VHC", "ANV", "BVH", "GVR",
-        "PLX", "APH", "ASM", "DBC", "DCM", "DPM", "GEX", "KDC", "LIG", "MSH",
-        "PAN", "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "DHC", "IMP", "SBA",
-        "TID", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
+    "CONG_NGHE_BAN_LE": [
+        "FPT", "MWG", "PNJ", "FRT", "DGW"
+    ],
+    "DIEN_NUOC_HA_TANG": [
+        "POW", "REE", "PC1", "NT2", "GAS", "GEG", "BWE", "TDM"
+    ],
+    "NGUYEN_VAT_LIEU_CHU_KY": [
+        "HPG", "HSG", "NKG", "DGC", "DCM", "DPM", "GVR", "PHR", "DHC"
+    ],
+    "SAN_XUAT_TIEU_DUNG_PHONG_THU": [
+        "VNM", "MSN", "SAB", "VHC", "ANV", "BVH", "PLX", "PVD", "PVS", "BSR", 
+        "GMD", "HAH", "PVT", "VJC", "HVN", "APH", "ASM", "DBC", "KDC", "MSH", 
+        "PAN", "SBT", "DRC", "CSM", "BMP", "DHG", "CTD", "VCG", "HHV", "GEX"
     ]
 }
 
@@ -38,7 +44,7 @@ def get_sector(symbol):
     for sector, symbols in SECTOR_MAPPING.items():
         if symbol in symbols:
             return sector
-    return "SAN_XUAT_TIEU_DUNG"
+    return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
 
 def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     if not ALIBABA_API_KEY:
@@ -57,24 +63,42 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     total_score = screener_item.get('total_score', 0)
     fund_notes = screener_item.get('fundamental_notes', '')
 
+    # Xây dựng hướng dẫn riêng cho AI tùy theo đặc thù từng nhóm ngành
+    sector_guidance = ""
+    if sector == "NGAN_HANG":
+        sector_guidance = "Đặc thù ngành Ngân hàng: Tập trung đánh giá chất lượng tài sản, tăng trưởng tín dụng, biên lãi ròng (NIM) và ROE. Lưu ý chính sách cổ tức bằng cổ phiếu/giữ vốn để tăng trưởng thay vì đòi hỏi cổ tức tiền mặt cao."
+    elif sector == "CHUNG_KHOAN":
+        sector_guidance = "Đặc thù ngành Chứng khoán: Nhạy bén theo chu kỳ thanh khoản thị trường, mảng tự doanh, cho vay margin và doanh thu môi giới. Đánh giá khả năng quản trị rủi ro danh mục."
+    elif sector == "BAT_DONG_SAN":
+        sector_guidance = "Đặc thù ngành Bất động sản: Đánh giá quỹ đất sạch, năng lực pháp lý dự án, người mua trả tiền trước và cơ cấu nợ vay/đòn bẩy tài chính thay vì chỉ nhìn P/E ngắn hạn."
+    elif sector == "CONG_NGHE_BAN_LE":
+        sector_guidance = "Đặc thù ngành Công nghệ & Bán lẻ: Trọng tâm là tốc độ tăng trưởng doanh thu cốt lõi, thị phần, biên lợi nhuận và tiềm năng mở rộng quy mô (Scalability)."
+    elif sector == "DIEN_NUOC_HA_TANG":
+        sector_guidance = "Đặc thù ngành Tiện ích/Hạ tầng: Dòng tiền phòng thủ ổn định, ít rủi ro suy thoái kinh tế. Trọng tâm đánh giá tính đều đặn của cổ tức tiền mặt và dòng tiền kinh doanh cốt lõi (CFO)."
+    elif sector == "NGUYEN_VAT_LIEU_CHU_KY":
+        sector_guidance = "Đặc thù ngành Vật liệu chu kỳ (Thép, Hóa chất...): Nhìn nhận qua góc độ chu kỳ giá hàng hóa (commodity cycle), P/B, biên lợi nhuận gộp theo từng quý thay vì bẫy P/E thấp ở đỉnh lợi nhuận."
+    else:
+        sector_guidance = "Đặc thù ngành Sản xuất & Tiêu dùng: Đánh giá sức khỏe thương hiệu (Economic Moat), thị phần nội địa, hiệu quả chuỗi cung ứng và lịch sử chi trả cổ tức tiền mặt đều đặn."
+
     prompt = f"""
-    Bạn là một Chuyên gia Đầu tư Giá trị (Value & Dividend Investor) kỳ cựu theo trường phái Graham & Buffett. 
-    Hãy thực hiện một bản **đánh giá tích sản dài hạn chuyên sâu** cho mã cổ phiếu: {symbol} thuộc ngành {sector}.
+    Bạn là một Chuyên gia Đầu tư Giá trị & Tăng trưởng kỳ cựu theo trường phái Graham, Buffett & Fisher. 
+    Hãy thực hiện một bản **đánh giá tích sản dài hạn chuyên sâu** cho mã cổ phiếu: {symbol} thuộc nhóm ngành: {sector}.
+
+    --- ĐẶC THÙ NGÀNH ---
+    {sector_guidance}
 
     --- DỮ LIỆU TÀI CHÍNH & ĐỊNH LƯỢNG ---
-    - Mã CK: {symbol} | Điểm chất lượng: {total_score}/100 ({fund_notes})
+    - Mã CK: {symbol} | Điểm chất lượng ngành: {total_score}/100 ({fund_notes})
     - Giá thị trường: {close_price:,.0f} VNĐ
     - Định giá: P/E = {pe} | P/B = {pb}
     - Cổ tức & Sinh lời: Tỷ suất cổ tức gần nhất = {dividend_yield}%/năm | ROE = {roe}% | EPS = {eps:,.0f} VNĐ
     - Tăng trưởng gần nhất: LNST = {net_profit:,.0f} Tỷ | Tăng trưởng YoY = {growth_yoy}%
     --------------------------------------------------------------
 
-    * LƯU Ý QUAN TRỌNG VỀ CỔ TỨC: Dữ liệu hệ thống hiện ghi nhận tỷ suất cổ tức năm gần nhất là {dividend_yield}%. Hãy dùng chuyên môn tài chính để phân tích xem mức cổ tức này có tính **bền vững dài hạn** hay chỉ là **đột biến một lần** (như bán tài sản, hoàn nhập dự phòng, hoặc lợi nhuận bất thường), dựa trên bối cảnh ngành và kết quả kinh doanh cốt lõi của doanh nghiệp. Tránh mắc bẫy cổ tức (dividend trap).
-
     YÊU CẦU TRẢ VỀ JSON THUẦN TÚY (TUYỆT ĐỐI KHÔNG DÙNG ```json):
-    1. "bctc": Phân tích sức khỏe tài chính cốt lõi, đánh giá tính bền vững của mức cổ tức {dividend_yield}% (có đều đặn từ kinh doanh thực hay chỉ là đột biến một lần?) (6-8 câu).
+    1. "bctc": Phân tích sức khỏe tài chính cốt lõi, đánh giá hiệu quả sinh lời và tính bền vững của dòng tiền/cổ tức phù hợp với đặc thù ngành (6-8 câu).
     2. "catalyst": Xác định lợi thế cạnh tranh dài hạn (Economic Moat) và động lực tăng trưởng nội tại trong 2-3 năm tới (4-5 câu).
-    3. "risks": Chỉ ra các rủi ro trọng yếu có thể làm xói mòn giá trị doanh nghiệp hoặc đe dọa chính sách cổ tức (3-4 câu).
+    3. "risks": Chỉ ra các rủi ro trọng yếu có thể làm xói mòn giá trị doanh nghiệp hoặc đe dọa triển vọng kinh doanh (3-4 câu).
     4. "outlook": Đánh giá biên an toàn (Margin of Safety) của mức định giá hiện tại (P/E {pe}, P/B {pb}) dưới góc nhìn đầu tư dài hạn (4-5 câu).
     5. "recommendation": Khuyến nghị hành động tích sản sắc bén (Ví dụ: "Tích sản dài hạn - Tỷ trọng 20%").
     6. "price_zone": Vạch rõ chiến lược tích sản dạng văn bản liền mạch (Ví dụ: "Vùng gom giá trị: dưới 20k, Vùng chặn lỗ: thủng 18k, Kỳ vọng dài hạn: tăng trưởng 25%"). TUYỆT ĐỐI KHÔNG TRẢ VỀ DẠNG DICTIONARY/OBJECT.
@@ -108,7 +132,6 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
             # 🛡️ BỔ SUNG BƯỚC AN TOÀN: Chuẩn hóa price_zone luôn là chuỗi string
             raw_pz = parsed_data.get("price_zone", "")
             if isinstance(raw_pz, dict):
-                # Nếu AI lỡ trả về object, gom các giá trị lại thành chuỗi văn bản
                 parsed_data["price_zone"] = " | ".join([f"{k}: {v}" for k, v in raw_pz.items()])
             elif isinstance(raw_pz, list):
                 parsed_data["price_zone"] = " - ".join([str(i) for i in raw_pz])
@@ -147,7 +170,7 @@ def main():
             else:
                 print(f"⚠️ Mã {symbol} không có trong dữ liệu screener, bỏ qua.")
     else:
-        # Gom nhóm và phân bổ: Ngân hàng lấy Top 5, các ngành khác lấy Top 3
+        # Gom nhóm và phân bổ: Tất cả 7 nhóm ngành đều lấy Top 5 tiêu biểu nhất
         industry_groups = {}
         for symbol, item in screener_map.items():
             sector = get_sector(symbol)
@@ -166,13 +189,13 @@ def main():
                 ), 
                 reverse=True
             )
-            limit_count = 5 if sector == "NGAN_HANG" else 3
+            limit_count = 5  # Đồng loạt lấy Top 5 cho tất cả các nhóm ngành
             selected_items = items_sorted[:limit_count]
             for itm in selected_items:
                 top_symbols_to_analyze[itm['symbol']] = sector
             print(f"📌 Nhóm ngành [{sector}] - Chọn Top {limit_count}: {[i['symbol'] for i in selected_items]}")
 
-    print(f"\n🤖 Bắt đầu chạy AI phân tích tích sản giá trị cho các mã: {list(top_symbols_to_analyze.keys())}")
+    print(f"\n🤖 Bắt đầu chạy AI phân tích tích sản cho các mã: {list(top_symbols_to_analyze.keys())}")
     count = 0
     
     for symbol, sector in top_symbols_to_analyze.items():
@@ -206,7 +229,7 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI tích sản cho {count} mã theo đúng định mức ngành và ghi vào {DATA_FILE}.")
+    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI tích sản cho {count} mã theo đặc thù 7 nhóm ngành và ghi vào {DATA_FILE}.")
 
 if __name__ == "__main__":
     main()
