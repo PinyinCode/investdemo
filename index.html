@@ -420,6 +420,7 @@
         const db = firebase.firestore();
 
         // Kiểm tra trạng thái đăng nhập
+                // Kiểm tra trạng thái đăng nhập
         auth.onAuthStateChanged(async (user) => {
             const authOverlay = document.getElementById('auth-overlay');
             const expiredModal = document.getElementById('expired-modal');
@@ -428,7 +429,8 @@
                 authOverlay.classList.add('hidden');
                 
                 try {
-                    const userDocRef = db.collection('users').doc(user.uid);
+                    const emailKey = user.email.toLowerCase();
+                    const userDocRef = db.collection('allowed_users').doc(emailKey);
                     const doc = await userDocRef.get();
 
                     let userData = {};
@@ -573,7 +575,7 @@
             document.getElementById('account-modal').classList.add('hidden');
         }
 
-        async function openAdminModal() {
+                async function openAdminModal() {
             const adminModal = document.getElementById('admin-modal');
             if (adminModal) {
                 adminModal.classList.remove('hidden');
@@ -585,7 +587,7 @@
             }
 
             try {
-                const snapshot = await db.collection('users').get();
+                const snapshot = await db.collection('allowed_users').get();
                 if (listEl) {
                     listEl.innerHTML = '';
                     if (snapshot.empty) {
@@ -594,15 +596,15 @@
                     }
                     snapshot.forEach(doc => {
                         const data = doc.data();
-                        const uid = doc.id;
+                        const emailId = doc.id;
                         const tr = document.createElement('tr');
                         tr.className = "hover:bg-slate-800/50 transition";
                         tr.innerHTML = `
-                            <td class="p-3 font-semibold text-white">${data.email || '—'}</td>
+                            <td class="p-3 font-semibold text-white">${data.email || emailId}</td>
                             <td class="p-3 text-slate-300">${data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : '—'}</td>
                             <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
                             <td class="p-3 text-right">
-                                <button type="button" onclick="extendUserTrial('${uid}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
+                                <button type="button" onclick="extendUserTrial('${emailId}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
                             </td>
                         `;
                         listEl.appendChild(tr);
@@ -611,8 +613,27 @@
             } catch (err) {
                 console.error("Lỗi Admin Panel:", err);
                 if (listEl) {
-                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Lỗi tải danh sách (Kiểm tra Firestore Rules).</td></tr>`;
+                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
                 }
+            }
+        }
+
+        async function extendUserTrial(emailKey) {
+            try {
+                const userDocRef = db.collection('allowed_users').doc(emailKey);
+                const doc = await userDocRef.get();
+                if (doc.exists) {
+                    const currentExpire = doc.data().expiresAt ? new Date(doc.data().expiresAt) : new Date();
+                    const now = new Date();
+                    let baseDate = currentExpire > now ? currentExpire : now;
+                    baseDate.setDate(baseDate.getDate() + 30);
+
+                    await userDocRef.update({ expiresAt: baseDate.toISOString() });
+                    alert("Đã gia hạn thành công thêm 30 ngày!");
+                    openAdminModal();
+                }
+            } catch (err) {
+                alert("Lỗi gia hạn: " + err.message);
             }
         }
 
