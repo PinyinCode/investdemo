@@ -243,11 +243,12 @@
                 "roe_quarter": 5.48
             }
         ],
-        "outlook": "Với P/E = 8.05, BID được đánh giá là có mức định giá hấp dẫn so với ngành, thể hiện tiềm năng tăng trưởng trong tương lai. P/B = 1.37 cũng ở mức hợp lý, cho thấy thị trường đánh giá cao về giá trị tài sản của ngân hàng. Biên an toàn này cung cấp cơ hội đầu tư tốt cho nhà đầu tư dài hạn.",
+        "outlook": "Với P/E = 8.05 và P/B = 1.37, BID đang được định giá hợp lý so với ngành ngân hàng. Biên an toàn tương đối cao, tạo cơ hội hấp dẫn cho nhà đầu tư dài hạn. Tuy nhiên, cần theo dõi sát sao các yếu tố vĩ mô và nội tại để đảm bảo biên an toàn.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 30,000 - 32,000 VNĐ; Cắt lỗ: Dưới 29,000 VNĐ; Gia tăng tỷ trọng: Trên 33,000 VNĐ.",
-        "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của BID dự kiến sẽ tiếp tục duy trì ở mức cao. Chính sách tiền tệ linh hoạt và nhu cầu vốn của doanh nghiệp đang thúc đẩy tăng trưởng của ngành ngân hàng. Tuy nhiên, cần theo dõi sát sao các rủi ro từ biến động lãi suất và tỷ lệ nợ xấu.",
-        "ai_updated_at": "2026-11-02 10:12:33"
+        "ai_price_zone": "Vùng gom: 30,000 - 32,000 VNĐ; Cắt lỗ: Dưới 28,000 VNĐ; Gia tăng tỷ trọng: Trên 34,000 VNĐ",
+        "macro_view": "Triển vọng ngành ngân hàng vẫn tích cực nhờ vào tăng trưởng tín dụng ổn định và nhu cầu tín dụng của nền kinh tế. Tuy nhiên, cần chú ý đến các rủi ro từ lãi suất và tỷ giá. BID có vị thế vững chắc trong ngành, với triển vọng tăng trưởng tín dụng và hiệu quả sinh lời cao, hứa hẹn mang lại lợi ích cho nhà đầu tư.",
+        "ai_updated_at": "2026-11-02 14:19:36",
+        "bctc": "BID đã ghi nhận lợi nhuận mới nhất là 8,473 tỷ VNĐ, với tốc độ tăng trưởng YoY ấn tượng đạt 39.2%, cho thấy sự cải thiện mạnh mẽ trong hoạt động kinh doanh. Hiệu quả sinh lời ROE ở mức 18.0% phản ánh khả năng sử dụng vốn chủ sở hữu hiệu quả. Mức EPS = 4,430 VNĐ thể hiện sức khỏe tài chính tốt và tiềm năng tăng trưởng bền vững."
     },
     "CTG": {
         "symbol": "CTG",
@@ -618,11 +619,12 @@
                 "roe_quarter": 5.45
             }
         ],
-        "outlook": "Với P/E = 5.97 và P/B = 1.24, MBB được định giá khá hấp dẫn so với mặt bằng chung của ngành. Biên P/E thấp cho thấy thị trường chưa đánh giá đầy đủ tiềm năng tăng trưởng của MBB, trong khi P/B dưới 1.5 cho thấy ngân hàng đang được định giá hợp lý so với giá trị sổ sách. Đây là cơ hội tốt để nhà đầu tư mua vào.",
+        "outlook": "Với P/E chỉ 5.97 và P/B 1.24, MBB được định giá khá hấp dẫn so với mặt bằng chung của ngành. Biên an toàn này cung cấp cơ hội đầu tư tiềm năng, đặc biệt khi kết hợp với triển vọng tăng trưởng tín dụng và hiệu quả kinh doanh ổn định.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 18,000 - 18,500 VNĐ; Cắt lỗ: Dưới 17,500 VNĐ; Gia tăng tỷ trọng: Trên 19,000 VNĐ.",
-        "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của MBB dự kiến sẽ tiếp tục duy trì ở mức cao. Chính sách tiền tệ linh hoạt và nhu cầu vốn của doanh nghiệp đang thúc đẩy tăng trưởng tín dụng. Tuy nhiên, cần theo dõi sát sao các rủi ro về nợ xấu và biến động lãi suất có thể ảnh hưởng đến biên lợi nhuận.",
-        "ai_updated_at": "2026-11-02 10:12:14"
+        "macro_view": "Trong bối cảnh nền kinh tế Việt Nam tiếp tục phục hồi, nhu cầu tín dụng dự kiến sẽ tăng, tạo điều kiện thuận lợi cho MBB. Chính sách tiền tệ linh hoạt và sự hỗ trợ từ các gói kích thích kinh tế cũng sẽ thúc đẩy tăng trưởng trong ngành ngân hàng. Tuy nhiên, cần theo dõi chặt chẽ các rủi ro về nợ xấu và biến động lãi suất.",
+        "ai_updated_at": "2026-11-02 14:18:46",
+        "bctc": "MBB đã chứng minh sức khỏe tài chính vững chắc với lợi nhuận mới nhất đạt 8,252 tỷ VNĐ, tăng trưởng YoY ấn tượng 42.26%. Hiệu quả sinh lời ROE ở mức 21.8% cho thấy ngân hàng đang sử dụng vốn chủ sở hữu một cách hiệu quả. EPS 3,232 VNĐ phản ánh khả năng tạo ra lợi nhuận trên mỗi cổ phiếu tốt, góp phần nâng cao giá trị cho cổ đông."
     },
     "STB": {
         "symbol": "STB",
@@ -993,11 +995,12 @@
                 "roe_quarter": 5.71
             }
         ],
-        "outlook": "Với P/E = 7.63, HDB đang được định giá thấp hơn so với trung bình ngành, đồng thời P/B = 1.7 cũng cho thấy biên an toàn hợp lý. Điều này cho thấy tiềm năng tăng giá trong tương lai khi thị trường nhận diện đúng giá trị thực của HDB.",
-        "ai_recommendation": "Tích sản dài hạn",
-        "ai_price_zone": "Vùng gom: 21,000 - 21,500 VNĐ; Cắt lỗ: Dưới 20,500 VNĐ; Gia tăng tỷ trọng: Trên 22,500 VNĐ.",
-        "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của ngành ngân hàng dự kiến sẽ tiếp tục duy trì ở mức cao. HDB với vị thế vững chắc và hiệu quả hoạt động tốt có thể tận dụng cơ hội này để mở rộng quy mô và nâng cao lợi nhuận. Tuy nhiên, cần theo dõi sát sao các chính sách tiền tệ và rủi ro từ biến động lãi suất.",
-        "ai_updated_at": "2026-11-02 10:12:05"
+        "outlook": "Với P/E = 7.63 và P/B = 1.7, HDB được định giá khá hấp dẫn so với các ngân hàng cùng ngành. Biên P/E thấp cho thấy thị trường chưa đánh giá đầy đủ tiềm năng tăng trưởng của ngân hàng, trong khi P/B hợp lý phản ánh giá trị tài sản ròng. Điều này tạo ra biên an toàn tốt cho nhà đầu tư.",
+        "ai_recommendation": "Tích lũy dài hạn",
+        "ai_price_zone": "Vùng gom: 21,000 - 21,500 VNĐ; Cắt lỗ: Dưới 20,500 VNĐ; Gia tăng tỷ trọng: Trên 22,000 VNĐ",
+        "macro_view": "Trong bối cảnh kinh tế vĩ mô Việt Nam tiếp tục phục hồi, nhu cầu tín dụng dự kiến sẽ tăng lên, tạo điều kiện thuận lợi cho HDB mở rộng hoạt động. Tuy nhiên, cần theo dõi chặt chẽ chính sách lãi suất và quy định về tỷ lệ an toàn vốn để đảm bảo ngân hàng duy trì sự ổn định và tăng trưởng bền vững.",
+        "ai_updated_at": "2026-11-02 14:18:20",
+        "bctc": "HDB đang thể hiện sức khỏe lợi nhuận ổn định với lợi nhuận mới nhất đạt 4,066 tỷ VNĐ, tăng trưởng YoY là 7.02%, cho thấy khả năng phát triển bền vững. Hiệu quả sinh lời ROE ở mức 24.8% phản ánh hiệu quả sử dụng vốn chủ sở hữu cao, vượt trội so với mặt bằng ngành. Mức EPS = 3,815 VNĐ cũng cho thấy ngân hàng đang tạo ra giá trị đáng kể cho cổ đông."
     },
     "VIB": {
         "symbol": "VIB",
@@ -1368,11 +1371,12 @@
                 "roe_quarter": 3.59
             }
         ],
-        "outlook": "Với P/E = 4.28 và P/B = 0.66, SHB được định giá khá hấp dẫn so với mặt bằng chung của ngành. Biên P/E thấp cho thấy thị trường chưa đánh giá đầy đủ tiềm năng tăng trưởng của ngân hàng, trong khi P/B < 1 cho thấy cổ phiếu đang được bán dưới giá trị sổ sách, tạo biên an toàn đáng kể cho nhà đầu tư.",
+        "outlook": "Với P/E = 4.28 và P/B = 0.66, SHB đang được định giá thấp so với mặt bằng chung của ngành ngân hàng, tạo ra biên an toàn đáng kể. Điều này cho thấy tiềm năng tăng trưởng giá cổ phiếu trong tương lai, đặc biệt khi kết hợp với triển vọng tăng trưởng tín dụng và lợi nhuận tích cực.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 10,000 - 10,400 VNĐ; Cắt lỗ: Dưới 9,500 VNĐ; Gia tăng tỷ trọng: Trên 11,000 VNĐ.",
-        "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của ngành ngân hàng dự kiến sẽ tiếp tục duy trì ở mức cao. SHB với tốc độ tăng trưởng tín dụng và lợi nhuận ấn tượng có thể tận dụng cơ hội này để mở rộng quy mô và nâng cao hiệu quả hoạt động. Tuy nhiên, cần theo dõi chặt chẽ các chính sách tiền tệ và rủi ro liên quan đến nợ xấu.",
-        "ai_updated_at": "2026-11-02 10:12:24"
+        "ai_price_zone": "Vùng gom: 10,000 - 10,500 VNĐ; Cắt lỗ: Dưới 9,500 VNĐ; Gia tăng tỷ trọng: Trên 11,000 VNĐ",
+        "macro_view": "Trong bối cảnh nền kinh tế Việt Nam tiếp tục phục hồi, nhu cầu tín dụng dự kiến sẽ tăng lên, hỗ trợ cho hoạt động kinh doanh của các ngân hàng. SHB, với tốc độ tăng trưởng tín dụng và lợi nhuận cao, có thể tận dụng cơ hội này để mở rộng thị phần và nâng cao hiệu quả kinh doanh. Tuy nhiên, cần theo dõi chặt chẽ các chính sách tiền tệ và rủi ro vĩ mô.",
+        "ai_updated_at": "2026-11-02 14:19:12",
+        "bctc": "SHB đã ghi nhận lợi nhuận mới nhất đạt 4,119 tỷ VNĐ, tăng trưởng YoY ấn tượng 58.01%, cho thấy sự cải thiện mạnh mẽ trong hoạt động kinh doanh. Hiệu quả sinh lời ROE đạt 19.0% phản ánh khả năng sử dụng vốn chủ sở hữu hiệu quả. EPS ở mức 2,796 VNĐ, tương ứng với P/E chỉ 4.28, cho thấy cổ phiếu đang được định giá hấp dẫn so với lợi nhuận."
     },
     "SSB": {
         "symbol": "SSB",
@@ -1618,12 +1622,12 @@
                 "roe_quarter": 6.16
             }
         ],
-        "outlook": "Chỉ số P/E ở mức 8.92 và P/B 2.31 cho thấy LPB đang được định giá hợp lý so với tiềm năng tăng trưởng và hiệu quả hoạt động. Biên an toàn này cung cấp cơ hội đầu tư hấp dẫn, đặc biệt khi so sánh với các ngân hàng cùng ngành. Tuy nhiên, cần theo dõi sát sao biến động thị trường để nắm bắt cơ hội mua vào.",
+        "outlook": "Với P/E = 8.92, LPB đang được định giá thấp hơn nhiều so với mặt bằng chung của thị trường, tạo ra biên an toàn đáng kể. Tuy nhiên, P/B = 2.31 cho thấy ngân hàng đang có mức định giá cao hơn giá trị sổ sách, nhưng vẫn nằm trong giới hạn chấp nhận được. Tổng thể, LPB có triển vọng định giá hấp dẫn, đặc biệt khi kết hợp với tốc độ tăng trưởng và hiệu quả kinh doanh tốt.",
         "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 33,000 - 34,000 VNĐ; Cắt lỗ: Dưới 32,000 VNĐ; Gia tăng tỷ trọng: Trên 35,000 VNĐ",
-        "macro_view": "Trong bối cảnh kinh tế vĩ mô ổn định, tốc độ tăng trưởng tín dụng của ngành ngân hàng dự kiến sẽ tiếp tục duy trì ở mức cao. Điều này tạo điều kiện thuận lợi cho LPB trong việc mở rộng quy mô và nâng cao hiệu quả hoạt động. Ngoài ra, chính sách tiền tệ linh hoạt và nhu cầu vốn của doanh nghiệp cũng hỗ trợ cho triển vọng tăng trưởng của ngân hàng.",
-        "ai_updated_at": "2026-11-02 10:11:47",
-        "bctc": "Lợi nhuận mới nhất của LPB đạt 3,562 tỷ VNĐ, tăng trưởng YoY ấn tượng ở mức 28.95%, cho thấy ngân hàng đang có sự phát triển mạnh mẽ. Hiệu quả sinh lời ROE đạt 26.3%, vượt trội so với mặt bằng ngành, phản ánh khả năng quản lý vốn hiệu quả. Mức EPS 4,047 VNĐ cũng là một dấu hiệu tích cực, thể hiện sức khỏe tài chính và khả năng tạo ra lợi nhuận trên mỗi cổ phiếu."
+        "ai_price_zone": "Vùng gom: 32,000 - 34,000 VNĐ; Cắt lỗ: Dưới 30,000 VNĐ; Gia tăng tỷ trọng: Trên 36,000 VNĐ",
+        "macro_view": "Trong bối cảnh nền kinh tế Việt Nam tiếp tục phục hồi, nhu cầu tín dụng dự kiến sẽ tăng lên, tạo điều kiện thuận lợi cho LPB. Ngân hàng cũng đang tập trung vào việc cải thiện chất lượng tín dụng và đa dạng hóa nguồn thu, giúp nâng cao hiệu quả hoạt động. Triển vọng ngành ngân hàng nhìn chung là tích cực, với các chính sách hỗ trợ từ Chính phủ và Ngân hàng Nhà nước.",
+        "ai_updated_at": "2026-11-02 14:17:54",
+        "bctc": "LPB đã ghi nhận lợi nhuận mới nhất đạt 3,562 tỷ VNĐ, với tốc độ tăng trưởng YoY ấn tượng ở mức 28.95%, cho thấy sự phát triển mạnh mẽ của ngân hàng. Hiệu quả sinh lời ROE đạt 26.3%, vượt trội so với mặt bằng ngành, phản ánh khả năng sử dụng vốn hiệu quả. Mức EPS 4,047 VNĐ cũng là một dấu hiệu tích cực, thể hiện sức khỏe tài chính và tiềm năng tăng trưởng trong tương lai."
     },
     "MSB": {
         "symbol": "MSB",
@@ -2119,11 +2123,12 @@
                 "roe_quarter": 1.63
             }
         ],
-        "outlook": "Với P/E ở mức 13.01 và P/B là 1.48, SSI đang được định giá ở mức hợp lý so với ngành chứng khoán. Tuy nhiên, biên an toàn có thể bị ảnh hưởng bởi sự sụt giảm trong tăng trưởng lợi nhuận. Nhà đầu tư nên cân nhắc kỹ lưỡng về triển vọng phục hồi của công ty trước khi đưa ra quyết định.",
-        "ai_recommendation": "Theo dõi ngắn hạn, chờ cơ hội",
-        "ai_price_zone": "Vùng gom: 18,000 - 18,500 VNĐ; Cắt lỗ: Dưới 17,500 VNĐ; Gia tăng tỷ trọng: Trên 19,500 VNĐ",
-        "macro_view": "Trong bối cảnh kinh tế vĩ mô, ngành chứng khoán đang chịu áp lực do biến động của thị trường tài chính toàn cầu. Tuy nhiên, triển vọng dài hạn vẫn tích cực với các chính sách hỗ trợ từ Chính phủ. SSI, với vị thế hàng đầu, có tiềm năng phục hồi mạnh mẽ khi thị trường ổn định trở lại. Cần theo dõi sát sao các yếu tố vĩ mô và nội bộ để nắm bắt cơ hội.",
-        "ai_updated_at": "2026-11-02 10:12:50"
+        "outlook": "Với P/E = 13.01 và P/B = 1.48, SSI đang được định giá ở mức trung bình so với ngành chứng khoán. Biên an toàn của cổ phiếu này không quá cao, nhưng cũng không phải là thấp. Điều này cho thấy tiềm năng tăng trưởng trong tương lai có thể còn hạn chế, nhưng vẫn có cơ hội nếu thị trường phục hồi.",
+        "ai_recommendation": "Tích lũy ngắn hạn",
+        "ai_price_zone": "Vùng gom: 18,000 - 18,500 VNĐ; Cắt lỗ: Dưới 17,500 VNĐ; Gia tăng tỷ trọng: Trên 19,500 VNĐ.",
+        "macro_view": "Ngành chứng khoán đang chịu ảnh hưởng từ nhiều yếu tố vĩ mô như lãi suất ngân hàng, chính sách tiền tệ, và tình hình kinh tế vĩ mô. Mặc dù SSI đang gặp khó khăn về tăng trưởng, nhưng triển vọng dài hạn của ngành vẫn tích cực. Thị trường chứng khoán Việt Nam đang có xu hướng tăng trưởng, tạo điều kiện thuận lợi cho các công ty chứng khoán như SSI.",
+        "ai_updated_at": "2026-11-02 14:20:31",
+        "bctc": "SSI đang thể hiện sức khỏe lợi nhuận ổn định với lợi nhuận ròng mới nhất đạt 1,125 tỷ VNĐ. Tuy nhiên, tốc độ tăng trưởng YoY giảm 23.76% cho thấy sự sụt giảm trong hiệu quả kinh doanh. ROE ở mức 12.2% phản ánh hiệu quả sử dụng vốn chủ sở hữu khá tốt, nhưng vẫn cần cải thiện. EPS là 1,483 VNĐ, tương đối thấp so với giá đóng cửa, chỉ ra rằng cổ phiếu có thể bị định giá cao."
     },
     "VCI": {
         "symbol": "VCI",
@@ -2619,11 +2624,12 @@
                 "roe_quarter": 2.39
             }
         ],
-        "outlook": "Với P/E = 12.35 và P/B = 1.33, MBS đang được định giá ở mức hợp lý so với ngành chứng khoán. Tuy nhiên, biên an toàn có thể bị ảnh hưởng bởi xu hướng tăng trưởng âm trong ngắn hạn. Cần theo dõi sát sao các yếu tố vĩ mô và nội bộ để đánh giá triển vọng dài hạn.",
-        "ai_recommendation": "Tích sản giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 14,000 - 14,500 VNĐ; Cắt lỗ: Dưới 13,500 VNĐ; Gia tăng tỷ trọng: Trên 15,500 VNĐ.",
-        "macro_view": "Ngành chứng khoán đang chịu áp lực từ nhiều yếu tố vĩ mô như lãi suất và tình hình kinh tế vĩ mô. Tuy nhiên, MBS với vị thế vững chắc và hiệu quả hoạt động tốt có thể vượt qua những thách thức này. Triển vọng dài hạn của MBS phụ thuộc vào khả năng thích ứng và tận dụng cơ hội từ thị trường.",
-        "ai_updated_at": "2026-11-02 10:12:41"
+        "outlook": "Với P/E = 12.35 và P/B = 1.33, MBS đang được định giá ở mức hợp lý so với ngành chứng khoán. Biên an toàn hiện tại có thể coi là chấp nhận được, tuy nhiên cần theo dõi sát sao các chỉ số tăng trưởng trong tương lai để đảm bảo tính bền vững.",
+        "ai_recommendation": "Tích lũy dài hạn",
+        "ai_price_zone": "Vùng gom: 14,000-14,500 VNĐ; Cắt lỗ: Dưới 13,500 VNĐ; Gia tăng tỷ trọng: Trên 15,500 VNĐ.",
+        "macro_view": "Ngành chứng khoán Việt Nam đang trải qua giai đoạn phục hồi sau những biến động gần đây. Tăng trưởng kinh tế vĩ mô tích cực cùng với việc cải thiện môi trường đầu tư sẽ tạo điều kiện thuận lợi cho MBS. Tuy nhiên, cần chú ý đến các yếu tố rủi ro như biến động thị trường và chính sách tiền tệ.",
+        "ai_updated_at": "2026-11-02 14:20:06",
+        "bctc": "Lợi nhuận ròng mới nhất của MBS đạt 315 tỷ VNĐ, mặc dù có sự sụt giảm YoY là -5.25%, nhưng vẫn cho thấy sức khỏe tài chính ổn định. ROE ở mức 13.1% phản ánh hiệu quả sử dụng vốn chủ sở hữu tốt, đồng thời EPS = 1,214 VNĐ cũng khá hấp dẫn, cho thấy khả năng sinh lời trên mỗi cổ phiếu."
     },
     "FTS": {
         "symbol": "FTS",
@@ -2744,11 +2750,12 @@
                 "roe_quarter": 3.87
             }
         ],
-        "outlook": "Với P/E = 16.98 và P/B = 1.53, FTS đang được định giá ở mức trung bình so với ngành. Biên an toàn không cao, nhưng cũng không quá đắt đỏ, đặc biệt khi xem xét tiềm năng phục hồi từ mức tăng trưởng âm hiện tại. Tuy nhiên, cần theo dõi chặt chẽ các yếu tố vĩ mô và nội bộ để đánh giá chính xác hơn.",
-        "ai_recommendation": "Theo dõi ngắn hạn, mua dài hạn",
-        "ai_price_zone": "Vùng gom: 17,000 - 17,500 VNĐ; Cắt lỗ: Dưới 16,500 VNĐ; Gia tăng tỷ trọng: Trên 18,500 VNĐ.",
-        "macro_view": "Ngành chứng khoán thường nhạy cảm với biến động thị trường và điều kiện kinh tế vĩ mô. Hiện tại, mặc dù FTS đang đối mặt với thách thức về tăng trưởng, nhưng nếu nền kinh tế phục hồi, thanh khoản thị trường cải thiện, triển vọng của FTS có thể sẽ tốt hơn. Cần chú ý đến các chính sách tài chính và xu hướng đầu tư của nhà đầu tư trong thời gian tới.",
-        "ai_updated_at": "2026-11-02 10:12:59"
+        "outlook": "Với P/E = 16.98 và P/B = 1.53, FTS đang được định giá ở mức trung bình so với ngành. Tuy nhiên, biên an toàn có thể bị ảnh hưởng bởi sự sụt giảm trong tăng trưởng lợi nhuận. Nếu tình hình kinh doanh không cải thiện, khả năng điều chỉnh giá xuống có thể xảy ra.",
+        "ai_recommendation": "Theo dõi chặt chẽ, chờ cơ hội",
+        "ai_price_zone": "Vùng gom: 17,000 - 17,500 VNĐ; Cắt lỗ: Dưới 16,500 VNĐ; Gia tăng tỷ trọng: Trên 18,500 VNĐ",
+        "macro_view": "Ngành chứng khoán đang chịu áp lực từ môi trường vĩ mô bất ổn, đặc biệt là lãi suất ngân hàng cao và biến động thị trường. Tuy nhiên, nếu nền kinh tế phục hồi, nhu cầu đầu tư sẽ tăng lên, tạo cơ hội cho các công ty chứng khoán như FTS. Cần theo dõi sát sao các chính sách tiền tệ và kinh tế vĩ mô để đánh giá triển vọng dài hạn.",
+        "ai_updated_at": "2026-11-02 14:20:56",
+        "bctc": "Lợi nhuận ròng mới nhất của FTS đạt 36 tỷ VNĐ, tuy nhiên tốc độ tăng trưởng YoY giảm 34.99%, cho thấy sự suy giảm đáng kể trong hiệu quả kinh doanh. ROE ở mức 9.1% phản ánh hiệu quả sử dụng vốn chủ sở hữu trung bình, nhưng vẫn thấp hơn so với kỳ vọng ngành. EPS là 1,054 VNĐ, tương ứng với mức P/E hiện tại, cho thấy giá cổ phiếu đang được định giá hợp lý dựa trên lợi nhuận."
     },
     "BSI": {
         "symbol": "BSI",
@@ -3244,11 +3251,12 @@
                 "roe_quarter": 6.56
             }
         ],
-        "outlook": "Tỷ số P/E = 5.23 và P/B = 1.8 cho thấy VHM đang được định giá khá thấp so với tiềm năng tăng trưởng và giá trị tài sản thực tế. Điều này tạo ra biên an toàn đáng kể, đặc biệt khi so sánh với các doanh nghiệp cùng ngành. Tuy nhiên, cần theo dõi sát sao biến động thị trường để đảm bảo tính bền vững của định giá hiện tại.",
-        "ai_recommendation": "Tích lũy dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 58,000 - 60,000 VNĐ; Cắt lỗ: Dưới 55,000 VNĐ; Gia tăng tỷ trọng: Trên 65,000 VNĐ. Chiến lược này giúp tối ưu hóa lợi nhuận và giảm thiểu rủi ro trong bối cảnh thị trường hiện nay.",
-        "macro_view": "Ngành bất động sản Việt Nam đang trải qua giai đoạn phục hồi mạnh mẽ sau đại dịch, với nhu cầu nhà ở và đầu tư tăng cao. Chính sách hỗ trợ từ chính phủ, như giảm lãi suất và thúc đẩy phát triển hạ tầng, cũng góp phần thúc đẩy tăng trưởng. Trong bối cảnh này, VHM với lợi nhuận và tăng trưởng ấn tượng có cơ hội lớn để tiếp tục mở rộng và duy trì vị thế hàng đầu.",
-        "ai_updated_at": "2026-11-02 10:11:09"
+        "outlook": "Tỷ số P/E = 5.23 và P/B = 1.8 cho thấy VHM đang được định giá khá hấp dẫn so với ngành bất động sản. Biên an toàn này cung cấp cơ hội tốt cho các nhà đầu tư tìm kiếm giá trị dài hạn, đặc biệt khi kết hợp với triển vọng tăng trưởng mạnh mẽ của công ty.",
+        "ai_recommendation": "Tích lũy dài hạn",
+        "ai_price_zone": "Vùng gom: 58,000 - 60,000 VNĐ; Cắt lỗ: dưới 55,000 VNĐ; Gia tăng tỷ trọng: trên 65,000 VNĐ.",
+        "macro_view": "Ngành bất động sản Việt Nam đang trải qua giai đoạn phục hồi sau đại dịch, với nhu cầu nhà ở và đầu tư tăng mạnh. Chính sách hỗ trợ từ chính phủ và hạ tầng ngày càng phát triển tạo điều kiện thuận lợi cho VHM tiếp tục mở rộng và duy trì tốc độ tăng trưởng. Tuy nhiên, cần theo dõi chặt chẽ các rủi ro vĩ mô như lãi suất và biến động thị trường.",
+        "ai_updated_at": "2026-11-02 14:16:27",
+        "bctc": "Với lợi nhuận mới nhất đạt 23,021 tỷ VNĐ và tăng trưởng YoY lên đến 419.0%, VHM đang thể hiện sức mạnh vượt trội trong khả năng sinh lời. ROE ở mức 36.6% cho thấy hiệu quả sử dụng vốn chủ sở hữu rất cao, đồng thời EPS đạt 12,038 VNĐ, phản ánh sự ổn định và tiềm năng tăng trưởng của doanh nghiệp."
     },
     "VIC": {
         "symbol": "VIC",
@@ -3369,11 +3377,12 @@
                 "roe_quarter": 0.78
             }
         ],
-        "outlook": "Với P/E ở mức 43.18 và P/B là 9.61, VIC đang được định giá cao so với mặt bằng chung của thị trường. Điều này có thể phản ánh kỳ vọng về tăng trưởng mạnh mẽ trong tương lai. Tuy nhiên, biên an toàn có thể bị hạn chế do định giá cao, đòi hỏi nhà đầu tư cần cân nhắc kỹ lưỡng.",
-        "ai_recommendation": "Tích sản dài hạn",
-        "ai_price_zone": "Vùng gom: 230,000 - 240,000 VNĐ; Cắt lỗ: Dưới 220,000 VNĐ; Gia tăng tỷ trọng: Trên 250,000 VNĐ.",
-        "macro_view": "Ngành bất động sản đang trải qua giai đoạn phục hồi sau những khó khăn do đại dịch. Chính sách hỗ trợ từ chính phủ và nhu cầu nhà ở tăng cao tạo điều kiện thuận lợi cho VIC. Tuy nhiên, rủi ro từ biến động lãi suất và chính sách vĩ mô vẫn cần được theo dõi chặt chẽ.",
-        "ai_updated_at": "2026-11-02 10:11:17"
+        "outlook": "Với P/E là 43.18 và P/B là 9.61, VIC được định giá khá cao so với mặt bằng chung của ngành bất động sản. Tuy nhiên, điều này có thể phản ánh kỳ vọng về tăng trưởng mạnh mẽ trong tương lai. Biên an toàn cần được cân nhắc kỹ lưỡng, đặc biệt là trong bối cảnh thị trường bất động sản có thể gặp phải rủi ro từ các yếu tố vĩ mô.",
+        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
+        "ai_price_zone": "Vùng gom: 220,000 - 240,000 VNĐ; Cắt lỗ: Dưới 200,000 VNĐ; Gia tăng tỷ trọng: Trên 260,000 VNĐ.",
+        "macro_view": "Thị trường bất động sản Việt Nam đang trải qua giai đoạn phục hồi sau đại dịch, với nhu cầu nhà ở và đầu tư tăng cao. Chính sách hỗ trợ từ chính phủ cũng tạo điều kiện thuận lợi cho sự phát triển của ngành. Tuy nhiên, cần chú ý đến các rủi ro như lãi suất ngân hàng và quy định pháp lý có thể ảnh hưởng đến hoạt động kinh doanh của VIC.",
+        "ai_updated_at": "2026-11-02 14:16:54",
+        "bctc": "Công ty VIC đang thể hiện sức khỏe tài chính mạnh mẽ với lợi nhuận mới nhất đạt 22,760 tỷ VNĐ, tăng trưởng YoY lên đến 652.31%, cho thấy sự phục hồi và tăng trưởng đột biến. ROE ở mức 24.0% phản ánh hiệu quả sử dụng vốn chủ sở hữu cao, trong khi EPS là 5,581 VNĐ, tương đương với mức sinh lời hấp dẫn cho cổ đông."
     },
     "VRE": {
         "symbol": "VRE",
@@ -5244,11 +5253,12 @@
                 "roe_quarter": 2.55
             }
         ],
-        "outlook": "Với P/E = 8.09, PHR đang được định giá thấp hơn so với trung bình ngành, cho thấy tiềm năng tăng giá. P/B = 1.62 cũng ở mức hợp lý, phản ánh giá trị tài sản ròng của công ty. Biên an toàn này tạo điều kiện thuận lợi cho nhà đầu tư mua vào ở mức giá hiện tại.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 27,000 - 28,500 VNĐ; Cắt lỗ: Dưới 26,000 VNĐ; Gia tăng tỷ trọng: Trên 29,500 VNĐ.",
-        "macro_view": "Ngành bất động sản đang trải qua giai đoạn phục hồi sau thời kỳ suy thoái do đại dịch. Chính sách hỗ trợ từ chính phủ và nhu cầu nhà ở tăng cao sẽ thúc đẩy tăng trưởng. PHR với lợi nhuận và tăng trưởng mạnh mẽ có thể tận dụng cơ hội này để mở rộng thị trường và nâng cao giá trị cổ đông.",
-        "ai_updated_at": "2026-11-02 10:11:29"
+        "outlook": "Với P/E chỉ ở mức 8.09, PHR được định giá khá hấp dẫn so với tiềm năng tăng trưởng của mình. P/B 1.62 cũng cho thấy giá trị tài sản ròng vẫn còn ở mức hợp lý. Biên an toàn này cung cấp cơ hội đầu tư tốt, đặc biệt khi kết hợp với triển vọng tăng trưởng mạnh mẽ.",
+        "ai_recommendation": "Tích lũy dài hạn giá hấp dẫn",
+        "ai_price_zone": "Vùng gom: 27,000 - 28,000 VNĐ; Cắt lỗ: Dưới 26,000 VNĐ; Gia tăng tỷ trọng: Trên 29,500 VNĐ",
+        "macro_view": "Ngành bất động sản Việt Nam đang trải qua giai đoạn phục hồi sau đại dịch, với nhu cầu nhà ở và đầu tư tăng cao. Chính sách hỗ trợ từ chính phủ và cải thiện môi trường kinh doanh sẽ tiếp tục thúc đẩy tăng trưởng. Công ty PHR, với vị thế vững chắc và tăng trưởng mạnh, có thể tận dụng tối đa các cơ hội này để duy trì đà phát triển.",
+        "ai_updated_at": "2026-11-02 14:17:19",
+        "bctc": "Công ty PHR đang thể hiện sức khỏe tài chính mạnh mẽ với lợi nhuận mới nhất đạt 370 tỷ VNĐ, tăng trưởng YoY lên đến 291.09%, cho thấy sự phục hồi và tăng trưởng đột biến. Hiệu quả sử dụng vốn chủ sở hữu (ROE) đạt 21.4%, phản ánh khả năng sinh lời tốt. Mức EPS 6,901 VNĐ cũng là một dấu hiệu tích cực, cho thấy công ty đang tạo ra giá trị đáng kể cho cổ đông."
     },
     "HPG": {
         "symbol": "HPG",
@@ -7369,11 +7379,12 @@
                 "roe_quarter": -0.15
             }
         ],
-        "outlook": "Với P/E chỉ ở mức 6.94, BSR đang được định giá thấp hơn nhiều so với thị trường, tạo ra biên an toàn đáng kể. P/B ở mức 1.66 cũng cho thấy giá trị hợp lý, không quá đắt đỏ. Điều này mở ra cơ hội hấp dẫn cho nhà đầu tư mua vào ở mức giá hiện tại, đặc biệt khi kết hợp với triển vọng tăng trưởng tốt.",
-        "ai_recommendation": "Tích sản dài hạn giá hấp dẫn",
+        "outlook": "Với P/E chỉ ở mức 6.94, BSR được định giá khá thấp so với tiềm năng tăng trưởng, cho thấy biên an toàn tốt. Tỷ lệ P/B = 1.66 cũng cho thấy giá cổ phiếu vẫn còn hấp dẫn so với giá trị sổ sách, tạo cơ hội đầu tư hấp dẫn cho nhà đầu tư dài hạn. Tổng điểm 80/100 cũng khẳng định vị thế vững chắc của BSR trong ngành sản xuất tiêu dùng.",
+        "ai_recommendation": "Tích lũy dài hạn giá hấp dẫn",
         "ai_price_zone": "Vùng gom: 25,000 - 27,000 VNĐ; Cắt lỗ: Dưới 24,000 VNĐ; Gia tăng tỷ trọng: Trên 28,000 VNĐ",
-        "macro_view": "Ngành sản xuất tiêu dùng đang chứng kiến sự phục hồi mạnh mẽ sau đại dịch, với nhu cầu trong nước tăng cao. BSR, với vị thế vững chắc trong ngành, có thể tận dụng xu hướng này để duy trì và mở rộng quy mô kinh doanh. Triển vọng vĩ mô ổn định, cùng với chính sách hỗ trợ từ Chính phủ, sẽ tiếp tục thúc đẩy tăng trưởng của ngành và doanh nghiệp.",
-        "ai_updated_at": "2026-11-02 09:58:05"
+        "macro_view": "Ngành sản xuất tiêu dùng đang có triển vọng tích cực nhờ vào nhu cầu nội địa ổn định và xu hướng tiêu dùng ngày càng tăng. Trong bối cảnh kinh tế vĩ mô Việt Nam tiếp tục phục hồi, BSR có nhiều cơ hội để mở rộng thị phần và nâng cao hiệu quả hoạt động. Đồng thời, các chính sách hỗ trợ từ Chính phủ cũng sẽ góp phần thúc đẩy sự phát triển bền vững của ngành.",
+        "ai_updated_at": "2026-11-02 14:14:23",
+        "bctc": "Công ty BSR đang thể hiện sức khỏe tài chính mạnh mẽ với lợi nhuận mới nhất đạt 8,969 tỷ VNĐ, tăng trưởng YoY lên đến 887.13%, cho thấy sự phục hồi nhanh chóng và hiệu quả sau giai đoạn khó khăn. Hiệu suất ROE đạt 40.5% phản ánh khả năng sinh lời vượt trội so với vốn chủ sở hữu, đồng thời EPS ở mức 5,583 VNĐ cũng là một dấu hiệu tích cực về thu nhập trên mỗi cổ phiếu, cho thấy công ty đang tạo ra giá trị đáng kể cho cổ đông."
     },
     "POW": {
         "symbol": "POW",
@@ -7869,11 +7880,12 @@
                 "roe_quarter": 1.78
             }
         ],
-        "outlook": "Với P/E = 4.44 và P/B = 1.26, NT2 được định giá khá hấp dẫn so với mặt bằng chung của ngành. Chỉ số P/E thấp cho thấy thị trường chưa đánh giá đầy đủ tiềm năng tăng trưởng của công ty, trong khi P/B dưới 2 cho thấy tài sản ròng vẫn còn được định giá hợp lý. Biên an toàn này cung cấp cơ hội đầu tư tốt cho các nhà đầu tư dài hạn.",
-        "ai_recommendation": "Tích lũy dài hạn giá hấp dẫn",
-        "ai_price_zone": "Vùng gom: 20,000 - 22,000 VNĐ; Cắt lỗ: Dưới 19,000 VNĐ; Gia tăng tỷ trọng: Trên 23,000 VNĐ. Chiến lược này giúp tối ưu hóa lợi nhuận và giảm thiểu rủi ro.",
-        "macro_view": "Ngành sản xuất tiêu dùng đang có triển vọng tích cực nhờ vào nhu cầu nội địa ổn định và xu hướng tiêu dùng ngày càng tăng. NT2, với vị thế vững chắc, sẽ tiếp tục hưởng lợi từ những yếu tố vĩ mô này. Tuy nhiên, cần theo dõi sát sao các biến động về chính sách kinh tế và cạnh tranh để đảm bảo chiến lược đầu tư phù hợp.",
-        "ai_updated_at": "2026-11-02 10:10:12"
+        "outlook": "Với P/E chỉ 4.44, NT2 được đánh giá là một cổ phiếu có mức định giá hấp dẫn, thấp hơn nhiều so với mặt bằng chung của ngành. P/B 1.26 cũng cho thấy giá trị tài sản ròng của công ty đang được thị trường định giá ở mức hợp lý. Biên an toàn này cung cấp cơ hội đầu tư tốt cho nhà đầu tư dài hạn.",
+        "ai_recommendation": "Tích lũy giá hấp dẫn",
+        "ai_price_zone": "Vùng gom: 20,000 - 22,000 VNĐ; Cắt lỗ: Dưới 19,000 VNĐ; Gia tăng tỷ trọng: Trên 23,000 VNĐ.",
+        "macro_view": "Ngành sản xuất tiêu dùng đang phục hồi mạnh mẽ sau giai đoạn khó khăn, nhờ vào nhu cầu tiêu dùng nội địa tăng lên và chính sách hỗ trợ từ Chính phủ. NT2, với vị thế hàng đầu trong ngành, sẽ tiếp tục hưởng lợi từ xu hướng này. Tăng trưởng kinh tế vĩ mô tích cực và sự ổn định của thị trường tài chính cũng tạo điều kiện thuận lợi cho sự phát triển bền vững của NT2.",
+        "ai_updated_at": "2026-11-02 14:16:01",
+        "bctc": "NT2 đang thể hiện sức khỏe lợi nhuận mạnh mẽ với lợi nhuận mới nhất đạt 419 tỷ VNĐ, tăng trưởng YoY ấn tượng 95.4%. Hiệu quả ROE cao 29.4% cho thấy khả năng sinh lời vượt trội so với vốn chủ sở hữu. Mức EPS 5,068 VNĐ phản ánh sự ổn định và tăng trưởng trong thu nhập trên mỗi cổ phiếu, góp phần tạo nền tảng vững chắc cho giá trị doanh nghiệp."
     },
     "GMD": {
         "symbol": "GMD",
