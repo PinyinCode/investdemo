@@ -42,7 +42,7 @@ def analyze_stock_with_ai(item, sector):
     symbol = item.get('symbol')
     sector_guideline = get_sector_specific_guideline(sector)
 
-    # Lấy toàn bộ chỉ số sạch từ screener_results.json
+    # Lấy toàn bộ chỉ số chuẩn từ screener_results.json
     close_price = item.get('close_price', 0)
     pe = item.get('pe', 0)
     pb = item.get('pb', 0)
@@ -69,7 +69,7 @@ def analyze_stock_with_ai(item, sector):
     {sector_guideline}
 
     YÊU CẦU TRẢ VỀ JSON THUẦN TÚY (TUYỆT ĐỐI KHÔNG DÙNG ```json):
-    1. "bctc": Phân tích sâu sát về sức khỏe lợi nhuận, tốc độ tăng trưởng YoY và hiệu quả ROE (5-7 câu).
+    1. "bctc": Phân tích sâu sát về sức khỏe lợi nhuận, tốc độ tăng trưởng YoY, hiệu quả ROE và đánh giá mức EPS = {eps:,.0f} VNĐ (5-7 câu).
     2. "outlook": Đánh giá triển vọng định giá (P/E, P/B) và biên an toàn (4-6 câu).
     3. "recommendation": Khuyến nghị hành động sắc bén (Ngắn gọn 3-6 từ, ví dụ: "Tích sản dài hạn giá hấp dẫn").
     4. "price_zone": Vạch rõ chiến lược giá chi tiết (vùng gom, cắt lỗ, gia tăng tỷ trọng).
@@ -113,7 +113,7 @@ def main():
     with open(SCREENER_FILE, "r", encoding="utf-8") as f:
         screener_data = json.load(f)
 
-    # 1. Gom nhóm ngành và LỌC RA TOP 3 MÃ CÓ TỔNG ĐIỂM CAO NHẤT MỖI NGÀNH
+    # 1. Gom nhóm ngành
     industry_groups = {}
     for item in screener_data:
         symbol = item.get('symbol')
@@ -127,19 +127,35 @@ def main():
 
     top_symbols_to_analyze = {}
     for sector, items in industry_groups.items():
-        items_sorted = sorted(items, key=lambda x: (x.get('total_score', 0), x.get('roe', 0)), reverse=True)
-        top_3 = items_sorted[:3] # Lấy chính xác Top 3 mỗi ngành
-        for itm in top_3:
+        # Sắp xếp ưu tiên tuyệt đối theo chất lượng cơ bản: Điểm cơ bản -> ROE -> Lợi nhuận -> Tổng điểm
+        items_sorted = sorted(
+            items, 
+            key=lambda x: (
+                x.get('fundamental_score', 0), 
+                x.get('roe', 0), 
+                x.get('net_profit_latest', 0),
+                x.get('total_score', 0)
+            ), 
+            reverse=True
+        )
+        
+        # PHÂN BỔ SỐ LƯỢNG LẤY PHÂN TÍCH AI:
+        # - Ngân hàng lấy Top 5
+        # - Các ngành khác lấy Top 3
+        limit_count = 5 if sector == "NGAN_HANG" else 3
+        selected_items = items_sorted[:limit_count]
+        
+        for itm in selected_items:
             top_symbols_to_analyze[itm['symbol']] = sector
-        print(f"📌 Nhóm ngành [{sector}] - Top 3 phân tích AI: {[i['symbol'] for i in top_3]}")
+        print(f"📌 Nhóm ngành [{sector}] - Lấy Top {limit_count} cơ bản tốt nhất phân tích AI: {[i['symbol'] for i in selected_items]}")
 
-    # Đọc data.json hiện tại để ghi đè kết quả phân tích AI vào
+    # Đọc file data.json hiện tại để ghi ngược thông tin AI vào
     stock_db = {}
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, "r", encoding="utf-8") as f:
             stock_db = json.load(f)
 
-    print(f"\n🤖 Bắt đầu chạy phân tích CHỈ CHO CÁC MÃ TOP 3 từ screener_results.json...")
+    print(f"\n🤖 Bắt đầu chạy phân tích chuyên sâu cho danh sách đã chọn từ screener_results.json...")
     count = 0
     
     for item in screener_data:
@@ -147,7 +163,7 @@ def main():
         if item.get('close_price', 0) <= 0:
             continue
             
-        # Chỉ gọi AI nếu mã nằm trong Top 3
+        # Chỉ gọi AI nếu mã nằm trong danh sách được chọn (Top 5 Ngân hàng hoặc Top 3 các ngành khác)
         if symbol in top_symbols_to_analyze:
             sector = top_symbols_to_analyze[symbol]
             
@@ -185,7 +201,7 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI cho {count} mã Top đầu và ghi ngược vào {DATA_FILE}.")
+    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI cho {count} mã thuộc danh sách ưu tiên và ghi ngược vào {DATA_FILE}.")
 
 if __name__ == "__main__":
     main()
