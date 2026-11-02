@@ -885,18 +885,13 @@
                 priceScaleId: 'volumeScale',
             });
 
-            // Tùy chỉnh tỷ lệ khung nhìn: Nếu bật RSI thì dồn nến và volume lên trên, nhường khoảng trống bên dưới cho RSI
+            // Tùy chỉnh phân chia tỷ lệ không gian biểu đồ
             if (hasRSI) {
                 chartInstance.priceScale('right').applyOptions({
                     scaleMargins: { top: 0.1, bottom: 0.35 },
                 });
                 chartInstance.priceScale('volumeScale').applyOptions({
                     scaleMargins: { top: 0.7, bottom: 0.25 },
-                });
-                
-                // Cấu hình thang đo riêng cho RSI từ 0 đến 100 ở cửa sổ phía dưới
-                chartInstance.priceScale('rsiScale').applyOptions({
-                    scaleMargins: { top: 0.8, bottom: 0.02 },
                 });
             } else {
                 chartInstance.priceScale('right').applyOptions({
@@ -943,10 +938,20 @@
                     volMaSeries.setData(calculateVolumeMA(chartData, 20));
                 }
 
+                // CHỈ BÁO RSI HIỂN THỊ TRÊN PANE 1 ĐỘC LẬP
                 if (hasRSI) {
                     const rsiSeries = chartInstance.addLineSeries({
-                        color: '#a855f7', lineWidth: 1.5, title: 'RSI(14)', priceScaleId: 'rsiScale'
+                        color: '#a855f7', 
+                        lineWidth: 1.5, 
+                        title: 'RSI(14)', 
+                        priceScaleId: 'rsiScale',
+                        pane: 1 // Tạo pane riêng biệt bên dưới
                     });
+
+                    chartInstance.priceScale('rsiScale').applyOptions({
+                        scaleMargins: { top: 0.1, bottom: 0.1 },
+                    });
+
                     rsiSeries.setData(calculateRSI(chartData, 14));
                 }
 
