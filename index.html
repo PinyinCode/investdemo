@@ -214,12 +214,16 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-filter text-xs md:text-sm"></i>
                     </span>
+                    <!-- CẬP NHẬT ĐỦ 7 NHÓM NGÀNH -->
                     <select id="sector-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500 appearance-none transition truncate">
                         <option value="ALL">Tất cả ngành</option>
-                        <option value="NGAN_HANG">Ngân hàng (NH)</option>
-                        <option value="CHUNG_KHOAN">Chứng khoán (CK)</option>
-                        <option value="BAT_DONG_SAN">Bất động sản (BĐS)</option>
-                        <option value="SAN_XUAT_TIEU_DUNG">Sản xuất & Tiêu dùng</option>
+                        <option value="NGAN_HANG">Ngân hàng</option>
+                        <option value="CHUNG_KHOAN">Chứng khoán</option>
+                        <option value="BAT_DONG_SAN">Bất động sản</option>
+                        <option value="CONG_NGHE_BAN_LE">Công nghệ & Bán lẻ</option>
+                        <option value="DIEN_NUOC_HA_TANG">Điện, Nước & Hạ tầng</option>
+                        <option value="NGUYEN_VAT_LIEU_CHU_KY">Vật liệu & Chu kỳ</option>
+                        <option value="SAN_XUAT_TIEU_DUNG_PHONG_THU">Sản xuất & Tiêu dùng</option>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-slate-400 pointer-events-none">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -230,12 +234,12 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-trophy text-xs md:text-sm"></i>
                     </span>
+                    <!-- CHỈ GIỮ LẠI 3 TÙY CHỌN SẮP XẾP: TỔNG HỢP, CƠ BẢN, KỸ THUẬT -->
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
                         <option value="NONE">Mặc định (A-Z)</option>
                         <option value="ALL_SCORE">🏆 Sắp xếp Tổng hợp</option>
                         <option value="FUNDAMENTAL">💰 Sắp xếp Cơ bản</option>
                         <option value="TECHNICAL">📈 Sắp xếp Kỹ thuật</option>
-                        <option value="BUY_ZONE">🎯 Đang về vùng giá mua</option>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-amber-400 pointer-events-none">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -268,12 +272,13 @@
                 </button>
             </div>
             
+            <!-- ĐẶT MẶC ĐỊNH TAB BCTC / CƠ BẢN LÊN ĐẦU -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
-                <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition">
-                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI Chiến Lược
+                <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
+                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Tra Cứu BCTC & Cơ Bản
                 </button>
-                <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
-                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Tra Cứu BCTC Chi Tiết
+                <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI Chiến Lược
                 </button>
             </div>
 
@@ -287,7 +292,8 @@
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
-                <div id="tab-content-eval" class="space-y-4">
+                <!-- TAB ĐÁNH GIÁ AI CHIẾN LƯỢC (ĐỂ ẨN MẶC ĐỊNH BAN ĐẦU) -->
+                <div id="tab-content-eval" class="space-y-4 hidden">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
                         <p id="modal-ai-rec" class="text-lg font-black text-white mb-2"></p>
@@ -311,7 +317,8 @@
                     </div>
                 </div>
 
-                <div id="tab-content-bctc" class="space-y-4 hidden">
+                <!-- TAB BCTC & CƠ BẢN (HIỆN MẶC ĐỊNH BAN ĐẦU) -->
+                <div id="tab-content-bctc" class="space-y-4">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-table mr-1.5"></i> Kết quả Kinh doanh Theo Quý</h4>
@@ -419,8 +426,6 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Kiểm tra trạng thái đăng nhập
-                // Kiểm tra trạng thái đăng nhập
         auth.onAuthStateChanged(async (user) => {
             const authOverlay = document.getElementById('auth-overlay');
             const expiredModal = document.getElementById('expired-modal');
@@ -436,7 +441,7 @@
                     let userData = {};
                     if (!doc.exists) {
                         const expireDate = new Date();
-                        expireDate.setDate(expireDate.getDate() + 7); // Trial 7 ngày
+                        expireDate.setDate(expireDate.getDate() + 7);
                         userData = {
                             email: user.email,
                             role: 'user',
@@ -448,17 +453,15 @@
                     }
 
                     const now = new Date();
-const expireTime = parseDate(userData.expiresAt);
+                    const expireTime = parseDate(userData.expiresAt);
 
-// Nếu có hạn dùng, đã quá hạn và không phải admin thì hiện bảng hết hạn
-if (expireTime && now > expireTime && userData.role !== 'admin') {
-    expiredModal.classList.remove('hidden');
-    document.getElementById('user-uid-text').innerText = user.uid;
-    return;
-} else {
-    expiredModal.classList.add('hidden');
-}
-
+                    if (expireTime && now > expireTime && userData.role !== 'admin') {
+                        expiredModal.classList.remove('hidden');
+                        document.getElementById('user-uid-text').innerText = user.uid;
+                        return;
+                    } else {
+                        expiredModal.classList.add('hidden');
+                    }
 
                     if (userData.role === 'admin') {
                         const adminBtn = document.getElementById('btn-admin-panel');
@@ -471,7 +474,6 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
                     console.warn("⚠️ Lỗi kiểm tra Firestore, tiếp tục tải ứng dụng:", err);
                 }
 
-                // TẢI DỮ LIỆU SAU KHI XÁC THỰC THÀNH CÔNG
                 loadData(true);
 
             } else {
@@ -479,17 +481,15 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
                 expiredModal.classList.add('hidden');
             }
         });
-        function parseDate(val) {
-    if (!val) return null;
-    // Nếu là Firestore Timestamp object có hàm toDate()
-    if (typeof val.toDate === 'function') {
-        return val.toDate();
-    }
-    // Nếu là chuỗi hoặc số
-    const d = new Date(val);
-    return isNaN(d.getTime()) ? null : d;
-}
 
+        function parseDate(val) {
+            if (!val) return null;
+            if (typeof val.toDate === 'function') {
+                return val.toDate();
+            }
+            const d = new Date(val);
+            return isNaN(d.getTime()) ? null : d;
+        }
 
         function switchAuthTab(tab) {
             const loginForm = document.getElementById('login-form');
@@ -555,126 +555,84 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
         }
 
         async function openAccountModal() {
-    const user = auth.currentUser;
-    if (!user) return;
+            const user = auth.currentUser;
+            if (!user) return;
 
-    document.getElementById('account-modal').classList.remove('hidden');
-    document.getElementById('acc-modal-email').innerText = user.email || '--';
-    document.getElementById('acc-modal-uid').innerText = user.uid;
-    document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
-    document.getElementById('acc-modal-role').innerText = 'Đang tải...';
+            document.getElementById('account-modal').classList.remove('hidden');
+            document.getElementById('acc-modal-email').innerText = user.email || '--';
+            document.getElementById('acc-modal-uid').innerText = user.uid;
+            document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
+            document.getElementById('acc-modal-role').innerText = 'Đang tải...';
 
-    try {
-        const emailKey = user.email.toLowerCase();
-        const doc = await db.collection('allowed_users').doc(emailKey).get();
-        
-        if (doc.exists) {
-            const data = doc.data();
-            document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
-            
-            const expDate = parseDate(data.expiresAt);
-            document.getElementById('acc-modal-expire').innerText = expDate ? expDate.toLocaleDateString('vi-VN') : 'Vô thời hạn';
-        } else {
-            document.getElementById('acc-modal-role').innerText = 'USER';
-            document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập';
+            try {
+                const emailKey = user.email.toLowerCase();
+                const doc = await db.collection('allowed_users').doc(emailKey).get();
+                
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
+                    
+                    const expDate = parseDate(data.expiresAt);
+                    document.getElementById('acc-modal-expire').innerText = expDate ? expDate.toLocaleDateString('vi-VN') : 'Vô thời hạn';
+                } else {
+                    document.getElementById('acc-modal-role').innerText = 'USER';
+                    document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập';
+                }
+            } catch (err) {
+                console.error("Lỗi lấy thông tin:", err);
+                document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
+            }
         }
-    } catch (err) {
-        console.error("Lỗi lấy thông tin:", err);
-        document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
-    }
-}
-
 
         function closeAccountModal() {
             document.getElementById('account-modal').classList.add('hidden');
         }
 
-                async function openAdminModal() {
-    const adminModal = document.getElementById('admin-modal');
-    if (adminModal) {
-        adminModal.classList.remove('hidden');
-    }
-    
-    const listEl = document.getElementById('admin-users-list');
-    if (listEl) {
-        listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
-    }
-
-    try {
-        const snapshot = await db.collection('allowed_users').get();
-        if (listEl) {
-            listEl.innerHTML = '';
-            if (snapshot.empty) {
-                listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
-                return;
+        async function openAdminModal() {
+            const adminModal = document.getElementById('admin-modal');
+            if (adminModal) {
+                adminModal.classList.remove('hidden');
             }
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const emailId = doc.id;
-                
-                // Xử lý ngày hết hạn an toàn
-                const expDate = parseDate(data.expiresAt);
-                const dateStr = expDate ? expDate.toLocaleDateString('vi-VN') : '—';
+            
+            const listEl = document.getElementById('admin-users-list');
+            if (listEl) {
+                listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
+            }
 
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-800/50 transition";
-                tr.innerHTML = `
-                    <td class="p-3 font-semibold text-white">${data.email || emailId}</td>
-                    <td class="p-3 text-slate-300">${dateStr}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
-                `;
-                listEl.appendChild(tr);
-            });
-        }
-    } catch (err) {
-        console.error("Lỗi Admin Panel:", err);
-        if (listEl) {
-            listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
-        }
-    }
-}
-
-
-        async function extendUserTrial(emailKey) {
             try {
-                const userDocRef = db.collection('allowed_users').doc(emailKey);
-                const doc = await userDocRef.get();
-                if (doc.exists) {
-                    const currentExpire = doc.data().expiresAt ? new Date(doc.data().expiresAt) : new Date();
-                    const now = new Date();
-                    let baseDate = currentExpire > now ? currentExpire : now;
-                    baseDate.setDate(baseDate.getDate() + 30);
+                const snapshot = await db.collection('allowed_users').get();
+                if (listEl) {
+                    listEl.innerHTML = '';
+                    if (snapshot.empty) {
+                        listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
+                        return;
+                    }
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        const emailId = doc.id;
+                        const expDate = parseDate(data.expiresAt);
+                        const dateStr = expDate ? expDate.toLocaleDateString('vi-VN') : '—';
 
-                    await userDocRef.update({ expiresAt: baseDate.toISOString() });
-                    alert("Đã gia hạn thành công thêm 30 ngày!");
-                    openAdminModal();
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-slate-800/50 transition";
+                        tr.innerHTML = `
+                            <td class="p-3 font-semibold text-white">${data.email || emailId}</td>
+                            <td class="p-3 text-slate-300">${dateStr}</td>
+                            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                        `;
+                        listEl.appendChild(tr);
+                    });
                 }
             } catch (err) {
-                alert("Lỗi gia hạn: " + err.message);
+                console.error("Lỗi Admin Panel:", err);
+                if (listEl) {
+                    listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
+                }
             }
         }
 
         function closeAdminModal() {
             document.getElementById('admin-modal').classList.add('hidden');
-        }
-
-        async function extendUserTrial(uid) {
-            try {
-                const userDocRef = db.collection('users').doc(uid);
-                const doc = await userDocRef.get();
-                if (doc.exists) {
-                    const currentExpire = doc.data().expiresAt ? new Date(doc.data().expiresAt) : new Date();
-                    const now = new Date();
-                    let baseDate = currentExpire > now ? currentExpire : now;
-                    baseDate.setDate(baseDate.getDate() + 30);
-
-                    await userDocRef.update({ expiresAt: baseDate.toISOString() });
-                    alert("Đã gia hạn thành công thêm 30 ngày!");
-                    openAdminModal();
-                }
-            } catch (err) {
-                alert("Lỗi gia hạn: " + err.message);
-            }
         }
 
         // --- 2. LOGIC GỐC SCREENER & BIỂU ĐỒ ---
@@ -689,14 +647,23 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
         let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
 
         const SECTOR_MAPPING = {
-            "NGAN_HANG": ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB", "SSB", "LPB", "MSB", "OCB", "EIB"],
+            "NGAN_HANG": ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB", "SSB", "LPB", "MSB", "OCB", "EIB", "VCB"],
             "CHUNG_KHOAN": ["SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"],
-            "BAT_DONG_SAN": ["VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR"],
-            "SAN_XUAT_TIEU_DUNG": ["HPG", "HSG", "NKG", "CTD", "VCG", "HHV", "FPT", "MWG", "PNJ", "FRT", "VNM", "MSN", "SAB", "GAS", "PVD", "PVS", "BSR", "POW", "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "VJC", "HVN", "VHC", "ANV"]
+            "BAT_DONG_SAN": ["VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR", "SJS", "VPI"],
+            "CONG_NGHE_BAN_LE": ["FPT", "MWG", "PNJ", "FRT", "DGW"],
+            "DIEN_NUOC_HA_TANG": ["POW", "REE", "PC1", "NT2", "GAS", "GEG", "BWE", "TDM"],
+            "NGUYEN_VAT_LIEU_CHU_KY": ["HPG", "HSG", "NKG", "DGC", "DCM", "DPM", "GVR", "PHR", "DHC"],
+            "SAN_XUAT_TIEU_DUNG_PHONG_THU": ["VNM", "MSN", "SAB", "VHC", "ANV", "BVH", "PLX", "PVD", "PVS", "BSR", "GMD", "HAH", "PVT", "VJC", "HVN", "APH", "ASM", "DBC", "KDC", "MSH", "PAN", "SBT", "DRC", "CSM", "BMP", "DHG", "CTD", "VCG", "HHV", "GEX"]
         };
         const SECTOR_NAMES = { 
-            "NGAN_HANG": "Ngân hàng", "CHUNG_KHOAN": "Chứng khoán", 
-            "BAT_DONG_SAN": "Bất động sản", "SAN_XUAT_TIEU_DUNG": "Sản xuất & Tiêu dùng", "KHAC": "Khác" 
+            "NGAN_HANG": "Ngân hàng", 
+            "CHUNG_KHOAN": "Chứng khoán", 
+            "BAT_DONG_SAN": "Bất động sản", 
+            "CONG_NGHE_BAN_LE": "Công nghệ & Bán lẻ",
+            "DIEN_NUOC_HA_TANG": "Điện, Nước & Hạ tầng",
+            "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ",
+            "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
+            "KHAC": "Khác" 
         };
 
         function formatNumber(num) {
@@ -760,10 +727,6 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
             }
         }
 
-        function isinBuyZone(item) {
-            return item.potential_zone && item.potential_zone.includes("VÙNG MUA");
-        }
-
         function renderCards() {
             const container = document.getElementById('stock-container');
             if (!container) return;
@@ -775,13 +738,12 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
             let filtered = screenerResults.filter(item => {
                 let matchSearch = item.symbol.includes(searchTerm);
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
-                let matchBuyZone = rankingMode === "BUY_ZONE" ? isinBuyZone(item) : true;
-                return matchSearch && matchSector && matchBuyZone;
+                return matchSearch && matchSector;
             });
 
             if (rankingMode === "FUNDAMENTAL") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
-            else if (rankingMode === "ALL_SCORE" || rankingMode === "BUY_ZONE") filtered.sort((a, b) => b.total_score - a.total_score);
+            else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
 
             if (filtered.length === 0) {
@@ -963,7 +925,9 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
-            switchAiTab('eval');
+            // ĐẶT MẶC ĐỊNH MỞ TAB BCTC & CƠ BẢN KHI BẬT MODAL
+            switchAiTab('bctc');
+
             document.getElementById('modal-symbol').innerText = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
@@ -975,11 +939,10 @@ if (expireTime && now > expireTime && userData.role !== 'admin') {
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
             let priceZoneText = item.ai_price_zone;
-if (typeof priceZoneText === 'object' && priceZoneText !== null) {
-    // Nếu AI trả về dạng object, tự động trích xuất các trường phổ biến hoặc chuyển về chuỗi JSON đẹp
-    priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
-}
-document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
+            if (typeof priceZoneText === 'object' && priceZoneText !== null) {
+                priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
+            }
+            document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
             document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
