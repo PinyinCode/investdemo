@@ -1,10 +1,15 @@
 name: 2. Run AI Deep Analysis
 
 on:
-  # Có thể đặt lịch chạy sau Workflow 1 (ví dụ: 02:00 sáng thứ Sáu)
   schedule:
     - cron: '30 18 * * 5'
-  workflow_dispatch: # Cho phép bấm chạy thủ công độc lập bất cứ lúc nào
+  workflow_dispatch:
+    inputs:
+      symbols:
+        description: 'Nhập mã cổ phiếu cần phân tích (cách nhau bằng dấu phẩy, để trống nếu muốn chạy tự động theo Top ngành)'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   ai-analysis:
@@ -26,9 +31,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Run AI Deep Analysis (Top 3 mỗi ngành)
+      - name: Run AI Deep Analysis
         env:
           ALIBABA_API_KEY: ${{ secrets.ALIBABA_API_KEY }}
+          INPUT_SYMBOLS: ${{ inputs.symbols }}
           PYTHONUNBUFFERED: 1
         run: python analyze_ai.py
 
@@ -37,4 +43,4 @@ jobs:
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "action@github.com"
           git add data.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 [AI Analysis] Cập nhật phân tích chuyên sâu Top 3 [$(date +'%Y-%m-%d')]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 [AI Analysis] Cập nhật phân tích thủ công cho các mã: ${{ inputs.symbols || 'Top ngành tự động' }} [$(date +'%Y-%m-%d')]" && git push)
