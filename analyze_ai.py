@@ -4,8 +4,8 @@ import requests
 import re
 import json
 
+SCREENER_FILE = "screener_results.json"
 DATA_FILE = "data.json"
-BCTC_DIR = "bctc_data"  # Thư mục chứa file JSON BCTC chi tiết
 
 ALIBABA_API_KEY = os.getenv("ALIBABA_API_KEY", "").strip()
 API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
@@ -22,91 +22,60 @@ def get_sector(symbol):
     for sector, symbols in SECTOR_MAPPING.items():
         if symbol in symbols:
             return sector
-    return "SAN_XUAT_TIEU_DUNG" # Mặc định
-
-def load_bctc_summary(symbol):
-    file_path = os.path.join(BCTC_DIR, f"{symbol}.json")
-    if not os.path.exists(file_path):
-        return "Không có dữ liệu BCTC chi tiết."
-    
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            bctc_raw = json.load(f)
-            
-        summary_info = []
-        if 'income_statement' in bctc_raw:
-            inc_data = bctc_raw['income_statement']
-            if isinstance(inc_data, list) and len(inc_data) > 0:
-                summary_info.append("--- KẾT QUẢ KINH DOANH 4 QUÝ GẦN NHẤT ---")
-                for item in inc_data[:4]:
-                    period = item.get('period', 'N/A')
-                    rev = item.get('revenue', item.get('netRevenue', 0))
-                    profit = item.get('profitAfterTax', item.get('netProfit', 0))
-                    summary_info.append(f"Kỳ {period}: Doanh thu/Thu nhập lãi thuần = {rev:,.0f}, Lợi nhuận sau thuế = {profit:,.0f}")
-
-        if 'balance_sheet' in bctc_raw:
-            bal_data = bctc_raw['balance_sheet']
-            if isinstance(bal_data, list) and len(bal_data) > 0:
-                summary_info.append("--- CÂN ĐỐI KẾ TOÁN QUÝ MỚI NHẤT (CHỈ TIÊU CỐT LÕI) ---")
-                latest = bal_data[0]
-                for k, v in list(latest.items())[:15]:
-                    summary_info.append(f"- {k}: {v}")
-
-        return "\n".join(summary_info) if summary_info else "Dữ liệu BCTC trống."
-    except Exception as e:
-        return f"Lỗi đọc file BCTC: {e}"
+    return "SAN_XUAT_TIEU_DUNG"
 
 def get_sector_specific_guideline(sector):
-    """Định nghĩa tiêu chí bóc tách chuyên biệt riêng cho từng nhóm ngành"""
     if sector == "NGAN_HANG":
-        return """
-        * ĐẶC THÙ NGÀNH NGÂN HÀNG: Tập trung phân tích tốc độ tăng trưởng tín dụng, biên lãi ròng (NIM), chất lượng tài sản (tỷ lệ nợ xấu NPL, tỷ lệ bao phủ nợ xấu LLR), và tỷ lệ vốn ngắn hạn cho vay trung dài hạn. Đánh giá xem chi phí dự phòng rủi ro tín dụng có đang ăn mòn lợi nhuận hay không.
-        """
+        return "* ĐẶC THÙ NGÀNH NGÂN HÀNG: Tập trung phân tích tốc độ tăng trưởng tín dụng, hiệu quả sinh lời ROE và biên định giá P/B, P/E."
     elif sector == "CHUNG_KHOAN":
-        return """
-        * ĐẶC THÙ NGÀNH CHỨNG KHOÁN: Tập trung phân tích quy mô cho vay Margin (dư nợ cho vay giao dịch ký quỹ), hiệu quả danh mục đầu tư tự doanh (FVTPL), và thị phần môi giới. Đánh giá độ nhạy của doanh thu trước biến động thanh khoản thị trường chung.
-        """
+        return "* ĐẶC THÙ NGÀNH CHỨNG KHOÁN: Tập trung phân tích lợi nhuận ròng, tốc độ tăng trưởng YoY và độ nhạy thanh khoản thị trường."
     elif sector == "BAT_DONG_SAN":
-        return """
-        * ĐẶC THÙ NGÀNH BẤT ĐỘNG SẢN & HẠ TẦNG: Tập trung phân tích khoản "Người mua trả tiền trước" / "Doanh thu chưa thực hiện" (tiền khách hàng đặt cọc dự án), quy mô hàng tồn kho (dự án dở dang), áp lực nợ vay trái phiếu và khả năng tất toán nợ.
-        """
+        return "* ĐẶC THÙ NGÀNH BẤT ĐỘNG SẢN: Tập trung phân tích điểm rơi lợi nhuận (`net_profit_latest`), tăng trưởng YoY đột biến và định giá."
     else:
-        return """
-        * ĐẶC THÙ NGÀNH SẢN XUẤT / BÁN LẺ / NĂNG LƯỢNG: Tập trung phân tích biên lợi nhuận gộp, vòng quay hàng tồn kho (rủi ro trích lập dự phòng giá vốn), đòn bẩy tài chính (tỷ lệ Nợ vay/Vốn chủ sở hữu) và dòng tiền thuần từ hoạt động kinh doanh (CFO) có thực sự dương và đều đặn không.
-        """
+        return "* ĐẶC THÙ NGÀNH SẢN XUẤT/BÁN LẺ: Tập trung phân tích quy mô lợi nhuận, hiệu quả ROE và tốc độ phục hồi lợi nhuận kinh doanh."
 
-def analyze_stock_with_ai(symbol, data, sector):
+def analyze_stock_with_ai(item, sector):
     if not ALIBABA_API_KEY:
         print(f"❌ LỖI: Biến môi trường ALIBABA_API_KEY đang trống!")
         return None
 
-    bctc_text = load_bctc_summary(symbol)
+    symbol = item.get('symbol')
     sector_guideline = get_sector_specific_guideline(sector)
 
+    # Lấy toàn bộ chỉ số sạch từ screener_results.json
+    close_price = item.get('close_price', 0)
+    pe = item.get('pe', 0)
+    pb = item.get('pb', 0)
+    roe = item.get('roe', 0)
+    eps = item.get('eps', 0)
+    net_profit = item.get('net_profit_latest', 0)
+    growth_yoy = item.get('profit_growth_yoy', 0)
+    total_score = item.get('total_score', 0)
+    tech_status = item.get('technical_status', 'Tích lũy')
+
     prompt = f"""
-    Bạn là một Chuyên gia Phân tích Tài chính Cấp cao kiêm Quản lý Quỹ Đầu tư (Portfolio Manager) xuất sắc. 
-    Hãy thực hiện một bản **đánh giá phân tích chiến lược chuyên sâu theo đúng ĐẶC THÙ NGÀNH ({sector})**, kết hợp chặt chẽ giữa chỉ số định lượng và số liệu BCTC của mã cổ phiếu: {symbol}.
+    Bạn là một Chuyên gia Phân tích Tài chính Cấp cao kiêm Quản lý Quỹ Đầu tư xuất sắc. 
+    Hãy thực hiện một bản **đánh giá phân tích chuyên sâu theo ĐẶC THÙ NGÀNH ({sector})**, dựa trực tiếp trên các chỉ số tài chính định lượng của mã: {symbol}.
 
-    --- 1. CÁC CHỈ SỐ ĐỊNH LƯỢNG & THỊ TRƯỜNG ---
-    - Ngành: {sector} | Giá: {data.get('close', 0):,.0f} VNĐ | Khối lượng: {data.get('volume', 0):,}
-    - Định giá: P/E = {data.get('pe', 0)} | P/B = {data.get('pb', 0)}
-    - Hiệu quả sinh lời: EPS = {data.get('eps', 0):,} VNĐ | ROE = {data.get('roe', 0)}% | ROA = {data.get('roa', 0)}% | Cổ tức = {data.get('dividend_yield', 0)}%
-    - Trạng thái kỹ thuật: {data.get('recommendation', 'Chưa xác định')} | Vùng giá thô: {data.get('price_zone', 'Chưa có')}
-
-    --- 2. DỮ LIỆU BÁO CÁO TÀI CHÍNH (BCTC) THỰC TẾ ---
-    {bctc_text}
-    -----------------------------------------------------------------
+    --- DỮ LIỆU TÀI CHÍNH TỪ HỆ THỐNG SCREENER ---
+    - Mã CK: {symbol} | Ngành: {sector} | Tổng điểm: {total_score}/100
+    - Giá đóng cửa: {close_price:,.0f} VNĐ
+    - Chỉ số định giá: P/E = {pe} | P/B = {pb}
+    - Khả năng sinh lời: ROE = {roe}% | EPS = {eps:,.0f} VNĐ
+    - Lợi nhuận mới nhất: {net_profit:,.0f} Tỷ VNĐ | Tăng trưởng lợi nhuận YoY = {growth_yoy}%
+    - Trạng thái kỹ thuật: {tech_status}
+    --------------------------------------------------------------
 
     {sector_guideline}
 
-    YÊU CẦU TRẢ VỀ BẢN PHÂN TÍCH CHI TIẾT (Dạng JSON thuần túy, TUYỆT ĐỐI KHÔNG dùng định dạng markdown như ```json):
-    1. "bctc": **Phân tích sâu sát theo đặc thù ngành (Từ 5-7 câu):** Đánh giá các chỉ số cốt lõi riêng của ngành ({sector}) trích xuất từ BCTC quý gần nhất.
-    2. "outlook": **Đánh giá triển vọng định giá và biên an toàn (Từ 4-6 câu):** Phân tích P/E, P/B có hợp lý so với triển vọng ngành không.
-    3. "recommendation": **Khuyến nghị hành động sắc bén (Ngắn gọn từ 3-6 từ):** Ví dụ: "Tích sản dài hạn giá hấp dẫn", "Định giá cao - Chờ chiết khấu".
-    4. "price_zone": **Vạch rõ chiến lược giá chi tiết:** Vùng giá gom hợp lý, mốc cắt lỗ hoặc gia tăng tỷ trọng.
-    5. "macro_view": **Phân tích vĩ mô & triển vọng ngành (Từ 5-7 câu):** Đan xen bức tranh vĩ mô với năng lực cạnh tranh thực tế của doanh nghiệp.
+    YÊU CẦU TRẢ VỀ JSON THUẦN TÚY (TUYỆT ĐỐI KHÔNG DÙNG ```json):
+    1. "bctc": Phân tích sâu sát về sức khỏe lợi nhuận, tốc độ tăng trưởng YoY và hiệu quả ROE (5-7 câu).
+    2. "outlook": Đánh giá triển vọng định giá (P/E, P/B) và biên an toàn (4-6 câu).
+    3. "recommendation": Khuyến nghị hành động sắc bén (Ngắn gọn 3-6 từ, ví dụ: "Tích sản dài hạn giá hấp dẫn").
+    4. "price_zone": Vạch rõ chiến lược giá chi tiết (vùng gom, cắt lỗ, gia tăng tỷ trọng).
+    5. "macro_view": Phân tích vĩ mô & triển vọng ngành liên hệ với số liệu doanh nghiệp (5-7 câu).
 
-    BẮT BUỘC TRẢ VỀ ĐỐI TƯỢNG JSON THUẦN TÚY với các khóa chính xác: "bctc", "outlook", "recommendation", "price_zone", "macro_view".
+    BẮT BUỘC KHÓA JSON: "bctc", "outlook", "recommendation", "price_zone", "macro_view".
     """
 
     headers = {
@@ -130,79 +99,93 @@ def analyze_stock_with_ai(symbol, data, sector):
             content = re.sub(r"\s*```$", "", content)
             return json.loads(content)
         else:
-            print(f"[{symbol}] Lỗi HTTP {response.status_code}: {response.text}")
+            print(f"[{symbol}] Lỗi HTTP {response.status_code}")
     except Exception as e:
-        print(f"[{symbol}] Lỗi phân tích từ AI: {e}")
+        print(f"[{symbol}] Lỗi AI: {e}")
     
     return None
 
 def main():
-    if not os.path.exists(DATA_FILE):
-        print("❌ Không tìm thấy file data.json!")
+    if not os.path.exists(SCREENER_FILE):
+        print(f"❌ Không tìm thấy file {SCREENER_FILE}!")
         return
 
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        stock_db = json.load(f)
+    with open(SCREENER_FILE, "r", encoding="utf-8") as f:
+        screener_data = json.load(f)
 
-    # 1. Gom nhóm ngành và chọn ra Top 3 mã xuất sắc nhất mỗi nhóm ngành
+    # 1. Gom nhóm ngành và LỌC RA TOP 3 MÃ CÓ TỔNG ĐIỂM CAO NHẤT MỖI NGÀNH
     industry_groups = {}
-    for symbol, data in stock_db.items():
-        if data.get('close', 0) <= 0:
+    for item in screener_data:
+        symbol = item.get('symbol')
+        if item.get('close_price', 0) <= 0:
             continue
         sector = get_sector(symbol)
+        item['sector'] = sector
         if sector not in industry_groups:
             industry_groups[sector] = []
-        industry_groups[sector].append((symbol, data))
+        industry_groups[sector].append(item)
 
-    top_symbols_to_analyze = {} # Lưu kèm sector để truyền vào prompt
+    top_symbols_to_analyze = {}
     for sector, items in industry_groups.items():
-        items_sorted = sorted(items, key=lambda x: (x[1].get('total_score', 0), x[1].get('roe', 0)), reverse=True)
-        top_3 = items_sorted[:3] # Lấy Top 3 đầu bảng mỗi ngành
-        for sym, _ in top_3:
-            top_symbols_to_analyze[sym] = sector
-        print(f"📌 Nhóm ngành [{sector}] - Top 3 phân tích theo tiêu chí chuyên biệt: {[s[0] for s in top_3]}")
+        items_sorted = sorted(items, key=lambda x: (x.get('total_score', 0), x.get('roe', 0)), reverse=True)
+        top_3 = items_sorted[:3] # Lấy chính xác Top 3 mỗi ngành
+        for itm in top_3:
+            top_symbols_to_analyze[itm['symbol']] = sector
+        print(f"📌 Nhóm ngành [{sector}] - Top 3 phân tích AI: {[i['symbol'] for i in top_3]}")
 
-    print(f"\n🤖 Bắt đầu chạy phân tích theo tiêu chí riêng biệt cho từng nhóm ngành (Top 3 mỗi ngành)...")
+    # Đọc data.json hiện tại để ghi đè kết quả phân tích AI vào
+    stock_db = {}
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            stock_db = json.load(f)
+
+    print(f"\n🤖 Bắt đầu chạy phân tích CHỈ CHO CÁC MÃ TOP 3 từ screener_results.json...")
     count = 0
     
-    for symbol, data in stock_db.items():
-        if data.get('close', 0) <= 0:
+    for item in screener_data:
+        symbol = item.get('symbol')
+        if item.get('close_price', 0) <= 0:
             continue
             
-        # Chỉ gọi AI nếu mã nằm trong Top 3 của ngành
+        # Chỉ gọi AI nếu mã nằm trong Top 3
         if symbol in top_symbols_to_analyze:
             sector = top_symbols_to_analyze[symbol]
-            updated_at = data.get("updated_at", "")
-            ai_updated_at = data.get("ai_updated_at", "")
             
-            if not data.get("ai_recommendation") or updated_at > ai_updated_at:
-                print(f"🔍 [{sector}] Đang phân tích chuyên sâu mã: {symbol}...")
-                ai_result = analyze_stock_with_ai(symbol, data, sector)
+            if symbol not in stock_db:
+                stock_db[symbol] = {}
+                
+            data_entry = stock_db[symbol]
+            updated_at = data_entry.get("updated_at", "")
+            ai_updated_at = data_entry.get("ai_updated_at", "")
+            
+            if not data_entry.get("ai_recommendation") or updated_at > ai_updated_at:
+                print(f"🔍 [{sector}] Đang phân tích AI mã: {symbol}...")
+                ai_result = analyze_stock_with_ai(item, sector)
                 
                 if ai_result:
-                    data["bctc"] = ai_result.get("bctc", "")
-                    data["outlook"] = ai_result.get("outlook", "")
-                    data["ai_recommendation"] = ai_result.get("recommendation", "")
-                    data["ai_price_zone"] = ai_result.get("price_zone", "")
-                    data["macro_view"] = ai_result.get("macro_view", "")
-                    data["ai_updated_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+                    # Ghi ngược kết quả phân tích AI vào data.json
+                    data_entry["bctc"] = ai_result.get("bctc", "")
+                    data_entry["outlook"] = ai_result.get("outlook", "")
+                    data_entry["ai_recommendation"] = ai_result.get("recommendation", "")
+                    data_entry["ai_price_zone"] = ai_result.get("price_zone", "")
+                    data_entry["macro_view"] = ai_result.get("macro_view", "")
+                    data_entry["ai_updated_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
                     count += 1
-                    print(f"  -> ✅ Phân tích thành công cho {symbol}")
+                    print(f"  -> ✅ Ghi ngược thành công vào data.json cho {symbol}")
                 else:
                     print(f"  -> ❌ Lỗi gọi AI cho {symbol}")
                 
                 time.sleep(1.5)
             else:
-                print(f"💤 Bỏ qua {symbol} (Nhận định AI đã là mới nhất).")
+                print(f"💤 Bỏ qua {symbol} (Đã có phân tích AI mới nhất).")
         else:
-            # Các mã ngoài Top 3 giữ nguyên vẹn dữ liệu cũ, không tốn token
             pass
 
-    # Lưu lại file data.json
+    # Lưu lại file data.json sau khi đã cập nhật
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích theo tiêu chí đặc thù ngành cho {count} mã Top đầu.")
+    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI cho {count} mã Top đầu và ghi ngược vào {DATA_FILE}.")
 
 if __name__ == "__main__":
     main()
