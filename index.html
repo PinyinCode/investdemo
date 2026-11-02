@@ -129,9 +129,8 @@
                            <th class="p-3">Quyền</th>
                           </tr>
                          </thead>
-
                         <tbody id="admin-users-list" class="divide-y divide-slate-800">
-                            <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
+                            <tr><td colspan="3" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -214,7 +213,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-filter text-xs md:text-sm"></i>
                     </span>
-                    <!-- CẬP NHẬT ĐỦ 7 NHÓM NGÀNH -->
+                    <!-- ĐỦ 7 NHÓM NGÀNH -->
                     <select id="sector-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500 appearance-none transition truncate">
                         <option value="ALL">Tất cả ngành</option>
                         <option value="NGAN_HANG">Ngân hàng</option>
@@ -234,7 +233,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-trophy text-xs md:text-sm"></i>
                     </span>
-                    <!-- CHỈ GIỮ LẠI 3 TÙY CHỌN SẮP XẾP: TỔNG HỢP, CƠ BẢN, KỸ THUẬT -->
+                    <!-- 3 TÙY CHỌN SẮP XẾP -->
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
                         <option value="NONE">Mặc định (A-Z)</option>
                         <option value="ALL_SCORE">🏆 Sắp xếp Tổng hợp</option>
@@ -272,7 +271,7 @@
                 </button>
             </div>
             
-            <!-- ĐẶT MẶC ĐỊNH TAB BCTC / CƠ BẢN LÊN ĐẦU -->
+            <!-- MẶC ĐỊNH MỞ TAB BCTC & CƠ BẢN -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
                     <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Tra Cứu BCTC & Cơ Bản
@@ -292,7 +291,7 @@
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
-                <!-- TAB ĐÁNH GIÁ AI CHIẾN LƯỢC (ĐỂ ẨN MẶC ĐỊNH BAN ĐẦU) -->
+                <!-- TAB ĐÁNH GIÁ AI -->
                 <div id="tab-content-eval" class="space-y-4 hidden">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
@@ -317,7 +316,7 @@
                     </div>
                 </div>
 
-                <!-- TAB BCTC & CƠ BẢN (HIỆN MẶC ĐỊNH BAN ĐẦU) -->
+                <!-- TAB BCTC & CƠ BẢN (MẶC ĐỊNH MỞ) -->
                 <div id="tab-content-bctc" class="space-y-4">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
@@ -409,7 +408,6 @@
     </div>
 
     <script>
-        // --- 1. CẤU HÌNH FIREBASE & XÁC THỰC ---
         const firebaseConfig = {
             apiKey: "AIzaSyA8VlFQvE_om-51pxffgd7hd2Ud6hQm11k",
             authDomain: "hoc-tieng-trung-64b8d.firebaseapp.com",
@@ -432,7 +430,6 @@
 
             if (user) {
                 authOverlay.classList.add('hidden');
-                
                 try {
                     const emailKey = user.email.toLowerCase();
                     const userDocRef = db.collection('allowed_users').doc(emailKey);
@@ -471,11 +468,9 @@
                         }
                     }
                 } catch (err) {
-                    console.warn("⚠️ Lỗi kiểm tra Firestore, tiếp tục tải ứng dụng:", err);
+                    console.warn("⚠️ Lỗi kiểm tra Firestore:", err);
                 }
-
                 loadData(true);
-
             } else {
                 authOverlay.classList.remove('hidden');
                 expiredModal.classList.add('hidden');
@@ -484,9 +479,7 @@
 
         function parseDate(val) {
             if (!val) return null;
-            if (typeof val.toDate === 'function') {
-                return val.toDate();
-            }
+            if (typeof val.toDate === 'function') return val.toDate();
             const d = new Date(val);
             return isNaN(d.getTime()) ? null : d;
         }
@@ -516,7 +509,6 @@
             const pass = document.getElementById('login-password').value;
             const errBox = document.getElementById('login-error');
             errBox.classList.add('hidden');
-
             try {
                 await auth.signInWithEmailAndPassword(email, pass);
             } catch (err) {
@@ -531,13 +523,11 @@
             const pass = document.getElementById('reg-password').value;
             const errBox = document.getElementById('register-error');
             errBox.classList.add('hidden');
-
             try {
                 const cred = await auth.createUserWithEmailAndPassword(email, pass);
                 const expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 7);
-
-                await db.collection('users').doc(cred.user.uid).set({
+                await db.collection('allowed_users').doc(email.toLowerCase()).set({
                     email: email,
                     role: 'user',
                     expiresAt: expireDate.toISOString()
@@ -557,7 +547,6 @@
         async function openAccountModal() {
             const user = auth.currentUser;
             if (!user) return;
-
             document.getElementById('account-modal').classList.remove('hidden');
             document.getElementById('acc-modal-email').innerText = user.email || '--';
             document.getElementById('acc-modal-uid').innerText = user.uid;
@@ -565,13 +554,10 @@
             document.getElementById('acc-modal-role').innerText = 'Đang tải...';
 
             try {
-                const emailKey = user.email.toLowerCase();
-                const doc = await db.collection('allowed_users').doc(emailKey).get();
-                
+                const doc = await db.collection('allowed_users').doc(user.email.toLowerCase()).get();
                 if (doc.exists) {
                     const data = doc.data();
                     document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
-                    
                     const expDate = parseDate(data.expiresAt);
                     document.getElementById('acc-modal-expire').innerText = expDate ? expDate.toLocaleDateString('vi-VN') : 'Vô thời hạn';
                 } else {
@@ -579,63 +565,43 @@
                     document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập';
                 }
             } catch (err) {
-                console.error("Lỗi lấy thông tin:", err);
                 document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
             }
         }
 
-        function closeAccountModal() {
-            document.getElementById('account-modal').classList.add('hidden');
-        }
+        function closeAccountModal() { document.getElementById('account-modal').classList.add('hidden'); }
 
         async function openAdminModal() {
-            const adminModal = document.getElementById('admin-modal');
-            if (adminModal) {
-                adminModal.classList.remove('hidden');
-            }
-            
+            document.getElementById('admin-modal').classList.remove('hidden');
             const listEl = document.getElementById('admin-users-list');
-            if (listEl) {
-                listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
-            }
+            listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
 
             try {
                 const snapshot = await db.collection('allowed_users').get();
-                if (listEl) {
-                    listEl.innerHTML = '';
-                    if (snapshot.empty) {
-                        listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
-                        return;
-                    }
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        const emailId = doc.id;
-                        const expDate = parseDate(data.expiresAt);
-                        const dateStr = expDate ? expDate.toLocaleDateString('vi-VN') : '—';
-
-                        const tr = document.createElement('tr');
-                        tr.className = "hover:bg-slate-800/50 transition";
-                        tr.innerHTML = `
-                            <td class="p-3 font-semibold text-white">${data.email || emailId}</td>
-                            <td class="p-3 text-slate-300">${dateStr}</td>
-                            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
-                        `;
-                        listEl.appendChild(tr);
-                    });
+                listEl.innerHTML = '';
+                if (snapshot.empty) {
+                    listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
+                    return;
                 }
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const expDate = parseDate(data.expiresAt);
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-800/50 transition";
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-white">${data.email || doc.id}</td>
+                        <td class="p-3 text-slate-300">${expDate ? expDate.toLocaleDateString('vi-VN') : '—'}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                    `;
+                    listEl.appendChild(tr);
+                });
             } catch (err) {
-                console.error("Lỗi Admin Panel:", err);
-                if (listEl) {
-                    listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
-                }
+                listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
             }
         }
 
-        function closeAdminModal() {
-            document.getElementById('admin-modal').classList.add('hidden');
-        }
+        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
 
-        // --- 2. LOGIC GỐC SCREENER & BIỂU ĐỒ ---
         let screenerResults = [];
         let currentSymbolHistory = null;
         let chartInstance = null;
@@ -643,18 +609,8 @@
         let volumeSeriesInstance = null;
         let currentSymbol = null;
         let currentInterval = 'D1';
-
         let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
 
-        const SECTOR_MAPPING = {
-            "NGAN_HANG": ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB", "SSB", "LPB", "MSB", "OCB", "EIB", "VCB"],
-            "CHUNG_KHOAN": ["SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"],
-            "BAT_DONG_SAN": ["VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR", "SJS", "VPI"],
-            "CONG_NGHE_BAN_LE": ["FPT", "MWG", "PNJ", "FRT", "DGW"],
-            "DIEN_NUOC_HA_TANG": ["POW", "REE", "PC1", "NT2", "GAS", "GEG", "BWE", "TDM"],
-            "NGUYEN_VAT_LIEU_CHU_KY": ["HPG", "HSG", "NKG", "DGC", "DCM", "DPM", "GVR", "PHR", "DHC"],
-            "SAN_XUAT_TIEU_DUNG_PHONG_THU": ["VNM", "MSN", "SAB", "VHC", "ANV", "BVH", "PLX", "PVD", "PVS", "BSR", "GMD", "HAH", "PVT", "VJC", "HVN", "APH", "ASM", "DBC", "KDC", "MSH", "PAN", "SBT", "DRC", "CSM", "BMP", "DHG", "CTD", "VCG", "HHV", "GEX"]
-        };
         const SECTOR_NAMES = { 
             "NGAN_HANG": "Ngân hàng", 
             "CHUNG_KHOAN": "Chứng khoán", 
@@ -688,9 +644,7 @@
                 try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
                     if (dataRes.ok) rawStockData = await dataRes.json();
-                } catch (e) {
-                    console.warn("Không tải được data.json phụ trợ:", e);
-                }
+                } catch (e) {}
 
                 screenerResults = screenerData.map(item => {
                     const sym = item.symbol;
@@ -711,16 +665,11 @@
                         ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at
                     };
                 });
-
                 renderCards();
             } catch (error) {
-                console.error(error);
                 const container = document.getElementById('stock-container');
                 if (container && showSpinner) {
-                    container.innerHTML = `
-                        <div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">
-                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa có file screener_results.json hoặc data.json!
-                        </div>`;
+                    container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
                 }
             } finally {
                 if (showSpinner && icon) icon.classList.remove('spinner');
@@ -780,10 +729,7 @@
                     if (rankingMode === "FUNDAMENTAL") { label = "Điểm Cơ bản"; valScore = item.fundamental_score; }
                     else if (rankingMode === "TECHNICAL") { label = "Điểm Kỹ thuật"; valScore = item.technical_score; }
 
-                    scoreHtml = `
-                    <div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">
-                        ${label}: <strong>${valScore}/100</strong>
-                    </div>`;
+                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${label}: <strong>${valScore}/100</strong></div>`;
                 }
 
                 const card = document.createElement('div');
@@ -852,14 +798,12 @@
             try {
                 const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
-                
                 const textData = await res.text();
                 let data = JSON.parse(textData.replace(/:\s*NaN/g, ': null'));
 
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
                     let metricNames = {}; 
-
                     data.income_statement.forEach(item => {
                         if (item && item.period && item.id) {
                             if (!groupedByPeriod[item.period]) groupedByPeriod[item.period] = {};
@@ -886,8 +830,6 @@
                         });
                         html += '</tbody></table>';
                         incomeContainer.innerHTML = html;
-                    } else {
-                        incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu kỳ báo cáo.</p>';
                     }
                 }
 
@@ -899,7 +841,6 @@
                             groupedBs[item.period][item.name] = item.value;
                         }
                     });
-
                     let periods = Object.keys(groupedBs).sort().reverse();
                     if (periods.length > 0) {
                         let latestPeriod = periods[0];
@@ -925,9 +866,7 @@
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
-            // ĐẶT MẶC ĐỊNH MỞ TAB BCTC & CƠ BẢN KHI BẬT MODAL
             switchAiTab('bctc');
-
             document.getElementById('modal-symbol').innerText = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
