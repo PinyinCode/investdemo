@@ -448,15 +448,17 @@
                     }
 
                     const now = new Date();
-                    const expireTime = new Date(userData.expiresAt);
-                    
-                    if (now > expireTime && userData.role !== 'admin') {
-                        expiredModal.classList.remove('hidden');
-                        document.getElementById('user-uid-text').innerText = user.uid;
-                        return;
-                    } else {
-                        expiredModal.classList.add('hidden');
-                    }
+const expireTime = parseDate(userData.expiresAt);
+
+// Nếu có hạn dùng, đã quá hạn và không phải admin thì hiện bảng hết hạn
+if (expireTime && now > expireTime && userData.role !== 'admin') {
+    expiredModal.classList.remove('hidden');
+    document.getElementById('user-uid-text').innerText = user.uid;
+    return;
+} else {
+    expiredModal.classList.add('hidden');
+}
+
 
                     if (userData.role === 'admin') {
                         const adminBtn = document.getElementById('btn-admin-panel');
@@ -477,6 +479,17 @@
                 expiredModal.classList.add('hidden');
             }
         });
+        function parseDate(val) {
+    if (!val) return null;
+    // Nếu là Firestore Timestamp object có hàm toDate()
+    if (typeof val.toDate === 'function') {
+        return val.toDate();
+    }
+    // Nếu là chuỗi hoặc số
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? null : d;
+}
+
 
         function switchAuthTab(tab) {
             const loginForm = document.getElementById('login-form');
@@ -552,17 +565,18 @@
     document.getElementById('acc-modal-role').innerText = 'Đang tải...';
 
     try {
-        // Truy vấn vào allowed_users theo email viết thường (khớp với rule function userEmail())
         const emailKey = user.email.toLowerCase();
         const doc = await db.collection('allowed_users').doc(emailKey).get();
         
         if (doc.exists) {
             const data = doc.data();
             document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
-            document.getElementById('acc-modal-expire').innerText = data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : 'Vô thời hạn';
+            
+            const expDate = parseDate(data.expiresAt);
+            document.getElementById('acc-modal-expire').innerText = expDate ? expDate.toLocaleDateString('vi-VN') : 'Vô thời hạn';
         } else {
-            document.getElementById('acc-modal-role').innerText = 'USER (Mới)';
-            document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập hạn';
+            document.getElementById('acc-modal-role').innerText = 'USER';
+            document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập';
         }
     } catch (err) {
         console.error("Lỗi lấy thông tin:", err);
@@ -576,47 +590,53 @@
         }
 
                 async function openAdminModal() {
-            const adminModal = document.getElementById('admin-modal');
-            if (adminModal) {
-                adminModal.classList.remove('hidden');
-            }
-            
-            const listEl = document.getElementById('admin-users-list');
-            if (listEl) {
-                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
-            }
+    const adminModal = document.getElementById('admin-modal');
+    if (adminModal) {
+        adminModal.classList.remove('hidden');
+    }
+    
+    const listEl = document.getElementById('admin-users-list');
+    if (listEl) {
+        listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
+    }
 
-            try {
-                const snapshot = await db.collection('allowed_users').get();
-                if (listEl) {
-                    listEl.innerHTML = '';
-                    if (snapshot.empty) {
-                        listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
-                        return;
-                    }
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        const emailId = doc.id;
-                        const tr = document.createElement('tr');
-                        tr.className = "hover:bg-slate-800/50 transition";
-                        tr.innerHTML = `
-                            <td class="p-3 font-semibold text-white">${data.email || emailId}</td>
-                            <td class="p-3 text-slate-300">${data.expiresAt ? new Date(data.expiresAt).toLocaleDateString('vi-VN') : '—'}</td>
-                            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
-                            <td class="p-3 text-right">
-                                <button type="button" onclick="extendUserTrial('${emailId}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
-                            </td>
-                        `;
-                        listEl.appendChild(tr);
-                    });
-                }
-            } catch (err) {
-                console.error("Lỗi Admin Panel:", err);
-                if (listEl) {
-                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
-                }
+    try {
+        const snapshot = await db.collection('allowed_users').get();
+        if (listEl) {
+            listEl.innerHTML = '';
+            if (snapshot.empty) {
+                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
+                return;
             }
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const emailId = doc.id;
+                
+                // Xử lý ngày hết hạn an toàn
+                const expDate = parseDate(data.expiresAt);
+                const dateStr = expDate ? expDate.toLocaleDateString('vi-VN') : '—';
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/50 transition";
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-white">${data.email || emailId}</td>
+                    <td class="p-3 text-slate-300">${dateStr}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                    <td class="p-3 text-right">
+                        <button type="button" onclick="extendUserTrial('${emailId}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-semibold transition">Gia hạn (+30 ngày)</button>
+                    </td>
+                `;
+                listEl.appendChild(tr);
+            });
         }
+    } catch (err) {
+        console.error("Lỗi Admin Panel:", err);
+        if (listEl) {
+            listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
+        }
+    }
+}
+
 
         async function extendUserTrial(emailKey) {
             try {
