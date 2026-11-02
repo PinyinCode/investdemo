@@ -66,7 +66,6 @@ def evaluate_stock(symbol, data):
     fund_notes = []
 
     if sector == "NGAN_HANG":
-        # Ngân hàng: Trọng tâm Tín dụng và ROE
         if credit_growth_yoy >= 12: 
             fundamental_score += 25; fund_notes.append("Tín dụng mạnh (>=12%)")
         elif credit_growth_yoy >= 8:
@@ -78,7 +77,6 @@ def evaluate_stock(symbol, data):
             fundamental_score += 15; fund_notes.append("ROE tốt (>=14%)")
 
     elif sector == "CHUNG_KHOAN":
-        # Chứng khoán: Trọng tâm Tăng trưởng lợi nhuận và ROE
         if profit_growth_yoy >= 20: 
             fundamental_score += 30; fund_notes.append("LN tăng trưởng mạnh (>=20%)")
         elif profit_growth_yoy >= 10:
@@ -90,7 +88,6 @@ def evaluate_stock(symbol, data):
             fundamental_score += 10; fund_notes.append("ROE ổn định")
 
     elif sector == "BAT_DONG_SAN":
-        # Bất động sản: Trọng tâm Duy trì quy mô lợi nhuận và Biên an toàn
         if profit_growth_yoy >= 10: 
             fundamental_score += 25; fund_notes.append("LN duy trì tăng trưởng")
         if roe >= 12: 
@@ -99,7 +96,6 @@ def evaluate_stock(symbol, data):
             fundamental_score += 10; fund_notes.append("Có lãi dương")
 
     elif sector == "CONG_NGHE_BAN_LE":
-        # Công nghệ & Bán lẻ: Trọng tâm tăng trưởng lõi và ROE cao
         if profit_growth_yoy >= 20: 
             fundamental_score += 30; fund_notes.append("Tăng trưởng lõi mạnh (>=20%)")
         elif profit_growth_yoy >= 10:
@@ -111,7 +107,6 @@ def evaluate_stock(symbol, data):
             fundamental_score += 10; fund_notes.append("ROE tốt")
 
     elif sector == "DIEN_NUOC_HA_TANG":
-        # Tiện ích công: Trọng tâm là Cổ tức tiền mặt đều đặn và sự ổn định
         if dividend_yield >= 6.0:
             fundamental_score += 30; fund_notes.append(f"Cổ tức hạ tầng hấp dẫn ({dividend_yield}%)")
         elif dividend_yield > 0:
@@ -123,7 +118,6 @@ def evaluate_stock(symbol, data):
             fundamental_score += 10
 
     elif sector == "NGUYEN_VAT_LIEU_CHU_KY":
-        # Vật liệu chu kỳ (Thép, Hóa chất...): Theo dõi tăng trưởng biên lợi nhuận và quy mô
         if profit_growth_yoy >= 15:
             fundamental_score += 30; fund_notes.append("Hưởng lợi chu kỳ / LN tăng mạnh")
         elif profit_growth_yoy >= 0:
@@ -135,7 +129,7 @@ def evaluate_stock(symbol, data):
             fundamental_score += 10
 
     else: 
-        # SẢN XUẤT & TIÊU DÙNG PHÒNG THỦ: Trọng tâm cổ tức + ROE + Ổn định
+        # SẢN XUẤT & TIÊU DÙNG PHÒNG THỦ
         if profit_growth_yoy >= 10: 
             fundamental_score += 20; fund_notes.append("LN tăng trưởng tốt")
         elif profit_growth_yoy >= 0:
@@ -200,7 +194,7 @@ def evaluate_stock(symbol, data):
     }
 
 def main():
-    print("🚀 Chạy bộ lọc định lượng chia chuẩn 7 nhóm ngành đặc thù...")
+    print("🚀 Chạy bộ lọc định lượng chia chuẩn 7 nhóm ngành - Tất cả lấy Top 5...")
     
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy file {DATA_FILE}")
@@ -226,7 +220,7 @@ def main():
     df = pd.DataFrame(results)
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
 
-    # In kết quả chi tiết từng nhóm ngành ra console
+    # Tất cả 7 nhóm ngành đều lấy Top 5 tiêu biểu nhất
     industry_groups = {}
     for item in results:
         sec = item['sector']
@@ -235,7 +229,7 @@ def main():
         industry_groups[sec].append(item)
 
     for sector, items in industry_groups.items():
-        limit_count = 5 if sector == "NGAN_HANG" else 3
+        limit_count = 5  # Đồng loạt lấy Top 5 cho mọi nhóm ngành
         top_items = items[:limit_count]
         
         print(f"\n📌 NHÓM NGÀNH: [{sector}] - TOP {limit_count} TIÊU BIỂU:")
