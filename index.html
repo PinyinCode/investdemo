@@ -262,7 +262,10 @@
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
                     
-                    <span id="modal-symbol" class="text-xl md:text-2xl font-black text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">--</span>
+                    <!-- Prop chọn mã / Nhập trực tiếp mã -->
+                    <div class="relative">
+                        <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-20 text-center text-lg md:text-xl font-black text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
+                    </div>
                     
                     <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
                         <i class="fa-solid fa-chevron-right text-xs"></i>
@@ -280,11 +283,11 @@
             
             <!-- TABS -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
-                <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
-                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> BCTC & Cơ Bản
-                </button>
-                <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
+                <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
                     <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI
+                </button>
+                <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> BCTC & Cơ Bản
                 </button>
                 <button type="button" onclick="switchAiTab('simulator')" id="tab-btn-simulator" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-calculator mr-1.5 text-emerald-400"></i> Giả Lập Tích Sản (DCA)
@@ -301,8 +304,8 @@
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
-                <!-- TAB ĐÁNH GIÁ AI -->
-                <div id="tab-content-eval" class="space-y-4 hidden">
+                <!-- TAB ĐÁNH GIÁ AI (MẶC ĐỊNH HIỂN THỊ) -->
+                <div id="tab-content-eval" class="space-y-4">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
                         <p id="modal-ai-rec" class="text-lg font-black text-white mb-2"></p>
@@ -326,7 +329,7 @@
                 </div>
 
                 <!-- TAB BCTC & CƠ BẢN -->
-                <div id="tab-content-bctc" class="space-y-4">
+                <div id="tab-content-bctc" class="space-y-4 hidden">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-table mr-1.5"></i> Kết quả Kinh doanh Theo Quý</h4>
@@ -874,7 +877,7 @@
                 const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 const textData = await res.text();
-                let data = JSON.parse(textData.replace(/:\s*NaN/g, ': null'));
+                let data = JSON.parse(textData.replace(/\s*NaN/g, ': null'));
 
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
                     let groupedByPeriod = {};
@@ -942,8 +945,10 @@
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
-            switchAiTab('bctc');
-            document.getElementById('modal-symbol').innerText = item.symbol;
+            // Mặc định hiển thị tab Đánh Giá AI khi mở modal
+            switchAiTab('eval');
+            
+            document.getElementById('modal-symbol-input').value = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
@@ -990,6 +995,17 @@
                 if (newIndex < 0) newIndex = symbols.length - 1;
                 if (newIndex >= symbols.length) newIndex = 0;
                 openModal(symbols[newIndex]);
+            }
+        }
+
+        function handleDirectSymbolInput(val) {
+            const cleanSymbol = val.trim().toUpperCase();
+            const found = screenerResults.find(s => s.symbol === cleanSymbol);
+            if (found) {
+                openModal(cleanSymbol);
+            } else {
+                alert("Không tìm thấy mã cổ phiếu: " + cleanSymbol);
+                document.getElementById('modal-symbol-input').value = currentSymbol;
             }
         }
 
