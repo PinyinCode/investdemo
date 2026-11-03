@@ -175,7 +175,7 @@ def parse_bctc_history(symbol):
     return bctc_records
 
 def auto_git_push():
-    """Tự động đồng bộ dữ liệu lên GitHub"""
+    """Tự động đồng bộ dữ liệu lên GitHub an toàn, tránh lỗi rejected"""
     try:
         print("📤 Đang tiến hành đồng bộ dữ liệu lên GitHub...")
         subprocess.run(["git", "add", DATA_FILE], check=True)
@@ -187,23 +187,25 @@ def auto_git_push():
             
         commit_msg = f"Auto update symbols data & BCTC - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        subprocess.run(["git", "push"], check=True)
+        
+        # Pull rebase trước khi push để tránh xung đột
+        subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=True)
+        subprocess.run(["git", "push", "origin", "main"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
     except subprocess.CalledProcessError:
-        print("⚠️ Git: Không có thay đổi mới để push hoặc đã được cập nhật.")
+        print("⚠️ Git: Đã cố gắng đồng bộ nhưng có thể cần kiểm tra xung đột thủ công nếu có.")
     except Exception as e:
         print(f"⚠️ Lỗi Git push: {e}")
 
 def main():
     print("==================================================")
-    print("       CHỌN CHẾ ĐỘ CÀO DỮ LIỆU LỊCH SỬ GIÁ       ")
+    print("        BƯỚC 1: CHỌN PHẠM VI MÃ CỔ PHIẾU        ")
     print("==================================================")
     print("1. Cào TOÀN BỘ danh sách VN100 (Mặc định)")
     print("2. Cào RIÊNG TỪNG MÃ (Tùy chọn mã cụ thể)")
     
-    mode_choice = input("Nhập lựa chọn chế độ (1/2, mặc định 1): ").strip()
-    
     target_symbols = VN100_SYMBOLS
+    mode_choice = input("Nhập lựa chọn chế độ (1/2, mặc định 1): ").strip()
     if mode_choice == '2':
         raw_input_symbols = input("Nhập mã cổ phiếu muốn cào (cách nhau bởi dấu phẩy, VD: PNJ,BID,ACB): ").strip()
         if raw_input_symbols:
@@ -211,9 +213,12 @@ def main():
             print(f"-> Đã chọn cào riêng các mã: {target_symbols}")
         else:
             print("⚠️ Không nhận được mã hợp lệ, tự động quay về cào toàn bộ VN100.")
-    
-    print("\n--------------------------------------------------")
-    print("CHỌN SỐ PHIÊN GIAO DỊCH GẦN NHẤT:")
+    else:
+        print("-> Đã chọn: Cào toàn bộ danh sách VN100.")
+
+    print("\n==================================================")
+    print("        BƯỚC 2: CHỌN SỐ PHIÊN GIAO DỊCH         ")
+    print("==================================================")
     print("1. Gần nhất: 30 phiên giao dịch gần nhất (Mặc định)")
     print("2. Dài hạn: 10 năm gần đây (~2500 phiên)")
     print("3. Tùy chỉnh: Nhập số phiên tự do (VD: 2, 5, 100 phiên)")
@@ -229,6 +234,7 @@ def main():
             custom_sessions = int(input("Nhập số phiên muốn cào (ví dụ: 2, 5, 100): ").strip())
             if custom_sessions > 0:
                 num_sessions = custom_sessions
+                print(f"-> Đã chọn cào tùy chỉnh: {num_sessions} phiên.")
         except ValueError:
             print("⚠️ Nhập sai định dạng, tự động quay về mặc định 30 phiên.")
     else:
@@ -249,7 +255,6 @@ def main():
 
     total = len(target_symbols)
     end_date = datetime.datetime.now().strftime("%Y-%m-%d")
-    # Lùi khoảng thời gian rộng rãi (nhân đôi số phiên + buffer năm) để đảm bảo gom đủ số phiên yêu cầu qua các ngày nghỉ lễ/cuối tuần
     approx_days = max(num_sessions * 2, 365)
     start_date = (datetime.datetime.now() - datetime.timedelta(days=approx_days)).strftime("%Y-%m-%d")
 
@@ -262,7 +267,6 @@ def main():
         try:
             df = fetch_history_with_fallback(symbol, start_date, end_date)
             if df is not None and not df.empty:
-                # 🚀 Cắt lấy chính xác số phiên giao dịch gần nhất theo yêu cầu
                 df = df.tail(num_sessions)
                 
                 closes = df['close'].tolist()
@@ -284,7 +288,6 @@ def main():
                         "volume": int(row.get('volume', 0))
                     })
                 
-                # --- LOGIC GỘP (MERGE) DỮ LIỆU ĐỂ GIỮ NGUYÊN LỊCH SỬ CŨ ---
                 history_file_path = os.path.join(HISTORY_DIR, f"{symbol}.json")
                 existing_history_d1 = []
                 
