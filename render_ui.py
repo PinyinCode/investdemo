@@ -1,4 +1,3 @@
-# render_ui.py
 import os
 import json
 from simulator import run_complex_backtest_simulation
@@ -291,7 +290,7 @@ def generate_html():
                 </button>
             </div>
             
-            <!-- TABS (Chỉ còn Đánh Giá AI và Giả Lập DCA) -->
+            <!-- TABS -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
                     <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá & Phân Tích AI
@@ -337,12 +336,21 @@ def generate_html():
 
                 <!-- TAB GIẢ LẬP TÍCH SẢN DCA RIÊNG CHO MÃ -->
                 <div id="tab-content-simulator" class="space-y-4 hidden">
-                    <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex items-center justify-between text-xs">
-                        <div>
-                            <span class="text-slate-400 block">Tỷ suất sinh lời lịch sử thực tế (CAGR) của mã này:</span>
+                    <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-xs space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Tỷ suất sinh lời lịch sử (CAGR 5 năm):</span>
                             <span id="sim-historical-rate-text" class="text-sm font-bold text-emerald-400">Đang tính toán...</span>
                         </div>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded font-semibold">Tự động hóa</span>
+                        <div class="border-t border-emerald-500/20 pt-2 grid grid-cols-2 gap-2 text-[11px]">
+                            <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
+                                <span class="text-slate-400 block">Quý đầu (Neo 5 năm trước):</span>
+                                <span id="sim-start-quarter-info" class="font-bold text-indigo-300">--</span>
+                            </div>
+                            <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
+                                <span class="text-slate-400 block">Quý cuối (Hiện tại):</span>
+                                <span id="sim-end-quarter-info" class="font-bold text-amber-300">--</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
@@ -420,6 +428,17 @@ def generate_html():
                         <button type="button" onclick="toggleIndicator('MA20')" id="btn-ind-ma20" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white transition">MA20</button>
                         <button type="button" onclick="toggleIndicator('MA50')" id="btn-ind-ma50" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">MA50</button>
                         <button type="button" onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">RSI</button>
+                    </div>
+
+                    <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
+                        <button type="button" onclick="toggleQuarterLines()" id="btn-ind-qlines" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện đường giá quý">Đường Quý</button>
+                        <button type="button" onclick="toggleQuarterZone()" id="btn-ind-qzone" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện hộp vùng giá quý">Vùng Quý</button>
+                    </div>
+
+                    <!-- 2 NÚT ĐIỀU HƯỚNG NHANH QUÝ ĐẦU & QUÝ CUỐI -->
+                    <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
+                        <button type="button" onclick="jumpToQuarter('start')" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-amber-600 text-white transition" title="Nhảy tới Quý đầu 5 năm trước">Quý Đầu</button>
+                        <button type="button" onclick="jumpToQuarter('end')" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Nhảy tới Quý cuối hiện tại">Quý Cuối</button>
                     </div>
 
                     <div class="flex items-center gap-2 pl-1 border-l border-slate-800/40 text-[10px]">
@@ -649,13 +668,14 @@ def generate_html():
 
         let screenerResults = [];
         let symbolSimRates = {};
+        let quarterlyMeanDetails = {};
         let currentSymbolHistory = null;
         let chartInstance = null;
         let candleSeriesInstance = null;
         let volumeSeriesInstance = null;
         let currentSymbol = null;
         let currentInterval = 'D1';
-        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
+        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
         let currentActiveTab = 'eval';
 
         const SECTOR_NAMES = { 
@@ -698,14 +718,16 @@ def generate_html():
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
             try {
-                const [screenerRes, ratesRes] = await Promise.all([
+                const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                     fetch('screener_results.json?t=' + new Date().getTime()),
-                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
+                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
+                    fetch('quarterly_mean_details.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
                 ]);
 
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
                 let screenerData = await screenerRes.json();
                 if (ratesRes.ok) symbolSimRates = await ratesRes.json();
+                if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
                 let rawStockData = {};
                 try {
@@ -890,6 +912,16 @@ def generate_html():
             } else {
                 document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
             }
+
+            const details = quarterlyMeanDetails[symbol];
+            if (details) {
+                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${details.start_price_mean.toLocaleString('vi-VN')} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${details.end_price_mean.toLocaleString('vi-VN')} đ`;
+            } else {
+                document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
+                document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
+            }
+
             document.getElementById('modal-sim-rate').value = histRate;
             document.getElementById('modal-sim-initial').value = "20.000.000";
             document.getElementById('modal-sim-monthly').value = "3.000.000";
@@ -1017,6 +1049,69 @@ def generate_html():
                     : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
             }
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function toggleQuarterLines() {
+            activeIndicators.QLINES = !activeIndicators.QLINES;
+            const btn = document.getElementById('btn-ind-qlines');
+            if (btn) {
+                btn.className = activeIndicators.QLINES
+                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition"
+                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function toggleQuarterZone() {
+            activeIndicators.QZONE = !activeIndicators.QZONE;
+            const btn = document.getElementById('btn-ind-qzone');
+            if (btn) {
+                btn.className = activeIndicators.QZONE
+                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition"
+                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function jumpToQuarter(type) {
+            const details = quarterlyMeanDetails[currentSymbol];
+            if (!details || !currentSymbolHistory) return;
+
+            let chartData = [];
+            if (currentInterval === 'D1') chartData = currentSymbolHistory.history_d1 || [];
+            else if (currentInterval === 'W1') chartData = currentSymbolHistory.history_w1 || [];
+            else if (currentInterval === 'MN') chartData = currentSymbolHistory.history_mn || [];
+
+            const quarterStr = (type === 'start') ? details.start_quarter : details.end_quarter;
+            if (!quarterStr) return;
+
+            const parts = quarterStr.split('Q');
+            const year = parseInt(parts[0]);
+            const q = parseInt(parts[1]);
+            const startMonth = (q - 1) * 3 + 1;
+            const endMonth = q * 3;
+
+            let indices = [];
+            chartData.forEach((bar, idx) => {
+                const barDate = new Date(bar.time);
+                if (barDate.getFullYear() === year && 
+                    (barDate.getMonth() + 1) >= startMonth && 
+                    (barDate.getMonth() + 1) <= endMonth) {
+                    indices.push(idx);
+                }
+            });
+
+            if (indices.length > 0 && chartInstance) {
+                const minIdx = indices[0];
+                const maxIdx = indices[indices.length - 1];
+                
+                const from = Math.max(0, minIdx - 10);
+                const to = Math.min(chartData.length - 1, maxIdx + 10);
+                
+                chartInstance.timeScale().setVisibleLogicalRange({ from, to });
+            } else {
+                alert(`Không tìm thấy dữ liệu thời gian cho ${quarterStr} trong khung thời gian hiện tại!`);
+            }
         }
 
         function resizeChart() {
@@ -1147,6 +1242,95 @@ def generate_html():
                     time: row.time, value: row.volume,
                     color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
                 })));
+
+                const details = quarterlyMeanDetails[currentSymbol];
+                if (details) {
+                    function getQuarterBoxInfo(quarterStr, allBars) {
+                        if (!quarterStr) return null;
+                        const parts = quarterStr.split('Q');
+                        const year = parseInt(parts[0]);
+                        const q = parseInt(parts[1]);
+                        
+                        const startMonth = (q - 1) * 3 + 1;
+                        const endMonth = q * 3;
+
+                        const quarterBars = allBars.filter(bar => {
+                            const barDate = new Date(bar.time);
+                            return barDate.getFullYear() === year && 
+                                   (barDate.getMonth() + 1) >= startMonth && 
+                                   (barDate.getMonth() + 1) <= endMonth;
+                        });
+
+                        if (quarterBars.length === 0) return null;
+
+                        let qHigh = -Infinity;
+                        let qLow = Infinity;
+                        quarterBars.forEach(b => {
+                            if (b.high > qHigh) qHigh = b.high;
+                            if (b.low < qLow) qLow = b.low;
+                        });
+
+                        return {
+                            high: qHigh,
+                            low: qLow,
+                            data: quarterBars.map(row => ({
+                                time: row.time,
+                                value: qHigh,
+                                baseValue: qLow
+                            }))
+                        };
+                    }
+
+                    // 1. Vẽ 2 Hộp vùng quý với nền đậm nét rõ ràng
+                    if (activeIndicators.QZONE) {
+                        const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
+                        if (startBoxInfo && startBoxInfo.data.length > 0) {
+                            const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
+                                baseValue: { type: 'price', price: startBoxInfo.low },
+                                topFillColor1: 'rgba(59, 130, 246, 0.45)',
+                                topFillColor2: 'rgba(59, 130, 246, 0.15)',
+                                topLineColor: '#2563eb',
+                                bottomLineColor: '#2563eb',
+                                lineWidth: 2
+                            }, 0);
+                            startBoxSeries.setData(startBoxInfo.data);
+                        }
+
+                        const endBoxInfo = getQuarterBoxInfo(details.end_quarter, chartData);
+                        if (endBoxInfo && endBoxInfo.data.length > 0) {
+                            const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
+                                baseValue: { type: 'price', price: endBoxInfo.low },
+                                topFillColor1: 'rgba(16, 185, 129, 0.45)',
+                                topFillColor2: 'rgba(16, 185, 129, 0.15)',
+                                topLineColor: '#059669',
+                                bottomLineColor: '#059669',
+                                lineWidth: 2
+                            }, 0);
+                            endBoxSeries.setData(endBoxInfo.data);
+                        }
+                    }
+
+                    // 2. Vẽ 2 Đường Giá Trung Bình Quý
+                    if (activeIndicators.QLINES) {
+                        candleSeriesInstance.createPriceLine({
+                            price: details.start_price_mean,
+                            color: '#f97316',
+                            lineWidth: 2,
+                            lineStyle: LC.LineStyle.Dashed,
+                            axisLabelVisible: true,
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
+                        });
+
+                        candleSeriesInstance.createPriceLine({
+                            price: details.end_price_mean,
+                            color: '#10b981',
+                            lineWidth: 2,
+                            lineStyle: LC.LineStyle.Dotted,
+                            axisLabelVisible: true,
+                            title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
+                        });
+                    }
+                }
 
                 if (activeIndicators.MA20) {
                     chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
