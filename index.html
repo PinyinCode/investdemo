@@ -1098,13 +1098,18 @@
                 const minIdx = indices[0];
                 const maxIdx = indices[indices.length - 1];
                 
+                // RESET TRỤC GIÁ TRƯỚC KHI ÉP KHUNG ĐỂ TRÁNH BỊ KẸT DO KÉO THẢ TAY TRƯỚC ĐÓ
+                chartInstance.priceScale('right').applyOptions({
+                    autoScale: true,
+                });
+
                 // 1. Căn chỉnh khoảng thời gian (trục ngang)
                 const rangeSpan = Math.max(15, (maxIdx - minIdx) * 2);
                 const from = Math.max(0, minIdx - Math.floor(rangeSpan / 2));
                 const to = Math.min(chartData.length - 1, maxIdx + Math.floor(rangeSpan / 2));
                 chartInstance.timeScale().setVisibleLogicalRange({ from, to });
 
-                // 2. Căn chỉnh vùng giá (trục dọc) để tự động bắt khung giá quý (cho cả nút đầu và cuối)
+                // 2. Căn chỉnh vùng giá (trục dọc) ôm trọn hộp quý
                 if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {
                     const pricePadding = (qMaxPrice - qMinPrice) * 0.5;
                     chartInstance.priceScale('right').setVisiblePriceRange({
