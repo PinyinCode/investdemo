@@ -1,4 +1,5 @@
-﻿import os
+﻿# crawl_data.py
+import os
 import datetime
 import time
 import json
@@ -185,7 +186,7 @@ def auto_git_push():
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
             
-        commit_msg = f"Auto update full 100 VN100 symbols data & BCTC - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update symbols data & BCTC - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
@@ -198,16 +199,32 @@ def main():
     print("==================================================")
     print("       CHỌN CHẾ ĐỘ CÀO DỮ LIỆU LỊCH SỬ GIÁ       ")
     print("==================================================")
-    print("1. Mặc định: 30 ngày gần nhất (Cập nhật cuốn chiếu)")
+    print("1. Cào TOÀN BỘ danh sách VN100 (Mặc định)")
+    print("2. Cào RIÊNG TỪNG MÃ (Tùy chọn mã cụ thể)")
+    
+    mode_choice = input("Nhập lựa chọn chế độ (1/2, mặc định 1): ").strip()
+    
+    target_symbols = VN100_SYMBOLS
+    if mode_choice == '2':
+        raw_input_symbols = input("Nhập mã cổ phiếu muốn cào (cách nhau bởi dấu phẩy, VD: PNJ,BID,ACB): ").strip()
+        if raw_input_symbols:
+            target_symbols = [s.strip().upper() for s in raw_input_symbols.split(",") if s.strip()]
+            print(f"-> Đã chọn cào riêng các mã: {target_symbols}")
+        else:
+            print("⚠️ Không nhận được mã hợp lệ, tự động quay về cào toàn bộ VN100.")
+    
+    print("\n--------------------------------------------------")
+    print("CHỌN KHOẢNG THỜI GIAN CÀO:")
+    print("1. Gần nhất: 30 ngày qua (Cuốn chiếu)")
     print("2. Dài hạn: 10 năm gần đây (~3650 ngày)")
     print("3. Tùy chỉnh: Nhập số ngày tự do")
     
-    choice = input("Nhập lựa chọn của bạn (1/2/3, mặc định 1): ").strip()
+    choice = input("Nhập lựa chọn khoảng thời gian (1/2/3, mặc định 1): ").strip()
     
     days = 30 # Mặc định
     if choice == '2':
         days = 3650
-        print("-> Đã chọn chế độ cào 10 năm dữ liệu cho toàn bộ 100 mã.")
+        print("-> Đã chọn chế độ cào 10 năm dữ liệu.")
     elif choice == '3':
         try:
             custom_days = int(input("Nhập số ngày muốn cào (ví dụ: 180, 730, 3650): ").strip())
@@ -218,7 +235,7 @@ def main():
     else:
         print("-> Đã chọn chế độ mặc định (30 ngày gần nhất).")
 
-    print(f"🚀 Bắt đầu cào dữ liệu cho {len(VN100_SYMBOLS)} mã VN100 (Phạm vi: {days} ngày qua)...")
+    print(f"\n🚀 Bắt đầu cào dữ liệu cho {len(target_symbols)} mã (Phạm vi: {days} ngày qua)...")
     
     if not os.path.exists(HISTORY_DIR):
         os.makedirs(HISTORY_DIR)
@@ -231,11 +248,11 @@ def main():
         except Exception:
             pass
 
-    total = len(VN100_SYMBOLS)
+    total = len(target_symbols)
     end_date = datetime.datetime.now().strftime("%Y-%m-%d")
     start_date = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime("%Y-%m-%d")
 
-    for i, symbol in enumerate(VN100_SYMBOLS):
+    for i, symbol in enumerate(target_symbols):
         print(f"[{i+1}/{total}] Đang xử lý: {symbol}...")
         closes, volumes = [], []
         close_price, volume = 0, 0
@@ -353,7 +370,7 @@ def main():
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-    print("✅ Đã hoàn tất toàn bộ dữ liệu 100 mã VN100 vào data.json!")
+    print("✅ Đã hoàn tất cập nhật dữ liệu vào data.json!")
 
     auto_git_push()
 
