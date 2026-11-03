@@ -1,4 +1,3 @@
-# simulator.py
 import os
 import json
 import pandas as pd
@@ -27,7 +26,8 @@ def calculate_dca_investment(initial_capital, monthly_contribution, years, annua
 
 def get_historical_return_rate(symbol, history_dir="history"):
     """
-    Đọc file lịch sử giá của một mã (vd: history/VIC.json) để tính tỷ suất sinh lời thực tế (CAGR) trong quá khứ.
+    Đọc file lịch sử giá của một mã (vd: history/VIC.json), chỉ lấy dữ liệu trong 5 năm gần nhất,
+    gom nhóm theo Quý và tính GIÁ TRUNG BÌNH (MEAN) của từng Quý để tính CAGR chống nhiễu tuyệt đối.
     """
     file_path = os.path.join(history_dir, f"{symbol}.json")
     if not os.path.exists(file_path):
@@ -39,7 +39,7 @@ def get_historical_return_rate(symbol, history_dir="history"):
             
         # Lấy dữ liệu biểu đồ ngày (history_d1)
         history_bars = data.get("history_d1", [])
-        if len(history_bars) < 50:
+        if len(history_bars) < 30:
             return 0.15 # Mặc định nếu thiếu dữ liệu
             
         df = pd.DataFrame(history_bars)
@@ -47,21 +47,42 @@ def get_historical_return_rate(symbol, history_dir="history"):
         df['date'] = pd.to_datetime(df['time'])
         df = df.sort_values('date')
         
-        start_price = df.iloc[0]['close']
-        end_price = df.iloc[-1]['close']
+        # 1. Lọc chỉ lấy dữ liệu trong 5 năm gần nhất tính từ ngày giao dịch mới nhất trong file
+        max_date = df['date'].max()
+        cutoff_date = max_date - pd.DateOffset(years=5)
+        df = df[df['date'] >= cutoff_date]
         
-        start_date = df.iloc[0]['date']
-        end_date = df.iloc[-1]['date']
+        if len(df) < 30:
+            return 0.15 # Nếu sau khi cắt 5 năm mà dữ liệu quá ít thì dùng mức mặc định
+            
+        # 2. Tạo cột gom nhóm theo Năm-Quý (VD: 2023Q1, 2023Q2...)
+        df['year_quarter'] = df['date'].dt.to_period('Q')
+        
+        # 3. Gom nhóm theo Quý: Tính giá trung bình (mean) của quý và lấy ngày đầu tiên làm mốc đại diện
+        df_quarterly = df.groupby('year_quarter').agg({
+            'close': 'mean',
+            'date': 'first'
+        }).reset_index()
+        
+        if len(df_quarterly) < 2:
+            return 0.15
+            
+        # 4. Lấy giá trung bình của Quý đầu tiên và Quý cuối cùng trong khung 5 năm làm điểm neo
+        start_price = df_quarterly.iloc[0]['close']
+        end_price = df_quarterly.iloc[-1]['close']
+        
+        start_date = df_quarterly.iloc[0]['date']
+        end_date = df_quarterly.iloc[-1]['date']
         
         days = (end_date - start_date).days
         if days < 30:
-            return 0.15 # Mặc định nếu khoảng thời gian quá ngắn
+            return 0.15
             
         years = days / 365.25
         if years <= 0:
             return 0.15
             
-        # Tính tỷ suất sinh lời hàng năm (CAGR) dựa trên giá lịch sử thực tế
+        # 5. Tính tỷ suất sinh lời hàng năm (CAGR) dựa trên giá trung bình quý trong 5 năm gần nhất
         cagr = (end_price / start_price) ** (1 / years) - 1
         
         # Giới hạn mức hợp lý để tránh biên độ quá dị (từ -50% đến +100%/năm)
@@ -94,7 +115,7 @@ def run_symbol_specific_simulation(symbol, initial_capital, monthly_contribution
 
 def run_complex_backtest_simulation(history_dir="history", output_json="symbol_sim_rates.json"):
     """
-    🚀 ĐÃ SỬA: Quét toàn bộ thư mục history/ để tính lãi suất quá khứ (CAGR) của TỪNG MÃ,
+    🚀 Quét toàn bộ thư mục history/ để tính lãi suất quá khứ (CAGR theo Quý trong 5 năm) của TỪNG MÃ,
     sau đó lưu ra file symbol_sim_rates.json để render_ui.py đọc.
     """
     rates_map = {}
@@ -113,7 +134,7 @@ def run_complex_backtest_simulation(history_dir="history", output_json="symbol_s
     try:
         with open(output_json, "w", encoding="utf-8") as f:
             json.dump(rates_map, f, ensure_ascii=False, indent=4)
-        print(f"✅ Đã tính toán và lưu thành công lãi suất cho {len(rates_map)} mã vào {output_json}")
+        print(f"✅ Đã tính toán và lưu thành công lãi suất (theo Quý/5 năm) cho {len(rates_map)} mã vào {output_json}")
     except Exception as e:
         print(f"⚠️ Không thể ghi file {output_json}: {e}")
 
