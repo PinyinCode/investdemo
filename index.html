@@ -1227,36 +1227,37 @@
                         };
                     }
 
-                    // 1. Vẽ 2 Hộp bao quanh nến Quý Đầu và Quý Cuối khi bật "Vùng Quý"
+                                        // 1. Vẽ 2 Hộp bao quanh nến Quý Đầu và Quý Cuối khi bật "Vùng Quý" (Đã tăng độ đậm nền)
                     if (activeIndicators.QZONE) {
-                        // Hộp Quý Đầu (Màu xanh dương mờ)
+                        // Hộp Quý Đầu (Màu xanh dương đậm nét hơn)
                         const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
                         if (startBoxInfo && startBoxInfo.data.length > 0) {
                             const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
                                 baseValue: { type: 'price', price: startBoxInfo.low },
-                                topFillColor1: 'rgba(59, 130, 246, 0.25)',
-                                topFillColor2: 'rgba(59, 130, 246, 0.05)',
-                                topLineColor: '#3b82f6',
-                                bottomLineColor: '#3b82f6',
-                                lineWidth: 1
+                                topFillColor1: 'rgba(59, 130, 246, 0.45)', // Tăng độ đậm nền
+                                topFillColor2: 'rgba(59, 130, 246, 0.15)',
+                                topLineColor: '#2563eb', // Viền xanh dương đậm
+                                bottomLineColor: '#2563eb',
+                                lineWidth: 2
                             }, 0);
                             startBoxSeries.setData(startBoxInfo.data);
                         }
 
-                        // Hộp Quý Cuối (Màu xanh ngọc mờ)
+                        // Hộp Quý Cuối (Màu xanh ngọc đậm nét hơn)
                         const endBoxInfo = getQuarterBoxInfo(details.end_quarter, chartData);
                         if (endBoxInfo && endBoxInfo.data.length > 0) {
                             const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
                                 baseValue: { type: 'price', price: endBoxInfo.low },
-                                topFillColor1: 'rgba(16, 185, 129, 0.25)',
-                                topFillColor2: 'rgba(16, 185, 129, 0.05)',
-                                topLineColor: '#10b981',
-                                bottomLineColor: '#10b981',
-                                lineWidth: 1
+                                topFillColor1: 'rgba(16, 185, 129, 0.45)', // Tăng độ đậm nền
+                                topFillColor2: 'rgba(16, 185, 129, 0.15)',
+                                topLineColor: '#059669', // Viền xanh ngọc đậm
+                                bottomLineColor: '#059669',
+                                lineWidth: 2
                             }, 0);
                             endBoxSeries.setData(endBoxInfo.data);
                         }
                     }
+
 
                     // 2. Vẽ 2 Đường Giá Trung Bình Quý khi bật "Đường Quý"
                     if (activeIndicators.QLINES) {
