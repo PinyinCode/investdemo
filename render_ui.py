@@ -362,26 +362,22 @@ def generate_html():
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-slate-400 mb-1 font-semibold">Vốn ban đầu (VNĐ)</label>
-                            <input type="number" id="modal-sim-initial" value="20000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
+                            <input type="text" id="modal-sim-initial" value="20.000.000" oninput="formatCurrencyInput(this)" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-slate-400 mb-1 font-semibold">Tích sản hàng tháng (VNĐ)</label>
-                            <input type="number" id="modal-sim-monthly" value="3000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
+                            <input type="text" id="modal-sim-monthly" value="3.000.000" oninput="formatCurrencyInput(this)" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-slate-400 mb-1 font-semibold">Kỳ hạn đầu tư</label>
-                            <select id="modal-sim-years" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
-                                <option value="1">1 Năm</option>
-                                <option value="3" selected>3 Năm</option>
-                                <option value="5">5 Năm</option>
-                            </select>
+                            <label class="block text-slate-400 mb-1 font-semibold">Kỳ hạn đầu tư (Năm)</label>
+                            <input type="number" id="modal-sim-years" value="3" min="1" max="50" step="1" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-slate-400 mb-1 font-semibold">Lợi nhuận áp dụng (%/năm)</label>
-                            <input type="number" id="modal-sim-rate" value="15" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-emerald-400 font-bold text-xs focus:outline-none focus:border-emerald-500">
+                            <input type="number" id="modal-sim-rate" value="15" step="0.1" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-emerald-400 font-bold text-xs focus:outline-none focus:border-emerald-500">
                         </div>
                     </div>
 
@@ -689,18 +685,34 @@ def generate_html():
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
-            return Math.round(val).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",");
+            return Math.round(val).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ".");
         }
         function formatPercent(num) {
             if (num === undefined || num === null) return '—';
             return num.toFixed(1) + '%';
         }
 
-                async function loadData(showSpinner = false) {
+        // Hàm định dạng tự động thêm dấu chấm phân cách hàng nghìn khi nhập ô tiền tệ
+        function formatCurrencyInput(input) {
+            let value = input.value.replace(/\\D/g, "");
+            if (value === "") {
+                input.value = "";
+                return;
+            }
+            input.value = Number(value).toLocaleString("vi-VN");
+        }
+
+        // Hàm lấy số thực từ chuỗi có chứa dấu chấm phân cách
+        function parseCleanNumber(valStr) {
+            if (!valStr) return 0;
+            let clean = valStr.toString().replace(/\\./g, "").replace(/,/g, "");
+            return parseFloat(clean) || 0;
+        }
+
+        async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
             try {
-                // 🚀 BỔ SUNG FETCH FILE symbol_sim_rates.json VÀO ĐÂY
                 const [screenerRes, ratesRes] = await Promise.all([
                     fetch('screener_results.json?t=' + new Date().getTime()),
                     fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
@@ -708,11 +720,7 @@ def generate_html():
 
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
                 let screenerData = await screenerRes.json();
-                
-                // Lưu dữ liệu tỷ suất sinh lời vào biến toàn cục symbolSimRates
-                if (ratesRes.ok) {
-                    symbolSimRates = await ratesRes.json();
-                }
+                if (ratesRes.ok) symbolSimRates = await ratesRes.json();
 
                 let rawStockData = {};
                 try {
@@ -962,7 +970,7 @@ def generate_html():
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
-            // Tự động điền tỷ suất sinh lời quá khứ thực tế của mã vào tab Giả lập
+            // Tự động điền tỷ suất sinh lời quá khứ thực tế của mã vào tab Giả lập kèm định dạng tiền tệ có dấu .
             let histRate = 15;
             if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
                 histRate = symbolSimRates[symbol].annual_rate_percent;
@@ -971,6 +979,9 @@ def generate_html():
                 document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
             }
             document.getElementById('modal-sim-rate').value = histRate;
+            document.getElementById('modal-sim-initial').value = "20.000.000";
+            document.getElementById('modal-sim-monthly').value = "3.000.000";
+            document.getElementById('modal-sim-years').value = "3";
 
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
@@ -979,9 +990,9 @@ def generate_html():
         function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
 
         function calculateModalSimulation() {
-            let p0 = parseFloat(document.getElementById('modal-sim-initial').value) || 0;
-            let pMonthly = parseFloat(document.getElementById('modal-sim-monthly').value) || 0;
-            let years = parseInt(document.getElementById('modal-sim-years').value) || 1;
+            let p0 = parseCleanNumber(document.getElementById('modal-sim-initial').value);
+            let pMonthly = parseCleanNumber(document.getElementById('modal-sim-monthly').value);
+            let years = parseFloat(document.getElementById('modal-sim-years').value) || 1;
             let rate = (parseFloat(document.getElementById('modal-sim-rate').value) || 15) / 100;
 
             let totalPrincipal = p0 + (pMonthly * 12 * years);
@@ -994,9 +1005,9 @@ def generate_html():
             }
             let profit = futureVal - totalPrincipal;
 
-            document.getElementById('modal-sim-principal').innerText = Math.round(totalPrincipal).toLocaleString() + " VNĐ";
-            document.getElementById('modal-sim-profit').innerText = "+" + Math.round(profit).toLocaleString() + " VNĐ";
-            document.getElementById('modal-sim-total').innerText = Math.round(futureVal).toLocaleString() + " VNĐ";
+            document.getElementById('modal-sim-principal').innerText = Math.round(totalPrincipal).toLocaleString("vi-VN") + " VNĐ";
+            document.getElementById('modal-sim-profit').innerText = "+" + Math.round(profit).toLocaleString("vi-VN") + " VNĐ";
+            document.getElementById('modal-sim-total').innerText = Math.round(futureVal).toLocaleString("vi-VN") + " VNĐ";
         }
 
         function navigateSymbol(direction) {
