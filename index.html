@@ -253,7 +253,7 @@
         </div>
     </main>
 
-    <!-- MODAL CHI TIẾT AI, BCTC & GIẢ LẬP ĐẦU TƯ TỪNG MÃ -->
+    <!-- MODAL CHI TIẾT AI & GIẢ LẬP ĐẦU TƯ TỪNG MÃ -->
     <div id="ai-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-3 md:p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10">
@@ -271,7 +271,7 @@
                     </button>
 
                     <div>
-                        <h3 class="text-xs md:text-sm font-bold text-white">Phân Tích & Giả Lập Đầu Tư</h3>
+                        <h3 class="text-xs md:text-sm font-bold text-white">Phân Tích AI & Giả Lập Đầu Tư</h3>
                         <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
                     </div>
                 </div>
@@ -280,13 +280,10 @@
                 </button>
             </div>
             
-            <!-- TABS -->
+            <!-- TABS (Chỉ còn Đánh Giá AI và Giả Lập DCA) -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
-                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI
-                </button>
-                <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
-                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> BCTC & Cơ Bản
+                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá & Phân Tích AI
                 </button>
                 <button type="button" onclick="switchAiTab('simulator')" id="tab-btn-simulator" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-calculator mr-1.5 text-emerald-400"></i> Giả Lập Tích Sản (DCA)
@@ -324,26 +321,6 @@
                     <div>
                         <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-globe text-amber-500 mr-1.5"></i> Vĩ mô & Sóng ngành [AI]</h4>
                         <p id="modal-macro" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
-                    </div>
-                </div>
-
-                <!-- TAB BCTC & CƠ BẢN -->
-                <div id="tab-content-bctc" class="space-y-4 hidden">
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                        <div class="flex justify-between items-center mb-3">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-table mr-1.5"></i> Kết quả Kinh doanh Theo Quý</h4>
-                        </div>
-                        <div id="bctc-income-container" class="overflow-x-auto">
-                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                        <div class="flex justify-between items-center mb-3">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400"><i class="fa-solid fa-scale-balanced mr-1.5"></i> Cân đối Kế toán Mới Nhất</h4>
-                        </div>
-                        <div id="bctc-balance-container" class="overflow-x-auto">
-                            <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
-                        </div>
                     </div>
                 </div>
 
@@ -668,7 +645,7 @@
         let currentSymbol = null;
         let currentInterval = 'D1';
         let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
-        let currentActiveTab = 'eval'; // Ghi nhớ tab hiện tại
+        let currentActiveTab = 'eval';
 
         const SECTOR_NAMES = { 
             "NGAN_HANG": "Ngân hàng", 
@@ -849,8 +826,8 @@
         }
 
         function switchAiTab(tabName) {
-            currentActiveTab = tabName; // Lưu lại tab hiện tại
-            ['bctc', 'eval', 'simulator'].forEach(t => {
+            currentActiveTab = tabName;
+            ['eval', 'simulator'].forEach(t => {
                 const contentEl = document.getElementById(`tab-content-${t}`);
                 const btnEl = document.getElementById(`tab-btn-${t}`);
                 if (contentEl) contentEl.classList.add('hidden');
@@ -867,152 +844,11 @@
             }
         }
 
-                                async function loadBctcDetail(symbol) {
-            const incomeContainer = document.getElementById('bctc-income-container');
-            const balanceContainer = document.getElementById('bctc-balance-container');
-            
-            if (incomeContainer) incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
-            if (balanceContainer) balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
-
-            try {
-                let data = null;
-
-                // 1. Thử fetch file JSON chữ thường (acb.json) hoặc chữ hoa (ACB.json)
-                try {
-                    let res = await fetch(`bctc_data/${symbol.toLowerCase()}.json?t=` + new Date().getTime());
-                    if (!res.ok) {
-                        res = await fetch(`bctc_data/${symbol.toUpperCase()}.json?t=` + new Date().getTime());
-                    }
-                    if (res.ok) {
-                        const textData = await res.text();
-                        data = JSON.parse(textData.replace(/\s*NaN/g, ': null'));
-                    }
-                } catch (e) {
-                    console.warn("Không fetch được file JSON BCTC riêng.");
-                }
-
-                // 2. Dự phòng lấy từ dữ liệu tổng hợp nếu không tìm thấy file riêng
-                if (!data && typeof screenerResults !== 'undefined') {
-                    let stockItem = screenerResults.find(s => s.symbol.toUpperCase() === symbol.toUpperCase());
-                    if (stockItem) data = stockItem;
-                }
-
-                if (!data || (!data.balance_sheet && !data.bctc_history)) {
-                    throw new Error("Không tìm thấy dữ liệu BCTC cho mã " + symbol);
-                }
-
-                // Trường hợp 1: Dữ liệu bctc_history cô đọng từ data.json
-                if (!data.balance_sheet && data.bctc_history && Array.isArray(data.bctc_history)) {
-                    let latest = data.bctc_history[0] || {};
-                    if (balanceContainer) {
-                        balanceContainer.innerHTML = `<div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${latest.period || '—'}</div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400">Tổng tài sản:</span><span class="font-bold text-slate-200">${formatNumber((latest.total_assets || 0) * 1e9)} VNĐ</span></div>
-                            <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400">Cho vay khách hàng:</span><span class="font-bold text-slate-200">${formatNumber((latest.loans || 0) * 1e9)} VNĐ</span></div>
-                            <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400">Vốn chủ sở hữu:</span><span class="font-bold text-slate-200">${formatNumber((latest.equity || 0) * 1e9)} VNĐ</span></div>
-                            <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400">Lợi nhuận sau thuế:</span><span class="font-bold text-emerald-400">${formatNumber((latest.net_profit || 0) * 1e9)} VNĐ</span></div>
-                        </div>`;
-                    }
-                    if (incomeContainer) {
-                        let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th><th class="p-2 text-right">Tổng tài sản (Tỷ)</th><th class="p-2 text-right">Cho vay (Tỷ)</th><th class="p-2 text-right">Lợi nhuận (Tỷ)</th></tr></thead><tbody class="divide-y divide-slate-900">';
-                        data.bctc_history.slice(0, 6).forEach(row => {
-                            html += `<tr class="hover:bg-slate-900/50">
-                                <td class="p-2 font-bold text-indigo-300">${row.period}</td>
-                                <td class="p-2 text-right text-slate-200">${row.total_assets || 0}</td>
-                                <td class="p-2 text-right text-slate-200">${row.loans || 0}</td>
-                                <td class="p-2 text-right text-emerald-400 font-semibold">${row.net_profit || 0}</td>
-                            </tr>`;
-                        });
-                        html += '</tbody></table>';
-                        incomeContainer.innerHTML = html;
-                    }
-                    return;
-                }
-
-                // Trường hợp 2: Cấu trúc Chi tiết BCTC (Bảng Cân đối kế toán)
-                if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
-                    let groupedBs = {};
-                    data.balance_sheet.forEach(item => {
-                        if (item && item.period) {
-                            let fieldName = item.name || item.id || 'Chỉ tiêu';
-                            if (!groupedBs[item.period]) groupedBs[item.period] = {};
-                            groupedBs[item.period][fieldName] = item.value;
-                        }
-                    });
-                    
-                    let periods = Object.keys(groupedBs).sort().reverse();
-                    if (periods.length > 0) {
-                        let latestPeriod = periods[0];
-                        let latestData = groupedBs[latestPeriod] || {};
-                        let html = `<div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${latestPeriod}</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
-                        let count = 0;
-                        for (const [name, val] of Object.entries(latestData)) {
-                            if (count >= 16) break;
-                            html += `<div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400 truncate pr-2">${name}:</span><span class="font-bold text-slate-200">${typeof val === 'number' && !isNaN(val) ? formatNumber(val) : (val || '—')}</span></div>`;
-                            count++;
-                        }
-                        html += '</div>';
-                        balanceContainer.innerHTML = html;
-                    } else {
-                        balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu bảng cân đối kế toán.</p>';
-                    }
-                }
-
-                // Trường hợp 3: Kết quả kinh doanh
-                if (incomeContainer) {
-                    let incomeData = data.income_statement || data.income || [];
-                    if (Array.isArray(incomeData) && incomeData.length > 0) {
-                        let groupedByPeriod = {};
-                        let metricNames = {}; 
-                        incomeData.forEach(item => {
-                            if (item && item.period) {
-                                let key = item.id || item.name;
-                                let name = item.name || item.id;
-                                if (!groupedByPeriod[item.period]) groupedByPeriod[item.period] = {};
-                                groupedByPeriod[item.period][key] = item.value;
-                                metricNames[key] = name;
-                            }
-                        });
-
-                        let periods = Object.keys(groupedByPeriod).sort().reverse();
-                        if (periods.length > 0) {
-                            let availableMetrics = Object.keys(metricNames).slice(0, 4);
-                            let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th>';
-                            availableMetrics.forEach(mId => { html += `<th class="p-2 text-right truncate">${metricNames[mId]}</th>`; });
-                            html += '</tr></thead><tbody class="divide-y divide-slate-900">';
-                            
-                            periods.slice(0, 6).forEach(p => {
-                                let pData = groupedByPeriod[p] || {};
-                                html += `<tr class="hover:bg-slate-900/50"><td class="p-2 font-bold text-indigo-300">${p}</td>`;
-                                availableMetrics.forEach(mId => {
-                                    let val = pData[mId] || 0;
-                                    html += `<td class="p-2 text-right text-slate-200">${formatNumber(val)}</td>`;
-                                });
-                                html += '</tr>';
-                            });
-                            html += '</tbody></table>';
-                            incomeContainer.innerHTML = html;
-                        } else {
-                            incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>';
-                        }
-                    }
-                }
-
-            } catch (err) {
-                console.error("Lỗi BCTC:", err);
-                if (incomeContainer) incomeContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Chưa có file JSON BCTC cho mã này.</p>`;
-                if (balanceContainer) balanceContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">Chưa có file JSON BCTC cho mã này.</p>`;
-            }
-        }
-
-
-
         function openModal(symbol) {
             currentSymbol = symbol;
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
-            // Giữ nguyên tab hiện tại khi chuyển mã
             switchAiTab(currentActiveTab);
             
             document.getElementById('modal-symbol-input').value = item.symbol;
@@ -1049,7 +885,6 @@
             document.getElementById('modal-sim-years').value = "3";
 
             document.getElementById('ai-modal').classList.remove('hidden');
-            loadBctcDetail(symbol);
         }
 
         function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
