@@ -407,10 +407,13 @@
 
                     <button type="button" onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-right text-[9px]"></i></button>
 
+                    <!-- Khung thời gian kết hợp nút Đường Quý & Vùng Quý dạng Icon -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button type="button" onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
                         <button type="button" onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
                         <button type="button" onclick="switchInterval('MN')" id="btn-mn" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">MN</button>
+                        <button type="button" onclick="toggleQuarterLines()" id="btn-ind-qlines" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition ml-1" title="Ẩn/Hiện đường giá quý"><i class="fa-solid fa-chart-line"></i></button>
+                        <button type="button" onclick="toggleQuarterZone()" id="btn-ind-qzone" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện hộp vùng giá quý"><i class="fa-solid fa-square"></i></button>
                     </div>
 
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
@@ -420,15 +423,10 @@
                         <button type="button" onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">RSI</button>
                     </div>
 
+                    <!-- 2 NÚT ĐIỀU HƯỚNG NHANH QUÝ ĐẦU & QUÝ CUỐI (Dùng mũi tên < >) -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
-                        <button type="button" onclick="toggleQuarterLines()" id="btn-ind-qlines" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện đường giá quý">Đường Quý</button>
-                        <button type="button" onclick="toggleQuarterZone()" id="btn-ind-qzone" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện hộp vùng giá quý">Vùng Quý</button>
-                    </div>
-
-                    <!-- 2 NÚT ĐIỀU HƯỚNG NHANH QUÝ ĐẦU & QUÝ CUỐI -->
-                    <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
-                        <button type="button" onclick="jumpToQuarter('start')" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-amber-600 text-white transition" title="Nhảy tới Quý đầu 5 năm trước">Quý Đầu</button>
-                        <button type="button" onclick="jumpToQuarter('end')" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Nhảy tới Quý cuối hiện tại">Quý Cuối</button>
+                        <button type="button" onclick="jumpToQuarter('start')" class="px-2 py-0.5 text-[10px] font-bold rounded bg-amber-600 text-white transition" title="Nhảy tới Quý đầu 5 năm trước">&lt;&lt;</button>
+                        <button type="button" onclick="jumpToQuarter('end')" class="px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition" title="Nhảy tới Quý cuối hiện tại">&gt;&gt;</button>
                     </div>
 
                     <div class="flex items-center gap-2 pl-1 border-l border-slate-800/40 text-[10px]">
@@ -1046,8 +1044,8 @@
             const btn = document.getElementById('btn-ind-qlines');
             if (btn) {
                 btn.className = activeIndicators.QLINES
-                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition"
-                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+                    ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition ml-1"
+                    : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition ml-1";
             }
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
         }
@@ -1057,8 +1055,8 @@
             const btn = document.getElementById('btn-ind-qzone');
             if (btn) {
                 btn.className = activeIndicators.QZONE
-                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition"
-                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+                    ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
+                    : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
             }
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
         }
