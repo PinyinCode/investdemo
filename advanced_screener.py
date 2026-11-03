@@ -31,7 +31,7 @@ SECTOR_MAPPING = {
     ],
     "SAN_XUAT_TIEU_DUNG_PHONG_THU": [
         "VNM", "MSN", "SAB", "VHC", "ANV", "BVH", "PLX", "PVD", "PVS", "BSR", 
-        "GMD", "HAH", "PVT", "VJC", "HVN", "APH", "ASM", "DBC", "KDC", "MSH", 
+        "GMD", "HAH", "PVT", "HVN", "VHV", "APH", "ASM", "DBC", "KDC", "MSH", 
         "PAN", "SBT", "DRC", "CSM", "BMP", "DHG", "CTD", "VCG", "HHV", "GEX"
     ]
 }
@@ -60,7 +60,7 @@ def evaluate_stock(symbol, data):
     credit_growth_yoy = latest.get("credit_growth_yoy", 0)
 
     # =========================================================================
-    # CHẤM ĐIỂM CƠ BẢN (50 điểm) - TIÊU CHÍ PHÂN HÓA THEO ĐẶC THÙ 7 NHÓM NGÀNH
+    # 1. CHẤM ĐIỂM CƠ BẢN (50 điểm) - PHÂN HÓA THEO ĐẶC THÙ 7 NHÓM NGÀNH
     # =========================================================================
     fundamental_score = 0
     fund_notes = []
@@ -129,7 +129,6 @@ def evaluate_stock(symbol, data):
             fundamental_score += 10
 
     else: 
-        # SẢN XUẤT & TIÊU DÙNG PHÒNG THỦ
         if profit_growth_yoy >= 10: 
             fundamental_score += 20; fund_notes.append("LN tăng trưởng tốt")
         elif profit_growth_yoy >= 0:
@@ -147,18 +146,33 @@ def evaluate_stock(symbol, data):
         elif dividend_yield > 0:
             fundamental_score += 5; fund_notes.append(f"Có cổ tức ({dividend_yield}%)")
 
-    # ==========================================
-    # CHẤM ĐIỂM KỸ THUẬT (20 điểm)
-    # ==========================================
+    # =========================================================================
+    # 2. CHẤM ĐIỂM KỸ THUẬT (20 điểm) - TỐI ƯU CHUYÊN NGHIỆP QUANT
+    # =========================================================================
     technical_score = 0
-    if "BREAKOUT" in recommendation or "CẠN CUNG" in recommendation or "MUA" in recommendation:
-        technical_score += 20
-    else:
-        technical_score += 10
+    tech_notes = []
+    rec_upper = recommendation.upper()
 
-    # ==========================================
-    # ĐÁNH GIÁ ĐỊNH GIÁ AN TOÀN (30 điểm)
-    # ==========================================
+    # Đánh giá cấu trúc xung lực & dòng tiền kỹ thuật chuyên sâu
+    if "BREAKOUT" in rec_upper or "VƯỢT ĐỈNH" in rec_upper or "BỨT PHÁ" in rec_upper:
+        technical_score += 20
+        tech_notes.append("Breakout / Vượt đỉnh mạnh")
+    elif "CẠN CUNG" in rec_upper or "TÍCH LŨY" in rec_upper or "BASE" in rec_upper:
+        technical_score += 17
+        tech_notes.append("Tích lũy cạn cung (Rủi ro thấp)")
+    elif "MUA" in rec_upper or "HẤP DẪN" in rec_upper or "GOM" in rec_upper:
+        technical_score += 14
+        tech_notes.append("Dòng tiền gom hàng")
+    elif "CHỜ" in rec_upper or "GIẰNG CO" in rec_upper or "SIDETRACK" in rec_upper:
+        technical_score += 9
+        tech_notes.append("Đang giằng co / Sideway")
+    else:
+        technical_score += 5
+        tech_notes.append("Xu hướng trung tính / Yếu")
+
+    # =========================================================================
+    # 3. ĐÁNH GIÁ ĐỊNH GIÁ AN TOÀN (30 điểm)
+    # =========================================================================
     valuation_score = 0
     if 0 < pe < 16 and 0 < pb < 2.5:
         valuation_score += 30
@@ -190,11 +204,12 @@ def evaluate_stock(symbol, data):
         "total_score": total_score,
         "potential_zone": potential_zone,
         "technical_status": recommendation,
+        "technical_notes": " | ".join(tech_notes),
         "fundamental_notes": " | ".join(fund_notes)
     }
 
 def main():
-    print("🚀 Chạy bộ lọc định lượng chia chuẩn 7 nhóm ngành - Tất cả lấy Top 5...")
+    print("🚀 Chạy bộ lọc định lượng chia chuẩn 7 nhóm ngành - Tối ưu hóa chuyên nghiệp...")
     
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy file {DATA_FILE}")
@@ -220,7 +235,6 @@ def main():
     df = pd.DataFrame(results)
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
 
-    # Tất cả 7 nhóm ngành đều lấy Top 5 tiêu biểu nhất
     industry_groups = {}
     for item in results:
         sec = item['sector']
@@ -229,14 +243,15 @@ def main():
         industry_groups[sec].append(item)
 
     for sector, items in industry_groups.items():
-        limit_count = 5  # Đồng loạt lấy Top 5 cho mọi nhóm ngành
+        limit_count = 5
         top_items = items[:limit_count]
         
         print(f"\n📌 NHÓM NGÀNH: [{sector}] - TOP {limit_count} TIÊU BIỂU:")
-        print("=" * 125)
+        print("=" * 135)
         df_sector = pd.DataFrame(top_items)
-        print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'fundamental_score', 'total_score', 'potential_zone']].to_string(index=False))
-        print("=" * 125)
+        print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'fundamental_score', 'technical_score', 'total_score', 'potential_zone']].to_string(index=False))
+        print("=" * 135)
 
 if __name__ == "__main__":
     main()
+
