@@ -690,7 +690,7 @@ def generate_html():
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
-            return Math.round(val).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ".");
+            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
         function formatPercent(num) {
             if (num === undefined || num === null) return '—';
@@ -698,7 +698,7 @@ def generate_html():
         }
 
         function formatCurrencyInput(input) {
-            let value = input.value.replace(/\\D/g, "");
+            let value = input.value.replace(/\D/g, "");
             if (value === "") {
                 input.value = "";
                 return;
@@ -708,7 +708,7 @@ def generate_html():
 
         function parseCleanNumber(valStr) {
             if (!valStr) return 0;
-            let clean = valStr.toString().replace(/\\./g, "").replace(/,/g, "");
+            let clean = valStr.toString().replace(/\./g, "").replace(/,/g, "");
             return parseFloat(clean) || 0;
         }
 
@@ -1090,12 +1090,17 @@ def generate_html():
             const endMonth = q * 3;
 
             let indices = [];
+            let qMinPrice = Infinity;
+            let qMaxPrice = -Infinity;
+
             chartData.forEach((bar, idx) => {
                 const barDate = new Date(bar.time);
                 if (barDate.getFullYear() === year && 
                     (barDate.getMonth() + 1) >= startMonth && 
                     (barDate.getMonth() + 1) <= endMonth) {
                     indices.push(idx);
+                    if (bar.low < qMinPrice) qMinPrice = bar.low;
+                    if (bar.high > qMaxPrice) qMaxPrice = bar.high;
                 }
             });
 
@@ -1103,12 +1108,20 @@ def generate_html():
                 const minIdx = indices[0];
                 const maxIdx = indices[indices.length - 1];
                 
-                // Mở rộng khoảng hiển thị để ôm trọn nến quý và dễ quan sát
+                // 1. Căn chỉnh khoảng thời gian (trục ngang)
                 const rangeSpan = Math.max(15, (maxIdx - minIdx) * 2);
                 const from = Math.max(0, minIdx - Math.floor(rangeSpan / 2));
                 const to = Math.min(chartData.length - 1, maxIdx + Math.floor(rangeSpan / 2));
-                
                 chartInstance.timeScale().setVisibleLogicalRange({ from, to });
+
+                // 2. Căn chỉnh vùng giá (trục dọc) để chắc chắn thấy hộp quý
+                if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {
+                    const pricePadding = (qMaxPrice - qMinPrice) * 0.5;
+                    chartInstance.priceScale('right').setVisiblePriceRange({
+                        from: qMinPrice - pricePadding,
+                        to: qMaxPrice + pricePadding
+                    });
+                }
             } else {
                 alert(`Không tìm thấy dữ liệu thời gian cho ${quarterStr} trong khung thời gian hiện tại!`);
             }
