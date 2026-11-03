@@ -422,7 +422,13 @@
 
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button type="button" onclick="toggleQuarterLines()" id="btn-ind-qlines" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện đường giá quý">Đường Quý</button>
-                        <button type="button" onclick="toggleQuarterZone()" id="btn-ind-qzone" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện vùng màu giá quý">Vùng Quý</button>
+                        <button type="button" onclick="toggleQuarterZone()" id="btn-ind-qzone" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện hộp vùng giá quý">Vùng Quý</button>
+                    </div>
+
+                    <!-- 2 NÚT ĐIỀU HƯỚNG NHANH QUÝ ĐẦU & QUÝ CUỐI -->
+                    <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
+                        <button type="button" onclick="jumpToQuarter('start')" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-amber-600 text-white transition" title="Nhảy tới Quý đầu 5 năm trước">Quý Đầu</button>
+                        <button type="button" onclick="jumpToQuarter('end')" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Nhảy tới Quý cuối hiện tại">Quý Cuối</button>
                     </div>
 
                     <div class="flex items-center gap-2 pl-1 border-l border-slate-800/40 text-[10px]">
@@ -1057,6 +1063,47 @@
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
         }
 
+        function jumpToQuarter(type) {
+            const details = quarterlyMeanDetails[currentSymbol];
+            if (!details || !currentSymbolHistory) return;
+
+            let chartData = [];
+            if (currentInterval === 'D1') chartData = currentSymbolHistory.history_d1 || [];
+            else if (currentInterval === 'W1') chartData = currentSymbolHistory.history_w1 || [];
+            else if (currentInterval === 'MN') chartData = currentSymbolHistory.history_mn || [];
+
+            const quarterStr = (type === 'start') ? details.start_quarter : details.end_quarter;
+            if (!quarterStr) return;
+
+            const parts = quarterStr.split('Q');
+            const year = parseInt(parts[0]);
+            const q = parseInt(parts[1]);
+            const startMonth = (q - 1) * 3 + 1;
+            const endMonth = q * 3;
+
+            let indices = [];
+            chartData.forEach((bar, idx) => {
+                const barDate = new Date(bar.time);
+                if (barDate.getFullYear() === year && 
+                    (barDate.getMonth() + 1) >= startMonth && 
+                    (barDate.getMonth() + 1) <= endMonth) {
+                    indices.push(idx);
+                }
+            });
+
+            if (indices.length > 0 && chartInstance) {
+                const minIdx = indices[0];
+                const maxIdx = indices[indices.length - 1];
+                
+                const from = Math.max(0, minIdx - 10);
+                const to = Math.min(chartData.length - 1, maxIdx + 10);
+                
+                chartInstance.timeScale().setVisibleLogicalRange({ from, to });
+            } else {
+                alert(`Không tìm thấy dữ liệu thời gian cho ${quarterStr} trong khung thời gian hiện tại!`);
+            }
+        }
+
         function resizeChart() {
             if (chartInstance) {
                 const container = document.getElementById('tv-chart-container');
@@ -1144,7 +1191,7 @@
             return result;
         }
 
-                function renderChartInstance(historyDataObj) {
+        function renderChartInstance(historyDataObj) {
             const container = document.getElementById('tv-chart-container');
             container.innerHTML = '';
             const LC = window.LightweightCharts;
@@ -1186,10 +1233,8 @@
                     color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
                 })));
 
-                // XỬ LÝ VẼ 2 HỘP (VÙNG QUÝ) VÀ CÁC ĐƯỜNG GIÁ TRUNG BÌNH QUÝ
                 const details = quarterlyMeanDetails[currentSymbol];
                 if (details) {
-                    // Hàm lọc nến và lấy giá High/Low của một quý cụ thể (vd: "2021Q4")
                     function getQuarterBoxInfo(quarterStr, allBars) {
                         if (!quarterStr) return null;
                         const parts = quarterStr.split('Q');
@@ -1199,7 +1244,6 @@
                         const startMonth = (q - 1) * 3 + 1;
                         const endMonth = q * 3;
 
-                        // Lọc các thanh nến thuộc quý đó
                         const quarterBars = allBars.filter(bar => {
                             const barDate = new Date(bar.time);
                             return barDate.getFullYear() === year && 
@@ -1227,30 +1271,28 @@
                         };
                     }
 
-                                        // 1. Vẽ 2 Hộp bao quanh nến Quý Đầu và Quý Cuối khi bật "Vùng Quý" (Đã tăng độ đậm nền)
+                    // 1. Vẽ 2 Hộp vùng quý với nền đậm nét rõ ràng
                     if (activeIndicators.QZONE) {
-                        // Hộp Quý Đầu (Màu xanh dương đậm nét hơn)
                         const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
                         if (startBoxInfo && startBoxInfo.data.length > 0) {
                             const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
                                 baseValue: { type: 'price', price: startBoxInfo.low },
-                                topFillColor1: 'rgba(59, 130, 246, 0.45)', // Tăng độ đậm nền
+                                topFillColor1: 'rgba(59, 130, 246, 0.45)',
                                 topFillColor2: 'rgba(59, 130, 246, 0.15)',
-                                topLineColor: '#2563eb', // Viền xanh dương đậm
+                                topLineColor: '#2563eb',
                                 bottomLineColor: '#2563eb',
                                 lineWidth: 2
                             }, 0);
                             startBoxSeries.setData(startBoxInfo.data);
                         }
 
-                        // Hộp Quý Cuối (Màu xanh ngọc đậm nét hơn)
                         const endBoxInfo = getQuarterBoxInfo(details.end_quarter, chartData);
                         if (endBoxInfo && endBoxInfo.data.length > 0) {
                             const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
                                 baseValue: { type: 'price', price: endBoxInfo.low },
-                                topFillColor1: 'rgba(16, 185, 129, 0.45)', // Tăng độ đậm nền
+                                topFillColor1: 'rgba(16, 185, 129, 0.45)',
                                 topFillColor2: 'rgba(16, 185, 129, 0.15)',
-                                topLineColor: '#059669', // Viền xanh ngọc đậm
+                                topLineColor: '#059669',
                                 bottomLineColor: '#059669',
                                 lineWidth: 2
                             }, 0);
@@ -1258,8 +1300,7 @@
                         }
                     }
 
-
-                    // 2. Vẽ 2 Đường Giá Trung Bình Quý khi bật "Đường Quý"
+                    // 2. Vẽ 2 Đường Giá Trung Bình Quý
                     if (activeIndicators.QLINES) {
                         candleSeriesInstance.createPriceLine({
                             price: details.start_price_mean,
@@ -1281,7 +1322,6 @@
                     }
                 }
 
-                // CÁC CHỈ BÁO KỸ THUẬT BỔ SUNG
                 if (activeIndicators.MA20) {
                     chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
                 }
