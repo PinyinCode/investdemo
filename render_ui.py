@@ -1114,7 +1114,7 @@ def generate_html():
                 const to = Math.min(chartData.length - 1, maxIdx + Math.floor(rangeSpan / 2));
                 chartInstance.timeScale().setVisibleLogicalRange({ from, to });
 
-                // 2. Căn chỉnh vùng giá (trục dọc) để chắc chắn thấy hộp quý
+                // 2. Căn chỉnh vùng giá (trục dọc) để tự động bắt khung giá quý (cho cả nút đầu và cuối)
                 if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {
                     const pricePadding = (qMaxPrice - qMinPrice) * 0.5;
                     chartInstance.priceScale('right').setVisiblePriceRange({
