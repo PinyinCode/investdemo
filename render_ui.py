@@ -14,7 +14,7 @@ def generate_html():
         json.dump(sim_data, f, ensure_ascii=False, indent=4)
 
     # 2. Xây dựng toàn bộ giao diện HTML
-    html_content = f"""<!DOCTYPE html>
+    html_content = """<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
