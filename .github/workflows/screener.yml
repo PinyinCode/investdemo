@@ -42,11 +42,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Thêm cả file giao diện index.html và file tính toán lãi suất symbol_sim_rates.json
-          git add index.html symbol_sim_rates.json
+          # Thêm đầy đủ file giao diện index.html và các file dữ liệu JSON tính toán mới
+          git add index.html symbol_sim_rates.json quarterly_mean_details.json
           
           # Kiểm tra xem có thay đổi hay không trước khi commit
           git status
           
-          git commit -m "📊 Auto-calculate symbol rates & render index.html via Python" || echo "No changes to commit"
+          git commit -m "📊 Auto-calculate symbol rates & details, then render index.html via Python" || echo "No changes to commit"
           git push
