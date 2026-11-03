@@ -270,10 +270,19 @@ def generate_html():
     <div id="ai-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-3 md:p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10">
-                <div class="flex items-center space-x-3">
-                    <span id="modal-symbol" class="text-2xl font-black text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">--</span>
+                <div class="flex items-center space-x-2">
+                    <button type="button" onclick="navigateModalSymbol(-1)" class="text-slate-400 hover:text-white px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã trước">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                    </button>
+                    
+                    <span id="modal-symbol" class="text-xl md:text-2xl font-black text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">--</span>
+                    
+                    <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+
                     <div>
-                        <h3 class="text-sm font-bold text-white">Hệ Thống Phân Tích Chuyên Sâu & Giả Lập Đầu Tư</h3>
+                        <h3 class="text-xs md:text-sm font-bold text-white">Phân Tích & Giả Lập Đầu Tư</h3>
                         <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
                     </div>
                 </div>
@@ -692,7 +701,6 @@ def generate_html():
             return num.toFixed(1) + '%';
         }
 
-        // Hàm định dạng tự động thêm dấu chấm phân cách hàng nghìn khi nhập ô tiền tệ
         function formatCurrencyInput(input) {
             let value = input.value.replace(/\\D/g, "");
             if (value === "") {
@@ -702,7 +710,6 @@ def generate_html():
             input.value = Number(value).toLocaleString("vi-VN");
         }
 
-        // Hàm lấy số thực từ chuỗi có chứa dấu chấm phân cách
         function parseCleanNumber(valStr) {
             if (!valStr) return 0;
             let clean = valStr.toString().replace(/\\./g, "").replace(/,/g, "");
@@ -970,7 +977,6 @@ def generate_html():
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
-            // Tự động điền tỷ suất sinh lời quá khứ thực tế của mã vào tab Giả lập kèm định dạng tiền tệ có dấu .
             let histRate = 15;
             if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
                 histRate = symbolSimRates[symbol].annual_rate_percent;
@@ -988,6 +994,17 @@ def generate_html():
         }
 
         function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
+
+        function navigateModalSymbol(direction) {
+            const symbols = screenerResults.map(s => s.symbol).sort();
+            const currentIndex = symbols.indexOf(currentSymbol);
+            if (currentIndex !== -1) {
+                let newIndex = currentIndex + direction;
+                if (newIndex < 0) newIndex = symbols.length - 1;
+                if (newIndex >= symbols.length) newIndex = 0;
+                openModal(symbols[newIndex]);
+            }
+        }
 
         function calculateModalSimulation() {
             let p0 = parseCleanNumber(document.getElementById('modal-sim-initial').value);
