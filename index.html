@@ -867,7 +867,7 @@
             }
         }
 
-                        async function loadBctcDetail(symbol) {
+                                async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
             
@@ -877,23 +877,23 @@
             try {
                 let data = null;
 
-                // 1. Thử fetch file JSON riêng trong thư mục bctc_data/
+                // 1. Thử fetch file JSON chữ thường (acb.json) hoặc chữ hoa (ACB.json)
                 try {
                     let res = await fetch(`bctc_data/${symbol.toLowerCase()}.json?t=` + new Date().getTime());
                     if (!res.ok) {
-                        res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
+                        res = await fetch(`bctc_data/${symbol.toUpperCase()}.json?t=` + new Date().getTime());
                     }
                     if (res.ok) {
                         const textData = await res.text();
                         data = JSON.parse(textData.replace(/\s*NaN/g, ': null'));
                     }
                 } catch (e) {
-                    console.warn("Không fetch được file JSON riêng, chuyển sang dữ liệu chung.");
+                    console.warn("Không fetch được file JSON BCTC riêng.");
                 }
 
-                // 2. Nếu không có file riêng, lấy trực tiếp từ mảng dữ liệu chung (screenerResults hoặc stockDb nếu có sẵn)
+                // 2. Dự phòng lấy từ dữ liệu tổng hợp nếu không tìm thấy file riêng
                 if (!data && typeof screenerResults !== 'undefined') {
-                    let stockItem = screenerResults.find(s => s.symbol === symbol);
+                    let stockItem = screenerResults.find(s => s.symbol.toUpperCase() === symbol.toUpperCase());
                     if (stockItem) data = stockItem;
                 }
 
@@ -901,7 +901,7 @@
                     throw new Error("Không tìm thấy dữ liệu BCTC cho mã " + symbol);
                 }
 
-                // Nếu dữ liệu lấy từ data.json chung có sẵn dạng bctc_history
+                // Trường hợp 1: Dữ liệu bctc_history cô đọng từ data.json
                 if (!data.balance_sheet && data.bctc_history && Array.isArray(data.bctc_history)) {
                     let latest = data.bctc_history[0] || {};
                     if (balanceContainer) {
@@ -914,13 +914,13 @@
                         </div>`;
                     }
                     if (incomeContainer) {
-                        let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th><th class="p-2 text-right">Tổng tài sản (B.VNĐ)</th><th class="p-2 text-right">Cho vay (B.VNĐ)</th><th class="p-2 text-right">Lợi nhuận (B.VNĐ)</th></tr></thead><tbody class="divide-y divide-slate-900">';
+                        let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th><th class="p-2 text-right">Tổng tài sản (Tỷ)</th><th class="p-2 text-right">Cho vay (Tỷ)</th><th class="p-2 text-right">Lợi nhuận (Tỷ)</th></tr></thead><tbody class="divide-y divide-slate-900">';
                         data.bctc_history.slice(0, 6).forEach(row => {
                             html += `<tr class="hover:bg-slate-900/50">
                                 <td class="p-2 font-bold text-indigo-300">${row.period}</td>
-                                <td class="p-2 text-right text-slate-200">${formatNumber((row.total_assets || 0) * 1e9)}</td>
-                                <td class="p-2 text-right text-slate-200">${formatNumber((row.loans || 0) * 1e9)}</td>
-                                <td class="p-2 text-right text-emerald-400 font-semibold">${formatNumber((row.net_profit || 0) * 1e9)}</td>
+                                <td class="p-2 text-right text-slate-200">${row.total_assets || 0}</td>
+                                <td class="p-2 text-right text-slate-200">${row.loans || 0}</td>
+                                <td class="p-2 text-right text-emerald-400 font-semibold">${row.net_profit || 0}</td>
                             </tr>`;
                         });
                         html += '</tbody></table>';
@@ -929,13 +929,14 @@
                     return;
                 }
 
-                // Hiển thị Cân đối kế toán (Balance Sheet) dạng dọc chuẩn
+                // Trường hợp 2: Cấu trúc Chi tiết BCTC (Bảng Cân đối kế toán)
                 if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
                     let groupedBs = {};
                     data.balance_sheet.forEach(item => {
-                        if (item && item.period && item.name) {
+                        if (item && item.period) {
+                            let fieldName = item.name || item.id || 'Chỉ tiêu';
                             if (!groupedBs[item.period]) groupedBs[item.period] = {};
-                            groupedBs[item.period][item.name] = item.value;
+                            groupedBs[item.period][fieldName] = item.value;
                         }
                     });
                     
@@ -953,34 +954,31 @@
                         html += '</div>';
                         balanceContainer.innerHTML = html;
                     } else {
-                        balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu cân đối kế toán.</p>';
+                        balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu bảng cân đối kế toán.</p>';
                     }
-                } else if (balanceContainer) {
-                    balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có cấu trúc dữ liệu cân đối kế toán.</p>';
                 }
 
-                // Xử lý Kết quả kinh doanh
+                // Trường hợp 3: Kết quả kinh doanh
                 if (incomeContainer) {
                     let incomeData = data.income_statement || data.income || [];
                     if (Array.isArray(incomeData) && incomeData.length > 0) {
                         let groupedByPeriod = {};
                         let metricNames = {}; 
                         incomeData.forEach(item => {
-                            if (item && item.period && (item.id || item.name)) {
+                            if (item && item.period) {
                                 let key = item.id || item.name;
+                                let name = item.name || item.id;
                                 if (!groupedByPeriod[item.period]) groupedByPeriod[item.period] = {};
                                 groupedByPeriod[item.period][key] = item.value;
-                                if (item.name) metricNames[key] = item.name;
+                                metricNames[key] = name;
                             }
                         });
 
                         let periods = Object.keys(groupedByPeriod).sort().reverse();
                         if (periods.length > 0) {
-                            let availableMetrics = Object.keys(metricNames).slice(0, 3);
-                            if (availableMetrics.length === 0) availableMetrics = ['Lợi nhuận gộp', 'Doanh thu thuần', 'Lợi nhuận sau thuế'];
-                            
+                            let availableMetrics = Object.keys(metricNames).slice(0, 4);
                             let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th>';
-                            availableMetrics.forEach(mId => { html += `<th class="p-2 text-right">${metricNames[mId] || mId}</th>`; });
+                            availableMetrics.forEach(mId => { html += `<th class="p-2 text-right truncate">${metricNames[mId]}</th>`; });
                             html += '</tr></thead><tbody class="divide-y divide-slate-900">';
                             
                             periods.slice(0, 6).forEach(p => {
@@ -995,10 +993,8 @@
                             html += '</tbody></table>';
                             incomeContainer.innerHTML = html;
                         } else {
-                            incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Không có dữ liệu kết quả kinh doanh.</p>';
+                            incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có dữ liệu kết quả kinh doanh.</p>';
                         }
-                    } else {
-                        incomeContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có file hoặc dữ liệu kết quả kinh doanh.</p>';
                     }
                 }
 
