@@ -12,13 +12,13 @@ def generate_html():
     with open("sim_results.json", "w", encoding="utf-8") as f:
         json.dump(sim_data, f, ensure_ascii=False, indent=4)
 
-    # 2. Xây dựng toàn bộ giao diện HTML (Không dùng f-string ở ngoặc nhọn để tránh lỗi CSS/JS)
+    # 2. Xây dựng toàn bộ giao diện HTML
     html_content = """<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pro Quant Screener - VN100</title>
+    <title>Pro Quant Screener & Investment Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -185,6 +185,60 @@ def generate_html():
         </div>
     </div>
 
+    <!-- MODAL GIẢ LẬP ĐẦU TƯ & TÍCH SẢN (DCA) -->
+    <div id="simulator-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-calculator text-emerald-400"></i>
+                    <h3 class="text-sm font-bold text-white">Giả Lập Đầu Tư & Tích Sản Định Kỳ (DCA)</h3>
+                </div>
+                <button type="button" onclick="closeSimulatorModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-5 space-y-4 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-semibold">Vốn ban đầu (VNĐ)</label>
+                        <input type="number" id="sim-initial" value="50000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-semibold">Tích sản hàng tháng (VNĐ)</label>
+                        <input type="number" id="sim-monthly" value="5000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-semibold">Kỳ hạn đầu tư</label>
+                        <select id="sim-years" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
+                            <option value="1">1 Năm</option>
+                            <option value="3" selected>3 Năm</option>
+                            <option value="5">5 Năm</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-semibold">Lợi nhuận kỳ vọng (%/năm)</label>
+                        <input type="number" id="sim-rate" value="15" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+
+                <button type="button" onclick="calculateSimulation()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold transition shadow-lg">
+                    Tính Toán Lợi Nhuận Tương Lai
+                </button>
+
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2 mt-4">
+                    <div class="flex justify-between"><span class="text-slate-400">Tổng vốn gốc bỏ ra:</span> <span id="sim-res-principal" class="font-bold text-slate-200">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Lợi nhuận ước tính:</span> <span id="sim-res-profit" class="font-bold text-emerald-400">--</span></div>
+                    <div class="border-t border-slate-800 pt-2 flex justify-between text-sm"><span class="text-slate-300 font-bold">Tổng tài sản tương lai:</span> <span id="sim-res-total" class="font-black text-amber-400">--</span></div>
+                </div>
+            </div>
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
+                <button type="button" onclick="closeSimulatorModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold">Đóng</button>
+            </div>
+        </div>
+    </div>
+
     <!-- HEADER CHÍNH -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
@@ -199,6 +253,10 @@ def generate_html():
             </div>
             
             <div class="flex items-center gap-2">
+                <!-- NÚT MỞ GIẢ LẬP ĐẦU TƯ -->
+                <button type="button" onclick="openSimulatorModal()" class="px-3 py-2 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-calculator text-emerald-400"></i> <span class="hidden md:inline">Giả lập đầu tư</span>
+                </button>
                 <button type="button" onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
                 </button>
@@ -616,6 +674,35 @@ def generate_html():
         }
 
         function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+
+        // Logic giả lập đầu tư DCA & Lãi kép
+        function openSimulatorModal() { 
+            document.getElementById('simulator-modal').classList.remove('hidden'); 
+            calculateSimulation(); 
+        }
+        function closeSimulatorModal() { 
+            document.getElementById('simulator-modal').classList.add('hidden'); 
+        }
+        function calculateSimulation() {
+            let p0 = parseFloat(document.getElementById('sim-initial').value) || 0;
+            let pMonthly = parseFloat(document.getElementById('sim-monthly').value) || 0;
+            let years = parseInt(document.getElementById('sim-years').value) || 1;
+            let rate = (parseFloat(document.getElementById('sim-rate').value) || 15) / 100;
+
+            let totalPrincipal = p0 + (pMonthly * 12 * years);
+            let futureVal = p0 * Math.pow(1 + rate, years);
+            let monthlyRate = rate / 12;
+            let totalMonths = years * 12;
+            
+            for (let i = 1; i <= totalMonths; i++) {
+                futureVal += pMonthly * Math.pow(1 + monthlyRate, totalMonths - i + 1);
+            }
+            let profit = futureVal - totalPrincipal;
+
+            document.getElementById('sim-res-principal').innerText = Math.round(totalPrincipal).toLocaleString() + " VNĐ";
+            document.getElementById('sim-res-profit').innerText = "+" + Math.round(profit).toLocaleString() + " VNĐ";
+            document.getElementById('sim-res-total').innerText = Math.round(futureVal).toLocaleString() + " VNĐ";
+        }
 
         let screenerResults = [];
         let currentSymbolHistory = null;
@@ -1185,7 +1272,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
     
-    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML}!")
+    print(f"✅ Đã tự động render thành công toàn bộ giao diện (bao gồm Modal Giả lập) ra file {OUTPUT_HTML}!")
 
 if __name__ == "__main__":
     generate_html()
