@@ -94,8 +94,8 @@ def run_symbol_specific_simulation(symbol, initial_capital, monthly_contribution
 
 def run_complex_backtest_simulation(history_dir="history", output_json="symbol_sim_rates.json"):
     """
-    Quét tất cả các file trong thư mục history/ để tính lãi suất quá khứ (CAGR) của từng mã,
-    sau đó lưu ra file JSON để giao diện web (render_ui.py) có thể đọc và nạp vào modal.
+    🚀 ĐÃ SỬA: Quét toàn bộ thư mục history/ để tính lãi suất quá khứ (CAGR) của TỪNG MÃ,
+    sau đó lưu ra file symbol_sim_rates.json để render_ui.py đọc.
     """
     rates_map = {}
     
@@ -113,6 +113,7 @@ def run_complex_backtest_simulation(history_dir="history", output_json="symbol_s
     try:
         with open(output_json, "w", encoding="utf-8") as f:
             json.dump(rates_map, f, ensure_ascii=False, indent=4)
+        print(f"✅ Đã tính toán và lưu thành công lãi suất cho {len(rates_map)} mã vào {output_json}")
     except Exception as e:
         print(f"⚠️ Không thể ghi file {output_json}: {e}")
 
@@ -123,10 +124,4 @@ def run_complex_backtest_simulation(history_dir="history", output_json="symbol_s
     }
 
 if __name__ == "__main__":
-    # Test thử nghiệm quét và tính toán toàn bộ mã
-    summary = run_complex_backtest_simulation()
-    print(f"📊 Đã quét và tính toán xong lãi suất lịch sử cho {summary.get('total_symbols_calculated', 0)} mã.")
-    
-    # Test thử nghiệm riêng cho mã VIC
-    res = run_symbol_specific_simulation("VIC", initial_capital=20000000, monthly_contribution=3000000, years=3)
-    print("📈 KẾT QUẢ GIẢ LẬP RIÊNG CHO MÃ VIC:", res)
+    run_complex_backtest_simulation()
