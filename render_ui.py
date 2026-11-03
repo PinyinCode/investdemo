@@ -1,9 +1,20 @@
+# render_ui.py
 import os
+import json
+from simulator import run_complex_backtest_simulation
 
 OUTPUT_HTML = "index.html"
 
 def generate_html():
-    html_content = """<!DOCTYPE html>
+    # 1. Gọi module Simulator phía Python để xử lý các tính toán phức tạp
+    sim_data = run_complex_backtest_simulation()
+    
+    # Lưu kết quả tính toán từ Python ra file JSON để Front-end (nếu cần) có thể đọc
+    with open("sim_results.json", "w", encoding="utf-8") as f:
+        json.dump(sim_data, f, ensure_ascii=False, indent=4)
+
+    # 2. Xây dựng toàn bộ giao diện HTML
+    html_content = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -184,7 +195,7 @@ def generate_html():
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành</p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành (Python Simulator Ready)</p>
                 </div>
             </div>
             
@@ -276,7 +287,6 @@ def generate_html():
                 </button>
             </div>
             
-            <!-- MẶC ĐỊNH MỞ TAB BCTC & CƠ BẢN -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
                     <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Tra Cứu BCTC & Cơ Bản
@@ -296,7 +306,6 @@ def generate_html():
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
-                <!-- TAB ĐÁNH GIÁ AI -->
                 <div id="tab-content-eval" class="space-y-4 hidden">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
@@ -321,12 +330,11 @@ def generate_html():
                     </div>
                 </div>
 
-                <!-- TAB BCTC & CƠ BẢN (MẶC ĐỊNH MỞ) -->
                 <div id="tab-content-bctc" class="space-y-4">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-table mr-1.5"></i> Kết quả Kinh doanh Theo Quý</h4>
-                            <span class="text-[10px] text-slate-500">Nguồn: bctc_data/{symbol}.json</span>
+                            <span class="text-[10px] text-slate-500">Nguồn: bctc_data/{{symbol}}.json</span>
                         </div>
                         <div id="bctc-income-container" class="overflow-x-auto">
                             <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
@@ -413,7 +421,7 @@ def generate_html():
     </div>
 
     <script>
-        const firebaseConfig = {
+        const firebaseConfig = {{
             apiKey: "AIzaSyA8VlFQvE_om-51pxffgd7hd2Ud6hQm11k",
             authDomain: "hoc-tieng-trung-64b8d.firebaseapp.com",
             projectId: "hoc-tieng-trung-64b8d",
@@ -421,7 +429,7 @@ def generate_html():
             messagingSenderId: "614326539390",
             appId: "1:614326539390:web:57344a021d7cbc7b18b42f",
             databaseURL: "https://hoc-tieng-trung-64b8d-default-rtdb.asia-southeast1.firebasedatabase.app"
-        };
+        }};
 
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -439,15 +447,15 @@ def generate_html():
                     const userDocRef = db.collection('allowed_users').doc(emailKey);
                     const doc = await userDocRef.get();
 
-                    let userData = {};
+                    let userData = {{}};
                     if (!doc.exists) {
                         const expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + 7);
-                        userData = {
+                        userData = {{
                             email: user.email,
                             role: 'user',
                             expiresAt: expireDate.toISOString()
-                        };
+                        }};
                         await userDocRef.set(userData);
                     } else {
                         userData = doc.data();
@@ -507,7 +515,7 @@ def generate_html():
             } else {
                 loginForm.classList.add('hidden');
                 registerForm.classList.remove('hidden');
-                registerBtn.className = "flex-1 pb-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition";
+                registerBtn.className = "flex-1 pb-2 text-xs font-bold text-indigo-400 border-b-2 border-emerald-500 transition";
                 loginBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
             }
         }
@@ -537,11 +545,11 @@ def generate_html():
                 const cred = await auth.createUserWithEmailAndPassword(email, pass);
                 const expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 7);
-                await db.collection('allowed_users').doc(email.toLowerCase()).set({
+                await db.collection('allowed_users').doc(email.toLowerCase()).set({{
                     email: email,
                     role: 'user',
                     expiresAt: expireDate.toISOString()
-                });
+                }});
                 alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
             } catch (err) {
                 errBox.innerText = "Lỗi đăng ký: " + err.message;
@@ -579,7 +587,7 @@ def generate_html():
             }
         }
 
-        function closeAccountModal() { document.getElementById('account-modal').classList.add('hidden'); }
+        function closeAccountModal() {{ document.getElementById('account-modal').classList.add('hidden'); }}
 
         async function openAdminModal() {
             document.getElementById('admin-modal').classList.remove('hidden');
@@ -599,9 +607,9 @@ def generate_html():
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-slate-800/50 transition";
                     tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white">${data.email || doc.id}</td>
-                        <td class="p-3 text-slate-300">${expDate ? expDate.toLocaleDateString('vi-VN') : '—'}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                        <td class="p-3 font-semibold text-white">${{data.email || doc.id}}</td>
+                        <td class="p-3 text-slate-300">${{expDate ? expDate.toLocaleDateString('vi-VN') : '—'}}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${{data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}}">${{data.role || 'user'}}</span></td>
                     `;
                     listEl.appendChild(tr);
                 });
@@ -610,7 +618,7 @@ def generate_html():
             }
         }
 
-        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+        function closeAdminModal() {{ document.getElementById('admin-modal').classList.add('hidden'); }}
 
         let screenerResults = [];
         let currentSymbolHistory = null;
@@ -619,9 +627,9 @@ def generate_html():
         let volumeSeriesInstance = null;
         let currentSymbol = null;
         let currentInterval = 'D1';
-        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
+        let activeIndicators = {{ VOLMA: false, MA20: true, MA50: false, RSI: false }};
 
-        const SECTOR_NAMES = { 
+        const SECTOR_NAMES = {{ 
             "NGAN_HANG": "Ngân hàng", 
             "CHUNG_KHOAN": "Chứng khoán", 
             "BAT_DONG_SAN": "Bất động sản", 
@@ -630,12 +638,12 @@ def generate_html():
             "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ",
             "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
             "KHAC": "Khác" 
-        };
+        }};
 
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
-            return Math.round(val).toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ",");
+            return Math.round(val).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",");
         }
         function formatPercent(num) {
             if (num === undefined || num === null) return '—';
@@ -650,16 +658,16 @@ def generate_html():
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
                 let screenerData = await screenerRes.json();
 
-                let rawStockData = {};
+                let rawStockData = {{}};
                 try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
                     if (dataRes.ok) rawStockData = await dataRes.json();
-                } catch (e) {}
+                } catch (e) {{}}
 
-                screenerResults = screenerData.map(item => {
+                screenerResults = screenerData.map(item => {{
                     const sym = item.symbol;
-                    const extraData = rawStockData[sym] || {};
-                    return {
+                    const extraData = rawStockData[sym] || {{}};
+                    return {{
                         ...item,
                         eps: extraData.eps !== undefined ? extraData.eps : item.eps,
                         dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
@@ -673,8 +681,8 @@ def generate_html():
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
                         macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
                         ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at
-                    };
-                });
+                    }};
+                }});
                 renderCards();
             } catch (error) {
                 const container = document.getElementById('stock-container');
@@ -694,11 +702,11 @@ def generate_html():
             const selectedSector = document.getElementById('sector-filter').value;
             const rankingMode = document.getElementById('ranking-filter').value;
 
-            let filtered = screenerResults.filter(item => {
+            let filtered = screenerResults.filter(item => {{
                 let matchSearch = item.symbol.includes(searchTerm);
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
                 return matchSearch && matchSector;
-            });
+            }});
 
             if (rankingMode === "FUNDAMENTAL") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
@@ -711,7 +719,7 @@ def generate_html():
             }
 
             container.innerHTML = '';
-            filtered.forEach((item, index) => {
+            filtered.forEach((item, index) => {{
                 let statusColor = "text-slate-400 bg-slate-800";
                 let borderColor = "border-slate-700";
                 let displayRec = item.technical_status || "Tích lũy";
@@ -726,57 +734,57 @@ def generate_html():
                 let topBadge = "";
                 let cardGlow = "";
                 if (rankingMode !== "NONE") {
-                    if (index === 0) { topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }
-                    else if (index === 1) { topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }
-                    else if (index === 2) { topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }
-                    else { topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }
+                    if (index === 0) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }}
+                    else if (index === 1) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }}
+                    else if (index === 2) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }}
+                    else {{ topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${{index + 1}}</span>`; }}
                 }
 
                 let scoreHtml = "";
                 if (rankingMode !== "NONE") {
                     let label = "Điểm Tổng hợp";
                     let valScore = item.total_score;
-                    if (rankingMode === "FUNDAMENTAL") { label = "Điểm Cơ bản"; valScore = item.fundamental_score; }
-                    else if (rankingMode === "TECHNICAL") { label = "Điểm Kỹ thuật"; valScore = item.technical_score; }
+                    if (rankingMode === "FUNDAMENTAL") {{ label = "Điểm Cơ bản"; valScore = item.fundamental_score; }}
+                    else if (rankingMode === "TECHNICAL") {{ label = "Điểm Kỹ thuật"; valScore = item.technical_score; }}
 
-                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${label}: <strong>${valScore}/100</strong></div>`;
+                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${{label}}: <strong>${{valScore}}/100</strong></div>`;
                 }
 
                 const card = document.createElement('div');
-                card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
+                card.className = `relative bg-slate-900 rounded-xl border ${{borderColor}} ${{cardGlow}} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
                 card.onclick = () => openChartModal(item.symbol);
                 
                 card.innerHTML = `
-                    ${topBadge}
+                    ${{topBadge}}
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-xl font-black text-white">${item.symbol}</span>
-                                    <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
+                                    <span class="text-xl font-black text-white">${{item.symbol}}</span>
+                                    <button type="button" onclick="event.stopPropagation(); openModal('${{item.symbol}}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
                                         <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
-                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
+                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${{statusColor}}">${{displayRec}}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
+                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${{SECTOR_NAMES[item.sector] || item.sector}}</span>
                             </div>
                             <div class="text-right">
-                                <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
-                                <span class="text-[10px] text-slate-500">Tổng điểm: ${item.total_score}</span>
+                                <span class="block text-lg font-bold text-emerald-400">${{formatNumber(item.close_price)}}</span>
+                                <span class="text-[10px] text-slate-500">Tổng điểm: ${{item.total_score}}</span>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50 text-center">
-                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${item.pe > 0 ? item.pe.toFixed(1) : '—'}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${item.pb > 0 ? item.pb.toFixed(1) : '—'}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
+                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${{item.pe > 0 ? item.pe.toFixed(1) : '—'}}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${{item.pb > 0 ? item.pb.toFixed(1) : '—'}}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${{formatPercent(item.roe)}}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${{item.total_score}}đ</span></div>
                         </div>
                     </div>
-                    ${scoreHtml}
+                    ${{scoreHtml}}
                 `;
                 container.appendChild(card);
-            });
+            }});
         }
 
         function switchAiTab(tabName) {
@@ -806,17 +814,17 @@ def generate_html():
             if (balanceContainer) balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
 
             try {
-                const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
+                const res = await fetch(`bctc_data/${{symbol}}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 const textData = await res.text();
                 let data = JSON.parse(textData.replace(/:\\s*NaN/g, ': null'));
 
                 if (incomeContainer && data.income_statement && Array.isArray(data.income_statement)) {
-                    let groupedByPeriod = {};
-                    let metricNames = {}; 
+                    let groupedByPeriod = {{}};
+                    let metricNames = {{}}; 
                     data.income_statement.forEach(item => {
                         if (item && item.period && item.id) {
-                            if (!groupedByPeriod[item.period]) groupedByPeriod[item.period] = {};
+                            if (!groupedByPeriod[item.period]) groupedByPeriod[item.period] = {{}};
                             groupedByPeriod[item.period][item.id] = item.value;
                             if (item.name) metricNames[item.id] = item.name;
                         }
@@ -826,15 +834,15 @@ def generate_html():
                     if (periods.length > 0) {
                         let availableMetrics = Object.keys(metricNames).slice(0, 3);
                         let html = '<table class="w-full text-left text-xs"><thead><tr class="border-b border-slate-800 text-slate-400 bg-slate-900"><th class="p-2">Kỳ</th>';
-                        availableMetrics.forEach(mId => { html += `<th class="p-2 text-right">${metricNames[mId]}</th>`; });
+                        availableMetrics.forEach(mId => { html += `<th class="p-2 text-right">${{metricNames[mId]}}</th>`; });
                         html += '</tr></thead><tbody class="divide-y divide-slate-900">';
                         
                         periods.slice(0, 6).forEach(p => {
-                            let pData = groupedByPeriod[p] || {};
-                            html += `<tr class="hover:bg-slate-900/50"><td class="p-2 font-bold text-indigo-300">${p}</td>`;
+                            let pData = groupedByPeriod[p] || {{}};
+                            html += `<tr class="hover:bg-slate-900/50"><td class="p-2 font-bold text-indigo-300">${{p}}</td>`;
                             availableMetrics.forEach(mId => {
                                 let val = pData[mId] || 0;
-                                html += `<td class="p-2 text-right text-slate-200">${formatNumber(val)}</td>`;
+                                html += `<td class="p-2 text-right text-slate-200">${{formatNumber(val)}}</td>`;
                             });
                             html += '</tr>';
                         });
@@ -844,22 +852,22 @@ def generate_html():
                 }
 
                 if (balanceContainer && data.balance_sheet && Array.isArray(data.balance_sheet)) {
-                    let groupedBs = {};
+                    let groupedBs = {{}};
                     data.balance_sheet.forEach(item => {
                         if (item && item.period && item.name) {
-                            if (!groupedBs[item.period]) groupedBs[item.period] = {};
+                            if (!groupedBs[item.period]) groupedBs[item.period] = {{}};
                             groupedBs[item.period][item.name] = item.value;
                         }
                     });
                     let periods = Object.keys(groupedBs).sort().reverse();
                     if (periods.length > 0) {
                         let latestPeriod = periods[0];
-                        let latestData = groupedBs[latestPeriod] || {};
-                        let html = `<div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${latestPeriod}</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
+                        let latestData = groupedBs[latestPeriod] || {{}};
+                        let html = `<div class="mb-2 text-[11px] text-slate-400 font-semibold">Kỳ báo cáo mới nhất: ${{latestPeriod}}</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
                         let count = 0;
                         for (const [name, val] of Object.entries(latestData)) {
                             if (count >= 12) break;
-                            html += `<div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400 truncate pr-2">${name}:</span><span class="font-bold text-slate-200">${typeof val === 'number' && !isNaN(val) ? formatNumber(val) : (val || '—')}</span></div>`;
+                            html += `<div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-800 text-xs"><span class="text-slate-400 truncate pr-2">${{name}}:</span><span class="font-bold text-slate-200">${{typeof val === 'number' && !isNaN(val) ? formatNumber(val) : (val || '—')}}</span></div>`;
                             count++;
                         }
                         html += '</div>';
@@ -878,7 +886,7 @@ def generate_html():
 
             switchAiTab('bctc');
             document.getElementById('modal-symbol').innerText = item.symbol;
-            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
+            document.getElementById('modal-sector').innerText = `Ngành: ${{SECTOR_NAMES[item.sector] || item.sector}}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
@@ -896,13 +904,13 @@ def generate_html():
             document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
-            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
+            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${{item.ai_updated_at || 'Hệ thống tự động'}}`;
 
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
         }
 
-        function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
+        function closeModal() {{ document.getElementById('ai-modal').classList.add('hidden'); }}
 
         function navigateSymbol(direction) {
             const symbols = screenerResults.map(s => s.symbol).sort();
@@ -931,8 +939,8 @@ def generate_html():
             symbols.sort().forEach(sym => {
                 const item = document.createElement('button');
                 item.type = 'button';
-                item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
-                item.innerHTML = `<span>${sym}</span>`;
+                item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${{sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}}`;
+                item.innerHTML = `<span>${{sym}}</span>`;
                 item.onclick = (e) => {
                     e.stopPropagation();
                     document.getElementById('symbol-dropdown').classList.add('hidden');
@@ -959,7 +967,7 @@ def generate_html():
         function switchInterval(interval) {
             currentInterval = interval;
             ['d1', 'w1', 'mn'].forEach(i => {
-                const btn = document.getElementById(`btn-${i}`);
+                const btn = document.getElementById(`btn-${{i}}`);
                 if (btn) {
                     btn.className = i === interval.toLowerCase() 
                         ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
@@ -971,7 +979,7 @@ def generate_html():
 
         function toggleIndicator(name) {
             activeIndicators[name] = !activeIndicators[name];
-            const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
+            const btn = document.getElementById(`btn-ind-${{name.toLowerCase()}}`);
             if (btn) {
                 btn.className = activeIndicators[name]
                     ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition"
@@ -1012,7 +1020,7 @@ def generate_html():
             document.getElementById('chart-loading').classList.remove('hidden');
 
             try {
-                const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
+                const res = await fetch(`history/${{symbol}}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 currentSymbolHistory = await res.json();
                 renderChartInstance(currentSymbolHistory);
@@ -1077,25 +1085,25 @@ def generate_html():
             const height = container.clientHeight || 380;
             const hasRSI = activeIndicators.RSI;
 
-            chartInstance = LC.createChart(container, {
+            chartInstance = LC.createChart(container, {{
                 width: width, height: height,
-                layout: { background: { type: 'solid', color: '#0f172a' }, textColor: '#94a3b8' },
-                grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
-                timeScale: { borderColor: '#334155' }
-            });
+                layout: {{ background: {{ type: 'solid', color: '#0f172a' }}, textColor: '#94a3b8' }},
+                grid: {{ vertLines: {{ color: '#1e293b' }}, horzLines: {{ color: '#1e293b' }} }},
+                timeScale: {{ borderColor: '#334155' }}
+            }});
 
-            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {
+            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {{
                 upColor: '#10b981', downColor: '#f43f5e',
                 borderUpColor: '#10b981', borderDownColor: '#f43f5e',
                 wickUpColor: '#10b981', wickDownColor: '#f43f5e',
-            }, 0);
+            }}, 0);
 
-            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
-                priceFormat: { type: 'volume' },
+            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {{
+                priceFormat: {{ type: 'volume' }},
                 priceScaleId: 'volumeScale'
-            }, 0);
+            }}, 0);
 
-            chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.75, bottom: 0 } });
+            chartInstance.priceScale('volumeScale').applyOptions({{ scaleMargins: {{ top: 0.75, bottom: 0 }} }});
 
             let chartData = [];
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
@@ -1104,24 +1112,24 @@ def generate_html():
 
             if (chartData && chartData.length > 0) {
                 candleSeriesInstance.setData(chartData);
-                volumeSeriesInstance.setData(chartData.map(row => ({
+                volumeSeriesInstance.setData(chartData.map(row => ({{
                     time: row.time, value: row.volume,
                     color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
-                })));
+                }})));
 
                 if (activeIndicators.MA20) {
-                    chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
+                    chartInstance.addSeries(LC.LineSeries, {{ color: '#3b82f6', lineWidth: 1 }}, 0).setData(calculateMA(chartData, 20));
                 }
                 if (activeIndicators.MA50) {
-                    chartInstance.addSeries(LC.LineSeries, { color: '#eab308', lineWidth: 1 }, 0).setData(calculateMA(chartData, 50));
+                    chartInstance.addSeries(LC.LineSeries, {{ color: '#eab308', lineWidth: 1 }}, 0).setData(calculateMA(chartData, 50));
                 }
                 if (activeIndicators.VOLMA) {
-                    chartInstance.addSeries(LC.LineSeries, { color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }, 0).setData(calculateVolumeMA(chartData, 20));
+                    chartInstance.addSeries(LC.LineSeries, {{ color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }}, 0).setData(calculateVolumeMA(chartData, 20));
                 }
                 if (hasRSI) {
-                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, { color: '#a855f7', lineWidth: 1.5 }, 1);
-                    rsiSeries.createPriceLine({ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
-                    rsiSeries.createPriceLine({ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
+                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, {{ color: '#a855f7', lineWidth: 1.5 }}, 1);
+                    rsiSeries.createPriceLine({{ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true }});
+                    rsiSeries.createPriceLine({{ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true }});
                     rsiSeries.setData(calculateRSI(chartData, 14));
                 }
 
@@ -1140,9 +1148,9 @@ def generate_html():
                     let changePct = 0;
                     if (index > 0) changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
                     
-                    legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
-                    legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-                    legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                    legendChange.innerText = `(${{changePct >= 0 ? '+' : ''}}${{changePct.toFixed(2)}}%)`;
+                    legendChange.className = `font-bold ${{changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}}`;
+                    legendClose.className = `font-bold ${{changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}}`;
                     legendVol.innerText = formatNumber(bar.volume);
                 }
 
@@ -1150,14 +1158,14 @@ def generate_html():
                     if (!param.point || !param.time) { if (latestBar) updateLegend(latestBar, chartData); }
                     else {
                         const dataPoint = param.seriesData.get(candleSeriesInstance);
-                        if (dataPoint) updateLegend({ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }, chartData);
+                        if (dataPoint) updateLegend({{ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }}, chartData);
                     }
                 });
 
                 setTimeout(() => {
                     const totalBars = chartData.length;
                     let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
-                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
+                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({{ from: totalBars - visibleBarsCount, to: totalBars - 1 }});
                     else chartInstance.timeScale().fitContent();
                 }, 50);
             }
@@ -1165,7 +1173,7 @@ def generate_html():
 
         function closeChartModal() {
             document.getElementById('chart-modal').classList.add('hidden');
-            if (chartInstance) { chartInstance.remove(); chartInstance = null; }
+            if (chartInstance) {{ chartInstance.remove(); chartInstance = null; }}
             currentSymbolHistory = null;
         }
 
@@ -1180,7 +1188,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
     
-    print(f"✅ Đã tự động render thành công toàn bộ giao diện gốc ra file {OUTPUT_HTML} từ Python!")
+    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML} (Tích hợp module Python Simulator thành công)!")
 
 if __name__ == "__main__":
     generate_html()
