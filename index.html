@@ -262,7 +262,6 @@
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
                     
-                    <!-- Prop chọn mã / Nhập trực tiếp mã -->
                     <div class="relative">
                         <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-20 text-center text-lg md:text-xl font-black text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
                     </div>
@@ -304,7 +303,7 @@
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
-                <!-- TAB ĐÁNH GIÁ AI (MẶC ĐỊNH HIỂN THỊ) -->
+                <!-- TAB ĐÁNH GIÁ AI -->
                 <div id="tab-content-eval" class="space-y-4">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
@@ -669,6 +668,7 @@
         let currentSymbol = null;
         let currentInterval = 'D1';
         let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
+        let currentActiveTab = 'eval'; // Ghi nhớ tab hiện tại
 
         const SECTOR_NAMES = { 
             "NGAN_HANG": "Ngân hàng", 
@@ -848,8 +848,6 @@
             });
         }
 
-                let currentActiveTab = 'eval'; // Biến ghi nhớ tab đang mở (mặc định là eval)
-
         function switchAiTab(tabName) {
             currentActiveTab = tabName; // Lưu lại tab hiện tại
             ['bctc', 'eval', 'simulator'].forEach(t => {
@@ -869,51 +867,6 @@
             }
         }
 
-        function openModal(symbol) {
-            currentSymbol = symbol;
-            const item = screenerResults.find(s => s.symbol === symbol);
-            if (!item) return;
-
-            // Giữ nguyên tab hiện tại thay vì ép về 'eval'
-            switchAiTab(currentActiveTab);
-            
-            document.getElementById('modal-symbol-input').value = item.symbol;
-            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
-            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
-            document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
-            document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
-            document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
-            document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
-            document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
-
-            document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
-            let priceZoneText = item.ai_price_zone;
-            if (typeof priceZoneText === 'object' && priceZoneText !== null) {
-                priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
-            }
-            document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
-
-            document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
-            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
-            document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
-            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
-
-            let histRate = 15;
-            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
-                histRate = symbolSimRates[symbol].annual_rate_percent;
-                document.getElementById('sim-historical-rate-text').innerText = histRate + "% / năm (Quá khứ thực tế)";
-            } else {
-                document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
-            }
-            document.getElementById('modal-sim-rate').value = histRate;
-            document.getElementById('modal-sim-initial').value = "20.000.000";
-            document.getElementById('modal-sim-monthly').value = "3.000.000";
-            document.getElementById('modal-sim-years').value = "3";
-
-            document.getElementById('ai-modal').classList.remove('hidden');
-            loadBctcDetail(symbol);
-        }
-
         async function loadBctcDetail(symbol) {
             const incomeContainer = document.getElementById('bctc-income-container');
             const balanceContainer = document.getElementById('bctc-balance-container');
@@ -922,8 +875,13 @@
             if (balanceContainer) balanceContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4"><i class="fa-solid fa-spinner spinner mr-1"></i> Đang tải dữ liệu BCTC...</p>';
 
             try {
-                const res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
+                // Tự động kiểm tra file chữ thường trước, nếu không được thì thử file gốc
+                let res = await fetch(`bctc_data/${symbol.toLowerCase()}.json?t=` + new Date().getTime());
+                if (!res.ok) {
+                    res = await fetch(`bctc_data/${symbol}.json?t=` + new Date().getTime());
+                }
                 if (!res.ok) throw new Error();
+
                 const textData = await res.text();
                 let data = JSON.parse(textData.replace(/\s*NaN/g, ': null'));
 
@@ -988,7 +946,51 @@
             }
         }
 
-        
+        function openModal(symbol) {
+            currentSymbol = symbol;
+            const item = screenerResults.find(s => s.symbol === symbol);
+            if (!item) return;
+
+            // Giữ nguyên tab hiện tại khi chuyển mã
+            switchAiTab(currentActiveTab);
+            
+            document.getElementById('modal-symbol-input').value = item.symbol;
+            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
+            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
+            document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
+            document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
+            document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
+            document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
+            document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
+
+            document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
+            let priceZoneText = item.ai_price_zone;
+            if (typeof priceZoneText === 'object' && priceZoneText !== null) {
+                priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
+            }
+            document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
+
+            document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
+            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
+            document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
+            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
+
+            let histRate = 15;
+            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
+                histRate = symbolSimRates[symbol].annual_rate_percent;
+                document.getElementById('sim-historical-rate-text').innerText = histRate + "% / năm (Quá khứ thực tế)";
+            } else {
+                document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
+            }
+            document.getElementById('modal-sim-rate').value = histRate;
+            document.getElementById('modal-sim-initial').value = "20.000.000";
+            document.getElementById('modal-sim-monthly').value = "3.000.000";
+            document.getElementById('modal-sim-years').value = "3";
+
+            document.getElementById('ai-modal').classList.remove('hidden');
+            loadBctcDetail(symbol);
+        }
+
         function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
 
         function navigateModalSymbol(direction) {
