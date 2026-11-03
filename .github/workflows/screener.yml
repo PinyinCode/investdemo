@@ -30,7 +30,12 @@ jobs:
           pip install pandas numpy requests
 
       - name: Run Python Scripts
-        run: python render_ui.py
+        run: |
+          echo "🔄 Đang chạy script tính toán lãi suất (simulator.py)..."
+          python simulator.py
+          
+          echo "🎨 Đang chạy script render giao diện (render_ui.py)..."
+          python render_ui.py
 
       - name: Commit and push generated files
         run: |
