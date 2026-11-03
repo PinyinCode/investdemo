@@ -24,7 +24,6 @@ VN100_SYMBOLS = [
     "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
 ]
 
-# Đảm bảo danh sách luôn độc nhất và sắp xếp gọn gàng
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 def fetch_financial_reports(symbol):
@@ -62,7 +61,7 @@ def auto_git_push_bctc():
     try:
         print("\n📤 Đang đồng bộ thư mục 'bctc_data' lên GitHub...")
         subprocess.run(["git", "add", OUTPUT_DIR], check=True)
-        commit_msg = f"Auto update BCTC data for full 100 symbols via vnstock v5 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update BCTC data via vnstock v5 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
         print("🚀 Đẩy dữ liệu BCTC lên GitHub thành công!")
@@ -70,18 +69,45 @@ def auto_git_push_bctc():
         print(f"ℹ️ Git push info: {e}")
 
 def main():
-    total = len(VN100_SYMBOLS)
-    print(f"🚀 Bắt đầu lấy dữ liệu BCTC qua vnstock v5 cho toàn bộ {total} mã VN100...")
+    print("==================================================")
+    print("       CHỌN CHẾ ĐỘ CÀO BÁO CÁO TÀI CHÍNH (BCTC)    ")
+    print("==================================================")
+    print("1. Cào TOÀN BỘ danh sách VN100")
+    print("2. Cào MỘT NHÓM MÃ hoặc MÃ LẺ (Tùy chọn)")
+    
+    mode_choice = input("Nhập lựa chọn của bạn (1/2, mặc định 2): ").strip()
+    
+    target_symbols = []
+    if mode_choice == '1':
+        target_symbols = VN100_SYMBOLS
+        print("-> Đã chọn chế độ cào toàn bộ danh sách VN100.")
+    else:
+        raw_input_symbols = input("Nhập mã cần cào (cách nhau bởi dấu phẩy, VD: ACB,BID,VNM): ").strip()
+        if raw_input_symbols:
+            target_symbols = [s.strip().upper() for s in raw_input_symbols.split(",") if s.strip()]
+            print(f"-> Đã chọn cào các mã: {target_symbols}")
+        else:
+            target_symbols = ["ACB"]
+            print("⚠️ Không nhận được mã hợp lệ, mặc định cào mã: ACB")
+
+    total = len(target_symbols)
+    print(f"\n🚀 Bắt đầu lấy dữ liệu BCTC qua vnstock v5 cho {total} mã...")
     
     success = 0
-    for i, symbol in enumerate(VN100_SYMBOLS):
+    for i, symbol in enumerate(target_symbols):
         print(f"[{i+1}/{total}] Xử lý: {symbol}...")
         if fetch_financial_reports(symbol):
             success += 1
         time.sleep(0.4)
         
     print(f"\n🎉 Hoàn tất! Đã lưu thành công {success}/{total} file BCTC.")
-    auto_git_push_bctc()
+    
+    # Hỏi ý kiến có muốn push git luôn không
+    push_choice = input("Bạn có muốn đồng bộ ngay lên GitHub không? (y/n, mặc định y): ").strip().lower()
+    if push_choice != 'n':
+        auto_git_push_bctc()
+    else:
+        print("ℹ️ Đã bỏ qua bước Git push.")
 
 if __name__ == "__main__":
     main()
