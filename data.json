@@ -2,16 +2,16 @@
     "ACB": {
         "symbol": "ACB",
         "close": 20300,
-        "volume": 17542800,
-        "pe": 7.57,
-        "pb": 1.17,
+        "volume": 1320600,
+        "pe": 7.32,
+        "pb": 1.13,
         "eps": 2773,
         "roe": 16.5,
         "roa": 1.6,
-        "dividend_yield": 2.95,
-        "recommendation": "ĐANG TÍCH LŨY NỀN",
-        "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "2026-11-02 20:57:38",
+        "dividend_yield": 3.05,
+        "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
+        "price_zone": "Khối lượng cạn kiệt ở mức 0.14x MA20.",
+        "updated_at": "2026-11-03 10:30:03",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -122,10 +122,7 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 20%",
         "ai_price_zone": "Vùng gom giá trị: dưới 20k, Vùng chặn lỗ: thủng 18k, Kỳ vọng dài hạn: tăng trưởng 25%",
         "macro_view": "Ngành ngân hàng Việt Nam đang trong chu kỳ tăng trưởng, với nhu cầu vốn và dịch vụ tài chính tăng cao. Tuy nhiên, cần chú ý đến các yếu tố vĩ mô như lạm phát, lãi suất và chính sách tiền tệ của Ngân hàng Nhà nước. Những yếu tố này có thể tác động trực tiếp đến dòng tiền và hoạt động kinh doanh của ACB.",
-        "ai_updated_at": "2026-11-02 15:02:06",
-        "bctc": "ACB có tỷ suất cổ tức gần nhất là 2.95%, tương đương với mức chia cổ tức ổn định từ hoạt động kinh doanh cốt lõi, không phải từ các yếu tố đột biến như bán tài sản hoặc lợi nhuận bất thường. ROE cao (16.5%) và LNST tăng trưởng đều đặn (9.77% YoY) cho thấy khả năng sinh lời bền vững. Tuy nhiên, cần theo dõi thêm để đảm bảo rằng chính sách cổ tức sẽ được duy trì trong dài hạn.",
-        "catalyst": "ACB sở hữu lợi thế cạnh tranh đáng kể thông qua mạng lưới chi nhánh rộng khắp, công nghệ ngân hàng tiên tiến và thương hiệu mạnh. Trong 2-3 năm tới, ACB có thể tiếp tục tăng trưởng nhờ vào việc mở rộng thị phần, nâng cao chất lượng dịch vụ và tận dụng xu hướng số hóa trong ngành ngân hàng.",
-        "risks": "Rủi ro chính đối với ACB bao gồm sự thay đổi về chính sách lãi suất, rủi ro tín dụng và cạnh tranh gay gắt từ các ngân hàng khác. Ngoài ra, tình hình kinh tế vĩ mô và biến động của thị trường tài chính cũng có thể ảnh hưởng đến hoạt động và kết quả kinh doanh của ACB."
+        "ai_updated_at": "2026-11-02 15:02:06"
     },
     "BID": {
         "symbol": "BID",
