@@ -696,10 +696,11 @@ def generate_html():
             return num.toFixed(1) + '%';
         }
 
-        async function loadData(showSpinner = false) {
+                async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
             try {
+                // 🚀 BỔ SUNG FETCH FILE symbol_sim_rates.json VÀO ĐÂY
                 const [screenerRes, ratesRes] = await Promise.all([
                     fetch('screener_results.json?t=' + new Date().getTime()),
                     fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
@@ -707,7 +708,11 @@ def generate_html():
 
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
                 let screenerData = await screenerRes.json();
-                if (ratesRes.ok) symbolSimRates = await ratesRes.json();
+                
+                // Lưu dữ liệu tỷ suất sinh lời vào biến toàn cục symbolSimRates
+                if (ratesRes.ok) {
+                    symbolSimRates = await ratesRes.json();
+                }
 
                 let rawStockData = {};
                 try {
