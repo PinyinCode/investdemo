@@ -24,10 +24,11 @@ def calculate_dca_investment(initial_capital, monthly_contribution, years, annua
         "roi_percent": round((profit / total_principal) * 100, 2) if total_principal > 0 else 0
     }
 
-def get_historical_return_rate(symbol, history_dir="history"):
+def get_historical_return_rate(symbol, history_dir="history", verbose=False):
     """
-    Đọc file lịch sử giá của một mã (vd: history/VIC.json), chỉ lấy dữ liệu trong 5 năm gần nhất,
-    gom nhóm theo Quý và tính GIÁ TRUNG BÌNH (MEAN) của từng Quý để tính CAGR chống nhiễu tuyệt đối.
+    Đọc file lịch sử giá của một mã, lọc đúng 5 năm tính theo ngày thực tế,
+    gom nhóm theo Quý, lấy giá trung bình (mean) và tính CAGR chuẩn xác theo thời gian thực (ngày).
+    Có thêm tham số verbose để in ra thông tin giá trung bình quý đầu và quý cuối nếu cần.
     """
     file_path = os.path.join(history_dir, f"{symbol}.json")
     if not os.path.exists(file_path):
@@ -37,29 +38,29 @@ def get_historical_return_rate(symbol, history_dir="history"):
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
             
-        # Lấy dữ liệu biểu đồ ngày (history_d1)
         history_bars = data.get("history_d1", [])
         if len(history_bars) < 30:
             return 0.15 # Mặc định nếu thiếu dữ liệu
             
         df = pd.DataFrame(history_bars)
-        # Chuyển đổi định dạng thời gian/ngày tháng
         df['date'] = pd.to_datetime(df['time'])
         df = df.sort_values('date')
         
-        # 1. Lọc chỉ lấy dữ liệu trong 5 năm gần nhất tính từ ngày giao dịch mới nhất trong file
+        # 1. Xác định mốc ngày mới nhất và lùi chính xác đúng 5 năm (theo lịch ngày thực tế)
         max_date = df['date'].max()
         cutoff_date = max_date - pd.DateOffset(years=5)
-        df = df[df['date'] >= cutoff_date]
         
-        if len(df) < 30:
-            return 0.15 # Nếu sau khi cắt 5 năm mà dữ liệu quá ít thì dùng mức mặc định
+        # Lọc dữ liệu nằm trong đúng khung 5 năm thực tế gần nhất
+        df_5years = df[df['date'] >= cutoff_date]
+        
+        if len(df_5years) < 30:
+            return 0.15 
             
-        # 2. Tạo cột gom nhóm theo Năm-Quý (VD: 2023Q1, 2023Q2...)
-        df['year_quarter'] = df['date'].dt.to_period('Q')
+        # 2. Tạo cột gom nhóm theo Năm-Quý (VD: 2021Q4, 2022Q1...)
+        df_5years['year_quarter'] = df_5years['date'].dt.to_period('Q')
         
-        # 3. Gom nhóm theo Quý: Tính giá trung bình (mean) của quý và lấy ngày đầu tiên làm mốc đại diện
-        df_quarterly = df.groupby('year_quarter').agg({
+        # 3. Gom nhóm theo Quý: Tính giá trung bình (mean) và lấy ngày đầu tiên của quý đó làm mốc đại diện
+        df_quarterly = df_5years.groupby('year_quarter').agg({
             'close': 'mean',
             'date': 'first'
         }).reset_index()
@@ -67,25 +68,36 @@ def get_historical_return_rate(symbol, history_dir="history"):
         if len(df_quarterly) < 2:
             return 0.15
             
-        # 4. Lấy giá trung bình của Quý đầu tiên và Quý cuối cùng trong khung 5 năm làm điểm neo
-        start_price = df_quarterly.iloc[0]['close']
-        end_price = df_quarterly.iloc[-1]['close']
+        # 4. Lấy điểm đầu (quý cũ nhất trong khung 5 năm) và điểm cuối (quý mới nhất)
+        start_row = df_quarterly.iloc[0]
+        end_row = df_quarterly.iloc[-1]
         
-        start_date = df_quarterly.iloc[0]['date']
-        end_date = df_quarterly.iloc[-1]['date']
+        start_price = start_row['close']
+        end_price = end_row['close']
         
+        start_date = start_row['date']
+        end_date = end_row['date']
+        
+        start_q = str(start_row['year_quarter'])
+        end_q = str(end_row['year_quarter'])
+        
+        # Nếu bật chế độ verbose, in ra thông tin chi tiết giá trung bình quý
+        if verbose:
+            print(f"[{symbol}] Quý đầu ({start_q}): Giá TB = {start_price:.2f} | Quý cuối ({end_q}): Giá TB = {end_price:.2f}")
+
+        # 5. Tính chính xác số năm dựa trên số ngày thực tế giữa 2 mốc thời gian
         days = (end_date - start_date).days
         if days < 30:
             return 0.15
             
-        years = days / 365.25
+        years = days / 365.25  # Quy đổi ra năm chính xác có tính năm nhuận
         if years <= 0:
             return 0.15
             
-        # 5. Tính tỷ suất sinh lời hàng năm (CAGR) dựa trên giá trung bình quý trong 5 năm gần nhất
+        # 6. Tính CAGR chuẩn theo công thức lãi kép thời gian thực
         cagr = (end_price / start_price) ** (1 / years) - 1
         
-        # Giới hạn mức hợp lý để tránh biên độ quá dị (từ -50% đến +100%/năm)
+        # Giới hạn biên độ an toàn (từ -50% đến +100%/năm)
         cagr = max(-0.5, min(cagr, 1.0))
         return round(cagr, 4)
         
@@ -97,7 +109,7 @@ def run_symbol_specific_simulation(symbol, initial_capital, monthly_contribution
     """
     Giả lập riêng cho một mã dựa trên hiệu suất thực tế trong quá khứ của nó.
     """
-    historical_rate = get_historical_return_rate(symbol)
+    historical_rate = get_historical_return_rate(symbol, verbose=True)
     
     is_fallback = False
     if historical_rate is None:
@@ -115,8 +127,8 @@ def run_symbol_specific_simulation(symbol, initial_capital, monthly_contribution
 
 def run_complex_backtest_simulation(history_dir="history", output_json="symbol_sim_rates.json"):
     """
-    🚀 Quét toàn bộ thư mục history/ để tính lãi suất quá khứ (CAGR theo Quý trong 5 năm) của TỪNG MÃ,
-    sau đó lưu ra file symbol_sim_rates.json để render_ui.py đọc.
+    Quét toàn bộ thư mục history/ để tính lãi suất quá khứ (CAGR theo Quý trong 5 năm) của TỪNG MÃ,
+    sau đó lưu ra file symbol_sim_rates.json để Front-end đọc.
     """
     rates_map = {}
     
@@ -124,7 +136,8 @@ def run_complex_backtest_simulation(history_dir="history", output_json="symbol_s
         for filename in os.listdir(history_dir):
             if filename.endswith(".json"):
                 symbol = filename.replace(".json", "")
-                cagr = get_historical_return_rate(symbol, history_dir)
+                # Bật verbose=True để in ra giá trung bình quý kiểm chứng trực tiếp trên màn hình terminal
+                cagr = get_historical_return_rate(symbol, history_dir, verbose=True)
                 if cagr is not None:
                     rates_map[symbol] = {
                         "annual_rate_percent": round(cagr * 100, 2)
