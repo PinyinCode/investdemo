@@ -6,11 +6,9 @@ from simulator import run_complex_backtest_simulation
 OUTPUT_HTML = "index.html"
 
 def generate_html():
-    # 1. Gọi module Simulator phía Python
+    # 1. Gọi module Simulator phía Python (tính toán CAGR lịch sử và sinh file symbol_sim_rates.json)
     sim_data = run_complex_backtest_simulation()
-    
-    with open("sim_results.json", "w", encoding="utf-8") as f:
-        json.dump(sim_data, f, ensure_ascii=False, indent=4)
+    print(f"📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
 
     # 2. Xây dựng toàn bộ giao diện HTML
     html_content = """<!DOCTYPE html>
@@ -185,60 +183,6 @@ def generate_html():
         </div>
     </div>
 
-    <!-- MODAL GIẢ LẬP ĐẦU TƯ & TÍCH SẢN (DCA) -->
-    <div id="simulator-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
-        <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-calculator text-emerald-400"></i>
-                    <h3 class="text-sm font-bold text-white">Giả Lập Đầu Tư & Tích Sản Định Kỳ (DCA)</h3>
-                </div>
-                <button type="button" onclick="closeSimulatorModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="p-5 space-y-4 text-xs">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-slate-400 mb-1 font-semibold">Vốn ban đầu (VNĐ)</label>
-                        <input type="number" id="sim-initial" value="50000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
-                    </div>
-                    <div>
-                        <label class="block text-slate-400 mb-1 font-semibold">Tích sản hàng tháng (VNĐ)</label>
-                        <input type="number" id="sim-monthly" value="5000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-slate-400 mb-1 font-semibold">Kỳ hạn đầu tư</label>
-                        <select id="sim-years" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
-                            <option value="1">1 Năm</option>
-                            <option value="3" selected>3 Năm</option>
-                            <option value="5">5 Năm</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-slate-400 mb-1 font-semibold">Lợi nhuận kỳ vọng (%/năm)</label>
-                        <input type="number" id="sim-rate" value="15" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold focus:outline-none focus:border-emerald-500">
-                    </div>
-                </div>
-
-                <button type="button" onclick="calculateSimulation()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold transition shadow-lg">
-                    Tính Toán Lợi Nhuận Tương Lai
-                </button>
-
-                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2 mt-4">
-                    <div class="flex justify-between"><span class="text-slate-400">Tổng vốn gốc bỏ ra:</span> <span id="sim-res-principal" class="font-bold text-slate-200">--</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Lợi nhuận ước tính:</span> <span id="sim-res-profit" class="font-bold text-emerald-400">--</span></div>
-                    <div class="border-t border-slate-800 pt-2 flex justify-between text-sm"><span class="text-slate-300 font-bold">Tổng tài sản tương lai:</span> <span id="sim-res-total" class="font-black text-amber-400">--</span></div>
-                </div>
-            </div>
-            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
-                <button type="button" onclick="closeSimulatorModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold">Đóng</button>
-            </div>
-        </div>
-    </div>
-
     <!-- HEADER CHÍNH -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
@@ -253,10 +197,6 @@ def generate_html():
             </div>
             
             <div class="flex items-center gap-2">
-                <!-- NÚT MỞ GIẢ LẬP ĐẦU TƯ -->
-                <button type="button" onclick="openSimulatorModal()" class="px-3 py-2 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-calculator text-emerald-400"></i> <span class="hidden md:inline">Giả lập đầu tư</span>
-                </button>
                 <button type="button" onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
                 </button>
@@ -326,14 +266,14 @@ def generate_html():
         </div>
     </main>
 
-    <!-- MODAL CHI TIẾT AI & BCTC -->
+    <!-- MODAL CHI TIẾT AI, BCTC & GIẢ LẬP ĐẦU TƯ TỪNG MÃ -->
     <div id="ai-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-3 md:p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10">
                 <div class="flex items-center space-x-3">
                     <span id="modal-symbol" class="text-2xl font-black text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">--</span>
                     <div>
-                        <h3 class="text-sm font-bold text-white">Hệ Thống Phân Tích Chuyên Sâu & BCTC [Đã tích hợp AI]</h3>
+                        <h3 class="text-sm font-bold text-white">Hệ Thống Phân Tích Chuyên Sâu & Giả Lập Đầu Tư</h3>
                         <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
                     </div>
                 </div>
@@ -342,12 +282,16 @@ def generate_html():
                 </button>
             </div>
             
+            <!-- TABS -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button type="button" onclick="switchAiTab('bctc')" id="tab-btn-bctc" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
-                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Tra Cứu BCTC & Cơ Bản
+                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> BCTC & Cơ Bản
                 </button>
                 <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
-                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI Chiến Lược
+                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá AI
+                </button>
+                <button type="button" onclick="switchAiTab('simulator')" id="tab-btn-simulator" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-calculator mr-1.5 text-emerald-400"></i> Giả Lập Tích Sản (DCA)
                 </button>
             </div>
 
@@ -361,6 +305,7 @@ def generate_html():
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
+                <!-- TAB ĐÁNH GIÁ AI -->
                 <div id="tab-content-eval" class="space-y-4 hidden">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
@@ -370,7 +315,6 @@ def generate_html():
                             <p id="modal-ai-price" class="text-sm text-emerald-300 font-medium">--</p>
                         </div>
                     </div>
-
                     <div>
                         <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i> Phân tích Sức khỏe Tài chính & BCTC [AI]</h4>
                         <p id="modal-bctc" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
@@ -385,17 +329,16 @@ def generate_html():
                     </div>
                 </div>
 
+                <!-- TAB BCTC & CƠ BẢN -->
                 <div id="tab-content-bctc" class="space-y-4">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-table mr-1.5"></i> Kết quả Kinh doanh Theo Quý</h4>
-                            <span class="text-[10px] text-slate-500">Nguồn: bctc_data/{symbol}.json</span>
                         </div>
                         <div id="bctc-income-container" class="overflow-x-auto">
                             <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
                         </div>
                     </div>
-
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400"><i class="fa-solid fa-scale-balanced mr-1.5"></i> Cân đối Kế toán Mới Nhất</h4>
@@ -403,6 +346,53 @@ def generate_html():
                         <div id="bctc-balance-container" class="overflow-x-auto">
                             <p class="text-xs text-amber-400 text-center py-4">⚠️ Đang tải dữ liệu BCTC...</p>
                         </div>
+                    </div>
+                </div>
+
+                <!-- TAB GIẢ LẬP TÍCH SẢN DCA RIÊNG CHO MÃ -->
+                <div id="tab-content-simulator" class="space-y-4 hidden">
+                    <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl flex items-center justify-between text-xs">
+                        <div>
+                            <span class="text-slate-400 block">Tỷ suất sinh lời lịch sử thực tế (CAGR) của mã này:</span>
+                            <span id="sim-historical-rate-text" class="text-sm font-bold text-emerald-400">Đang tính toán...</span>
+                        </div>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded font-semibold">Tự động hóa</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-semibold">Vốn ban đầu (VNĐ)</label>
+                            <input type="number" id="modal-sim-initial" value="20000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-semibold">Tích sản hàng tháng (VNĐ)</label>
+                            <input type="number" id="modal-sim-monthly" value="3000000" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-semibold">Kỳ hạn đầu tư</label>
+                            <select id="modal-sim-years" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-bold text-xs focus:outline-none focus:border-emerald-500">
+                                <option value="1">1 Năm</option>
+                                <option value="3" selected>3 Năm</option>
+                                <option value="5">5 Năm</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-semibold">Lợi nhuận áp dụng (%/năm)</label>
+                            <input type="number" id="modal-sim-rate" value="15" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-emerald-400 font-bold text-xs focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="calculateModalSimulation()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold transition text-xs shadow">
+                        Tính Toán Lợi Nhuận DCA
+                    </button>
+
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5 text-xs">
+                        <div class="flex justify-between"><span class="text-slate-400">Tổng vốn gốc đầu tư:</span> <span id="modal-sim-principal" class="font-bold text-slate-200">--</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Lợi nhuận dự kiến:</span> <span id="modal-sim-profit" class="font-bold text-emerald-400">--</span></div>
+                        <div class="border-t border-slate-800 pt-1.5 flex justify-between text-sm"><span class="text-slate-300 font-bold">Tổng tài sản tương lai:</span> <span id="modal-sim-total" class="font-black text-amber-400">--</span></div>
                     </div>
                 </div>
             </div>
@@ -675,36 +665,8 @@ def generate_html():
 
         function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
 
-        // Logic giả lập đầu tư DCA & Lãi kép
-        function openSimulatorModal() { 
-            document.getElementById('simulator-modal').classList.remove('hidden'); 
-            calculateSimulation(); 
-        }
-        function closeSimulatorModal() { 
-            document.getElementById('simulator-modal').classList.add('hidden'); 
-        }
-        function calculateSimulation() {
-            let p0 = parseFloat(document.getElementById('sim-initial').value) || 0;
-            let pMonthly = parseFloat(document.getElementById('sim-monthly').value) || 0;
-            let years = parseInt(document.getElementById('sim-years').value) || 1;
-            let rate = (parseFloat(document.getElementById('sim-rate').value) || 15) / 100;
-
-            let totalPrincipal = p0 + (pMonthly * 12 * years);
-            let futureVal = p0 * Math.pow(1 + rate, years);
-            let monthlyRate = rate / 12;
-            let totalMonths = years * 12;
-            
-            for (let i = 1; i <= totalMonths; i++) {
-                futureVal += pMonthly * Math.pow(1 + monthlyRate, totalMonths - i + 1);
-            }
-            let profit = futureVal - totalPrincipal;
-
-            document.getElementById('sim-res-principal').innerText = Math.round(totalPrincipal).toLocaleString() + " VNĐ";
-            document.getElementById('sim-res-profit').innerText = "+" + Math.round(profit).toLocaleString() + " VNĐ";
-            document.getElementById('sim-res-total').innerText = Math.round(futureVal).toLocaleString() + " VNĐ";
-        }
-
         let screenerResults = [];
+        let symbolSimRates = {};
         let currentSymbolHistory = null;
         let chartInstance = null;
         let candleSeriesInstance = null;
@@ -738,9 +700,14 @@ def generate_html():
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
             try {
-                const screenerRes = await fetch('screener_results.json?t=' + new Date().getTime());
+                const [screenerRes, ratesRes] = await Promise.all([
+                    fetch('screener_results.json?t=' + new Date().getTime()),
+                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
+                ]);
+
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
                 let screenerData = await screenerRes.json();
+                if (ratesRes.ok) symbolSimRates = await ratesRes.json();
 
                 let rawStockData = {};
                 try {
@@ -872,21 +839,20 @@ def generate_html():
         }
 
         function switchAiTab(tabName) {
-            const btnEval = document.getElementById('tab-btn-eval');
-            const btnBctc = document.getElementById('tab-btn-bctc');
-            const contentEval = document.getElementById('tab-content-eval');
-            const contentBctc = document.getElementById('tab-content-bctc');
+            ['bctc', 'eval', 'simulator'].forEach(t => {
+                const contentEl = document.getElementById(`tab-content-${t}`);
+                const btnEl = document.getElementById(`tab-btn-${t}`);
+                if (contentEl) contentEl.classList.add('hidden');
+                if (btnEl) btnEl.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
+            });
 
-            if (tabName === 'eval') {
-                btnEval.className = "px-4 py-2 text-xs font-bold text-indigo-400 border-b-2 border-indigo-500 transition";
-                btnBctc.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
-                contentEval.classList.remove('hidden');
-                contentBctc.classList.add('hidden');
-            } else {
-                btnBctc.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
-                btnEval.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
-                contentBctc.classList.remove('hidden');
-                contentEval.classList.add('hidden');
+            const activeContent = document.getElementById(`tab-content-${tabName}`);
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (activeContent) activeContent.classList.remove('hidden');
+            if (activeBtn) activeBtn.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
+
+            if (tabName === 'simulator') {
+                calculateModalSimulation();
             }
         }
 
@@ -965,6 +931,7 @@ def generate_html():
         }
 
         function openModal(symbol) {
+            currentSymbol = symbol;
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
 
@@ -990,11 +957,42 @@ def generate_html():
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
+            // Tự động điền tỷ suất sinh lời quá khứ thực tế của mã vào tab Giả lập
+            let histRate = 15;
+            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
+                histRate = symbolSimRates[symbol].annual_rate_percent;
+                document.getElementById('sim-historical-rate-text').innerText = histRate + "% / năm (Quá khứ thực tế)";
+            } else {
+                document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
+            }
+            document.getElementById('modal-sim-rate').value = histRate;
+
             document.getElementById('ai-modal').classList.remove('hidden');
             loadBctcDetail(symbol);
         }
 
         function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
+
+        function calculateModalSimulation() {
+            let p0 = parseFloat(document.getElementById('modal-sim-initial').value) || 0;
+            let pMonthly = parseFloat(document.getElementById('modal-sim-monthly').value) || 0;
+            let years = parseInt(document.getElementById('modal-sim-years').value) || 1;
+            let rate = (parseFloat(document.getElementById('modal-sim-rate').value) || 15) / 100;
+
+            let totalPrincipal = p0 + (pMonthly * 12 * years);
+            let futureVal = p0 * Math.pow(1 + rate, years);
+            let monthlyRate = rate / 12;
+            let totalMonths = years * 12;
+            
+            for (let i = 1; i <= totalMonths; i++) {
+                futureVal += pMonthly * Math.pow(1 + monthlyRate, totalMonths - i + 1);
+            }
+            let profit = futureVal - totalPrincipal;
+
+            document.getElementById('modal-sim-principal').innerText = Math.round(totalPrincipal).toLocaleString() + " VNĐ";
+            document.getElementById('modal-sim-profit').innerText = "+" + Math.round(profit).toLocaleString() + " VNĐ";
+            document.getElementById('modal-sim-total').innerText = Math.round(futureVal).toLocaleString() + " VNĐ";
+        }
 
         function navigateSymbol(direction) {
             const symbols = screenerResults.map(s => s.symbol).sort();
@@ -1272,7 +1270,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
     
-    print(f"✅ Đã tự động render thành công toàn bộ giao diện (bao gồm Modal Giả lập) ra file {OUTPUT_HTML}!")
+    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML}!")
 
 if __name__ == "__main__":
     generate_html()
