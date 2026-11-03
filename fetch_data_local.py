@@ -1,4 +1,3 @@
-﻿# crawl_data.py
 import os
 import datetime
 import time
@@ -214,28 +213,28 @@ def main():
             print("⚠️ Không nhận được mã hợp lệ, tự động quay về cào toàn bộ VN100.")
     
     print("\n--------------------------------------------------")
-    print("CHỌN KHOẢNG THỜI GIAN CÀO:")
-    print("1. Gần nhất: 30 ngày qua (Cuốn chiếu)")
-    print("2. Dài hạn: 10 năm gần đây (~3650 ngày)")
-    print("3. Tùy chỉnh: Nhập số ngày tự do")
+    print("CHỌN SỐ PHIÊN GIAO DỊCH GẦN NHẤT:")
+    print("1. Gần nhất: 30 phiên giao dịch gần nhất (Mặc định)")
+    print("2. Dài hạn: 10 năm gần đây (~2500 phiên)")
+    print("3. Tùy chỉnh: Nhập số phiên tự do (VD: 2, 5, 100 phiên)")
     
-    choice = input("Nhập lựa chọn khoảng thời gian (1/2/3, mặc định 1): ").strip()
+    choice = input("Nhập lựa chọn số phiên (1/2/3, mặc định 1): ").strip()
     
-    days = 30 # Mặc định
+    num_sessions = 30 # Mặc định
     if choice == '2':
-        days = 3650
-        print("-> Đã chọn chế độ cào 10 năm dữ liệu.")
+        num_sessions = 2500
+        print("-> Đã chọn chế độ cào 10 năm dữ liệu (~2500 phiên).")
     elif choice == '3':
         try:
-            custom_days = int(input("Nhập số ngày muốn cào (ví dụ: 180, 730, 3650): ").strip())
-            if custom_days > 0:
-                days = custom_days
+            custom_sessions = int(input("Nhập số phiên muốn cào (ví dụ: 2, 5, 100): ").strip())
+            if custom_sessions > 0:
+                num_sessions = custom_sessions
         except ValueError:
-            print("⚠️ Nhập sai định dạng, tự động quay về mặc định 30 ngày.")
+            print("⚠️ Nhập sai định dạng, tự động quay về mặc định 30 phiên.")
     else:
-        print("-> Đã chọn chế độ mặc định (30 ngày gần nhất).")
+        print("-> Đã chọn chế độ mặc định (30 phiên gần nhất).")
 
-    print(f"\n🚀 Bắt đầu cào dữ liệu cho {len(target_symbols)} mã (Phạm vi: {days} ngày qua)...")
+    print(f"\n🚀 Bắt đầu cào dữ liệu cho {len(target_symbols)} mã (Lấy đúng {num_sessions} phiên giao dịch gần nhất)...")
     
     if not os.path.exists(HISTORY_DIR):
         os.makedirs(HISTORY_DIR)
@@ -250,7 +249,9 @@ def main():
 
     total = len(target_symbols)
     end_date = datetime.datetime.now().strftime("%Y-%m-%d")
-    start_date = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime("%Y-%m-%d")
+    # Lùi khoảng thời gian rộng rãi (nhân đôi số phiên + buffer năm) để đảm bảo gom đủ số phiên yêu cầu qua các ngày nghỉ lễ/cuối tuần
+    approx_days = max(num_sessions * 2, 365)
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=approx_days)).strftime("%Y-%m-%d")
 
     for i, symbol in enumerate(target_symbols):
         print(f"[{i+1}/{total}] Đang xử lý: {symbol}...")
@@ -261,6 +262,9 @@ def main():
         try:
             df = fetch_history_with_fallback(symbol, start_date, end_date)
             if df is not None and not df.empty:
+                # 🚀 Cắt lấy chính xác số phiên giao dịch gần nhất theo yêu cầu
+                df = df.tail(num_sessions)
+                
                 closes = df['close'].tolist()
                 volumes = df['volume'].tolist()
                 close_price = closes[-1]
