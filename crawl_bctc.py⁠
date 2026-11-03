@@ -3,7 +3,7 @@ import os
 import json
 import time
 import pandas as pd
-from vnstock import financial_flow
+from vnstock import Vnstock
 
 BCTC_DIR = "bctc_data"
 
@@ -28,18 +28,21 @@ def crawl_symbol_bctc(symbol):
         
     print(f"📥 Đang cào dữ liệu BCTC cho mã: {symbol}...")
     try:
-        # Lấy cân đối kế toán và kết quả kinh doanh theo quý
-        bs_df = financial_flow(symbol=symbol, report_type='balancesheet', report_range='quarterly')
-        is_df = financial_flow(symbol=symbol, report_type='incomestatement', report_range='quarterly')
+        # Khởi tạo đối tượng cổ phiếu thông qua lớp Vnstock chuẩn
+        stock = Vnstock().stock(symbol=symbol, source='VCI')
+        
+        # Lấy báo cáo tài chính cân đối kế toán và kết quả kinh doanh theo quý
+        bs_df = stock.finance.balance_sheet(period='quarter')
+        is_df = stock.finance.income_statement(period='quarter')
         
         balance_sheet = []
         income_statement = []
         
         if bs_df is not None and not bs_df.empty:
             for idx, row in bs_df.iterrows():
-                period = row.get('quarter') or row.get('index') or str(row.name)
+                period = row.get('quarter') or row.get('period') or row.get('index') or str(row.name)
                 for col in bs_df.columns:
-                    if col not in ['ticker', 'quarter', 'index', 'year']:
+                    if col not in ['ticker', 'quarter', 'period', 'index', 'year']:
                         val = row[col]
                         if pd.notna(val):
                             balance_sheet.append({
@@ -51,9 +54,9 @@ def crawl_symbol_bctc(symbol):
                             
         if is_df is not None and not is_df.empty:
             for idx, row in is_df.iterrows():
-                period = row.get('quarter') or row.get('index') or str(row.name)
+                period = row.get('quarter') or row.get('period') or row.get('index') or str(row.name)
                 for col in is_df.columns:
-                    if col not in ['ticker', 'quarter', 'index', 'year']:
+                    if col not in ['ticker', 'quarter', 'period', 'index', 'year']:
                         val = row[col]
                         if pd.notna(val):
                             income_statement.append({
