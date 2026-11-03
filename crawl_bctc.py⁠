@@ -1,0 +1,102 @@
+# crawl_bctc.py
+import os
+import json
+import time
+import pandas as pd
+from vnstock import financial_flow
+
+BCTC_DIR = "bctc_data"
+
+VN100_SYMBOLS = [
+    "ACB", "BCM", "BID", "BVH", "CTG", "FPT", "GAS", "GVR", "HDB", "HPG",
+    "MBB", "MSN", "MWG", "PLX", "POW", "SAB", "SHB", "SSB", "SSI", "STB",
+    "TCB", "TPB", "VCB", "VHM", "VIB", "VIC", "VJC", "VNM", "VPB", "VRE",
+    "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS", "NVL", "PDR",
+    "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC",
+    "PHR", "HSG", "NKG", "CTD", "VCG", "HHV", "PNJ", "FRT", "PVD", "PVS",
+    "BSR", "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "HVN", "VHC", "ANV",
+    "APH", "ASM", "DBC", "DCM", "DPM", "GEX", "KDC", "LIG", "MSH", "PAN",
+    "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "DHC", "IMP", "SBA", "SJS",
+    "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
+]
+
+VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
+
+def crawl_symbol_bctc(symbol):
+    if not os.path.exists(BCTC_DIR):
+        os.makedirs(BCTC_DIR)
+        
+    print(f"📥 Đang cào dữ liệu BCTC cho mã: {symbol}...")
+    try:
+        # Lấy cân đối kế toán và kết quả kinh doanh theo quý
+        bs_df = financial_flow(symbol=symbol, report_type='balancesheet', report_range='quarterly')
+        is_df = financial_flow(symbol=symbol, report_type='incomestatement', report_range='quarterly')
+        
+        balance_sheet = []
+        income_statement = []
+        
+        if bs_df is not None and not bs_df.empty:
+            for idx, row in bs_df.iterrows():
+                period = row.get('quarter') or row.get('index') or str(row.name)
+                for col in bs_df.columns:
+                    if col not in ['ticker', 'quarter', 'index', 'year']:
+                        val = row[col]
+                        if pd.notna(val):
+                            balance_sheet.append({
+                                "period": str(period),
+                                "id": str(col).upper(),
+                                "name": str(col),
+                                "value": float(val)
+                            })
+                            
+        if is_df is not None and not is_df.empty:
+            for idx, row in is_df.iterrows():
+                period = row.get('quarter') or row.get('index') or str(row.name)
+                for col in is_df.columns:
+                    if col not in ['ticker', 'quarter', 'index', 'year']:
+                        val = row[col]
+                        if pd.notna(val):
+                            income_statement.append({
+                                "period": str(period),
+                                "id": str(col).upper(),
+                                "name": str(col),
+                                "value": float(val)
+                            })
+                            
+        data = {
+            "balance_sheet": balance_sheet,
+            "income_statement": income_statement
+        }
+        
+        # Lưu file dưới dạng chữ thường để tương thích tuyệt đối với Linux/Hosting
+        filepath = os.path.join(BCTC_DIR, f"{symbol.lower()}.json")
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        print(f"✅ Đã lưu thành công file BCTC: {filepath}")
+        
+    except Exception as e:
+        print(f"⚠️ Lỗi cào BCTC cho {symbol}: {e}")
+
+def main():
+    print("==================================================")
+    print("         CHƯƠNG TRÌNH CÀO BÁO CÁO TÀI CHÍNH        ")
+    print("==================================================")
+    print("1. Cào BCTC TOÀN BỘ danh sách VN100")
+    print("2. Cào BCTC RIÊNG MÃ CỤ THỂ (nhanh)")
+    
+    choice = input("Nhập lựa chọn của bạn (1/2, mặc định 2): ").strip()
+    
+    if choice == '1':
+        symbols = VN100_SYMBOLS
+    else:
+        raw = input("Nhập mã cổ phiếu (cách nhau bởi dấu phẩy, VD: ACB,BID): ").strip()
+        symbols = [s.strip().upper() for s in raw.split(",") if s.strip()] if raw else ["ACB"]
+        
+    for sym in symbols:
+        crawl_symbol_bctc(sym)
+        time.sleep(1)
+        
+    print("🎉 Hoàn tất cào dữ liệu BCTC! Hãy chạy git push để cập nhật lên server.")
+
+if __name__ == "__main__":
+    main()
