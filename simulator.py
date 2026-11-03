@@ -40,7 +40,7 @@ def get_historical_return_rate(symbol, history_dir="history"):
         # Lấy dữ liệu biểu đồ ngày (history_d1)
         history_bars = data.get("history_d1", [])
         if len(history_bars) < 50:
-            return None # Không đủ dữ liệu
+            return 0.15 # Mặc định nếu thiếu dữ liệu
             
         df = pd.DataFrame(history_bars)
         # Chuyển đổi định dạng thời gian/ngày tháng
@@ -70,7 +70,7 @@ def get_historical_return_rate(symbol, history_dir="history"):
         
     except Exception as e:
         print(f"⚠️ Lỗi tính lịch sử cho {symbol}: {e}")
-        return None
+        return 0.15
 
 def run_symbol_specific_simulation(symbol, initial_capital, monthly_contribution, years):
     """
@@ -78,7 +78,6 @@ def run_symbol_specific_simulation(symbol, initial_capital, monthly_contribution
     """
     historical_rate = get_historical_return_rate(symbol)
     
-    # Nếu không tìm thấy lịch sử, lấy mức mặc định 15%/năm
     is_fallback = False
     if historical_rate is None:
         historical_rate = 0.15 
@@ -93,16 +92,41 @@ def run_symbol_specific_simulation(symbol, initial_capital, monthly_contribution
         "simulation": sim_result
     }
 
-def run_complex_backtest_simulation():
+def run_complex_backtest_simulation(history_dir="history", output_json="symbol_sim_rates.json"):
     """
-    Hàm tổng hợp dùng cho render_ui.py (nếu muốn tổng kết chung).
+    Quét tất cả các file trong thư mục history/ để tính lãi suất quá khứ (CAGR) của từng mã,
+    sau đó lưu ra file JSON để giao diện web (render_ui.py) có thể đọc và nạp vào modal.
     """
+    rates_map = {}
+    
+    if os.path.exists(history_dir):
+        for filename in os.listdir(history_dir):
+            if filename.endswith(".json"):
+                symbol = filename.replace(".json", "")
+                cagr = get_historical_return_rate(symbol, history_dir)
+                if cagr is not None:
+                    rates_map[symbol] = {
+                        "annual_rate_percent": round(cagr * 100, 2)
+                    }
+                    
+    # Lưu ra file JSON phục vụ Front-end
+    try:
+        with open(output_json, "w", encoding="utf-8") as f:
+            json.dump(rates_map, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        print(f"⚠️ Không thể ghi file {output_json}: {e}")
+
     return {
         "status": "success",
+        "total_symbols_calculated": len(rates_map),
         "default_benchmark_return": 15.0
     }
 
 if __name__ == "__main__":
-    # Test thử nghiệm riêng cho một mã bất kỳ có sẵn trong thư mục history
+    # Test thử nghiệm quét và tính toán toàn bộ mã
+    summary = run_complex_backtest_simulation()
+    print(f"📊 Đã quét và tính toán xong lãi suất lịch sử cho {summary.get('total_symbols_calculated', 0)} mã.")
+    
+    # Test thử nghiệm riêng cho mã VIC
     res = run_symbol_specific_simulation("VIC", initial_capital=20000000, monthly_contribution=3000000, years=3)
-    print("📊 KẾT QUẢ GIẢ LẬP RIÊNG CHO MÃ VIC:", res)
+    print("📈 KẾT QUẢ GIẢ LẬP RIÊNG CHO MÃ VIC:", res)
