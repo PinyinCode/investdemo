@@ -29,7 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas numpy requests
 
-      # Chạy render_ui.py (bên trong render_ui.py đã gọi run_complex_backtest_simulation() để tính toán từng mã)
       - name: Run Python Scripts
         run: python render_ui.py
 
@@ -37,6 +36,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Thêm cả file giao diện index.html và file tính toán lãi suất symbol_sim_rates.json
           git add index.html symbol_sim_rates.json
-          git commit -m "📊 Auto-calculate symbol rates & render index.html via Python" || exit 0
+          
+          # Kiểm tra xem có thay đổi hay không trước khi commit
+          git status
+          
+          git commit -m "📊 Auto-calculate symbol rates & render index.html via Python" || echo "No changes to commit"
           git push
