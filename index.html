@@ -420,6 +420,11 @@
                         <button type="button" onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">RSI</button>
                     </div>
 
+                    <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
+                        <button type="button" onclick="toggleQuarterLines()" id="btn-ind-qlines" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện đường giá quý">Đường Quý</button>
+                        <button type="button" onclick="toggleQuarterZone()" id="btn-ind-qzone" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition" title="Ẩn/Hiện vùng màu giá quý">Vùng Quý</button>
+                    </div>
+
                     <div class="flex items-center gap-2 pl-1 border-l border-slate-800/40 text-[10px]">
                         <div><span class="text-slate-400">TG:</span> <span id="legend-time" class="font-bold text-white">--</span></div>
                         <div><span class="text-slate-400">Giá:</span> <span id="legend-close" class="font-bold">--</span></div>
@@ -654,7 +659,7 @@
         let volumeSeriesInstance = null;
         let currentSymbol = null;
         let currentInterval = 'D1';
-        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false };
+        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
         let currentActiveTab = 'eval';
 
         const SECTOR_NAMES = { 
@@ -892,7 +897,6 @@
                 document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
             }
 
-            // Hiển thị chi tiết giá trung bình quý từ quarterlyMeanDetails
             const details = quarterlyMeanDetails[symbol];
             if (details) {
                 document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${details.start_price_mean.toLocaleString('vi-VN')} đ`;
@@ -1031,6 +1035,28 @@
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
         }
 
+        function toggleQuarterLines() {
+            activeIndicators.QLINES = !activeIndicators.QLINES;
+            const btn = document.getElementById('btn-ind-qlines');
+            if (btn) {
+                btn.className = activeIndicators.QLINES
+                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition"
+                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function toggleQuarterZone() {
+            activeIndicators.QZONE = !activeIndicators.QZONE;
+            const btn = document.getElementById('btn-ind-qzone');
+            if (btn) {
+                btn.className = activeIndicators.QZONE
+                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white transition"
+                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
         function resizeChart() {
             if (chartInstance) {
                 const container = document.getElementById('tv-chart-container');
@@ -1160,28 +1186,51 @@
                     color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
                 })));
 
-                // Hiển thị đường giá trung bình quý đầu & quý cuối 5 năm trước trên biểu đồ
                 const details = quarterlyMeanDetails[currentSymbol];
                 if (details) {
-                    // Đường giá trung bình Quý đầu 5 năm trước (Màu cam đứt nét)
-                    candleSeriesInstance.createPriceLine({
-                        price: details.start_price_mean,
-                        color: '#f97316',
-                        lineWidth: 2,
-                        lineStyle: LC.LineStyle.Dashed,
-                        axisLabelVisible: true,
-                        title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
-                    });
+                    const minPrice = Math.min(details.start_price_mean, details.end_price_mean);
+                    const maxPrice = Math.max(details.start_price_mean, details.end_price_mean);
 
-                    // Đường giá trung bình Quý cuối hiện tại (Màu xanh ngọc đứt nét)
-                    candleSeriesInstance.createPriceLine({
-                        price: details.end_price_mean,
-                        color: '#10b981',
-                        lineWidth: 2,
-                        lineStyle: LC.LineStyle.Dotted,
-                        axisLabelVisible: true,
-                        title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
-                    });
+                    // 1. Vẽ vùng nền màu (Zone) nếu được bật
+                    if (activeIndicators.QZONE) {
+                        const zoneData = chartData.map(row => ({
+                            time: row.time,
+                            value: maxPrice,
+                            baseValue: minPrice
+                        }));
+                        const zoneSeries = chartInstance.addSeries(LC.BaselineSeries, {
+                            baseValue: { type: 'price', price: minPrice },
+                            topFillColor1: 'rgba(16, 185, 129, 0.12)',
+                            topFillColor2: 'rgba(16, 185, 129, 0.03)',
+                            bottomFillColor1: 'rgba(16, 185, 129, 0.03)',
+                            bottomFillColor2: 'rgba(16, 185, 129, 0.12)',
+                            topLineColor: 'transparent',
+                            bottomLineColor: 'transparent',
+                            lineWidth: 1
+                        }, 0);
+                        zoneSeries.setData(zoneData);
+                    }
+
+                    // 2. Vẽ các đường giá trung bình quý (Lines) nếu được bật
+                    if (activeIndicators.QLINES) {
+                        candleSeriesInstance.createPriceLine({
+                            price: details.start_price_mean,
+                            color: '#f97316',
+                            lineWidth: 2,
+                            lineStyle: LC.LineStyle.Dashed,
+                            axisLabelVisible: true,
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
+                        });
+
+                        candleSeriesInstance.createPriceLine({
+                            price: details.end_price_mean,
+                            color: '#10b981',
+                            lineWidth: 2,
+                            lineStyle: LC.LineStyle.Dotted,
+                            axisLabelVisible: true,
+                            title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
+                        });
+                    }
                 }
 
                 if (activeIndicators.MA20) {
