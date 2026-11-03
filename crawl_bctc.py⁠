@@ -28,7 +28,8 @@ VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 def fetch_financial_reports(symbol):
     try:
-        file_path = os.path.join(OUTPUT_DIR, f"{symbol}.json")
+        # Ép tên file thành chữ thường để tương thích tuyệt đối với web server Linux
+        file_path = os.path.join(OUTPUT_DIR, f"{symbol.lower()}.json")
         
         # Xóa file cũ nếu tồn tại để ép buộc làm mới hoàn toàn
         if os.path.exists(file_path):
@@ -58,7 +59,7 @@ def fetch_financial_reports(symbol):
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(reports, f, ensure_ascii=False, indent=4)
         
-        print(f"✅ Đã tải và làm mới BCTC cho mã: {symbol}")
+        print(f"✅ Đã tải và làm mới BCTC cho mã: {symbol} -> {symbol.lower()}.json")
         return True
         
     except Exception as e:
@@ -67,14 +68,14 @@ def fetch_financial_reports(symbol):
 
 def auto_git_push_bctc(target_symbols):
     try:
-        print("\n📤 Đang đồng bộ thư mục 'bctc_data' lên GitHub...")
-        # Add riêng các file vừa được cào để tránh dồn các file cũ khác
+        print("\n📤 Đang tự động đồng bộ thư mục 'bctc_data' lên GitHub...")
+        # Add riêng các file vừa được cào
         for symbol in target_symbols:
-            f_path = os.path.join(OUTPUT_DIR, f"{symbol}.json")
+            f_path = os.path.join(OUTPUT_DIR, f"{symbol.lower()}.json")
             if os.path.exists(f_path):
                 subprocess.run(["git", "add", f_path], check=True)
                 
-        commit_msg = f"Update BCTC data for {', '.join(target_symbols)} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update BCTC data for {', '.join(target_symbols)} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
         print("🚀 Đẩy dữ liệu BCTC lên GitHub thành công!")
@@ -115,12 +116,9 @@ def main():
         
     print(f"\n🎉 Hoàn tất! Đã làm mới thành công {len(successful_symbols)}/{total} file BCTC.")
     
+    # Tự động đẩy lên git luôn mà không cần hỏi thêm
     if successful_symbols:
-        push_choice = input("Bạn có muốn đồng bộ ngay lên GitHub không? (y/n, mặc định y): ").strip().lower()
-        if push_choice != 'n':
-            auto_git_push_bctc(successful_symbols)
-        else:
-            print("ℹ️ Đã bỏ qua bước Git push.")
+        auto_git_push_bctc(successful_symbols)
 
 if __name__ == "__main__":
     main()
