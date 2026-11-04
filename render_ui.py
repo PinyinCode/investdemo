@@ -26,7 +26,7 @@ def generate_html():
     last_update_str = get_last_update_string()
     print(f"🕒 Mốc thời gian cập nhật dữ liệu được sử dụng: {last_update_str}")
 
-    html_content = f"""<!DOCTYPE html>
+    html_template = r"""<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -43,29 +43,29 @@ def generate_html():
     <script src="./lightweight-charts.js"></script>
 
     <style>
-        ::-webkit-scrollbar {{ width: 6px; height: 6px; }}
-        ::-webkit-scrollbar-track {{ background: #0f172a; }}
-        ::-webkit-scrollbar-thumb {{ background: #334155; border-radius: 4px; }}
-        .spinner {{ animation: spin 1s linear infinite; }}
-        @keyframes spin {{ from {{ transform: rotate(0deg); }} to {{ transform: rotate(360deg); }} }}
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
-        .glow-top1 {{ box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); border-color: #eab308; }}
-        .glow-top2 {{ box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }}
-        .glow-top3 {{ box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }}
+        .glow-top1 { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); border-color: #eab308; }
+        .glow-top2 { box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }
+        .glow-top3 { box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }
 
-        #chart-modal-box {{ max-height: 96dvh; }}
-        #chart-modal-box.fullscreen {{
+        #chart-modal-box { max-height: 96dvh; }
+        #chart-modal-box.fullscreen {
             position: fixed !important; top: 0 !important; left: 0 !important;
             width: 100vw !important; height: 100dvh !important;
             max-width: none !important; max-height: none !important;
             border-radius: 0 !important; z-index: 9999 !important;
-        }}
-        #chart-modal-box:not(.fullscreen) #tv-chart-container {{
+        }
+        #chart-modal-box:not(.fullscreen) #tv-chart-container {
             height: calc(96dvh - 50px) !important; min-height: 380px; width: 100% !important;
-        }}
-        #chart-modal-box.fullscreen #tv-chart-container {{
+        }
+        #chart-modal-box.fullscreen #tv-chart-container {
             height: calc(100dvh - 45px) !important; width: 100% !important;
-        }}
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
@@ -529,7 +529,7 @@ def generate_html():
     </div>
 
     <script>
-        const firebaseConfig = {{
+        const firebaseConfig = {
             apiKey: "AIzaSyA8VlFQvE_om-51pxffgd7hd2Ud6hQm11k",
             authDomain: "hoc-tieng-trung-64b8d.firebaseapp.com",
             projectId: "hoc-tieng-trung-64b8d",
@@ -537,140 +537,140 @@ def generate_html():
             messagingSenderId: "614326539390",
             appId: "1:614326539390:web:57344a021d7cbc7b18b42f",
             databaseURL: "https://hoc-tieng-trung-64b8d-default-rtdb.asia-southeast1.firebasedatabase.app"
-        }};
+        };
 
-        if (!firebase.apps.length) {{
+        if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
-        }}
+        }
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        auth.onAuthStateChanged(async (user) => {{
+        auth.onAuthStateChanged(async (user) => {
             const authOverlay = document.getElementById('auth-overlay');
             const expiredModal = document.getElementById('expired-modal');
 
-            if (user) {{
-                try {{
+            if (user) {
+                try {
                     const emailKey = user.email.toLowerCase();
                     const userDocRef = db.collection('allowed_users').doc(emailKey);
                     const doc = await userDocRef.get();
 
-                    let userData = {{}};
-                    if (!doc.exists) {{
+                    let userData = {};
+                    if (!doc.exists) {
                         const expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + 7);
-                        userData = {{
+                        userData = {
                             email: user.email,
                             role: 'user',
                             expiresAt: expireDate.toISOString()
-                        }};
+                        };
                         await userDocRef.set(userData);
-                    }} else {{
+                    } else {
                         userData = doc.data();
-                    }}
+                    }
 
                     const now = new Date();
                     const expireTime = parseDate(userData.expiresAt);
 
-                    if (expireTime && now > expireTime && userData.role !== 'admin') {{
+                    if (expireTime && now > expireTime && userData.role !== 'admin') {
                         authOverlay.classList.add('hidden');
                         expiredModal.classList.remove('hidden');
                         document.getElementById('user-uid-text').innerText = user.uid;
                         await auth.signOut();
                         return;
-                    }} else {{
+                    } else {
                         authOverlay.classList.add('hidden');
                         expiredModal.classList.add('hidden');
-                    }}
+                    }
 
-                    if (userData.role === 'admin') {{
+                    if (userData.role === 'admin') {
                         const adminBtn = document.getElementById('btn-admin-panel');
-                        if (adminBtn) {{
+                        if (adminBtn) {
                             adminBtn.classList.remove('hidden');
                             adminBtn.classList.add('flex');
-                        }}
-                    }}
-                }} catch (err) {{
+                        }
+                    }
+                } catch (err) {
                     console.warn("⚠️ Lỗi kiểm tra Firestore:", err);
-                }}
+                }
 
                 loadData(true);
 
-            }} else {{
+            } else {
                 authOverlay.classList.remove('hidden');
                 expiredModal.classList.add('hidden');
-            }}
-        }});
+            }
+        });
 
-        function parseDate(val) {{
+        function parseDate(val) {
             if (!val) return null;
             if (typeof val.toDate === 'function') return val.toDate();
             const d = new Date(val);
             return isNaN(d.getTime()) ? null : d;
-        }}
+        }
 
-        function switchAuthTab(tab) {{
+        function switchAuthTab(tab) {
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
             const loginBtn = document.getElementById('tab-login-btn');
             const registerBtn = document.getElementById('tab-register-btn');
 
-            if (tab === 'login') {{
+            if (tab === 'login') {
                 loginForm.classList.remove('hidden');
                 registerForm.classList.add('hidden');
                 loginBtn.className = "flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
                 registerBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            }} else {{
+            } else {
                 loginForm.classList.add('hidden');
                 registerForm.classList.remove('hidden');
                 registerBtn.className = "flex-1 pb-2 text-xs font-bold text-indigo-400 border-b-2 border-emerald-500 transition";
                 loginBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            }}
-        }}
+            }
+        }
 
-        async function handleLogin(e) {{
+        async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-password').value;
             const errBox = document.getElementById('login-error');
             errBox.classList.add('hidden');
-            try {{
+            try {
                 await auth.signInWithEmailAndPassword(email, pass);
-            }} catch (err) {{
+            } catch (err) {
                 errBox.innerText = "Lỗi đăng nhập: " + err.message;
                 errBox.classList.remove('hidden');
-            }}
-        }}
+            }
+        }
 
-        async function handleRegister(e) {{
+        async function handleRegister(e) {
             e.preventDefault();
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-password').value;
             const errBox = document.getElementById('register-error');
             errBox.classList.add('hidden');
 
-            try {{
+            try {
                 const cred = await auth.createUserWithEmailAndPassword(email, pass);
                 const expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 7);
-                await db.collection('allowed_users').doc(email.toLowerCase()).set({{
+                await db.collection('allowed_users').doc(email.toLowerCase()).set({
                     email: email,
                     role: 'user',
                     expiresAt: expireDate.toISOString()
-                }});
+                });
                 alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
-            }} catch (err) {{
+            } catch (err) {
                 errBox.innerText = "Lỗi đăng ký: " + err.message;
                 errBox.classList.remove('hidden');
-            }}
-        }}
+            }
+        }
 
-        async function handleLogout() {{
+        async function handleLogout() {
             await auth.signOut();
             window.location.reload();
-        }}
+        }
 
-        async function openAccountModal() {{
+        async function openAccountModal() {
             const user = auth.currentUser;
             if (!user) return;
             document.getElementById('account-modal').classList.remove('hidden');
@@ -679,68 +679,68 @@ def generate_html():
             document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
             document.getElementById('acc-modal-role').innerText = 'Đang tải...';
 
-            try {{
+            try {
                 const doc = await db.collection('allowed_users').doc(user.email.toLowerCase()).get();
-                if (doc.exists) {{
+                if (doc.exists) {
                     const data = doc.data();
                     document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
                     const expDate = parseDate(data.expiresAt);
                     document.getElementById('acc-modal-expire').innerText = expDate ? expDate.toLocaleDateString('vi-VN') : 'Vô thời hạn';
-                }} else {{
+                } else {
                     document.getElementById('acc-modal-role').innerText = 'USER';
                     document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập';
-                }}
-            }} catch (err) {{
+                }
+            } catch (err) {
                 document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
-            }}
-        }}
+            }
+        }
 
-        function closeAccountModal() {{ document.getElementById('account-modal').classList.add('hidden'); }}
+        function closeAccountModal() { document.getElementById('account-modal').classList.add('hidden'); }
 
-        async function openAdminModal() {{
+        async function openAdminModal() {
             document.getElementById('admin-modal').classList.remove('hidden');
             const listEl = document.getElementById('admin-users-list');
             listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
 
-            try {{
+            try {
                 const snapshot = await db.collection('allowed_users').get();
                 listEl.innerHTML = '';
-                if (snapshot.empty) {{
+                if (snapshot.empty) {
                     listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
                     return;
-                }}
-                snapshot.forEach(doc => {{
+                }
+                snapshot.forEach(doc => {
                     const data = doc.data();
                     const expDate = parseDate(data.expiresAt);
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-slate-800/50 transition";
                     tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white">${{data.email || doc.id}}</td>
-                        <td class="p-3 text-slate-300">${{expDate ? expDate.toLocaleDateString('vi-VN') : '—'}}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${{data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}}">${{data.role || 'user'}}</span></td>
+                        <td class="p-3 font-semibold text-white">${data.email || doc.id}</td>
+                        <td class="p-3 text-slate-300">${expDate ? expDate.toLocaleDateString('vi-VN') : '—'}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
                     `;
                     listEl.appendChild(tr);
-                }});
-            }} catch (err) {{
+                });
+            } catch (err) {
                 listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
-            }}
-        }}
+            }
+        }
 
-        function closeAdminModal() {{ document.getElementById('admin-modal').classList.add('hidden'); }}
+        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
 
         let screenerResults = [];
-        let symbolSimRates = {{}};
-        let quarterlyMeanDetails = {{}};
+        let symbolSimRates = {};
+        let quarterlyMeanDetails = {};
         let currentSymbolHistory = null;
         let chartInstance = null;
         let candleSeriesInstance = null;
         let volumeSeriesInstance = null;
         let currentSymbol = null;
         let currentInterval = 'D1';
-        let activeIndicators = {{ VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true }};
+        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
         let currentActiveTab = 'eval';
 
-        const SECTOR_NAMES = {{ 
+        const SECTOR_NAMES = { 
             "NGAN_HANG": "Ngân hàng", 
             "CHUNG_KHOAN": "Chứng khoán", 
             "BAT_DONG_SAN": "Bất động sản", 
@@ -749,66 +749,66 @@ def generate_html():
             "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ",
             "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
             "KHAC": "Khác" 
-        }};
+        };
 
-        function formatNumber(num) {{
+        function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
             return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }}
-        function formatPercent(num) {{
+        }
+        function formatPercent(num) {
             if (num === undefined || num === null) return '—';
             return num.toFixed(1) + '%';
-        }}
+        }
 
-        function formatCurrencyInput(input) {{
+        function formatCurrencyInput(input) {
             let value = input.value.replace(/\D/g, "");
-            if (value === "") {{
+            if (value === "") {
                 input.value = "";
                 return;
-            }}
+            }
             input.value = Number(value).toLocaleString("vi-VN");
-        }}
+        }
 
-        function parseCleanNumber(valStr) {{
+        function parseCleanNumber(valStr) {
             if (!valStr) return 0;
             let clean = valStr.toString().replace(/\./g, "").replace(/,/g, "");
             return parseFloat(clean) || 0;
-        }}
+        }
 
-        function clearInput(elementId) {{
+        function clearInput(elementId) {
             const inputEl = document.getElementById(elementId);
-            if (inputEl) {{
+            if (inputEl) {
                 inputEl.value = '';
                 inputEl.focus();
                 if (elementId === 'search-input') renderCards();
-            }}
-        }}
+            }
+        }
 
-        function toggleProMetrics() {{
+        function toggleProMetrics() {
             const box = document.getElementById('pro-metrics-box');
             const textEl = document.getElementById('prometrics-text');
             const chevron = document.getElementById('prometrics-chevron');
             
-            if (box.classList.contains('hidden')) {{
+            if (box.classList.contains('hidden')) {
                 box.classList.remove('hidden');
                 textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
                 chevron.style.transform = "rotate(180deg)";
-            }} else {{
+            } else {
                 box.classList.add('hidden');
                 textEl.innerText = "Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)";
                 chevron.style.transform = "rotate(0deg)";
-            }}
-        }}
+            }
+        }
 
-        async function loadData(showSpinner = false) {{
+        async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
-            try {{
+            try {
                 const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                     fetch('screener_results.json?t=' + new Date().getTime()),
-                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({{ ok: false }})),
-                    fetch('quarterly_mean_details.json?t=' + new Date().getTime()).catch(() => ({{ ok: false }}))
+                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
+                    fetch('quarterly_mean_details.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
                 ]);
 
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
@@ -816,16 +816,16 @@ def generate_html():
                 if (ratesRes.ok) symbolSimRates = await ratesRes.json();
                 if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
-                let rawStockData = {{}};
-                try {{
+                let rawStockData = {};
+                try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
                     if (dataRes.ok) rawStockData = await dataRes.json();
-                }} catch (e) {{}}
+                } catch (e) {}
 
-                screenerResults = screenerData.map(item => {{
+                screenerResults = screenerData.map(item => {
                     const sym = item.symbol;
-                    const extraData = rawStockData[sym] || {{}};
-                    return {{
+                    const extraData = rawStockData[sym] || {};
+                    return {
                         ...item,
                         eps: extraData.eps !== undefined ? extraData.eps : item.eps,
                         dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
@@ -846,20 +846,20 @@ def generate_html():
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
                         macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
                         ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at
-                    }};
-                }});
+                    };
+                });
                 renderCards();
-            }} catch (error) {{
+            } catch (error) {
                 const container = document.getElementById('stock-container');
-                if (container && showSpinner) {{
+                if (container && showSpinner) {
                     container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
-                }}
-            }} finally {{
+                }
+            } finally {
                 if (showSpinner && icon) icon.classList.remove('spinner');
-            }}
-        }}
+            }
+        }
 
-        function renderCards() {{
+        function renderCards() {
             const container = document.getElementById('stock-container');
             if (!container) return;
 
@@ -867,53 +867,53 @@ def generate_html():
             const selectedSector = document.getElementById('sector-filter').value;
             const rankingMode = document.getElementById('ranking-filter').value;
 
-            let filtered = screenerResults.filter(item => {{
+            let filtered = screenerResults.filter(item => {
                 let matchSearch = item.symbol.includes(searchTerm);
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
                 return matchSearch && matchSector;
-            }});
+            });
 
             if (rankingMode === "FUNDAMENTAL") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
             else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
 
-            if (filtered.length === 0) {{
+            if (filtered.length === 0) {
                 container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">Không tìm thấy mã nào phù hợp.</div>`;
                 return;
-            }}
+            }
 
             container.innerHTML = '';
-            filtered.forEach((item, index) => {{
+            filtered.forEach((item, index) => {
                 let statusColor = "text-slate-400 bg-slate-800";
                 let borderColor = "border-slate-700";
                 let displayRec = item.technical_status || "Tích lũy";
-                if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {{
+                if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {
                     statusColor = "text-emerald-400 bg-emerald-500/10";
                     borderColor = "border-emerald-500/30";
-                }} else if (displayRec.includes("CHỜ") || displayRec.includes("TÍCH LŨY") || displayRec.includes("CẠN CUNG")) {{
+                } else if (displayRec.includes("CHỜ") || displayRec.includes("TÍCH LŨY") || displayRec.includes("CẠN CUNG")) {
                     statusColor = "text-amber-400 bg-amber-500/10";
                     borderColor = "border-amber-500/30";
-                }}
+                }
 
                 let topBadge = "";
                 let cardGlow = "";
-                if (rankingMode !== "NONE") {{
-                    if (index === 0) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }}
-                    else if (index === 1) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }}
-                    else if (index === 2) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }}
-                    else {{ topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }}
-                }}
+                if (rankingMode !== "NONE") {
+                    if (index === 0) { topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }
+                    else if (index === 1) { topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }
+                    else if (index === 2) { topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }
+                    else { topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }
+                }
 
                 let scoreHtml = "";
-                if (rankingMode !== "NONE") {{
+                if (rankingMode !== "NONE") {
                     let label = "Điểm Tổng hợp";
                     let valScore = item.total_score;
-                    if (rankingMode === "FUNDAMENTAL") {{ label = "Điểm Cơ bản"; valScore = item.fundamental_score; }}
-                    else if (rankingMode === "TECHNICAL") {{ label = "Điểm Kỹ thuật"; valScore = item.technical_score; }}
+                    if (rankingMode === "FUNDAMENTAL") { label = "Điểm Cơ bản"; valScore = item.fundamental_score; }
+                    else if (rankingMode === "TECHNICAL") { label = "Điểm Kỹ thuật"; valScore = item.technical_score; }
 
                     scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${label}: <strong>${valScore}/100</strong></div>`;
-                }}
+                }
 
                 const card = document.createElement('div');
                 card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
@@ -952,26 +952,26 @@ def generate_html():
             });
         }
 
-        function switchAiTab(tabName) {{
+        function switchAiTab(tabName) {
             currentActiveTab = tabName;
-            ['eval', 'simulator'].forEach(t => {{
+            ['eval', 'simulator'].forEach(t => {
                 const contentEl = document.getElementById(`tab-content-${t}`);
                 const btnEl = document.getElementById(`tab-btn-${t}`);
                 if (contentEl) contentEl.classList.add('hidden');
                 if (btnEl) btnEl.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            }});
+            });
 
             const activeContent = document.getElementById(`tab-content-${tabName}`);
             const activeBtn = document.getElementById(`tab-btn-${tabName}`);
             if (activeContent) activeContent.classList.remove('hidden');
             if (activeBtn) activeBtn.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
 
-            if (tabName === 'simulator') {{
+            if (tabName === 'simulator') {
                 calculateModalSimulation();
-            }}
-        }}
+            }
+        }
 
-        function openModal(symbol) {{
+        function openModal(symbol) {
             currentSymbol = symbol;
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
@@ -988,7 +988,6 @@ def generate_html():
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
-            // Xử lý hiển thị thông số chuyên sâu linh hoạt theo nhóm ngành
             const isBankOrSec = (item.sector === "NGAN_HANG" || item.sector === "CHUNG_KHOAN");
             
             document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
@@ -996,33 +995,33 @@ def generate_html():
 
             const deLabel = document.getElementById('label-de');
             const deVal = document.getElementById('modal-de');
-            if (isBankOrSec) {{
+            if (isBankOrSec) {
                 deLabel.innerText = "Hệ số T.Sản/VCSH";
                 deLabel.title = "Đòn bẩy đặc thù Ngân hàng/Chứng khoán";
                 deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity + 'x (Nợ/VCSH)' : '—';
-            }} else {{
+            } else {
                 deLabel.innerText = "Đòn bẩy D/E";
                 deLabel.title = "Nợ phải trả / Vốn chủ sở hữu";
                 deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
-            }}
+            }
 
             const gmLabel = document.getElementById('label-gm');
             const gmVal = document.getElementById('modal-gm');
-            if (isBankOrSec) {{
+            if (isBankOrSec) {
                 gmLabel.innerText = "Đặc thù ngành";
                 gmLabel.title = "Ngân hàng/Chứng khoán không tính biên gộp truyền thống";
                 gmVal.innerText = "N/A (Ngành tài chính)";
-            }} else {{
+            } else {
                 gmLabel.innerText = "Biên gộp";
                 gmLabel.title = "Biên lợi nhuận gộp";
                 gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
-            }}
+            }
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
             let priceZoneText = item.ai_price_zone;
-            if (typeof priceZoneText === 'object' && priceZoneText !== null) {{
+            if (typeof priceZoneText === 'object' && priceZoneText !== null) {
                 priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
-            }}
+            }
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
             document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
@@ -1032,21 +1031,21 @@ def generate_html():
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
             let histRate = 15;
-            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {{
+            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
                 histRate = symbolSimRates[symbol].annual_rate_percent;
                 document.getElementById('sim-historical-rate-text').innerText = histRate + "% / năm (Quá khứ thực tế)";
-            }} else {{
+            } else {
                 document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
-            }}
+            }
 
             const details = quarterlyMeanDetails[symbol];
-            if (details) {{
+            if (details) {
                 document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${details.start_price_mean.toLocaleString('vi-VN')} đ`;
                 document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${details.end_price_mean.toLocaleString('vi-VN')} đ`;
-            }} else {{
+            } else {
                 document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
                 document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
-            }}
+            }
 
             document.getElementById('modal-sim-rate').value = histRate;
             document.getElementById('modal-sim-initial').value = "20.000.000";
@@ -1054,33 +1053,33 @@ def generate_html():
             document.getElementById('modal-sim-years').value = "3";
 
             document.getElementById('ai-modal').classList.remove('hidden');
-        }}
+        }
 
-        function closeModal() {{ document.getElementById('ai-modal').classList.add('hidden'); }}
+        function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
 
-        function navigateModalSymbol(direction) {{
+        function navigateModalSymbol(direction) {
             const symbols = screenerResults.map(s => s.symbol).sort();
             const currentIndex = symbols.indexOf(currentSymbol);
-            if (currentIndex !== -1) {{
+            if (currentIndex !== -1) {
                 let newIndex = currentIndex + direction;
                 if (newIndex < 0) newIndex = symbols.length - 1;
                 if (newIndex >= symbols.length) newIndex = 0;
                 openModal(symbols[newIndex]);
-            }}
-        }}
+            }
+        }
 
-        function handleDirectSymbolInput(val) {{
+        function handleDirectSymbolInput(val) {
             const cleanSymbol = val.trim().toUpperCase();
             const found = screenerResults.find(s => s.symbol === cleanSymbol);
-            if (found) {{
+            if (found) {
                 openModal(cleanSymbol);
-            }} else {{
+            } else {
                 alert("Không tìm thấy mã cổ phiếu: " + cleanSymbol);
                 document.getElementById('modal-symbol-input').value = currentSymbol;
-            }}
-        }}
+            }
+        }
 
-        function calculateModalSimulation() {{
+        function calculateModalSimulation() {
             let p0 = parseCleanNumber(document.getElementById('modal-sim-initial').value);
             let pMonthly = parseCleanNumber(document.getElementById('modal-sim-monthly').value);
             let years = parseFloat(document.getElementById('modal-sim-years').value) || 1;
@@ -1091,115 +1090,115 @@ def generate_html():
             let monthlyRate = rate / 12;
             let totalMonths = years * 12;
             
-            for (let i = 1; i <= totalMonths; i++) {{
+            for (let i = 1; i <= totalMonths; i++) {
                 futureVal += pMonthly * Math.pow(1 + monthlyRate, totalMonths - i + 1);
-            }}
+            }
             let profit = futureVal - totalPrincipal;
 
             document.getElementById('modal-sim-principal').innerText = Math.round(totalPrincipal).toLocaleString("vi-VN") + " VNĐ";
             document.getElementById('modal-sim-profit').innerText = "+" + Math.round(profit).toLocaleString("vi-VN") + " VNĐ";
             document.getElementById('modal-sim-total').innerText = Math.round(futureVal).toLocaleString("vi-VN") + " VNĐ";
-        }}
+        }
 
-        function navigateSymbol(direction) {{
+        function navigateSymbol(direction) {
             const symbols = screenerResults.map(s => s.symbol).sort();
             const currentIndex = symbols.indexOf(currentSymbol);
-            if (currentIndex !== -1) {{
+            if (currentIndex !== -1) {
                 let newIndex = currentIndex + direction;
                 if (newIndex < 0) newIndex = symbols.length - 1;
                 if (newIndex >= symbols.length) newIndex = 0;
                 openChartModal(symbols[newIndex]);
-            }}
-        }}
+            }
+        }
 
-        function toggleSymbolDropdown() {{
+        function toggleSymbolDropdown() {
             const dropdown = document.getElementById('symbol-dropdown');
             dropdown.classList.toggle('hidden');
-            if (!dropdown.classList.contains('hidden')) {{
+            if (!dropdown.classList.contains('hidden')) {
                 document.getElementById('dropdown-search').value = '';
                 renderDropdownSymbolList(screenerResults.map(s => s.symbol));
                 document.getElementById('dropdown-search').focus();
-            }}
-        }}
+            }
+        }
 
-        function renderDropdownSymbolList(symbols) {{
+        function renderDropdownSymbolList(symbols) {
             const listContainer = document.getElementById('dropdown-symbol-list');
             listContainer.innerHTML = '';
-            symbols.sort().forEach(sym => {{
+            symbols.sort().forEach(sym => {
                 const item = document.createElement('button');
                 item.type = 'button';
                 item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
                 item.innerHTML = `<span>${sym}</span>`;
-                item.onclick = (e) => {{
+                item.onclick = (e) => {
                     e.stopPropagation();
                     document.getElementById('symbol-dropdown').classList.add('hidden');
                     openChartModal(sym);
-                }};
+                };
                 listContainer.appendChild(item);
-            }});
-        }}
+            });
+        }
 
-        function filterDropdownSymbols(keyword) {{
+        function filterDropdownSymbols(keyword) {
             const upper = keyword.toUpperCase();
             const matched = screenerResults.map(s => s.symbol).filter(sym => sym.includes(upper));
             renderDropdownSymbolList(matched);
-        }}
+        }
 
-        window.addEventListener('click', (e) => {{
+        window.addEventListener('click', (e) => {
             const dropdown = document.getElementById('symbol-dropdown');
             const symbolBtn = document.getElementById('chart-modal-symbol');
-            if (dropdown && !dropdown.contains(e.target) && !symbolBtn.contains(e.target)) {{
+            if (dropdown && !dropdown.contains(e.target) && !symbolBtn.contains(e.target)) {
                 dropdown.classList.add('hidden');
-            }}
-        }});
+            }
+        });
 
-        function switchInterval(interval) {{
+        function switchInterval(interval) {
             currentInterval = interval;
-            ['d1', 'w1', 'mn'].forEach(i => {{
+            ['d1', 'w1', 'mn'].forEach(i => {
                 const btn = document.getElementById(`btn-${i}`);
-                if (btn) {{
+                if (btn) {
                     btn.className = i === interval.toLowerCase() 
                         ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
                         : "px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition";
-                }}
-            }});
+                }
+            });
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }}
+        }
 
-        function toggleIndicator(name) {{
+        function toggleIndicator(name) {
             activeIndicators[name] = !activeIndicators[name];
             const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
-            if (btn) {{
+            if (btn) {
                 btn.className = activeIndicators[name]
                     ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition"
                     : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
-            }}
+            }
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }}
+        }
 
-        function toggleQuarterLines() {{
+        function toggleQuarterLines() {
             activeIndicators.QLINES = !activeIndicators.QLINES;
             const btn = document.getElementById('btn-ind-qlines');
-            if (btn) {{
+            if (btn) {
                 btn.className = activeIndicators.QLINES
                     ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition ml-1"
                     : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition ml-1";
-            }}
+            }
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }}
+        }
 
-        function toggleQuarterZone() {{
+        function toggleQuarterZone() {
             activeIndicators.QZONE = !activeIndicators.QZONE;
             const btn = document.getElementById('btn-ind-qzone');
-            if (btn) {{
+            if (btn) {
                 btn.className = activeIndicators.QZONE
                     ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
                     : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
-            }}
+            }
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }}
+        }
 
-        function jumpToQuarter(type) {{
+        function jumpToQuarter(type) {
             const details = quarterlyMeanDetails[currentSymbol];
             if (!details || !currentSymbolHistory) return;
 
@@ -1221,130 +1220,130 @@ def generate_html():
             let qMinPrice = Infinity;
             let qMaxPrice = -Infinity;
 
-            chartData.forEach((bar, idx) => {{
+            chartData.forEach((bar, idx) => {
                 const barDate = new Date(bar.time);
                 if (barDate.getFullYear() === year && 
                     (barDate.getMonth() + 1) >= startMonth && 
-                    (barDate.getMonth() + 1) <= endMonth) {{
+                    (barDate.getMonth() + 1) <= endMonth) {
                     indices.push(idx);
                     if (bar.low < qMinPrice) qMinPrice = bar.low;
                     if (bar.high > qMaxPrice) qMaxPrice = bar.high;
-                }}
-            }});
+                }
+            });
 
-            if (indices.length > 0 && chartInstance) {{
+            if (indices.length > 0 && chartInstance) {
                 const minIdx = indices[0];
                 const maxIdx = indices[indices.length - 1];
                 
-                chartInstance.priceScale('right').applyOptions({{
+                chartInstance.priceScale('right').applyOptions({
                     autoScale: true,
-                }});
+                });
 
                 const rangeSpan = Math.max(15, (maxIdx - minIdx) * 2);
                 const from = Math.max(0, minIdx - Math.floor(rangeSpan / 2));
                 const to = Math.min(chartData.length - 1, maxIdx + Math.floor(rangeSpan / 2));
-                chartInstance.timeScale().setVisibleLogicalRange({{ from, to }});
+                chartInstance.timeScale().setVisibleLogicalRange({ from, to });
 
-                if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {{
+                if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {
                     const pricePadding = (qMaxPrice - qMinPrice) * 0.5;
-                    chartInstance.priceScale('right').setVisiblePriceRange({{
+                    chartInstance.priceScale('right').setVisiblePriceRange({
                         from: qMinPrice - pricePadding,
                         to: qMaxPrice + pricePadding
-                    }});
-                }}
-            }} else {{
+                    });
+                }
+            } else {
                 alert(`Không tìm thấy dữ liệu thời gian cho ${quarterStr} trong khung thời gian hiện tại!`);
-            }}
-        }}
+            }
+        }
 
-        function resizeChart() {{
-            if (chartInstance) {{
+        function resizeChart() {
+            if (chartInstance) {
                 const container = document.getElementById('tv-chart-container');
-                if (container) chartInstance.applyOptions({{ width: container.clientWidth, height: container.clientHeight }});
-            }}
-        }}
+                if (container) chartInstance.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+            }
+        }
 
-        function toggleFullscreen() {{
+        function toggleFullscreen() {
             const modalBox = document.getElementById('chart-modal-box');
             const fsBtnIcon = document.querySelector('#fullscreen-btn i');
             modalBox.classList.toggle('fullscreen');
             fsBtnIcon.className = modalBox.classList.contains('fullscreen') ? "fa-solid fa-compress text-xs" : "fa-solid fa-expand text-xs";
             setTimeout(resizeChart, 200);
-        }}
+        }
 
-        window.addEventListener('resize', () => {{
+        window.addEventListener('resize', () => {
             if (!document.getElementById('chart-modal').classList.contains('hidden')) setTimeout(resizeChart, 300);
-        }});
+        });
 
-        async function openChartModal(symbol) {{
+        async function openChartModal(symbol) {
             currentSymbol = symbol;
             currentInterval = 'D1';
             switchInterval('D1');
 
             document.getElementById('current-symbol-text').innerText = symbol;
             document.getElementById('symbol-dropdown').classList.add('hidden');
-            document.getElementById('btn-view-ai').onclick = () => {{ closeChartModal(); openModal(symbol); }};
+            document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
 
             document.getElementById('chart-modal').classList.remove('hidden');
             document.getElementById('chart-loading').classList.remove('hidden');
 
-            try {{
+            try {
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 currentSymbolHistory = await res.json();
                 renderChartInstance(currentSymbolHistory);
-            }} catch (err) {{
+            } catch (err) {
                 document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
-            }} finally {{
+            } finally {
                 document.getElementById('chart-loading').classList.add('hidden');
-            }}
-        }}
+            }
+        }
 
-        function calculateMA(data, period) {{
+        function calculateMA(data, period) {
             let result = [];
-            for (let i = 0; i < data.length; i++) {{
+            for (let i = 0; i < data.length; i++) {
                 if (i < period - 1) continue;
                 let sum = 0;
                 for (let j = 0; j < period; j++) sum += data[i - j].close;
-                result.push({{ time: data[i].time, value: sum / period }});
-            }}
+                result.push({ time: data[i].time, value: sum / period });
+            }
             return result;
-        }}
+        }
 
-        function calculateVolumeMA(data, period = 20) {{
+        function calculateVolumeMA(data, period = 20) {
             let result = [];
-            for (let i = 0; i < data.length; i++) {{
+            for (let i = 0; i < data.length; i++) {
                 if (i < period - 1) continue;
                 let sum = 0;
                 for (let j = 0; j < period; j++) sum += data[i - j].volume;
-                result.push({{ time: data[i].time, value: sum / period }});
-            }}
+                result.push({ time: data[i].time, value: sum / period });
+            }
             return result;
-        }}
+        }
 
-        function calculateRSI(data, period = 14) {{
+        function calculateRSI(data, period = 14) {
             let result = [];
             let gains = 0, losses = 0;
-            for (let i = 1; i < data.length; i++) {{
+            for (let i = 1; i < data.length; i++) {
                 let change = data[i].close - data[i - 1].close;
-                if (i <= period) {{
+                if (i <= period) {
                     if (change >= 0) gains += change; else losses -= change;
-                    if (i === period) {{
+                    if (i === period) {
                         let avgGain = gains / period, avgLoss = losses / period;
                         let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
-                        result.push({{ time: data[i].time, value: 100 - (100 / (1 + rs)) }});
-                    }}
-                }} else {{
+                        result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
+                    }
+                } else {
                     gains = (gains * (period - 1) + (change >= 0 ? change : 0)) / period;
                     losses = (losses * (period - 1) + (change < 0 ? -change : 0)) / period;
                     let rs = losses === 0 ? 100 : gains / losses;
-                    result.push({{ time: data[i].time, value: 100 - (100 / (1 + rs)) }});
-                }}
-            }}
+                    result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
+                }
+            }
             return result;
-        }}
+        }
 
-        function renderChartInstance(historyDataObj) {{
+        function renderChartInstance(historyDataObj) {
             const container = document.getElementById('tv-chart-container');
             container.innerHTML = '';
             const LC = window.LightweightCharts;
@@ -1354,41 +1353,41 @@ def generate_html():
             const height = container.clientHeight || 380;
             const hasRSI = activeIndicators.RSI;
 
-            chartInstance = LC.createChart(container, {{
+            chartInstance = LC.createChart(container, {
                 width: width, height: height,
-                layout: {{ background: {{ type: 'solid', color: '#0f172a' }}, textColor: '#94a3b8' }},
-                grid: {{ vertLines: {{ color: '#1e293b' }}, horzLines: {{ color: '#1e293b' }} }},
-                timeScale: {{ borderColor: '#334155' }}
-            }});
+                layout: { background: { type: 'solid', color: '#0f172a' }, textColor: '#94a3b8' },
+                grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
+                timeScale: { borderColor: '#334155' }
+            });
 
-            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {{
+            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {
                 upColor: '#10b981', downColor: '#f43f5e',
                 borderUpColor: '#10b981', borderDownColor: '#f43f5e',
                 wickUpColor: '#10b981', wickDownColor: '#f43f5e',
-            }}, 0);
+            }, 0);
 
-            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {{
-                priceFormat: {{ type: 'volume' }},
+            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
+                priceFormat: { type: 'volume' },
                 priceScaleId: 'volumeScale'
-            }}, 0);
+            }, 0);
 
-            chartInstance.priceScale('volumeScale').applyOptions({{ scaleMargins: {{ top: 0.75, bottom: 0 }} }});
+            chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.75, bottom: 0 } });
 
             let chartData = [];
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
             else if (currentInterval === 'W1') chartData = historyDataObj.history_w1 || [];
             else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
 
-            if (chartData && chartData.length > 0) {{
+            if (chartData && chartData.length > 0) {
                 candleSeriesInstance.setData(chartData);
-                volumeSeriesInstance.setData(chartData.map(row => ({{
+                volumeSeriesInstance.setData(chartData.map(row => ({
                     time: row.time, value: row.volume,
                     color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
-                }})));
+                })));
 
                 const details = quarterlyMeanDetails[currentSymbol];
-                if (details) {{
-                    function getQuarterBoxInfo(quarterStr, allBars) {{
+                if (details) {
+                    function getQuarterBoxInfo(quarterStr, allBars) {
                         if (!quarterStr) return null;
                         const parts = quarterStr.split('Q');
                         const year = parseInt(parts[0]);
@@ -1397,97 +1396,97 @@ def generate_html():
                         const startMonth = (q - 1) * 3 + 1;
                         const endMonth = q * 3;
 
-                        const quarterBars = allBars.filter(bar => {{
+                        const quarterBars = allBars.filter(bar => {
                             const barDate = new Date(bar.time);
                             return barDate.getFullYear() === year && 
                                    (barDate.getMonth() + 1) >= startMonth && 
                                    (barDate.getMonth() + 1) <= endMonth;
-                        }});
+                        });
 
                         if (quarterBars.length === 0) return null;
 
                         let qHigh = -Infinity;
                         let qLow = Infinity;
-                        quarterBars.forEach(b => {{
+                        quarterBars.forEach(b => {
                             if (b.high > qHigh) qHigh = b.high;
                             if (b.low < qLow) qLow = b.low;
-                        }});
+                        });
 
-                        return {{
+                        return {
                             high: qHigh,
                             low: qLow,
-                            data: quarterBars.map(row => ({{
+                            data: quarterBars.map(row => ({
                                 time: row.time,
                                 value: qHigh,
                                 baseValue: qLow
-                            }}))
-                        }};
-                    }}
+                            }))
+                        };
+                    }
 
-                    if (activeIndicators.QZONE) {{
+                    if (activeIndicators.QZONE) {
                         const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
-                        if (startBoxInfo && startBoxInfo.data.length > 0) {{
-                            const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {{
-                                baseValue: {{ type: 'price', price: startBoxInfo.low }},
+                        if (startBoxInfo && startBoxInfo.data.length > 0) {
+                            const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
+                                baseValue: { type: 'price', price: startBoxInfo.low },
                                 topFillColor1: 'rgba(59, 130, 246, 0.45)',
                                 topFillColor2: 'rgba(59, 130, 246, 0.15)',
                                 topLineColor: '#2563eb',
                                 bottomLineColor: '#2563eb',
                                 lineWidth: 2
-                            }}, 0);
+                            }, 0);
                             startBoxSeries.setData(startBoxInfo.data);
-                        }}
+                        }
 
                         const endBoxInfo = getQuarterBoxInfo(details.end_quarter, chartData);
-                        if (endBoxInfo && endBoxInfo.data.length > 0) {{
-                            const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {{
-                                baseValue: {{ type: 'price', price: endBoxInfo.low }},
+                        if (endBoxInfo && endBoxInfo.data.length > 0) {
+                            const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
+                                baseValue: { type: 'price', price: endBoxInfo.low },
                                 topFillColor1: 'rgba(16, 185, 129, 0.45)',
                                 topFillColor2: 'rgba(16, 185, 129, 0.15)',
                                 topLineColor: '#059669',
                                 bottomLineColor: '#059669',
                                 lineWidth: 2
-                            }}, 0);
+                            }, 0);
                             endBoxSeries.setData(endBoxInfo.data);
-                        }}
-                    }}
+                        }
+                    }
 
-                    if (activeIndicators.QLINES) {{
-                        candleSeriesInstance.createPriceLine({{
+                    if (activeIndicators.QLINES) {
+                        candleSeriesInstance.createPriceLine({
                             price: details.start_price_mean,
                             color: '#f97316',
                             lineWidth: 2,
                             lineStyle: LC.LineStyle.Dashed,
                             axisLabelVisible: true,
                             title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
-                        }});
+                        });
 
-                        candleSeriesInstance.createPriceLine({{
+                        candleSeriesInstance.createPriceLine({
                             price: details.end_price_mean,
                             color: '#10b981',
                             lineWidth: 2,
                             lineStyle: LC.LineStyle.Dotted,
                             axisLabelVisible: true,
                             title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
-                        }});
-                    }}
-                }}
+                        });
+                    }
+                }
 
-                if (activeIndicators.MA20) {{
-                    chartInstance.addSeries(LC.LineSeries, {{ color: '#3b82f6', lineWidth: 1 }}, 0).setData(calculateMA(chartData, 20));
-                }}
-                if (activeIndicators.MA50) {{
-                    chartInstance.addSeries(LC.LineSeries, {{ color: '#eab308', lineWidth: 1 }}, 0).setData(calculateMA(chartData, 50));
-                }}
-                if (activeIndicators.VOLMA) {{
-                    chartInstance.addSeries(LC.LineSeries, {{ color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }}, 0).setData(calculateVolumeMA(chartData, 20));
-                }}
-                if (hasRSI) {{
-                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, {{ color: '#a855f7', lineWidth: 1.5 }}, 1);
-                    rsiSeries.createPriceLine({{ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true }});
-                    rsiSeries.createPriceLine({{ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true }});
+                if (activeIndicators.MA20) {
+                    chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
+                }
+                if (activeIndicators.MA50) {
+                    chartInstance.addSeries(LC.LineSeries, { color: '#eab308', lineWidth: 1 }, 0).setData(calculateMA(chartData, 50));
+                }
+                if (activeIndicators.VOLMA) {
+                    chartInstance.addSeries(LC.LineSeries, { color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }, 0).setData(calculateVolumeMA(chartData, 20));
+                }
+                if (hasRSI) {
+                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, { color: '#a855f7', lineWidth: 1.5 }, 1);
+                    rsiSeries.createPriceLine({ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
+                    rsiSeries.createPriceLine({ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
                     rsiSeries.setData(calculateRSI(chartData, 14));
-                }}
+                }
 
                 const legendTime = document.getElementById('legend-time');
                 const legendClose = document.getElementById('legend-close');
@@ -1497,7 +1496,7 @@ def generate_html():
                 const latestBar = chartData[chartData.length - 1];
                 if (latestBar) updateLegend(latestBar, chartData);
 
-                function updateLegend(bar, dataArr) {{
+                function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
                     legendClose.innerText = formatNumber(bar.close);
                     const index = dataArr.findIndex(item => item.time === bar.time);
@@ -1508,30 +1507,30 @@ def generate_html():
                     legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendVol.innerText = formatNumber(bar.volume);
-                }}
+                }
 
-                chartInstance.subscribeCrosshairMove(param => {{
-                    if (!param.point || !param.time) {{ if (latestBar) updateLegend(latestBar, chartData); }}
-                    else {{
+                chartInstance.subscribeCrosshairMove(param => {
+                    if (!param.point || !param.time) { if (latestBar) updateLegend(latestBar, chartData); }
+                    else {
                         const dataPoint = param.seriesData.get(candleSeriesInstance);
-                        if (dataPoint) updateLegend({{ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }}, chartData);
-                    }}
-                }});
+                        if (dataPoint) updateLegend({ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }, chartData);
+                    }
+                });
 
-                setTimeout(() => {{
+                setTimeout(() => {
                     const totalBars = chartData.length;
                     let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
-                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({{ from: totalBars - visibleBarsCount, to: totalBars - 1 }});
+                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
                     else chartInstance.timeScale().fitContent();
-                }}, 50);
-            }}
-        }}
+                }, 50);
+            }
+        }
 
-        function closeChartModal() {{
+        function closeChartModal() {
             document.getElementById('chart-modal').classList.add('hidden');
-            if (chartInstance) {{ chartInstance.remove(); chartInstance = null; }}
+            if (chartInstance) { chartInstance.remove(); chartInstance = null; }
             currentSymbolHistory = null;
-        }}
+        }
 
         document.getElementById('search-input').addEventListener('input', renderCards);
         document.getElementById('sector-filter').addEventListener('change', renderCards);
@@ -1540,6 +1539,8 @@ def generate_html():
 </body>
 </html>
 """
+
+    html_content = html_template.replace("{last_update_str}", last_update_str)
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
