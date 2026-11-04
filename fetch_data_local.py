@@ -5,7 +5,7 @@ import json
 import subprocess
 import numpy as np
 import requests
-from vnstock import Quote
+from vnstock import Quote, Listing
 
 DATA_FILE = "data.json"
 LAST_UPDATE_FILE = "last_update.json"
@@ -51,27 +51,20 @@ def get_vndirect_ratio(symbol, ratio_code):
         pass
     return 0
 
-def get_vndirect_company_overview(symbol):
-    """Gọi API trực tiếp từ VNDirect để lấy tên công ty, vốn hóa và tổng số cổ phiếu niêm yết"""
-    url = f"https://api-finfo.vndirect.com.vn/v4/issuer_profiles"
-    params = {"q": f"code:{symbol}"}
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-    
-    company_name = ""
+def get_vndirect_company_overview(symbol, company_info_map=None):
+    """Lấy thông tin tên công ty, vốn hóa và tổng số cổ phiếu thông qua dữ liệu Listing hoặc map tải sẵn"""
+    company_name = symbol
     market_cap = 0
     total_shares = 0
     
     try:
-        r = requests.get(url, params=params, headers=headers, timeout=10)
-        if r.status_code == 200:
-            data = r.json().get("data", [])
-            if data:
-                item = data[0]
-                company_name = item.get("organName") or item.get("companyName") or item.get("enOrganName") or symbol
-                market_cap = float(item.get("marketCap", 0) or 0)
-                total_shares = float(item.get("listingShares", 0) or item.get("sharesOutstanding", 0) or 0)
+        if company_info_map and symbol in company_info_map:
+            item = company_info_map[symbol]
+            company_name = item.get('organName') or item.get('companyName') or item.get('enOrganName') or symbol
+            market_cap = float(item.get('marketCap', 0) or item.get('market_cap', 0) or 0)
+            total_shares = float(item.get('sharesOutstanding', 0) or item.get('totalShares', 0) or item.get('listingShares', 0) or 0)
     except Exception as e:
-        print(f"⚠️ Không lấy được profile công ty qua API cho {symbol}: {e}")
+        print(f"⚠️ Không lấy được profile công ty cho {symbol}: {e}")
         
     return {
         "company_name": company_name,
@@ -362,6 +355,19 @@ def main():
     else:
         print("-> Đã chọn chế độ mặc định (30 phiên gần nhất).")
 
+    # Tải trước danh sách thông tin chung qua Listing của vnstock để lấy tên cty, vốn hóa chuẩn xác
+    print("🔄 Đang tải thông tin chung danh sách công ty từ vnstock (Listing)...")
+    company_info_map = {}
+    try:
+        df_listing = Listing().symbols_by_exchange()
+        if df_listing is not None and not df_listing.empty:
+            for _, row in df_listing.iterrows():
+                sym = row.get('symbol') or row.get('ticker')
+                if sym:
+                    company_info_map[sym.upper()] = row.to_dict()
+    except Exception as e:
+        print(f"⚠️ Không tải được danh sách chung qua Listing: {e}")
+
     print(f"\n🚀 Bắt đầu cào dữ liệu cho {len(target_symbols)} mã (Lấy đúng {num_sessions} phiên giao dịch gần nhất)...")
     
     if not os.path.exists(HISTORY_DIR):
@@ -437,9 +443,9 @@ def main():
             print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
             continue
 
-        # Lấy thông tin Tên công ty, Vốn hóa, Tổng số cổ phiếu trực tiếp từ API VNDirect
-        company_overview = get_vndirect_company_overview(symbol)
-        time.sleep(0.2)
+        # Lấy thông tin Tên công ty, Vốn hóa, Tổng số cổ phiếu từ map Listing đã tải
+        company_overview = get_vndirect_company_overview(symbol, company_info_map)
+        time.sleep(0.1)
 
         ratios = {}
         for key, code in VNDIRECT_RATIOS.items():
@@ -483,9 +489,9 @@ def main():
 
         stock_db[symbol] = {
             "symbol": symbol,
-            "company_name": company_overview["company_name"],     # Lấy trực tiếp từ API
-            "market_cap": company_overview["market_cap"],         # Lấy trực tiếp từ API
-            "total_shares": company_overview["total_shares"],     # Lấy trực tiếp từ API
+            "company_name": company_overview["company_name"],     # Đã lấy được tên chính xác
+            "market_cap": company_overview["market_cap"],         # Đã lấy được vốn hóa
+            "total_shares": company_overview["total_shares"],     # Đã lấy được số cổ phiếu
             "close": int(close_price * 1000),
             "volume": int(volume),
             "pe": round(ratios.get("pe", 0), 2),
