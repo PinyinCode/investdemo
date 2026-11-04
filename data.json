@@ -1,6 +1,9 @@
 {
     "ACB": {
         "symbol": "ACB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 20500,
         "volume": 11819700,
         "pe": 7.3,
@@ -15,7 +18,7 @@
         "net_profit_ttm": 16096.39,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:29:17",
+        "updated_at": "04/11/2026 19:19:15",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -126,13 +129,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, ưu tiên nắm giữ xuyên chu kỳ kinh tế.",
         "ai_price_zone": "Vùng gom giá trị: dưới 21,000 VNĐ, Vùng gia tăng tỷ trọng: quanh 19,500 VNĐ, Vùng chặn lỗ tư duy: thủng 17,500 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% trong 2-3 năm tới kèm cổ tức đều đặn.",
         "macro_view": "Chu kỳ ngành ngân hàng đang ở giai đoạn đáy của lợi nhuận biên (NIM) do lãi suất huy động tăng nhanh hơn lãi suất cho vay trong giai đoạn trước, nhưng đang dần cân bằng lại. Chính sách tiền tệ nới lỏng có kiểm soát của Ngân hàng Nhà nước nhằm hỗ trợ tăng trưởng GDP sẽ tạo dư địa cho ACB mở rộng tín dụng vào các phân khúc sản xuất và tiêu dùng. Lạm phát được kiểm soát ở mức thấp giúp duy trì mặt bằng lãi suất ổn định, giảm áp lực trích lập dự phòng rủi ro tín dụng cho toàn hệ thống. Tuy nhiên, độ trễ của chính sách tiền tệ và sự suy yếu của sức cầu nội địa vẫn là lực cản khiến tốc độ hấp thụ vốn của nền kinh tế chưa thể bứt phá ngay lập tức. Trong bối cảnh vĩ mô phân hóa, những ngân hàng có bộ đệm vốn dày và quản trị rủi ro tốt như ACB sẽ là nhóm hưởng lợi đầu tiên khi dòng vốn FDI và xuất khẩu khởi sắc.",
-        "ai_updated_at": "2026-11-04 10:58:49",
-        "bctc": "Bức tranh tài chính của ACB thể hiện rõ bản chất của một định chế tài chính hàng đầu với khả năng sinh lời vượt trội, minh chứng qua ROE đạt 16.5% và ROA ở mức 1.6%, thuộc top đầu ngành ngân hàng tư nhân. Việc biên lợi nhuận gộp bằng 0% là hoàn toàn bình thường do đặc thù kế toán ngân hàng không áp dụng chỉ số này, thay vào đó NIM và thu nhập lãi thuần mới là thước đo cốt lõi. Tỷ lệ D/E lên tới 9.62 không hề đáng ngại mà ngược lại, phản ánh năng lực huy động vốn dân cư và tổ chức kinh tế cực kỳ xuất sắc của ACB. Dòng tiền kinh doanh (CFO) âm 3,317 tỷ đồng thực chất là tín hiệu tích cực cho thấy ngân hàng đang đẩy mạnh giải ngân tín dụng ra nền kinh tế thay vì găm giữ tiền mặt. Lợi nhuận trượt 4 quý đạt hơn 16,096 tỷ đồng cùng mức tăng trưởng LNST 9.77% cho thấy sự bền bỉ trong bối cảnh vĩ mô nhiều biến động. Chất lượng tài sản của ACB luôn được kiểm soát chặt chẽ với triết lý quản trị rủi ro thận trọng, duy trì bộ đệm dự phòng (LLR) dày dặn trước những cú sốc nợ xấu. EPS đạt 2,773 VNĐ kết hợp với cổ tức tiền mặt đều đặn 3.06% mang lại dòng tiền thụ động hấp dẫn cho cổ đông dài hạn. Tổng thể, bảng cân đối kế toán của ACB rất vững chắc, tối ưu hóa việc giữ lại lợi nhuận để mở rộng quy mô tài sản mà không làm pha loãng giá trị nội tại.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của ACB nằm ở mạng lưới khách hàng bán lẻ trung thành, chi phí vốn (COF) thấp nhờ mạnh về CASA và tiền gửi không kỳ hạn. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi quá trình chuyển đổi số toàn diện, giúp tối ưu hóa chi phí vận hành (CIR) và mở rộng biên lợi nhuận ròng. Bên cạnh đó, việc kiểm soát chặt chẽ khẩu vị rủi ro giúp ACB dễ dàng bứt phá tín dụng khi chu kỳ kinh tế hồi phục mà không gánh nặng nợ xấu từ bất động sản. Sự kết hợp giữa quản trị minh bạch theo chuẩn quốc tế và năng lực bán chéo sản phẩm bảo hiểm, thẻ tín dụng sẽ tiếp tục nâng cao tỷ trọng thu nhập ngoài lãi (NOII).",
-        "risks": "Rủi ro lớn nhất đối với ACB đến từ sự đóng băng của thị trường bất động sản, có thể làm gia tăng tỷ lệ nợ xấu (NPL) tiềm ẩn ở nhóm khách hàng doanh nghiệp và cá nhân vay mua nhà. Áp lực cạnh tranh gay gắt trong việc huy động vốn có thể làm tăng chi phí vốn (COF), từ đó bào mòn biên lãi ròng (NIM) trong các kỳ tái định giá lãi suất. Ngoài ra, rủi ro pháp lý và sự thay đổi trong chính sách điều hành tín dụng của Ngân hàng Nhà nước có thể kìm hãm tốc độ tăng trưởng quy mô tài sản ngắn hạn."
+        "ai_updated_at": "2026-11-04 10:58:49"
     },
     "BID": {
         "symbol": "BID",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 32450,
         "volume": 4384800,
         "pe": 7.12,
@@ -147,7 +150,7 @@
         "net_profit_ttm": 35136.72,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:29:52",
+        "updated_at": "04/11/2026 19:19:52",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -258,13 +261,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, ưu tiên nắm giữ xuyên chu kỳ để hưởng lợi từ kép lãi suất và tăng trưởng giá trị sổ sách.",
         "ai_price_zone": "Vùng gom giá trị: dưới 33.000 VNĐ, Vùng gia tăng tỷ trọng: 29.000 - 30.500 VNĐ, Vùng chặn lỗ danh nghĩa: thủng 26.000 VNĐ, Kỳ vọng dài hạn: vượt 45.000 VNĐ khi P/B tiến về mức 1.6x.",
         "macro_view": "Vĩ mô Việt Nam đang trong giai đoạn nới lỏng tiền tệ và đẩy mạnh đầu tư công để thúc đẩy GDP, tạo môi trường thuận lợi cho tăng trưởng tín dụng toàn hệ thống. Lãi suất điều hành duy trì ở mức thấp giúp giảm áp lực chi phí vốn cho các ngân hàng quốc doanh có lợi thế huy động tiền gửi kho bạc nhà nước và tổ chức lớn như BID. Tuy nhiên, độ trễ của chính sách tiền tệ và sự đóng băng của thị trường bất động sản vẫn là lực cản khiến cầu tín dụng dân cư chưa thể bứt phá ngay lập tức. Chu kỳ ngành ngân hàng đang chuyển dịch từ giai đoạn tăng trưởng nóng về lượng sang tối ưu hóa chất lượng tài sản và thu nhập từ dịch vụ. Trong bối cảnh địa chính trị toàn cầu biến động, BIDV với tư cách là cánh tay nối dài của Nhà nước sẽ đóng vai trò trụ cột trong việc điều tiết vốn vào các ngành sản xuất chiến lược.",
-        "ai_updated_at": "2026-11-04 11:21:30",
-        "bctc": "Bức tranh tài chính của BIDV thể hiện vị thế của một ông lớn quốc doanh với lợi nhuận trượt 4 quý đạt 35.137 tỷ đồng, tăng trưởng ấn tượng 39.2% so với cùng kỳ. Chỉ số ROE duy trì ở mức xuất sắc 18.5% kết hợp cùng ROA 1.0% cho thấy năng lực sinh lời trên vốn chủ sở hữu và tài sản vượt trội so với mặt bằng chung ngành ngân hàng. Tỷ lệ D/E lên tới 16.21 hoàn toàn không phải là rủi ro đòn bẩy tài chính, mà phản ánh quy mô huy động vốn khổng lồ từ tiền gửi khách hàng - nguồn nguyên liệu đầu vào thiết yếu cho hoạt động cấp tín dụng. Tương tự, dòng tiền kinh doanh (CFO) âm 19.192 tỷ đồng là hệ quả tất yếu và tích cực của việc ngân hàng đang đẩy mạnh giải ngân cho vay ra nền kinh tế thay vì giữ tiền mặt nhàn rỗi. Biên lợi nhuận gộp 0% là chỉ số không có ý nghĩa đối với mô hình kinh doanh tiền tệ, thay vào đó cần nhìn nhận qua NIM và khả năng tối ưu hóa chi phí vốn. EPS đạt 4.452 VNĐ đi kèm cổ tức đều đặn 2.61% cho thấy cam kết chia sẻ lợi nhuận với cổ đông song song với việc giữ lại vốn để đáp ứng chuẩn Basel. Chất lượng tài sản được kiểm soát chặt chẽ thông qua bộ đệm dự phòng rủi ro dày dặn, giúp BID vững vàng trước những biến động của nợ xấu tiềm ẩn. Tổng thể, sức khỏe nội tại của BID cực kỳ tráng kiện, minh chứng cho khả năng tạo ra dòng tiền thực và mở rộng bảng cân đối kế toán một cách bền vững.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của BIDV nằm ở quy mô tài sản lớn nhất hệ thống, mạng lưới phòng giao dịch phủ sóng toàn quốc và vị thế con cưng của Nhà nước trong các dự án đầu tư công trọng điểm. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi sự phục hồi của chu kỳ tín dụng bất động sản và hạ tầng, nơi BID có thị phần cho vay áp đảo. Quá trình chuyển đổi số mạnh mẽ và tối ưu hóa chi phí vận hành sẽ tiếp tục nới rộng biên lợi nhuận ròng dù môi trường lãi suất biến động. Hơn nữa, việc sở hữu tệp khách hàng doanh nghiệp FDI và bán lẻ khổng lồ tạo ra nguồn thu nhập ngoài lãi từ dịch vụ, giảm bớt sự phụ thuộc vào tín dụng truyền thống.",
-        "risks": "Rủi ro lớn nhất đè nặng lên BIDV là áp lực nợ xấu gia tăng từ nhóm khách hàng doanh nghiệp bất động sản và trái phiếu doanh nghiệp khi thị trường chưa hoàn toàn hồi phục. Biên thu nhập lãi ròng có thể bị nén lại do áp lực giảm lãi suất cho vay để hỗ trợ nền kinh tế theo chỉ đạo vĩ mô, trong khi chi phí huy động vốn khó giảm tương ứng. Ngoài ra, quy mô tài sản khổng lồ đòi hỏi nhu cầu trích lập dự phòng rủi ro tín dụng hàng năm rất lớn, có thể bào mòn lợi nhuận ròng nếu chất lượng tài sản suy giảm đột ngột."
+        "ai_updated_at": "2026-11-04 11:21:30"
     },
     "CTG": {
         "symbol": "CTG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 31050,
         "volume": 10975700,
         "pe": 5.48,
@@ -279,7 +282,7 @@
         "net_profit_ttm": 42722.23,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:30:49",
+        "updated_at": "04/11/2026 19:20:52",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -394,6 +397,9 @@
     },
     "TCB": {
         "symbol": "TCB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 21850,
         "volume": 12234200,
         "pe": 7.94,
@@ -408,7 +414,7 @@
         "net_profit_ttm": 29994.03,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:38:22",
+        "updated_at": "04/11/2026 19:29:13",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -519,13 +525,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, ưu tiên nắm giữ để tận dụng sức mạnh lãi suất kép từ cổ tức tiền mặt và tăng trưởng EPS bền vững.",
         "ai_price_zone": "Vùng gom giá trị: từ 20.500 đến 22.000 VNĐ, Vùng chặn lỗ cứng: thủng mốc 18.500 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% trong 12-18 tháng tới khi định giá P/B trở về mức trung bình ngành là 1.5 - 1.8.",
         "macro_view": "Chu kỳ ngành ngân hàng đang bước vào giai đoạn phục hồi tín dụng sau khi Ngân hàng Nhà nước duy trì chính sách tiền tệ nới lỏng và hạ lãi suất điều hành. Tuy nhiên, độ trễ của chính sách và sức cầu nền kinh tế chưa thực sự bứt phá khiến tăng trưởng tín dụng toàn ngành vẫn đối mặt với áp lực ngắn hạn. Về vĩ mô, lạm phát được kiểm soát tốt và tỷ giá ổn định tạo dư địa cho NHNN tiếp tục hỗ trợ thanh khoản hệ thống, có lợi cho các ngân hàng có chi phí vốn thấp như TCB. Sự phục hồi của thị trường bất động sản và đầu tư công sẽ là hai trụ cột vĩ mô quan trọng giúp giải phóng dòng vốn tắc nghẽn, trực tiếp cải thiện chất lượng tài sản cho các ngân hàng. Trong bối cảnh FDI và xuất khẩu dần khởi sắc, dòng tiền ngoại tệ và nhu cầu thanh toán quốc tế sẽ mang lại thêm nguồn thu dịch vụ cho các ngân hàng có thế mạnh bán lẻ và công nghệ.",
-        "ai_updated_at": "2026-11-04 11:23:37",
-        "bctc": "Bức tranh tài chính của TCB thể hiện vị thế của một ngân hàng tư nhân hàng đầu với khả năng sinh lời vượt trội, minh chứng qua ROE đạt 15.4% và ROA 2.3%, cao hơn hẳn mức trung bình ngành. Lợi nhuận sau thuế trượt 4 quý (TTM) lên tới 29,994 tỷ đồng cùng mức tăng trưởng ấn tượng 26.06% YoY cho thấy động lực kiếm tiền cốt lõi vẫn rất mạnh mẽ. Tỷ lệ Nợ/Vốn chủ sở hữu (D/E) ở mức 5.68 là hoàn toàn bình thường và không đáng lo ngại đối với mô hình kinh doanh tiền tệ, vì nợ phải trả chủ yếu là tiền gửi huy động từ dân cư và tổ chức kinh tế. Dòng tiền kinh doanh (CFO) dương 7,495 tỷ đồng phản ánh khả năng huy động vốn tốt, bù đắp và vượt qua tốc độ giải ngân tín dụng, giúp ngân hàng duy trì thanh khoản dồi dào. Chỉ số biên lợi nhuận gộp hiển thị 0.0% là do đặc thù kế toán ngân hàng không sử dụng khái niệm này, mà thay vào đó nhà đầu tư cần tập trung vào NIM và thu nhập ngoài lãi để đánh giá hiệu quả. Chất lượng tài sản của TCB luôn được kiểm soát chặt chẽ với tỷ lệ bao phủ nợ xấu (LLR) thuộc top đầu ngành, tạo ra lớp đệm phòng thủ vững chắc trước các cú sốc kinh tế. Việc duy trì cổ tức tiền mặt đều đặn với tỷ suất 5.24% là một điểm cộng lớn theo trường phái Graham, chứng tỏ dòng tiền thực tế dồi dào và ban lãnh đạo cam kết chia sẻ lợi ích với cổ đông. Tổng thể, bảng cân đối kế toán của TCB rất khỏe mạnh, tối ưu hóa đòn bẩy tài chính đặc thù ngành để tối đa hóa lợi nhuận cho cổ đông mà không đánh đổi bằng rủi ro thanh khoản.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của TCB nằm ở hệ sinh thái khách hàng thu nhập cao, chi phí vốn (COF) thấp nhờ lượng CASA khổng lồ và nền tảng công nghệ số hóa dẫn đầu. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi sự phục hồi của thị trường bất động sản và nhu cầu tín dụng bán lẻ, mảng mà TCB có thế mạnh áp đảo. Chiến lược chuyển đổi số sâu rộng giúp ngân hàng liên tục cắt giảm chi phí vận hành (CIR), từ đó mở rộng biên lợi nhuận ngay cả khi môi trường lãi suất biến động. Hơn nữa, việc mở rộng các sản phẩm bancassurance và dịch vụ thẻ sẽ tiếp tục gia tăng tỷ trọng thu nhập ngoài lãi, giảm bớt sự phụ thuộc vào tín dụng truyền thống.",
-        "risks": "Rủi ro trọng yếu nhất của TCB là mức độ phơi nhiễm khá lớn vào thị trường bất động sản và trái phiếu doanh nghiệp, khiến bảng cân đối kế toán dễ tổn thương nếu chu kỳ đóng băng kéo dài. Áp lực nén biên lãi ròng (NIM) có thể xảy ra nếu cuộc đua lãi suất huy động tái diễn hoặc nhu cầu vay vốn của nền kinh tế phục hồi chậm hơn kỳ vọng. Ngoài ra, rủi ro nợ xấu tiềm ẩn từ các khoản vay thế chấp bất động sản giá trị lớn có thể làm gia tăng chi phí trích lập dự phòng, bào mòn lợi nhuận trong các kỳ tới."
+        "ai_updated_at": "2026-11-04 11:23:37"
     },
     "MBB": {
         "symbol": "MBB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 19250,
         "volume": 19527900,
         "pe": 5.85,
@@ -540,7 +546,7 @@
         "net_profit_ttm": 33303.02,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.53x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:34:39",
+        "updated_at": "04/11/2026 19:24:52",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -651,13 +657,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, ưu tiên nắm giữ xuyên chu kỳ kinh tế.",
         "ai_price_zone": "Vùng gom giá trị: dưới 20,000 VNĐ, Vùng chặn lỗ: thủng 16,500 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% trong 2 năm tới kèm cổ tức đều đặn.",
         "macro_view": "Chu kỳ ngành ngân hàng đang ở giai đoạn phục hồi sau khi vượt qua đáy của chu kỳ siết chặt tín dụng và xử lý nợ xấu bất động sản. Chính sách tiền tệ nới lỏng và lãi suất điều hành thấp của NHNN đang tạo điều kiện thuận lợi để giảm chi phí vốn, kích thích nhu cầu vay vốn sản xuất kinh doanh. Tuy nhiên, độ trễ của chính sách vĩ mô và sức khỏe tài chính của khu vực doanh nghiệp tư nhân vẫn là rào cản khiến tăng trưởng tín dụng toàn ngành chưa thể bứt phá ngay lập tức. Luật Đất đai và Luật Các TCTD sửa đổi có hiệu lực sẽ giúp minh bạch hóa thị trường, gián tiếp cải thiện chất lượng tài sản đảm bảo của các ngân hàng. Trong bối cảnh FDI và xuất khẩu dần hồi phục, dòng tiền quay lại nền kinh tế sẽ là chất xúc tác vĩ mô quan trọng nhất giúp MBB hưởng lợi đầu tiên.",
-        "ai_updated_at": "2026-11-04 11:20:27",
-        "bctc": "Bức tranh tài chính của MBB thể hiện vị thế của một định chế tài chính hàng đầu với khả năng sinh lời vượt trội, minh chứng qua ROE đạt 21.8% và ROA 2.0%, thuộc top đầu ngành ngân hàng. Tăng trưởng LNST YoY lên tới 42.26% cho thấy động lực mở rộng quy mô và tối ưu hóa chi phí hoạt động cực kỳ ấn tượng trong bối cảnh chung. Theo đúng đặc thù ngành ngân hàng, tỷ lệ D/E ở mức 10.2 hoàn toàn không phải là rủi ro đòn bẩy tài chính, mà phản ánh quy mô huy động vốn tiền gửi khách hàng khổng lồ, tạo nền tảng thanh khoản vững chắc. Tương tự, dòng tiền kinh doanh (CFO) âm 12,063 tỷ đồng là hệ quả tất yếu và tích cực của việc đẩy mạnh giải ngân tín dụng, bơm vốn ra nền kinh tế thay vì dấu hiệu suy kiệt dòng tiền. Biên lợi nhuận gộp 0% là chỉ số không có ý nghĩa với ngân hàng, thay vào đó cần nhìn nhận qua NIM và thu nhập ngoài lãi đang là bệ đỡ lợi nhuận của MBB. Chất lượng tài sản được kiểm soát tốt nhờ hệ sinh thái khách hàng quân đội và doanh nghiệp lớn, giúp tỷ lệ nợ xấu và bộ đệm dự phòng luôn ở mức an toàn. Lợi nhuận trượt 4 quý đạt 33,303 tỷ đồng khẳng định sức bền bỉ của cỗ máy kiếm tiền, bất chấp những biến động vĩ mô. Cổ tức tiền mặt đều đặn 4.23% kết hợp với trả cổ phiếu thưởng cho thấy ban lãnh đạo vừa đảm bảo quyền lợi cổ đông, vừa giữ lại vốn để đáp ứng các chuẩn mực Basel. Tổng thể, bảng cân đối kế toán của MBB cực kỳ khỏe mạnh, phản ánh đúng bản chất của một ngân hàng bán lẻ hiện đại đang trong giai đoạn hái quả ngọt.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của MBB nằm ở hệ sinh thái khách hàng độc bản từ khối Quân đội, doanh nghiệp Viettel và tệp khách hàng trẻ tuổi am hiểu công nghệ qua nền tảng App MBBank. Chi phí vốn thấp nhờ tỷ lệ tiền gửi không kỳ hạn (CASA) luôn duy trì ở mức cao giúp ngân hàng bảo vệ NIM trước áp lực lãi suất. Động lực tăng trưởng 2-3 năm tới đến từ việc đẩy mạnh bán chéo bảo hiểm, dịch vụ thẻ và khai thác sâu tệp khách hàng SME, bán lẻ. Quá trình chuyển đổi số toàn diện tiếp tục giúp MBB tối ưu hóa chi phí vận hành, tạo ra đòn bẩy lợi nhuận khổng lồ khi quy mô tài sản mở rộng.",
-        "risks": "Rủi ro lớn nhất đối với MBB là áp lực nợ xấu gia tăng từ nhóm khách hàng doanh nghiệp bất động sản và trái phiếu doanh nghiệp khi thị trường địa ốc chưa hoàn toàn hồi phục. Biên thu nhập lãi ròng (NIM) có thể bị nén lại nếu cuộc đua lãi suất huy động tái diễn hoặc tăng trưởng tín dụng bị tắc nghẽn do sức hấp thụ vốn của nền kinh tế yếu. Ngoài ra, rủi ro pháp lý và sự thay đổi trong các quy định trích lập dự phòng rủi ro tín dụng của NHNN có thể làm biến động mạnh lợi nhuận ròng trong ngắn hạn."
+        "ai_updated_at": "2026-11-04 11:20:27"
     },
     "STB": {
         "symbol": "STB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 67700,
         "volume": 3662900,
         "pe": 82.31,
@@ -672,7 +678,7 @@
         "net_profit_ttm": 1525.32,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:38:07",
+        "updated_at": "04/11/2026 19:28:57",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -787,6 +793,9 @@
     },
     "VPB": {
         "symbol": "VPB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 22150,
         "volume": 16232600,
         "pe": 6.8,
@@ -801,7 +810,7 @@
         "net_profit_ttm": 32086.7,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:40:31",
+        "updated_at": "04/11/2026 19:31:27",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -916,6 +925,9 @@
     },
     "HDB": {
         "symbol": "HDB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 22200,
         "volume": 14181500,
         "pe": 7.35,
@@ -930,7 +942,7 @@
         "net_profit_ttm": 20004.47,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:33:13",
+        "updated_at": "04/11/2026 19:23:23",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1041,13 +1053,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, tận dụng mọi nhịp điều chỉnh của thị trường để gia tăng số lượng cổ phiếu sở hữu.",
         "ai_price_zone": "Vùng gom giá trị tích sản: từ 20.000 VNĐ đến 22.500 VNĐ, Vùng chặn lỗ tuyệt đối: thủng mốc 17.500 VNĐ, Kỳ vọng dài hạn 3-5 năm: tăng trưởng kép 15-20%/năm nhờ tái định giá P/B về mức 2.0-2.5x.",
         "macro_view": "Ngành ngân hàng đang bước vào giai đoạn cuối của chu kỳ xử lý nợ xấu và chuẩn bị cho một chu kỳ tín dụng mới khi các chính sách tài khóa và tiền tệ mở rộng bắt đầu ngấm vào nền kinh tế. Lãi suất điều hành duy trì ở mức thấp giúp giảm chi phí vốn cho doanh nghiệp, từ đó kích thích nhu cầu vay vốn sản xuất kinh doanh và tiêu dùng. Tuy nhiên, áp lực lạm phát toàn cầu và tỷ giá hối đoái vẫn là những biến số vĩ mô buộc Ngân hàng Nhà nước phải điều hành linh hoạt, có thể gây ra những đợt thắt chặt cục bộ thanh khoản hệ thống. Sự phân hóa trong ngành sẽ diễn ra mạnh mẽ, nơi các ngân hàng có bộ đệm vốn dày và chất lượng tài sản tốt như HDB sẽ chiếm lĩnh thị phần từ các tổ chức yếu kém hơn. Đầu tư công và sự phục hồi của thị trường bất động sản, xuất khẩu sẽ là những động lực vĩ mô cốt lõi quyết định tốc độ tăng trưởng tín dụng của toàn ngành trong 12-18 tháng tới.",
-        "ai_updated_at": "2026-11-04 11:22:33",
-        "bctc": "Bức tranh tài chính của HDBank thể hiện rõ nét vị thế của một ngân hàng tư nhân hàng đầu với khả năng sinh lời vượt trội, minh chứng qua chỉ số ROE đạt 23.3% và ROA 2.0%, thuộc nhóm xuất sắc nhất ngành. Lợi nhuận trượt 4 quý (TTM) lên tới 20.004 tỷ đồng cho thấy nội lực tăng trưởng bền bỉ bất chấp những biến động của môi trường vĩ mô. Theo đúng đặc thù ngành ngân hàng, tỷ lệ D/E ở mức 11.12 hoàn toàn không phải là rủi ro đòn bẩy tài chính, mà phản ánh quy mô huy động vốn tiền gửi khách hàng khổng lồ tạo nền tảng cho hoạt động cấp tín dụng. Biên lợi nhuận gộp không áp dụng cho mô hình kinh doanh tiền tệ, thay vào đó dòng tiền kinh doanh (CFO) dương 20.278 tỷ đồng khẳng định chất lượng lợi nhuận thực tế và khả năng thu hồi nợ, thu lãi cực kỳ hiệu quả. Việc ngân hàng không chia cổ tức tiền mặt (0.0%) mà giữ lại toàn bộ lợi nhuận là một chiến lược tối ưu nhằm bổ sung vốn chủ sở hữu, đáp ứng các chuẩn mực an toàn vốn và mở rộng room tín dụng. Tăng trưởng LNST YoY đạt 7.02% có phần thận trọng nhưng vẫn duy trì được đà tích lũy tài sản, tạo bước đệm cho sự bứt phá khi chu kỳ tín dụng bùng nổ trở lại. Chất lượng tài sản và năng lực trích lập dự phòng (LLR) của HDB tiếp tục là lá chắn vững chắc, giúp ngân hàng hấp thụ tốt các cú sốc từ nợ xấu tiềm ẩn. Tổng thể, bảng cân đối kế toán của HDB rất khỏe mạnh, dòng tiền lõi dồi dào và hiệu suất sử dụng vốn ở mức đỉnh cao, đúng chuẩn mực của một cỗ máy in tiền thực thụ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của HDBank nằm ở hệ sinh thái khách hàng độc quyền và khép kín thông qua sự liên kết chặt chẽ với Vietjet Air, HD Saison và các tập đoàn kinh tế tư nhân lớn. Động lực tăng trưởng trong 2-3 năm tới sẽ được thúc đẩy mạnh mẽ bởi việc mở rộng tệp khách hàng bán lẻ và SME, nơi có biên lợi nhuận ròng (NIM) cao hơn hẳn so với cho vay doanh nghiệp lớn. Bên cạnh đó, quá trình chuyển đổi số toàn diện và tối ưu hóa chi phí vận hành (CIR) sẽ tiếp tục nới rộng biên lợi nhuận và tạo ra lợi thế về quy mô. Việc được Ngân hàng Nhà nước nới room tín dụng nhờ vào việc kiểm soát tốt nợ xấu và tham gia tái cơ cấu các tổ chức tín dụng yếu kém sẽ là bệ phóng cho tăng trưởng tài sản dài hạn.",
-        "risks": "Rủi ro trọng yếu nhất đối với HDB nằm ở áp lực nợ xấu (NPL) gia tăng từ phân khúc tài chính tiêu dùng (HD Saison) và cho vay bất động sản khi sức khỏe tài chính của nhóm khách hàng này chưa hoàn toàn phục hồi. Biên thu nhập lãi ròng (NIM) có thể bị thu hẹp trong ngắn hạn do áp lực cạnh tranh lãi suất huy động và chính sách điều hành giảm lãi suất cho vay nhằm hỗ trợ nền kinh tế của Ngân hàng Nhà nước. Ngoài ra, rủi ro chu kỳ kinh tế vĩ mô suy thoái có thể làm giảm nhu cầu tín dụng và gia tăng chi phí trích lập dự phòng rủi ro, bào mòn lợi nhuận ròng trong các quý tới."
+        "ai_updated_at": "2026-11-04 11:22:33"
     },
     "VIB": {
         "symbol": "VIB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 14250,
         "volume": 9168100,
         "pe": 6.71,
@@ -1062,7 +1074,7 @@
         "net_profit_ttm": 7719.47,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:39:49",
+        "updated_at": "04/11/2026 19:30:43",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1177,6 +1189,9 @@
     },
     "TPB": {
         "symbol": "TPB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 12750,
         "volume": 14066400,
         "pe": 4.72,
@@ -1191,7 +1206,7 @@
         "net_profit_ttm": 8489.52,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:38:58",
+        "updated_at": "04/11/2026 19:29:50",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1306,6 +1321,9 @@
     },
     "SHB": {
         "symbol": "SHB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 10750,
         "volume": 46906600,
         "pe": 3.74,
@@ -1320,7 +1338,7 @@
         "net_profit_ttm": 13657.69,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:37:39",
+        "updated_at": "04/11/2026 19:28:24",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -1435,6 +1453,9 @@
     },
     "SSB": {
         "symbol": "SSB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 15150,
         "volume": 2378700,
         "pe": 15.97,
@@ -1449,7 +1470,7 @@
         "net_profit_ttm": 3257.81,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:37:53",
+        "updated_at": "04/11/2026 19:28:40",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2067,6 +2088,9 @@
     },
     "SSI": {
         "symbol": "SSI",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 20400,
         "volume": 47036100,
         "pe": 12.91,
@@ -2081,7 +2105,7 @@
         "net_profit_ttm": 4454.16,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.46x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:38:00",
+        "updated_at": "04/11/2026 19:28:49",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2192,13 +2216,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung gom đều tay qua các nhịp rung lắc của thị trường.",
         "ai_price_zone": "Vùng gom giá trị tích sản: từ 19.500 đến 20.500 VNĐ, Vùng gia tăng tỷ trọng khi thị trường hoảng loạn: dưới 18.000 VNĐ, Vùng chặn lỗ tuyệt đối: thủng mốc 16.500 VNĐ, Kỳ vọng dài hạn 3 năm: tăng trưởng 40-50% khi thị trường thăng hạng và thanh khoản bùng nổ.",
         "macro_view": "Ngành chứng khoán là hàn thử biểu của nền kinh tế và chịu tác động trực tiếp từ chính sách tiền tệ cũng như chu kỳ tín dụng của Ngân hàng Nhà nước. Trong bối cảnh vĩ mô hiện tại, mặt bằng lãi suất huy động duy trì ở mức thấp tạo điều kiện thuận lợi cho dòng tiền nhàn rỗi dịch chuyển vào kênh đầu tư rủi ro hơn như chứng khoán. Tuy nhiên, áp lực tỷ giá và lạm phát toàn cầu đôi khi khiến NHNN phải điều tiết cung tiền, gây ra những nhịp siết margin cục bộ làm gián đoạn đà tăng của thanh khoản thị trường. Về mặt chu kỳ ngành, chúng ta đang ở giai đoạn bản lề của việc nâng cấp hệ thống giao dịch và câu chuyện nâng hạng thị trường mới nổi, hứa hẹn một chu kỳ bùng nổ mới trong 2-3 năm tới. Các chính sách tháo gỡ nút thắt trái phiếu và bất động sản cũng đang dần phát huy tác dụng, giúp giảm thiểu rủi ro hệ thống và khôi phục niềm tin của nhà đầu tư tổ chức.",
-        "ai_updated_at": "2026-11-04 11:35:43",
-        "bctc": "Bức tranh tài chính của SSI phản ánh rõ nét đặc thù của ngành chứng khoán, nơi đòn bẩy tài chính (D/E = 1.38) không phải là dấu hiệu của rủi ro vỡ nợ mà là công cụ thiết yếu để mở rộng quy mô cho vay margin và kinh doanh nguồn vốn. Tỷ lệ ROE đạt 12.2% và ROA 4.7% ở mức khá tốt trong bối cảnh thị trường chung chưa thực sự bùng nổ, cho thấy năng lực sinh lời trên tài sản và vốn chủ sở hữu được duy trì ổn định. Điểm sáng lớn nhất nằm ở dòng tiền kinh doanh (CFO) dương 5.217 tỷ đồng, vượt trội so với lợi nhuận ròng 4.454 tỷ đồng, chứng tỏ chất lượng lợi nhuận thực tế rất cao và dòng tiền từ hoạt động lõi đang chảy mạnh về két sắt. Biên lợi nhuận gộp lên tới 73% khẳng định vị thế top đầu ngành của SSI nhờ lợi thế quy mô, thương hiệu và tệp khách hàng tổ chức lẫn bán lẻ trung thành. Mức cổ tức tiền mặt hấp dẫn 7.96% là minh chứng rõ ràng cho cam kết chia sẻ lợi nhuận với cổ đông, một điều khá hiếm hoi ở các công ty chứng khoán thường ưu tiên tái đầu tư vốn. Tuy nhiên, việc lợi nhuận trượt YoY suy giảm 23.76% cho thấy SSI vẫn không thể thoát khỏi sự nhạy bén của chu kỳ thanh khoản thị trường và áp lực từ mảng tự doanh khi thị trường biến động. Năng lực quản trị rủi ro được thể hiện qua việc kiểm soát tốt nợ xấu cho vay ký quỹ dù quy mô tín chấp lớn. Tổng thể, sức khỏe tài chính của SSI vững vàng, đủ sức chống đỡ qua các nhịp điều chỉnh của thị trường và sẵn sàng bứt phá khi thanh khoản quay lại.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của SSI nằm ở hệ sinh thái tài chính toàn diện, thị phần môi giới top đầu và năng lực huy động vốn ngoại vượt trội so với các đối thủ nội địa. Động lực tăng trưởng trong 2-3 năm tới sẽ được thúc đẩy mạnh mẽ bởi câu chuyện nâng hạng thị trường chứng khoán Việt Nam, giúp thu hút hàng tỷ USD vốn ngoại chảy vào các bluechip mà SSI có thế mạnh tư vấn và môi giới. Bên cạnh đó, hệ thống giao dịch KRX đi vào vận hành ổn định sẽ mở ra các sản phẩm phái sinh mới và cho vay ký quỹ linh hoạt hơn, gia tăng biên lợi nhuận cho mảng tín dụng. Mảng ngân hàng đầu tư (IB) cũng sẽ bùng nổ khi làn sóng M&A và thoái vốn nhà nước tái khởi động, mang lại nguồn thu phí đột biến.",
-        "risks": "Rủi ro lớn nhất của SSI gắn liền với tính chu kỳ của thị trường chứng khoán, nơi thanh khoản sụt giảm hoặc VN-Index điều chỉnh sâu sẽ bào mòn nhanh chóng doanh thu môi giới và gây lỗ cho danh mục tự doanh. Rủi ro thanh khoản hệ thống và lãi suất huy động vốn tăng cao có thể thu hẹp biên lợi nhuận ròng (NIM) của hoạt động cho vay margin, đồng thời gia tăng áp lực nợ xấu nếu thị trường đóng băng. Ngoài ra, sự cạnh tranh khốc liệt về phí giao dịch (zero-fee) từ các công ty chứng khoán vốn ngoại và fintech đang đe dọa trực tiếp đến thị phần và biên lợi nhuận môi giới truyền thống."
+        "ai_updated_at": "2026-11-04 11:35:43"
     },
     "VCI": {
         "symbol": "VCI",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 20250,
         "volume": 21830300,
         "pe": 15.58,
@@ -2213,7 +2237,7 @@
         "net_profit_ttm": 1401.65,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.57x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:39:19",
+        "updated_at": "04/11/2026 19:30:13",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2324,13 +2348,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào chiến lược mua gom đều đặn trong các nhịp thị trường điều chỉnh do tâm lý vĩ mô ngắn hạn.",
         "ai_price_zone": "Vùng gom giá trị: từ 19.500 đến 20.500 VNĐ, Vùng chặn lỗ cứng: thủng mốc 17.800 VNĐ (mất hơn 15% và phá vỡ cấu trúc tài sản an toàn), Kỳ vọng dài hạn: hướng tới mục tiêu 32.000 VNĐ khi câu chuyện nâng hạng và thoái vốn được hiện thực hóa (tăng trưởng kỳ vọng 50-60%).",
         "macro_view": "Ngành chứng khoán đang ở giai đoạn cuối của chu kỳ thắt chặt tiền tệ và chuẩn bị bước vào pha nới lỏng, khi mặt bằng lãi suất huy động xuống thấp sẽ đẩy dòng tiền nhàn rỗi dịch chuyển sang kênh tài sản rủi ro. Câu chuyện nâng hạng thị trường từ Cận biên lên Mới nổi đang tạo ra một lực cầu ngoại hối thụ động khổng lồ, buộc các định chế đầu ngành như VCI phải chuẩn bị sẵn sàng về vốn và hệ thống để đón đầu. Tuy nhiên, sự phục hồi của nền kinh tế thực vẫn còn mong manh, khiến các doanh nghiệp niêm yết thận trọng hơn trong việc gọi vốn qua kênh IPO hay phát hành trái phiếu, tạo ra độ trễ cho mảng IB. Chính sách tỷ giá và áp lực từ FED vẫn là những biến số vĩ mô có thể gây ra những nhịp rung lắc mạnh về thanh khoản trên thị trường chứng khoán trong ngắn hạn. Dù vậy, với tầm nhìn 3-5 năm, sự minh bạch hóa thị trường trái phiếu doanh nghiệp và các quy định mới về hệ thống giao dịch sẽ là bệ đỡ vĩ mô vững chắc giúp VCI tối ưu hóa năng lực cung cấp vốn cho nền kinh tế.",
-        "ai_updated_at": "2026-11-04 11:37:01",
-        "bctc": "Bức tranh tài chính của VCI phản ánh rõ nét đặc thù của ngành chứng khoán, nơi dòng tiền kinh doanh (CFO) âm 1.645 tỷ đồng không phải là dấu hiệu của sự suy kiệt thanh khoản mà là hệ quả tất yếu của việc mở rộng quy mô cho vay margin và đầu tư nguồn vốn. Tỷ lệ Nợ trên Vốn chủ sở hữu (D/E) ở mức 1.38 thực chất là một đòn bẩy khá thận trọng và an toàn so với mức trần quy định, cho thấy ban lãnh đạo đang ưu tiên sự bền vững trước những cú sốc thanh khoản của thị trường. Hiệu suất sinh lời trên tài sản (ROA) đạt 3.8% là một con số rất ấn tượng đối với một định chế tài chính, chứng tỏ năng lực tối ưu hóa tài sản và sinh lời từ nguồn vốn nhàn rỗi cực kỳ sắc bén. Tuy nhiên, ROE dừng lại ở 8.5% cho thấy VCI đang trong giai đoạn tích lũy và giữ lại vốn thay vì chi trả cổ tức bằng tiền mặt ồ ạt, nhằm chuẩn bị đệm vốn cho chu kỳ bùng nổ tiếp theo. Biên lợi nhuận gộp lên tới 69.1% khẳng định vị thế của mảng ngân hàng đầu tư (IB) và môi giới tổ chức, nơi mang lại giá trị gia tăng cao hơn hẳn so với mảng bán lẻ truyền thống. Lợi nhuận trượt 4 quý đạt 1.402 tỷ đồng dù tăng trưởng YoY âm 12.58% nhưng vẫn duy trì được nền tảng lợi nhuận cốt lõi vững chắc trong bối cảnh thanh khoản thị trường chung chưa thực sự thăng hoa. Chất lượng tài sản của VCI được bảo chứng qua việc kiểm soát rủi ro cho vay ký quỹ chặt chẽ, giúp công ty tránh được các cú sốc nợ xấu khi thị trường điều chỉnh mạnh. Nhìn chung, sức khỏe nội tại của VCI đang ở trạng thái phòng thủ chờ thời, với bảng cân đối kế toán được cấu trúc để hấp thụ tối đa cơ hội khi dòng tiền vĩ mô quay trở lại.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của VCI nằm ở hệ sinh thái Ngân hàng đầu tư hàng đầu thị trường, nơi họ nắm giữ thị phần áp đảo trong mảng tư vấn phát hành, M&A và niêm yết cho các doanh nghiệp tỷ đô. Động lực tăng trưởng nội tại trong 2-3 năm tới sẽ được kích hoạt mạnh mẽ từ chu kỳ nâng hạng thị trường chứng khoán Việt Nam, buộc các quỹ ngoại phải cơ cấu danh mục và gia tăng quy mô giao dịch qua các định chế đầu ngành. Bên cạnh đó, mảng tự doanh và đầu tư trái phiếu hoặc doanh nghiệp chưa niêm yết của VCI đóng vai trò như một kho báu ngầm, sẵn sàng hạch toán lợi nhuận đột biến khi các thương vụ thoái vốn hoàn tất. Việc liên tục mở rộng tệp khách hàng tổ chức nước ngoài và nâng cấp hệ thống công nghệ lõi sẽ giúp VCI chiếm lĩnh trọn vẹn làn sóng thanh khoản khi thị trường phái sinh và giao dịch T+0 được vận hành trơn tru.",
-        "risks": "Rủi ro lớn nhất mang tính chu kỳ là sự đóng băng của thị trường IPO và M&A doanh nghiệp, khiến mảng IB vốn là cỗ máy in tiền biên lợi nhuận cao bị đình trệ và suy giảm doanh thu nghiêm trọng. Hoạt động tự doanh tuy mang lại lợi nhuận đột biến nhưng cũng tiềm ẩn rủi ro biến động mạnh nếu thị trường chứng khoán rơi vào pha suy giảm kéo dài hoặc có những cú sốc lãi suất làm giảm giá trị trái phiếu nắm giữ. Ngoài ra, áp lực cạnh tranh khốc liệt về phí môi giới từ các công ty chứng khoán vốn ngoại và fintech có thể bào mòn dần biên lợi nhuận của mảng môi giới bán lẻ truyền thống trong dài hạn."
+        "ai_updated_at": "2026-11-04 11:37:01"
     },
     "HCM": {
         "symbol": "HCM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 24250,
         "volume": 10137300,
         "pe": 27.44,
@@ -2345,7 +2369,7 @@
         "net_profit_ttm": 1180.11,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 3.13x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:33:05",
+        "updated_at": "04/11/2026 19:23:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2456,13 +2480,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% (Chờ nhịp điều chỉnh của thị trường để tối ưu biên an toàn).",
         "ai_price_zone": "Vùng gom giá trị: dưới 21.000 VNĐ (tương ứng P/B ~ 1.8-1.9), Vùng chặn lỗ: thủng 18.500 VNĐ (mất lợi thế cạnh tranh vốn), Kỳ vọng dài hạn: tăng trưởng 30-40% khi thanh khoản thị trường bùng nổ và hệ thống giao dịch mới vận hành trơn tru.",
         "macro_view": "Ngành chứng khoán đang ở giai đoạn cuối của chu kỳ thắt chặt và chuẩn bị bước vào pha mở rộng khi mặt bằng lãi suất cho vay margin có xu hướng giảm theo đà hạ nhiệt của lãi suất huy động. Dòng vốn FDI và sự dịch chuyển chuỗi cung ứng tiếp tục là bệ đỡ vĩ mô giúp thị trường cổ phiếu Việt Nam duy trì sức hút đối với khối ngoại, nhóm khách hàng mục tiêu của HCM. Tuy nhiên, sự chậm trễ trong việc nâng hạng thị trường mới nổi và các biến số địa chính trị toàn cầu có thể làm kéo dài giai đoạn tích lũy thanh khoản. Việc áp dụng các chuẩn mực kế toán và quản trị rủi ro mới cũng sẽ phân hóa mạnh mẽ nhóm chứng khoán, nơi các ông lớn có chi phí vốn rẻ như HCM sẽ hưởng lợi lớn từ việc thanh lọc thị phần. Nhìn chung, vĩ mô đang tạo tiền đề tốt, nhưng nhà đầu tư cần kiên nhẫn chờ đợi điểm bùng nổ của dòng tiền thực để tối đa hóa hiệu quả tích sản.",
-        "ai_updated_at": "2026-11-04 11:38:07",
-        "bctc": "Bức tranh tài chính của HCM mang đậm đặc thù của một công ty chứng khoán top đầu, nơi đòn bẩy tài chính (D/E = 1.97) không phải là rủi ro nợ vay truyền thống mà là công cụ thiết yếu để mở rộng quy mô cho vay margin và kinh doanh nguồn vốn. Dòng tiền kinh doanh (CFO) dương đột biến ở mức 6.064 tỷ đồng phản ánh sự luân chuyển vốn mạnh mẽ từ hoạt động thu hồi nợ margin và biến động danh mục tự doanh, chứ không đơn thuần là dòng tiền từ lợi nhuận cốt lõi. Hiệu suất sinh lời trên tài sản (ROA 2.7%) là một điểm sáng, cho thấy năng lực tối ưu hóa tài sản và quản trị rủi ro danh mục cho vay khá tốt trong bối cảnh thị trường biến động. Tuy nhiên, ROE đạt 8.6% và biên lợi nhuận gộp 39.4% cho thấy áp lực cạnh tranh khốc liệt về phí môi giới và sự phụ thuộc vào chu kỳ thanh khoản thị trường. Lợi nhuận trượt 4 quý đạt 1.180 tỷ đồng nhưng tăng trưởng âm 32.53% YoY phản ánh giai đoạn trũng của chu kỳ thanh khoản và sự thận trọng trong hoạt động tự doanh. Nhìn chung, HCM đang ưu tiên giữ lại vốn chủ sở hữu để chuẩn bị nguồn lực vốn cho chu kỳ bùng nổ tiếp theo, một chiến lược hợp lý đối với doanh nghiệp cần quy mô vốn lớn. Chất lượng tài sản và năng lực huy động vốn trái phiếu quốc tế của HSC vẫn là bệ đỡ vững chắc giúp công ty duy trì lợi thế chi phí vốn so với các đối thủ nhỏ hơn. Việc duy trì tỷ lệ an toàn tài chính ở mức cao giúp HCM miễn nhiễm với các cú sốc thanh khoản đột ngột của thị trường trái phiếu doanh nghiệp.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của HCM nằm ở tệp khách hàng tổ chức và nước ngoài trung thành, cùng năng lực huy động vốn ngoại hạng giúp duy trì chi phí vốn cho vay margin ở mức tối ưu. Động lực tăng trưởng trong 2-3 năm tới sẽ được kích hoạt mạnh mẽ khi hệ thống KRX đi vào vận hành ổn định, cho phép triển khai các sản phẩm phái sinh mới và giao dịch Pre-funded. Bên cạnh đó, việc liên tục được cấp room tín dụng và phát hành trái phiếu quốc tế sẽ giúp HCM mở rộng thị phần margin, đặc biệt khi thanh khoản thị trường hồi phục. Sự chuyển dịch từ môi giới thuần túy sang tư vấn tài chính và ngân hàng đầu tư cũng sẽ tạo ra nguồn thu nhập phí bền vững hơn, giảm bớt tính chu kỳ.",
-        "risks": "Rủi ro lớn nhất của HCM là tính chu kỳ khắc nghiệt của thị trường chứng khoán, khi thanh khoản sụt giảm sẽ bào mòn nhanh chóng doanh thu môi giới và làm gia tăng chi phí dự phòng nợ xấu margin. Hoạt động tự doanh, dù được quản trị thận trọng, vẫn tiềm ẩn rủi ro biến động giá trị tài sản đảm bảo và rủi ro thị trường khi có các cú sốc vĩ mô bất ngờ. Ngoài ra, áp lực cạnh tranh phí giao dịch về 0 từ các đối thủ ngoại và công ty chứng khoán vốn ngoại đang đe dọa trực tiếp đến biên lợi nhuận gộp và thị phần bán lẻ của công ty."
+        "ai_updated_at": "2026-11-04 11:38:07"
     },
     "VIX": {
         "symbol": "VIX",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 12600,
         "volume": 54438300,
         "pe": 18.13,
@@ -2477,7 +2501,7 @@
         "net_profit_ttm": 1674.8,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.71x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:40:03",
+        "updated_at": "04/11/2026 19:30:57",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2592,6 +2616,9 @@
     },
     "MBS": {
         "symbol": "MBS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 16100,
         "volume": 8494100,
         "pe": 12.35,
@@ -2606,7 +2633,7 @@
         "net_profit_ttm": 1215.69,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.86x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:34:46",
+        "updated_at": "04/11/2026 19:25:00",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2717,13 +2744,13 @@
         "ai_recommendation": "Tích sản dài hạn kết hợp trading theo chu kỳ - Tỷ trọng 10-15% danh mục.",
         "ai_price_zone": "Vùng gom giá trị: dưới 16.500 VNĐ, Vùng gia tăng tỷ trọng khi có xác nhận dòng tiền: 14.000 - 15.000 VNĐ, Vùng chặn lỗ cứng thủng nền tảng tài sản: dưới 12.500 VNĐ, Kỳ vọng dài hạn: hướng tới vùng định giá P/B 1.6 tương đương mức giá 20.000 - 22.000 VNĐ khi thị trường chung bùng nổ thanh khoản.",
         "macro_view": "Ngành chứng khoán đang ở giai đoạn cuối của chu kỳ thắt chặt tiền tệ và chuẩn bị bước vào pha nới lỏng, khi mặt bằng lãi suất huy động thấp tạo áp lực buộc dòng tiền nhàn rỗi phải tìm kiếm kênh sinh lời hấp dẫn hơn trên thị trường vốn. Các chính sách vĩ mô như yêu cầu làm sạch dữ liệu trái phiếu, minh bạch hóa thị trường và nỗ lực nâng hạng từ Frontier lên Emerging Market của Chính phủ đang tạo ra bệ đỡ pháp lý vững chắc cho sự phát triển bền vững. Tuy nhiên, độ trễ của chính sách tiền tệ và sự phục hồi chậm của nền kinh tế thực khiến dòng tiền hiện tại mang tính đầu cơ cao, tập trung vào các nhóm ngành đầu cơ hơn là lan tỏa đều, gây ra sự biến động mạnh về thanh khoản. Đối với MBS, môi trường vĩ mô này vừa là cơ hội để đẩy mạnh dư nợ margin nhờ chi phí vốn rẻ, vừa là thách thức khi dòng tiền ngoại chưa thực sự quay lại ồ ạt để kích hoạt các nhịp sóng lớn. Nhà đầu tư cần theo dõi sát sao chỉ số DXY, tỷ giá hối đoái và các phiên họp điều hành lãi suất của FED cũng như NHNN, vì đây là những biến số vĩ mô quyết định trực tiếp đến sức khỏe thanh khoản của toàn thị trường chứng khoán.",
-        "ai_updated_at": "2026-11-04 11:34:36",
-        "bctc": "Bức tranh tài chính của MBS phản ánh rõ nét đặc thù của ngành chứng khoán, nơi tỷ lệ Nợ/VCSH (D/E) ở mức 2.13 không phải là dấu hiệu của rủi ro mất thanh khoản mà là đòn bẩy cần thiết để mở rộng quy mô cho vay margin và kinh doanh nguồn vốn. Hiệu suất sinh lời ROE đạt 13.1% và ROA 3.8% cho thấy năng lực sử dụng vốn chủ sở hữu và tổng tài sản ở mức khá tốt, vượt qua chi phí vốn bình quân trong bối cảnh lãi suất biến động. Biên lợi nhuận gộp 56.6% là một điểm sáng, chứng tỏ MBS đang duy trì được lợi thế cạnh tranh nhất định trong hoạt động môi giới và dịch vụ tài chính, bù đắp được các chi phí vận hành. Dòng tiền kinh doanh (CFO) dương 110 tỷ đồng tuy có vẻ khiêm tốn so với lợi nhuận ròng 1.216 tỷ đồng, nhưng đây là trạng thái hoàn toàn bình thường và thậm chí là tích cực đối với công ty chứng khoán đang trong giai đoạn mở rộng dư nợ margin hoặc tái cơ cấu danh mục tự doanh. Lợi nhuận trượt 4 quý duy trì ở mức trên 1.200 tỷ đồng cho thấy sự ổn định tương đối của dòng tiền cốt lõi, không bị phụ thuộc hoàn toàn vào các khoản lãi đột biến từ tự doanh. Tuy nhiên, mức tăng trưởng LNST YoY âm 5.25% cảnh báo áp lực từ sự thu hẹp của thanh khoản thị trường chung hoặc biên lãi ròng cho vay margin bị bào mòn do cạnh tranh khốc liệt về lãi suất. Chất lượng tài sản và năng lực quản trị rủi ro margin sẽ là yếu tố sống còn, đòi hỏi nhà đầu tư phải liên tục theo dõi tỷ lệ nợ xấu và mức độ tập trung danh mục cho vay. Nhìn chung, sức khỏe tài chính của MBS đang ở trạng thái vững vàng, được bảo chứng bởi mức cổ tức tiền mặt hấp dẫn 10.16%, chứng tỏ ban lãnh đạo tự tin về dòng tiền thực tế và cam kết chia sẻ lợi ích với cổ đông.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của MBS nằm ở hệ sinh thái khép kín và sự hậu thuẫn mạnh mẽ từ ngân hàng mẹ MB, giúp công ty có lợi thế vượt trội về chi phí vốn và nguồn dữ liệu khách hàng khổng lồ để bán chéo sản phẩm. Động lực tăng trưởng trong 2-3 năm tới sẽ được thúc đẩy bởi câu chuyện nâng hạng thị trường chứng khoán Việt Nam, dự kiến kéo theo dòng vốn ngoại đổ vào và gia tăng đột biến thị phần môi giới cho các công ty chứng khoán top đầu. Bên cạnh đó, việc đẩy mạnh chuyển đổi số và ứng dụng AI vào tư vấn đầu tư sẽ giúp MBS tối ưu hóa chi phí vận hành, từ đó mở rộng biên lợi nhuận ròng ngay cả khi mặt bằng lãi suất cho vay margin bị nén lại. Sự phục hồi của thị trường trái phiếu doanh nghiệp và các dịch vụ ngân hàng đầu tư cũng sẽ là mảng ghép quan trọng giúp đa dạng hóa nguồn thu, giảm bớt sự phụ thuộc vào chu kỳ thanh khoản của thị trường cổ phiếu.",
-        "risks": "Rủi ro lớn nhất đối với MBS là tính chu kỳ khắc nghiệt của thị trường chứng khoán, nơi thanh khoản sụt giảm sẽ bào mòn nhanh chóng doanh thu môi giới và làm gia tăng gánh nặng chi phí vốn nhàn rỗi. Hoạt động tự doanh và cho vay margin tiềm ẩn rủi ro nợ xấu hoặc thua lỗ trọng yếu nếu thị trường xuất hiện các nhịp điều chỉnh sâu gây ra margin call dây chuyền hoặc công ty quản trị rủi ro kém đối với các mã cổ phiếu midcap. Ngoài ra, cuộc đua giảm phí giao dịch và lãi suất margin zero-fee từ các đối thủ ngoại và nội địa đang tạo áp lực nén biên lợi nhuận ròng, đe dọa trực tiếp đến tốc độ tăng trưởng EPS trong dài hạn."
+        "ai_updated_at": "2026-11-04 11:34:36"
     },
     "FTS": {
         "symbol": "FTS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 19550,
         "volume": 1563000,
         "pe": 17.64,
@@ -2738,7 +2765,7 @@
         "net_profit_ttm": 401.85,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.81x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:32:15",
+        "updated_at": "04/11/2026 19:22:22",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2849,13 +2876,13 @@
         "ai_recommendation": "Tích sản thăm dò - Tỷ trọng 5-8% (Chờ đợi biên an toàn tốt hơn khi thị trường điều chỉnh hoặc ROE cải thiện).",
         "ai_price_zone": "Vùng gom giá trị: 16.000 - 17.500 VNĐ (tương ứng P/B ~ 1.2-1.3), Vùng chặn lỗ: thủng 14.500 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% khi chu kỳ thanh khoản mới xác lập và ROE vượt 15%.",
         "macro_view": "Ngành chứng khoán là hàn thử biểu của nền kinh tế, chịu tác động trực tiếp từ chính sách tiền tệ và mặt bằng lãi suất huy động. Trong bối cảnh vĩ mô hiện tại, việc Ngân hàng Nhà nước duy trì thanh khoản hệ thống dồi dào và lãi suất thấp là điều kiện tiên quyết để kích thích dòng tiền nhàn rỗi chảy vào kênh chứng khoán, từ đó cải thiện thanh khoản cho FTS. Tuy nhiên, những biến động địa chính trị toàn cầu và áp lực tỷ giá có thể khiến dòng vốn ngoại rút ròng, gây áp lực lên chỉ số chung và làm giảm nhu cầu sử dụng đòn bẩy margin của nhà đầu tư cá nhân. Việc nâng hạng thị trường và vận hành trơn tru hệ thống giao dịch mới sẽ là cú hích vĩ mô dài hạn, giúp gia tăng quy mô vốn hóa và thu hút dòng vốn tổ chức, tạo dư địa tăng trưởng dư nợ cho vay. Do đó, FTS sẽ hưởng lợi lớn nhất khi vĩ mô chuyển sang pha nới lỏng tín dụng và niềm tin của nhà đầu tư nội địa được khôi phục hoàn toàn.",
-        "ai_updated_at": "2026-11-04 11:39:25",
-        "bctc": "Bức tranh tài chính của FTS mang đậm đặc thù của một định chế tài chính trung gian, nơi dòng tiền kinh doanh (CFO) âm 731 tỷ và tỷ lệ D/E ở mức 2.06 không phải là dấu hiệu của sự mất thanh khoản, mà phản ánh hoạt động mở rộng quy mô cho vay margin và đầu tư nguồn vốn. Tuy nhiên, hiệu suất sinh lời trên vốn chủ sở hữu (ROE) chỉ đạt 9.1% là một điểm trừ lớn đối với cổ phiếu ngành chứng khoán, cho thấy năng lực tối ưu hóa đòn bẩy và tạo ra lợi nhuận cho cổ đông đang kém xa mức kỳ vọng 15-20% của ngành. Tỷ suất sinh lời trên tài sản (ROA) 2.9% kết hợp với biên lợi nhuận gộp 29% cho thấy hoạt động cốt lõi vẫn có lãi nhưng đang bị gánh nặng chi phí vốn hoặc mảng tự doanh kìm hãm. Lợi nhuận trượt 4 quý đạt 402 tỷ nhưng tăng trưởng âm gần 35% so với cùng kỳ, xác nhận FTS đang chịu áp lực nặng nề từ chu kỳ thanh khoản thị trường suy giảm. Chất lượng tài sản cần được theo dõi sát sao qua tỷ lệ nợ xấu cho vay margin, bởi trong bối cảnh thị trường biến động, rủi ro từ danh mục tự doanh và dư nợ margin có thể bào mòn nhanh chóng vốn chủ sở hữu. Việc giữ lại lợi nhuận để mở rộng quy mô vốn là bước đi cần thiết, nhưng ban lãnh đạo cần chứng minh được khả năng chuyển hóa quy mô vốn này thành thị phần môi giới và ROE đột phá trong tương lai. Nhìn chung, sức khỏe tài chính ở mức trung bình khá, an toàn về mặt thanh khoản ngắn hạn nhưng thiếu đi sự bùng nổ về hiệu quả sử dụng vốn. Nhà đầu tư cần theo dõi sát sao báo cáo quý tiếp theo để xác nhận xem dòng vốn đang bị ứ đọng ở các tài sản rủi ro hay đang được phân bổ hiệu quả vào dư nợ margin chất lượng.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của FTS không nằm ở nghiệp vụ ngân hàng đầu tư mà dựa vào hệ sinh thái công nghệ từ tập đoàn FPT và tệp khách hàng cá nhân bán lẻ trung thành, giúp giảm thiểu chi phí huy động vốn và duy trì thị phần môi giới ổn định. Động lực tăng trưởng trong 2-3 năm tới sẽ đến từ việc nâng cấp hệ thống giao dịch, cho phép FTS tung ra các sản phẩm margin linh hoạt hơn và gia tăng dư nợ cho vay. Bên cạnh đó, việc tối ưu hóa danh mục tự doanh theo hướng an toàn hơn và tập trung vào mảng tư vấn tài chính doanh nghiệp sẽ giúp đa dạng hóa nguồn thu, giảm bớt sự phụ thuộc vào biến động thất thường của thanh khoản thị trường. Sự kết hợp giữa nền tảng công nghệ vượt trội và chiến lược mở rộng quy mô vốn chủ sở hữu sẽ là bệ phóng giúp FTS chiếm lĩnh thêm thị phần khi chu kỳ thanh khoản mới bùng nổ.",
-        "risks": "Rủi ro lớn nhất của FTS nằm ở tính chu kỳ khắc nghiệt của thị trường chứng khoán, nơi thanh khoản sụt giảm sẽ trực tiếp bào mòn doanh thu môi giới và làm tăng chi phí dự phòng rủi ro cho vay margin. Mảng tự doanh và danh mục đầu tư nguồn vốn tiềm ẩn rủi ro đuôi (tail-risk), có thể gây ra những khoản lỗ đột biến nếu thị trường xuất hiện các cú sốc vĩ mô hoặc sự kiện thiên nga đen. Ngoài ra, áp lực cạnh tranh gay gắt về phí giao dịch từ các đối thủ ngoại và nội địa đang liên tục ép biên lợi nhuận gộp của mảng môi giới truyền thống, đòi hỏi FTS phải liên tục đổ tiền vào công nghệ để giữ chân khách hàng."
+        "ai_updated_at": "2026-11-04 11:39:25"
     },
     "BSI": {
         "symbol": "BSI",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 29400,
         "volume": 1288300,
         "pe": 15.84,
@@ -2870,7 +2897,7 @@
         "net_profit_ttm": 472.13,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.32x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:30:06",
+        "updated_at": "04/11/2026 19:20:07",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -2985,6 +3012,9 @@
     },
     "CTS": {
         "symbol": "CTS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 23050,
         "volume": 4236400,
         "pe": 52.67,
@@ -2999,7 +3029,7 @@
         "net_profit_ttm": 111.4,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.36x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:30:56",
+        "updated_at": "04/11/2026 19:21:00",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3114,6 +3144,9 @@
     },
     "ORS": {
         "symbol": "ORS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 14800,
         "volume": 10838500,
         "pe": 25.15,
@@ -3128,7 +3161,7 @@
         "net_profit_ttm": 347.29,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.96x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:35:50",
+        "updated_at": "04/11/2026 19:26:08",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3243,6 +3276,9 @@
     },
     "VHM": {
         "symbol": "VHM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 63200,
         "volume": 4951200,
         "pe": 5.14,
@@ -3257,7 +3293,7 @@
         "net_profit_ttm": 103080.6,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:39:40",
+        "updated_at": "04/11/2026 19:30:35",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3368,13 +3404,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, tận dụng vị thế độc tôn và biên an toàn dày.",
         "ai_price_zone": "Vùng gom giá trị: 55.0 - 63.0, Vùng gia tăng tỷ trọng khi có xác nhận dòng tiền lớn: trên 68.0, Vùng chặn lỗ cứng (thủng nền tảng cơ bản): dưới 48.0, Kỳ vọng dài hạn 3 năm: tăng trưởng 100-120% khi chu kỳ BĐS đảo chiều.",
         "macro_view": "Thị trường bất động sản đang ở giai đoạn cuối của chu kỳ thanh lọc và chuẩn bị bước vào pha phục hồi nhờ các chính sách tháo gỡ pháp lý và hạ lãi suất của Ngân hàng Nhà nước. Luật Đất đai, Luật Nhà ở và Luật Kinh doanh Bất động sản sửa đổi có hiệu lực sẽ giúp minh bạch hóa thị trường, tạo lợi thế tuyệt đối cho các chủ đầu tư có quỹ đất sạch và pháp lý chuẩn chỉnh như VHM. Tuy nhiên, độ trễ của chính sách và sức khỏe tài chính của người mua nhà vẫn cần thời gian để thẩm thấu, khiến thanh khoản phân khúc đầu cơ tiếp tục trầm lắng. Dòng tiền thông minh đang dịch chuyển sang phân khúc nhà ở thực và đại đô thị tích hợp, đúng vào thế mạnh cốt lõi của VHM. Do đó, vĩ mô hiện tại đang đóng vai trò là bệ phóng hoàn hảo cho những doanh nghiệp đầu ngành tích lũy thị phần trong giai đoạn các đối thủ yếu thế bị đào thải.",
-        "ai_updated_at": "2026-11-04 11:04:57",
-        "bctc": "Bức tranh tài chính của VHM thể hiện vị thế của một ông trùm bất động sản với khả năng sinh lời vượt trội, thể hiện qua ROE 36.6% và ROA 10.1%, vượt xa chuẩn mực ngành. Biên lợi nhuận gộp lên tới 60.3% phản ánh quyền lực định giá và lợi thế quỹ đất sạch chi phí thấp đã được chuẩn bị từ trước. Điểm sáng lớn nhất nằm ở dòng tiền kinh doanh (CFO) dương tới 92,494 tỷ đồng, cho thấy năng lực bán hàng thực tế và thu tiền từ người mua trả trước cực kỳ mạnh mẽ, thay vì chỉ là lợi nhuận trên giấy. Tăng trưởng LNST đột biến 419% YoY chủ yếu đến từ tiến độ ghi nhận doanh thu của các đại dự án gối đầu đang vào giai đoạn bàn giao. Việc duy trì được dòng tiền dương kỷ lục trong bối cảnh thị trường đóng băng chứng tỏ VHM không phụ thuộc vào việc vay mới để nuôi nợ cũ. Tuy nhiên, tỷ lệ đòn bẩy D/E ở mức 3.35 là một điểm cần theo dõi sát sao, dù trong ngành BĐS, nợ vay lớn thường gắn liền với việc tài trợ cho các dự án quy mô lớn và trái phiếu có tài sản đảm bảo. Chất lượng tài sản và tính thanh khoản của quỹ đất sẽ là bệ đỡ giúp VHM kiểm soát rủi ro thanh khoản nợ vay tốt hơn hẳn các đối thủ cùng ngành. Nhìn chung, sức khỏe nội tại của VHM rất tráng kiện, dòng tiền thực thu là minh chứng rõ nhất cho năng lực triển khai và tiêu thụ sản phẩm.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của VHM nằm ở quỹ đất sạch khổng lồ, pháp lý hoàn thiện và hệ sinh thái all-in-one giúp tạo ra các đại đô thị có tính thanh khoản và biên lợi nhuận cao. Động lực tăng trưởng trong 2-3 năm tới được bảo chứng bởi lượng hàng tồn kho và người mua trả tiền trước từ các siêu dự án như Vinhomes Ocean Park 2, 3 và các dự án mới tại miền Trung, miền Nam. Năng lực tự chủ trong xây dựng và bán hàng giúp VHM rút ngắn tiến độ ghi nhận doanh thu, biến lợi nhuận tiềm năng thành dòng tiền thực tế nhanh chóng. Hơn nữa, việc chuyển dịch sang mô hình bán buôn cho các nhà đầu tư thứ cấp cũng giúp đẩy nhanh vòng quay vốn và giảm áp lực tài chính.",
-        "risks": "Rủi ro trọng yếu nhất đối với VHM là tiến độ phê duyệt pháp lý cho các dự án gối đầu mới, vốn có thể làm chậm trễ dòng tiền thu về và kéo dài chu kỳ kinh doanh. Bên cạnh đó, áp lực đáo hạn trái phiếu và sự thắt chặt của thị trường vốn có thể làm gia tăng chi phí lãi vay, bào mòn biên lợi nhuận ròng nếu D/E không được hạ nhiệt kịp thời. Tính chu kỳ của thị trường bất động sản cũng là một ẩn số, khi sức cầu suy giảm do mặt bằng lãi suất cao hoặc thu nhập thực tế của người mua nhà bị ảnh hưởng sẽ tác động trực tiếp đến tỷ lệ hấp thụ sản phẩm."
+        "ai_updated_at": "2026-11-04 11:04:57"
     },
     "VIC": {
         "symbol": "VIC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 234000,
         "volume": 1431900,
         "pe": 41.92,
@@ -3389,7 +3425,7 @@
         "net_profit_ttm": 47164.44,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.56x MA20.",
-        "updated_at": "04/11/2026 17:39:56",
+        "updated_at": "04/11/2026 19:30:50",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3500,13 +3536,13 @@
         "ai_recommendation": "Quan sát chờ nhịp điều chỉnh - Tỷ trọng giải ngân 0-5% (Chỉ gom khi thị trường chiết khấu rủi ro đòn bẩy, tránh mua đuổi ở vùng định giá bong bóng).",
         "ai_price_zone": "Vùng gom giá trị: dưới 160.000 VNĐ (chiết khấu 30% so với thị giá), Vùng chặn lỗ: thủng 130.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng kép 15-20% nhờ chu kỳ ghi nhận doanh thu từ backlog.",
         "macro_view": "Chu kỳ bất động sản hiện tại đang ở giai đoạn thanh lọc và tái cấu trúc, nơi dòng tiền đầu cơ bị triệt tiêu bởi chính sách siết tín dụng và minh bạch hóa trái phiếu. Tuy nhiên, vĩ mô dài hạn lại ủng hộ VIC nhờ tốc độ đô thị hóa nhanh, tầng lớp trung lưu gia tăng và nhu cầu nhà ở thực tại các đại đô thị vẫn rất khát nguồn cung chất lượng. Các chính sách tháo gỡ pháp lý từ Luật Đất đai và Luật Nhà ở sửa đổi sẽ là đòn bẩy giúp những chủ đầu tư có quỹ đất sạch và năng lực triển khai như VIC hưởng lợi độc quyền. Lãi suất huy động có xu hướng ổn định ở mức thấp sẽ dần kích thích nhu cầu vay mua nhà, cải thiện tỷ lệ hấp thụ cho các dự án mở bán mới. Đầu tư công bùng nổ vào hạ tầng giao thông liên vùng cũng sẽ làm gia tăng đáng kể giá trị quỹ đất vệ tinh mà VIC đang nắm giữ.",
-        "ai_updated_at": "2026-11-04 11:07:27",
-        "bctc": "Bức tranh tài chính của VIC phản ánh rõ nét đặc thù của một tập đoàn bất động sản quy mô lớn với lợi nhuận trượt 4 quý đạt 47.164 tỷ đồng và mức tăng trưởng đột biến 652.31% nhờ tiến độ ghi nhận doanh thu từ các đại dự án gối đầu. Hiệu suất sinh lời trên vốn chủ sở hữu (ROE) đạt 24.0% vượt xa chuẩn mực ngành, cho thấy năng lực kiến tạo lợi nhuận xuất sắc từ quỹ đất sạch và hệ sinh thái đa tiện ích. Tuy nhiên, ROA chỉ đạt 3.4% phản ánh tổng tài sản khổng lồ đang trong quá trình xây dựng cơ bản dở dang chưa kịp chuyển hóa thành doanh thu. Biên lợi nhuận gộp 32.8% là con số ấn tượng, khẳng định vị thế thương hiệu premium cho phép VIC duy trì quyền định giá cao trên thị trường nhà ở. Điểm sáng lớn nhất nằm ở dòng tiền kinh doanh (CFO) dương tới 107.500 tỷ đồng, chủ yếu đến từ khoản người mua trả tiền trước khổng lồ, đóng vai trò như nguồn vốn chiếm dụng không lãi suất. Mặc dù vậy, tỷ lệ đòn bẩy D/E lên tới 5.85 là một tín hiệu cảnh báo đỏ về áp lực trả nợ gốc và lãi vay trong bối cảnh chi phí vốn neo cao. Cấu trúc nợ vay của VIC phụ thuộc nhiều vào trái phiếu và tín dụng ngân hàng, đòi hỏi dòng tiền từ việc bán hàng các phân khu mới phải liên tục cuộn chảy để đảo nợ. Nhìn chung, sức khỏe tài chính của VIC mang tính lấy mỡ nó rán nó, nơi dòng tiền người mua nhà trả trước bù đắp cho đòn bẩy cao, nhưng tính bền vững phụ thuộc tuyệt đối vào tiến độ pháp lý và bàn giao dự án.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của VIC nằm ở thương hiệu quốc gia, quỹ đất sạch khổng lồ trải dài khắp các vị trí đắc địa và hệ sinh thái All-in-one tạo ra rào cản gia nhập ngành không thể vượt qua. Động lực tăng trưởng 2-3 năm tới được bảo chứng bởi lượng hàng bán chưa ghi nhận doanh thu dày dặn từ các đại đô thị như Vinhomes Ocean Park, Royal Island và các dự án mới tại miền Nam. Việc chuyển dịch mô hình sang bán buôn và đẩy mạnh mảng nhà ở xã hội sẽ giúp VIC đa dạng hóa tệp khách hàng và duy trì vòng quay vốn nhanh. Hơn nữa, khả năng tự chủ pháp lý và năng lực thi công thần tốc giúp VIC rút ngắn chu kỳ dự án, biến quỹ đất thành dòng tiền thực tế nhanh hơn bất kỳ đối thủ nào.",
-        "risks": "Rủi ro trọng yếu nhất là áp lực thanh khoản từ cấu trúc nợ vay khổng lồ, đặc biệt khi các lô trái phiếu doanh nghiệp đáo hạn trong bối cảnh thị trường vốn chưa hoàn toàn thông thoáng. Rủi ro pháp lý và tiến độ cấp phép các dự án gối đầu có thể làm chậm trễ thời điểm ghi nhận doanh thu, gây đứt gãy dòng tiền dự kiến dùng để trả nợ. Ngoài ra, sự đóng băng của phân khúc bất động sản đầu cơ và cao cấp do lãi suất neo cao có thể làm suy giảm tỷ lệ hấp thụ, buộc doanh nghiệp phải chiết khấu sâu làm xói mòn biên lợi nhuận gộp."
+        "ai_updated_at": "2026-11-04 11:07:27"
     },
     "VRE": {
         "symbol": "VRE",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 24200,
         "volume": 2763700,
         "pe": 7.11,
@@ -3521,7 +3557,7 @@
         "net_profit_ttm": 7395.69,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:40:53",
+        "updated_at": "04/11/2026 19:31:50",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3632,13 +3668,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào vai trò tài sản phòng thủ sinh lời đều và hưởng cổ tức.",
         "ai_price_zone": "Vùng gom giá trị: dưới 23.500 VNĐ, Vùng tối ưu hóa chi phí vốn: 20.000 - 22.000 VNĐ, Vùng chặn lỗ cứng (thủng nền tảng tích sản): dưới 18.500 VNĐ, Kỳ vọng dài hạn 3 năm: tăng trưởng 40-50% kết hợp nhận cổ tức đều đặn.",
         "macro_view": "Vĩ mô hiện tại đang ở giai đoạn bản lề khi lãi suất cho vay có xu hướng hạ nhiệt, giúp giảm bớt áp lực chi phí vốn cho các doanh nghiệp bán lẻ thuê mặt bằng, từ đó gián tiếp hỗ trợ VRE duy trì tỷ lệ lấp đầy. Tuy nhiên, sức cầu tiêu dùng nội địa vẫn đang phục hồi chậm và phân hóa rõ rệt, khiến các thương hiệu F&B và thời trang phải cân nhắc kỹ lưỡng trước khi mở rộng điểm bán, tạo ra thách thức ngắn hạn cho việc tăng trưởng doanh thu cho thuê. Về dài hạn, làn sóng FDI đổ vào ngành bán lẻ và sự bùng nổ của tầng lớp trung lưu sẽ là động lực vĩ mô vững chắc nhất cho mô hình trung tâm thương mại. Chu kỳ bất động sản bán lẻ đang chuyển từ giai đoạn 'xây để bán' sang 'khai thác vận hành', và VRE đang đứng ở vị thế độc tôn để hưởng lợi từ xu hướng tích lũy tài sản tạo dòng tiền này. Thêm vào đó, các chính sách kích cầu du lịch và tiêu dùng của Chính phủ trong nửa cuối năm sẽ là chất xúc tác trực tiếp làm gia tăng lưu lượng khách đến các Vincom, củng cố vị thế đàm phán của VRE với các đối tác thuê mặt bằng.",
-        "ai_updated_at": "2026-11-04 11:06:10",
-        "bctc": "Bức tranh tài chính của VRE thể hiện vị thế của một 'con bò sữa' trong ngành bất động sản bán lẻ với biên lợi nhuận gộp lên tới 51.5%, phản ánh quyền lực định giá và tỷ lệ lấp đầy ấn tượng tại các vị trí đắc địa. Hiệu suất sinh lời ROE 15.1% và ROA 12.0% là những con số mơ ước đối với mô hình thâm dụng vốn như sở hữu và vận hành trung tâm thương mại, cho thấy ban lãnh đạo tối ưu hóa tài sản cực tốt. Cấu trúc vốn cực kỳ bảo thủ với D/E chỉ 0.23 tạo ra một lớp đệm phòng thủ vững chắc trước mọi biến động của lãi suất và chu kỳ tín dụng. Điểm trừ duy nhất là dòng tiền kinh doanh (CFO) âm 572 tỷ, tuy nhiên dưới góc nhìn đặc thù ngành, điều này thường xuất phát từ việc gia tăng các khoản phải thu, đặt cọc cho đối tác hoặc dòng tiền luân chuyển nội bộ trong hệ sinh thái chứ không đến từ sự suy yếu của hoạt động cho thuê cốt lõi. Lợi nhuận trượt 4 quý đạt 7,396 tỷ đồng khẳng định dòng tiền thực tế từ hoạt động khai thác mặt bằng vẫn rất dồi dào và bền vững. Việc ghi nhận doanh thu của VRE không phụ thuộc vào tiến độ bàn giao dự án gối đầu hay người mua trả tiền trước như bất động sản nhà ở, mà đến từ các hợp đồng thuê dài hạn mang tính lặp lại và dự báo được. Nhìn chung, bảng cân đối kế toán của VRE mang đậm tính phòng thủ của trường phái Graham nhưng vẫn giữ được khả năng sinh lời vượt trội của Fisher. Đây là một pháo đài tài chính thực sự với tài sản ngầm là quỹ đất kim cương đã được hiện thực hóa thành dòng tiền.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của VRE nằm ở mạng lưới trung tâm thương mại Vincom trải dài khắp các tỉnh thành, tạo ra hiệu ứng mạng lưới và rào cản gia nhập ngành cực lớn đối với bất kỳ đối thủ nào muốn tìm kiếm quỹ đất sạch tại các vị trí kim cương. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi sự phục hồi của sức mua bán lẻ nội địa và chiến lược mở rộng các mô hình Vincom mới giúp gia tăng diện tích sàn cho thuê. Hơn nữa, hệ sinh thái Vingroup với lượng cư dân Vinhomes khổng lồ đảm bảo nguồn cầu nội khu ổn định, giúp VRE duy trì tỷ lệ lấp đầy và giá thuê ở mức tối ưu bất chấp chu kỳ kinh tế. Sự chuyển dịch sang các mô hình trải nghiệm và giải trí tích hợp cũng là đòn bẩy giúp VRE liên tục tái định vị và gia tăng biên lợi nhuận trên mỗi mét vuông sàn.",
-        "risks": "Rủi ro lớn nhất đối với VRE là sự thay đổi cấu trúc hành vi tiêu dùng khi thương mại điện tử và các mô hình Shoppertainment tiếp tục ăn mòn thị phần của bán lẻ truyền thống, gây áp lực lên khả năng tăng giá thuê trong dài hạn. Bên cạnh đó, rủi ro phụ thuộc vào hệ sinh thái Vingroup khiến dòng tiền và các khoản phải thu của VRE dễ bị ảnh hưởng bởi các quyết định điều chuyển vốn nội bộ, làm méo mó bức tranh dòng tiền tự do (FCF). Cuối cùng, áp lực từ việc gia tăng chi phí vận hành, bảo trì các tổ hợp Mega Mall cũ có thể làm xói mòn biên lợi nhuận ròng nếu doanh thu không tăng trưởng tương xứng."
+        "ai_updated_at": "2026-11-04 11:06:10"
     },
     "NVL": {
         "symbol": "NVL",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 10450,
         "volume": 17233600,
         "pe": 7.79,
@@ -3653,7 +3689,7 @@
         "net_profit_ttm": 6554.78,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:35:43",
+        "updated_at": "04/11/2026 19:26:01",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3768,6 +3804,9 @@
     },
     "PDR": {
         "symbol": "PDR",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 11500,
         "volume": 6952100,
         "pe": 20.54,
@@ -3782,7 +3821,7 @@
         "net_profit_ttm": 545.03,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:36:13",
+        "updated_at": "04/11/2026 19:26:31",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -3897,6 +3936,9 @@
     },
     "DIG": {
         "symbol": "DIG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 10000,
         "volume": 8954300,
         "pe": 12.69,
@@ -3911,7 +3953,7 @@
         "net_profit_ttm": 600.68,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.63x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:31:31",
+        "updated_at": "04/11/2026 19:21:37",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4026,6 +4068,9 @@
     },
     "NLG": {
         "symbol": "NLG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 22000,
         "volume": 2536700,
         "pe": 16.43,
@@ -4040,7 +4085,7 @@
         "net_profit_ttm": 686.0,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.88x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:35:21",
+        "updated_at": "04/11/2026 19:25:39",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4155,6 +4200,9 @@
     },
     "KDH": {
         "symbol": "KDH",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 13800,
         "volume": 11749400,
         "pe": 9.54,
@@ -4169,7 +4217,7 @@
         "net_profit_ttm": 2053.47,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.10x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:34:24",
+        "updated_at": "04/11/2026 19:24:37",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4284,6 +4332,9 @@
     },
     "CEO": {
         "symbol": "CEO",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 11900,
         "volume": 17920100,
         "pe": 35.73,
@@ -4298,7 +4349,7 @@
         "net_profit_ttm": 245.56,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.37x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:30:28",
+        "updated_at": "04/11/2026 19:20:29",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4413,6 +4464,9 @@
     },
     "DXG": {
         "symbol": "DXG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 10550,
         "volume": 38609100,
         "pe": 109.58,
@@ -4427,7 +4481,7 @@
         "net_profit_ttm": 336.36,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 3.52x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:31:52",
+        "updated_at": "04/11/2026 19:22:00",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4542,6 +4596,9 @@
     },
     "TCH": {
         "symbol": "TCH",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 12750,
         "volume": 20992900,
         "pe": 15.06,
@@ -4556,7 +4613,7 @@
         "net_profit_ttm": 1060.92,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 3.04x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:38:36",
+        "updated_at": "04/11/2026 19:29:28",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4671,6 +4728,9 @@
     },
     "HDG": {
         "symbol": "HDG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 15300,
         "volume": 801700,
         "pe": 7.33,
@@ -4685,7 +4745,7 @@
         "net_profit_ttm": 1036.88,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:33:20",
+        "updated_at": "04/11/2026 19:23:30",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4800,6 +4860,9 @@
     },
     "KBC": {
         "symbol": "KBC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 27050,
         "volume": 1844700,
         "pe": 14.12,
@@ -4814,7 +4877,7 @@
         "net_profit_ttm": 1842.73,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.55x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:34:10",
+        "updated_at": "04/11/2026 19:24:23",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -4929,6 +4992,9 @@
     },
     "IDC": {
         "symbol": "IDC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 35300,
         "volume": 1074500,
         "pe": 7.61,
@@ -4943,7 +5009,7 @@
         "net_profit_ttm": 2081.61,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:33:55",
+        "updated_at": "04/11/2026 19:24:07",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5058,6 +5124,9 @@
     },
     "SZC": {
         "symbol": "SZC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 20550,
         "volume": 1646900,
         "pe": 21.6,
@@ -5072,7 +5141,7 @@
         "net_profit_ttm": 160.4,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.29x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:38:14",
+        "updated_at": "04/11/2026 19:29:05",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5187,6 +5256,9 @@
     },
     "BCM": {
         "symbol": "BCM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 38450,
         "volume": 564000,
         "pe": 19.73,
@@ -5201,7 +5273,7 @@
         "net_profit_ttm": 2133.52,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:29:45",
+        "updated_at": "04/11/2026 19:19:44",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5316,6 +5388,9 @@
     },
     "PHR": {
         "symbol": "PHR",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 29900,
         "volume": 524500,
         "pe": 6.43,
@@ -5330,7 +5405,7 @@
         "net_profit_ttm": 1123.42,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:36:21",
+        "updated_at": "04/11/2026 19:26:38",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5441,13 +5516,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào chiến lược nắm giữ xuyên chu kỳ bất động sản khu công nghiệp.",
         "ai_price_zone": "Vùng gom giá trị: dưới 30.000 VNĐ, Vùng gia tăng tỷ trọng: 26.000 - 28.000 VNĐ, Vùng chặn lỗ cứng: thủng 23.500 VNĐ, Kỳ vọng dài hạn: tăng trưởng 40-50% khi các dự án KCN mới được hạch toán đầy đủ.",
         "macro_view": "Chu kỳ ngành bất động sản khu công nghiệp đang bước vào giai đoạn trưởng thành, nơi nguồn cung đất sạch khan hiếm đẩy giá thuê lên cao nhưng đồng thời làm tăng rào cản gia nhập ngành. Vĩ mô toàn cầu với xu hướng dịch chuyển chuỗi cung ứng (China+1) tiếp tục là luồng gió thuận, đưa Việt Nam và đặc biệt là Bình Dương trở thành điểm đến ưu tiên của dòng vốn FDI chất lượng cao. Tuy nhiên, chính sách tiền tệ thắt chặt và tỷ giá biến động có thể làm chậm lại quyết định mở rộng nhà máy của các tập đoàn đa quốc gia trong ngắn hạn. Ở trong nước, nỗ lực đẩy mạnh giải ngân đầu tư công và hoàn thiện hạ tầng giao thông sẽ là chất xúc tác vĩ mô giúp tái định giá quỹ đất ven đô và các KCN lân cận. Do đó, PHR được hưởng lợi kép từ cả câu chuyện vĩ mô dài hạn lẫn vị thế độc tôn về quỹ đất tại địa phương, bất chấp những nhiễu động ngắn hạn của thị trường tín dụng.",
-        "ai_updated_at": "2026-11-04 11:02:26",
-        "bctc": "Bức tranh tài chính của PHR phản ánh rõ nét quá trình chuyển mình từ cao su sang bất động sản khu công nghiệp với ROE ấn tượng 24.1% và ROA 16.6%, cho thấy hiệu suất khai thác tài sản và quỹ đất cực kỳ xuất sắc. Cấu trúc vốn an toàn với tỷ lệ D/E chỉ 0.46 là một điểm cộng lớn, giúp doanh nghiệp giảm thiểu áp lực lãi vay trong bối cảnh chi phí vốn biến động. Tuy nhiên, sự chênh lệch khổng lồ giữa lợi nhuận sau thuế trượt 4 quý (1,123 tỷ VNĐ) và dòng tiền kinh doanh (CFO chỉ 46 tỷ VNĐ) đòi hỏi sự soi xét kỹ lưỡng dưới góc độ đặc thù ngành. Trong bất động sản, việc CFO thấp hơn nhiều so với lợi nhuận thường đến từ việc ghi nhận doanh thu một lần từ các hợp đồng cho thuê đất KCN đã thu tiền trước hoặc từ tiền đền bù giải phóng mặt bằng, chứ không hẳn là dòng tiền lõi yếu kém. Biên lợi nhuận gộp 15.3% có phần khiêm tốn so với mặt bằng chung BĐS KCN, nguyên nhân có thể do PHR vẫn đang gánh chi phí khấu hao vườn cây cao su hoặc chi phí hạ tầng ban đầu của các dự án gối đầu. Quỹ đất sạch chuyển đổi từ cao su sang KCN là tài sản ngầm khổng lồ, nhưng tiến độ ghi nhận doanh thu phụ thuộc hoàn toàn vào pháp lý dự án và tốc độ lấp đầy. Tăng trưởng LNST YoY lên tới 63.73% chứng tỏ năng lực hạch toán các khoản thu nhập khác hoặc doanh thu từ các dự án đã hoàn thiện pháp lý đang phát huy tác dụng. Nhìn chung, sức khỏe tài chính ở mức rất tốt, nhưng nhà đầu tư cần theo dõi sát sao khoản mục người mua trả tiền trước trên bảng cân đối kế toán để dự phóng dòng tiền thực tế trong tương lai. Chất lượng tài sản được đảm bảo bởi P/B 1.46, cho thấy thị trường đã bắt đầu định giá lại phần giá trị gia tăng từ quỹ đất KCN so với giá trị sổ sách thuần túy.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của PHR nằm ở quỹ đất sạch rộng lớn tại Bình Dương với chi phí vốn ban đầu cực thấp nhờ quá trình chuyển đổi mục đích sử dụng từ đất trồng cao su. Động lực tăng trưởng nội tại trong 2-3 năm tới được thúc đẩy bởi tiến độ lấp đầy các KCN như VSIP III, Tân Lập và dòng tiền cho thuê lại đất ổn định từ các tập đoàn đa quốc gia (FDI). Việc sở hữu vị trí địa lý chiến lược gần các trục giao thông trọng điểm giúp PHR duy trì lợi thế thu hút vốn ngoại và giữ vững tỷ lệ lấp đầy ở mức cao. Hơn nữa, nguồn thu tài chính từ các liên doanh KCN và tiền đền bù giải phóng mặt bằng sẽ tiếp tục là bệ phóng lợi nhuận đột biến, bổ sung cho mảng kinh doanh cốt lõi.",
-        "risks": "Rủi ro trọng yếu nhất nằm ở tiến độ pháp lý và thủ tục chuyển đổi mục đích sử dụng đất, vốn thường xuyên bị trì hoãn và có thể làm chậm tiến độ ghi nhận doanh thu từ các dự án gối đầu. Bên cạnh đó, biên lợi nhuận gộp 15.3% đang chịu áp lực nén do chi phí đền bù giải phóng mặt bằng và xây dựng hạ tầng ngày càng leo thang, làm suy giảm phần nào sức hấp dẫn của các dự án mới. Rủi ro chu kỳ suy giảm dòng vốn FDI toàn cầu hoặc sự gián đoạn chuỗi cung ứng cũng có thể ảnh hưởng trực tiếp đến tốc độ lấp đầy và khả năng đàm phán giá cho thuê đất KCN trong tương lai."
+        "ai_updated_at": "2026-11-04 11:02:26"
     },
     "HPG": {
         "symbol": "HPG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 21700,
         "volume": 38465700,
         "pe": 6.54,
@@ -5462,7 +5537,7 @@
         "net_profit_ttm": 27634.2,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.90x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:33:34",
+        "updated_at": "04/11/2026 19:23:45",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5573,13 +5648,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, tận dụng mọi nhịp điều chỉnh của thị trường để gia tăng số lượng cổ phiếu sở hữu.",
         "ai_price_zone": "Vùng gom giá trị tích sản: từ 20.000 đến 22.500 VNĐ, Vùng chặn lỗ tuyệt đối (phá vỡ cấu trúc dài hạn): thủng 17.500 VNĐ, Kỳ vọng dài hạn 3-5 năm: tăng trưởng tài sản 100-150% khi chu kỳ hàng hóa đảo chiều và Dung Quất 2 đạt điểm rơi lợi nhuận.",
         "macro_view": "Ngành thép đang bước vào giai đoạn đầu của chu kỳ phục hồi sau khi trải qua đợt thanh lọc khốc liệt về giá và nhu cầu trong hai năm qua. Môi trường vĩ mô với mặt bằng lãi suất cho vay duy trì ở mức thấp là chất xúc tác quan trọng giúp giảm chi phí vốn lưu động và kích thích nhu cầu tín dụng bất động sản, xây dựng. Tuy nhiên, sự bất định của địa chính trị toàn cầu và chính sách tiền tệ của các ngân hàng trung ương lớn vẫn khiến giá nguyên liệu đầu vào biến động khó lường, đòi hỏi doanh nghiệp phải có năng lực phòng vệ chi phí xuất sắc. Tại thị trường nội địa, Chính phủ đang quyết liệt đẩy mạnh giải ngân đầu tư công các dự án trọng điểm, tạo ra một lực cầu đệm vững chắc giúp HPG duy trì công suất hoạt động tối ưu. Nhìn chung, vĩ mô đang chuyển dịch từ giai đoạn gió ngược sang gió thuận, tạo đà cho các doanh nghiệp đầu ngành có bảng cân đối kế toán khỏe mạnh bứt phá mạnh mẽ trong nửa cuối chu kỳ.",
-        "ai_updated_at": "2026-11-04 11:16:11",
-        "bctc": "Bức tranh tài chính của HPG thể hiện rõ bản lĩnh của một con đầu đàn trong ngành vật liệu xây dựng mang tính chu kỳ cao. Tỷ suất sinh lời trên vốn chủ sở hữu (ROE) đạt 19.9% và ROA 10.4% là những con số cực kỳ ấn tượng, chứng tỏ năng lực tối ưu hóa tài sản và vượt trội so với mặt bằng chung của ngành thép khu vực. Biên lợi nhuận gộp duy trì ở mức 19.2% cho thấy lợi thế quy mô và khả năng kiểm soát chi phí sản xuất ngay cả khi giá nguyên liệu đầu vào biến động. Cấu trúc vốn với tỷ lệ D/E ở mức 0.9 là hoàn toàn khỏe mạnh và an toàn đối với một doanh nghiệp thâm dụng vốn như thép, giúp HPG có đủ dư địa để vượt qua các giai đoạn đáy chu kỳ mà không chịu áp lực thanh khoản nghẹt thở. Dòng tiền kinh doanh (CFO) dương 8,295 tỷ đồng tuy thấp hơn lợi nhuận sau thuế trượt 27,634 tỷ đồng nhưng đây là đặc thù dễ hiểu do doanh nghiệp đang tái đầu tư mạnh vào tài sản cố định và quản lý vốn lưu động cho các dự án mở rộng. Lợi nhuận tăng trưởng đột biến 106% YoY phản ánh sự phục hồi mạnh mẽ từ đáy chu kỳ, khẳng định vị thế độc tôn về thị phần và năng lực hấp thụ thị trường. Nhìn chung, chất lượng tài sản và dòng tiền của HPG hoàn toàn đáp ứng tiêu chuẩn khắt khe của trường phái Graham về một pháo đài tài chính vững chãi. Thêm vào đó, việc duy trì chi trả cổ tức đều đặn 2.14% bằng tiền mặt càng củng cố niềm tin về tính minh bạch và dòng tiền thực của doanh nghiệp. Đây là nền tảng cốt lõi giúp HPG không chỉ sinh tồn mà còn thâu tóm thị phần khi các đối thủ yếu hơn bị đào thải trong mùa đông của ngành thép.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của HPG nằm ở quy mô sản xuất khổng lồ, chuỗi giá trị khép kín và vị thế độc quyền tự nhiên về chi phí thấp nhờ công nghệ lò cao BF-BOF. Động lực tăng trưởng nội tại lớn nhất trong 2-3 năm tới chắc chắn đến từ việc đưa vào vận hành giai đoạn 2 của Khu liên hợp Gang thép Dung Quất, giúp nâng tổng công suất và đặc biệt là gia tăng tỷ trọng sản phẩm thép dẹt có biên lợi nhuận cao hơn. Bên cạnh đó, làn sóng giải ngân đầu tư công mạnh mẽ cho hạ tầng giao thông và sự phục hồi dần của thị trường bất động sản nội địa sẽ là chất xúc tác trực tiếp hấp thụ toàn bộ sản lượng tăng thêm. Sự kết hợp giữa lợi thế chi phí và năng lực mở rộng công suất giúp HPG có khả năng chiếm lĩnh thêm thị phần xuất khẩu khi nhu cầu thép toàn cầu hồi phục.",
-        "risks": "Rủi ro lớn nhất và mang tính sống còn đối với HPG vẫn là tính chu kỳ khắc nghiệt của giá hàng hóa, khi biên lợi nhuận có thể bốc hơi nhanh chóng nếu giá quặng sắt, than cốc tăng vọt trong khi giá thép thành phẩm bị kìm hãm. Áp lực từ việc Trung Quốc dư thừa công suất và đẩy mạnh xuất khẩu thép giá rẻ sang Đông Nam Á có thể gây ra cuộc chiến về giá, làm xói mòn biên lợi nhuận gộp trong ngắn hạn. Ngoài ra, tiến độ giải ngân đầu tư công nội địa nếu chậm trễ hoặc thị trường bất động sản đóng băng kéo dài sẽ tạo ra rủi ro tồn kho và ứ đọng vốn lưu động, gây áp lực lên dòng tiền tự do."
+        "ai_updated_at": "2026-11-04 11:16:11"
     },
     "HSG": {
         "symbol": "HSG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 11100,
         "volume": 3894800,
         "pe": 13.16,
@@ -5594,7 +5669,7 @@
         "net_profit_ttm": 623.69,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:33:41",
+        "updated_at": "04/11/2026 19:23:53",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5709,6 +5784,9 @@
     },
     "NKG": {
         "symbol": "NKG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 12500,
         "volume": 7968700,
         "pe": 24.49,
@@ -5723,7 +5801,7 @@
         "net_profit_ttm": 242.37,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:35:14",
+        "updated_at": "04/11/2026 19:25:31",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5838,6 +5916,9 @@
     },
     "CTD": {
         "symbol": "CTD",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 68000,
         "volume": 805800,
         "pe": 9.17,
@@ -5852,7 +5933,7 @@
         "net_profit_ttm": 799.01,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:30:42",
+        "updated_at": "04/11/2026 19:20:44",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5967,6 +6048,9 @@
     },
     "VCG": {
         "symbol": "VCG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 15600,
         "volume": 7560400,
         "pe": 9.46,
@@ -5981,7 +6065,7 @@
         "net_profit_ttm": 1362.16,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.56x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:39:12",
+        "updated_at": "04/11/2026 19:30:05",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6096,6 +6180,9 @@
     },
     "HHV": {
         "symbol": "HHV",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 9610,
         "volume": 3692600,
         "pe": 7.76,
@@ -6110,7 +6197,7 @@
         "net_profit_ttm": 796.44,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:33:27",
+        "updated_at": "04/11/2026 19:23:38",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6225,6 +6312,9 @@
     },
     "FPT": {
         "symbol": "FPT",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 53900,
         "volume": 12822500,
         "pe": 9.24,
@@ -6239,7 +6329,7 @@
         "net_profit_ttm": 10771.41,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.56x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:31:59",
+        "updated_at": "04/11/2026 19:22:07",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6350,13 +6440,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, tận dụng nhịp định giá P/E dưới 10x để xây dựng vị thế lõi.",
         "ai_price_zone": "Vùng gom giá trị: dưới 53,900 VNĐ, Vùng gia tăng tỷ trọng: 48,000 - 50,000 VNĐ, Vùng chặn lỗ cứng: thủng 42,000 VNĐ, Kỳ vọng dài hạn: tăng trưởng kép 15-20%/năm trong 3-5 năm tới.",
         "macro_view": "Chu kỳ ngành công nghệ toàn cầu đang bước vào giai đoạn tái cấu trúc sau thời kỳ bùng nổ hậu đại dịch, với dòng vốn dịch chuyển mạnh mẽ sang AI, bán dẫn và an ninh mạng. Lãi suất duy trì ở mức cao tại các nền kinh tế lớn khiến các doanh nghiệp thắt chặt chi tiêu IT, gây áp lực lên tăng trưởng doanh thu ngắn hạn của các tập đoàn outsourcing như FPT. Tuy nhiên, xu hướng China+1 và sự dịch chuyển chuỗi cung ứng công nghệ sang Đông Nam Á đang tạo ra gió xuôi vĩ mô cực lớn cho Việt Nam. Trong nước, chính phủ đẩy mạnh chuyển đổi số quốc gia và kinh tế số, tạo ra thị trường nội địa vững chắc cho mảng viễn thông và giải pháp công nghệ của FPT. Tỷ giá hối đoái biến động cũng là một yếu tố vĩ mô cần lưu ý, vừa hỗ trợ doanh thu xuất khẩu quy đổi ra VNĐ nhưng cũng làm tăng chi phí nhập khẩu thiết bị hạ tầng.",
-        "ai_updated_at": "2026-11-04 11:26:43",
-        "bctc": "Bức tranh tài chính của FPT thể hiện một cỗ máy tạo tiền xuất sắc với ROE lên tới 24.3% và ROA 13.2%, phản ánh năng lực tối ưu hóa tài sản và sinh lời trên vốn chủ sở hữu vượt trội trong ngành công nghệ. Biên lợi nhuận gộp duy trì ở mức 31.0% là minh chứng rõ nét cho lợi thế cạnh tranh về chất xám và khả năng định giá dịch vụ phần mềm, giáo dục và viễn thông so với các mô hình bán lẻ công nghệ thuần túy. Cấu trúc bảng cân đối kế toán rất an toàn với tỷ lệ D/E chỉ 0.71, cho phép doanh nghiệp thoải mái tái đầu tư cho R&D và M&A mà không chịu áp lực lãi vay đè nặng. Tuy nhiên, điểm trừ lớn nhất nằm ở tăng trưởng LNST YoY đang âm 5.94%, đòi hỏi nhà đầu tư phải soi xét kỹ xem đây là nhịp chững lại ngắn hạn do chi phí đầu tư hạ tầng hay sự bão hòa của các mảng kinh doanh lõi. Dòng tiền kinh doanh (CFO) đạt 2,098 tỷ VNĐ tuy dương nhưng cần được đối chiếu với quy mô lợi nhuận trượt 10,771 tỷ VNĐ để đảm bảo chất lượng lợi nhuận không đến từ các bút toán kế toán hay công nợ phải thu khó đòi. Vòng quay tài sản ở mức cao thể hiện qua ROA 13.2% cho thấy FPT đang vận hành mô hình asset-light rất hiệu quả, đặc thù của ngành xuất khẩu phần mềm và dịch vụ số. Việc kiểm soát chi phí vận hành chuỗi và tối ưu hóa năng suất lập trình viên là chìa khóa giúp FPT bảo vệ biên lợi nhuận trước áp lực lạm phát chi phí nhân sự IT. Tổng thể, sức khỏe nội tại của FPT vẫn thuộc top đầu ngành, nhưng sự sụt giảm tăng trưởng lợi nhuận gần nhất là một tín hiệu cảnh báo cần theo dõi sát sao trong các quý tiếp theo.",
-        "catalyst": "Hào hào kinh tế của FPT được xây dựng vững chắc từ hệ sinh thái kép gồm công nghệ phần mềm toàn cầu và nền tảng giáo dục, viễn thông độc quyền trong nước, tạo ra rào cản gia nhập ngành cực lớn. Động lực tăng trưởng cốt lõi trong 2-3 năm tới sẽ đến từ làn sóng chuyển đổi số toàn cầu, đặc biệt là các hợp đồng AI, bán dẫn và cloud computing tại thị trường Nhật Bản và APAC. Mảng giáo dục và viễn thông tiếp tục đóng vai trò là bò sữa tạo dòng tiền đều đặn, bù đắp chi phí R&D cho các mảng công nghệ mới. Năng lực mở rộng chuỗi cung ứng nhân sự IT toàn cầu giúp FPT liên tục giành được các hợp đồng outsourcing tỷ đô từ các tập đoàn đa quốc gia.",
-        "risks": "Rủi ro lớn nhất đối với FPT là sự phụ thuộc vào chi tiêu IT của các thị trường xuất khẩu trọng điểm như Nhật Bản và Mỹ, nơi suy thoái kinh tế có thể làm đóng băng các dự án chuyển đổi số. Áp lực cạnh tranh nhân sự ngành công nghệ ngày càng khốc liệt có thể làm xói mòn biên lợi nhuận gộp 31% nếu chi phí lương thưởng vượt quá mức tăng trưởng doanh thu. Ngoài ra, sự trỗi dậy của Generative AI có thể là con dao hai lưỡi, vừa là cơ hội nhưng cũng đe dọa thay thế các dịch vụ gia công phần mềm mã nguồn thấp nếu FPT không kịp thời nâng cấp chuỗi giá trị."
+        "ai_updated_at": "2026-11-04 11:26:43"
     },
     "MWG": {
         "symbol": "MWG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 74500,
         "volume": 2700200,
         "pe": 9.54,
@@ -6371,7 +6461,7 @@
         "net_profit_ttm": 11717.18,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:35:07",
+        "updated_at": "04/11/2026 19:25:24",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6482,13 +6572,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục đầu tư.",
         "ai_price_zone": "Vùng gom giá trị: từ 65.000 đến 75.000 VNĐ, Vùng gia tăng tỷ trọng khi có xác nhận dòng tiền dương: dưới 80.000 VNĐ, Vùng chặn lỗ cứng: thủng 58.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 40-50% trong 18-24 tháng tới khi BHX hòa vốn toàn hệ thống.",
         "macro_view": "Ngành bán lẻ công nghệ và tiêu dùng đang ở giai đoạn cuối của chu kỳ suy thoái và bắt đầu bước vào pha phục hồi khi mặt bằng lãi suất hạ nhiệt và các chính sách kích cầu tiêu dùng của Chính phủ phát huy tác dụng. Tuy nhiên, đà phục hồi vẫn mang tính phân hóa, khi người tiêu dùng thắt chặt chi tiêu cho các tài sản giá trị lớn như điện máy nhưng lại duy trì nhu cầu thiết yếu cho thực phẩm và FMCG. Sự dịch chuyển này giải thích lý do tại sao mảng ICT và CE của MWG tăng trưởng chậm lại trong khi BHX lại trở thành trụ cột tăng trưởng mới. Về vĩ mô, áp lực tỷ giá và lạm phát toàn cầu có thể làm tăng chi phí nhập khẩu hàng công nghệ, đòi hỏi MWG phải liên tục đàm phán lại với các nhà cung cấp đa quốc gia. Nhìn chung, môi trường vĩ mô hiện tại đang ủng hộ các doanh nghiệp bán lẻ có quy mô lớn, khả năng thích ứng nhanh và sở hữu cả mảng thiết yếu lẫn không thiết yếu để bù trừ rủi ro chu kỳ.",
-        "ai_updated_at": "2026-11-04 11:24:39",
-        "bctc": "Bức tranh tài chính của MWG thể hiện rõ vị thế của một cỗ máy bán lẻ với khả năng sinh lời trên vốn chủ sở hữu (ROE 29.5%) và tài sản (ROA 12.1%) ở mức xuất sắc, phản ánh năng lực quay vòng tài sản và tối ưu hóa mặt bằng kinh doanh vượt trội. Biên lợi nhuận gộp duy trì ở mức 21.7% là con số chấp nhận được đối với ngành bán lẻ thiết bị công nghệ và điện máy, nơi doanh thu lớn nhưng biên mỏng, bù lại bằng vòng quay hàng tồn kho nhanh. Tăng trưởng LNST YoY đạt 97.41% cho thấy nỗ lực tái cấu trúc, đóng cửa các cửa hàng không hiệu quả và tối ưu chi phí vận hành chuỗi đang phát huy tác dụng rõ rệt. Tuy nhiên, điểm trừ lớn nhất là dòng tiền kinh doanh (CFO) đang âm 531 tỷ đồng, đòi hỏi nhà đầu tư phải nhìn nhận dưới góc độ đặc thù ngành bán lẻ. Trong ngắn hạn, CFO âm có thể đến từ việc gia tăng tích trữ hàng tồn kho chuẩn bị cho mùa cao điểm hoặc mở rộng chuỗi Bách Hóa Xanh, làm thay đổi vốn lưu động. Tỷ lệ Nợ trên Vốn chủ sở hữu (D/E) ở mức 1.05 là hoàn toàn bình thường và an toàn đối với mô hình bán lẻ sử dụng đòn bẩy tài chính và chiếm dụng vốn nhà cung cấp để tài trợ cho tài sản ngắn hạn. Lợi nhuận trượt 4 quý đạt 11,717 tỷ đồng chứng tỏ lõi kinh doanh đã vượt qua đáy suy thoái và phục hồi mạnh mẽ. Nhìn chung, chất lượng tài sản và hiệu suất sinh lời lõi vẫn rất vững vàng, nhưng cần theo dõi sát sao diễn biến dòng tiền trong các quý tiếp theo để đảm bảo CFO dương trở lại khi chu kỳ bán hàng hoàn tất.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của MWG nằm ở mạng lưới phân phối rộng khắp, thương hiệu quốc gia và năng lực quản trị chuỗi cung ứng, hậu cần mà khó đối thủ nào sao chép được. Động lực tăng trưởng nội tại trong 2-3 năm tới sẽ được dẫn dắt bởi sự bùng nổ về điểm hòa vốn và sinh lời của chuỗi Bách Hóa Xanh, mở ra dư địa thị trường thực phẩm tươi sống và FMCG khổng lồ. Bên cạnh đó, việc tái cấu trúc thành công chuỗi Thế Giới Di Động và Điện Máy Xanh giúp tối ưu hóa biên lợi nhuận ròng thay vì chỉ chạy theo doanh thu bề nổi. Sự phục hồi của sức mua tiêu dùng và chu kỳ thay mới thiết bị điện tử sẽ là chất xúc tác kép giúp MWG bứt phá mạnh mẽ về lợi nhuận.",
-        "risks": "Rủi ro trọng yếu nhất đối với MWG là sự suy giảm sức mua vĩ mô và lạm phát làm xói mòn thu nhập khả dụng của tầng lớp trung lưu, trực tiếp ảnh hưởng đến doanh số các mặt hàng điện máy không thiết yếu. Cạnh tranh khốc liệt từ các sàn thương mại điện tử và các chuỗi bán lẻ điện máy giá rẻ liên tục gây áp lực nén biên lợi nhuận gộp của mảng công nghệ. Ngoài ra, tiến trình mở rộng và duy trì biên lợi nhuận của Bách Hóa Xanh vẫn tiềm ẩn rủi ro thực thi, đặc biệt là bài toán kiểm soát tỷ lệ hủy hàng và chi phí logistics chuỗi lạnh."
+        "ai_updated_at": "2026-11-04 11:24:39"
     },
     "PNJ": {
         "symbol": "PNJ",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 14750,
         "volume": 10772700,
         "pe": 4.47,
@@ -6503,7 +6593,7 @@
         "net_profit_ttm": 1688.59,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:36:35",
+        "updated_at": "04/11/2026 19:26:53",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6614,13 +6704,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, chia vốn giải ngân dần qua các nhịp rung lắc do tâm lý thị trường.",
         "ai_price_zone": "Vùng gom giá trị: dưới 15.000 VNĐ, Vùng chặn lỗ cứng: thủng mốc 11.500 VNĐ (mất hơn 20% và phá vỡ cấu trúc tài sản an toàn), Kỳ vọng dài hạn: tăng trưởng 150-200% khi P/B hồi phục về mức 1.2-1.5.",
         "macro_view": "Ngành bán lẻ công nghệ và tiêu dùng đang ở giai đoạn đáy của chu kỳ hàng tồn kho, nơi sức cầu yếu khiến các chuỗi phải chấp nhận biên lợi nhuận mỏng để đẩy hàng và thu hồi vốn. Môi trường vĩ mô với lãi suất cho vay tiêu dùng còn cao và thu nhập khả dụng của tầng lớp trung lưu bị bào mòn bởi lạm phát đang kìm hãm sự phục hồi của nhóm hàng không thiết yếu. Tuy nhiên, các chính sách kích cầu tiêu dùng nội địa và sự phục hồi của thị trường lao động trong 12-18 tháng tới sẽ là chất xúc tác vĩ mô quan trọng. Khi chu kỳ kinh tế vượt qua điểm trũng, dòng tiền sẽ nhanh chóng quay trở lại các cổ phiếu đầu ngành bán lẻ có bảng cân đối kế toán lành mạnh như PNJ. Nhà đầu tư cần chấp nhận sự chậm trễ của dòng tiền ngắn hạn để đón đầu chu kỳ phục hồi vĩ mô mang tính tất yếu.",
-        "ai_updated_at": "2026-11-04 11:27:57",
-        "bctc": "Bức tranh tài chính của PNJ đang phản ánh một giai đoạn tái cấu trúc hoặc tích lũy hàng hóa cực kỳ quyết liệt của mô hình bán lẻ chuỗi, thể hiện qua dòng tiền kinh doanh (CFO) âm sâu -2.874 tỷ đồng. Trong ngành bán lẻ, CFO âm đôi khi không phải là dấu hiệu của sự sụp đổ mà là hệ quả của việc gia tăng tích trữ hàng tồn kho để chuẩn bị cho các mùa vụ hoặc mở rộng độ phủ chuỗi cửa hàng, điều này cũng lý giải cho vòng quay tài sản và ROA ấn tượng ở mức 8.6%. Tuy nhiên, biên lợi nhuận gộp chỉ đạt 8.7% là một điểm trừ lớn, cho thấy doanh nghiệp đang phải cạnh tranh khốc liệt về giá hoặc chịu áp lực chiết khấu từ các nhà cung cấp. Hiệu suất sinh lời trên vốn chủ sở hữu (ROE) duy trì ở mức 12.7% chứng tỏ ban lãnh đạo vẫn đang tối ưu hóa tốt đòn bẩy vận hành bất chấp biên lợi nhuận mỏng. Cấu trúc tài chính với tỷ lệ D/E 0.52 là một lớp đệm an toàn, giúp doanh nghiệp không bị bóp nghẹt bởi chi phí lãi vay trong bối cảnh lợi nhuận sau thuế trượt 4 quý suy giảm nghiêm trọng -152.02%. Tóm lại, sức khỏe nội tại vẫn vững vàng nhờ ROA cao và nợ vay kiểm soát, nhưng chất lượng lợi nhuận đang bị che khuất bởi áp lực dòng tiền và biên gộp thấp, đòi hỏi sự theo dõi sát sao về vòng quay hàng tồn kho trong các quý tới. Việc EPS đạt 3.302 VNĐ nhưng định giá P/B chỉ 0.57 cho thấy thị trường đang trừng phạt nặng nề sự sụt giảm tăng trưởng ngắn hạn và lo ngại về rủi ro thanh khoản hàng tồn kho. Sự chênh lệch giữa lợi nhuận kế toán và dòng tiền thực tế là bài kiểm tra bản lĩnh dành cho những người theo đuổi triết lý đầu tư giá trị. Nhà đầu tư cần nhìn nhận đây là bài toán đánh đổi giữa việc chấp nhận dòng tiền âm ngắn hạn để đổi lấy vị thế thống lĩnh chuỗi bán lẻ trong dài hạn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của PNJ nằm ở mạng lưới phân phối bán lẻ rộng khắp, nhận diện thương hiệu mạnh và năng lực tối ưu hóa chi phí vận hành chuỗi mà các đối thủ mới khó lòng sao chép. Động lực tăng trưởng trong 2-3 năm tới sẽ đến từ việc khai thác tối đa doanh thu trên cùng một cửa hàng (SSS growth) và sự bùng nổ của xu hướng tiêu dùng công nghệ khi kinh tế phục hồi. Bên cạnh đó, việc kiểm soát D/E ở mức 0.52 cung cấp dư địa tài chính dồi dào để thực hiện các thương vụ M&A hoặc mở rộng thị phần khi các đối thủ yếu hơn buộc phải rời bỏ cuộc chơi. Chính sự thanh lọc của thị trường bán lẻ sẽ là bệ phóng giúp PNJ củng cố vị thế độc quyền nhóm và gia tăng biên lợi nhuận gộp trong tương lai.",
-        "risks": "Rủi ro trọng yếu nhất hiện tại là áp lực lỗi thời của hàng tồn kho và sự suy giảm biên lợi nhuận gộp (chỉ 8.7%) do cuộc chiến giảm giá khốc liệt trong ngành bán lẻ. Dòng tiền CFO âm kéo dài nếu không được chuyển hóa thành doanh thu thực tế sẽ dẫn đến rủi ro thanh khoản, buộc doanh nghiệp phải vay mượn thêm hoặc phát hành cổ phiếu pha loãng. Ngoài ra, sự phụ thuộc vào sức mua tiêu dùng không thiết yếu khiến kết quả kinh doanh cực kỳ nhạy cảm với các cú sốc lạm phát và thắt chặt tín dụng vĩ mô."
+        "ai_updated_at": "2026-11-04 11:27:57"
     },
     "FRT": {
         "symbol": "FRT",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 144000,
         "volume": 256700,
         "pe": 18.2,
@@ -6635,7 +6725,7 @@
         "net_profit_ttm": 1732.56,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:32:07",
+        "updated_at": "04/11/2026 19:22:15",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6746,13 +6836,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào chiến lược DCA trong các nhịp điều chỉnh của thị trường.",
         "ai_price_zone": "Vùng gom giá trị tích sản: từ 125.000 đến 135.000 VNĐ, Vùng chặn lỗ rủi ro hệ thống: thủng mốc 110.000 VNĐ, Kỳ vọng dài hạn 3 năm: tăng trưởng kép 20-25% mỗi năm dựa trên đà mở rộng của chuỗi Long Châu.",
         "macro_view": "Ngành bán lẻ đang bước vào giai đoạn phục hồi sau chu kỳ suy giảm sức mua, khi lạm phát được kiểm soát và các chính sách kích cầu tiêu dùng nội địa phát huy tác dụng. Xu hướng già hóa dân số và thu nhập bình quân đầu người tăng lên là động lực vĩ mô dài hạn hỗ trợ trực tiếp cho mảng dược phẩm và chăm sóc sức khỏe của FRT. Tuy nhiên, sự biến động của tỷ giá và chuỗi cung ứng linh kiện toàn cầu có thể ảnh hưởng ngắn hạn đến biên lợi nhuận của mảng FPT Shop. Môi trường lãi suất hạ nhiệt cũng sẽ giảm bớt gánh nặng chi phí tài chính cho mô hình sử dụng đòn bẩy cao của doanh nghiệp bán lẻ. Nhìn chung, FRT được định vị ở vị thế phòng thủ tốt nhờ nhóm hàng thiết yếu kết hợp với tính chu kỳ của hàng công nghệ, giúp bình ổn doanh thu qua các biến động vĩ mô.",
-        "ai_updated_at": "2026-11-04 11:25:34",
-        "bctc": "FRT thể hiện bức tranh tài chính đặc trưng của mô hình bán lẻ chuỗi với khả năng sinh lời trên vốn chủ sở hữu (ROE) xuất sắc ở mức 25.4% và ROA đạt 5.3% nhờ vòng quay tài sản nhanh. Tỷ lệ đòn bẩy D/E lên tới 3.68 không hẳn là rủi ro thanh khoản mà phản ánh năng lực chiếm dụng vốn lưu động từ nhà cung cấp, một lợi thế điển hình của các chuỗi bán lẻ có vị thế đàm phán mạnh. Biên lợi nhuận gộp duy trì ở mức 20.0% là con số chấp nhận được đối với ngành bán lẻ thiết bị và dược phẩm, nơi doanh thu cốt lõi tăng trưởng mạnh bù đắp cho biên ròng mỏng. Dòng tiền kinh doanh (CFO) đạt 1,246 tỷ đồng so với lợi nhuận 1,733 tỷ đồng cho thấy chất lượng lợi nhuận thực tế và khả năng chuyển đổi tiền mặt tốt. Tăng trưởng LNST YoY đột biến 110.27% khẳng định điểm rơi lợi nhuận từ chuỗi nhà thuốc Long Châu đã bắt đầu hái quả ngọt. Tuy nhiên, việc không chi trả cổ tức tiền mặt cho thấy ban lãnh đạo đang ưu tiên tái đầu tư toàn bộ lợi nhuận để mở rộng độ phủ chuỗi. Nhìn chung, sức khỏe nội tại của FRT rất vững vàng dựa trên năng lực tối ưu hóa chi phí vận hành và quản lý hàng tồn kho hiệu quả. Sự kết hợp giữa dòng tiền dương và hiệu suất sinh lời cao chứng tỏ mô hình kinh doanh đang tạo ra giá trị thặng dư thực sự cho cổ đông.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của FRT nằm ở hệ sinh thái bán lẻ kép FPT Shop và FPT Long Châu, cùng nền tảng công nghệ lõi từ tập đoàn mẹ giúp tối ưu hóa trải nghiệm khách hàng và quản trị chuỗi cung ứng. Động lực tăng trưởng chính trong 2-3 năm tới sẽ đến từ việc phủ sóng toàn diện chuỗi nhà thuốc Long Châu, khai thác sâu tệp khách hàng chăm sóc sức khỏe có tính lặp lại cao và ít nhạy cảm với chu kỳ kinh tế. Bên cạnh đó, sự phục hồi của sức mua thiết bị điện tử và các dịch vụ giá trị gia tăng sẽ tiếp tục cải thiện biên lợi nhuận trên mỗi cửa hàng. Việc ứng dụng AI và dữ liệu lớn vào dự báo nhu cầu tiêu dùng sẽ giúp FRT giảm thiểu rủi ro tồn kho và gia tăng vòng quay tài sản một cách bền vững.",
-        "risks": "Rủi ro lớn nhất đối với FRT là áp lực cạnh tranh khốc liệt trong mảng dược phẩm bán lẻ từ các chuỗi đối thủ và nhà thuốc truyền thống, có thể làm xói mòn biên lợi nhuận gộp. Ngoài ra, mô hình bán lẻ phụ thuộc nặng vào chi phí mặt bằng và nhân sự, khiến doanh nghiệp nhạy cảm với lạm phát và sự suy giảm sức mua tiêu dùng trong các chu kỳ kinh tế vĩ mô bất ổn. Tỷ lệ D/E cao cũng sẽ trở thành gánh nặng chi phí lãi vay nếu mặt bằng lãi suất neo ở mức cao kéo dài, gây áp lực trực tiếp lên dòng tiền tự do của doanh nghiệp."
+        "ai_updated_at": "2026-11-04 11:25:34"
     },
     "VNM": {
         "symbol": "VNM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 57400,
         "volume": 3430600,
         "pe": 10.32,
@@ -6767,7 +6857,7 @@
         "net_profit_ttm": 11432.03,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 1.82x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:40:17",
+        "updated_at": "04/11/2026 19:31:12",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -6878,13 +6968,13 @@
         "ai_recommendation": "Tích sản dài hạn, nắm giữ như một tài sản phòng thủ sinh lời đều - Tỷ trọng giải ngân 10-15% danh mục.",
         "ai_price_zone": "Vùng gom giá trị tích sản: từ 54.000 đến 58.000 VNĐ, Vùng gia tăng tỷ trọng khi thị trường hoảng loạn: dưới 50.000 VNĐ, Vùng chốt lời một phần hoặc tái cơ cấu: trên 75.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 12-15% mỗi năm bao gồm cả cổ tức tiền mặt.",
         "macro_view": "Ngành hàng tiêu dùng thiết yếu mang tính chất phòng thủ cao, ít bị ảnh hưởng trực tiếp bởi các cú sốc suy thoái kinh tế nhưng lại nhạy cảm với lạm phát và sức mua của tầng lớp trung lưu. Trong bối cảnh vĩ mô hiện tại, lạm phát được kiểm soát và mặt bằng lãi suất hạ nhiệt là điều kiện lý tưởng để kích thích chi tiêu tiêu dùng nội địa, hỗ trợ đầu ra cho VNM. Tuy nhiên, sự phục hồi của kinh tế toàn cầu chậm lại có thể ảnh hưởng đến mảng xuất khẩu, vốn được kỳ vọng là trụ cột tăng trưởng mới của doanh nghiệp. Các chính sách thúc đẩy tiêu dùng nội địa và miễn giảm thuế VAT của Chính phủ sẽ là đòn bẩy vĩ mô tích cực giúp VNM cải thiện sản lượng tiêu thụ trong ngắn và trung hạn. Nhìn chung, VNM đóng vai trò như một hầm trú ẩn an toàn trong danh mục đầu tư khi thị trường chứng khoán biến động mạnh bởi các yếu tố địa chính trị hoặc chu kỳ tín dụng.",
-        "ai_updated_at": "2026-11-04 11:08:35",
-        "bctc": "Bức tranh tài chính của VNM thể hiện vị thế của một con bò sữa đúng nghĩa trong ngành tiêu dùng thiết yếu với biên lợi nhuận gộp duy trì ở mức ấn tượng 41.4%, phản ánh sức mạnh định giá và khả năng kiểm soát chuỗi cung ứng đầu vào. Hiệu suất sinh lời trên tài sản (ROA) đạt 20.4% và ROE lên tới 31.1% là những con số mơ ước, chứng tỏ ban lãnh đạo sử dụng vốn cực kỳ hiệu quả mà không cần dựa vào đòn bẩy tài chính quá mức với D/E chỉ 0.51. Tuy nhiên, điểm trừ lớn nhất và cũng là cờ vàng cho nhà đầu tư giá trị nằm ở dòng tiền kinh doanh (CFO) chỉ đạt 4,272 tỷ đồng, thấp hơn đáng kể so với lợi nhuận sau thuế trượt 4 quý là 11,432 tỷ đồng. Sự chênh lệch này đòi hỏi phải soi xét kỹ lưỡng báo cáo lưu chuyển tiền tệ, có thể đến từ việc gia tăng hàng tồn kho chuẩn bị cho mùa vụ, biến động vốn lưu động hoặc các khoản phải thu từ kênh phân phối. Dù vậy, với đặc thù ngành sản xuất tiêu dùng phòng thủ, việc VNM duy trì được cấu trúc bảng cân đối kế toán an toàn giúp doanh nghiệp dễ dàng vượt qua các cú sốc lãi suất. Tỷ suất cổ tức tiền mặt lên đến 8.35% mỗi năm là minh chứng rõ ràng nhất cho việc doanh nghiệp vẫn tạo ra tiền mặt thực tế để chi trả cho cổ đông, bù đắp phần nào lo ngại về con số CFO trên giấy tờ. Tăng trưởng LNST YoY đạt 17.99% cho thấy nỗ lực tái cấu trúc và mở rộng thị phần đang bắt đầu hái quả ngọt sau giai đoạn bão hòa. Tổng kết lại, sức khỏe nội tại của VNM vẫn rất cường tráng, nhưng nhà đầu tư cần theo dõi sát sao sự chuyển hóa từ lợi nhuận kế toán sang dòng tiền thực trong các quý tiếp theo.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của VNM nằm ở thương hiệu quốc gia đã ăn sâu vào tiềm thức người tiêu dùng cùng hệ thống phân phối phủ sóng đến tận thôn xã, tạo ra rào cản gia nhập ngành cực lớn cho bất kỳ đối thủ nào. Động lực tăng trưởng nội tại trong 2-3 năm tới sẽ không đến từ việc mở rộng quy mô đàn bò trong nước mà đến từ chiến lược M&A, xuất khẩu sang các thị trường ngách và việc tái định vị thương hiệu để trẻ hóa tệp khách hàng. Bên cạnh đó, việc làm chủ chuỗi cung ứng từ trang trại đến bàn ăn giúp VNM chủ động điều tiết chi phí đầu vào, bảo vệ biên lợi nhuận trước những biến động của giá nguyên liệu sữa thế giới. Sự phục hồi của sức mua tiêu dùng nội địa kết hợp với các sản phẩm sữa hạt, sữa chua uống giá trị gia tăng cao sẽ là mũi nhọn thúc đẩy tăng trưởng doanh thu bền vững.",
-        "risks": "Rủi ro trọng yếu nhất của VNM là sự bão hòa của thị trường sữa nội địa và áp lực cạnh tranh khốc liệt về giá từ các hãng sữa ngoại nhập cũng như các thương hiệu local mới nổi. Biến động tỷ giá và giá nguyên liệu sữa bột thế giới có thể bào mòn biên lợi nhuận gộp nếu doanh nghiệp không thể chuyển giao hoàn toàn chi phí sang người tiêu dùng cuối cùng. Ngoài ra, thói quen tiêu dùng thay đổi sang các loại thức uống sức khỏe thay thế hoặc thực phẩm chức năng có thể làm suy giảm thị phần của nhóm sản phẩm sữa truyền thống trong dài hạn."
+        "ai_updated_at": "2026-11-04 11:08:35"
     },
     "MSN": {
         "symbol": "MSN",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 72300,
         "volume": 5245400,
         "pe": 11.19,
@@ -6899,7 +6989,7 @@
         "net_profit_ttm": 12620.79,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:35:00",
+        "updated_at": "04/11/2026 19:25:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7014,6 +7104,9 @@
     },
     "SAB": {
         "symbol": "SAB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 42350,
         "volume": 482100,
         "pe": 11.58,
@@ -7028,7 +7121,7 @@
         "net_profit_ttm": 4879.67,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:37:18",
+        "updated_at": "04/11/2026 19:27:57",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7143,6 +7236,9 @@
     },
     "GAS": {
         "symbol": "GAS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 75600,
         "volume": 593600,
         "pe": 12.34,
@@ -7157,7 +7253,7 @@
         "net_profit_ttm": 14982.08,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.62x MA20.",
-        "updated_at": "04/11/2026 17:32:22",
+        "updated_at": "04/11/2026 19:22:30",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7268,13 +7364,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, đóng vai trò là tài sản phòng thủ lõi tạo dòng tiền cổ tức và bảo vệ vốn trước biến động vĩ mô.",
         "ai_price_zone": "Vùng gom giá trị: 70.000 - 75.000 VNĐ, Vùng gia tăng tỷ trọng khi có nhịp chỉnh sâu: dưới 65.000 VNĐ, Vùng chặn lỗ tuyệt đối: thủng 58.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% kết hợp nhận cổ tức tiền mặt đều đặn 3-5% mỗi năm.",
         "macro_view": "Bối cảnh vĩ mô hiện tại với xu hướng phục hồi sản xuất công nghiệp và nhu cầu điện năng tăng cao đang tạo đà thuận lợi cho ngành năng lượng và hạ tầng khí đốt. Chính phủ Việt Nam đang đẩy mạnh Quy hoạch Điện VIII, trong đó ưu tiên phát triển điện khí LNG để đảm bảo an ninh năng lượng và giảm phát thải carbon, mang lại lợi ích trực tiếp cho GAS. Tuy nhiên, chu kỳ tăng lãi suất toàn cầu và biến động địa chính trị có thể làm giá LNG thế giới trồi sụt, ảnh hưởng ngắn hạn đến chi phí đầu vào của doanh nghiệp. Dẫu vậy, với tư cách là doanh nghiệp hạ tầng thiết yếu, GAS có khả năng chuyển giao một phần biến động giá qua cơ chế hợp đồng dài hạn, giúp giảm thiểu tác động của lạm phát. Nhìn chung, chu kỳ ngành đang ở giai đoạn chuyển giao từ khai thác nội địa sang nhập khẩu và phân phối LNG, đòi hỏi vốn đầu tư lớn nhưng sẽ củng cố vị thế độc quyền dài hạn.",
-        "ai_updated_at": "2026-11-04 11:29:03",
-        "bctc": "Bức tranh tài chính của GAS thể hiện rõ nét đặc thù của một doanh nghiệp hạ tầng khí đốt với nền tảng bảng cân đối kế toán cực kỳ vững chắc và an toàn. Tỷ lệ Nợ trên Vốn chủ sở hữu (D/E) chỉ ở mức 0.41 là một điểm sáng hiếm có trong ngành tiện ích, cho thấy doanh nghiệp không phụ thuộc vào đòn bẩy tài chính để duy trì hoạt động hay mở rộng. Hiệu suất sinh lời trên tài sản (ROA) đạt 15.1% và ROE lên tới 21.1% là những con số ấn tượng, vượt xa mức trung bình của các doanh nghiệp hạ tầng vốn thâm dụng tài sản cố định. Mặc dù ngành hạ tầng thường chịu áp lực khấu hao lớn làm bào mòn lợi nhuận kế toán, biên lợi nhuận gộp 15.7% vẫn chứng tỏ khả năng duy trì vị thế độc quyền tự nhiên trong chuỗi cung ứng khí. Lợi nhuận trượt 4 quý (TTM) đạt gần 15.000 tỷ đồng, tăng trưởng đột biến 74.87% so với cùng kỳ, phản ánh sự phục hồi mạnh mẽ của nhu cầu năng lượng và giá khí. Tuy nhiên, dòng tiền kinh doanh (CFO) đạt 5.615 tỷ đồng tuy dương nhưng chưa tương xứng hoàn toàn với quy mô lợi nhuận ròng, một phần do biến động vốn lưu động và chu kỳ thanh toán của các đối tác lớn. Dẫu vậy, với đặc thù tài sản cố định đã được khấu hao dần, dòng tiền thực tế tạo ra vẫn đủ sức đảm bảo cho việc chi trả cổ tức đều đặn và tái đầu tư duy trì. Nhìn chung, chất lượng tài sản và cấu trúc vốn của GAS hoàn toàn thỏa mãn tiêu chuẩn pháo đài tài chính của Benjamin Graham, sẵn sàng chống chịu trước mọi cú sốc lãi suất hay suy thoái vĩ mô.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của GAS nằm ở vị thế độc quyền tự nhiên về hạ tầng đường ống dẫn khí và các kho cảng LNG trọng yếu tại Việt Nam. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy mạnh mẽ bởi xu hướng chuyển dịch năng lượng, trong đó khí LNG được xem là nguồn nhiên liệu chuyển tiếp thiết yếu thay thế cho than và dầu. Việc đưa vào vận hành các dự án kho cảng LNG như Thị Vải sẽ giúp GAS mở rộng dung lượng lưu trữ, đáp ứng nhu cầu nhập khẩu khí hóa lỏng khi nguồn khí nội địa suy giảm. Ngoài ra, các hợp đồng bao tiêu dài hạn với EVN và các nhà máy điện khí đảm bảo dòng tiền ổn định, biến GAS thành một tài sản phòng thủ nhưng vẫn có dư địa tăng trưởng theo sản lượng tiêu thụ.",
-        "risks": "Rủi ro trọng yếu nhất của GAS đến từ sự suy giảm sản lượng của các mỏ khí nội địa truyền thống, buộc doanh nghiệp phải phụ thuộc nhiều hơn vào nguồn LNG nhập khẩu với biên lợi nhuận mỏng hơn. Bên cạnh đó, biến động giá khí thế giới và cơ chế đàm phán giá bán với các đối tác độc quyền mua có thể gây áp lực lên biên lợi nhuận gộp trong các chu kỳ giá năng lượng đảo chiều. Rủi ro pháp lý và tiến độ giải phóng mặt bằng cho các dự án đường ống dẫn khí mới cũng là một ẩn số có thể làm chậm tiến độ ghi nhận doanh thu và gia tăng chi phí vốn."
+        "ai_updated_at": "2026-11-04 11:29:03"
     },
     "PVD": {
         "symbol": "PVD",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 17600,
         "volume": 2801300,
         "pe": 17.88,
@@ -7289,7 +7385,7 @@
         "net_profit_ttm": 939.04,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:36:49",
+        "updated_at": "04/11/2026 19:27:08",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7404,6 +7500,9 @@
     },
     "PVS": {
         "symbol": "PVS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 30300,
         "volume": 1637400,
         "pe": 8.72,
@@ -7418,7 +7517,7 @@
         "net_profit_ttm": 2315.58,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:36:56",
+        "updated_at": "04/11/2026 19:27:24",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7533,6 +7632,9 @@
     },
     "BSR": {
         "symbol": "BSR",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 26500,
         "volume": 11872000,
         "pe": 4.71,
@@ -7547,7 +7649,7 @@
         "net_profit_ttm": 27963.93,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:30:13",
+        "updated_at": "04/11/2026 19:20:14",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7658,13 +7760,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tận dụng vị thế độc quyền và biên an toàn định giá sâu.",
         "ai_price_zone": "Vùng gom giá trị: dưới 24.000 VNĐ, Vùng gia tăng tỷ trọng: 24.000 - 26.500 VNĐ, Vùng chặn lỗ cứng: thủng 21.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% khi dự án nâng cấp hoàn thiện và chu kỳ crack spread hồi phục.",
         "macro_view": "Bối cảnh vĩ mô hiện tại với sự phân hóa địa chính trị toàn cầu đang giữ giá dầu ở mức cân bằng, hỗ trợ biên lợi nhuận lọc dầu duy trì ở ngưỡng khả quan thay vì biến động sốc. Tại thị trường nội địa, tốc độ phục hồi của ngành sản xuất, xây dựng và xuất khẩu đang kéo theo nhu cầu tiêu thụ nhiên liệu và hạt nhựa nguyên sinh tăng trưởng vững chắc. Chính sách đẩy mạnh đầu tư công và phát triển hạ tầng khu vực miền Trung cũng gián tiếp tạo ra lực cầu phòng thủ cho các sản phẩm hóa dầu của doanh nghiệp. Tuy nhiên, xu hướng chuyển dịch năng lượng xanh toàn cầu trong dài hạn buộc BSR phải liên tục tái cấu trúc danh mục sản phẩm sang hóa dầu chuyên sâu để tránh bẫy tài sản stranded. Nhìn chung, chu kỳ ngành đang ở giai đoạn bản lề của việc nâng cấp chất lượng, và các doanh nghiệp có bảng cân đối kế toán khỏe mạnh như BSR sẽ là người chiến thắng cuối cùng.",
-        "ai_updated_at": "2026-11-04 11:11:53",
-        "bctc": "Bức tranh tài chính của BSR thể hiện sức khỏe nội tại cực kỳ ấn tượng của một doanh nghiệp sản xuất đầu ngành, minh chứng qua mức ROE lên tới 40.5% và ROA đạt 27.9%, phản ánh hiệu suất khai thác tài sản và chuỗi cung ứng ở mức tối ưu. Biên lợi nhuận gộp 16.2% là con số rất khỏe đối với đặc thù ngành sản xuất lọc hóa dầu có quy mô doanh thu khổng lồ, cho thấy khả năng kiểm soát giá vốn và chuyển giao chi phí đầu vào ra thị trường. Cấu trúc bảng cân đối kế toán vững chắc với tỷ lệ D/E chỉ 0.44, tạo ra lớp đệm an toàn dày dặn trước các biến động về lãi suất hay chi phí vốn vay. Tuy nhiên, điểm trừ lớn nhất nằm ở chất lượng dòng tiền khi CFO (7,690 tỷ) đang thấp hơn đáng kể so với lợi nhuận trượt 4 quý (27,964 tỷ). Sự chênh lệch này thường xuất phát từ việc gia tăng hàng tồn kho hoặc các khoản phải thu trong chu kỳ nhập khẩu dầu thô, đòi hỏi nhà đầu tư phải theo dõi sát sao vòng quay vốn lưu động. Dẫu vậy, mức tăng trưởng LNST đột biến 887.13% YoY cho thấy doanh nghiệp đang ở đỉnh cao của chu kỳ sinh lời, tận dụng tốt lợi thế quy mô. Nhìn chung, năng lực tạo ra lợi nhuận thực tế trên mỗi đồng vốn chủ sở hữu của BSR hoàn toàn thỏa mãn tiêu chuẩn khắt khe của trường phái Fisher về những cỗ máy in tiền hiệu quả. Dòng tiền kinh doanh dương và đủ sức trang trải chi phí vận hành giúp BSR duy trì vị thế phòng thủ vững chắc ngay cả khi thị trường tiêu thụ biến động. Đây là nền tảng tài chính vững vàng để doanh nghiệp tái đầu tư mở rộng công suất và bảo vệ thị phần trước các đối thủ ngoại nhập.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của BSR nằm ở vị thế độc quyền tự nhiên tại khu vực miền Trung và rào cản gia nhập ngành cực kỳ cao do yêu cầu vốn đầu tư khổng lồ cùng hạ tầng kỹ thuật phức tạp. Động lực tăng trưởng nội tại trong 2-3 năm tới được thúc đẩy mạnh mẽ bởi dự án nâng cấp mở rộng nhà máy, giúp gia tăng tỷ trọng sản phẩm hóa dầu có biên lợi nhuận cao thay vì chỉ phụ thuộc vào xăng dầu truyền thống. Bên cạnh đó, nhu cầu tiêu thụ năng lượng và nguyên liệu nhựa của thị trường nội địa vẫn mang tính phòng thủ và tăng trưởng đều đặn, đảm bảo đầu ra ổn định cho chuỗi cung ứng. Việc tối ưu hóa nguồn cung dầu thô từ các thị trường mới nổi cũng giúp doanh nghiệp linh hoạt hơn trong việc nới rộng biên lợi nhuận gộp so với các đối thủ trong khu vực.",
-        "risks": "Rủi ro trọng yếu nhất của BSR là tính chu kỳ sâu sắc của giá dầu thô thế giới và biên lợi nhuận lọc dầu (crack spread), có thể bào mòn thành quả lợi nhuận bất cứ khi nào nguồn cung toàn cầu dư thừa. Áp lực từ các hiệp định thương mại tự do (FTA) khiến thuế nhập khẩu xăng dầu về 0% sẽ mở ra cuộc chiến thị phần khốc liệt với các tập đoàn năng lượng ngoại bang ngay trên sân nhà. Ngoài ra, rủi ro suy giảm biên lợi nhuận do chi phí bảo dưỡng định kỳ và các quy định môi trường ngày càng khắt khe cũng là bài toán đánh đổi dòng tiền ngắn hạn mà ban lãnh đạo phải đối mặt."
+        "ai_updated_at": "2026-11-04 11:11:53"
     },
     "POW": {
         "symbol": "POW",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 12450,
         "volume": 5249300,
         "pe": 6.18,
@@ -7679,7 +7781,7 @@
         "net_profit_ttm": 7723.73,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:36:42",
+        "updated_at": "04/11/2026 19:27:01",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7790,13 +7892,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, đóng vai trò là tài sản phòng thủ và neo giữ sự ổn định cho portfolio.",
         "ai_price_zone": "Vùng gom giá trị: dưới 13.000 VNĐ, Vùng gia tăng tỷ trọng: 11.500 - 12.000 VNĐ, Vùng chặn lỗ danh mục: thủng 10.500 VNĐ, Kỳ vọng dài hạn: tăng trưởng 40-50% khi các dự án LNG Nhơn Trạch hoàn thiện và cơ chế giá điện mới được áp dụng.",
         "macro_view": "Vĩ mô ngành điện Việt Nam đang ở giai đoạn bản lề của quá trình chuyển dịch năng lượng, với Quy hoạch Điện VIII ưu tiên phát triển điện khí LNG, đặt POW vào vị thế thuận lợi nhờ nền tảng nhiệt điện khí sẵn có. Nhu cầu điện cho sản xuất công nghiệp và xuất khẩu đang phục hồi mạnh mẽ, đảm bảo sản lượng huy động cho các nhà máy của POW. Hiện tượng thời tiết cực đoan và sự thiếu hụt cục bộ nguồn điện đang buộc Chính phủ phải đẩy mạnh truyền tải và huy động tối đa công suất các nhà máy miền Nam, nơi POW chiếm thị phần áp đảo. Mặt khác, sức khỏe tài chính của EVN và lộ trình tăng giá bán lẻ điện bình quân là biến số vĩ mô quan trọng nhất, quyết định trực tiếp đến dòng tiền của toàn bộ chuỗi phát điện. Lãi suất cho vay dài hạn có xu hướng ổn định cũng giúp giảm bớt gánh nặng chi phí tài chính cho các khoản nợ vay hạ tầng khổng lồ của doanh nghiệp.",
-        "ai_updated_at": "2026-11-04 11:32:18",
-        "bctc": "Bức tranh tài chính của POW thể hiện rõ đặc thù của ngành điện với suất sinh lời trên tài sản (ROA 6.4%) và vốn chủ sở hữu (ROE 15.3%) ở mức cực kỳ ấn tượng đối với một doanh nghiệp hạ tầng nặng về tài sản cố định. Tỷ lệ Nợ/VCSH (D/E) ở mức 1.35 là hoàn toàn bình thường và có thể chấp nhận được trong ngành điện, do đặc thù vay vốn dự án dài hạn để tài trợ cho CAPEX khổng lồ ban đầu. Lợi nhuận trượt 4 quý đạt 7,724 tỷ đồng song hành cùng dòng tiền kinh doanh (CFO) 5,682 tỷ đồng cho thấy chất lượng lợi nhuận khá thực chất, phần chênh lệch chủ yếu đến từ khấu hao tài sản cố định lớn và biến động vốn lưu động. Biên lợi nhuận gộp 13.8% phản ánh đúng mô hình gia công điện cho EVN, nơi biên lợi nhuận bị giới hạn nhưng đổi lại là sự ổn định về đầu ra. Mức tăng trưởng LNST đột biến 118.6% YoY là một điểm sáng, có thể đến từ việc tối ưu hóa chi phí nhiên liệu đầu vào hoặc sản lượng huy động cao hơn. Tuy nhiên, tỷ lệ cổ tức tiền mặt chỉ 0.38% là một điểm trừ lớn đối với cổ phiếu phòng thủ, cho thấy ban lãnh đạo đang ưu tiên giữ lại tiền mặt để trả nợ gốc hoặc chuẩn bị vốn cho các siêu dự án điện LNG sắp tới. Hệ số thanh toán lãi vay và khả năng tái cấu trúc nợ trong hệ sinh thái PVN là lớp đệm bảo vệ vững chắc cho cổ đông trước những cú sốc vĩ mô. Nhìn chung, sức khỏe tài chính của POW rất vững vàng, giúp doanh nghiệp không gặp áp lực thanh khoản ngắn hạn dù gánh nợ vay dài hạn lớn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của POW nằm ở vị thế độc quyền tự nhiên về hạ tầng phát điện, các hợp đồng mua bán điện dài hạn với EVN và sự bảo trợ tuyệt đối từ tập đoàn mẹ PetroVietnam về nguồn cung cấp khí đốt. Động lực tăng trưởng nội tại trong 2-3 năm tới được thúc đẩy mạnh mẽ bởi quá trình chuyển dịch năng lượng, đặc biệt là việc đưa vào vận hành các nhà máy điện LNG như Nhơn Trạch 3 và 4, giúp nâng cao tổng công suất và sản lượng. Bên cạnh đó, nhu cầu tiêu thụ điện tại Việt Nam liên tục tăng trưởng hai chữ số do làn sóng FDI và công nghiệp hóa sẽ đảm bảo tỷ lệ huy động nguồn điện của POW luôn ở mức cao. Sự chủ động trong việc tự chủ nguồn nhiên liệu khí từ các mỏ của PVN cũng giúp POW giảm thiểu rủi ro biến động giá nhiên liệu thế giới so với các nhà máy nhiệt điện than.",
-        "risks": "Rủi ro trọng yếu nhất của POW nằm ở cơ chế đàm phán giá điện và sự phụ thuộc vào tiến độ thanh toán của EVN, khi tình trạng chậm trễ giải ngân có thể gây áp lực lên dòng tiền ngắn hạn. Ngoài ra, biên lợi nhuận của mảng nhiệt điện khí và than rất nhạy cảm với biến động giá nhiên liệu đầu vào trên thị trường quốc tế nếu các điều khoản PPA không cho phép chuyển giao toàn bộ chi phí. Rủi ro pháp lý và quy hoạch từ Quy hoạch Điện VIII cũng có thể làm chậm tiến độ các dự án nguồn điện mới, ảnh hưởng đến kỳ vọng tăng trưởng dài hạn."
+        "ai_updated_at": "2026-11-04 11:32:18"
     },
     "REE": {
         "symbol": "REE",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 45600,
         "volume": 265900,
         "pe": 10.15,
@@ -7811,7 +7913,7 @@
         "net_profit_ttm": 3415.61,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:37:11",
+        "updated_at": "04/11/2026 19:27:47",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -7922,13 +8024,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 15-20% danh mục, ưu tiên nắm giữ như một tài sản phòng thủ lõi sinh dòng tiền đều đặn.",
         "ai_price_zone": "Vùng gom giá trị tích sản: 42.000 - 46.000 VNĐ, Vùng gia tăng tỷ trọng khi thị trường hoảng loạn: dưới 38.000 VNĐ, Vùng chặn lỗ tuyệt đối khi thủng nền tảng vĩ mô: dưới 32.000 VNĐ, Kỳ vọng dài hạn 3-5 năm: vượt đỉnh lịch sử và tăng trưởng tài sản 80-100% kèm cổ tức tiền mặt đều đặn.",
         "macro_view": "Ngành tiện ích và hạ tầng đang bước vào chu kỳ hưởng lợi từ làn sóng đầu tư công và sự phục hồi của sản xuất công nghiệp sau giai đoạn suy thoái. Lãi suất cho vay tuy có biến động nhưng xu hướng trung hạn vẫn ở mức hợp lý, giúp giảm bớt gánh nặng chi phí vốn cho các dự án CAPEX lớn của REE. Chính sách đẩy mạnh giải ngân đầu tư công và thu hút FDI của Chính phủ là bệ đỡ vĩ mô vững chắc cho mảng hạ tầng khu công nghiệp và điện nước. Tuy nhiên, áp lực lạm phát và giá nguyên vật liệu xây dựng có thể ảnh hưởng nhẹ đến biên lợi nhuận của các dự án đang trong quá trình thi công. Nhìn chung, môi trường vĩ mô hiện tại đang tạo ra thời điểm vàng để các doanh nghiệp đầu ngành có bảng cân đối kế toán sạch như REE thâu tóm thị phần và mở rộng công suất.",
-        "ai_updated_at": "2026-11-04 11:30:06",
-        "bctc": "Bức tranh tài chính của REE thể hiện rõ bản chất của một doanh nghiệp hạ tầng tiện ích với nền tảng sinh lời vững chắc và cấu trúc vốn an toàn. Mức ROE 10.9% và ROA 6.7% là rất ấn tượng đối với ngành thâm dụng vốn, cho thấy ban lãnh đạo sử dụng tài sản cố định cực kỳ hiệu quả để tạo ra lợi nhuận. Biên lợi nhuận gộp 33.3% phản ánh vị thế độc quyền tương đối và khả năng chuyển giao chi phí tốt trong mảng cho thuê văn phòng và hạ tầng điện nước. Điểm đáng lưu ý nhất là sự chênh lệch giữa lợi nhuận kế toán 3.416 tỷ và dòng tiền kinh doanh CFO 650 tỷ, tuy nhiên dưới góc độ Graham-Buffett, đây là đặc thù dễ hiểu của ngành hạ tầng do khấu hao tài sản cố định lớn ăn mòn lợi nhuận ròng nhưng không làm thất thoát tiền mặt thực tế. Tỷ lệ D/E 0.68 cho thấy đòn bẩy tài chính được kiểm soát chặt chẽ, tạo lớp đệm phòng thủ tuyệt vời trước các cú sốc lãi suất. Tăng trưởng LNST 12.26% chứng minh dòng tiền không chỉ ổn định mà vẫn có dư địa mở rộng nhờ các dự án năng lượng tái tạo và bất động sản khu công nghiệp. Nhìn chung, chất lượng tài sản và dòng tiền của REE hoàn toàn đáp ứng tiêu chuẩn của một cỗ máy in tiền phòng thủ, sẵn sàng chi trả cổ tức đều đặn và tái đầu tư an toàn. Sự thận trọng trong việc duy trì bảng cân đối kế toán lành mạnh giúp REE tránh được bẫy thanh khoản mà nhiều doanh nghiệp cùng ngành đang mắc phải. Đây chính xác là mẫu hình con hào kinh tế dựa trên chi phí chuyển đổi cao và tài sản hạ tầng khó sao chép.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của REE nằm ở mạng lưới hạ tầng điện nước độc quyền và quỹ đất văn phòng, khu công nghiệp đã hoàn thiện pháp lý, tạo ra rào cản gia nhập ngành cực lớn. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy mạnh mẽ bởi xu hướng dịch chuyển chuỗi cung ứng FDI làm tăng nhu cầu thuê xưởng và tiêu thụ điện nước công nghiệp. Bên cạnh đó, việc mở rộng danh mục năng lượng tái tạo sẽ giúp công ty hưởng lợi từ cơ chế giá điện mới và cam kết Net Zero của chính phủ. Sự kết hợp giữa dòng tiền phòng thủ từ tiện ích và biên lợi nhuận cao từ bất động sản khu công nghiệp tạo ra một cỗ máy tăng trưởng kép cực kỳ bền vững.",
-        "risks": "Rủi ro trọng yếu nhất đối với REE đến từ sự thay đổi chính sách vĩ mô, đặc biệt là Quy hoạch Điện VIII và cơ chế giá điện nước có thể làm chậm tiến độ giải ngân hoặc nén biên lợi nhuận của các dự án năng lượng mới. Ngoài ra, tiến độ lấp đầy các khu công nghiệp và tòa nhà văn phòng phụ thuộc nhiều vào sức khỏe của nền kinh tế toàn cầu và dòng vốn FDI thực tế đổ vào Việt Nam. Rủi ro pháp lý và giải phóng mặt bằng kéo dài cũng là một ẩn số có thể làm đội vốn đầu tư CAPEX, gây áp lực lên dòng tiền tự do trong ngắn hạn."
+        "ai_updated_at": "2026-11-04 11:30:06"
     },
     "PC1": {
         "symbol": "PC1",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 16250,
         "volume": 669800,
         "pe": 6.78,
@@ -7943,7 +8045,7 @@
         "net_profit_ttm": 1545.88,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:36:05",
+        "updated_at": "04/11/2026 19:26:23",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8054,13 +8156,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào chiến lược nắm giữ vượt qua biến động ngắn hạn để hưởng trọn vẹn sự tái định giá của tài sản hạ tầng.",
         "ai_price_zone": "Vùng gom giá trị: dưới 17.000 VNĐ, Vùng gia tăng tỷ trọng: 14.500 - 15.500 VNĐ, Vùng chặn lỗ cứng: thủng 13.000 VNĐ, Kỳ vọng dài hạn 3-5 năm: tăng trưởng 80-100% khi thị trường nhận ra giá trị thực của dòng tiền hạ tầng.",
         "macro_view": "Vĩ mô Việt Nam đang trong giai đoạn đẩy mạnh giải ngân đầu tư công và nâng cấp hệ thống lưới điện quốc gia để đáp ứng tiêu chuẩn xanh của các hiệp định thương mại tự do. Làn sóng dịch chuyển chuỗi cung ứng toàn cầu biến Việt Nam thành công xưởng mới, khiến nhu cầu điện cho sản xuất công nghiệp luôn trong tình trạng tăng trưởng nóng và thiếu hụt cục bộ. Chu kỳ ngành hạ tầng điện đang bước vào giai đoạn bùng nổ về nhu cầu nâng cấp trạm biến áp và đường dây truyền tải, mang lại khối lượng công việc khổng lồ cho các nhà thầu đầu ngành như PC1. Tuy nhiên, áp lực từ giá nguyên vật liệu đầu vào như đồng, thép và sự thắt chặt tín dụng cho các dự án năng lượng có thể làm chậm tiến độ một số dự án trọng điểm. Nhìn chung, bối cảnh vĩ mô đang tạo ra một cơn gió thuận mang tính cấu trúc dài hạn, bảo chứng cho doanh thu và dòng tiền của PC1 trong ít nhất một thập kỷ tới.",
-        "ai_updated_at": "2026-11-04 11:33:23",
-        "bctc": "Bức tranh tài chính của PC1 mang đậm đặc thù của ngành hạ tầng điện lực với quy mô tài sản cố định khổng lồ, khiến khấu hao lớn ăn mòn lợi nhuận kế toán nhưng không làm ảnh hưởng đến sức mạnh dòng tiền thực tế. Điểm sáng lớn nhất nằm ở dòng tiền kinh doanh (CFO) đạt 1.289 tỷ đồng, bám sát lợi nhuận sau thuế trượt 4 quý (1.546 tỷ đồng), chứng tỏ chất lượng lợi nhuận cực kỳ thực chất và không đến từ các bút toán kế toán. Tỷ lệ Nợ trên Vốn chủ sở hữu ở mức 1.51 thoạt nhìn có vẻ cao, nhưng đối với doanh nghiệp hạ tầng điện có dòng tiền đều đặn và tài sản đảm bảo lớn, đây là mức đòn bẩy tài chính hoàn toàn bình thường và tối ưu hóa chi phí vốn. Hiệu suất sinh lời trên vốn chủ sở hữu đạt 12.4% và ROA đạt 4.6% là những con số rất ấn tượng đối với một tài sản hạ tầng nặng nề, cho thấy năng lực khai thác tài sản của ban lãnh đạo ở mức tốt. Biên lợi nhuận gộp duy trì ở mức 27.6% phản ánh vị thế vững chắc và khả năng chuyển giao chi phí đầu vào của PC1 trong chuỗi giá trị ngành điện. Tuy nhiên, việc cổ tức tiền mặt hiện tại đang ở mức 0.0% là một điểm trừ nhẹ đối với trường phái đầu tư giá trị phòng thủ, có thể do doanh nghiệp đang ưu tiên tái đầu tư hoặc trả nợ gốc. Dù vậy, với EPS đạt 2.704 VNĐ và mức tăng trưởng lợi nhuận 5.55%, PC1 vẫn đang âm thầm tích lũy nội lực thay vì phân phối ngắn hạn. Tổng kết lại, sức khỏe tài chính của PC1 rất vững vàng, dòng tiền mạnh mẽ đủ sức gồng gánh các nghĩa vụ nợ vay và tài trợ cho các dự án mở rộng trong tương lai.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của PC1 nằm ở rào cản gia nhập ngành cực cao do yêu cầu về vốn, quỹ đất và giấy phép độc quyền tự nhiên trong mảng truyền tải và phân phối điện. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy mạnh mẽ bởi làn sóng FDI đổ vào Việt Nam, kéo theo nhu cầu tiêu thụ điện và hạ tầng khu công nghiệp tăng vọt. Bên cạnh đó, việc mở rộng sang mảng năng lượng tái tạo và bất động sản khu công nghiệp giúp PC1 đa dạng hóa nguồn thu, giảm bớt sự phụ thuộc vào mảng xây lắp điện truyền thống có biên lợi nhuận mỏng hơn. Sự kết hợp giữa tài sản hạ tầng phòng thủ và các mảng kinh doanh tăng trưởng cao tạo ra một cỗ máy sinh lời kép cực kỳ hấp dẫn cho tầm nhìn dài hạn.",
-        "risks": "Rủi ro lớn nhất đối với PC1 là áp lực từ chi phí lãi vay khi môi trường lãi suất có thể biến động, gây bào mòn lợi nhuận ròng do quy mô nợ vay tuyệt đối đang ở mức lớn. Ngoài ra, tiến độ giải ngân và thanh toán từ các chủ đầu tư dự án điện hoặc ngân sách nhà nước có thể bị chậm trễ, dẫn đến rủi ro chiếm dụng vốn và phát sinh nợ xấu ngắn hạn. Rủi ro chính sách về giá điện và quy hoạch điện lực quốc gia cũng có thể làm thay đổi đột ngột biên lợi nhuận của các dự án năng lượng tái tạo mà doanh nghiệp đang vận hành."
+        "ai_updated_at": "2026-11-04 11:33:23"
     },
     "NT2": {
         "symbol": "NT2",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 22650,
         "volume": 1326400,
         "pe": 4.3,
@@ -8075,7 +8177,7 @@
         "net_profit_ttm": 1459.2,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:35:29",
+        "updated_at": "04/11/2026 19:25:46",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8186,13 +8288,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục phòng thủ.",
         "ai_price_zone": "Vùng gom giá trị: dưới 21,500 VNĐ, Vùng gia tăng tỷ trọng: 19,000 - 20,000 VNĐ, Vùng chặn lỗ tuyệt đối: thủng 17,500 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% kết hợp nhận cổ tức tiền mặt đều đặn hàng năm.",
         "macro_view": "Chu kỳ ngành điện đang bước vào giai đoạn thiếu hụt cục bộ nguồn cung nền tại miền Nam, tạo điều kiện thuận lợi cho các nhà máy điện khí như NT2 được huy động tối đa công suất. Vĩ mô với làn sóng FDI đổ vào các khu công nghiệp tại Đồng Nai và Bình Dương trực tiếp làm tăng sản lượng điện thương phẩm tiêu thụ. Tuy nhiên, xu hướng chuyển dịch năng lượng xanh và quy hoạch điện VIII đòi hỏi các doanh nghiệp điện khí truyền thống phải thích ứng linh hoạt để tránh bị thay thế bởi điện gió và LNG trong tương lai xa. Lạm phát và lãi suất hạ nhiệt cũng giúp giảm bớt gánh nặng chi phí tài chính cho các doanh nghiệp mang nợ vay lớn như NT2. Nhìn chung, môi trường vĩ mô hiện tại đang ủng hộ mạnh mẽ cho nhóm tiện ích phòng thủ nắm giữ vị thế độc quyền tự nhiên.",
-        "ai_updated_at": "2026-11-04 11:31:09",
-        "bctc": "Bức tranh tài chính của NT2 mang đậm đặc thù của ngành điện khí với gánh nặng khấu hao tài sản cố định lớn, khiến lợi nhuận kế toán có thể bị bóp méo so với dòng tiền thực tế. Tuy nhiên, chỉ số ROA đạt 14.9% và ROE lên tới 29.4% là những con số cực kỳ ấn tượng đối với một doanh nghiệp hạ tầng phòng thủ, cho thấy khả năng tối ưu hóa tài sản và đòn bẩy vốn xuất sắc. Tỷ lệ Nợ/VCSH (D/E) ở mức 1.05 hoàn toàn chấp nhận được trong ngành tiện ích vốn đòi hỏi suất đầu tư ban đầu khổng lồ và dòng tiền thu về đều đặn để trả nợ. Biên lợi nhuận gộp 17.5% phản ánh áp lực từ giá nhiên liệu đầu vào nhưng vẫn duy trì được mức sinh lời cốt lõi. Điểm trừ duy nhất nằm ở Dòng tiền kinh doanh (CFO) đạt 422 tỷ, thấp hơn đáng kể so với lợi nhuận trượt 1,459 tỷ, đòi hỏi nhà đầu tư phải rà soát kỹ khoản mục vốn lưu động hoặc các bút toán phi tiền tệ. Dẫu vậy, với mức EPS 5,068 VNĐ và khả năng duy trì cổ tức tiền mặt, NT2 chứng minh được cỗ máy in tiền vẫn đang hoạt động tốt bất chấp những biến động ngắn hạn của chu kỳ kế toán. Tăng trưởng LNST YoY đột biến 95.4% càng củng cố thêm sức bật nội tại sau giai đoạn biến động giá nhiên liệu. Nhìn chung, sức khỏe tài chính của NT2 vững vàng, mang tính phòng thủ cao và phù hợp với tiêu chí nắm giữ dài hạn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của NT2 nằm ở rào cản gia nhập ngành cực cao và hợp đồng mua bán điện dài hạn với EVN, đảm bảo đầu ra ổn định cho nhà máy điện Nhơn Trạch 2. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi nhu cầu điện công nghiệp phục hồi mạnh mẽ tại khu vực trọng điểm phía Nam. Bên cạnh đó, việc tối ưu hóa chi phí vận hành và kỳ vọng ổn định giá khí đốt đầu vào sẽ giúp biên lợi nhuận có dư địa cải thiện. Sự khan hiếm nguồn cung điện nền tại miền Nam cũng gián tiếp nâng cao vị thế đàm phán và tần suất huy động công suất của nhà máy.",
-        "risks": "Rủi ro trọng yếu nhất của NT2 là sự biến động khó lường của giá nhiên liệu đầu vào, có thể bào mòn biên lợi nhuận nếu cơ chế bù giá với EVN không được thực hiện kịp thời. Ngoài ra, nhà máy đã vận hành nhiều năm nên chi phí bảo dưỡng lớn và rủi ro suy giảm hiệu suất phát điện theo thời gian là điều không thể tránh khỏi. Rủi ro pháp lý liên quan đến việc đàm phán lại các điều khoản hợp đồng PPA hoặc chuyển dịch năng lượng quốc gia cũng có thể tác động tiêu cực đến dòng tiền dài hạn."
+        "ai_updated_at": "2026-11-04 11:31:09"
     },
     "GMD": {
         "symbol": "GMD",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 51700,
         "volume": 2055500,
         "pe": 11.98,
@@ -8207,7 +8309,7 @@
         "net_profit_ttm": 3263.23,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:32:37",
+        "updated_at": "04/11/2026 19:22:46",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8318,13 +8420,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào vai trò phòng thủ và tăng trưởng bền vững của hạ tầng chuỗi cung ứng.",
         "ai_price_zone": "Vùng gom giá trị: 48.000 - 52.000 VNĐ, Vùng chặn lỗ: thủng 42.000 VNĐ (mất vị thế hỗ trợ dài hạn), Kỳ vọng dài hạn: tăng trưởng 15-20%/năm kèm cổ tức đều đặn.",
         "macro_view": "Chu kỳ ngành logistics và cảng biển đang ở giai đoạn bình thường hóa sau cơn sốt giá cước vận tải, nhưng sản lượng hàng hóa thực tế vẫn duy trì đà tăng trưởng nhờ FDI và xuất khẩu. Vĩ mô toàn cầu với nguy cơ suy thoái nhẹ ở các thị trường tiêu thụ lớn có thể làm chậm lại tốc độ tăng trưởng kim ngạch xuất nhập khẩu trong ngắn hạn. Tuy nhiên, các hiệp định thương mại tự do thế hệ mới và xu hướng dịch chuyển sản xuất sang Việt Nam tiếp tục đóng vai trò là bệ đỡ vĩ mô vững chắc cho GMD. Lạm phát và lãi suất hạ nhiệt sẽ giúp giảm bớt áp lực chi phí vốn cho các dự án mở rộng hạ tầng nặng của doanh nghiệp. Nhìn chung, môi trường vĩ mô hiện tại ủng hộ các doanh nghiệp nắm giữ tài sản độc quyền và thiết yếu trong chuỗi cung ứng tiêu dùng, sản xuất như GMD.",
-        "ai_updated_at": "2026-11-04 11:10:45",
-        "bctc": "Bức tranh tài chính của GMD thể hiện vị thế xương sống trong chuỗi cung ứng sản xuất và tiêu dùng với hiệu suất sinh lời trên tài sản (ROA 13.1%) cực kỳ ấn tượng, vượt xa mức trung bình của các doanh nghiệp vận hành hạ tầng nặng. Biên lợi nhuận gộp duy trì ở mức 31.8% cho thấy sức mạnh định giá và lợi thế quy mô trong việc cung cấp dịch vụ logistics, cảng biển thiết yếu cho ngành hàng tiêu dùng và xuất nhập khẩu. Cấu trúc bảng cân đối kế toán rất an toàn với tỷ lệ D/E chỉ 0.37, tạo lớp đệm phòng thủ vững chắc trước các cú sốc lãi suất hay suy thoái chu kỳ tiêu dùng. Tuy nhiên, điểm trừ lớn nhất nằm ở chất lượng dòng tiền khi CFO (497 tỷ) thấp hơn rất nhiều so với lợi nhuận trượt TTM (3,263 tỷ). Sự chênh lệch này thường đến từ các khoản lợi nhuận tài chính đột biến được ghi nhận vào LNST nhưng không tạo ra tiền mặt từ hoạt động kinh doanh cốt lõi. Dưới góc nhìn khắt khe của trường phái Graham, nhà đầu tư cần chiết khấu lại mức EPS 6,224 VNĐ để tìm ra mức lợi nhuận chuẩn hóa từ hoạt động khai thác cảng thực tế. Dù vậy, ROE đạt 17.6% chứng tỏ ban lãnh đạo vẫn đang tái đầu tư và quay vòng vốn chủ sở hữu cực kỳ hiệu quả vào các tài sản sinh lời. Tổng kết lại, sức khỏe nội tại của GMD rất khỏe mạnh về mặt cấu trúc vốn và biên lợi nhuận, nhưng nhà đầu tư tích sản cần theo dõi sát sao sự chuyển đổi từ lợi nhuận kế toán sang tiền mặt thực thu trong các quý tới.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của GMD nằm ở mạng lưới cảng biển nước sâu và hạ tầng logistics độc quyền, tạo ra rào cản gia nhập ngành cực lớn đối với bất kỳ đối thủ mới nào. Động lực tăng trưởng nội tại trong 2-3 năm tới được thúc đẩy bởi xu hướng dịch chuyển chuỗi cung ứng toàn cầu, giúp sản lượng hàng hóa xuất nhập khẩu qua các cảng của GMD liên tục mở rộng. Việc sở hữu vị thế nút thắt cổ chai trong chuỗi cung ứng tiêu dùng và sản xuất giúp doanh nghiệp có khả năng chuyển giao lạm phát và bảo vệ biên lợi nhuận trước biến động chi phí. Hơn nữa, các dự án mở rộng công suất cảng sẽ là đòn bẩy tăng trưởng dài hạn, đón đầu sự phục hồi của chu kỳ tiêu dùng và xuất khẩu toàn cầu.",
-        "risks": "Rủi ro trọng yếu nhất là tính chu kỳ của ngành logistics và cảng biển, khi sản lượng hàng hóa phụ thuộc nặng nề vào sức cầu tiêu dùng toàn cầu và các cú sốc địa chính trị làm gián đoạn thương mại. Bên cạnh đó, áp lực suy giảm biên lợi nhuận có thể xảy ra nếu chi phí nhiên liệu, nhân công và bảo trì hạ tầng tăng đột biến mà không thể chuyển giao hoàn toàn cho các hãng tàu. Rủi ro từ các khoản lợi nhuận tài chính không thường xuyên cũng có thể tạo ra bẫy giá trị nếu nhà đầu tư nhầm lẫn giữa tăng trưởng EPS đột biến và năng lực tạo tiền cốt lõi."
+        "ai_updated_at": "2026-11-04 11:10:45"
     },
     "HAH": {
         "symbol": "HAH",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 48800,
         "volume": 331200,
         "pe": 6.77,
@@ -8339,7 +8441,7 @@
         "net_profit_ttm": 1543.57,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:32:58",
+        "updated_at": "04/11/2026 19:23:08",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8450,13 +8552,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tận dụng mọi nhịp điều chỉnh của thị trường để gia tăng số lượng cổ phiếu sở hữu.",
         "ai_price_zone": "Vùng gom giá trị: dưới 45,000 VNĐ, Vùng tối ưu tích sản: 38,000 - 42,000 VNĐ, Vùng chặn lỗ cứng: thủng 32,000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 40-50% trong 24 tháng kèm cổ tức đều đặn.",
         "macro_view": "Ngành sản xuất tiêu dùng phòng thủ thường chứng tỏ sức chống chịu tuyệt vời trong các giai đoạn vĩ mô biến động, khi nhu cầu đối với các mặt hàng thiết yếu không bị ảnh hưởng bởi chu kỳ suy thoái. Lạm phát hạ nhiệt và mặt bằng lãi suất ổn định đang tạo điều kiện thuận lợi để HAH giảm chi phí vốn lưu động và kích thích sức mua của người tiêu dùng nội địa. Tuy nhiên, độ trễ của chính sách tiền tệ và áp lực tỷ giá có thể làm tăng chi phí nhập khẩu nguyên liệu đầu vào trong ngắn hạn. Chu kỳ ngành hiện đang ở giai đoạn tích lũy và phục hồi nhẹ, nơi các doanh nghiệp đầu ngành có bảng cân đối kế toán sạch sẽ dễ dàng thâu tóm thị phần từ các đối thủ yếu thế. Do đó, vĩ mô hiện tại đóng vai trò như một bộ lọc hoàn hảo, làm nổi bật lên chất lượng tài sản và vị thế độc tôn của HAH.",
-        "ai_updated_at": "2026-11-04 11:12:54",
-        "bctc": "Bức tranh tài chính của HAH thể hiện rõ nét bản lĩnh của một doanh nghiệp sản xuất tiêu dùng phòng thủ với biên lợi nhuận gộp đạt 35.5%, phản ánh sức mạnh định giá và khả năng kiểm soát chi phí đầu vào xuất sắc. Điểm sáng lớn nhất nằm ở hiệu suất sinh lời trên tài sản (ROA) lên tới 14.1%, cho thấy chuỗi cung ứng và vòng quay tài sản đang được vận hành với hiệu quả tối ưu, một lợi thế sống còn trong ngành sản xuất. Tỷ suất sinh lời trên vốn chủ sở hữu (ROE) duy trì ở mức 22.5% mà không cần dựa vào đòn bẩy tài chính quá mức, khi tỷ lệ D/E chỉ ở mức 0.59 an toàn. Tuy nhiên, một điểm trừ cần lưu ý dưới góc độ khắt khe của trường phái Graham là dòng tiền kinh doanh (CFO) đạt 633 tỷ đồng đang thấp hơn đáng kể so với lợi nhuận sau thuế trượt 4 quý (1,544 tỷ đồng). Sự chênh lệch này có thể xuất phát từ việc doanh nghiệp đang tích trữ hàng tồn kho để chuẩn bị cho chu kỳ sản xuất mới hoặc bị chiếm dụng vốn bởi các đối tác phân phối. Dẫu vậy, cấu trúc bảng cân đối kế toán vẫn rất khỏe mạnh, tạo lớp đệm phòng thủ vững chắc trước những cú sốc thanh khoản ngắn hạn. Mức cổ tức tiền mặt đều đặn 5.54%/năm là minh chứng rõ ràng cho việc ban lãnh đạo cam kết chia sẻ lợi ích thực tế với cổ đông. Tổng thể, chất lượng tài sản và khả năng sinh lời nội tại hoàn toàn xứng đáng với điểm số 85/100, đáp ứng tiêu chuẩn của một cỗ máy in tiền phòng thủ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của HAH nằm ở hệ thống phân phối sâu rộng và thương hiệu đã ăn sâu vào tâm trí người tiêu dùng, tạo ra rào cản gia nhập ngành cực lớn cho các đối thủ mới. Trong 2-3 năm tới, động lực tăng trưởng nội tại sẽ được thúc đẩy bởi việc tối ưu hóa dây chuyền sản xuất tự động hóa giúp giảm chi phí biên và mở rộng thị phần sang các ngách tiêu dùng cao cấp hơn. Việc duy trì biên gộp trên 35% cho thấy doanh nghiệp có quyền chuyển giao chi phí (pricing power) cho người tiêu dùng cuối cùng ngay cả khi lạm phát tăng cao. Đây chính là loại hình lợi thế cạnh tranh bền vững về thương hiệu và quy mô mà Warren Buffett luôn tìm kiếm để nắm giữ dài hạn.",
-        "risks": "Rủi ro trọng yếu nhất đối với mô hình sản xuất tiêu dùng là áp lực suy giảm biên lợi nhuận nếu giá nguyên vật liệu đầu vào biến động mạnh mà doanh nghiệp không thể chuyển giao hoàn toàn cho người tiêu dùng. Bên cạnh đó, việc dòng tiền kinh doanh (CFO) thấp hơn lợi nhuận kế toán đòi hỏi nhà đầu tư phải theo dõi sát sao vòng quay hàng tồn kho và công nợ phải thu để tránh rủi ro lợi nhuận giấy. Sự thay đổi trong thị hiếu tiêu dùng hoặc sự trỗi dậy của các kênh phân phối hiện đại cũng có thể làm xói mòn thị phần nếu HAH chậm trễ trong việc đổi mới mẫu mã và chiến lược bán hàng."
+        "ai_updated_at": "2026-11-04 11:12:54"
     },
     "PVT": {
         "symbol": "PVT",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 21000,
         "volume": 3584400,
         "pe": 6.99,
@@ -8471,7 +8573,7 @@
         "net_profit_ttm": 1927.19,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.50x MA20.",
-        "updated_at": "04/11/2026 17:37:03",
+        "updated_at": "04/11/2026 19:27:36",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8586,6 +8688,9 @@
     },
     "VJC": {
         "symbol": "VJC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 134400,
         "volume": 1143800,
         "pe": 46.13,
@@ -8600,7 +8705,7 @@
         "net_profit_ttm": 2229.87,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:40:10",
+        "updated_at": "04/11/2026 19:31:05",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8715,6 +8820,9 @@
     },
     "HVN": {
         "symbol": "HVN",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 22050,
         "volume": 1795400,
         "pe": 16.04,
@@ -8729,7 +8837,7 @@
         "net_profit_ttm": 4604.44,
         "recommendation": "SẴN SÀNG BREAKOUT (NỔ VOL)",
         "price_zone": "Khối lượng bùng nổ đạt 2.87x MA20 kèm giá tăng.",
-        "updated_at": "04/11/2026 17:33:48",
+        "updated_at": "04/11/2026 19:24:00",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8844,6 +8952,9 @@
     },
     "VHC": {
         "symbol": "VHC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 49250,
         "volume": 320100,
         "pe": 8.17,
@@ -8858,7 +8969,7 @@
         "net_profit_ttm": 1313.75,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:39:33",
+        "updated_at": "04/11/2026 19:30:28",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -8973,6 +9084,9 @@
     },
     "ANV": {
         "symbol": "ANV",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 17250,
         "volume": 978400,
         "pe": 5.71,
@@ -8987,7 +9101,7 @@
         "net_profit_ttm": 788.45,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:29:24",
+        "updated_at": "04/11/2026 19:19:22",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -9102,6 +9216,9 @@
     },
     "APH": {
         "symbol": "APH",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 7030,
         "volume": 273600,
         "pe": 6.87,
@@ -9116,7 +9233,7 @@
         "net_profit_ttm": 546.66,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:29:31",
+        "updated_at": "04/11/2026 19:19:30",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -9231,6 +9348,9 @@
     },
     "ASM": {
         "symbol": "ASM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 4440,
         "volume": 320200,
         "pe": 12.31,
@@ -9245,7 +9365,7 @@
         "net_profit_ttm": 273.52,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:29:38",
+        "updated_at": "04/11/2026 19:19:37",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -9360,6 +9480,9 @@
     },
     "BMP": {
         "symbol": "BMP",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 137500,
         "volume": 97500,
         "pe": 8.85,
@@ -9374,7 +9497,7 @@
         "net_profit_ttm": 1251.83,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:29:59",
+        "updated_at": "04/11/2026 19:19:59",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -9489,6 +9612,9 @@
     },
     "BVH": {
         "symbol": "BVH",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 63800,
         "volume": 959200,
         "pe": 13.69,
@@ -9503,7 +9629,7 @@
         "net_profit_ttm": 3442.14,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:30:20",
+        "updated_at": "04/11/2026 19:20:22",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -9618,6 +9744,9 @@
     },
     "CSM": {
         "symbol": "CSM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 11650,
         "volume": 298500,
         "pe": 22.09,
@@ -9632,7 +9761,7 @@
         "net_profit_ttm": -3.56,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:30:35",
+        "updated_at": "04/11/2026 19:20:37",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -9747,6 +9876,9 @@
     },
     "DBC": {
         "symbol": "DBC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 15750,
         "volume": 1568900,
         "pe": 6.47,
@@ -9761,7 +9893,7 @@
         "net_profit_ttm": 1011.91,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:31:03",
+        "updated_at": "04/11/2026 19:21:07",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -9876,6 +10008,9 @@
     },
     "DCM": {
         "symbol": "DCM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 33000,
         "volume": 1214500,
         "pe": 6.36,
@@ -9890,7 +10025,7 @@
         "net_profit_ttm": 2719.01,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.63x MA20.",
-        "updated_at": "04/11/2026 17:31:10",
+        "updated_at": "04/11/2026 19:21:15",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10001,13 +10136,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tận dụng nhịp điều chỉnh của nhóm hóa chất để gom dần.",
         "ai_price_zone": "Vùng gom giá trị: dưới 33.000 VNĐ, Vùng gia tăng tỷ trọng: 28.000 - 30.000 VNĐ, Vùng chặn lỗ danh mục: thủng 24.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% kết hợp nhận cổ tức tiền mặt đều đặn hàng năm.",
         "macro_view": "Ngành phân bón đang bước vào giai đoạn bình thường hóa sau cơn sốt giá, khi nguồn cung toàn cầu dần ổn định và giá năng lượng hạ nhiệt. Tuy nhiên, vĩ mô nông nghiệp vẫn hỗ trợ DCM nhờ các chính sách an ninh lương thực và xu hướng gia tăng giá trị xuất khẩu nông sản của Việt Nam, giữ cho cầu nội địa ở mức nền tảng vững chắc. Biến động địa chính trị và các lệnh hạn chế xuất khẩu phân bón từ một số cường quốc vẫn có thể tạo ra các nhịp sóng tăng giá ngắn hạn cho Urea. Lãi suất và tỷ giá hối đoái cũng tác động gián tiếp qua chi phí nhập khẩu nguyên liệu phụ trợ và sức mua của bà con nông dân. Nhìn chung, DCM đang ở vị thế phòng thủ tốt trước các cú sốc vĩ mô nhờ chuỗi cung ứng khép kín trong nước và thị trường tiêu thụ ổn định.",
-        "ai_updated_at": "2026-11-04 11:13:54",
-        "bctc": "Bức tranh tài chính của DCM thể hiện rõ nét sức mạnh của một doanh nghiệp hóa chất đang ở giai đoạn hái quả ngọt trong chu kỳ hàng hóa. Với ROE đạt 24.2% và ROA lên tới 14.3%, hiệu suất sử dụng tài sản và vốn chủ sở hữu của DCM thuộc hàng xuất sắc, phản ánh năng lực tối ưu hóa chi phí sản xuất urea. Biên lợi nhuận gộp duy trì ở mức 19.1% là con số rất ấn tượng đối với ngành phân bón vốn chịu áp lực lớn từ giá khí đầu vào, cho thấy lợi thế quy mô và khả năng chuyển giao chi phí. Dòng tiền kinh doanh (CFO) đạt 2,174 tỷ đồng, bám sát lợi nhuận sau thuế trượt 4 quý (2,719 tỷ), chứng tỏ lợi nhuận tạo ra là tiền thật chứ không phải bút toán kế toán. Cấu trúc vốn an toàn với tỷ lệ D/E chỉ 0.67 giúp DCM có đủ bộ đệm tài chính để vượt qua các giai đoạn đáy chu kỳ khi giá phân bón toàn cầu suy thoái. Việc không phụ thuộc quá nhiều vào đòn bẩy tài chính là điểm cộng lớn theo trường phái Graham, giúp doanh nghiệp tránh được rủi ro thanh khoản khi lãi suất biến động. Cổ tức tiền mặt đều đặn 6.13% càng củng cố chất lượng dòng tiền và cam kết chia sẻ lợi ích với cổ đông. Nhìn chung, bảng cân đối kế toán của DCM đang ở trạng thái phòng thủ cực tốt, sẵn sàng hấp thụ các cú sốc từ thị trường hàng hóa.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của DCM nằm ở vị thế độc quyền tự nhiên tại khu vực Tây Nam Bộ và nguồn cung khí đầu vào ổn định từ PVN với cơ chế giá được bảo hộ tương đối. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi việc tối ưu hóa công suất nhà máy, mở rộng thị phần sang các thị trường xuất khẩu tiềm năng khi cầu nội địa bão hòa. Bên cạnh đó, xu hướng nông nghiệp xanh và việc phát triển các dòng phân bón NPK, hữu cơ cao cấp sẽ giúp DCM cải thiện biên lợi nhuận và giảm bớt sự phụ thuộc vào tính chu kỳ của Urea. Năng lực tự chủ tài chính cũng cho phép DCM linh hoạt tái đầu tư vào công nghệ tiết kiệm năng lượng, tạo ra lợi thế chi phí dài hạn so với các đối thủ trong khu vực.",
-        "risks": "Rủi ro lớn nhất của DCM mang đậm tính chất chu kỳ của ngành vật liệu, khi giá Urea thế giới biến động mạnh theo giá năng lượng và nguồn cung từ Trung Quốc hay Nga. Ngoài ra, cơ chế giá khí đầu vào có thể thay đổi theo hướng thị trường hóa trong tương lai, đe dọa trực tiếp làm thu hẹp biên lợi nhuận gộp hiện tại. Sự phụ thuộc vào một nhà cung cấp khí duy nhất cũng tiềm ẩn rủi ro gián đoạn sản xuất nếu có sự cố hạ tầng hoặc thiếu hụt nguồn cung khí thiên nhiên."
+        "ai_updated_at": "2026-11-04 11:13:54"
     },
     "DHC": {
         "symbol": "DHC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 36050,
         "volume": 461700,
         "pe": 6.42,
@@ -10022,7 +10157,7 @@
         "net_profit_ttm": 599.03,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:31:17",
+        "updated_at": "04/11/2026 19:21:22",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10133,13 +10268,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tận dụng các nhịp điều chỉnh do tâm lý lo ngại chu kỳ để gom nhặt tài sản sinh lời tốt.",
         "ai_price_zone": "Vùng gom giá trị tích sản: 32.000 - 35.000 VNĐ, Vùng gia tăng tỷ trọng khi thị trường hoảng loạn: dưới 28.000 VNĐ, Vùng chặn lỗ danh mục đầu tư dài hạn: thủng 24.000 VNĐ, Kỳ vọng dài hạn 3-5 năm: tăng trưởng 80-100% kết hợp nhận cổ tức tiền mặt đều đặn.",
         "macro_view": "Chu kỳ ngành bao bì giấy đang chuyển dịch từ giai đoạn bùng nổ hậu đại dịch sang trạng thái bình thường hóa, nơi cầu tiêu dùng và xuất khẩu đóng vai trò dẫn dắt. Vĩ mô toàn cầu với lãi suất duy trì ở mức cao và sức cầu tiêu dùng tại các thị trường lớn suy yếu đang tạo áp lực lên hoạt động xuất khẩu của Việt Nam, gián tiếp làm chậm đà tăng trưởng của ngành vật liệu đóng gói. Tuy nhiên, các hiệp định thương mại tự do và làn sóng FDI đổ vào Việt Nam vẫn là bệ đỡ dài hạn, đảm bảo sản lượng công nghiệp và nhu cầu bao bì không bị đứt gãy. Chính sách tỷ giá và chi phí vận tải biển quốc tế là hai biến số vĩ mô quan trọng nhất ảnh hưởng trực tiếp đến chi phí nhập khẩu giấy OCC của DHC. Khi chu kỳ tín dụng trong nước nới lỏng trở lại, dòng vốn vào sản xuất và bất động sản khu công nghiệp sẽ là chất xúc tác mạnh mẽ kích hoạt lại chu kỳ tăng trưởng mới cho nhóm vật liệu.",
-        "ai_updated_at": "2026-11-04 11:15:04",
-        "bctc": "Bức tranh tài chính của DHC phản ánh vị thế của một doanh nghiệp vật liệu chu kỳ đang ở giai đoạn chín muồi về hiệu suất khai thác công suất, thể hiện qua ROE 25.4% và ROA 15.7% vượt trội hoàn toàn so với trung bình ngành bao bì giấy. Biên lợi nhuận gộp duy trì ở mức 20.8% cho thấy khả năng chuyển dịch chi phí đầu vào như giá giấy OCC hay than đá sang khách hàng khá tốt, giúp bảo vệ lợi nhuận trước những cú sốc hàng hóa. Cấu trúc vốn an toàn với tỷ lệ D/E 0.58 là một điểm cộng lớn, tạo lớp đệm phòng thủ vững chắc khi chu kỳ tín dụng thắt chặt hoặc lãi suất biến động. Dòng tiền kinh doanh (CFO) đạt 363 tỷ đồng, tuy thấp hơn lợi nhuận ròng 599 tỷ nhưng đây là đặc thù bình thường của ngành sản xuất nặng về khấu hao tài sản cố định tại nhà máy Giao Long. Thực tế, dòng tiền từ hoạt động cốt lõi trước khấu hao vẫn rất dồi dào, đủ sức trang trải nợ vay và duy trì cổ tức tiền mặt đều đặn 5.02%. Tăng trưởng LNST 49.65% YoY xác nhận DHC đang hưởng lợi lớn từ việc lấp đầy công suất và tối ưu hóa chi phí sản xuất. Tuy nhiên, dưới lăng kính Graham, mức P/E 6.42 thấp kỷ lục thường là tín hiệu cảnh báo doanh nghiệp đang ở vùng đỉnh của chu kỳ lợi nhuận (peak earnings). Do đó, chất lượng tài sản và khả năng tạo tiền mặt thực (P/B 1.56) mới là mỏ neo định giá an toàn hơn so với hệ số thu nhập hiện tại.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của DHC nằm ở quy mô sản xuất lớn, vị trí địa lý chiến lược gần các khu công nghiệp và chuỗi cung ứng khép kín giúp tối ưu chi phí logistics. Động lực tăng trưởng nội tại trong 2-3 năm tới được thúc đẩy bởi việc nhà máy Giao Long giai đoạn 2 vận hành ổn định, giúp gia tăng thị phần tại khu vực phía Nam. Bên cạnh đó, xu hướng dịch chuyển chuỗi cung ứng và sự phục hồi của ngành xuất khẩu sẽ kéo theo nhu cầu tiêu thụ bao bì giấy carton. Việc chủ động nguồn nguyên liệu giấy tái chế và mở rộng tệp khách hàng FDI giúp DHC giảm thiểu sự phụ thuộc vào biến động ngắn hạn của thị trường nội địa.",
-        "risks": "Rủi ro lớn nhất mang tính chu kỳ là sự biến động khó lường của giá nguyên liệu đầu vào (giấy OCC nhập khẩu) và chi phí năng lượng có thể bào mòn biên lợi nhuận gộp nếu cầu cuối nguồn suy yếu. Ngành bao bì giấy có rào cản gia nhập thấp ở phân khúc nhỏ, dẫn đến áp lực cạnh tranh về giá gay gắt khi kinh tế vĩ mô suy thoái và sức mua giảm sút. Ngoài ra, việc phụ thuộc vào nguồn giấy phế liệu nhập khẩu khiến DHC nhạy cảm với các chính sách môi trường, thuế quan và rủi ro đứt gãy chuỗi cung ứng toàn cầu."
+        "ai_updated_at": "2026-11-04 11:15:04"
     },
     "DHG": {
         "symbol": "DHG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 83000,
         "volume": 21600,
         "pe": 12.85,
@@ -10154,7 +10289,7 @@
         "net_profit_ttm": 852.42,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:31:24",
+        "updated_at": "04/11/2026 19:21:30",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10269,6 +10404,9 @@
     },
     "DPM": {
         "symbol": "DPM",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 19800,
         "volume": 1922300,
         "pe": 8.3,
@@ -10283,7 +10421,7 @@
         "net_profit_ttm": 1603.39,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:31:38",
+        "updated_at": "04/11/2026 19:21:45",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10394,13 +10532,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào chiến lược nhận cổ tức tiền mặt và chờ đợi điểm đảo chiều của chu kỳ giá phân bón.",
         "ai_price_zone": "Vùng gom giá trị: từ 18.500 đến 19.800 VNĐ (tích lũy dần khi P/B quanh 1.0-1.1x), Vùng chặn lỗ tuyệt đối: thủng 16.500 VNĐ (mất lợi thế tài sản ròng), Kỳ vọng dài hạn: tăng trưởng 30-40% khi chu kỳ Urea đảo chiều và biên lợi nhuận gộp phục hồi về mức 20%.",
         "macro_view": "Ngành phân bón và hóa chất cơ bản đang ở giai đoạn cuối của chu kỳ suy thoái giá hàng hóa, khi nguồn cung toàn cầu đã hấp thụ phần lớn cú sốc địa chính trị từ những năm trước. Tuy nhiên, vĩ mô dài hạn lại đang ủng hộ DPM nhờ xu hướng an ninh lương thực toàn cầu và sự gia tăng dân số, buộc diện tích canh tác và nhu cầu phân bón phải duy trì ở mức nền tảng cao. Biến động giá khí đốt tự nhiên - yếu tố vĩ mô cốt lõi - đang có dấu hiệu ổn định trở lại, giúp DPM dễ dàng dự phóng chi phí và bảo vệ biên lợi nhuận. Hơn nữa, các chính sách thúc đẩy nông nghiệp công nghệ cao và xuất khẩu nông sản của Chính phủ sẽ gián tiếp duy trì sức cầu nội địa đối với các sản phẩm phân bón chất lượng cao. Do đó, việc nắm giữ DPM lúc này là một bước đi đón đầu vĩ mô, chuẩn bị cho giai đoạn bùng nổ tiếp theo của chu kỳ hàng hóa nông sản.",
-        "ai_updated_at": "2026-11-04 11:18:21",
-        "bctc": "Bức tranh tài chính của DPM đang phản ánh rõ nét đặc thù của một doanh nghiệp vật liệu chu kỳ đang ở vùng đáy hoặc cận đáy của chu kỳ giá hàng hóa, thể hiện qua mức sụt giảm lợi nhuận tới -81.18% và biên lợi nhuận gộp co hẹp về 14.1%. Tuy nhiên, dưới lăng kính của trường phái Graham, bảng cân đối kế toán của DPM vẫn giữ được sự phòng thủ tuyệt vời với tỷ lệ D/E chỉ 0.6, giúp doanh nghiệp không bị áp lực thanh khoản khi giá urea thế giới lao dốc. Điểm sáng lớn nhất nằm ở chất lượng dòng tiền thực tế khi CFO đạt 1.200 tỷ đồng, chứng tỏ lợi nhuận tạo ra được chuyển hóa thành tiền mặt chứ không phải là các khoản phải thu ảo. Hiệu suất sinh lời ROA 8.6% và ROE 13.7% trong bối cảnh ngành phân bón trải qua giai đoạn khó khăn nhất là minh chứng cho năng lực quản trị chi phí và lợi thế quy mô của doanh nghiệp đầu ngành. Việc duy trì được mức cổ tức tiền mặt hấp dẫn 7.72%/năm ngay cả khi lợi nhuận trượt dốc cho thấy DPM đang sở hữu lượng tiền mặt tích lũy khổng lồ từ các chu kỳ đỉnh trước đó. Đối với cổ phiếu chu kỳ, việc P/E ở mức 8.3 có thể là bẫy giá trị nếu chu kỳ còn xấu đi, nhưng P/B 1.16 lại cung cấp một lớp đệm bảo vệ tài sản ròng vững chắc cho nhà đầu tư dài hạn. Tóm lại, sức khỏe nội tại của DPM hoàn toàn đủ sức chống chịu qua mùa đông của ngành hóa chất để chờ đợi sự phục hồi của biên lợi nhuận gộp trong các quý tới.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của DPM nằm ở vị thế độc quyền tự nhiên về nguồn nguyên liệu khí đầu vào từ hệ sinh thái PVN cùng mạng lưới phân phối nông nghiệp sâu rộng khó lòng sao chép. Động lực tăng trưởng nội tại trong 2-3 năm tới sẽ không đến từ việc mở rộng công suất ồ ạt, mà đến từ chiến lược tối ưu hóa chi phí sản xuất và đa dạng hóa danh mục sang các dòng phân bón NPK, hóa chất chuyên dụng có biên lợi nhuận cao hơn. Bên cạnh đó, việc tận dụng các hiệp định thương mại để đẩy mạnh xuất khẩu khi thị trường nội địa bão hòa sẽ là đòn bẩy giúp DPM vượt qua giới hạn của một doanh nghiệp thuần chu kỳ nội địa. Sự phục hồi của chu kỳ nông nghiệp toàn cầu và nhu cầu an ninh lương thực sẽ là chất xúc tác vĩ mô giúp biên lợi nhuận gộp của DPM sớm quay lại mức trung bình lịch sử.",
-        "risks": "Rủi ro trọng yếu nhất của DPM là tính chu kỳ khắc nghiệt của giá Urea thế giới và nguy cơ dư cung từ các nhà máy hóa chất khổng lồ của Trung Quốc và Trung Đông. Bên cạnh đó, biên lợi nhuận gộp của doanh nghiệp cực kỳ nhạy cảm với chính sách điều chỉnh giá khí đầu vào, khi chi phí nguyên liệu chiếm tỷ trọng áp đảo trong cơ cấu giá vốn. Nếu chu kỳ nông nghiệp suy yếu kéo dài kết hợp với việc giá khí không được hỗ trợ, DPM có thể phải đối mặt với rủi ro suy giảm ROE xuống dưới mức chi phí vốn trong nhiều quý liên tiếp."
+        "ai_updated_at": "2026-11-04 11:18:21"
     },
     "DRC": {
         "symbol": "DRC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 8990,
         "volume": 253400,
         "pe": 13.93,
@@ -10415,7 +10553,7 @@
         "net_profit_ttm": 99.45,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:31:45",
+        "updated_at": "04/11/2026 19:21:52",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10530,6 +10668,9 @@
     },
     "GEX": {
         "symbol": "GEX",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 22700,
         "volume": 10726200,
         "pe": 28.22,
@@ -10544,7 +10685,7 @@
         "net_profit_ttm": 3358.19,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:32:29",
+        "updated_at": "04/11/2026 19:22:37",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10659,6 +10800,9 @@
     },
     "GVR": {
         "symbol": "GVR",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 30200,
         "volume": 1356000,
         "pe": 16.9,
@@ -10673,7 +10817,7 @@
         "net_profit_ttm": 9407.49,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:32:44",
+        "updated_at": "04/11/2026 19:22:53",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10784,13 +10928,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào câu chuyện chuyển đổi quỹ đất KCN hơn là biến động giá mủ cao su ngắn hạn.",
         "ai_price_zone": "Vùng gom giá trị: 24.0 - 26.5 (tương ứng P/B ~1.5 khi thị trường điều chỉnh), Vùng chặn lỗ: thủng 21.0 (mất đi lợi thế định giá tài sản ròng), Kỳ vọng dài hạn: tăng trưởng 30-40% khi các dự án KCN lấp đầy và ghi nhận lợi nhuận.",
         "macro_view": "Ngành cao su tự nhiên đang bước vào nửa sau của chu kỳ hàng hóa, nơi nguồn cung từ các nước Đông Nam Á bị kìm hãm do diện tích trồng mới hạn chế trong thập kỷ qua, trong khi nhu cầu từ ngành công nghiệp ô tô và lốp xe Trung Quốc đang phục hồi. Lạm phát toàn cầu hạ nhiệt và lãi suất duy trì ở mức dễ chịu hơn giúp kích thích nhu cầu tiêu dùng và vận tải, tạo bệ đỡ vững chắc cho giá mủ cao su xuất khẩu. Tuy nhiên, sự cạnh tranh từ cao su tổng hợp và các rào cản thương mại quốc tế liên quan đến tiêu chuẩn ESG, chống phá rừng (EUDR) sẽ là những biến số vĩ mô sàng lọc khốc liệt các doanh nghiệp xuất khẩu. GVR với lợi thế quy mô và khả năng truy xuất nguồn gốc sẽ là một trong số ít doanh nghiệp vượt qua được hàng rào kỹ thuật này để giữ vững thị phần tại các thị trường khó tính. Do đó, vĩ mô hiện tại đang ủng hộ các doanh nghiệp đầu ngành có khả năng kiểm soát chuỗi cung ứng từ nông trại đến nhà máy.",
-        "ai_updated_at": "2026-11-04 11:17:17",
-        "bctc": "Bức tranh tài chính của GVR phản ánh rõ nét vị thế của một doanh nghiệp nguyên vật liệu mang tính chu kỳ nhưng sở hữu nền tảng bảng cân đối kế toán cực kỳ vững chắc. Tỷ lệ D/E chỉ ở mức 0.37 cho thấy GVR không phụ thuộc vào đòn bẩy tài chính để duy trì hoạt động, một lớp đệm phòng thủ tuyệt vời khi ngành cao su bước vào giai đoạn biến động giá. Hiệu suất sinh lời trên tổng tài sản (ROA) đạt 8.1% là con số ấn tượng đối với một doanh nghiệp thâm dụng đất đai và tài sản cố định như trồng và khai thác cao su. Tuy nhiên, ROE ở mức 10.9% cho thấy đòn bẩy vốn chủ sở hữu đang được sử dụng khá thận trọng, chưa tối ưu hóa hết sức mạnh tài chính nhưng lại đảm bảo an toàn tuyệt đối. Biên lợi nhuận gộp 30.8% chứng tỏ khả năng kiểm soát chi phí khai thác tốt và đang hưởng lợi từ nhịp phục hồi của giá mủ cao su tự nhiên trên thị trường quốc tế. Lợi nhuận trượt 4 quý đạt 9,407 tỷ đồng nhưng dòng tiền kinh doanh (CFO) chỉ mang về 4,130 tỷ đồng, cho thấy một phần lợi nhuận đang nằm ở hàng tồn kho hoặc các khoản phải thu, đòi hỏi nhà đầu tư cần theo dõi sát sao vòng quay vốn lưu động. Tăng trưởng LNST đột biến 68.19% chủ yếu đến từ yếu tố thuận lợi của chu kỳ hàng hóa hơn là sự mở rộng năng lực cốt lõi. Nhìn chung, sức khỏe tài chính của GVR đang ở trạng thái phòng thủ tấn công, sẵn sàng vượt qua các nhịp suy thoái của chu kỳ commodity nhờ bệ phóng tài chính lành mạnh.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của GVR nằm ở quỹ đất nông nghiệp khổng lồ và vị thế độc quyền tự nhiên trong ngành cao su Việt Nam, tạo ra rào cản gia nhập ngành gần như tuyệt đối. Động lực tăng trưởng trong 2-3 năm tới không chỉ đến từ chu kỳ tăng giá của mủ cao su tự nhiên do nguồn cung toàn cầu thắt chặt, mà còn từ câu chuyện chuyển đổi mục đích sử dụng đất sang khu công nghiệp. Việc tận dụng quỹ đất ven các trục giao thông trọng điểm để phát triển bất động sản khu công nghiệp sẽ tái định vị biên lợi nhuận của tập đoàn, thoát ly dần khỏi sự phụ thuộc thuần túy vào nông sản. Ngoài ra, mảng sản xuất lốp xe và gỗ cao su cũng đang tạo ra chuỗi giá trị khép kín, giúp tối ưu hóa lợi nhuận trên mỗi héc-ta đất khai thác.",
-        "risks": "Rủi ro lớn nhất của GVR gắn liền với tính chu kỳ của giá cao su tự nhiên, khi sự suy thoái kinh tế toàn cầu hoặc nhu cầu lốp xe ô tô sụt giảm sẽ kéo biên lợi nhuận gộp lao dốc không phanh. Bên cạnh đó, yếu tố thời tiết cực đoan và dịch bệnh trên cây cao su có thể làm gián đoạn sản lượng khai thác, ảnh hưởng trực tiếp đến dòng tiền ngắn hạn. Rủi ro pháp lý và tiến độ giải phóng mặt bằng trong quá trình chuyển đổi đất nông nghiệp sang khu công nghiệp cũng là một ẩn số có thể làm chậm lại kỳ vọng tăng trưởng lợi nhuận đột biến."
+        "ai_updated_at": "2026-11-04 11:17:17"
     },
     "HAG": {
         "symbol": "HAG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 13750,
         "volume": 1821900,
         "pe": 5.27,
@@ -10805,7 +10949,7 @@
         "net_profit_ttm": 3602.69,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:32:51",
+        "updated_at": "04/11/2026 19:23:01",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -10920,6 +11064,9 @@
     },
     "IMP": {
         "symbol": "IMP",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 35050,
         "volume": 9300,
         "pe": 14.71,
@@ -10934,7 +11081,7 @@
         "net_profit_ttm": 367.4,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:34:02",
+        "updated_at": "04/11/2026 19:24:15",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11049,6 +11196,9 @@
     },
     "KDC": {
         "symbol": "KDC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 50400,
         "volume": 94600,
         "pe": 19.15,
@@ -11063,7 +11213,7 @@
         "net_profit_ttm": 778.13,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:34:17",
+        "updated_at": "04/11/2026 19:24:30",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11178,6 +11328,9 @@
     },
     "LIG": {
         "symbol": "LIG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 3100,
         "volume": 74700,
         "pe": 24.6,
@@ -11192,7 +11345,7 @@
         "net_profit_ttm": 28.53,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:34:31",
+        "updated_at": "04/11/2026 19:24:45",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11307,6 +11460,9 @@
     },
     "MSH": {
         "symbol": "MSH",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 34500,
         "volume": 64400,
         "pe": 6.26,
@@ -11321,7 +11477,7 @@
         "net_profit_ttm": 688.88,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.38x MA20.",
-        "updated_at": "04/11/2026 17:34:53",
+        "updated_at": "04/11/2026 19:25:09",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11436,6 +11592,9 @@
     },
     "NTC": {
         "symbol": "NTC",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 128900,
         "volume": 3800,
         "pe": 9.54,
@@ -11450,7 +11609,7 @@
         "net_profit_ttm": 244.52,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.36x MA20.",
-        "updated_at": "04/11/2026 17:35:36",
+        "updated_at": "04/11/2026 19:25:54",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11565,6 +11724,9 @@
     },
     "PAN": {
         "symbol": "PAN",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 17100,
         "volume": 918600,
         "pe": 3.4,
@@ -11579,7 +11741,7 @@
         "net_profit_ttm": 1804.24,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:35:58",
+        "updated_at": "04/11/2026 19:26:16",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11694,6 +11856,9 @@
     },
     "PLX": {
         "symbol": "PLX",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 33500,
         "volume": 1930300,
         "pe": 10.91,
@@ -11708,7 +11873,7 @@
         "net_profit_ttm": 4438.46,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:36:28",
+        "updated_at": "04/11/2026 19:26:46",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11823,6 +11988,9 @@
     },
     "SBA": {
         "symbol": "SBA",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 23400,
         "volume": 500,
         "pe": 10.65,
@@ -11837,7 +12005,7 @@
         "net_profit_ttm": 140.14,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.13x MA20.",
-        "updated_at": "04/11/2026 17:37:25",
+        "updated_at": "04/11/2026 19:28:04",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -11952,6 +12120,9 @@
     },
     "SBT": {
         "symbol": "SBT",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 21000,
         "volume": 1389300,
         "pe": 23.09,
@@ -11966,7 +12137,7 @@
         "net_profit_ttm": 803.2,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:37:32",
+        "updated_at": "04/11/2026 19:28:17",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12081,6 +12252,9 @@
     },
     "SJS": {
         "symbol": "SJS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 55600,
         "volume": 11200,
         "pe": 9.89,
@@ -12095,7 +12269,7 @@
         "net_profit_ttm": 1620.36,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:37:46",
+        "updated_at": "04/11/2026 19:28:32",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12206,13 +12380,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, tập trung vào chiến lược mua gom khi thị trường điều chỉnh do tâm lý chu kỳ.",
         "ai_price_zone": "Vùng gom giá trị: 45.000 - 50.000 VNĐ, Vùng gia tăng tỷ trọng: dưới 42.000 VNĐ, Vùng chặn lỗ cứng: thủng 38.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 30-40% khi các dự án gối đầu được bàn giao và ghi nhận đầy đủ.",
         "macro_view": "Chu kỳ bất động sản hiện tại đang ở giai đoạn đáy phục hồi, nơi các chính sách vĩ mô như Luật Đất đai, Luật Nhà ở và Luật Kinh doanh Bất động sản sửa đổi bắt đầu có hiệu lực, giúp thanh lọc thị trường và tạo lợi thế cho các doanh nghiệp có quỹ đất sạch, pháp lý chuẩn chỉnh như SJS. Mặt bằng lãi suất huy động thấp và định hướng nới lỏng tín dụng cho các dự án nhà ở thực sẽ là chất xúc tác vĩ mô quan trọng giúp cải thiện thanh khoản và sức mua trên thị trường. Tuy nhiên, áp lực lạm phát và chi phí nguyên vật liệu xây dựng tăng cao vẫn là bài toán vĩ mô đe dọa trực tiếp đến biên lợi nhuận của các dự án mới triển khai. Sự chuyển dịch dòng vốn FDI và xu hướng phát triển hạ tầng giao thông liên vùng sẽ tiếp tục làm gia tăng giá trị quỹ đất tại các khu vực vệ tinh, nơi SJS đang sở hữu nhiều tài sản. Nhìn chung, môi trường vĩ mô đang chuyển từ giai đoạn thắt chặt sang kiến tạo, đòi hỏi doanh nghiệp phải có năng lực thực thi pháp lý xuất sắc để đón đầu sóng phục hồi.",
-        "ai_updated_at": "2026-11-04 11:03:45",
-        "bctc": "Bức tranh tài chính của SJS đang thể hiện sự bùng nổ lợi nhuận đột biến với mức tăng trưởng YoY hơn 32.000%, phản ánh việc doanh nghiệp đã hoàn tất pháp lý và tiến hành bàn giao, ghi nhận doanh thu từ các dự án gối đầu trọng điểm. Biên lợi nhuận gộp đạt mức ấn tượng 72.1% cho thấy SJS đang sở hữu quỹ đất sạch có giá vốn thấp từ những năm trước, tạo ra lợi thế cạnh tranh cực lớn về biên lợi nhuận so với mặt bằng chung ngành bất động sản. Hiệu suất sinh lời trên vốn chủ sở hữu (ROE) lên tới 42.5% và ROA đạt 19.8% là những con số mơ ước, chứng tỏ ban lãnh đạo đang khai thác rất tốt tài sản và quỹ đất hiện có. Tuy nhiên, dưới góc nhìn khắt khe của trường phái Graham, mức tăng trưởng đột biến này thường mang tính chất gối đầu một lần từ việc mở bán và bàn giao dự án lớn, chứ không phải là dòng tiền đều đặn hàng năm. Điểm sáng lớn nhất nằm ở dòng tiền kinh doanh (CFO) dương 871 tỷ đồng, cho thấy lợi nhuận ghi nhận trên sổ sách đã chuyển hóa thành tiền mặt thực tế, một phần có thể đến từ khoản người mua trả tiền trước tích lũy từ các giai đoạn mở bán trước đó. Cấu trúc tài chính duy trì ở mức an toàn với tỷ lệ D/E 0.78, giúp SJS giảm thiểu áp lực chi phí lãi vay trong bối cảnh lãi suất và tín dụng bất động sản vẫn còn nhiều biến động. Việc không chia cổ tức tiền mặt là điều dễ hiểu và có thể chấp nhận được đối với doanh nghiệp địa ốc, vì họ cần tái đầu tư toàn bộ lợi nhuận giữ lại để giải phóng mặt bằng, hoàn thiện pháp lý và phát triển các dự án gối đầu tiếp theo. Tóm lại, sức khỏe nội tại của SJS đang ở trạng thái rất tốt nhờ bệ đỡ là quỹ đất giá rẻ và tiến độ ghi nhận doanh thu thuận lợi, nhưng nhà đầu tư cần theo dõi sát sao tính bền vững của dòng tiền từ các dự án mới thay vì chỉ nhìn vào con số TTM hiện tại.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của SJS nằm ở quỹ đất sạch rộng lớn, vị trí chiến lược và đặc biệt là giá vốn cực thấp đã được tích lũy từ nhiều năm trước, tạo ra rào cản về biên lợi nhuận mà các đối thủ mới khó lòng sao chép. Động lực tăng trưởng nội tại trong 2-3 năm tới sẽ được thúc đẩy bởi tiến độ hoàn thiện pháp lý và hạ tầng của các dự án trọng điểm tại Hà Nội và các tỉnh lân cận, giúp mở khóa dòng tiền từ người mua trả tiền trước. Bên cạnh đó, sự hậu thuẫn từ hệ sinh thái và cổ đông chiến lược liên quan đến hạ tầng, xây dựng giúp SJS có lợi thế trong việc đẩy nhanh tiến độ thi công và tối ưu hóa chi phí phát triển dự án. Việc liên tục tái cấu trúc danh mục đầu tư và tập trung vào các phân khúc bất động sản có nhu cầu thực sẽ là bệ phóng giúp doanh nghiệp duy trì vị thế và gia tăng giá trị tài sản ròng trong dài hạn.",
-        "risks": "Rủi ro lớn nhất và mang tính đặc thù ngành đối với SJS là tiến độ tháo gỡ vướng mắc pháp lý tại các dự án gối đầu, bởi bất kỳ sự chậm trễ nào từ cơ quan quản lý cũng sẽ làm đóng băng dòng tiền và bào mòn lợi nhuận. Ngoài ra, tính chu kỳ của thị trường bất động sản và sự thắt chặt tín dụng vào phân khúc đầu cơ có thể làm suy giảm sức cầu, dẫn đến rủi ro tồn kho và kéo dài thời gian bàn giao, ghi nhận doanh thu. Rủi ro pha loãng và xung đột lợi ích trong các giao dịch với các bên liên quan cũng là một điểm trừ cần được giám sát chặt chẽ, tránh tình trạng cổ đông thiểu số bị thiệt thòi khi quỹ đất được khai thác."
+        "ai_updated_at": "2026-11-04 11:03:45"
     },
     "TCD": {
         "symbol": "TCD",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 1000,
         "volume": 1664800,
         "pe": 9.25,
@@ -12227,7 +12401,7 @@
         "net_profit_ttm": 187.16,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:38:29",
+        "updated_at": "04/11/2026 19:29:20",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12303,6 +12477,9 @@
     },
     "TID": {
         "symbol": "TID",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 18500,
         "volume": 600,
         "pe": 23.08,
@@ -12317,7 +12494,7 @@
         "net_profit_ttm": 307.28,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.11x MA20.",
-        "updated_at": "04/11/2026 17:38:43",
+        "updated_at": "04/11/2026 19:29:35",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12432,6 +12609,9 @@
     },
     "TLG": {
         "symbol": "TLG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 54100,
         "volume": 107300,
         "pe": 11.32,
@@ -12446,7 +12626,7 @@
         "net_profit_ttm": 492.09,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.40x MA20.",
-        "updated_at": "04/11/2026 17:38:51",
+        "updated_at": "04/11/2026 19:29:43",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12557,13 +12737,13 @@
         "ai_recommendation": "Tích sản dài hạn - Tỷ trọng 10-15% danh mục, ưu tiên nắm giữ để nhận cổ tức đều đặn và tái đầu tư.",
         "ai_price_zone": "Vùng gom giá trị: từ 48.000 đến 54.000 VNĐ, Vùng chặn lỗ: thủng 42.000 VNĐ, Kỳ vọng dài hạn: tăng trưởng 15-20% mỗi năm kèm cổ tức 8%.",
         "macro_view": "Ngành sản xuất hàng tiêu dùng thiết yếu và văn phòng phẩm mang tính chất phòng thủ cao, thường duy trì được sức mua ổn định ngay cả khi kinh tế vĩ mô bước vào giai đoạn suy thoái hoặc lạm phát tăng cao. Tuy nhiên, áp lực từ tỷ giá hối đoái và giá dầu thế giới có thể tác động gián tiếp đến chi phí nhập khẩu hạt nhựa nguyên sinh, gây áp lực lên biên lợi nhuận gộp trong ngắn hạn. Chính sách đẩy mạnh giải ngân đầu tư công và phục hồi thu nhập bình quân đầu người tại Việt Nam sẽ hỗ trợ gián tiếp cho nhu cầu tiêu dùng và giáo dục. TLG với vị thế nội địa vững chắc và nguồn cung ứng được nội địa hóa một phần sẽ ít bị tổn thương hơn trước các cú sốc cung ứng toàn cầu so với đối thủ. Nhìn chung, chu kỳ ngành đang ở giai đoạn trưởng thành, nơi thị phần tập trung vào tay các ông lớn có lợi thế quy mô và thương hiệu.",
-        "ai_updated_at": "2026-11-04 11:09:39",
-        "bctc": "Bức tranh tài chính của TLG thể hiện vị thế của một doanh nghiệp sản xuất hàng tiêu dùng thiết yếu với sức khỏe nội tại cực kỳ vững chắc. Biên lợi nhuận gộp đạt 49.9% là một con số ấn tượng đối với ngành sản xuất văn phòng phẩm, phản ánh quyền lực định giá và khả năng kiểm soát chi phí nguyên vật liệu đầu vào xuất sắc. Hiệu suất sinh lời trên tài sản (ROA) ở mức 12.5% chứng tỏ ban lãnh đạo sử dụng tài sản và chuỗi cung ứng vô cùng hiệu quả, không bị chôn vốn vào hàng tồn kho hay tài sản cố định dư thừa. ROE duy trì ở mức 18.4% mà không cần phụ thuộc vào đòn bẩy tài chính cao, khi tỷ lệ D/E chỉ ở mức 0.49, cho thấy cấu trúc vốn an toàn và tự chủ. Tuy nhiên, điểm trừ lớn nhất nằm ở chất lượng dòng tiền khi CFO (182 tỷ) thấp hơn đáng kể so với lợi nhuận trượt (492 tỷ), đòi hỏi nhà đầu tư phải theo dõi sát sao xem dòng tiền có đang bị giam trong khoản phải thu hay hàng tồn kho hay không. Dù vậy, với đặc thù ngành hàng tiêu dùng phòng thủ, dòng tiền đều đặn qua các năm vẫn đủ sức trang trải cổ tức tiền mặt hấp dẫn lên tới 8.18%. Tổng thể, bảng cân đối kế toán của TLG mang dáng dấp của một cỗ máy in tiền thực thụ, tối ưu hóa tốt vòng quay vốn lưu động. Đây là nền tảng tài chính lý tưởng để doanh nghiệp vượt qua các giai đoạn biến động của chu kỳ kinh tế vĩ mô.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của TLG nằm ở sức mạnh thương hiệu quốc gia đã ăn sâu vào tiềm thức người tiêu dùng Việt Nam qua nhiều thế hệ, kết hợp với mạng lưới phân phối độc quyền và rộng khắp. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi chiến lược mở rộng sang các dòng sản phẩm cao cấp, mỹ thuật và xuất khẩu sang các thị trường ngách có biên lợi nhuận cao hơn. Việc liên tục tái đầu tư vào R&D và tự động hóa dây chuyền sản xuất giúp TLG duy trì rào cản gia nhập ngành đối với các đối thủ ngoại nhập. Hơn nữa, nhu cầu về văn phòng phẩm và dụng cụ học tập mang tính chất phòng thủ, ít bị ảnh hưởng bởi suy thoái kinh tế, đảm bảo dòng doanh thu tăng trưởng ổn định và bền vững.",
-        "risks": "Rủi ro lớn nhất đối với TLG đến từ sự thay đổi thói quen tiêu dùng và quá trình số hóa giáo dục, có thể làm thu hẹp dần dung lượng thị trường của các sản phẩm văn phòng phẩm truyền thống. Bên cạnh đó, việc CFO thấp hơn lợi nhuận kế toán đặt ra dấu hỏi về rủi ro bị chiếm dụng vốn từ các nhà phân phối hoặc áp lực tích trữ hàng tồn kho nguyên vật liệu nhựa và hóa chất. Doanh nghiệp cũng đối mặt với rủi ro biến động giá hạt nhựa và chi phí logistics, vốn có thể bào mòn biên lợi nhuận gộp nếu không thể chuyển giao hoàn toàn cho người tiêu dùng cuối cùng."
+        "ai_updated_at": "2026-11-04 11:09:39"
     },
     "VCB": {
         "symbol": "VCB",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 54800,
         "volume": 4883500,
         "pe": 10.73,
@@ -12578,7 +12758,7 @@
         "net_profit_ttm": 41687.46,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:39:05",
+        "updated_at": "04/11/2026 19:29:58",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12693,6 +12873,9 @@
     },
     "VDP": {
         "symbol": "VDP",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 31950,
         "volume": 100,
         "pe": 15.47,
@@ -12707,7 +12890,7 @@
         "net_profit_ttm": 66.14,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.07x MA20.",
-        "updated_at": "04/11/2026 17:39:26",
+        "updated_at": "04/11/2026 19:30:20",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12822,6 +13005,9 @@
     },
     "VOS": {
         "symbol": "VOS",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 11100,
         "volume": 755700,
         "pe": 4.33,
@@ -12836,7 +13022,7 @@
         "net_profit_ttm": 339.16,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 17:40:24",
+        "updated_at": "04/11/2026 19:31:20",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -12951,6 +13137,9 @@
     },
     "VPG": {
         "symbol": "VPG",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 980,
         "volume": 91600,
         "pe": 4.54,
@@ -12965,7 +13154,7 @@
         "net_profit_ttm": -512.08,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.34x MA20.",
-        "updated_at": "04/11/2026 17:40:38",
+        "updated_at": "04/11/2026 19:31:35",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -13080,6 +13269,9 @@
     },
     "VPI": {
         "symbol": "VPI",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 61200,
         "volume": 1975200,
         "pe": 68.2,
@@ -13094,7 +13286,7 @@
         "net_profit_ttm": 350.98,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "04/11/2026 17:40:46",
+        "updated_at": "04/11/2026 19:31:42",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -13209,6 +13401,9 @@
     },
     "VTO": {
         "symbol": "VTO",
+        "company_name": "",
+        "market_cap": 0,
+        "total_shares": 0,
         "close": 10300,
         "volume": 200200,
         "pe": 4.84,
@@ -13223,7 +13418,7 @@
         "net_profit_ttm": 168.14,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.37x MA20.",
-        "updated_at": "04/11/2026 17:41:00",
+        "updated_at": "04/11/2026 19:31:57",
         "bctc_history": [
             {
                 "period": "2026-Q3",
