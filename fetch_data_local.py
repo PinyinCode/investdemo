@@ -22,10 +22,10 @@ VN100_SYMBOLS = [
     "BSR", "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "HVN", "VHC", "ANV",
     "APH", "ASM", "DBC", "DCM", "DPM", "GEX", "KDC", "LIG", "MSH", "PAN",
     "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "DHC", "IMP", "SBA", "SJS",
-    "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VHC", "VOS", "HAG"
+    "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
 ]
 
-# Đảm bảo danh sách luôn chuẩn 100 mã độc nhất
+# Đảm bảo danh sách luôn chuẩn 100 mã độc nhất (đã loại bỏ mã trùng VHC)
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 VNDIRECT_RATIOS = {
@@ -141,15 +141,13 @@ def parse_bctc_history(symbol):
         year, q_str = curr_p.split("-")
         yoy_p = f"{int(year) - 1}-{q_str}"
 
-        # Lấy số liệu linh hoạt (hỗ trợ cả ngân hàng lẫn phi ngân hàng)
         total_assets = bs_dict[curr_p].get("BS_TOTAL_ASSETS", bs_dict[curr_p].get("TOTAL_ASSETS", 0))
-        loans = bs_dict[curr_p].get("BS_LOANS_TO_CUSTOMERS", 0) # Riêng ngân hàng
+        loans = bs_dict[curr_p].get("BS_LOANS_TO_CUSTOMERS", 0)
         equity = bs_dict[curr_p].get("BS_EQUITY", bs_dict[curr_p].get("EQUITY", 0))
         
-        nii = is_dict[curr_p].get("IS_NET_INTEREST_INCOME", 0) # Ngân hàng
+        nii = is_dict[curr_p].get("IS_NET_INTEREST_INCOME", 0)
         pat = is_dict[curr_p].get("IS_NET_PROFIT_AFTER_TAX", is_dict[curr_p].get("NET_PROFIT_AFTER_TAX", 0))
 
-        # Tăng trưởng QoQ & YoY cho khoản vay (hoặc tài sản)
         loans_prev = bs_dict.get(prev_p, {}).get("BS_LOANS_TO_CUSTOMERS", 0) if prev_p else 0
         loans_yoy = bs_dict.get(yoy_p, {}).get("BS_LOANS_TO_CUSTOMERS", 0)
         credit_growth_qoq = ((loans - loans_prev) / loans_prev * 100) if loans_prev else 0
@@ -196,15 +194,22 @@ def extract_advanced_metrics_from_bctc(symbol):
 
     latest_period = balance_sheet[0].get("period") if balance_sheet else None
 
-    # Lấy CFO kỳ gần nhất
+    # Lấy CFO kỳ gần nhất (Đã cập nhật quét đúng ID chuẩn từ cash_flow)
     latest_cfo = 0
     if cash_flow and latest_period:
         for item in cash_flow:
-            if item.get("period") == latest_period and item.get("id") in ["CF_OPERATE_CASH_FLOW", "CFO"]:
+            if item.get("period") == latest_period and item.get("id") in [
+                "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES", 
+                "CF_OPERATE_CASH_FLOW", 
+                "CFO"
+            ]:
                 latest_cfo = item.get("value", 0)
                 break
         if latest_cfo == 0 and cash_flow:
-            latest_cfo = cash_flow[0].get("value", 0)
+            for item in cash_flow:
+                if item.get("id") in ["CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES", "CF_OPERATE_CASH_FLOW", "CFO"]:
+                    latest_cfo = item.get("value", 0)
+                    break
 
     # Đòn bẩy D/E kỳ gần nhất
     total_liabilities = 0
@@ -256,7 +261,7 @@ def auto_git_push():
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
             
-        commit_msg = f"Auto update symbols data & BCTC (8 quarters) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update symbols data & BCTC (8 quarters & Cash Flow) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         
         subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=True)
@@ -277,7 +282,7 @@ def main():
     target_symbols = VN100_SYMBOLS
     mode_choice = input("Nhập lựa chọn chế độ (1/2, mặc định 1): ").strip()
     if mode_choice == '2':
-        raw_input_symbols = input("Nhập mã cổ phiếu muốn cào (cách nhau bởi dấu phẩy, VD: PNJ,BID,ACB): ").strip()
+        raw_input_symbols = input("Nhập mã cổ phiếu muốn cào (cách nhau bởi dấu phẩy, VD: FPT,MWG,ACB): ").strip()
         if raw_input_symbols:
             target_symbols = [s.strip().upper() for s in raw_input_symbols.split(",") if s.strip()]
             print(f"-> Đã chọn cào riêng các mã: {target_symbols}")
@@ -456,7 +461,7 @@ def main():
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-    print("✅ Đã hoàn tất cập nhật dữ liệu tài chính (chuỗi 8 quý & chỉ số nâng cao) vào data.json!")
+    print("✅ Đã hoàn tất cập nhật toàn bộ dữ liệu tài chính (kèm CFO và các chỉ số chuyên sâu) vào data.json!")
 
     auto_git_push()
 
