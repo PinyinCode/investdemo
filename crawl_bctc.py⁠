@@ -74,17 +74,15 @@ def fetch_financial_reports(symbol):
 def auto_git_push_bctc(target_symbols):
     try:
         print("\n📤 Đang tự động đồng bộ thư mục 'bctc_data' lên GitHub...")
-        for symbol in target_symbols:
-            f_path = os.path.join(OUTPUT_DIR, f"{symbol.lower()}.json")
-            if os.path.exists(f_path):
-                subprocess.run(["git", "add", f_path], check=True)
-                
-        commit_msg = f"Auto update full BCTC data (with Cash Flow) for {', '.join(target_symbols)} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        subprocess.run(["git", "add", "bctc_data/"], check=True)
+        
+        commit_msg = f"Auto update full BCTC data (with Cash Flow) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push"], check=True)
         print("🚀 Đẩy dữ liệu BCTC lên GitHub thành công!")
     except Exception as e:
         print(f"ℹ️ Git push info: {e}")
+
 
 def main():
     print("==================================================")
