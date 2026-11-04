@@ -5,7 +5,7 @@ import json
 import subprocess
 import numpy as np
 import requests
-from vnstock import Quote, Reference
+from vnstock import Quote
 
 DATA_FILE = "data.json"
 LAST_UPDATE_FILE = "last_update.json"
@@ -157,8 +157,8 @@ def get_vndirect_ratio(symbol, ratio_code):
 
 def get_company_overview(symbol, close_price=0):
     """
-    Lấy số cổ phiếu và vốn hóa từ VNDirect API (ổn định hơn vnstock Reference).
-    Fallback: nếu VNDirect không có, thử tính từ issue_share (nếu có).
+    Lấy tên doanh nghiệp trực tiếp từ từ điển hardcode COMPANY_NAMES (không gọi API).
+    Lấy số cổ phiếu và vốn hóa từ VNDirect API.
     """
     company_name = COMPANY_NAMES.get(symbol, symbol)
     total_shares = 0
@@ -201,17 +201,7 @@ def get_company_overview(symbol, close_price=0):
         except Exception as e:
             print(f"   ⚠️ VNDirect MARKET_CAP lỗi cho {symbol}: {e}")
 
-    # 3. Nếu vẫn không có, thử dùng issue_share từ vnstock (fallback cuối)
-    if total_shares == 0:
-        try:
-            overview = Reference().company(symbol).overview()
-            if overview is not None and not overview.empty:
-                row = overview.iloc[0].to_dict()
-                total_shares = float(row.get("issue_share", 0) or 0)
-        except Exception:
-            pass
-
-    # 4. Tính market_cap nếu chưa có
+    # 3. Tính market_cap nếu chưa có
     if market_cap == 0 and close_price > 0 and total_shares > 0:
         market_cap = close_price * 1000 * total_shares
 
@@ -436,24 +426,52 @@ def extract_advanced_metrics_from_bctc(symbol):
 
 def auto_git_push():
     try:
-        print("📤 Đang tiến hành đồng bộ dữ liệu lên GitHub...")
+        print("🔄 Đang chuẩn bị đồng bộ dữ liệu lên GitHub (Ưu tiên dữ liệu trên PC)...")
+        
+        # 1. Fetch thông tin mới nhất từ GitHub về trước
+        subprocess.run(["git", "fetch", "origin", "main"], check=True)
+        
+        # 2. Add toàn bộ dữ liệu mới vừa cào xong trên PC vào staging area
         subprocess.run(["git", "add", DATA_FILE], check=True)
         subprocess.run(["git", "add", LAST_UPDATE_FILE], check=True)
         subprocess.run(["git", "add", HISTORY_DIR], check=True)
-        if os.path.exists("bctc_data"):
-            subprocess.run(["git", "add", "bctc_data"], check=True)
+        if os.path.exists(BCTC_DIR):
+            subprocess.run(["git", "add", BCTC_DIR], check=True)
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
 
+        # 3. Kiểm tra xem có thay đổi thực sự hay không
+        status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+        if not status_result.stdout.strip():
+            print("ℹ️ Không có dữ liệu thay đổi nào mới trên PC để đẩy lên.")
+            return
+
+        # 4. Commit các thay đổi của PC
         commit_msg = f"Auto update symbols data & last_update timestamp - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=True)
-        subprocess.run(["git", "push", "origin", "main"], check=True)
-        print("🚀 Đẩy dữ liệu lên GitHub thành công!")
-    except subprocess.CalledProcessError:
-        print("⚠️ Git: Đã cố gắng đồng bộ nhưng có thể cần kiểm tra xung đột thủ công nếu có.")
+        
+        # 5. Thử push lên. Nếu bị từ chối do xung đột, thực hiện rebase, 
+        # ép buộc lấy dữ liệu hiện tại trên PC và push đè lên an toàn.
+        push_result = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True)
+        
+        if push_result.returncode != 0:
+            print("⚠️ Phát hiện xung đột với GitHub. Đang tiến hành ép buộc lấy dữ liệu từ PC làm chuẩn...")
+            subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=False)
+            
+            # Ưu tiên tuyệt đối phiên bản file trên máy PC của bạn (--ours) khi xảy ra tranh chấp
+            subprocess.run(["git", "checkout", "--ours", DATA_FILE], check=False)
+            subprocess.run(["git", "add", DATA_FILE], check=False)
+            
+            subprocess.run(["git", "rebase", "--continue"], check=False)
+            subprocess.run(["git", "push", "origin", "main", "--force-with-lease"], check=True)
+            print("🚀 Đẩy dữ liệu (ưu tiên từ PC) lên GitHub thành công!")
+        else:
+            print("🚀 Đẩy dữ liệu lên GitHub thành công!")
+            
+    except subprocess.CalledProcessError as e:
+        print(f"⚠️ Lỗi Git automation: {e}")
     except Exception as e:
-        print(f"⚠️ Lỗi Git push: {e}")
+        print(f"⚠️ Lỗi không xác định khi Git push: {e}")
 
 
 def main():
@@ -574,7 +592,7 @@ def main():
             print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
             continue
 
-        # Lấy hồ sơ công ty: số cổ phiếu và vốn hóa
+        # Lấy hồ sơ công ty: tên doanh nghiệp từ hardcode, số cổ phiếu và vốn hóa từ API
         company_overview = get_company_overview(symbol, close_price)
         time.sleep(0.3)
 
