@@ -1,5 +1,7 @@
 import os
 import json
+import time
+from datetime import datetime
 from simulator import run_complex_backtest_simulation
 
 OUTPUT_HTML = "index.html"
@@ -8,7 +10,10 @@ def generate_html():
     sim_data = run_complex_backtest_simulation()
     print(f"📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
 
-    html_content = """<!DOCTYPE html>
+    # Lấy thời điểm cập nhật giá cuối cùng (Current formatted time)
+    last_update_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+    html_content = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -25,29 +30,29 @@ def generate_html():
     <script src="./lightweight-charts.js"></script>
 
     <style>
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        .spinner { animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        ::-webkit-scrollbar {{ width: 6px; height: 6px; }}
+        ::-webkit-scrollbar-track {{ background: #0f172a; }}
+        ::-webkit-scrollbar-thumb {{ background: #334155; border-radius: 4px; }}
+        .spinner {{ animation: spin 1s linear infinite; }}
+        @keyframes spin {{ from {{ transform: rotate(0deg); }} to {{ transform: rotate(360deg); }} }}
         
-        .glow-top1 { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); border-color: #eab308; }
-        .glow-top2 { box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }
-        .glow-top3 { box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }
+        .glow-top1 {{ box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); border-color: #eab308; }}
+        .glow-top2 {{ box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }}
+        .glow-top3 {{ box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }}
 
-        #chart-modal-box { max-height: 96dvh; }
-        #chart-modal-box.fullscreen {
+        #chart-modal-box {{ max-height: 96dvh; }}
+        #chart-modal-box.fullscreen {{
             position: fixed !important; top: 0 !important; left: 0 !important;
             width: 100vw !important; height: 100dvh !important;
             max-width: none !important; max-height: none !important;
             border-radius: 0 !important; z-index: 9999 !important;
-        }
-        #chart-modal-box:not(.fullscreen) #tv-chart-container {
+        }}
+        #chart-modal-box:not(.fullscreen) #tv-chart-container {{
             height: calc(96dvh - 50px) !important; min-height: 380px; width: 100% !important;
-        }
-        #chart-modal-box.fullscreen #tv-chart-container {
+        }}
+        #chart-modal-box.fullscreen #tv-chart-container {{
             height: calc(100dvh - 45px) !important; width: 100% !important;
-        }
+        }}
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
@@ -189,7 +194,7 @@ def generate_html():
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành</p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: {last_update_str}</span></p>
                 </div>
             </div>
             
@@ -486,17 +491,20 @@ def generate_html():
                 <div id="tv-chart-container" class="w-full h-full"></div>
             </div>
 
-            <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center">
-                <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-robot"></i> Xem AI chi tiết
-                </button>
-                <button type="button" onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
+            <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center text-xs">
+                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">{last_update_str}</strong></span>
+                <div class="flex gap-2">
+                    <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-robot"></i> Xem AI chi tiết
+                    </button>
+                    <button type="button" onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold">Đóng</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const firebaseConfig = {
+        const firebaseConfig = {{
             apiKey: "AIzaSyA8VlFQvE_om-51pxffgd7hd2Ud6hQm11k",
             authDomain: "hoc-tieng-trung-64b8d.firebaseapp.com",
             projectId: "hoc-tieng-trung-64b8d",
@@ -504,140 +512,140 @@ def generate_html():
             messagingSenderId: "614326539390",
             appId: "1:614326539390:web:57344a021d7cbc7b18b42f",
             databaseURL: "https://hoc-tieng-trung-64b8d-default-rtdb.asia-southeast1.firebasedatabase.app"
-        };
+        }};
 
-        if (!firebase.apps.length) {
+        if (!firebase.apps.length) {{
             firebase.initializeApp(firebaseConfig);
-        }
+        }}
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        auth.onAuthStateChanged(async (user) => {
+        auth.onAuthStateChanged(async (user) => {{
             const authOverlay = document.getElementById('auth-overlay');
             const expiredModal = document.getElementById('expired-modal');
 
-            if (user) {
-                try {
+            if (user) {{
+                try {{
                     const emailKey = user.email.toLowerCase();
                     const userDocRef = db.collection('allowed_users').doc(emailKey);
                     const doc = await userDocRef.get();
 
-                    let userData = {};
-                    if (!doc.exists) {
+                    let userData = {{}};
+                    if (!doc.exists) {{
                         const expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + 7);
-                        userData = {
+                        userData = {{
                             email: user.email,
                             role: 'user',
                             expiresAt: expireDate.toISOString()
-                        };
+                        }};
                         await userDocRef.set(userData);
-                    } else {
+                    }} else {{
                         userData = doc.data();
-                    }
+                    }}
 
                     const now = new Date();
                     const expireTime = parseDate(userData.expiresAt);
 
-                    if (expireTime && now > expireTime && userData.role !== 'admin') {
+                    if (expireTime && now > expireTime && userData.role !== 'admin') {{
                         authOverlay.classList.add('hidden');
                         expiredModal.classList.remove('hidden');
                         document.getElementById('user-uid-text').innerText = user.uid;
                         await auth.signOut();
                         return;
-                    } else {
+                    }} else {{
                         authOverlay.classList.add('hidden');
                         expiredModal.classList.add('hidden');
-                    }
+                    }}
 
-                    if (userData.role === 'admin') {
+                    if (userData.role === 'admin') {{
                         const adminBtn = document.getElementById('btn-admin-panel');
-                        if (adminBtn) {
+                        if (adminBtn) {{
                             adminBtn.classList.remove('hidden');
                             adminBtn.classList.add('flex');
-                        }
-                    }
-                } catch (err) {
+                        }}
+                    }}
+                }} catch (err) {{
                     console.warn("⚠️ Lỗi kiểm tra Firestore:", err);
-                }
+                }}
 
                 loadData(true);
 
-            } else {
+            }} else {{
                 authOverlay.classList.remove('hidden');
                 expiredModal.classList.add('hidden');
-            }
-        });
+            }}
+        }});
 
-        function parseDate(val) {
+        function parseDate(val) {{
             if (!val) return null;
             if (typeof val.toDate === 'function') return val.toDate();
             const d = new Date(val);
             return isNaN(d.getTime()) ? null : d;
-        }
+        }}
 
-        function switchAuthTab(tab) {
+        function switchAuthTab(tab) {{
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
             const loginBtn = document.getElementById('tab-login-btn');
             const registerBtn = document.getElementById('tab-register-btn');
 
-            if (tab === 'login') {
+            if (tab === 'login') {{
                 loginForm.classList.remove('hidden');
                 registerForm.classList.add('hidden');
                 loginBtn.className = "flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
                 registerBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            } else {
+            }} else {{
                 loginForm.classList.add('hidden');
                 registerForm.classList.remove('hidden');
                 registerBtn.className = "flex-1 pb-2 text-xs font-bold text-indigo-400 border-b-2 border-emerald-500 transition";
                 loginBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            }
-        }
+            }}
+        }}
 
-        async function handleLogin(e) {
+        async function handleLogin(e) {{
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-password').value;
             const errBox = document.getElementById('login-error');
             errBox.classList.add('hidden');
-            try {
+            try {{
                 await auth.signInWithEmailAndPassword(email, pass);
-            } catch (err) {
+            }} catch (err) {{
                 errBox.innerText = "Lỗi đăng nhập: " + err.message;
                 errBox.classList.remove('hidden');
-            }
-        }
+            }}
+        }}
 
-        async function handleRegister(e) {
+        async function handleRegister(e) {{
             e.preventDefault();
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-password').value;
             const errBox = document.getElementById('register-error');
             errBox.classList.add('hidden');
 
-            try {
+            try {{
                 const cred = await auth.createUserWithEmailAndPassword(email, pass);
                 const expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 7);
-                await db.collection('allowed_users').doc(email.toLowerCase()).set({
+                await db.collection('allowed_users').doc(email.toLowerCase()).set({{
                     email: email,
                     role: 'user',
                     expiresAt: expireDate.toISOString()
-                });
+                }});
                 alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
-            } catch (err) {
+            }} catch (err) {{
                 errBox.innerText = "Lỗi đăng ký: " + err.message;
                 errBox.classList.remove('hidden');
-            }
-        }
+            }}
+        }}
 
-        async function handleLogout() {
+        async function handleLogout() {{
             await auth.signOut();
             window.location.reload();
-        }
+        }}
 
-        async function openAccountModal() {
+        async function openAccountModal() {{
             const user = auth.currentUser;
             if (!user) return;
             document.getElementById('account-modal').classList.remove('hidden');
@@ -646,68 +654,68 @@ def generate_html():
             document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
             document.getElementById('acc-modal-role').innerText = 'Đang tải...';
 
-            try {
+            try {{
                 const doc = await db.collection('allowed_users').doc(user.email.toLowerCase()).get();
-                if (doc.exists) {
+                if (doc.exists) {{
                     const data = doc.data();
                     document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
                     const expDate = parseDate(data.expiresAt);
                     document.getElementById('acc-modal-expire').innerText = expDate ? expDate.toLocaleDateString('vi-VN') : 'Vô thời hạn';
-                } else {
+                }} else {{
                     document.getElementById('acc-modal-role').innerText = 'USER';
                     document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập';
-                }
-            } catch (err) {
+                }}
+            }} catch (err) {{
                 document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng';
-            }
-        }
+            }}
+        }}
 
-        function closeAccountModal() { document.getElementById('account-modal').classList.add('hidden'); }
+        function closeAccountModal() {{ document.getElementById('account-modal').classList.add('hidden'); }}
 
-        async function openAdminModal() {
+        async function openAdminModal() {{
             document.getElementById('admin-modal').classList.remove('hidden');
             const listEl = document.getElementById('admin-users-list');
             listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
 
-            try {
+            try {{
                 const snapshot = await db.collection('allowed_users').get();
                 listEl.innerHTML = '';
-                if (snapshot.empty) {
+                if (snapshot.empty) {{
                     listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
                     return;
-                }
-                snapshot.forEach(doc => {
+                }}
+                snapshot.forEach(doc => {{
                     const data = doc.data();
                     const expDate = parseDate(data.expiresAt);
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-slate-800/50 transition";
                     tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white">${data.email || doc.id}</td>
-                        <td class="p-3 text-slate-300">${expDate ? expDate.toLocaleDateString('vi-VN') : '—'}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                        <td class="p-3 font-semibold text-white">${{data.email || doc.id}}</td>
+                        <td class="p-3 text-slate-300">${{expDate ? expDate.toLocaleDateString('vi-VN') : '—'}}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${{data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}}">${{data.role || 'user'}}</span></td>
                     `;
                     listEl.appendChild(tr);
-                });
-            } catch (err) {
+                }});
+            }} catch (err) {{
                 listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`;
-            }
-        }
+            }}
+        }}
 
-        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+        function closeAdminModal() {{ document.getElementById('admin-modal').classList.add('hidden'); }}
 
         let screenerResults = [];
-        let symbolSimRates = {};
-        let quarterlyMeanDetails = {};
+        let symbolSimRates = {{}};
+        let quarterlyMeanDetails = {{}};
         let currentSymbolHistory = null;
         let chartInstance = null;
         let candleSeriesInstance = null;
         let volumeSeriesInstance = null;
         let currentSymbol = null;
         let currentInterval = 'D1';
-        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
+        let activeIndicators = {{ VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true }};
         let currentActiveTab = 'eval';
 
-        const SECTOR_NAMES = { 
+        const SECTOR_NAMES = {{ 
             "NGAN_HANG": "Ngân hàng", 
             "CHUNG_KHOAN": "Chứng khoán", 
             "BAT_DONG_SAN": "Bất động sản", 
@@ -716,63 +724,62 @@ def generate_html():
             "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ",
             "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
             "KHAC": "Khác" 
-        };
+        }};
 
-        function formatNumber(num) {
+        function formatNumber(num) {{
             if (num === undefined || num === null || num === 0) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
             return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-        function formatPercent(num) {
+        }}
+        function formatPercent(num) {{
             if (num === undefined || num === null) return '—';
             return num.toFixed(1) + '%';
-        }
+        }}
 
-        function formatCurrencyInput(input) {
+        function formatCurrencyInput(input) {{
             let value = input.value.replace(/\D/g, "");
-            if (value === "") {
+            if (value === "") {{
                 input.value = "";
                 return;
-            }
+            }}
             input.value = Number(value).toLocaleString("vi-VN");
-        }
+        }}
 
-        function parseCleanNumber(valStr) {
+        function parseCleanNumber(valStr) {{
             if (!valStr) return 0;
             let clean = valStr.toString().replace(/\./g, "").replace(/,/g, "");
             return parseFloat(clean) || 0;
-        }
+        }}
 
-        function clearInput(elementId) {
+        function clearInput(elementId) {{
             const inputEl = document.getElementById(elementId);
-            if (inputEl) {
+            if (inputEl) {{
                 inputEl.value = '';
                 inputEl.focus();
                 if (elementId === 'search-input') renderCards();
-            }
-        }
+            }}
+        }}
 
-        // HÀM ẨN/HIỆN THÊM CHỈ SỐ CHUYÊN NGHIỆP MỚI
-        function toggleProMetrics() {
+        function toggleProMetrics() {{
             const box = document.getElementById('pro-metrics-box');
             const textEl = document.getElementById('prometrics-text');
             const chevron = document.getElementById('prometrics-chevron');
             
-            if (box.classList.contains('hidden')) {
+            if (box.classList.contains('hidden')) {{
                 box.classList.remove('hidden');
                 textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
                 chevron.style.transform = "rotate(180deg)";
-            } else {
+            }} else {{
                 box.classList.add('hidden');
                 textEl.innerText = "Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)";
                 chevron.style.transform = "rotate(0deg)";
-            }
-        }
+            }}
+        }}
 
-        async function loadData(showSpinner = false) {
+        async function loadData(showSpinner = false) {{
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
-            try {
+            try {{
                 const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                     fetch('screener_results.json?t=' + new Date().getTime()),
                     fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
@@ -784,16 +791,16 @@ def generate_html():
                 if (ratesRes.ok) symbolSimRates = await ratesRes.json();
                 if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
-                let rawStockData = {};
-                try {
+                let rawStockData = {{}};
+                try {{
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
                     if (dataRes.ok) rawStockData = await dataRes.json();
-                } catch (e) {}
+                }} catch (e) {{}}
 
-                screenerResults = screenerData.map(item => {
+                screenerResults = screenerData.map(item => {{
                     const sym = item.symbol;
-                    const extraData = rawStockData[sym] || {};
-                    return {
+                    const extraData = rawStockData[sym] || {{}};
+                    return {{
                         ...item,
                         eps: extraData.eps !== undefined ? extraData.eps : item.eps,
                         dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
@@ -812,20 +819,20 @@ def generate_html():
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
                         macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
                         ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at
-                    };
-                });
+                    }};
+                }});
                 renderCards();
-            } catch (error) {
+            } catch (error) {{
                 const container = document.getElementById('stock-container');
-                if (container && showSpinner) {
+                if (container && showSpinner) {{
                     container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
-                }
-            } finally {
+                }}
+            }} finally {{
                 if (showSpinner && icon) icon.classList.remove('spinner');
-            }
-        }
+            }}
+        }}
 
-        function renderCards() {
+        function renderCards() {{
             const container = document.getElementById('stock-container');
             if (!container) return;
 
@@ -833,86 +840,86 @@ def generate_html():
             const selectedSector = document.getElementById('sector-filter').value;
             const rankingMode = document.getElementById('ranking-filter').value;
 
-            let filtered = screenerResults.filter(item => {
+            let filtered = screenerResults.filter(item => {{
                 let matchSearch = item.symbol.includes(searchTerm);
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
                 return matchSearch && matchSector;
-            });
+            }});
 
             if (rankingMode === "FUNDAMENTAL") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
             else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
 
-            if (filtered.length === 0) {
+            if (filtered.length === 0) {{
                 container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">Không tìm thấy mã nào phù hợp.</div>`;
                 return;
-            }
+            }}
 
             container.innerHTML = '';
-            filtered.forEach((item, index) => {
+            filtered.forEach((item, index) => {{
                 let statusColor = "text-slate-400 bg-slate-800";
                 let borderColor = "border-slate-700";
                 let displayRec = item.technical_status || "Tích lũy";
-                if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {
+                if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {{
                     statusColor = "text-emerald-400 bg-emerald-500/10";
                     borderColor = "border-emerald-500/30";
-                } else if (displayRec.includes("CHỜ") || displayRec.includes("TÍCH LŨY") || displayRec.includes("CẠN CUNG")) {
+                }} else if (displayRec.includes("CHỜ") || displayRec.includes("TÍCH LŨY") || displayRec.includes("CẠN CUNG")) {{
                     statusColor = "text-amber-400 bg-amber-500/10";
                     borderColor = "border-amber-500/30";
-                }
+                }}
 
                 let topBadge = "";
                 let cardGlow = "";
-                if (rankingMode !== "NONE") {
-                    if (index === 0) { topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }
-                    else if (index === 1) { topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }
-                    else if (index === 2) { topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }
-                    else { topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }
-                }
+                if (rankingMode !== "NONE") {{
+                    if (index === 0) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }}
+                    else if (index === 1) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }}
+                    else if (index === 2) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }}
+                    else {{ topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${{index + 1}}</span>`; }}
+                }}
 
                 let scoreHtml = "";
-                if (rankingMode !== "NONE") {
+                if (rankingMode !== "NONE") {{
                     let label = "Điểm Tổng hợp";
                     let valScore = item.total_score;
-                    if (rankingMode === "FUNDAMENTAL") { label = "Điểm Cơ bản"; valScore = item.fundamental_score; }
-                    else if (rankingMode === "TECHNICAL") { label = "Điểm Kỹ thuật"; valScore = item.technical_score; }
+                    if (rankingMode === "FUNDAMENTAL") {{ label = "Điểm Cơ bản"; valScore = item.fundamental_score; }}
+                    else if (rankingMode === "TECHNICAL") {{ label = "Điểm Kỹ thuật"; valScore = item.technical_score; }}
 
-                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${label}: <strong>${valScore}/100</strong></div>`;
-                }
+                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${{label}}: <strong>${{valScore}}/100</strong></div>`;
+                }}
 
                 const card = document.createElement('div');
-                card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
+                card.className = `relative bg-slate-900 rounded-xl border ${{borderColor}} ${{cardGlow}} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
                 card.onclick = () => openChartModal(item.symbol);
                 
                 card.innerHTML = `
-                    ${topBadge}
+                    ${{topBadge}}
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-xl font-black text-white">${item.symbol}</span>
-                                    <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
+                                    <span class="text-xl font-black text-white">${{item.symbol}}</span>
+                                    <button type="button" onclick="event.stopPropagation(); openModal('${{item.symbol}}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
                                         <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
-                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
+                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${{statusColor}}">${{displayRec}}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
+                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${{SECTOR_NAMES[item.sector] || item.sector}}</span>
                             </div>
                             <div class="text-right">
-                                <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
-                                <span class="text-[10px] text-slate-500">Tổng điểm: ${item.total_score}</span>
+                                <span class="block text-lg font-bold text-emerald-400">${{formatNumber(item.close_price)}}</span>
+                                <span class="text-[10px] text-slate-500">Tổng điểm: ${{item.total_score}}</span>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50 text-center">
-                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${item.pe > 0 ? item.pe.toFixed(1) : '—'}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${item.pb > 0 ? item.pb.toFixed(1) : '—'}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
+                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${{item.pe > 0 ? item.pe.toFixed(1) : '—'}}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${{item.pb > 0 ? item.pb.toFixed(1) : '—'}}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${{formatPercent(item.roe)}}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${{item.total_score}}đ</span></div>
                         </div>
                     </div>
-                    ${scoreHtml}
+                    ${{scoreHtml}}
                 `;
                 container.appendChild(card);
             });
@@ -954,7 +961,6 @@ def generate_html():
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
-            // Gán dữ liệu vào các chỉ số chuyên nghiệp mới
             document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
             document.getElementById('modal-de').innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
             document.getElementById('modal-gm').innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
@@ -1485,7 +1491,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
     
-    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML}!")
+    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML} (Bổ sung hiển thị thời gian cập nhật giá: {last_update_str})!")
 
 if __name__ == "__main__":
     generate_html()
