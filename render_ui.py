@@ -310,6 +310,7 @@ def generate_html():
             </div>
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+                <!-- KHUNG CHỈ SỐ CƠ BẢN -->
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/B</span><span id="modal-pb" class="text-sm font-bold text-slate-200">--</span></div>
@@ -317,6 +318,23 @@ def generate_html():
                     <div><span class="text-[10px] text-slate-500 block">ROE</span><span id="modal-roe" class="text-sm font-bold text-blue-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">ROA</span><span id="modal-roa" class="text-sm font-bold text-indigo-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
+                </div>
+
+                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP MỚI -->
+                <div>
+                    <button type="button" onclick="toggleProMetrics()" id="btn-toggle-prometrics" class="w-full py-2 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-chart-pie text-emerald-400" id="prometrics-icon"></i> 
+                        <span id="prometrics-text">Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 ml-1 transition-transform duration-200" id="prometrics-chevron"></i>
+                    </button>
+
+                    <!-- KHUNG CHỈ SỐ CHUYÊN NGHIỆP (ẨN MẶC ĐỊNH) -->
+                    <div id="pro-metrics-box" class="hidden mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 bg-slate-950/80 p-3 rounded-xl border border-emerald-500/30 text-center animate-fadeIn">
+                        <div><span class="text-[10px] text-slate-400 block">Dòng tiền CFO</span><span id="modal-cfo" class="text-xs font-bold text-emerald-400">--</span></div>
+                        <div><span class="text-[10px] text-slate-400 block">Đòn bẩy D/E</span><span id="modal-de" class="text-xs font-bold text-amber-400">--</span></div>
+                        <div><span class="text-[10px] text-slate-400 block">Biên gộp</span><span id="modal-gm" class="text-xs font-bold text-blue-400">--</span></div>
+                        <div><span class="text-[10px] text-slate-400 block">LN TTM (4Q)</span><span id="modal-ttm" class="text-xs font-bold text-indigo-400">--</span></div>
+                    </div>
                 </div>
                 
                 <!-- TAB ĐÁNH GIÁ AI -->
@@ -735,6 +753,23 @@ def generate_html():
             }
         }
 
+        // HÀM ẨN/HIỆN THÊM CHỈ SỐ CHUYÊN NGHIỆP MỚI
+        function toggleProMetrics() {
+            const box = document.getElementById('pro-metrics-box');
+            const textEl = document.getElementById('prometrics-text');
+            const chevron = document.getElementById('prometrics-chevron');
+            
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
+                chevron.style.transform = "rotate(180deg)";
+            } else {
+                box.classList.add('hidden');
+                textEl.innerText = "Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)";
+                chevron.style.transform = "rotate(0deg)";
+            }
+        }
+
         async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
@@ -767,6 +802,10 @@ def generate_html():
                         pb: extraData.pb !== undefined ? extraData.pb : item.pb,
                         roe: extraData.roe !== undefined ? extraData.roe : item.roe,
                         roa: extraData.roa !== undefined ? extraData.roa : item.roa,
+                        cfo_latest: extraData.cfo_latest !== undefined ? extraData.cfo_latest : (item.cfo_latest || 0),
+                        debt_to_equity: extraData.debt_to_equity !== undefined ? extraData.debt_to_equity : (item.debt_to_equity || 0),
+                        gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
+                        net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
                         bctc: extraData.bctc !== undefined ? extraData.bctc : item.bctc,
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
@@ -915,6 +954,12 @@ def generate_html():
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
+
+            // Gán dữ liệu vào các chỉ số chuyên nghiệp mới
+            document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
+            document.getElementById('modal-de').innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
+            document.getElementById('modal-gm').innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
+            document.getElementById('modal-ttm').innerText = (item.net_profit_ttm !== undefined && item.net_profit_ttm !== null) ? item.net_profit_ttm + ' Tỷ' : '—';
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
             let priceZoneText = item.ai_price_zone;
@@ -1133,18 +1178,15 @@ def generate_html():
                 const minIdx = indices[0];
                 const maxIdx = indices[indices.length - 1];
                 
-                // RESET TRỤC GIÁ TRƯỚC KHI ÉP KHUNG ĐỂ TRÁNH BỊ KẸT DO KÉO THẢ TAY TRƯỚC ĐÓ
                 chartInstance.priceScale('right').applyOptions({
                     autoScale: true,
                 });
 
-                // 1. Căn chỉnh khoảng thời gian (trục ngang)
                 const rangeSpan = Math.max(15, (maxIdx - minIdx) * 2);
                 const from = Math.max(0, minIdx - Math.floor(rangeSpan / 2));
                 const to = Math.min(chartData.length - 1, maxIdx + Math.floor(rangeSpan / 2));
                 chartInstance.timeScale().setVisibleLogicalRange({ from, to });
 
-                // 2. Căn chỉnh vùng giá (trục dọc) ôm trọn hộp quý
                 if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {
                     const pricePadding = (qMaxPrice - qMinPrice) * 0.5;
                     chartInstance.priceScale('right').setVisiblePriceRange({
@@ -1324,7 +1366,6 @@ def generate_html():
                         };
                     }
 
-                    // 1. Vẽ 2 Hộp vùng quý với nền đậm nét rõ ràng
                     if (activeIndicators.QZONE) {
                         const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
                         if (startBoxInfo && startBoxInfo.data.length > 0) {
@@ -1353,7 +1394,6 @@ def generate_html():
                         }
                     }
 
-                    // 2. Vẽ 2 Đường Giá Trung Bình Quý
                     if (activeIndicators.QLINES) {
                         candleSeriesInstance.createPriceLine({
                             price: details.start_price_mean,
