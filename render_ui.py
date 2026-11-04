@@ -216,7 +216,10 @@ def generate_html():
                         <i class="fa-solid fa-magnifying-glass text-xs md:text-sm"></i>
                     </span>
                     <input type="text" id="search-input" placeholder="Tìm mã..." 
-                        class="w-full pl-7 md:pl-10 pr-2 md:pr-4 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                        class="w-full pl-7 md:pl-10 pr-7 md:pr-8 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                    <button type="button" onclick="clearInput('search-input')" class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-slate-400 hover:text-white transition" title="Xóa nhanh">
+                        <i class="fa-solid fa-xmark text-xs"></i>
+                    </button>
                 </div>
                 
                 <div class="relative w-full">
@@ -272,8 +275,11 @@ def generate_html():
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
                     
-                    <div class="relative">
-                        <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-20 text-center text-lg md:text-xl font-black text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
+                    <div class="relative flex items-center">
+                        <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-24 text-center text-lg md:text-xl font-black text-indigo-400 bg-indigo-500/10 px-2 py-0.5 pr-6 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
+                        <button type="button" onclick="clearInput('modal-symbol-input')" class="absolute right-1.5 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
                     </div>
                     
                     <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
@@ -281,7 +287,10 @@ def generate_html():
                     </button>
 
                     <div>
-                        <h3 class="text-xs md:text-sm font-bold text-white">Phân Tích AI & Giả Lập Đầu Tư</h3>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xs md:text-sm font-bold text-white">Phân Tích AI & Giả Lập Đầu Tư</h3>
+                            <span id="modal-price" class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">--</span>
+                        </div>
                         <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
                     </div>
                 </div>
@@ -302,11 +311,11 @@ def generate_html():
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
-                    <div><span class="text-[10px] text-slate-500 block">Giá</span><span id="modal-price" class="text-sm font-bold text-emerald-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/B</span><span id="modal-pb" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">EPS</span><span id="modal-eps" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">ROE</span><span id="modal-roe" class="text-sm font-bold text-blue-400">--</span></div>
+                    <div><span class="text-[10px] text-slate-500 block">ROA</span><span id="modal-roa" class="text-sm font-bold text-indigo-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
                 
@@ -410,7 +419,12 @@ def generate_html():
                             <span id="current-symbol-text">--</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
                         </button>
                         <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
-                            <input type="text" id="dropdown-search" placeholder="Lọc mã..." oninput="filterDropdownSymbols(this.value)" class="w-full px-2.5 py-1.5 mb-1 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500">
+                            <div class="relative mb-1">
+                                <input type="text" id="dropdown-search" placeholder="Lọc mã..." oninput="filterDropdownSymbols(this.value)" class="w-full px-2.5 py-1.5 pr-6 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500">
+                                <button type="button" onclick="clearInput('dropdown-search'); filterDropdownSymbols('')" class="absolute right-1.5 inset-y-0 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
                             <div id="dropdown-symbol-list" class="space-y-0.5"></div>
                         </div>
                     </div>
@@ -712,6 +726,15 @@ def generate_html():
             return parseFloat(clean) || 0;
         }
 
+        function clearInput(elementId) {
+            const inputEl = document.getElementById(elementId);
+            if (inputEl) {
+                inputEl.value = '';
+                inputEl.focus();
+                if (elementId === 'search-input') renderCards();
+            }
+        }
+
         async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
@@ -743,6 +766,7 @@ def generate_html():
                         pe: extraData.pe !== undefined ? extraData.pe : item.pe,
                         pb: extraData.pb !== undefined ? extraData.pb : item.pb,
                         roe: extraData.roe !== undefined ? extraData.roe : item.roe,
+                        roa: extraData.roa !== undefined ? extraData.roa : item.roa,
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
                         bctc: extraData.bctc !== undefined ? extraData.bctc : item.bctc,
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
@@ -889,6 +913,7 @@ def generate_html():
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
             document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
+            document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
