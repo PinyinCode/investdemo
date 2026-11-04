@@ -125,32 +125,42 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
         "temperature": 0.2
     }
 
-    try:
-        response = requests.post(API_URL, headers=headers, json=payload, timeout=60)
-        if response.status_code == 200:
-            res_json = response.json()
-            content = res_json["choices"][0]["message"]["content"].strip()
-            content = re.sub(r"^```json\s*", "", content)
-            content = re.sub(r"^```\s*", "", content)
-            content = re.sub(r"\s*```$", "", content)
-            
-            parsed_data = json.loads(content)
-            
-            # 🛡️ AN TOÀN TUYỆT ĐỐI: Chuẩn hóa price_zone luôn là chuỗi string để tránh [object Object]
-            raw_pz = parsed_data.get("price_zone", "")
-            if isinstance(raw_pz, dict):
-                parsed_data["price_zone"] = " | ".join([f"{k}: {v}" for k, v in raw_pz.items()])
-            elif isinstance(raw_pz, list):
-                parsed_data["price_zone"] = " - ".join([str(i) for i in raw_pz])
-            else:
-                parsed_data["price_zone"] = str(raw_pz)
+    # 🛡️ CƠ CHẾ PHÒNG THỦ TIMEOUT & THỬ LẠI (RETRY)
+    timeout_seconds = 120  # Tăng thời gian chờ lên 120 giây
+    max_retries = 3
+
+    for attempt in range(max_retries):
+        try:
+            response = requests.post(API_URL, headers=headers, json=payload, timeout=timeout_seconds)
+            if response.status_code == 200:
+                res_json = response.json()
+                content = res_json["choices"][0]["message"]["content"].strip()
+                content = re.sub(r"^```json\s*", "", content)
+                content = re.sub(r"^```\s*", "", content)
+                content = re.sub(r"\s*```$", "", content)
                 
-            return parsed_data
-        else:
-            print(f"[{symbol}] Lỗi HTTP {response.status_code}")
-    except Exception as e:
-        print(f"[{symbol}] Lỗi AI: {e}")
-    
+                parsed_data = json.loads(content)
+                
+                # 🛡️ AN TOÀN TUYỆT ĐỐI: Chuẩn hóa price_zone luôn là chuỗi string để tránh [object Object]
+                raw_pz = parsed_data.get("price_zone", "")
+                if isinstance(raw_pz, dict):
+                    parsed_data["price_zone"] = " | ".join([f"{k}: {v}" for k, v in raw_pz.items()])
+                elif isinstance(raw_pz, list):
+                    parsed_data["price_zone"] = " - ".join([str(i) for i in raw_pz])
+                else:
+                    parsed_data["price_zone"] = str(raw_pz)
+                    
+                return parsed_data
+            else:
+                print(f"[{symbol}] Lỗi HTTP {response.status_code}")
+                break
+        except requests.exceptions.Timeout:
+            print(f"[{symbol}] ⏳ Lần thử {attempt + 1}/{max_retries} bị quá thời gian (Timeout), đang thử lại...")
+            time.sleep(3)
+        except Exception as e:
+            print(f"[{symbol}] Lỗi AI: {e}")
+            break
+            
     return None
 
 def main():
@@ -230,7 +240,8 @@ def main():
         else:
             print(f"  -> ❌ Lỗi gọi AI cho {symbol}")
         
-        time.sleep(1.5)
+        # Tăng thời gian nghỉ giữa các mã lên 3 giây để giảm tải cho API
+        time.sleep(3)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
