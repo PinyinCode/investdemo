@@ -179,7 +179,7 @@
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành</p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: 04/11/2026 09:03:19</span></p>
                 </div>
             </div>
             
@@ -476,11 +476,14 @@
                 <div id="tv-chart-container" class="w-full h-full"></div>
             </div>
 
-            <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center">
-                <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-robot"></i> Xem AI chi tiết
-                </button>
-                <button type="button" onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold text-xs">Đóng</button>
+            <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center text-xs">
+                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">04/11/2026 09:03:19</strong></span>
+                <div class="flex gap-2">
+                    <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-robot"></i> Xem AI chi tiết
+                    </button>
+                    <button type="button" onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold">Đóng</button>
+                </div>
             </div>
         </div>
     </div>
@@ -742,7 +745,6 @@
             }
         }
 
-        // HÀM ẨN/HIỆN THÊM CHỈ SỐ CHUYÊN NGHIỆP MỚI
         function toggleProMetrics() {
             const box = document.getElementById('pro-metrics-box');
             const textEl = document.getElementById('prometrics-text');
@@ -796,7 +798,8 @@
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
-                        bctc: extraData.bctc !== undefined ? extraData.bctc : item.bctc,
+                        bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc,
+                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc,
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
                         ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
@@ -944,7 +947,6 @@
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
-            // Gán dữ liệu vào các chỉ số chuyên nghiệp mới
             document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
             document.getElementById('modal-de').innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
             document.getElementById('modal-gm').innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
@@ -957,7 +959,7 @@
             }
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-            document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
+            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
