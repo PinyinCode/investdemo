@@ -8,6 +8,7 @@ import requests
 from vnstock import Quote
 
 DATA_FILE = "data.json"
+LAST_UPDATE_FILE = "last_update.json"
 HISTORY_DIR = "history"
 BCTC_DIR = "bctc_data"
 JS_LIB_FILE = "lightweight-charts.js"
@@ -25,7 +26,7 @@ VN100_SYMBOLS = [
     "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
 ]
 
-# Đảm bảo danh sách luôn chuẩn 100 mã độc nhất (đã loại bỏ mã trùng VHC)
+# Đảm bảo danh sách luôn chuẩn 100 mã độc nhất
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 VNDIRECT_RATIOS = {
@@ -194,7 +195,6 @@ def extract_advanced_metrics_from_bctc(symbol):
 
     latest_period = balance_sheet[0].get("period") if balance_sheet else None
 
-    # Lấy CFO kỳ gần nhất (Đã cập nhật quét đúng ID chuẩn từ cash_flow)
     latest_cfo = 0
     if cash_flow and latest_period:
         for item in cash_flow:
@@ -211,7 +211,6 @@ def extract_advanced_metrics_from_bctc(symbol):
                     latest_cfo = item.get("value", 0)
                     break
 
-    # Đòn bẩy D/E kỳ gần nhất
     total_liabilities = 0
     equity = 0
     if balance_sheet and latest_period:
@@ -223,7 +222,6 @@ def extract_advanced_metrics_from_bctc(symbol):
                     equity = item.get("value", 0)
     debt_to_equity = round(total_liabilities / equity, 2) if equity > 0 else 0
 
-    # Biên lợi nhuận gộp kỳ gần nhất
     gross_profit = 0
     revenue = 0
     if income_statement and latest_period:
@@ -235,7 +233,6 @@ def extract_advanced_metrics_from_bctc(symbol):
                     revenue = item.get("value", 0)
     gross_margin = round((gross_profit / revenue) * 100, 1) if revenue > 0 else 0
 
-    # Tính TTM (Trailing Twelve Months - Tổng lợi nhuận 4 quý gần nhất)
     net_profit_ttm = 0
     if income_statement:
         pat_items = [item for item in income_statement if item.get("id") in ["IS_NET_PROFIT_AFTER_TAX", "NET_PROFIT_AFTER_TAX"]]
@@ -255,13 +252,14 @@ def auto_git_push():
     try:
         print("📤 Đang tiến hành đồng bộ dữ liệu lên GitHub...")
         subprocess.run(["git", "add", DATA_FILE], check=True)
+        subprocess.run(["git", "add", LAST_UPDATE_FILE], check=True)
         subprocess.run(["git", "add", HISTORY_DIR], check=True)
         if os.path.exists("bctc_data"):
             subprocess.run(["git", "add", "bctc_data"], check=True)
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
             
-        commit_msg = f"Auto update symbols data & BCTC (8 quarters & Cash Flow) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update symbols data & last_update timestamp - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         
         subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=True)
@@ -424,14 +422,12 @@ def main():
         with open(os.path.join(HISTORY_DIR, f"{symbol}.json"), "w", encoding="utf-8") as sf:
             json.dump(symbol_history_data, sf, ensure_ascii=False)
 
-        # Xử lý chuỗi 8 quý từ thư mục bctc_data
         bctc_history = parse_bctc_history(symbol)
-        
-        # Trích xuất các chỉ số nâng cao (CFO, D/E, Biên gộp, Lợi nhuận TTM 4 quý)
         adv_metrics = extract_advanced_metrics_from_bctc(symbol)
-        
         old_data = stock_db.get(symbol, {})
         
+        current_time_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
         stock_db[symbol] = {
             "symbol": symbol,
             "close": int(close_price * 1000),
@@ -442,14 +438,14 @@ def main():
             "roe": round(ratios.get("roe", 0) * 100, 1),
             "roa": round(ratios.get("roa", 0) * 100, 1),
             "dividend_yield": round(ratios.get("dividend_yield", 0) * 100, 2),
-            "cfo_latest": adv_metrics["cfo_latest"],          # Dòng tiền kinh doanh kỳ gần nhất (tỷ VNĐ)
-            "debt_to_equity": adv_metrics["debt_to_equity"],  # Tỷ lệ D/E
-            "gross_margin": adv_metrics["gross_margin"],      # Biên lợi nhuận gộp (%)
-            "net_profit_ttm": adv_metrics["net_profit_ttm"],  # Lợi nhuận trượt 4 quý (TTM)
+            "cfo_latest": adv_metrics["cfo_latest"],
+            "debt_to_equity": adv_metrics["debt_to_equity"],
+            "gross_margin": adv_metrics["gross_margin"],
+            "net_profit_ttm": adv_metrics["net_profit_ttm"],
             "recommendation": status,
             "price_zone": detail,
-            "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "bctc_history": bctc_history,                     # Toàn bộ lịch sử chuỗi 8 quý
+            "updated_at": current_time_str,
+            "bctc_history": bctc_history,
             "outlook": old_data.get("outlook", ""),
             "ai_recommendation": old_data.get("ai_recommendation", ""),
             "ai_price_zone": old_data.get("ai_price_zone", ""),
@@ -461,7 +457,13 @@ def main():
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-    print("✅ Đã hoàn tất cập nhật toàn bộ dữ liệu tài chính (kèm CFO và các chỉ số chuyên sâu) vào data.json!")
+        
+    # Ghi nhận thời điểm cào thành công vào last_update.json
+    crawl_timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    with open(LAST_UPDATE_FILE, "w", encoding="utf-8") as f:
+        json.dump({"last_update": crawl_timestamp}, f, ensure_ascii=False)
+
+    print(f"✅ Đã lưu file {LAST_UPDATE_FILE} với mốc thời gian: {crawl_timestamp}")
 
     auto_git_push()
 
