@@ -179,7 +179,7 @@
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: 04/11/2026 09:58:31</span></p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: 04/11/2026 10:25:24</span></p>
                 </div>
             </div>
             
@@ -309,7 +309,7 @@
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
 
-                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP MỚI -->
+                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP MỚI (LINH HOẠT THEO NGÀNH) -->
                 <div>
                     <button type="button" onclick="toggleProMetrics()" id="btn-toggle-prometrics" class="w-full py-2 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 shadow-sm">
                         <i class="fa-solid fa-chart-pie text-emerald-400" id="prometrics-icon"></i> 
@@ -319,10 +319,22 @@
 
                     <!-- KHUNG CHỈ SỐ CHUYÊN NGHIỆP (ẨN MẶC ĐỊNH) -->
                     <div id="pro-metrics-box" class="hidden mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 bg-slate-950/80 p-3 rounded-xl border border-emerald-500/30 text-center animate-fadeIn">
-                        <div><span class="text-[10px] text-slate-400 block">Dòng tiền CFO</span><span id="modal-cfo" class="text-xs font-bold text-emerald-400">--</span></div>
-                        <div><span class="text-[10px] text-slate-400 block">Đòn bẩy D/E</span><span id="modal-de" class="text-xs font-bold text-amber-400">--</span></div>
-                        <div><span class="text-[10px] text-slate-400 block">Biên gộp</span><span id="modal-gm" class="text-xs font-bold text-blue-400">--</span></div>
-                        <div><span class="text-[10px] text-slate-400 block">LN TTM (4Q)</span><span id="modal-ttm" class="text-xs font-bold text-indigo-400">--</span></div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block" id="label-cfo" title="Dòng tiền hoạt động kinh doanh">Dòng tiền CFO</span>
+                            <span id="modal-cfo" class="text-xs font-bold text-emerald-400">--</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block" id="label-de" title="Nợ phải trả / Vốn chủ sở hữu">Đòn bẩy D/E</span>
+                            <span id="modal-de" class="text-xs font-bold text-amber-400">--</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block" id="label-gm" title="Biên lợi nhuận gộp (Doanh nghiệp thường) / Biên đặc thù">Biên gộp</span>
+                            <span id="modal-gm" class="text-xs font-bold text-blue-400">--</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block">LN TTM (4Q)</span>
+                            <span id="modal-ttm" class="text-xs font-bold text-indigo-400">--</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -477,7 +489,7 @@
             </div>
 
             <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center text-xs">
-                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">04/11/2026 09:58:31</strong></span>
+                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">04/11/2026 10:25:24</strong></span>
                 <div class="flex gap-2">
                     <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold flex items-center gap-1.5">
                         <i class="fa-solid fa-robot"></i> Xem AI chi tiết
@@ -799,7 +811,6 @@
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
                         
-                        // Lấy riêng biệt các trường BCTC và Định giá từ extraData hoặc item
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
@@ -949,10 +960,34 @@
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
+            const isBankOrSec = (item.sector === "NGAN_HANG" || item.sector === "CHUNG_KHOAN");
+            
             document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
-            document.getElementById('modal-de').innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
-            document.getElementById('modal-gm').innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
             document.getElementById('modal-ttm').innerText = (item.net_profit_ttm !== undefined && item.net_profit_ttm !== null) ? item.net_profit_ttm + ' Tỷ' : '—';
+
+            const deLabel = document.getElementById('label-de');
+            const deVal = document.getElementById('modal-de');
+            if (isBankOrSec) {
+                deLabel.innerText = "Hệ số T.Sản/VCSH";
+                deLabel.title = "Đòn bẩy đặc thù Ngân hàng/Chứng khoán";
+                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity + 'x (Nợ/VCSH)' : '—';
+            } else {
+                deLabel.innerText = "Đòn bẩy D/E";
+                deLabel.title = "Nợ phải trả / Vốn chủ sở hữu";
+                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
+            }
+
+            const gmLabel = document.getElementById('label-gm');
+            const gmVal = document.getElementById('modal-gm');
+            if (isBankOrSec) {
+                gmLabel.innerText = "Đặc thù ngành";
+                gmLabel.title = "Ngân hàng/Chứng khoán không tính biên gộp truyền thống";
+                gmVal.innerText = "N/A (Ngành tài chính)";
+            } else {
+                gmLabel.innerText = "Biên gộp";
+                gmLabel.title = "Biên lợi nhuận gộp";
+                gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
+            }
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
             let priceZoneText = item.ai_price_zone;
@@ -961,7 +996,6 @@
             }
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-            // PHÂN TÁCH ĐỘC LẬP: Ô BCTC đọc từ bctc_evaluation / bctc; Ô Định giá đọc từ outlook tránh bị trùng lặp
             document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá từ AI.";
             
