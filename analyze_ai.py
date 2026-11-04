@@ -103,7 +103,7 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     --------------------------------------------------------------------------------------------------------------------------------
 
     YÊU CẦU TRẢ VỀ JSON THUẦN TÚY (TUYỆT ĐỐI KHÔNG DÙNG ```json):
-    1. "bctc": Phân tích cực kỳ sâu sắc sức khỏe tài chính cốt lõi. Bắt buộc đối chiếu mối quan hệ giữa Lợi nhuận TTM ({net_profit_ttm:,.0f} Tỷ) và Dòng tiền kinh doanh CFO ({cfo_latest:,.0f} Tỷ) để phát hiện rủi ro "lợi nhuận giấy". Đánh giá hiệu suất sinh lời tổng tài sản (ROA {roa}%), vốn chủ (ROE {roe}%) và gánh nặng đòn bẩy tài chính (D/E {debt_to_equity}) (7-9 câu).
+    1. "bctc": [MỤC TRỌNG TÂM - PHÂN TÍCH SỨC KHỎE TÀI CHÍNH]: Phân tích cực kỳ chuyên sâu và chi tiết về bức tranh BCTC dựa trên các số liệu thực tế được cung cấp. Bắt buộc làm rõ mối quan hệ giữa Lợi nhuận TTM ({net_profit_ttm:,.0f} Tỷ) và Dòng tiền thuần từ hoạt động kinh doanh (CFO = {cfo_latest:,.0f} Tỷ) xem dòng tiền có thực sự thu về tiền mặt hay chỉ là "lợi nhuận trên giấy". Đánh giá hiệu suất sinh lời qua biên lợi nhuận gộp ({gross_margin}%), ROA ({roa}%), ROE ({roe}%) và gánh nặng đòn bẩy tài chính thông qua tỷ lệ Nợ trên vốn chủ sở hữu (D/E = {debt_to_equity}) (8-10 câu).
     2. "catalyst": Xác định lợi thế cạnh tranh dài hạn (Economic Moat) và động lực tăng trưởng nội tại trong 2-3 năm tới (4-5 câu).
     3. "risks": Chỉ trích thẳng thắn các rủi ro trọng yếu (Rủi ro chu kỳ, rủi ro đòn bẩy tài chính cao, rủi ro suy giảm biên lợi nhuận hoặc dòng tiền âm) có thể làm xói mòn giá trị doanh nghiệp (3-4 câu).
     4. "outlook": Đánh giá biên an toàn (Margin of Safety) của mức định giá hiện tại (P/E {pe}, P/B {pb}) kết hợp triển vọng dài hạn (4-5 câu).
@@ -125,8 +125,7 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
         "temperature": 0.2
     }
 
-    # 🛡️ CƠ CHẾ PHÒNG THỦ TIMEOUT & THỬ LẠI (RETRY)
-    timeout_seconds = 120  # Tăng thời gian chờ lên 120 giây
+    timeout_seconds = 120
     max_retries = 3
 
     for attempt in range(max_retries):
@@ -141,7 +140,6 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
                 
                 parsed_data = json.loads(content)
                 
-                # 🛡️ AN TOÀN TUYỆT ĐỐI: Chuẩn hóa price_zone luôn là chuỗi string để tránh [object Object]
                 raw_pz = parsed_data.get("price_zone", "")
                 if isinstance(raw_pz, dict):
                     parsed_data["price_zone"] = " | ".join([f"{k}: {v}" for k, v in raw_pz.items()])
@@ -205,7 +203,7 @@ def main():
                 ), 
                 reverse=True
             )
-            limit_count = 5  # Lấy Top 5 cho toàn bộ 7 nhóm ngành
+            limit_count = 5
             selected_items = items_sorted[:limit_count]
             for itm in selected_items:
                 top_symbols_to_analyze[itm['symbol']] = sector
@@ -240,7 +238,6 @@ def main():
         else:
             print(f"  -> ❌ Lỗi gọi AI cho {symbol}")
         
-        # Tăng thời gian nghỉ giữa các mã lên 3 giây để giảm tải cho API
         time.sleep(3)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
