@@ -3,7 +3,7 @@ import json
 import time
 import subprocess
 import datetime
-from vnstock import Fundamental
+from vnstock import Fundamental, Listing
 
 OUTPUT_DIR = "bctc_data"
 if not os.path.exists(OUTPUT_DIR):
@@ -25,7 +25,7 @@ VN100_SYMBOLS = [
 
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
-def fetch_financial_reports(symbol):
+def fetch_financial_reports(symbol, company_info_map=None):
     try:
         file_path = os.path.join(OUTPUT_DIR, f"{symbol.lower()}.json")
         
@@ -37,22 +37,16 @@ def fetch_financial_reports(symbol):
         
         reports = {}
 
-        # 0. Cào Thông tin tổng quan (Tên công ty, Vốn hóa, Tổng số cổ phiếu)
-        try:
-            df_overview = None
-            if hasattr(stock_obj, 'overview'):
-                df_overview = stock_obj.overview()
-            elif hasattr(stock_obj, 'company_overview'):
-                df_overview = stock_obj.company_overview()
-                
-            if df_overview is not None and not df_overview.empty:
-                reports['overview'] = df_overview.to_dict(orient="records")
-                first_row = df_overview.iloc[0].to_dict()
-                reports['company_name'] = first_row.get('organName') or first_row.get('companyName') or first_row.get('enOrganName') or ""
-                reports['market_cap'] = first_row.get('marketCap') or first_row.get('market_cap') or 0
-                reports['total_shares'] = first_row.get('sharesOutstanding') or first_row.get('totalShares') or first_row.get('outstandingShare') or 0
-        except Exception as e:
-            print(f"⚠️ Không lấy được thông tin tổng quan/vốn hóa cho {symbol}: {e}")
+        # 0. Gán thông tin Tổng quan (Tên công ty, Vốn hóa, Tổng số cổ phiếu) từ map dữ liệu Listing tải sẵn
+        if company_info_map and symbol in company_info_map:
+            info = company_info_map[symbol]
+            reports['company_name'] = info.get('organName', '') or info.get('companyName', '') or info.get('enOrganName', '')
+            reports['market_cap'] = info.get('marketCap', 0) or info.get('market_cap', 0)
+            reports['total_shares'] = info.get('sharesOutstanding', 0) or info.get('totalShares', 0) or info.get('outstandingShare', 0)
+        else:
+            reports['company_name'] = ""
+            reports['market_cap'] = 0
+            reports['total_shares'] = 0
 
         # 1. Cào Bảng cân đối kế toán
         df_balance = stock_obj.balance_sheet(period='quarter')
@@ -106,6 +100,22 @@ def main():
     print("==================================================")
     print("   CÀO BCTC ĐẦY ĐỦ + TÊN CTY, VỐN HÓA, LƯU CHUYỂN TIỀN TỆ")
     print("==================================================")
+    
+    # Tải trước thông tin chung để lấy tên công ty và vốn hóa tối ưu
+    print("🔄 Đang tải thông tin chung danh sách công ty từ vnstock (Listing)...")
+    company_info_map = {}
+    try:
+        listing = Listing()
+        # Thử lấy danh sách tổng quan các mã niêm yết
+        df_symbols = listing.symbols_by_exchange()
+        if df_symbols is not None and not df_symbols.empty:
+            for _, row in df_symbols.iterrows():
+                sym = row.get('symbol') or row.get('ticker')
+                if sym:
+                    company_info_map[sym.upper()] = row.to_dict()
+    except Exception as e:
+        print(f"⚠️ Không tải được danh sách chung qua Listing: {e}")
+
     print("1. Cào TOÀN BỘ danh sách VN100")
     print("2. Cào MỘT NHÓM MÃ hoặc MÃ LẺ (Tùy chọn)")
     
@@ -125,12 +135,12 @@ def main():
             print("⚠️ Không nhận được mã hợp lệ, mặc định cào mã: FPT")
 
     total = len(target_symbols)
-    print(f"\n🚀 Bắt đầu lấy dữ liệu qua vnstock v5 cho {total} mã...")
+    print(f"\n🚀 Bắt đầu lấy dữ liệu qua vnstock cho {total} mã...")
     
     successful_symbols = []
     for i, symbol in enumerate(target_symbols):
         print(f"[{i+1}/{total}] Xử lý: {symbol}...")
-        if fetch_financial_reports(symbol):
+        if fetch_financial_reports(symbol, company_info_map):
             successful_symbols.append(symbol)
         time.sleep(0.4)
         
