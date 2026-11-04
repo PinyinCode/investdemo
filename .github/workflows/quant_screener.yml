@@ -3,7 +3,7 @@ name: 1. Run Quant Screener
 on:
   push:
     paths:
-      - 'data.json' # Kích hoạt khi file data.json thay đổi trên nhánh chính
+      - 'last_update.json' # Kích hoạt khi file data.json thay đổi trên nhánh chính
   workflow_dispatch: # Vẫn giữ lại tùy chọn chạy thủ công
 
 jobs:
