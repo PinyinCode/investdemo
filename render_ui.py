@@ -327,22 +327,10 @@ def generate_html():
             </div>
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <!-- KHUNG THÔNG TIN CÔNG TY & VỐN HÓA MỚI -->
-                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-2 text-xs">
-                    <div>
-                        <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tên doanh nghiệp</span>
-                        <span id="modal-company-name" class="font-bold text-white text-sm">--</span>
-                    </div>
-                    <div class="flex gap-4">
-                        <div>
-                            <span class="text-[10px] text-slate-400 block uppercase font-semibold">Vốn hóa</span>
-                            <span id="modal-market-cap" class="font-bold text-emerald-400">--</span>
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tổng số CP</span>
-                            <span id="modal-total-shares" class="font-bold text-indigo-300">--</span>
-                        </div>
-                    </div>
+                <!-- KHUNG THÔNG TIN TÊN CÔNG TY -->
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
+                    <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tên doanh nghiệp</span>
+                    <span id="modal-company-name" class="font-bold text-white text-sm">--</span>
                 </div>
 
                 <!-- KHUNG CHỈ SỐ CƠ BẢN -->
@@ -1013,10 +1001,8 @@ def generate_html():
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
             
-            // Hiển thị thông tin tên công ty, vốn hóa và tổng số cổ phiếu mới
+            // Chỉ hiển thị tên công ty, ẩn vốn hóa và tổng số cổ phiếu
             document.getElementById('modal-company-name').innerText = item.company_name || '—';
-            document.getElementById('modal-market-cap').innerText = formatMarketCap(item.market_cap);
-            document.getElementById('modal-total-shares').innerText = item.total_shares ? formatNumber(item.total_shares) + ' CP' : '—';
 
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
