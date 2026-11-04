@@ -269,34 +269,33 @@ def generate_html():
     <!-- MODAL CHI TIẾT AI & GIẢ LẬP ĐẦU TƯ TỪNG MÃ -->
     <div id="ai-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-3 md:p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
-            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10">
-                <div class="flex items-center space-x-2">
-                    <button type="button" onclick="navigateModalSymbol(-1)" class="text-slate-400 hover:text-white px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã trước">
+            <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10 gap-2">
+                <div class="flex items-center space-x-1.5 md:space-x-2">
+                    <button type="button" onclick="navigateModalSymbol(-1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã trước">
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
                     
                     <div class="relative flex items-center">
-                        <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-24 text-center text-lg md:text-xl font-black text-indigo-400 bg-indigo-500/10 px-2 py-0.5 pr-6 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
-                        <button type="button" onclick="clearInput('modal-symbol-input')" class="absolute right-1.5 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
+                        <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-20 md:w-24 text-center text-base md:text-lg font-black text-indigo-400 bg-indigo-500/10 px-2 py-1 pr-6 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
+                        <button type="button" onclick="clearInput('modal-symbol-input')" class="absolute right-1 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
                     
-                    <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
+                    <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
-
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-xs md:text-sm font-bold text-white">Phân Tích AI & Giả Lập Đầu Tư</h3>
-                            <span id="modal-price" class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">--</span>
-                        </div>
-                        <p id="modal-sector" class="text-[10px] text-slate-400">Ngành: --</p>
-                    </div>
                 </div>
-                <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+
+                <div class="flex items-center gap-2">
+                    <div class="text-right">
+                        <span id="modal-price" class="text-sm md:text-base font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">--</span>
+                        <p id="modal-sector" class="text-[9px] text-slate-400 mt-0.5 text-right">--</p>
+                    </div>
+                    <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </div>
             
             <!-- TABS -->
