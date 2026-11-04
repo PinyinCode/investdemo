@@ -1,10 +1,10 @@
 name: 1. Run Quant Screener
 
 on:
-  schedule:
-    # Chạy vào lúc 01:00 sáng thứ Sáu hàng tuần (giờ VN là sáng thứ Bảy UTC) hoặc tùy chỉnh
-    - cron: '0 18 * * 5'
-  workflow_dispatch: # Cho phép chạy thủ công
+  push:
+    paths:
+      - 'data.json' # Kích hoạt khi file data.json thay đổi trên nhánh chính
+  workflow_dispatch: # Vẫn giữ lại tùy chọn chạy thủ công
 
 jobs:
   screener:
