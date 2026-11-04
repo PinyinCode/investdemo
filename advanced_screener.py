@@ -52,7 +52,7 @@ def evaluate_stock(symbol, data):
     recommendation = data.get("recommendation", "")
     close_price = data.get("close", 0)
     
-    # Các chỉ số nâng cao mới từ BCTC (TTM & Quý gần nhất)
+    # Các chỉ số nâng cao lấy từ data.json (đã được trích xuất chuẩn xác từ bctc_data)
     cfo_latest = data.get("cfo_latest", 0)
     net_profit_ttm = data.get("net_profit_ttm", 0)
     debt_to_equity = data.get("debt_to_equity", 0)
@@ -148,27 +148,23 @@ def evaluate_stock(symbol, data):
             fundamental_score += 10; fund_notes.append("ROE khá")
 
     # --- TIÊU CHÍ CHUNG BỔ SUNG NÂNG CAO (15 điểm) ---
-    # 1. Đánh giá chất lượng sinh lời tổng tài sản (ROA)
     if roa >= 5.0:
         fundamental_score += 5; fund_notes.append(f"ROA rất cao ({roa}%)")
     elif roa >= 2.5:
         fundamental_score += 3; fund_notes.append(f"ROA tốt ({roa}%)")
 
-    # 2. Kiểm chứng dòng tiền kinh doanh thực tế (CFO so với Lợi nhuận TTM)
-    # Trừ ngân hàng/chứng khoán do đặc thù bảng cân đối
+    # Kiểm chứng dòng tiền kinh doanh (CFO) & Đòn bẩy tài chính (D/E)
     if sector not in ["NGAN_HANG", "CHUNG_KHOAN"]:
         if cfo_latest > 0 and (net_profit_ttm <= 0 or cfo_latest >= net_profit_ttm * 0.8):
             fundamental_score += 5; fund_notes.append("Dòng tiền kinh doanh (CFO) mạnh mẽ")
         elif cfo_latest < 0:
-            fundamental_score -= 5; fund_notes.append("⚠️ Cảnh báo: CFO âm (Lợi nhuận giấy)")
+            fundamental_score -= 5; fund_notes.append("⚠️ Cảnh báo: CFO âm")
 
-        # Kiểm soát rủi ro đòn bẩy nợ vay (D/E)
         if 0 < debt_to_equity <= 1.0:
             fundamental_score += 5; fund_notes.append(f"Cấu trúc tài chính an toàn (D/E: {debt_to_equity})")
         elif debt_to_equity > 2.5:
             fundamental_score -= 5; fund_notes.append(f"⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: {debt_to_equity})")
     else:
-        # Đối với Ngân hàng/CK: Thưởng điểm nếu cổ tức đều đặn hoặc biên lãi tốt
         if dividend_yield >= 4.0:
             fundamental_score += 5; fund_notes.append(f"Cổ tức tiền mặt tốt ({dividend_yield}%)")
         else:
@@ -226,6 +222,8 @@ def evaluate_stock(symbol, data):
         "roa": roa,
         "dividend_yield": dividend_yield,
         "profit_growth_yoy": profit_growth_yoy,
+        "cfo_latest": cfo_latest,          # Bổ sung thêm vào kết quả xuất ra để tiện theo dõi
+        "debt_to_equity": debt_to_equity,  # Bổ sung thêm D/E
         "fundamental_score": fundamental_score,
         "technical_score": technical_score,
         "valuation_score": valuation_score,
@@ -277,7 +275,7 @@ def main():
         print(f"\n📌 NHÓM NGÀNH: [{sector}] - TOP {limit_count} TIÊU BIỂU:")
         print("=" * 140)
         df_sector = pd.DataFrame(top_items)
-        print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'roa', 'fundamental_score', 'technical_score', 'total_score', 'potential_zone']].to_string(index=False))
+        print(df_sector[['symbol', 'dividend_yield', 'pe', 'roe', 'cfo_latest', 'debt_to_equity', 'fundamental_score', 'technical_score', 'total_score', 'potential_zone']].to_string(index=False))
         print("=" * 140)
 
 if __name__ == "__main__":
