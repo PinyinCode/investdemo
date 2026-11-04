@@ -174,16 +174,27 @@ def parse_bctc_history(symbol):
     return bctc_records
 
 def extract_advanced_metrics_from_bctc(symbol):
-    """Trích xuất thông số chuyên nghiệp tối ưu, tự động nhận diện Ngân hàng để xử lý Biên gộp & D/E chuẩn xác"""
+    """Trích xuất thông số chuyên nghiệp tối ưu, tự động nhận diện Ngân hàng để xử lý Biên gộp & D/E chuẩn xác đồng thời lấy tên cty, vốn hóa, tổng số cp"""
     filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
     if not os.path.exists(filepath):
-        return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
+        return {
+            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0,
+            "company_name": "", "market_cap": 0, "total_shares": 0
+        }
 
     try:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except Exception:
-        return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
+        return {
+            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0,
+            "company_name": "", "market_cap": 0, "total_shares": 0
+        }
+
+    # Trích xuất các thuộc tính mới từ file BCTC (đã được lưu khi cào tổng quan)
+    company_name = data.get("company_name", "")
+    market_cap = data.get("market_cap", 0)
+    total_shares = data.get("total_shares", 0)
 
     balance_sheet = data.get("balance_sheet", [])
     cash_flow = data.get("cash_flow", [])
@@ -245,7 +256,6 @@ def extract_advanced_metrics_from_bctc(symbol):
                     is_bank_or_sec = True
 
     if is_bank_or_sec:
-        # Đối với ngân hàng, không áp dụng biên gộp sản xuất -> gán giá trị đặc biệt hoặc 0 để UI phân biệt
         gross_margin = 0.0
     else:
         gross_margin = round((gross_profit / revenue) * 100, 1) if revenue > 0 else 0
@@ -263,7 +273,10 @@ def extract_advanced_metrics_from_bctc(symbol):
         "cfo_latest": round(latest_cfo / 1e9, 2),
         "debt_to_equity": debt_to_equity,
         "gross_margin": gross_margin,
-        "net_profit_ttm": round(net_profit_ttm / 1e9, 2)
+        "net_profit_ttm": round(net_profit_ttm / 1e9, 2),
+        "company_name": company_name,
+        "market_cap": market_cap,
+        "total_shares": total_shares
     }
 
 def auto_git_push():
@@ -448,6 +461,9 @@ def main():
 
         stock_db[symbol] = {
             "symbol": symbol,
+            "company_name": adv_metrics["company_name"],     # Thuộc tính mới: Tên công ty
+            "market_cap": adv_metrics["market_cap"],         # Thuộc tính mới: Vốn hóa
+            "total_shares": adv_metrics["total_shares"],     # Thuộc tính mới: Tổng số cổ phiếu
             "close": int(close_price * 1000),
             "volume": int(volume),
             "pe": round(ratios.get("pe", 0), 2),
