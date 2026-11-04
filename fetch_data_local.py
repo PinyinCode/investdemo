@@ -5,7 +5,7 @@ import json
 import subprocess
 import numpy as np
 import requests
-from vnstock import Quote, Listing
+from vnstock import Quote, Listing, Reference
 
 DATA_FILE = "data.json"
 LAST_UPDATE_FILE = "last_update.json"
@@ -25,7 +25,6 @@ VN100_SYMBOLS = [
     "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "DHC", "IMP", "SBA", "SJS",
     "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
 ]
-
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 VNDIRECT_RATIOS = {
@@ -36,6 +35,7 @@ VNDIRECT_RATIOS = {
     "roa": "ROAA_TR_AVG5Q",
     "dividend_yield": "DIVIDEND_YIELD"
 }
+
 
 def get_vndirect_ratio(symbol, ratio_code):
     url = "https://api-finfo.vndirect.com.vn/v4/ratios"
@@ -51,29 +51,49 @@ def get_vndirect_ratio(symbol, ratio_code):
         pass
     return 0
 
-def get_vndirect_company_overview(symbol, company_info_map=None):
-    """Lấy thông tin tên công ty, vốn hóa và tổng số cổ phiếu thông qua dữ liệu Listing hoặc map tải sẵn"""
+
+def get_company_overview(symbol):
+    """
+    Lấy hồ sơ công ty qua Reference().company().overview() của vnstock.
+    Trả về tên công ty, vốn hóa thị trường, tổng số cổ phiếu.
+    """
     company_name = symbol
     market_cap = 0
     total_shares = 0
-    
+
     try:
-        if company_info_map and symbol in company_info_map:
-            item = company_info_map[symbol]
-            company_name = item.get('organName') or item.get('companyName') or item.get('enOrganName') or symbol
-            market_cap = float(item.get('marketCap', 0) or item.get('market_cap', 0) or 0)
-            total_shares = float(item.get('sharesOutstanding', 0) or item.get('totalShares', 0) or item.get('listingShares', 0) or 0)
+        overview = Reference().company(symbol).overview()
+        if overview is not None and not overview.empty:
+            row = overview.iloc[0].to_dict()
+            # Các trường tên có thể có
+            company_name = (
+                row.get("organ_name")
+                or row.get("company_name")
+                or row.get("en_organ_name")
+                or row.get("organ_short_name")
+                or symbol
+            )
+            # Vốn hóa thị trường (đơn vị: đồng)
+            market_cap = float(row.get("market_cap", 0) or row.get("marketCap", 0) or 0)
+            # Tổng số cổ phiếu đang lưu hành
+            total_shares = float(
+                row.get("outstanding_shares", 0)
+                or row.get("issue_share", 0)
+                or row.get("shares_outstanding", 0)
+                or row.get("total_shares", 0)
+                or 0
+            )
     except Exception as e:
-        print(f"⚠️ Không lấy được profile công ty cho {symbol}: {e}")
-        
+        print(f"   ⚠️ Không lấy được overview cho {symbol}: {e}")
+
     return {
         "company_name": company_name,
         "market_cap": market_cap,
-        "total_shares": total_shares
+        "total_shares": total_shares,
     }
 
+
 def aggregate_candles(data, interval):
-    """Thuật toán gom nhóm nến D1 thành W1 (Tuần) hoặc MN (Tháng) chuẩn xác"""
     if not data:
         return []
     if interval == 'D1':
@@ -105,6 +125,7 @@ def aggregate_candles(data, interval):
 
     return sorted(list(groups.values()), key=lambda x: x['time'])
 
+
 def fetch_history_with_fallback(symbol, start_date, end_date):
     sources = ['TCBS', 'VCI']
     for src in sources:
@@ -118,6 +139,7 @@ def fetch_history_with_fallback(symbol, start_date, end_date):
                 time.sleep(1)
         time.sleep(0.5)
     return None
+
 
 def parse_bctc_history(symbol):
     filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
@@ -162,7 +184,7 @@ def parse_bctc_history(symbol):
         total_assets = bs_dict[curr_p].get("BS_TOTAL_ASSETS", bs_dict[curr_p].get("TOTAL_ASSETS", 0))
         loans = bs_dict[curr_p].get("BS_LOANS_TO_CUSTOMERS", 0)
         equity = bs_dict[curr_p].get("BS_EQUITY", bs_dict[curr_p].get("EQUITY", 0))
-        
+
         nii = is_dict[curr_p].get("IS_NET_INTEREST_INCOME", 0)
         pat = is_dict[curr_p].get("IS_NET_PROFIT_AFTER_TAX", is_dict[curr_p].get("NET_PROFIT_AFTER_TAX", 0))
 
@@ -194,21 +216,17 @@ def parse_bctc_history(symbol):
 
     return bctc_records
 
+
 def extract_advanced_metrics_from_bctc(symbol):
-    """Trích xuất thông số chuyên nghiệp tối ưu, tự động nhận diện Ngân hàng để xử lý Biên gộp & D/E chuẩn xác"""
     filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
     if not os.path.exists(filepath):
-        return {
-            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0
-        }
+        return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
 
     try:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
     except Exception:
-        return {
-            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0
-        }
+        return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
 
     balance_sheet = data.get("balance_sheet", [])
     cash_flow = data.get("cash_flow", [])
@@ -218,12 +236,11 @@ def extract_advanced_metrics_from_bctc(symbol):
     if not latest_period and income_statement:
         latest_period = income_statement[0].get("period")
 
-    # 1. Dòng tiền kinh doanh CFO
     latest_cfo = 0
     cfo_ids = [
-        "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES", 
-        "CF_OPERATE_CASH_FLOW", 
-        "CFO", 
+        "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+        "CF_OPERATE_CASH_FLOW",
+        "CFO",
         "CF_NET_CASH"
     ]
     if cash_flow:
@@ -237,7 +254,6 @@ def extract_advanced_metrics_from_bctc(symbol):
                     latest_cfo = item.get("value", 0)
                     break
 
-    # 2. Tổng nợ phải trả & Vốn chủ sở hữu
     total_liabilities = 0
     equity = 0
     if balance_sheet:
@@ -252,7 +268,6 @@ def extract_advanced_metrics_from_bctc(symbol):
 
     debt_to_equity = round(total_liabilities / equity, 2) if equity > 0 else 0
 
-    # 3. Phân biệt Ngân hàng/Chứng khoán với Doanh nghiệp thường để tính Biên lợi nhuận
     gross_profit = 0
     revenue = 0
     is_bank_or_sec = False
@@ -266,7 +281,7 @@ def extract_advanced_metrics_from_bctc(symbol):
                     gross_profit = val
                 elif item_id in ["IS_NET_REVENUE", "REVENUE", "NET_REVENUE", "IS_TOTAL_REVENUE"]:
                     revenue = val
-                elif item_id in ["IS_NET_INTEREST_INCOME"]: # Chỉ tiêu đặc trưng của Ngân hàng
+                elif item_id in ["IS_NET_INTEREST_INCOME"]:
                     is_bank_or_sec = True
 
     if is_bank_or_sec:
@@ -274,7 +289,6 @@ def extract_advanced_metrics_from_bctc(symbol):
     else:
         gross_margin = round((gross_profit / revenue) * 100, 1) if revenue > 0 else 0
 
-    # 4. Lợi nhuận TTM (4 quý gần nhất)
     net_profit_ttm = 0
     pat_ids = ["IS_NET_PROFIT_AFTER_TAX", "NET_PROFIT_AFTER_TAX", "IS_PROFIT_AFTER_TAX"]
     pat_items = [item for item in income_statement if item.get("id") in pat_ids]
@@ -290,6 +304,7 @@ def extract_advanced_metrics_from_bctc(symbol):
         "net_profit_ttm": round(net_profit_ttm / 1e9, 2)
     }
 
+
 def auto_git_push():
     try:
         print("📤 Đang tiến hành đồng bộ dữ liệu lên GitHub...")
@@ -300,10 +315,9 @@ def auto_git_push():
             subprocess.run(["git", "add", "bctc_data"], check=True)
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
-            
+
         commit_msg = f"Auto update symbols data & last_update timestamp - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        
         subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=True)
         subprocess.run(["git", "push", "origin", "main"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
@@ -312,13 +326,14 @@ def auto_git_push():
     except Exception as e:
         print(f"⚠️ Lỗi Git push: {e}")
 
+
 def main():
     print("==================================================")
     print("        BƯỚC 1: CHỌN PHẠM VI MÃ CỔ PHIẾU        ")
     print("==================================================")
     print("1. Cào TOÀN BỘ danh sách VN100 (Mặc định)")
     print("2. Cào RIÊNG TỪNG MÃ (Tùy chọn mã cụ thể)")
-    
+
     target_symbols = VN100_SYMBOLS
     mode_choice = input("Nhập lựa chọn chế độ (1/2, mặc định 1): ").strip()
     if mode_choice == '2':
@@ -337,9 +352,9 @@ def main():
     print("1. Gần nhất: 30 phiên giao dịch gần nhất (Mặc định)")
     print("2. Dài hạn: 10 năm gần đây (~2500 phiên)")
     print("3. Tùy chỉnh: Nhập số phiên tự do (VD: 2, 5, 100 phiên)")
-    
+
     choice = input("Nhập lựa chọn số phiên (1/2/3, mặc định 1): ").strip()
-    
+
     num_sessions = 30
     if choice == '2':
         num_sessions = 2500
@@ -355,21 +370,8 @@ def main():
     else:
         print("-> Đã chọn chế độ mặc định (30 phiên gần nhất).")
 
-    # Tải trước danh sách thông tin chung qua Listing của vnstock để lấy tên cty, vốn hóa chuẩn xác
-    print("🔄 Đang tải thông tin chung danh sách công ty từ vnstock (Listing)...")
-    company_info_map = {}
-    try:
-        df_listing = Listing().symbols_by_exchange()
-        if df_listing is not None and not df_listing.empty:
-            for _, row in df_listing.iterrows():
-                sym = row.get('symbol') or row.get('ticker')
-                if sym:
-                    company_info_map[sym.upper()] = row.to_dict()
-    except Exception as e:
-        print(f"⚠️ Không tải được danh sách chung qua Listing: {e}")
-
     print(f"\n🚀 Bắt đầu cào dữ liệu cho {len(target_symbols)} mã (Lấy đúng {num_sessions} phiên giao dịch gần nhất)...")
-    
+
     if not os.path.exists(HISTORY_DIR):
         os.makedirs(HISTORY_DIR)
 
@@ -391,22 +393,22 @@ def main():
         closes, volumes = [], []
         close_price, volume = 0, 0
         history_d1 = []
-        
+
         try:
             df = fetch_history_with_fallback(symbol, start_date, end_date)
             if df is not None and not df.empty:
                 df = df.tail(num_sessions)
-                
+
                 closes = df['close'].tolist()
                 volumes = df['volume'].tolist()
                 close_price = closes[-1]
                 volume = volumes[-1]
-                
+
                 new_history_d1 = []
                 for _, row in df.iterrows():
                     time_val = row['time']
                     time_str = time_val.strftime('%Y-%m-%d') if hasattr(time_val, 'strftime') else str(time_val)[:10]
-                    
+
                     new_history_d1.append({
                         "time": time_str,
                         "open": float(row.get('open', row['close'])),
@@ -415,10 +417,10 @@ def main():
                         "close": float(row['close']),
                         "volume": int(row.get('volume', 0))
                     })
-                
+
                 history_file_path = os.path.join(HISTORY_DIR, f"{symbol}.json")
                 existing_history_d1 = []
-                
+
                 if os.path.exists(history_file_path):
                     try:
                         with open(history_file_path, "r", encoding="utf-8") as sf:
@@ -426,16 +428,16 @@ def main():
                             existing_history_d1 = old_history_data.get("history_d1", [])
                     except Exception:
                         pass
-                
+
                 merged_dict = {item['time']: item for item in existing_history_d1}
                 for item in new_history_d1:
                     merged_dict[item['time']] = item
-                
+
                 history_d1 = sorted(list(merged_dict.values()), key=lambda x: x['time'])
-                
+
                 closes = [bar['close'] for bar in history_d1]
                 volumes = [bar['volume'] for bar in history_d1]
-                
+
         except Exception as e:
             print(f"⚠️ Lỗi xử lý lịch sử {symbol}: {e}")
 
@@ -443,9 +445,9 @@ def main():
             print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
             continue
 
-        # Lấy thông tin Tên công ty, Vốn hóa, Tổng số cổ phiếu từ map Listing đã tải
-        company_overview = get_vndirect_company_overview(symbol, company_info_map)
-        time.sleep(0.1)
+        # Lấy hồ sơ công ty qua Reference().company().overview()
+        company_overview = get_company_overview(symbol)
+        time.sleep(0.3)
 
         ratios = {}
         for key, code in VNDIRECT_RATIOS.items():
@@ -484,14 +486,14 @@ def main():
         bctc_history = parse_bctc_history(symbol)
         adv_metrics = extract_advanced_metrics_from_bctc(symbol)
         old_data = stock_db.get(symbol, {})
-        
+
         current_time_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
         stock_db[symbol] = {
             "symbol": symbol,
-            "company_name": company_overview["company_name"],     # Đã lấy được tên chính xác
-            "market_cap": company_overview["market_cap"],         # Đã lấy được vốn hóa
-            "total_shares": company_overview["total_shares"],     # Đã lấy được số cổ phiếu
+            "company_name": company_overview["company_name"],
+            "market_cap": company_overview["market_cap"],
+            "total_shares": company_overview["total_shares"],
             "close": int(close_price * 1000),
             "volume": int(volume),
             "pe": round(ratios.get("pe", 0), 2),
@@ -514,12 +516,12 @@ def main():
             "macro_view": old_data.get("macro_view", ""),
             "ai_updated_at": old_data.get("ai_updated_at", "")
         }
-        
+
         time.sleep(1.5)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-        
+
     crawl_timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     with open(LAST_UPDATE_FILE, "w", encoding="utf-8") as f:
         json.dump({"last_update": crawl_timestamp}, f, ensure_ascii=False)
@@ -527,6 +529,7 @@ def main():
     print(f"✅ Đã lưu file {LAST_UPDATE_FILE} với mốc thời gian: {crawl_timestamp}")
 
     auto_git_push()
+
 
 if __name__ == "__main__":
     main()
