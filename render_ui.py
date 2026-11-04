@@ -5,13 +5,28 @@ from datetime import datetime
 from simulator import run_complex_backtest_simulation
 
 OUTPUT_HTML = "index.html"
+LAST_UPDATE_FILE = "last_update.json"
+
+def get_last_update_string():
+    """Đọc mốc thời gian cào dữ liệu thực tế vừa lưu từ file last_update.json"""
+    if os.path.exists(LAST_UPDATE_FILE):
+        try:
+            with open(LAST_UPDATE_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if isinstance(data, dict) and "last_update" in data:
+                    return data["last_update"]
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc file last_update.json: {e}")
+    # Nếu file không tồn tại hoặc lỗi, sử dụng thời gian hiện tại
+    return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 def generate_html():
     sim_data = run_complex_backtest_simulation()
     print(f"📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
 
-    # Lấy thời điểm cập nhật giá cuối cùng
-    last_update_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    # Lấy mốc thời gian cào thực tế từ file last_update.json
+    last_update_str = get_last_update_string()
+    print(f"🕒 Mốc thời gian cập nhật dữ liệu được sử dụng: {last_update_str}")
 
     html_content = f"""<!DOCTYPE html>
 <html lang="vi">
@@ -1496,7 +1511,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
     
-    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML} (Bổ sung hiển thị thời gian cập nhật giá: {last_update_str})!")
+    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML} (Mốc thời gian dữ liệu: {last_update_str})!")
 
 if __name__ == "__main__":
     generate_html()
