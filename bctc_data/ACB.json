@@ -1,4 +1,7 @@
 {
+    "company_name": "",
+    "market_cap": 0,
+    "total_shares": 0,
     "balance_sheet": [
         {
             "period": "2026-Q3",
@@ -2813,5 +2816,5 @@
             "value": 139824608000000.0
         }
     ],
-    "updated_at": "2026-11-04 19:09:37"
+    "updated_at": "2026-11-04 20:14:02"
 }
