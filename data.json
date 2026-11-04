@@ -1,9 +1,9 @@
 {
     "ACB": {
         "symbol": "ACB",
-        "company_name": "ACB",
+        "company_name": "Ngân hàng TMCP Á Châu",
         "market_cap": 0.0,
-        "total_shares": 0.0,
+        "total_shares": 0,
         "close": 20500,
         "volume": 11819700,
         "pe": 7.3,
@@ -18,7 +18,7 @@
         "net_profit_ttm": 16096.39,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 20:57:05",
+        "updated_at": "04/11/2026 21:05:09",
         "bctc_history": [
             {
                 "period": "2026-Q3",
