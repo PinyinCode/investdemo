@@ -179,7 +179,7 @@
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: 04/11/2026 09:21:49</span></p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: 04/11/2026 09:35:22</span></p>
                 </div>
             </div>
             
@@ -477,7 +477,7 @@
             </div>
 
             <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center text-xs">
-                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">04/11/2026 09:21:49</strong></span>
+                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">04/11/2026 09:35:22</strong></span>
                 <div class="flex gap-2">
                     <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold flex items-center gap-1.5">
                         <i class="fa-solid fa-robot"></i> Xem AI chi tiết
@@ -799,10 +799,9 @@
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
                         
-                        // ĐÃ SỬA: Cập nhật đường dẫn ưu tiên đọc các trường BCTC từ data.json và screener
-                        bctc: extraData.bctc_evaluation || extraData.bctc || extraData.outlook || item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.",
-                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || extraData.outlook || item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.",
-                        
+                        // Lấy riêng biệt các trường BCTC và Định giá từ extraData hoặc item
+                        bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
+                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
                         ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
@@ -962,8 +961,10 @@
             }
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.";
-            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
+            // PHÂN TÁCH ĐỘC LẬP: Ô BCTC đọc từ bctc_evaluation / bctc; Ô Định giá đọc từ outlook tránh bị trùng lặp
+            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
+            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá từ AI.";
+            
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
