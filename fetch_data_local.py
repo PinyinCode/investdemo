@@ -100,7 +100,8 @@ def fetch_history_with_fallback(symbol, start_date, end_date):
     return None
 
 def parse_bctc_history(symbol):
-    """Đọc file BCTC JSON chi tiết của mã trong thư mục bctc_data và tính toán toàn bộ chuỗi quý (3 năm)"""
+    """Đọc file BCTC JSON chi tiết (hỗ trợ 8 quý) trong thư mục bctc_data, 
+    tính toán các chỉ số tăng trưởng QoQ, YoY và chuỗi thời gian chi tiết."""
     filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
     if not os.path.exists(filepath):
         return []
@@ -140,19 +141,22 @@ def parse_bctc_history(symbol):
         year, q_str = curr_p.split("-")
         yoy_p = f"{int(year) - 1}-{q_str}"
 
-        total_assets = bs_dict[curr_p].get("BS_TOTAL_ASSETS", 0)
-        loans = bs_dict[curr_p].get("BS_LOANS_TO_CUSTOMERS", 0)
-        equity = bs_dict[curr_p].get("BS_EQUITY", 0)
-        nii = is_dict[curr_p].get("IS_NET_INTEREST_INCOME", 0)
-        pat = is_dict[curr_p].get("IS_NET_PROFIT_AFTER_TAX", 0)
+        # Lấy số liệu linh hoạt (hỗ trợ cả ngân hàng lẫn phi ngân hàng)
+        total_assets = bs_dict[curr_p].get("BS_TOTAL_ASSETS", bs_dict[curr_p].get("TOTAL_ASSETS", 0))
+        loans = bs_dict[curr_p].get("BS_LOANS_TO_CUSTOMERS", 0) # Riêng ngân hàng
+        equity = bs_dict[curr_p].get("BS_EQUITY", bs_dict[curr_p].get("EQUITY", 0))
+        
+        nii = is_dict[curr_p].get("IS_NET_INTEREST_INCOME", 0) # Ngân hàng
+        pat = is_dict[curr_p].get("IS_NET_PROFIT_AFTER_TAX", is_dict[curr_p].get("NET_PROFIT_AFTER_TAX", 0))
 
+        # Tăng trưởng QoQ & YoY cho khoản vay (hoặc tài sản)
         loans_prev = bs_dict.get(prev_p, {}).get("BS_LOANS_TO_CUSTOMERS", 0) if prev_p else 0
         loans_yoy = bs_dict.get(yoy_p, {}).get("BS_LOANS_TO_CUSTOMERS", 0)
         credit_growth_qoq = ((loans - loans_prev) / loans_prev * 100) if loans_prev else 0
         credit_growth_yoy = ((loans - loans_yoy) / loans_yoy * 100) if loans_yoy else 0
 
-        pat_prev = is_dict.get(prev_p, {}).get("IS_NET_PROFIT_AFTER_TAX", 0) if prev_p else 0
-        pat_yoy = is_dict.get(yoy_p, {}).get("IS_NET_PROFIT_AFTER_TAX", 0)
+        pat_prev = is_dict.get(prev_p, {}).get("IS_NET_PROFIT_AFTER_TAX", is_dict.get(prev_p, {}).get("NET_PROFIT_AFTER_TAX", 0)) if prev_p else 0
+        pat_yoy = is_dict.get(yoy_p, {}).get("IS_NET_PROFIT_AFTER_TAX", is_dict.get(yoy_p, {}).get("NET_PROFIT_AFTER_TAX", 0))
         pat_growth_qoq = ((pat - pat_prev) / pat_prev * 100) if pat_prev else 0
         pat_growth_yoy = ((pat - pat_yoy) / pat_yoy * 100) if pat_yoy else 0
 
@@ -174,6 +178,73 @@ def parse_bctc_history(symbol):
 
     return bctc_records
 
+def extract_advanced_metrics_from_bctc(symbol):
+    """Trích xuất các thông số chuyên sâu (CFO, D/E, Gross Margin, TTM Net Profit) từ chuỗi 8 quý gần nhất"""
+    filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
+    if not os.path.exists(filepath):
+        return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
+
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
+
+    balance_sheet = data.get("balance_sheet", [])
+    cash_flow = data.get("cash_flow", [])
+    income_statement = data.get("income_statement", [])
+
+    latest_period = balance_sheet[0].get("period") if balance_sheet else None
+
+    # Lấy CFO kỳ gần nhất
+    latest_cfo = 0
+    if cash_flow and latest_period:
+        for item in cash_flow:
+            if item.get("period") == latest_period and item.get("id") in ["CF_OPERATE_CASH_FLOW", "CFO"]:
+                latest_cfo = item.get("value", 0)
+                break
+        if latest_cfo == 0 and cash_flow:
+            latest_cfo = cash_flow[0].get("value", 0)
+
+    # Đòn bẩy D/E kỳ gần nhất
+    total_liabilities = 0
+    equity = 0
+    if balance_sheet and latest_period:
+        for item in balance_sheet:
+            if item.get("period") == latest_period:
+                if item.get("id") in ["BS_TOTAL_LIABILITIES", "TOTAL_LIABILITIES"]:
+                    total_liabilities = item.get("value", 0)
+                elif item.get("id") in ["BS_EQUITY", "EQUITY"]:
+                    equity = item.get("value", 0)
+    debt_to_equity = round(total_liabilities / equity, 2) if equity > 0 else 0
+
+    # Biên lợi nhuận gộp kỳ gần nhất
+    gross_profit = 0
+    revenue = 0
+    if income_statement and latest_period:
+        for item in income_statement:
+            if item.get("period") == latest_period:
+                if item.get("id") in ["IS_GROSS_PROFIT", "GROSS_PROFIT"]:
+                    gross_profit = item.get("value", 0)
+                elif item.get("id") in ["IS_NET_REVENUE", "REVENUE", "NET_REVENUE"]:
+                    revenue = item.get("value", 0)
+    gross_margin = round((gross_profit / revenue) * 100, 1) if revenue > 0 else 0
+
+    # Tính TTM (Trailing Twelve Months - Tổng lợi nhuận 4 quý gần nhất)
+    net_profit_ttm = 0
+    if income_statement:
+        pat_items = [item for item in income_statement if item.get("id") in ["IS_NET_PROFIT_AFTER_TAX", "NET_PROFIT_AFTER_TAX"]]
+        pat_items = sorted(pat_items, key=lambda x: x.get("period", ""), reverse=True)
+        latest_4q = pat_items[:4]
+        net_profit_ttm = sum([q.get("value", 0) for q in latest_4q])
+
+    return {
+        "cfo_latest": round(latest_cfo / 1e9, 2),
+        "debt_to_equity": debt_to_equity,
+        "gross_margin": gross_margin,
+        "net_profit_ttm": round(net_profit_ttm / 1e9, 2)
+    }
+
 def auto_git_push():
     """Tự động đồng bộ dữ liệu lên GitHub an toàn, tránh lỗi rejected"""
     try:
@@ -185,10 +256,9 @@ def auto_git_push():
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
             
-        commit_msg = f"Auto update symbols data & BCTC - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update symbols data & BCTC (8 quarters) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         
-        # Pull rebase trước khi push để tránh xung đột
         subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=True)
         subprocess.run(["git", "push", "origin", "main"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
@@ -225,7 +295,7 @@ def main():
     
     choice = input("Nhập lựa chọn số phiên (1/2/3, mặc định 1): ").strip()
     
-    num_sessions = 30 # Mặc định
+    num_sessions = 30
     if choice == '2':
         num_sessions = 2500
         print("-> Đã chọn chế độ cào 10 năm dữ liệu (~2500 phiên).")
@@ -349,7 +419,12 @@ def main():
         with open(os.path.join(HISTORY_DIR, f"{symbol}.json"), "w", encoding="utf-8") as sf:
             json.dump(symbol_history_data, sf, ensure_ascii=False)
 
+        # Xử lý chuỗi 8 quý từ thư mục bctc_data
         bctc_history = parse_bctc_history(symbol)
+        
+        # Trích xuất các chỉ số nâng cao (CFO, D/E, Biên gộp, Lợi nhuận TTM 4 quý)
+        adv_metrics = extract_advanced_metrics_from_bctc(symbol)
+        
         old_data = stock_db.get(symbol, {})
         
         stock_db[symbol] = {
@@ -362,10 +437,14 @@ def main():
             "roe": round(ratios.get("roe", 0) * 100, 1),
             "roa": round(ratios.get("roa", 0) * 100, 1),
             "dividend_yield": round(ratios.get("dividend_yield", 0) * 100, 2),
+            "cfo_latest": adv_metrics["cfo_latest"],          # Dòng tiền kinh doanh kỳ gần nhất (tỷ VNĐ)
+            "debt_to_equity": adv_metrics["debt_to_equity"],  # Tỷ lệ D/E
+            "gross_margin": adv_metrics["gross_margin"],      # Biên lợi nhuận gộp (%)
+            "net_profit_ttm": adv_metrics["net_profit_ttm"],  # Lợi nhuận trượt 4 quý (TTM)
             "recommendation": status,
             "price_zone": detail,
             "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "bctc_history": bctc_history,
+            "bctc_history": bctc_history,                     # Toàn bộ lịch sử chuỗi 8 quý
             "outlook": old_data.get("outlook", ""),
             "ai_recommendation": old_data.get("ai_recommendation", ""),
             "ai_price_zone": old_data.get("ai_price_zone", ""),
@@ -377,7 +456,7 @@ def main():
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-    print("✅ Đã hoàn tất cập nhật dữ liệu vào data.json!")
+    print("✅ Đã hoàn tất cập nhật dữ liệu tài chính (chuỗi 8 quý & chỉ số nâng cao) vào data.json!")
 
     auto_git_push()
 
