@@ -157,24 +157,62 @@ def get_vndirect_ratio(symbol, ratio_code):
 
 def get_company_overview(symbol, close_price=0):
     """
-    Lấy số lượng cổ phiếu từ issue_share của Reference().company().overview().
-    Tính vốn hóa từ close_price (nghìn đồng) × total_shares.
-    Tên công ty lấy từ dict hardcode COMPANY_NAMES.
+    Lấy số cổ phiếu và vốn hóa từ VNDirect API (ổn định hơn vnstock Reference).
+    Fallback: nếu VNDirect không có, thử tính từ issue_share (nếu có).
     """
     company_name = COMPANY_NAMES.get(symbol, symbol)
     total_shares = 0
     market_cap = 0
 
+    # 1. Thử lấy SHARE_OUTSTANDING từ VNDirect
     try:
-        overview = Reference().company(symbol).overview()
-        if overview is not None and not overview.empty:
-            row = overview.iloc[0].to_dict()
-            total_shares = float(row.get("issue_share", 0) or 0)
+        url = "https://api-finfo.vndirect.com.vn/v4/ratios"
+        params = {
+            "q": f"code:{symbol}~ratioCode:SHARE_OUTSTANDING",
+            "size": 1,
+            "sort": "reportDate:desc"
+        }
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+        r = requests.get(url, params=params, headers=headers, timeout=10)
+        if r.status_code == 200:
+            data = r.json().get("data", [])
+            if data:
+                total_shares = float(data[0].get("value", 0) or 0)
     except Exception as e:
-        print(f"   ⚠️ Không lấy được overview cho {symbol}: {e}")
+        print(f"   ⚠️ VNDirect SHARE_OUTSTANDING lỗi cho {symbol}: {e}")
 
-    # Vốn hóa (đồng) = giá (nghìn đồng) × 1000 × số cổ phiếu
-    if close_price > 0 and total_shares > 0:
+    # 2. Nếu VNDirect không có, thử lấy MARKET_CAP trực tiếp
+    if total_shares == 0:
+        try:
+            url = "https://api-finfo.vndirect.com.vn/v4/ratios"
+            params = {
+                "q": f"code:{symbol}~ratioCode:MARKET_CAP",
+                "size": 1,
+                "sort": "reportDate:desc"
+            }
+            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+            r = requests.get(url, params=params, headers=headers, timeout=10)
+            if r.status_code == 200:
+                data = r.json().get("data", [])
+                if data:
+                    market_cap = float(data[0].get("value", 0) or 0)
+                    if market_cap > 0 and close_price > 0:
+                        total_shares = market_cap / (close_price * 1000)
+        except Exception as e:
+            print(f"   ⚠️ VNDirect MARKET_CAP lỗi cho {symbol}: {e}")
+
+    # 3. Nếu vẫn không có, thử dùng issue_share từ vnstock (fallback cuối)
+    if total_shares == 0:
+        try:
+            overview = Reference().company(symbol).overview()
+            if overview is not None and not overview.empty:
+                row = overview.iloc[0].to_dict()
+                total_shares = float(row.get("issue_share", 0) or 0)
+        except Exception:
+            pass
+
+    # 4. Tính market_cap nếu chưa có
+    if market_cap == 0 and close_price > 0 and total_shares > 0:
         market_cap = close_price * 1000 * total_shares
 
     return {
