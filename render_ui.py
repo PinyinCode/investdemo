@@ -10,7 +10,7 @@ def generate_html():
     sim_data = run_complex_backtest_simulation()
     print(f"📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
 
-    # Lấy thời điểm cập nhật giá cuối cùng (Current formatted time)
+    # Lấy thời điểm cập nhật giá cuối cùng
     last_update_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
     html_content = f"""<!DOCTYPE html>
@@ -814,10 +814,9 @@ def generate_html():
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
                         
-                        // ĐÃ SỬA: Cập nhật đường dẫn ưu tiên đọc các trường BCTC từ data.json và screener
-                        bctc: extraData.bctc_evaluation || extraData.bctc || extraData.outlook || item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.",
-                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || extraData.outlook || item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.",
-                        
+                        // Lấy riêng biệt các trường BCTC và Định giá từ extraData hoặc item
+                        bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
+                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
                         ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
@@ -977,8 +976,10 @@ def generate_html():
             }}
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.";
-            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
+            // PHÂN TÁCH ĐỘC LẬP: Ô BCTC đọc từ bctc_evaluation / bctc; Ô Định giá đọc từ outlook tránh bị trùng lặp
+            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
+            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá từ AI.";
+            
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${{item.ai_updated_at || 'Hệ thống tự động'}}`;
 
