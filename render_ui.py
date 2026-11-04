@@ -263,10 +263,11 @@ def generate_html():
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-trophy text-xs md:text-sm"></i>
                     </span>
+                    <!-- Đặt mặc định là FUNDAMENTAL (Điểm Cơ bản) thay vì NONE -->
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
                         <option value="NONE">Mặc định (A-Z)</option>
                         <option value="ALL_SCORE">🏆 Sắp xếp Tổng hợp</option>
-                        <option value="FUNDAMENTAL">💰 Sắp xếp Cơ bản</option>
+                        <option value="FUNDAMENTAL" selected>💰 Sắp xếp Cơ bản</option>
                         <option value="TECHNICAL">📈 Sắp xếp Kỹ thuật</option>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-amber-400 pointer-events-none">
@@ -873,7 +874,8 @@ def generate_html():
                 return matchSearch && matchSector;
             });
 
-            if (rankingMode === "FUNDAMENTAL") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
+            // Mặc định sắp xếp theo điểm cơ bản nếu rankingMode là FUNDAMENTAL hoặc NONE
+            if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
             else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
