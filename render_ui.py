@@ -17,14 +17,12 @@ def get_last_update_string():
                     return data["last_update"]
         except Exception as e:
             print(f"⚠️ Lỗi đọc file last_update.json: {e}")
-    # Nếu file không tồn tại hoặc lỗi, sử dụng thời gian hiện tại
     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 def generate_html():
     sim_data = run_complex_backtest_simulation()
     print(f"📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
 
-    # Lấy mốc thời gian cào thực tế từ file last_update.json
     last_update_str = get_last_update_string()
     print(f"🕒 Mốc thời gian cập nhật dữ liệu được sử dụng: {last_update_str}")
 
@@ -339,7 +337,7 @@ def generate_html():
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
 
-                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP MỚI -->
+                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP MỚI (LINH HOẠT THEO NGÀNH) -->
                 <div>
                     <button type="button" onclick="toggleProMetrics()" id="btn-toggle-prometrics" class="w-full py-2 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 shadow-sm">
                         <i class="fa-solid fa-chart-pie text-emerald-400" id="prometrics-icon"></i> 
@@ -349,10 +347,22 @@ def generate_html():
 
                     <!-- KHUNG CHỈ SỐ CHUYÊN NGHIỆP (ẨN MẶC ĐỊNH) -->
                     <div id="pro-metrics-box" class="hidden mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 bg-slate-950/80 p-3 rounded-xl border border-emerald-500/30 text-center animate-fadeIn">
-                        <div><span class="text-[10px] text-slate-400 block">Dòng tiền CFO</span><span id="modal-cfo" class="text-xs font-bold text-emerald-400">--</span></div>
-                        <div><span class="text-[10px] text-slate-400 block">Đòn bẩy D/E</span><span id="modal-de" class="text-xs font-bold text-amber-400">--</span></div>
-                        <div><span class="text-[10px] text-slate-400 block">Biên gộp</span><span id="modal-gm" class="text-xs font-bold text-blue-400">--</span></div>
-                        <div><span class="text-[10px] text-slate-400 block">LN TTM (4Q)</span><span id="modal-ttm" class="text-xs font-bold text-indigo-400">--</span></div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block" id="label-cfo" title="Dòng tiền hoạt động kinh doanh">Dòng tiền CFO</span>
+                            <span id="modal-cfo" class="text-xs font-bold text-emerald-400">--</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block" id="label-de" title="Nợ phải trả / Vốn chủ sở hữu">Đòn bẩy D/E</span>
+                            <span id="modal-de" class="text-xs font-bold text-amber-400">--</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block" id="label-gm" title="Biên lợi nhuận gộp (Doanh nghiệp thường) / Biên đặc thù">Biên gộp</span>
+                            <span id="modal-gm" class="text-xs font-bold text-blue-400">--</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block">LN TTM (4Q)</span>
+                            <span id="modal-ttm" class="text-xs font-bold text-indigo-400">--</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -744,7 +754,7 @@ def generate_html():
         function formatNumber(num) {{
             if (num === undefined || num === null || num === 0) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
-            return Math.round(val).toString().replace(/\B(?=(\d{{3}})+(?!\d))/g, ".");
+            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }}
         function formatPercent(num) {{
             if (num === undefined || num === null) return '—';
@@ -829,7 +839,6 @@ def generate_html():
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
                         
-                        // Lấy riêng biệt các trường BCTC và Định giá từ extraData hoặc item
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
@@ -893,7 +902,7 @@ def generate_html():
                     if (index === 0) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }}
                     else if (index === 1) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }}
                     else if (index === 2) {{ topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }}
-                    else {{ topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${{index + 1}}</span>`; }}
+                    else {{ topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }}
                 }}
 
                 let scoreHtml = "";
@@ -903,57 +912,57 @@ def generate_html():
                     if (rankingMode === "FUNDAMENTAL") {{ label = "Điểm Cơ bản"; valScore = item.fundamental_score; }}
                     else if (rankingMode === "TECHNICAL") {{ label = "Điểm Kỹ thuật"; valScore = item.technical_score; }}
 
-                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${{label}}: <strong>${{valScore}}/100</strong></div>`;
+                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${label}: <strong>${valScore}/100</strong></div>`;
                 }}
 
                 const card = document.createElement('div');
-                card.className = `relative bg-slate-900 rounded-xl border ${{borderColor}} ${{cardGlow}} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
+                card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
                 card.onclick = () => openChartModal(item.symbol);
                 
                 card.innerHTML = `
-                    ${{topBadge}}
+                    ${topBadge}
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-xl font-black text-white">${{item.symbol}}</span>
-                                    <button type="button" onclick="event.stopPropagation(); openModal('${{item.symbol}}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
+                                    <span class="text-xl font-black text-white">${item.symbol}</span>
+                                    <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
                                         <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
-                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${{statusColor}}">${{displayRec}}</span>
+                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${{SECTOR_NAMES[item.sector] || item.sector}}</span>
+                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
                             </div>
                             <div class="text-right">
-                                <span class="block text-lg font-bold text-emerald-400">${{formatNumber(item.close_price)}}</span>
-                                <span class="text-[10px] text-slate-500">Tổng điểm: ${{item.total_score}}</span>
+                                <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
+                                <span class="text-[10px] text-slate-500">Tổng điểm: ${item.total_score}</span>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50 text-center">
-                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${{item.pe > 0 ? item.pe.toFixed(1) : '—'}}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${{item.pb > 0 ? item.pb.toFixed(1) : '—'}}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${{formatPercent(item.roe)}}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${{item.total_score}}đ</span></div>
+                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${item.pe > 0 ? item.pe.toFixed(1) : '—'}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${item.pb > 0 ? item.pb.toFixed(1) : '—'}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
                         </div>
                     </div>
-                    ${{scoreHtml}}
+                    ${scoreHtml}
                 `;
                 container.appendChild(card);
-            }});
-        }}
+            });
+        }
 
         function switchAiTab(tabName) {{
             currentActiveTab = tabName;
             ['eval', 'simulator'].forEach(t => {{
-                const contentEl = document.getElementById(`tab-content-${{t}}`);
-                const btnEl = document.getElementById(`tab-btn-${{t}}`);
+                const contentEl = document.getElementById(`tab-content-${t}`);
+                const btnEl = document.getElementById(`tab-btn-${t}`);
                 if (contentEl) contentEl.classList.add('hidden');
                 if (btnEl) btnEl.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
             }});
 
-            const activeContent = document.getElementById(`tab-content-${{tabName}}`);
-            const activeBtn = document.getElementById(`tab-btn-${{tabName}}`);
+            const activeContent = document.getElementById(`tab-content-${tabName}`);
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
             if (activeContent) activeContent.classList.remove('hidden');
             if (activeBtn) activeBtn.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
 
@@ -970,7 +979,7 @@ def generate_html():
             switchAiTab(currentActiveTab);
             
             document.getElementById('modal-symbol-input').value = item.symbol;
-            document.getElementById('modal-sector').innerText = `Ngành: ${{SECTOR_NAMES[item.sector] || item.sector}}`;
+            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
@@ -979,10 +988,35 @@ def generate_html():
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
+            // Xử lý hiển thị thông số chuyên sâu linh hoạt theo nhóm ngành
+            const isBankOrSec = (item.sector === "NGAN_HANG" || item.sector === "CHUNG_KHOAN");
+            
             document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
-            document.getElementById('modal-de').innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
-            document.getElementById('modal-gm').innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
             document.getElementById('modal-ttm').innerText = (item.net_profit_ttm !== undefined && item.net_profit_ttm !== null) ? item.net_profit_ttm + ' Tỷ' : '—';
+
+            const deLabel = document.getElementById('label-de');
+            const deVal = document.getElementById('modal-de');
+            if (isBankOrSec) {{
+                deLabel.innerText = "Hệ số T.Sản/VCSH";
+                deLabel.title = "Đòn bẩy đặc thù Ngân hàng/Chứng khoán";
+                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity + 'x (Nợ/VCSH)' : '—';
+            }} else {{
+                deLabel.innerText = "Đòn bẩy D/E";
+                deLabel.title = "Nợ phải trả / Vốn chủ sở hữu";
+                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
+            }}
+
+            const gmLabel = document.getElementById('label-gm');
+            const gmVal = document.getElementById('modal-gm');
+            if (isBankOrSec) {{
+                gmLabel.innerText = "Đặc thù ngành";
+                gmLabel.title = "Ngân hàng/Chứng khoán không tính biên gộp truyền thống";
+                gmVal.innerText = "N/A (Ngành tài chính)";
+            }} else {{
+                gmLabel.innerText = "Biên gộp";
+                gmLabel.title = "Biên lợi nhuận gộp";
+                gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
+            }}
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
             let priceZoneText = item.ai_price_zone;
@@ -991,12 +1025,11 @@ def generate_html():
             }}
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-            // PHÂN TÁCH ĐỘC LẬP: Ô BCTC đọc từ bctc_evaluation / bctc; Ô Định giá đọc từ outlook tránh bị trùng lặp
             document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá từ AI.";
             
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
-            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${{item.ai_updated_at || 'Hệ thống tự động'}}`;
+            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
             let histRate = 15;
             if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {{
@@ -1008,8 +1041,8 @@ def generate_html():
 
             const details = quarterlyMeanDetails[symbol];
             if (details) {{
-                document.getElementById('sim-start-quarter-info').innerText = `${{details.start_quarter}}: ${{details.start_price_mean.toLocaleString('vi-VN')}} đ`;
-                document.getElementById('sim-end-quarter-info').innerText = `${{details.end_quarter}}: ${{details.end_price_mean.toLocaleString('vi-VN')}} đ`;
+                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${details.start_price_mean.toLocaleString('vi-VN')} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${details.end_price_mean.toLocaleString('vi-VN')} đ`;
             }} else {{
                 document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
                 document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
@@ -1095,8 +1128,8 @@ def generate_html():
             symbols.sort().forEach(sym => {{
                 const item = document.createElement('button');
                 item.type = 'button';
-                item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${{sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}}`;
-                item.innerHTML = `<span>${{sym}}</span>`;
+                item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
+                item.innerHTML = `<span>${sym}</span>`;
                 item.onclick = (e) => {{
                     e.stopPropagation();
                     document.getElementById('symbol-dropdown').classList.add('hidden');
@@ -1123,7 +1156,7 @@ def generate_html():
         function switchInterval(interval) {{
             currentInterval = interval;
             ['d1', 'w1', 'mn'].forEach(i => {{
-                const btn = document.getElementById(`btn-${{i}}`);
+                const btn = document.getElementById(`btn-${i}`);
                 if (btn) {{
                     btn.className = i === interval.toLowerCase() 
                         ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
@@ -1135,7 +1168,7 @@ def generate_html():
 
         function toggleIndicator(name) {{
             activeIndicators[name] = !activeIndicators[name];
-            const btn = document.getElementById(`btn-ind-${{name.toLowerCase()}}`);
+            const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
             if (btn) {{
                 btn.className = activeIndicators[name]
                     ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition"
@@ -1220,7 +1253,7 @@ def generate_html():
                     }});
                 }}
             }} else {{
-                alert(`Không tìm thấy dữ liệu thời gian cho ${{quarterStr}} trong khung thời gian hiện tại!`);
+                alert(`Không tìm thấy dữ liệu thời gian cho ${quarterStr} trong khung thời gian hiện tại!`);
             }}
         }}
 
@@ -1256,7 +1289,7 @@ def generate_html():
             document.getElementById('chart-loading').classList.remove('hidden');
 
             try {{
-                const res = await fetch(`history/${{symbol}}.json?t=` + new Date().getTime());
+                const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 currentSymbolHistory = await res.json();
                 renderChartInstance(currentSymbolHistory);
@@ -1426,7 +1459,7 @@ def generate_html():
                             lineWidth: 2,
                             lineStyle: LC.LineStyle.Dashed,
                             axisLabelVisible: true,
-                            title: `Q.Đầu 5Y (${{details.start_quarter}}): ${{details.start_price_mean}}`
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
                         }});
 
                         candleSeriesInstance.createPriceLine({{
@@ -1435,7 +1468,7 @@ def generate_html():
                             lineWidth: 2,
                             lineStyle: LC.LineStyle.Dotted,
                             axisLabelVisible: true,
-                            title: `Q.Cuối (${{details.end_quarter}}): ${{details.end_price_mean}}`
+                            title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
                         }});
                     }}
                 }}
@@ -1471,9 +1504,9 @@ def generate_html():
                     let changePct = 0;
                     if (index > 0) changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
                     
-                    legendChange.innerText = `(${{changePct >= 0 ? '+' : ''}}${{changePct.toFixed(2)}}%)`;
-                    legendChange.className = `font-bold ${{changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}}`;
-                    legendClose.className = `font-bold ${{changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}}`;
+                    legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
+                    legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                    legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendVol.innerText = formatNumber(bar.volume);
                 }}
 
