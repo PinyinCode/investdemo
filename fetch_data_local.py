@@ -574,7 +574,7 @@ def main():
             print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
             continue
 
-        # Lấy hồ sơ công ty: số cổ phiếu từ issue_share, vốn hóa tính từ giá × số cổ phiếu
+        # Lấy hồ sơ công ty: số cổ phiếu và vốn hóa
         company_overview = get_company_overview(symbol, close_price)
         time.sleep(0.3)
 
@@ -618,10 +618,11 @@ def main():
 
         current_time_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-        stock_db[symbol] = {
+        # Chỉ các trường này được phép cập nhật từ quá trình cào
+        crawled_data = {
             "symbol": symbol,
             "company_name": company_overview["company_name"],
-            "market_cap": round(company_overview["market_cap"] / 1e9, 2),   # tỷ đồng
+            "market_cap": round(company_overview["market_cap"] / 1e9, 2),
             "total_shares": int(company_overview["total_shares"]),
             "close": int(close_price * 1000),
             "volume": int(volume),
@@ -639,12 +640,11 @@ def main():
             "price_zone": detail,
             "updated_at": current_time_str,
             "bctc_history": bctc_history,
-            "outlook": old_data.get("outlook", ""),
-            "ai_recommendation": old_data.get("ai_recommendation", ""),
-            "ai_price_zone": old_data.get("ai_price_zone", ""),
-            "macro_view": old_data.get("macro_view", ""),
-            "ai_updated_at": old_data.get("ai_updated_at", "")
         }
+
+        # Gộp: giữ nguyên toàn bộ trường cũ (outlook, ai_*, bctc, catalyst, risks, ...)
+        # rồi ghi đè bằng dữ liệu mới cào được
+        stock_db[symbol] = {**old_data, **crawled_data}
 
         time.sleep(1.5)
 
