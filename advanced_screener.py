@@ -52,7 +52,7 @@ def evaluate_stock(symbol, data):
     recommendation = data.get("recommendation", "")
     close_price = data.get("close", 0)
     
-    # Các chỉ số nâng cao lấy từ data.json (đã được trích xuất chuẩn xác từ bctc_data)
+    # Các chỉ số nâng cao lấy từ data.json (đồng bộ với bctc_data đã tối ưu)
     cfo_latest = data.get("cfo_latest", 0)
     net_profit_ttm = data.get("net_profit_ttm", 0)
     debt_to_equity = data.get("debt_to_equity", 0)
@@ -153,7 +153,7 @@ def evaluate_stock(symbol, data):
     elif roa >= 2.5:
         fundamental_score += 3; fund_notes.append(f"ROA tốt ({roa}%)")
 
-    # Kiểm chứng dòng tiền kinh doanh (CFO) & Đòn bẩy tài chính (D/E)
+    # Xử lý kiểm chứng đặc thù: Ngân hàng không áp dụng bộ lọc CFO và D/E khắt khe như doanh nghiệp sản xuất
     if sector not in ["NGAN_HANG", "CHUNG_KHOAN"]:
         if cfo_latest > 0 and (net_profit_ttm <= 0 or cfo_latest >= net_profit_ttm * 0.8):
             fundamental_score += 5; fund_notes.append("Dòng tiền kinh doanh (CFO) mạnh mẽ")
@@ -165,10 +165,11 @@ def evaluate_stock(symbol, data):
         elif debt_to_equity > 2.5:
             fundamental_score -= 5; fund_notes.append(f"⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: {debt_to_equity})")
     else:
+        # Đối với ngân hàng, đánh giá cao nếu duy trì cổ tức hoặc khả năng sinh lời trên tổng tài sản tốt
         if dividend_yield >= 4.0:
             fundamental_score += 5; fund_notes.append(f"Cổ tức tiền mặt tốt ({dividend_yield}%)")
         else:
-            fundamental_score += 5; fund_notes.append("Giữ vốn tăng trưởng quy mô")
+            fundamental_score += 5; fund_notes.append("Ngân hàng tối ưu giữ vốn mở rộng")
 
     # =========================================================================
     # 2. CHẤM ĐIỂM KỸ THUẬT (20 điểm) - DÒNG TIỀN & XUNG LỰC QUANT
@@ -222,8 +223,9 @@ def evaluate_stock(symbol, data):
         "roa": roa,
         "dividend_yield": dividend_yield,
         "profit_growth_yoy": profit_growth_yoy,
-        "cfo_latest": cfo_latest,          # Bổ sung thêm vào kết quả xuất ra để tiện theo dõi
-        "debt_to_equity": debt_to_equity,  # Bổ sung thêm D/E
+        "cfo_latest": cfo_latest,
+        "debt_to_equity": debt_to_equity,
+        "gross_margin": gross_margin,
         "fundamental_score": fundamental_score,
         "technical_score": technical_score,
         "valuation_score": valuation_score,
@@ -235,7 +237,7 @@ def evaluate_stock(symbol, data):
     }
 
 def main():
-    print("🚀 Chạy bộ lọc định lượng đa tiêu chí - Cải tiến chuẩn nhóm ngành & BCTC sâu...")
+    print("🚀 Chạy bộ lọc định lượng đa tiêu chí - Đồng bộ hoàn chỉnh với BCTC chuẩn...")
     
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy file {DATA_FILE}")
