@@ -51,6 +51,34 @@ def get_vndirect_ratio(symbol, ratio_code):
         pass
     return 0
 
+def get_vndirect_company_overview(symbol):
+    """Gọi API trực tiếp từ VNDirect để lấy tên công ty, vốn hóa và tổng số cổ phiếu niêm yết"""
+    url = f"https://api-finfo.vndirect.com.vn/v4/issuer_profiles"
+    params = {"q": f"code:{symbol}"}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+    
+    company_name = ""
+    market_cap = 0
+    total_shares = 0
+    
+    try:
+        r = requests.get(url, params=params, headers=headers, timeout=10)
+        if r.status_code == 200:
+            data = r.json().get("data", [])
+            if data:
+                item = data[0]
+                company_name = item.get("organName") or item.get("companyName") or item.get("enOrganName") or symbol
+                market_cap = float(item.get("marketCap", 0) or 0)
+                total_shares = float(item.get("listingShares", 0) or item.get("sharesOutstanding", 0) or 0)
+    except Exception as e:
+        print(f"⚠️ Không lấy được profile công ty qua API cho {symbol}: {e}")
+        
+    return {
+        "company_name": company_name,
+        "market_cap": market_cap,
+        "total_shares": total_shares
+    }
+
 def aggregate_candles(data, interval):
     """Thuật toán gom nhóm nến D1 thành W1 (Tuần) hoặc MN (Tháng) chuẩn xác"""
     if not data:
@@ -174,12 +202,11 @@ def parse_bctc_history(symbol):
     return bctc_records
 
 def extract_advanced_metrics_from_bctc(symbol):
-    """Trích xuất thông số chuyên nghiệp tối ưu, tự động nhận diện Ngân hàng để xử lý Biên gộp & D/E chuẩn xác đồng thời lấy tên cty, vốn hóa, tổng số cp"""
+    """Trích xuất thông số chuyên nghiệp tối ưu, tự động nhận diện Ngân hàng để xử lý Biên gộp & D/E chuẩn xác"""
     filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
     if not os.path.exists(filepath):
         return {
-            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0,
-            "company_name": "", "market_cap": 0, "total_shares": 0
+            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0
         }
 
     try:
@@ -187,14 +214,8 @@ def extract_advanced_metrics_from_bctc(symbol):
             data = json.load(f)
     except Exception:
         return {
-            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0,
-            "company_name": "", "market_cap": 0, "total_shares": 0
+            "cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0
         }
-
-    # Trích xuất các thuộc tính mới từ file BCTC (đã được lưu khi cào tổng quan)
-    company_name = data.get("company_name", "")
-    market_cap = data.get("market_cap", 0)
-    total_shares = data.get("total_shares", 0)
 
     balance_sheet = data.get("balance_sheet", [])
     cash_flow = data.get("cash_flow", [])
@@ -273,10 +294,7 @@ def extract_advanced_metrics_from_bctc(symbol):
         "cfo_latest": round(latest_cfo / 1e9, 2),
         "debt_to_equity": debt_to_equity,
         "gross_margin": gross_margin,
-        "net_profit_ttm": round(net_profit_ttm / 1e9, 2),
-        "company_name": company_name,
-        "market_cap": market_cap,
-        "total_shares": total_shares
+        "net_profit_ttm": round(net_profit_ttm / 1e9, 2)
     }
 
 def auto_git_push():
@@ -419,6 +437,10 @@ def main():
             print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
             continue
 
+        # Lấy thông tin Tên công ty, Vốn hóa, Tổng số cổ phiếu trực tiếp từ API VNDirect
+        company_overview = get_vndirect_company_overview(symbol)
+        time.sleep(0.2)
+
         ratios = {}
         for key, code in VNDIRECT_RATIOS.items():
             ratios[key] = get_vndirect_ratio(symbol, code)
@@ -461,9 +483,9 @@ def main():
 
         stock_db[symbol] = {
             "symbol": symbol,
-            "company_name": adv_metrics["company_name"],     # Thuộc tính mới: Tên công ty
-            "market_cap": adv_metrics["market_cap"],         # Thuộc tính mới: Vốn hóa
-            "total_shares": adv_metrics["total_shares"],     # Thuộc tính mới: Tổng số cổ phiếu
+            "company_name": company_overview["company_name"],     # Lấy trực tiếp từ API
+            "market_cap": company_overview["market_cap"],         # Lấy trực tiếp từ API
+            "total_shares": company_overview["total_shares"],     # Lấy trực tiếp từ API
             "close": int(close_price * 1000),
             "volume": int(volume),
             "pe": round(ratios.get("pe", 0), 2),
