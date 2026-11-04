@@ -729,7 +729,7 @@ def generate_html():
         function formatNumber(num) {{
             if (num === undefined || num === null || num === 0) return '—';
             let val = (num < 1000 && num > 0) ? num * 1000 : num; 
-            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return Math.round(val).toString().replace(/\B(?=(\d{{3}})+(?!\d))/g, ".");
         }}
         function formatPercent(num) {{
             if (num === undefined || num === null) return '—';
@@ -782,8 +782,8 @@ def generate_html():
             try {{
                 const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                     fetch('screener_results.json?t=' + new Date().getTime()),
-                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
-                    fetch('quarterly_mean_details.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
+                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({{ ok: false }})),
+                    fetch('quarterly_mean_details.json?t=' + new Date().getTime()).catch(() => ({{ ok: false }}))
                 ]);
 
                 if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
@@ -813,7 +813,8 @@ def generate_html():
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
-                        bctc: extraData.bctc !== undefined ? extraData.bctc : item.bctc,
+                        bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc,
+                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc,
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
                         ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
@@ -822,7 +823,7 @@ def generate_html():
                     }};
                 }});
                 renderCards();
-            } catch (error) {{
+            }} catch (error) {{
                 const container = document.getElementById('stock-container');
                 if (container && showSpinner) {{
                     container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
@@ -922,29 +923,29 @@ def generate_html():
                     ${{scoreHtml}}
                 `;
                 container.appendChild(card);
-            });
-        }
+            }});
+        }}
 
-        function switchAiTab(tabName) {
+        function switchAiTab(tabName) {{
             currentActiveTab = tabName;
-            ['eval', 'simulator'].forEach(t => {
-                const contentEl = document.getElementById(`tab-content-${t}`);
-                const btnEl = document.getElementById(`tab-btn-${t}`);
+            ['eval', 'simulator'].forEach(t => {{
+                const contentEl = document.getElementById(`tab-content-${{t}}`);
+                const btnEl = document.getElementById(`tab-btn-${{t}}`);
                 if (contentEl) contentEl.classList.add('hidden');
                 if (btnEl) btnEl.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
-            });
+            }});
 
-            const activeContent = document.getElementById(`tab-content-${tabName}`);
-            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            const activeContent = document.getElementById(`tab-content-${{tabName}}`);
+            const activeBtn = document.getElementById(`tab-btn-${{tabName}}`);
             if (activeContent) activeContent.classList.remove('hidden');
             if (activeBtn) activeBtn.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
 
-            if (tabName === 'simulator') {
+            if (tabName === 'simulator') {{
                 calculateModalSimulation();
-            }
-        }
+            }}
+        }}
 
-        function openModal(symbol) {
+        function openModal(symbol) {{
             currentSymbol = symbol;
             const item = screenerResults.find(s => s.symbol === symbol);
             if (!item) return;
@@ -952,7 +953,7 @@ def generate_html():
             switchAiTab(currentActiveTab);
             
             document.getElementById('modal-symbol-input').value = item.symbol;
-            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
+            document.getElementById('modal-sector').innerText = `Ngành: ${{SECTOR_NAMES[item.sector] || item.sector}}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
@@ -968,32 +969,32 @@ def generate_html():
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
             let priceZoneText = item.ai_price_zone;
-            if (typeof priceZoneText === 'object' && priceZoneText !== null) {
+            if (typeof priceZoneText === 'object' && priceZoneText !== null) {{
                 priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
-            }
+            }}
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-            document.getElementById('modal-bctc').innerText = item.bctc || "Chưa có đánh giá BCTC từ AI.";
+            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng từ AI.";
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
-            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
+            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${{item.ai_updated_at || 'Hệ thống tự động'}}`;
 
             let histRate = 15;
-            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
+            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {{
                 histRate = symbolSimRates[symbol].annual_rate_percent;
                 document.getElementById('sim-historical-rate-text').innerText = histRate + "% / năm (Quá khứ thực tế)";
-            } else {
+            }} else {{
                 document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
-            }
+            }}
 
             const details = quarterlyMeanDetails[symbol];
-            if (details) {
-                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${details.start_price_mean.toLocaleString('vi-VN')} đ`;
-                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${details.end_price_mean.toLocaleString('vi-VN')} đ`;
-            } else {
+            if (details) {{
+                document.getElementById('sim-start-quarter-info').innerText = `${{details.start_quarter}}: ${{details.start_price_mean.toLocaleString('vi-VN')}} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${{details.end_quarter}}: ${{details.end_price_mean.toLocaleString('vi-VN')}} đ`;
+            }} else {{
                 document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
                 document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
-            }
+            }}
 
             document.getElementById('modal-sim-rate').value = histRate;
             document.getElementById('modal-sim-initial').value = "20.000.000";
@@ -1001,33 +1002,33 @@ def generate_html():
             document.getElementById('modal-sim-years').value = "3";
 
             document.getElementById('ai-modal').classList.remove('hidden');
-        }
+        }}
 
-        function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
+        function closeModal() {{ document.getElementById('ai-modal').classList.add('hidden'); }}
 
-        function navigateModalSymbol(direction) {
+        function navigateModalSymbol(direction) {{
             const symbols = screenerResults.map(s => s.symbol).sort();
             const currentIndex = symbols.indexOf(currentSymbol);
-            if (currentIndex !== -1) {
+            if (currentIndex !== -1) {{
                 let newIndex = currentIndex + direction;
                 if (newIndex < 0) newIndex = symbols.length - 1;
                 if (newIndex >= symbols.length) newIndex = 0;
                 openModal(symbols[newIndex]);
-            }
-        }
+            }}
+        }}
 
-        function handleDirectSymbolInput(val) {
+        function handleDirectSymbolInput(val) {{
             const cleanSymbol = val.trim().toUpperCase();
             const found = screenerResults.find(s => s.symbol === cleanSymbol);
-            if (found) {
+            if (found) {{
                 openModal(cleanSymbol);
-            } else {
+            }} else {{
                 alert("Không tìm thấy mã cổ phiếu: " + cleanSymbol);
                 document.getElementById('modal-symbol-input').value = currentSymbol;
-            }
-        }
+            }}
+        }}
 
-        function calculateModalSimulation() {
+        function calculateModalSimulation() {{
             let p0 = parseCleanNumber(document.getElementById('modal-sim-initial').value);
             let pMonthly = parseCleanNumber(document.getElementById('modal-sim-monthly').value);
             let years = parseFloat(document.getElementById('modal-sim-years').value) || 1;
@@ -1038,115 +1039,115 @@ def generate_html():
             let monthlyRate = rate / 12;
             let totalMonths = years * 12;
             
-            for (let i = 1; i <= totalMonths; i++) {
+            for (let i = 1; i <= totalMonths; i++) {{
                 futureVal += pMonthly * Math.pow(1 + monthlyRate, totalMonths - i + 1);
-            }
+            }}
             let profit = futureVal - totalPrincipal;
 
             document.getElementById('modal-sim-principal').innerText = Math.round(totalPrincipal).toLocaleString("vi-VN") + " VNĐ";
             document.getElementById('modal-sim-profit').innerText = "+" + Math.round(profit).toLocaleString("vi-VN") + " VNĐ";
             document.getElementById('modal-sim-total').innerText = Math.round(futureVal).toLocaleString("vi-VN") + " VNĐ";
-        }
+        }}
 
-        function navigateSymbol(direction) {
+        function navigateSymbol(direction) {{
             const symbols = screenerResults.map(s => s.symbol).sort();
             const currentIndex = symbols.indexOf(currentSymbol);
-            if (currentIndex !== -1) {
+            if (currentIndex !== -1) {{
                 let newIndex = currentIndex + direction;
                 if (newIndex < 0) newIndex = symbols.length - 1;
                 if (newIndex >= symbols.length) newIndex = 0;
                 openChartModal(symbols[newIndex]);
-            }
-        }
+            }}
+        }}
 
-        function toggleSymbolDropdown() {
+        function toggleSymbolDropdown() {{
             const dropdown = document.getElementById('symbol-dropdown');
             dropdown.classList.toggle('hidden');
-            if (!dropdown.classList.contains('hidden')) {
+            if (!dropdown.classList.contains('hidden')) {{
                 document.getElementById('dropdown-search').value = '';
                 renderDropdownSymbolList(screenerResults.map(s => s.symbol));
                 document.getElementById('dropdown-search').focus();
-            }
-        }
+            }}
+        }}
 
-        function renderDropdownSymbolList(symbols) {
+        function renderDropdownSymbolList(symbols) {{
             const listContainer = document.getElementById('dropdown-symbol-list');
             listContainer.innerHTML = '';
-            symbols.sort().forEach(sym => {
+            symbols.sort().forEach(sym => {{
                 const item = document.createElement('button');
                 item.type = 'button';
-                item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
-                item.innerHTML = `<span>${sym}</span>`;
-                item.onclick = (e) => {
+                item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${{sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}}`;
+                item.innerHTML = `<span>${{sym}}</span>`;
+                item.onclick = (e) => {{
                     e.stopPropagation();
                     document.getElementById('symbol-dropdown').classList.add('hidden');
                     openChartModal(sym);
-                };
+                }};
                 listContainer.appendChild(item);
-            });
-        }
+            }});
+        }}
 
-        function filterDropdownSymbols(keyword) {
+        function filterDropdownSymbols(keyword) {{
             const upper = keyword.toUpperCase();
             const matched = screenerResults.map(s => s.symbol).filter(sym => sym.includes(upper));
             renderDropdownSymbolList(matched);
-        }
+        }}
 
-        window.addEventListener('click', (e) => {
+        window.addEventListener('click', (e) => {{
             const dropdown = document.getElementById('symbol-dropdown');
             const symbolBtn = document.getElementById('chart-modal-symbol');
-            if (dropdown && !dropdown.contains(e.target) && !symbolBtn.contains(e.target)) {
+            if (dropdown && !dropdown.contains(e.target) && !symbolBtn.contains(e.target)) {{
                 dropdown.classList.add('hidden');
-            }
-        });
+            }}
+        }});
 
-        function switchInterval(interval) {
+        function switchInterval(interval) {{
             currentInterval = interval;
-            ['d1', 'w1', 'mn'].forEach(i => {
-                const btn = document.getElementById(`btn-${i}`);
-                if (btn) {
+            ['d1', 'w1', 'mn'].forEach(i => {{
+                const btn = document.getElementById(`btn-${{i}}`);
+                if (btn) {{
                     btn.className = i === interval.toLowerCase() 
                         ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
                         : "px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition";
-                }
-            });
+                }}
+            }});
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }
+        }}
 
-        function toggleIndicator(name) {
+        function toggleIndicator(name) {{
             activeIndicators[name] = !activeIndicators[name];
-            const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
-            if (btn) {
+            const btn = document.getElementById(`btn-ind-${{name.toLowerCase()}}`);
+            if (btn) {{
                 btn.className = activeIndicators[name]
                     ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition"
                     : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
-            }
+            }}
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }
+        }}
 
-        function toggleQuarterLines() {
+        function toggleQuarterLines() {{
             activeIndicators.QLINES = !activeIndicators.QLINES;
             const btn = document.getElementById('btn-ind-qlines');
-            if (btn) {
+            if (btn) {{
                 btn.className = activeIndicators.QLINES
                     ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition ml-1"
                     : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition ml-1";
-            }
+            }}
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }
+        }}
 
-        function toggleQuarterZone() {
+        function toggleQuarterZone() {{
             activeIndicators.QZONE = !activeIndicators.QZONE;
             const btn = document.getElementById('btn-ind-qzone');
-            if (btn) {
+            if (btn) {{
                 btn.className = activeIndicators.QZONE
                     ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
                     : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
-            }
+            }}
             if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
-        }
+        }}
 
-        function jumpToQuarter(type) {
+        function jumpToQuarter(type) {{
             const details = quarterlyMeanDetails[currentSymbol];
             if (!details || !currentSymbolHistory) return;
 
@@ -1168,130 +1169,130 @@ def generate_html():
             let qMinPrice = Infinity;
             let qMaxPrice = -Infinity;
 
-            chartData.forEach((bar, idx) => {
+            chartData.forEach((bar, idx) => {{
                 const barDate = new Date(bar.time);
                 if (barDate.getFullYear() === year && 
                     (barDate.getMonth() + 1) >= startMonth && 
-                    (barDate.getMonth() + 1) <= endMonth) {
+                    (barDate.getMonth() + 1) <= endMonth) {{
                     indices.push(idx);
                     if (bar.low < qMinPrice) qMinPrice = bar.low;
                     if (bar.high > qMaxPrice) qMaxPrice = bar.high;
-                }
-            });
+                }}
+            }});
 
-            if (indices.length > 0 && chartInstance) {
+            if (indices.length > 0 && chartInstance) {{
                 const minIdx = indices[0];
                 const maxIdx = indices[indices.length - 1];
                 
-                chartInstance.priceScale('right').applyOptions({
+                chartInstance.priceScale('right').applyOptions({{
                     autoScale: true,
-                });
+                }});
 
                 const rangeSpan = Math.max(15, (maxIdx - minIdx) * 2);
                 const from = Math.max(0, minIdx - Math.floor(rangeSpan / 2));
                 const to = Math.min(chartData.length - 1, maxIdx + Math.floor(rangeSpan / 2));
-                chartInstance.timeScale().setVisibleLogicalRange({ from, to });
+                chartInstance.timeScale().setVisibleLogicalRange({{ from, to }});
 
-                if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {
+                if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {{
                     const pricePadding = (qMaxPrice - qMinPrice) * 0.5;
-                    chartInstance.priceScale('right').setVisiblePriceRange({
+                    chartInstance.priceScale('right').setVisiblePriceRange({{
                         from: qMinPrice - pricePadding,
                         to: qMaxPrice + pricePadding
-                    });
-                }
-            } else {
-                alert(`Không tìm thấy dữ liệu thời gian cho ${quarterStr} trong khung thời gian hiện tại!`);
-            }
-        }
+                    }});
+                }}
+            }} else {{
+                alert(`Không tìm thấy dữ liệu thời gian cho ${{quarterStr}} trong khung thời gian hiện tại!`);
+            }}
+        }}
 
-        function resizeChart() {
-            if (chartInstance) {
+        function resizeChart() {{
+            if (chartInstance) {{
                 const container = document.getElementById('tv-chart-container');
-                if (container) chartInstance.applyOptions({ width: container.clientWidth, height: container.clientHeight });
-            }
-        }
+                if (container) chartInstance.applyOptions({{ width: container.clientWidth, height: container.clientHeight }});
+            }}
+        }}
 
-        function toggleFullscreen() {
+        function toggleFullscreen() {{
             const modalBox = document.getElementById('chart-modal-box');
             const fsBtnIcon = document.querySelector('#fullscreen-btn i');
             modalBox.classList.toggle('fullscreen');
             fsBtnIcon.className = modalBox.classList.contains('fullscreen') ? "fa-solid fa-compress text-xs" : "fa-solid fa-expand text-xs";
             setTimeout(resizeChart, 200);
-        }
+        }}
 
-        window.addEventListener('resize', () => {
+        window.addEventListener('resize', () => {{
             if (!document.getElementById('chart-modal').classList.contains('hidden')) setTimeout(resizeChart, 300);
-        });
+        }});
 
-        async function openChartModal(symbol) {
+        async function openChartModal(symbol) {{
             currentSymbol = symbol;
             currentInterval = 'D1';
             switchInterval('D1');
 
             document.getElementById('current-symbol-text').innerText = symbol;
             document.getElementById('symbol-dropdown').classList.add('hidden');
-            document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
+            document.getElementById('btn-view-ai').onclick = () => {{ closeChartModal(); openModal(symbol); }};
 
             document.getElementById('chart-modal').classList.remove('hidden');
             document.getElementById('chart-loading').classList.remove('hidden');
 
-            try {
-                const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
+            try {{
+                const res = await fetch(`history/${{symbol}}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 currentSymbolHistory = await res.json();
                 renderChartInstance(currentSymbolHistory);
-            } catch (err) {
+            }} catch (err) {{
                 document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
-            } finally {
+            }} finally {{
                 document.getElementById('chart-loading').classList.add('hidden');
-            }
-        }
+            }}
+        }}
 
-        function calculateMA(data, period) {
+        function calculateMA(data, period) {{
             let result = [];
-            for (let i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {{
                 if (i < period - 1) continue;
                 let sum = 0;
                 for (let j = 0; j < period; j++) sum += data[i - j].close;
-                result.push({ time: data[i].time, value: sum / period });
-            }
+                result.push({{ time: data[i].time, value: sum / period }});
+            }}
             return result;
-        }
+        }}
 
-        function calculateVolumeMA(data, period = 20) {
+        function calculateVolumeMA(data, period = 20) {{
             let result = [];
-            for (let i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {{
                 if (i < period - 1) continue;
                 let sum = 0;
                 for (let j = 0; j < period; j++) sum += data[i - j].volume;
-                result.push({ time: data[i].time, value: sum / period });
-            }
+                result.push({{ time: data[i].time, value: sum / period }});
+            }}
             return result;
-        }
+        }}
 
-        function calculateRSI(data, period = 14) {
+        function calculateRSI(data, period = 14) {{
             let result = [];
             let gains = 0, losses = 0;
-            for (let i = 1; i < data.length; i++) {
+            for (let i = 1; i < data.length; i++) {{
                 let change = data[i].close - data[i - 1].close;
-                if (i <= period) {
+                if (i <= period) {{
                     if (change >= 0) gains += change; else losses -= change;
-                    if (i === period) {
+                    if (i === period) {{
                         let avgGain = gains / period, avgLoss = losses / period;
                         let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
-                        result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
-                    }
-                } else {
+                        result.push({{ time: data[i].time, value: 100 - (100 / (1 + rs)) }});
+                    }}
+                }} else {{
                     gains = (gains * (period - 1) + (change >= 0 ? change : 0)) / period;
                     losses = (losses * (period - 1) + (change < 0 ? -change : 0)) / period;
                     let rs = losses === 0 ? 100 : gains / losses;
-                    result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
-                }
-            }
+                    result.push({{ time: data[i].time, value: 100 - (100 / (1 + rs)) }});
+                }}
+            }}
             return result;
-        }
+        }}
 
-        function renderChartInstance(historyDataObj) {
+        function renderChartInstance(historyDataObj) {{
             const container = document.getElementById('tv-chart-container');
             container.innerHTML = '';
             const LC = window.LightweightCharts;
@@ -1301,41 +1302,41 @@ def generate_html():
             const height = container.clientHeight || 380;
             const hasRSI = activeIndicators.RSI;
 
-            chartInstance = LC.createChart(container, {
+            chartInstance = LC.createChart(container, {{
                 width: width, height: height,
-                layout: { background: { type: 'solid', color: '#0f172a' }, textColor: '#94a3b8' },
-                grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
-                timeScale: { borderColor: '#334155' }
-            });
+                layout: {{ background: {{ type: 'solid', color: '#0f172a' }}, textColor: '#94a3b8' }},
+                grid: {{ vertLines: {{ color: '#1e293b' }}, horzLines: {{ color: '#1e293b' }} }},
+                timeScale: {{ borderColor: '#334155' }}
+            }});
 
-            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {
+            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {{
                 upColor: '#10b981', downColor: '#f43f5e',
                 borderUpColor: '#10b981', borderDownColor: '#f43f5e',
                 wickUpColor: '#10b981', wickDownColor: '#f43f5e',
-            }, 0);
+            }}, 0);
 
-            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
-                priceFormat: { type: 'volume' },
+            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {{
+                priceFormat: {{ type: 'volume' }},
                 priceScaleId: 'volumeScale'
-            }, 0);
+            }}, 0);
 
-            chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.75, bottom: 0 } });
+            chartInstance.priceScale('volumeScale').applyOptions({{ scaleMargins: {{ top: 0.75, bottom: 0 }} }});
 
             let chartData = [];
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
             else if (currentInterval === 'W1') chartData = historyDataObj.history_w1 || [];
             else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
 
-            if (chartData && chartData.length > 0) {
+            if (chartData && chartData.length > 0) {{
                 candleSeriesInstance.setData(chartData);
-                volumeSeriesInstance.setData(chartData.map(row => ({
+                volumeSeriesInstance.setData(chartData.map(row => ({{
                     time: row.time, value: row.volume,
                     color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
-                })));
+                }})));
 
                 const details = quarterlyMeanDetails[currentSymbol];
-                if (details) {
-                    function getQuarterBoxInfo(quarterStr, allBars) {
+                if (details) {{
+                    function getQuarterBoxInfo(quarterStr, allBars) {{
                         if (!quarterStr) return null;
                         const parts = quarterStr.split('Q');
                         const year = parseInt(parts[0]);
@@ -1344,97 +1345,97 @@ def generate_html():
                         const startMonth = (q - 1) * 3 + 1;
                         const endMonth = q * 3;
 
-                        const quarterBars = allBars.filter(bar => {
+                        const quarterBars = allBars.filter(bar => {{
                             const barDate = new Date(bar.time);
                             return barDate.getFullYear() === year && 
                                    (barDate.getMonth() + 1) >= startMonth && 
                                    (barDate.getMonth() + 1) <= endMonth;
-                        });
+                        }});
 
                         if (quarterBars.length === 0) return null;
 
                         let qHigh = -Infinity;
                         let qLow = Infinity;
-                        quarterBars.forEach(b => {
+                        quarterBars.forEach(b => {{
                             if (b.high > qHigh) qHigh = b.high;
                             if (b.low < qLow) qLow = b.low;
-                        });
+                        }});
 
-                        return {
+                        return {{
                             high: qHigh,
                             low: qLow,
-                            data: quarterBars.map(row => ({
+                            data: quarterBars.map(row => ({{
                                 time: row.time,
                                 value: qHigh,
                                 baseValue: qLow
-                            }))
-                        };
-                    }
+                            }}))
+                        }};
+                    }}
 
-                    if (activeIndicators.QZONE) {
+                    if (activeIndicators.QZONE) {{
                         const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
-                        if (startBoxInfo && startBoxInfo.data.length > 0) {
-                            const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
-                                baseValue: { type: 'price', price: startBoxInfo.low },
+                        if (startBoxInfo && startBoxInfo.data.length > 0) {{
+                            const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {{
+                                baseValue: {{ type: 'price', price: startBoxInfo.low }},
                                 topFillColor1: 'rgba(59, 130, 246, 0.45)',
                                 topFillColor2: 'rgba(59, 130, 246, 0.15)',
                                 topLineColor: '#2563eb',
                                 bottomLineColor: '#2563eb',
                                 lineWidth: 2
-                            }, 0);
+                            }}, 0);
                             startBoxSeries.setData(startBoxInfo.data);
-                        }
+                        }}
 
                         const endBoxInfo = getQuarterBoxInfo(details.end_quarter, chartData);
-                        if (endBoxInfo && endBoxInfo.data.length > 0) {
-                            const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
-                                baseValue: { type: 'price', price: endBoxInfo.low },
+                        if (endBoxInfo && endBoxInfo.data.length > 0) {{
+                            const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {{
+                                baseValue: {{ type: 'price', price: endBoxInfo.low }},
                                 topFillColor1: 'rgba(16, 185, 129, 0.45)',
                                 topFillColor2: 'rgba(16, 185, 129, 0.15)',
                                 topLineColor: '#059669',
                                 bottomLineColor: '#059669',
                                 lineWidth: 2
-                            }, 0);
+                            }}, 0);
                             endBoxSeries.setData(endBoxInfo.data);
-                        }
-                    }
+                        }}
+                    }}
 
-                    if (activeIndicators.QLINES) {
-                        candleSeriesInstance.createPriceLine({
+                    if (activeIndicators.QLINES) {{
+                        candleSeriesInstance.createPriceLine({{
                             price: details.start_price_mean,
                             color: '#f97316',
                             lineWidth: 2,
                             lineStyle: LC.LineStyle.Dashed,
                             axisLabelVisible: true,
-                            title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
-                        });
+                            title: `Q.Đầu 5Y (${{details.start_quarter}}): ${{details.start_price_mean}}`
+                        }});
 
-                        candleSeriesInstance.createPriceLine({
+                        candleSeriesInstance.createPriceLine({{
                             price: details.end_price_mean,
                             color: '#10b981',
                             lineWidth: 2,
                             lineStyle: LC.LineStyle.Dotted,
                             axisLabelVisible: true,
-                            title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
-                        });
-                    }
-                }
+                            title: `Q.Cuối (${{details.end_quarter}}): ${{details.end_price_mean}}`
+                        }});
+                    }}
+                }}
 
-                if (activeIndicators.MA20) {
-                    chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
-                }
-                if (activeIndicators.MA50) {
-                    chartInstance.addSeries(LC.LineSeries, { color: '#eab308', lineWidth: 1 }, 0).setData(calculateMA(chartData, 50));
-                }
-                if (activeIndicators.VOLMA) {
-                    chartInstance.addSeries(LC.LineSeries, { color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }, 0).setData(calculateVolumeMA(chartData, 20));
-                }
-                if (hasRSI) {
-                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, { color: '#a855f7', lineWidth: 1.5 }, 1);
-                    rsiSeries.createPriceLine({ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
-                    rsiSeries.createPriceLine({ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
+                if (activeIndicators.MA20) {{
+                    chartInstance.addSeries(LC.LineSeries, {{ color: '#3b82f6', lineWidth: 1 }}, 0).setData(calculateMA(chartData, 20));
+                }}
+                if (activeIndicators.MA50) {{
+                    chartInstance.addSeries(LC.LineSeries, {{ color: '#eab308', lineWidth: 1 }}, 0).setData(calculateMA(chartData, 50));
+                }}
+                if (activeIndicators.VOLMA) {{
+                    chartInstance.addSeries(LC.LineSeries, {{ color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }}, 0).setData(calculateVolumeMA(chartData, 20));
+                }}
+                if (hasRSI) {{
+                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, {{ color: '#a855f7', lineWidth: 1.5 }}, 1);
+                    rsiSeries.createPriceLine({{ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true }});
+                    rsiSeries.createPriceLine({{ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true }});
                     rsiSeries.setData(calculateRSI(chartData, 14));
-                }
+                }}
 
                 const legendTime = document.getElementById('legend-time');
                 const legendClose = document.getElementById('legend-close');
@@ -1444,41 +1445,41 @@ def generate_html():
                 const latestBar = chartData[chartData.length - 1];
                 if (latestBar) updateLegend(latestBar, chartData);
 
-                function updateLegend(bar, dataArr) {
+                function updateLegend(bar, dataArr) {{
                     legendTime.innerText = bar.time;
                     legendClose.innerText = formatNumber(bar.close);
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
                     if (index > 0) changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
                     
-                    legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
-                    legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-                    legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                    legendChange.innerText = `(${{changePct >= 0 ? '+' : ''}}${{changePct.toFixed(2)}}%)`;
+                    legendChange.className = `font-bold ${{changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}}`;
+                    legendClose.className = `font-bold ${{changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}}`;
                     legendVol.innerText = formatNumber(bar.volume);
-                }
+                }}
 
-                chartInstance.subscribeCrosshairMove(param => {
-                    if (!param.point || !param.time) { if (latestBar) updateLegend(latestBar, chartData); }
-                    else {
+                chartInstance.subscribeCrosshairMove(param => {{
+                    if (!param.point || !param.time) {{ if (latestBar) updateLegend(latestBar, chartData); }}
+                    else {{
                         const dataPoint = param.seriesData.get(candleSeriesInstance);
-                        if (dataPoint) updateLegend({ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }, chartData);
-                    }
-                });
+                        if (dataPoint) updateLegend({{ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }}, chartData);
+                    }}
+                }});
 
-                setTimeout(() => {
+                setTimeout(() => {{
                     const totalBars = chartData.length;
                     let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
-                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
+                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({{ from: totalBars - visibleBarsCount, to: totalBars - 1 }});
                     else chartInstance.timeScale().fitContent();
-                }, 50);
-            }
-        }
+                }}, 50);
+            }}
+        }}
 
-        function closeChartModal() {
+        function closeChartModal() {{
             document.getElementById('chart-modal').classList.add('hidden');
-            if (chartInstance) { chartInstance.remove(); chartInstance = null; }
+            if (chartInstance) {{ chartInstance.remove(); chartInstance = null; }}
             currentSymbolHistory = null;
-        }
+        }}
 
         document.getElementById('search-input').addEventListener('input', renderCards);
         document.getElementById('sector-filter').addEventListener('change', renderCards);
