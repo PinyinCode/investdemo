@@ -5,7 +5,7 @@ import json
 import subprocess
 import numpy as np
 import requests
-from vnstock import Quote, Listing, Reference
+from vnstock import Quote, Reference
 
 DATA_FILE = "data.json"
 LAST_UPDATE_FILE = "last_update.json"
@@ -26,6 +26,109 @@ VN100_SYMBOLS = [
     "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
 ]
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
+
+# Hardcode tên công ty đầy đủ cho các mã VN100
+COMPANY_NAMES = {
+    "ACB": "Ngân hàng TMCP Á Châu",
+    "BCM": "Tổng Công ty Đầu tư và Phát triển Công nghiệp - CTCP (Becamex IDC)",
+    "BID": "Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)",
+    "BVH": "Tập đoàn Bảo Việt",
+    "CTG": "Ngân hàng TMCP Công Thương Việt Nam (VietinBank)",
+    "FPT": "Công ty Cổ phần FPT",
+    "GAS": "Tổng Công ty Khí Việt Nam - CTCP (PV GAS)",
+    "GVR": "Tập đoàn Công nghiệp Cao su Việt Nam",
+    "HDB": "Ngân hàng TMCP Phát triển TP.HCM (HDBank)",
+    "HPG": "Công ty Cổ phần Tập đoàn Hòa Phát",
+    "MBB": "Ngân hàng TMCP Quân Đội (MB Bank)",
+    "MSN": "Công ty Cổ phần Tập đoàn Masan",
+    "MWG": "Công ty Cổ phần Đầu tư Thế Giới Di Động",
+    "PLX": "Tập đoàn Xăng dầu Việt Nam (Petrolimex)",
+    "POW": "Tổng Công ty Điện lực Dầu khí Việt Nam - CTCP (PV Power)",
+    "SAB": "Tổng Công ty Cổ phần Bia - Rượu - Nước giải khát Sài Gòn (Sabeco)",
+    "SHB": "Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)",
+    "SSB": "Ngân hàng TMCP Đông Nam Á (SeABank)",
+    "SSI": "Công ty Cổ phần Chứng khoán SSI",
+    "STB": "Ngân hàng TMCP Sài Gòn Thương Tín (Sacombank)",
+    "TCB": "Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)",
+    "TPB": "Ngân hàng TMCP Tiên Phong (TPBank)",
+    "VCB": "Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank)",
+    "VHM": "Công ty Cổ phần Vinhomes",
+    "VIB": "Ngân hàng TMCP Quốc tế Việt Nam (VIB)",
+    "VIC": "Tập đoàn Vingroup - Công ty Cổ phần",
+    "VJC": "Công ty Cổ phần Hàng không Vietjet",
+    "VNM": "Công ty Cổ phần Sữa Việt Nam (Vinamilk)",
+    "VPB": "Ngân hàng TMCP Việt Nam Thịnh Vượng (VPBank)",
+    "VRE": "Công ty Cổ phần Vincom Retail",
+    "VCI": "Công ty Cổ phần Chứng khoán Vietcap",
+    "HCM": "Công ty Cổ phần Chứng khoán TP.HCM (HSC)",
+    "VIX": "Công ty Cổ phần Chứng khoán VIX",
+    "MBS": "Công ty Cổ phần Chứng khoán MB (MBS)",
+    "FTS": "Công ty Cổ phần Chứng khoán FPT",
+    "BSI": "Công ty Cổ phần Chứng khoán BIDV (BSC)",
+    "CTS": "Công ty Cổ phần Chứng khoán VietinBank",
+    "ORS": "Công ty Cổ phần Chứng khoán Tiên Phong",
+    "NVL": "Công ty Cổ phần Tập đoàn Địa ốc No Va (Novaland)",
+    "PDR": "Công ty Cổ phần Phát triển Bất động sản Phát Đạt",
+    "DIG": "Tổng Công ty Cổ phần Đầu tư Phát triển Xây dựng (DIC Corp)",
+    "NLG": "Công ty Cổ phần Đầu tư Nam Long",
+    "KDH": "Công ty Cổ phần Đầu tư và Kinh doanh Nhà Khang Điền",
+    "CEO": "Công ty Cổ phần Tập đoàn C.E.O",
+    "DXG": "Công ty Cổ phần Tập đoàn Đất Xanh",
+    "TCH": "Công ty Cổ phần Đầu tư Dịch vụ Tài chính Hoàng Huy",
+    "HDG": "Công ty Cổ phần Tập đoàn Hà Đô",
+    "KBC": "Tổng Công ty Phát triển Đô thị Kinh Bắc - CTCP",
+    "IDC": "Tổng Công ty IDICO - CTCP",
+    "SZC": "Công ty Cổ phần Sonadezi Châu Đức",
+    "PHR": "Công ty Cổ phần Cao su Phước Hòa",
+    "HSG": "Công ty Cổ phần Tập đoàn Hoa Sen",
+    "NKG": "Công ty Cổ phần Thép Nam Kim",
+    "CTD": "Công ty Cổ phần Xây dựng Coteccons",
+    "VCG": "Tổng Công ty Cổ phần Xuất nhập khẩu và Xây dựng Việt Nam (Vinaconex)",
+    "HHV": "Công ty Cổ phần Đầu tư Hạ tầng Giao thông Đèo Cả",
+    "PNJ": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
+    "FRT": "Công ty Cổ phần Bán lẻ Kỹ thuật số FPT",
+    "PVD": "Tổng Công ty Cổ phần Khoan và Dịch vụ Khoan Dầu khí (PV Drilling)",
+    "PVS": "Tổng Công ty Cổ phần Dịch vụ Kỹ thuật Dầu khí Việt Nam (PTSC)",
+    "BSR": "Công ty Cổ phần Lọc hóa dầu Bình Sơn",
+    "REE": "Công ty Cổ phần Cơ Điện Lạnh (REE)",
+    "PC1": "Công ty Cổ phần Tập đoàn PC1",
+    "NT2": "Công ty Cổ phần Điện lực Dầu khí Nhơn Trạch 2",
+    "GMD": "Công ty Cổ phần Gemadept",
+    "HAH": "Công ty Cổ phần Vận tải và Xếp dỡ Hải An",
+    "PVT": "Tổng Công ty Cổ phần Vận tải Dầu khí (PVTrans)",
+    "HVN": "Tổng Công ty Hàng không Việt Nam - CTCP (Vietnam Airlines)",
+    "VHC": "Công ty Cổ phần Vĩnh Hoàn",
+    "ANV": "Công ty Cổ phần Nam Việt (Navico)",
+    "APH": "Công ty Cổ phần Tập đoàn An Phát Holdings",
+    "ASM": "Công ty Cổ phần Tập đoàn Sao Mai",
+    "DBC": "Công ty Cổ phần Tập đoàn Dabaco Việt Nam",
+    "DCM": "Công ty Cổ phần Phân bón Dầu khí Cà Mau",
+    "DPM": "Tổng Công ty Phân bón và Hóa chất Dầu khí - CTCP (PVFCCo)",
+    "GEX": "Công ty Cổ phần Tập đoàn Gelex",
+    "KDC": "Công ty Cổ phần Tập đoàn Kido",
+    "LIG": "Công ty Cổ phần Licogi 13",
+    "MSH": "Công ty Cổ phần May Sông Hồng",
+    "PAN": "Công ty Cổ phần Tập đoàn PAN",
+    "SBT": "Công ty Cổ phần Thành Thành Công - Biên Hòa (TTC AgriS)",
+    "TCD": "Công ty Cổ phần Tập đoàn Xây dựng và Phát triển Hạ tầng",
+    "TLG": "Công ty Cổ phần Tập đoàn Thiên Long",
+    "VDP": "Công ty Cổ phần Thuốc thú y Trung ương I (Vinavetco)",
+    "VPG": "Công ty Cổ phần Thép Việt - Ý",
+    "VTO": "Công ty Cổ phần Vận tải Xăng dầu Vitaco",
+    "DHC": "Công ty Cổ phần Đông Hải Bến Tre",
+    "IMP": "Công ty Cổ phần Dược phẩm Imexpharm",
+    "SBA": "Công ty Cổ phần Mía đường Sông Lam",
+    "SJS": "Công ty Cổ phần SJ Group",
+    "TID": "Công ty Cổ phần Tập đoàn Tin Việt Nam",
+    "VPI": "Công ty Cổ phần Đầu tư và Phát triển Bất động sản VPI",
+    "DRC": "Công ty Cổ phần Cao su Đà Nẵng",
+    "CSM": "Công ty Cổ phần Cao su Sài Gòn - Cà Mau",
+    "BMP": "Công ty Cổ phần Nhựa Bình Minh",
+    "NTC": "Công ty Cổ phần Khu Công nghiệp Nam Tân Uyên",
+    "DHG": "Công ty Cổ phần Dược Hậu Giang",
+    "VOS": "Công ty Cổ phần Vận tải Biển Việt Nam",
+    "HAG": "Công ty Cổ phần Hoàng Anh Gia Lai",
+}
 
 VNDIRECT_RATIOS = {
     "pe": "PRICE_TO_EARNINGS",
@@ -52,39 +155,27 @@ def get_vndirect_ratio(symbol, ratio_code):
     return 0
 
 
-def get_company_overview(symbol):
+def get_company_overview(symbol, close_price=0):
     """
-    Lấy hồ sơ công ty qua Reference().company().overview() của vnstock.
-    Trả về tên công ty, vốn hóa thị trường, tổng số cổ phiếu.
+    Lấy số lượng cổ phiếu từ issue_share của Reference().company().overview().
+    Tính vốn hóa từ close_price (nghìn đồng) × total_shares.
+    Tên công ty lấy từ dict hardcode COMPANY_NAMES.
     """
-    company_name = symbol
-    market_cap = 0
+    company_name = COMPANY_NAMES.get(symbol, symbol)
     total_shares = 0
+    market_cap = 0
 
     try:
         overview = Reference().company(symbol).overview()
         if overview is not None and not overview.empty:
             row = overview.iloc[0].to_dict()
-            # Các trường tên có thể có
-            company_name = (
-                row.get("organ_name")
-                or row.get("company_name")
-                or row.get("en_organ_name")
-                or row.get("organ_short_name")
-                or symbol
-            )
-            # Vốn hóa thị trường (đơn vị: đồng)
-            market_cap = float(row.get("market_cap", 0) or row.get("marketCap", 0) or 0)
-            # Tổng số cổ phiếu đang lưu hành
-            total_shares = float(
-                row.get("outstanding_shares", 0)
-                or row.get("issue_share", 0)
-                or row.get("shares_outstanding", 0)
-                or row.get("total_shares", 0)
-                or 0
-            )
+            total_shares = float(row.get("issue_share", 0) or 0)
     except Exception as e:
         print(f"   ⚠️ Không lấy được overview cho {symbol}: {e}")
+
+    # Vốn hóa (đồng) = giá (nghìn đồng) × 1000 × số cổ phiếu
+    if close_price > 0 and total_shares > 0:
+        market_cap = close_price * 1000 * total_shares
 
     return {
         "company_name": company_name,
@@ -445,8 +536,8 @@ def main():
             print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
             continue
 
-        # Lấy hồ sơ công ty qua Reference().company().overview()
-        company_overview = get_company_overview(symbol)
+        # Lấy hồ sơ công ty: số cổ phiếu từ issue_share, vốn hóa tính từ giá × số cổ phiếu
+        company_overview = get_company_overview(symbol, close_price)
         time.sleep(0.3)
 
         ratios = {}
@@ -492,8 +583,8 @@ def main():
         stock_db[symbol] = {
             "symbol": symbol,
             "company_name": company_overview["company_name"],
-            "market_cap": company_overview["market_cap"],
-            "total_shares": company_overview["total_shares"],
+            "market_cap": round(company_overview["market_cap"] / 1e9, 2),   # tỷ đồng
+            "total_shares": int(company_overview["total_shares"]),
             "close": int(close_price * 1000),
             "volume": int(volume),
             "pe": round(ratios.get("pe", 0), 2),
