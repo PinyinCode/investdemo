@@ -43,11 +43,15 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Thêm đầy đủ file giao diện index.html và các file dữ liệu JSON tính toán mới
+          # Đảm bảo đã add đầy đủ index.html và các file JSON tính toán do simulator.py sinh ra
           git add index.html symbol_sim_rates.json quarterly_mean_details.json
           
           # Kiểm tra xem có thay đổi hay không trước khi commit
           git status
           
           git commit -m "📊 Auto-calculate symbol rates & details, then render index.html via Python" || echo "No changes to commit"
+          
+          # Kéo các thay đổi mới nhất từ remote về trước để tránh lỗi conflict/reject
+          git pull --rebase origin main || echo "No rebase needed or handled"
+          
           git push
