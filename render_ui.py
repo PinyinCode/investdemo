@@ -813,8 +813,11 @@ def generate_html():
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
-                        bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc,
-                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc,
+                        
+                        // ĐÃ SỬA: Cập nhật đường dẫn ưu tiên đọc các trường BCTC từ data.json và screener
+                        bctc: extraData.bctc_evaluation || extraData.bctc || extraData.outlook || item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.",
+                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || extraData.outlook || item.bctc_evaluation || item.bctc || "Chưa có đánh giá BCTC từ AI.",
+                        
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
                         ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
