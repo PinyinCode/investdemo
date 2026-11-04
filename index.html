@@ -299,6 +299,24 @@
             </div>
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+                <!-- KHUNG THÔNG TIN CÔNG TY & VỐN HÓA MỚI -->
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-2 text-xs">
+                    <div>
+                        <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tên doanh nghiệp</span>
+                        <span id="modal-company-name" class="font-bold text-white text-sm">--</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <div>
+                            <span class="text-[10px] text-slate-400 block uppercase font-semibold">Vốn hóa</span>
+                            <span id="modal-market-cap" class="font-bold text-emerald-400">--</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tổng số CP</span>
+                            <span id="modal-total-shares" class="font-bold text-indigo-300">--</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- KHUNG CHỈ SỐ CƠ BẢN -->
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
@@ -733,6 +751,13 @@
             return num.toFixed(1) + '%';
         }
 
+        function formatMarketCap(val) {
+            if (!val || val === 0) return '—';
+            if (val >= 1e9) return (val / 1e9).toFixed(2) + ' Tỷ';
+            if (val >= 1e6) return (val / 1e6).toFixed(2) + ' Tr';
+            return formatNumber(val) + ' VNĐ';
+        }
+
         function formatCurrencyInput(input) {
             let value = input.value.replace(/\D/g, "");
             if (value === "") {
@@ -800,6 +825,8 @@
                     return {
                         ...item,
                         company_name: extraData.company_name !== undefined ? extraData.company_name : (item.company_name || extraData.organ_name || item.organ_name || ""),
+                        market_cap: extraData.market_cap !== undefined ? extraData.market_cap : (item.market_cap || 0),
+                        total_shares: extraData.total_shares !== undefined ? extraData.total_shares : (item.total_shares || 0),
                         eps: extraData.eps !== undefined ? extraData.eps : item.eps,
                         dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
                         pe: extraData.pe !== undefined ? extraData.pe : item.pe,
@@ -911,7 +938,7 @@
                             </div>
                             <div class="text-right">
                                 <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
-                                <span class="text-[10px] text-slate-500">Tổng điểm: ${item.total_score}</span>
+                                <span class="text-[10px] text-slate-500">Vốn hóa: ${formatMarketCap(item.market_cap)}</span>
                             </div>
                         </div>
 
@@ -957,6 +984,12 @@
             document.getElementById('modal-symbol-input').value = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
+            
+            // Hiển thị thông tin tên công ty, vốn hóa và tổng số cổ phiếu mới
+            document.getElementById('modal-company-name').innerText = item.company_name || '—';
+            document.getElementById('modal-market-cap').innerText = formatMarketCap(item.market_cap);
+            document.getElementById('modal-total-shares').innerText = item.total_shares ? formatNumber(item.total_shares) + ' CP' : '—';
+
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
             document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
