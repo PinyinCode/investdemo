@@ -51,7 +51,6 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
         print(f"❌ LỖI: Biến môi trường ALIBABA_API_KEY đang trống!")
         return None
 
-    # Lấy các thông số cũ
     close_price = stock_metrics.get('close', stock_metrics.get('close_price', 0))
     pe = stock_metrics.get('pe', 0)
     pb = stock_metrics.get('pb', 0)
@@ -59,7 +58,6 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     eps = stock_metrics.get('eps', 0)
     dividend_yield = stock_metrics.get('dividend_yield', 0)
     
-    # Lấy các thông số mới bổ sung từ chuỗi BCTC & Crawler nâng cao
     roa = stock_metrics.get('roa', 0)
     cfo_latest = stock_metrics.get('cfo_latest', 0)
     debt_to_equity = stock_metrics.get('debt_to_equity', 0)
@@ -70,46 +68,72 @@ def analyze_stock_with_ai(symbol, stock_metrics, screener_item, sector):
     total_score = screener_item.get('total_score', 0)
     fund_notes = screener_item.get('fundamental_notes', '')
 
+    # Hướng dẫn linh hoạt cho từng nhóm ngành
     sector_guidance = ""
     if sector == "NGAN_HANG":
-        sector_guidance = "Đặc thù ngành Ngân hàng: Trọng tâm đánh giá chất lượng tài sản, tăng trưởng tín dụng, biên lãi ròng (NIM), tỷ lệ bao phủ nợ xấu và cặp chỉ số ROE/ROA dưới đòn bẩy vốn đặc thù. Lưu ý chính sách giữ vốn thay vì cổ tức tiền mặt cao."
+        sector_guidance = (
+            "ĐẶC THÙ NGÂN HÀNG: Cần đánh giá linh hoạt. "
+            "1. KHÔNG đánh giá D/E (Debt/Equity) cao là xấu, vì nợ phải trả chủ yếu là tiền gửi huy động khách hàng. "
+            "2. Dòng tiền kinh doanh (CFO) âm trong các kỳ mở rộng tín dụng là bản chất bình thường của ngân hàng (do giải ngân cho vay), không suy diễn là dòng tiền xấu. "
+            "3. Tập trung vào tăng trưởng tín dụng, NIM, chất lượng tài sản (nợ xấu/LLR) và ROE/ROA."
+        )
     elif sector == "CHUNG_KHOAN":
-        sector_guidance = "Đặc thù ngành Chứng khoán: Nhạy bén theo thanh khoản thị trường, mảng tự doanh, cho vay margin và doanh thu môi giới. Đánh giá hệ số sinh lời tài sản (ROA) và hiệu quả quản trị rủi ro danh mục."
+        sector_guidance = (
+            "ĐẶC THÙ CHỨNG KHOÁN: Cần đánh giá linh hoạt. "
+            "1. Nhạy bén theo chu kỳ thanh khoản thị trường và danh mục tự doanh. "
+            "2. Đòn bẩy tài chính và dòng tiền hoạt động phụ thuộc vào quy mô cho vay margin và hoạt động kinh doanh nguồn vốn. "
+            "3. Trọng tâm đánh giá ROE, thị phần môi giới và năng lực quản trị rủi ro."
+        )
     elif sector == "BAT_DONG_SAN":
-        sector_guidance = "Đặc thù ngành Bất động sản: Thẩm định quỹ đất sạch, pháp lý dự án, người mua trả tiền trước, cơ cấu nợ vay/đòn bẩy (D/E) và dòng tiền thuần từ hoạt động kinh doanh (CFO) thay vì chỉ nhìn P/E ngắn hạn."
+        sector_guidance = (
+            "ĐẶC THÙ BẤT ĐỘNG SẢN: "
+            "Thẩm định quỹ đất sạch, pháp lý dự án, người mua trả tiền trước, cơ cấu nợ vay và tiến độ ghi nhận doanh thu từ các dự án gối đầu."
+        )
     elif sector == "CONG_NGHE_BAN_LE":
-        sector_guidance = "Đặc thù ngành Công nghệ & Bán lẻ: Trọng tâm là tốc độ tăng trưởng doanh thu cốt lõi, biên lợi nhuận gộp, vòng quay tài sản (ROA) và năng lực tối ưu hóa chi phí vận hành."
+        sector_guidance = (
+            "ĐẶC THÙ CÔNG NGHỆ & BÁN LẺ: "
+            "Trọng tâm tốc độ tăng trưởng doanh thu cốt lõi, biên lợi nhuận gộp, vòng quay tài sản và năng lực tối ưu hóa chi phí vận hành chuỗi."
+        )
     elif sector == "DIEN_NUOC_HA_TANG":
-        sector_guidance = "Đặc thù ngành Tiện ích/Hạ tầng: Dòng tiền phòng thủ ổn định, khấu hao tài sản cố định lớn. Trọng tâm đánh giá tính đều đặn của cổ tức tiền mặt và dòng tiền kinh doanh (CFO) thực tế."
+        sector_guidance = (
+            "ĐẶC THÙ TIỆN ÍCH / HẠ TẦNG: "
+            "Dòng tiền phòng thủ ổn định, khấu hao tài sản cố định lớn làm giảm lợi nhuận kế toán ngắn hạn nhưng dòng tiền thực tế thường rất đều đặn để chi trả cổ tức."
+        )
     elif sector == "NGUYEN_VAT_LIEU_CHU_KY":
-        sector_guidance = "Đặc thù ngành Vật liệu chu kỳ (Thép, Hóa chất...): Nhìn nhận qua góc độ chu kỳ giá hàng hóa (commodity cycle), biên lợi nhuận gộp theo từng quý và định giá P/B tại đỉnh/đáy chu kỳ."
+        sector_guidance = (
+            "ĐẶC THÙ VẬT LIỆU CHU KỲ (Thép, Hóa chất...): "
+            "Đánh giá qua lăng kính chu kỳ giá hàng hóa (commodity cycle), biên lợi nhuận gộp theo từng quý và định giá P/B tại vùng đỉnh/đáy chu kỳ."
+        )
     else:
-        sector_guidance = "Đặc thù ngành Sản xuất & Tiêu dùng: Đánh giá sức mạnh thương hiệu (Economic Moat), thị phần, hiệu quả chuỗi cung ứng (phản ánh qua ROA) và lịch sử chi trả cổ tức tiền mặt."
+        sector_guidance = (
+            "ĐẶC THÙ SẢN XUẤT & TIÊU DÙNG: "
+            "Đánh giá sức mạnh thương hiệu (Economic Moat), thị phần, hiệu quả chuỗi cung ứng (ROA) và sự khỏe mạnh của dòng tiền kinh doanh (CFO) so với lợi nhuận."
+        )
 
     prompt = f"""
     Bạn là một Chuyên gia Đầu tư Giá trị & Tăng trưởng kỳ cựu theo trường phái Graham, Buffett & Fisher. 
-    Hãy thực hiện một bản **đánh giá tích sản dài hạn chuyên sâu, khắt khe và đa chiều** cho mã cổ phiếu: {symbol} thuộc nhóm ngành: {sector}.
+    Hãy thực hiện một bản **đánh giá tích sản dài hạn chuyên sâu, khắt khe và linh hoạt theo đúng đặc thù ngành** cho mã cổ phiếu: {symbol} thuộc nhóm ngành: {sector}.
 
-    --- ĐẶC THÙ NGÀNH ---
+    --- HƯỚNG DẪN ĐÁNH GIÁ THEO ĐẶC THÙ NGÀNH ---
     {sector_guidance}
 
-    --- DỮ LIỆU TÀI CHÍNH & ĐỊNH LƯỢNG (CŨ & MỚI) ---
+    --- DỮ LIỆU TÀI CHÍNH & ĐỊNH LƯỢNG ---
     - Mã CK: {symbol} | Điểm chất lượng tổng hợp: {total_score}/100 ({fund_notes})
     - Giá thị trường: {close_price:,.0f} VNĐ
     - Định giá: P/E = {pe} | P/B = {pb}
     - Hiệu quả sinh lời: ROE = {roe}% | ROA = {roa}% | EPS = {eps:,.0f} VNĐ | Cổ tức = {dividend_yield}%/năm
-    - Sức khỏe dòng tiền & Cấu trúc nợ: Lợi nhuận trượt 4 quý (TTM) = {net_profit_ttm:,.0f} Tỷ | Dòng tiền kinh doanh (CFO) = {cfo_latest:,.0f} Tỷ | Tỷ lệ Nợ/VCSH (D/E) = {debt_to_equity} | Biên lợi nhuận gộp = {gross_margin}%
+    - Sức khỏe tài chính & Dòng tiền: Lợi nhuận trượt 4 quý (TTM) = {net_profit_ttm:,.0f} Tỷ | Dòng tiền kinh doanh (CFO) = {cfo_latest:,.0f} Tỷ | Tỷ lệ Nợ/VCSH (D/E) = {debt_to_equity} | Biên lợi nhuận gộp = {gross_margin}%
     - Tăng trưởng gần nhất: Tăng trưởng LNST YoY = {growth_yoy}%
     --------------------------------------------------------------------------------------------------------------------------------
 
     YÊU CẦU TRẢ VỀ JSON THUẦN TÚY (TUYỆT ĐỐI KHÔNG DÙNG ```json):
-    1. "bctc": [MỤC TRỌNG TÂM - PHÂN TÍCH SỨC KHỎE TÀI CHÍNH]: Phân tích cực kỳ chuyên sâu và chi tiết về bức tranh BCTC dựa trên các số liệu thực tế được cung cấp. Bắt buộc làm rõ mối quan hệ giữa Lợi nhuận TTM ({net_profit_ttm:,.0f} Tỷ) và Dòng tiền thuần từ hoạt động kinh doanh (CFO = {cfo_latest:,.0f} Tỷ) xem dòng tiền có thực sự thu về tiền mặt hay chỉ là "lợi nhuận trên giấy". Đánh giá hiệu suất sinh lời qua biên lợi nhuận gộp ({gross_margin}%), ROA ({roa}%), ROE ({roe}%) và gánh nặng đòn bẩy tài chính thông qua tỷ lệ Nợ trên vốn chủ sở hữu (D/E = {debt_to_equity}) (8-10 câu).
+    1. "bctc": [MỤC TRỌNG TÂM - PHÂN TÍCH SỨC KHỎE TÀI CHÍNH]: Phân tích chuyên sâu bức tranh BCTC dựa trên dữ liệu thực tế. **LƯU Ý QUAN TRỌNG:** Phải áp dụng góc nhìn đánh giá linh hoạt theo đặc thù ngành đã nêu ở trên (Ví dụ: Tuyệt đối không máy móc chê Ngân hàng có D/E cao hay CFO âm). Phân tích rõ hiệu suất sinh lời (ROE, ROA), biên gộp (nếu áp dụng được) và chất lượng dòng tiền (8-10 câu).
     2. "catalyst": Xác định lợi thế cạnh tranh dài hạn (Economic Moat) và động lực tăng trưởng nội tại trong 2-3 năm tới (4-5 câu).
-    3. "risks": Chỉ trích thẳng thắn các rủi ro trọng yếu (Rủi ro chu kỳ, rủi ro đòn bẩy tài chính cao, rủi ro suy giảm biên lợi nhuận hoặc dòng tiền âm) có thể làm xói mòn giá trị doanh nghiệp (3-4 câu).
+    3. "risks": Chỉ trích thẳng thắn các rủi ro trọng yếu thực tế phù hợp với ngành (rủi ro chu kỳ, rủi ro nợ xấu/thanh khoản với ngân hàng, rủi ro suy giảm biên lợi nhuận,...) (3-4 câu).
     4. "outlook": Đánh giá biên an toàn (Margin of Safety) của mức định giá hiện tại (P/E {pe}, P/B {pb}) kết hợp triển vọng dài hạn (4-5 câu).
     5. "recommendation": Khuyến nghị hành động tích sản sắc bén kèm tỷ trọng giải ngân (Ví dụ: "Tích sản dài hạn - Tỷ trọng 15-20%").
     6. "price_zone": Vạch rõ chiến lược tích sản dạng văn bản liền mạch (Ví dụ: "Vùng gom giá trị: dưới 20k, Vùng chặn lỗ: thủng 18k, Kỳ vọng dài hạn: tăng trưởng 25%"). TUYỆT ĐỐI KHÔNG TRẢ VỀ DẠNG DICTIONARY/OBJECT.
-    7. "macro_view": Phân tích chu kỳ ngành và vĩ mô tác động đến dòng tiền kinh doanh của doanh nghiệp (5-6 câu).
+    7. "macro_view": Phân tích chu kỳ ngành và vĩ mô tác động đến hoạt động kinh doanh của doanh nghiệp (5-6 câu).
 
     BẮT BUỘC KHÓA JSON ĐẦY ĐỦ: "bctc", "catalyst", "risks", "outlook", "recommendation", "price_zone", "macro_view".
     """
@@ -209,7 +233,7 @@ def main():
                 top_symbols_to_analyze[itm['symbol']] = sector
             print(f"📌 Nhóm ngành [{sector}] - Chọn Top {limit_count}: {[i['symbol'] for i in selected_items]}")
 
-    print(f"\n🤖 Bắt đầu chạy AI phân tích tích sản chuyên sâu cho các mã: {list(top_symbols_to_analyze.keys())}")
+    print(f"\n🤖 Bắt đầu chạy AI phân tích tích sản chuyên sâu (đánh giá linh hoạt theo ngành) cho các mã: {list(top_symbols_to_analyze.keys())}")
     count = 0
     
     for symbol, sector in top_symbols_to_analyze.items():
@@ -243,7 +267,7 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI tích sản chuyên sâu cho {count} mã và ghi vào {DATA_FILE}.")
+    print(f"\n🎉 Hoàn thành! Đã cập nhật phân tích AI cho {count} mã và ghi vào {DATA_FILE}.")
 
 if __name__ == "__main__":
     main()
