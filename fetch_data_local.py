@@ -26,7 +26,6 @@ VN100_SYMBOLS = [
     "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
 ]
 
-# Đảm bảo danh sách luôn chuẩn 100 mã độc nhất
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 VNDIRECT_RATIOS = {
@@ -86,7 +85,6 @@ def aggregate_candles(data, interval):
     return sorted(list(groups.values()), key=lambda x: x['time'])
 
 def fetch_history_with_fallback(symbol, start_date, end_date):
-    """Thử lần lượt các nguồn TCBS và VCI với cơ chế đổi User-Agent phòng chống chặn"""
     sources = ['TCBS', 'VCI']
     for src in sources:
         for attempt in range(2):
@@ -101,8 +99,6 @@ def fetch_history_with_fallback(symbol, start_date, end_date):
     return None
 
 def parse_bctc_history(symbol):
-    """Đọc file BCTC JSON chi tiết (hỗ trợ 8 quý) trong thư mục bctc_data, 
-    tính toán các chỉ số tăng trưởng QoQ, YoY và chuỗi thời gian chi tiết."""
     filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
     if not os.path.exists(filepath):
         return []
@@ -178,7 +174,7 @@ def parse_bctc_history(symbol):
     return bctc_records
 
 def extract_advanced_metrics_from_bctc(symbol):
-    """Trích xuất các thông số chuyên sâu (CFO, D/E, Gross Margin, TTM Net Profit) từ chuỗi 8 quý gần nhất"""
+    """Trích xuất thông số chuyên nghiệp tối ưu, tự động nhận diện Ngân hàng để xử lý Biên gộp & D/E chuẩn xác"""
     filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
     if not os.path.exists(filepath):
         return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
@@ -194,48 +190,71 @@ def extract_advanced_metrics_from_bctc(symbol):
     income_statement = data.get("income_statement", [])
 
     latest_period = balance_sheet[0].get("period") if balance_sheet else None
+    if not latest_period and income_statement:
+        latest_period = income_statement[0].get("period")
 
+    # 1. Dòng tiền kinh doanh CFO
     latest_cfo = 0
-    if cash_flow and latest_period:
+    cfo_ids = [
+        "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES", 
+        "CF_OPERATE_CASH_FLOW", 
+        "CFO", 
+        "CF_NET_CASH"
+    ]
+    if cash_flow:
         for item in cash_flow:
-            if item.get("period") == latest_period and item.get("id") in [
-                "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES", 
-                "CF_OPERATE_CASH_FLOW", 
-                "CFO"
-            ]:
+            if latest_period and item.get("period") == latest_period and item.get("id") in cfo_ids:
                 latest_cfo = item.get("value", 0)
                 break
-        if latest_cfo == 0 and cash_flow:
+        if latest_cfo == 0:
             for item in cash_flow:
-                if item.get("id") in ["CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES", "CF_OPERATE_CASH_FLOW", "CFO"]:
+                if item.get("id") in cfo_ids:
                     latest_cfo = item.get("value", 0)
                     break
 
+    # 2. Tổng nợ phải trả & Vốn chủ sở hữu
     total_liabilities = 0
     equity = 0
-    if balance_sheet and latest_period:
+    if balance_sheet:
         for item in balance_sheet:
-            if item.get("period") == latest_period:
-                if item.get("id") in ["BS_TOTAL_LIABILITIES", "TOTAL_LIABILITIES"]:
-                    total_liabilities = item.get("value", 0)
-                elif item.get("id") in ["BS_EQUITY", "EQUITY"]:
-                    equity = item.get("value", 0)
+            if latest_period and item.get("period") == latest_period:
+                item_id = item.get("id", "")
+                val = item.get("value", 0)
+                if item_id in ["BS_TOTAL_LIABILITIES", "TOTAL_LIABILITIES"]:
+                    total_liabilities = val
+                elif item_id in ["BS_EQUITY", "EQUITY"]:
+                    equity = val
+
     debt_to_equity = round(total_liabilities / equity, 2) if equity > 0 else 0
 
+    # 3. Phân biệt Ngân hàng/Chứng khoán với Doanh nghiệp thường để tính Biên lợi nhuận
     gross_profit = 0
     revenue = 0
-    if income_statement and latest_period:
-        for item in income_statement:
-            if item.get("period") == latest_period:
-                if item.get("id") in ["IS_GROSS_PROFIT", "GROSS_PROFIT"]:
-                    gross_profit = item.get("value", 0)
-                elif item.get("id") in ["IS_NET_REVENUE", "REVENUE", "NET_REVENUE"]:
-                    revenue = item.get("value", 0)
-    gross_margin = round((gross_profit / revenue) * 100, 1) if revenue > 0 else 0
+    is_bank_or_sec = False
 
-    net_profit_ttm = 0
     if income_statement:
-        pat_items = [item for item in income_statement if item.get("id") in ["IS_NET_PROFIT_AFTER_TAX", "NET_PROFIT_AFTER_TAX"]]
+        for item in income_statement:
+            if latest_period and item.get("period") == latest_period:
+                item_id = item.get("id", "")
+                val = item.get("value", 0)
+                if item_id in ["IS_GROSS_PROFIT", "GROSS_PROFIT"]:
+                    gross_profit = val
+                elif item_id in ["IS_NET_REVENUE", "REVENUE", "NET_REVENUE", "IS_TOTAL_REVENUE"]:
+                    revenue = val
+                elif item_id in ["IS_NET_INTEREST_INCOME"]: # Chỉ tiêu đặc trưng của Ngân hàng
+                    is_bank_or_sec = True
+
+    if is_bank_or_sec:
+        # Đối với ngân hàng, không áp dụng biên gộp sản xuất -> gán giá trị đặc biệt hoặc 0 để UI phân biệt
+        gross_margin = 0.0
+    else:
+        gross_margin = round((gross_profit / revenue) * 100, 1) if revenue > 0 else 0
+
+    # 4. Lợi nhuận TTM (4 quý gần nhất)
+    net_profit_ttm = 0
+    pat_ids = ["IS_NET_PROFIT_AFTER_TAX", "NET_PROFIT_AFTER_TAX", "IS_PROFIT_AFTER_TAX"]
+    pat_items = [item for item in income_statement if item.get("id") in pat_ids]
+    if pat_items:
         pat_items = sorted(pat_items, key=lambda x: x.get("period", ""), reverse=True)
         latest_4q = pat_items[:4]
         net_profit_ttm = sum([q.get("value", 0) for q in latest_4q])
@@ -248,7 +267,6 @@ def extract_advanced_metrics_from_bctc(symbol):
     }
 
 def auto_git_push():
-    """Tự động đồng bộ dữ liệu lên GitHub an toàn, tránh lỗi rejected"""
     try:
         print("📤 Đang tiến hành đồng bộ dữ liệu lên GitHub...")
         subprocess.run(["git", "add", DATA_FILE], check=True)
@@ -458,7 +476,6 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
         
-    # Ghi nhận thời điểm cào thành công vào last_update.json
     crawl_timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     with open(LAST_UPDATE_FILE, "w", encoding="utf-8") as f:
         json.dump({"last_update": crawl_timestamp}, f, ensure_ascii=False)
