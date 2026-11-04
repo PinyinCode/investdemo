@@ -235,7 +235,6 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-trophy text-xs md:text-sm"></i>
                     </span>
-                    <!-- Đặt mặc định là FUNDAMENTAL (Điểm Cơ bản) thay vì NONE -->
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
                         <option value="NONE">Mặc định (A-Z)</option>
                         <option value="ALL_SCORE">🏆 Sắp xếp Tổng hợp</option>
@@ -800,6 +799,7 @@
                     const extraData = rawStockData[sym] || {};
                     return {
                         ...item,
+                        company_name: extraData.company_name !== undefined ? extraData.company_name : (item.company_name || extraData.organ_name || item.organ_name || ""),
                         eps: extraData.eps !== undefined ? extraData.eps : item.eps,
                         dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
                         pe: extraData.pe !== undefined ? extraData.pe : item.pe,
@@ -841,12 +841,11 @@
             const rankingMode = document.getElementById('ranking-filter').value;
 
             let filtered = screenerResults.filter(item => {
-                let matchSearch = item.symbol.includes(searchTerm);
+                let matchSearch = item.symbol.includes(searchTerm) || (item.company_name && item.company_name.toUpperCase().includes(searchTerm));
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
                 return matchSearch && matchSector;
             });
 
-            // Mặc định sắp xếp theo điểm cơ bản nếu rankingMode là FUNDAMENTAL hoặc NONE
             if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
             else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
@@ -905,7 +904,10 @@
                                     </button>
                                     <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 mt-1"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
+                                <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
+                                    <span><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
+                                    ${item.company_name ? `<span class="text-slate-500">•</span> <span class="text-slate-300 font-medium truncate max-w-[180px] sm:max-w-[220px]" title="${item.company_name}">${item.company_name}</span>` : ''}
+                                </div>
                             </div>
                             <div class="text-right">
                                 <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
