@@ -125,14 +125,14 @@
                 "roe_quarter": 5.45
             }
         ],
-        "outlook": "Giá thị trường hiện tại là 20,550 VNĐ, đang giao dịch cao hơn 0.3% so với Fair value 20,492 VNĐ (tính theo phương pháp P/E lý tưởng 7.4x). Với biên an toàn (MoS) yêu cầu là 20%, vùng mua an toàn được xác định nghiêm ngặt ở mức 16,394 VNĐ. Do đó, mức giá hiện tại chưa cung cấp đủ chiết khấu (-20.2% so với vùng mua an toàn) để bảo vệ nhà đầu tư giá trị trước các biến động vĩ mô. Hệ thống đánh giá trạng thái kỹ thuật đang tích lũy sideway, chưa có điểm nổ để hấp thụ lượng cung tiềm năng. Nhà đầu tư nên kiên nhẫn chờ đợi nhịp điều chỉnh về vùng 16,394 VNĐ để tối ưu hóa tỷ suất sinh lời trên rủi ro.",
-        "ai_recommendation": "CHỜ VỀ VÙNG MUA — Tỷ trọng 0%",
+        "outlook": "Giá 20,550 VNĐ đã vượt fair value 20,492 VNĐ. Định giá hiện tại chưa hấp dẫn cho tích sản mới. Verdict: HƠI ĐẮT - KHÔNG MUA. Quyết định hệ thống: ❌ TRÁNH. Chờ giá điều chỉnh về 16,394 VNĐ mới nên giải ngân.",
+        "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 16,394 — 20,492 | Giá hiện tại: 20,550 | Verdict: HƠI ĐẮT - KHÔNG MUA",
-        "macro_view": "Chính sách tiền tệ nới lỏng và mặt bằng lãi suất cho vay giảm đang tạo điều kiện cho ACB đẩy mạnh tăng trưởng tín dụng (>=12%). Tuy nhiên, áp lực lên NIM là hiện hữu khi chi phí huy động (COF) có độ trễ giảm so với lãi suất cho vay. Chu kỳ phục hồi của thị trường bất động sản và trái phiếu doanh nghiệp sẽ quyết định trực tiếp đến chất lượng tài sản và chi phí dự phòng rủi ro tín dụng của ngân hàng. Ngoài ra, các quy định mới về an toàn vốn và tỷ lệ LDR từ NHNN sẽ ảnh hưởng đến room tăng trưởng tín dụng thực tế trong các quý tới.",
-        "ai_updated_at": "2026-11-05 14:51:36",
-        "bctc": "Chất lượng tài sản và hiệu quả sinh lời của ACB ở mức tốt với ROE đạt 16.5% và ROA là 1.6%, vượt ngưỡng tối ưu vốn của ngành (ROE >=14%). Lợi nhuận TTM đạt 16,096 Tỷ với tăng trưởng YoY 9.77%, phản ánh lợi nhuận thật từ hoạt động cốt lõi. Chỉ số D/E ở mức 9.62 hoàn toàn phù hợp với đặc thù ngành ngân hàng khi nợ chủ yếu là tiền gửi khách hàng. Biên gộp 0.0% là do đặc thù kế toán ngân hàng không áp dụng chỉ số này cho doanh thu thuần. Dòng tiền kinh doanh (CFO) âm 3,317 Tỷ khiến tỷ lệ CFO/LNST đạt -0.21x, tuy nhiên đây là trạng thái bình thường khi ngân hàng đẩy mạnh tăng trưởng tín dụng (>=12%) và giải ngân cho vay vượt huy động. Định giá P/E 7.39x và P/B 1.14x cho thấy thị trường đang định giá ngân hàng này sát với mức trung bình ngành (P/E median 7.4x, P/B median 1.2x).",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi của ACB nằm ở chất lượng tài sản thuộc top ngành và chi phí huy động vốn thấp nhờ nền tảng khách hàng bán lẻ trung thành. Động lực tăng trưởng 2-3 năm tới được thúc đẩy bởi khả năng duy trì tăng trưởng tín dụng mạnh (>=12%) trong khi vẫn tối ưu hóa hiệu quả sử dụng vốn (ROE >=14%). Việc mở rộng biên lãi ròng (NIM) thông qua dịch chuyển sang cho vay bán lẻ và SME sẽ là bệ phóng cho lợi nhuận.",
-        "risks": "Rủi ro trọng yếu nhất là áp lực nợ xấu tiềm ẩn khi ngân hàng đẩy mạnh tăng trưởng tín dụng (>=12%) trong bối cảnh sức khỏe tài chính của nhóm khách hàng bất động sản chưa hoàn toàn hồi phục. Thứ hai, việc CFO âm (-3,317 Tỷ) cho thấy nhu cầu thanh khoản cao, đặt ra rủi ro về chi phí huy động vốn nếu thị trường tiền tệ thắt chặt. Cuối cùng, biên an toàn định giá mỏng (chênh lệch 0.3% so với fair value) khiến cổ phiếu dễ bị điều chỉnh mạnh nếu tăng trưởng LNST (hiện tại 9.77%) không đạt kỳ vọng.",
+        "macro_view": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
+        "ai_updated_at": "2026-11-05 15:33:59",
+        "bctc": "Chỉ số sinh lời: ROE đạt 16.5%, ROA 1.6% — vượt trội so với mặt bằng chung ngành. P/E 7.39x và P/B 1.14x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 9.62 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ -0.21x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 2,773 VNĐ, cổ tức 3.02%/năm — thu nhập thụ động hấp dẫn.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành. Tăng trưởng ổn định với LNST tăng 9.8% YoY.",
+        "risks": "Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức 9.62. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
         "ps": 0,
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
@@ -151,7 +151,8 @@
         "valuation_calculated_at": "2026-11-05 15:04:33",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
+        "ai_source": "TEMPLATE_FALLBACK"
     },
     "BID": {
         "symbol": "BID",
