@@ -148,7 +148,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=20,492 (P/E lý tưởng 7.4x, median 7.4x); PB_method=21,992 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -20.2,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "BID": {
         "symbol": "BID",
@@ -299,7 +302,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=37,835 (P/E lý tưởng 8.5x, median 7.4x); PB_method=30,738 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -6.1,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "CTG": {
         "symbol": "CTG",
@@ -447,7 +453,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=46,563 (P/E lý tưởng 8.5x, median 7.4x); PB_method=32,950 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": 17.9,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "TCB": {
         "symbol": "TCB",
@@ -598,7 +607,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=29,863 (P/E lý tưởng 7.4x, median 7.4x); PB_method=21,596 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": 8.8,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "MBB": {
         "symbol": "MBB",
@@ -749,7 +761,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=27,467 (P/E lý tưởng 8.5x, median 7.4x); PB_method=19,341 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": 12.7,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "STB": {
         "symbol": "STB",
@@ -897,7 +912,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=5,979 (P/E lý tưởng 7.4x, median 7.4x); PB_method=42,424 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -93.1,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VPB": {
         "symbol": "VPB",
@@ -1045,7 +1063,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=23,042 (P/E lý tưởng 7.4x, median 7.4x); PB_method=22,642 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -15.8,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "HDB": {
         "symbol": "HDB",
@@ -1196,7 +1217,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=32,770 (P/E lý tưởng 8.5x, median 7.4x); PB_method=17,012 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": 16.8,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VIB": {
         "symbol": "VIB",
@@ -1344,7 +1368,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=15,305 (P/E lý tưởng 7.4x, median 7.4x); PB_method=16,077 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -13.2,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "TPB": {
         "symbol": "TPB",
@@ -1492,7 +1519,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=25,886 (P/E lý tưởng 8.5x, median 7.4x); PB_method=17,949 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": 61.8,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "SHB": {
         "symbol": "SHB",
@@ -1640,7 +1670,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=23,762 (P/E lý tưởng 8.5x, median 7.4x); PB_method=19,779 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": 77.7,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "SSB": {
         "symbol": "SSB",
@@ -1788,7 +1821,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=6,939 (P/E lý tưởng 7.4x, median 7.4x); PB_method=15,150 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -63.4,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "LPB": {
         "symbol": "LPB",
@@ -1931,7 +1967,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=34,393 (P/E lý tưởng 8.5x, median 7.4x); PB_method=18,221 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -20.2,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "MSB": {
         "symbol": "MSB",
@@ -2071,7 +2110,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=12,363 (P/E lý tưởng 7.4x, median 7.4x); PB_method=15,250 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -37.2,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "OCB": {
         "symbol": "OCB",
@@ -2211,7 +2253,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=10,952 (P/E lý tưởng 7.4x, median 7.4x); PB_method=14,233 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -13.7,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "EIB": {
         "symbol": "EIB",
@@ -2351,7 +2396,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=754 (P/E lý tưởng 7.4x, median 7.4x); PB_method=17,328 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -96.2,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "SSI": {
         "symbol": "SSI",
@@ -2502,7 +2550,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=20,762 (P/E lý tưởng 14.0x, median 18.5x); PB_method=18,581 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -23.7,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VCI": {
         "symbol": "VCI",
@@ -2653,7 +2704,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=17,024 (P/E lý tưởng 14.0x, median 18.5x); PB_method=20,776 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -36.3,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "HCM": {
         "symbol": "HCM",
@@ -2804,7 +2858,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=14,980 (P/E lý tưởng 14.0x, median 18.5x); PB_method=14,987 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -53.2,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VIX": {
         "symbol": "VIX",
@@ -2952,7 +3009,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=9,100 (P/E lý tưởng 14.0x, median 18.5x); PB_method=18,922 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -47.9,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "MBS": {
         "symbol": "MBS",
@@ -3103,7 +3163,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=16,996 (P/E lý tưởng 14.0x, median 18.5x); PB_method=16,000 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -20.3,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "FTS": {
         "symbol": "FTS",
@@ -3254,7 +3317,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=14,756 (P/E lý tưởng 14.0x, median 18.5x); PB_method=16,698 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -43.2,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "BSI": {
         "symbol": "BSI",
@@ -3402,7 +3468,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=24,486 (P/E lý tưởng 14.0x, median 18.5x); PB_method=30,388 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -36.5,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "CTS": {
         "symbol": "CTS",
@@ -3550,7 +3619,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=5,726 (P/E lý tưởng 14.0x, median 18.5x); PB_method=14,820 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -81.2,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "ORS": {
         "symbol": "ORS",
@@ -3698,7 +3770,10 @@
         "fair_value_rationale": "[CHUNG_KHOAN] PE_method=7,784 (P/E lý tưởng 14.0x, median 18.5x); PB_method=17,722 (P/B lý tưởng 1.4x, median 1.4x); MoS 25%.",
         "discount_to_fair_pct": -59.7,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VHM": {
         "symbol": "VHM",
@@ -3851,7 +3926,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=144,456 (P/E lý tưởng 12.0x, median 14.6x); PB_method=37,770 (P/B lý tưởng 1.1x, median 1.1x); Graham=97,326; MoS 30%.",
         "discount_to_fair_pct": 7.6,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VIC": {
         "symbol": "VIC",
@@ -4004,7 +4082,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=66,972 (P/E lý tưởng 12.0x, median 14.6x); PB_method=27,520 (P/B lý tưởng 1.1x, median 1.1x); Graham=56,567; MoS 30%.",
         "discount_to_fair_pct": -83.4,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VRE": {
         "symbol": "VRE",
@@ -4156,7 +4237,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=39,048 (P/E lý tưởng 12.0x, median 14.6x); PB_method=24,200 (P/B lý tưởng 1.1x, median 1.1x); Graham=40,504; MoS 30%.",
         "discount_to_fair_pct": 12.9,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "NVL": {
         "symbol": "NVL",
@@ -4308,7 +4392,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=21,060 (P/E lý tưởng 12.0x, median 14.6x); PB_method=21,704 (P/B lý tưởng 1.1x, median 1.1x); Graham=28,170; MoS 30%.",
         "discount_to_fair_pct": 45.4,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "PDR": {
         "symbol": "PDR",
@@ -4458,7 +4545,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=6,456 (P/E lý tưởng 12.0x, median 14.6x); PB_method=13,708 (P/B lý tưởng 1.1x, median 1.1x); Graham=12,395; MoS 30%.",
         "discount_to_fair_pct": -24.9,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "DIG": {
         "symbol": "DIG",
@@ -4607,7 +4697,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=8,976 (P/E lý tưởng 12.0x, median 14.6x); PB_method=13,337 (P/B lý tưởng 1.1x, median 1.1x); Graham=14,417; MoS 30%.",
         "discount_to_fair_pct": -8.9,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "NLG": {
         "symbol": "NLG",
@@ -4756,7 +4849,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=15,264 (P/E lý tưởng 12.0x, median 14.6x); PB_method=28,671 (P/B lý tưởng 1.1x, median 1.1x); Graham=27,564; MoS 30%.",
         "discount_to_fair_pct": -13.5,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "KDH": {
         "symbol": "KDH",
@@ -4906,7 +5002,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=18,144 (P/E lý tưởng 12.0x, median 14.6x); PB_method=17,031 (P/B lý tưởng 1.1x, median 1.1x); Graham=23,162; MoS 30%.",
         "discount_to_fair_pct": -11.5,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "CEO": {
         "symbol": "CEO",
@@ -5055,7 +5154,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=3,720 (P/E lý tưởng 12.0x, median 14.6x); PB_method=11,668 (P/B lý tưởng 1.1x, median 1.1x); Graham=8,681; MoS 30%.",
         "discount_to_fair_pct": -49.8,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "DXG": {
         "symbol": "DXG",
@@ -5204,7 +5306,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=1,080 (P/E lý tưởng 12.0x, median 14.6x); PB_method=12,484 (P/B lý tưởng 1.1x, median 1.1x); Graham=4,838; MoS 30%.",
         "discount_to_fair_pct": -68.5,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "TCH": {
         "symbol": "TCH",
@@ -5353,7 +5458,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=9,516 (P/E lý tưởng 12.0x, median 14.6x); PB_method=13,371 (P/B lý tưởng 1.1x, median 1.1x); Graham=14,863; MoS 30%.",
         "discount_to_fair_pct": -28.0,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "HDG": {
         "symbol": "HDG",
@@ -5502,7 +5610,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=23,988 (P/E lý tưởng 12.0x, median 14.6x); PB_method=19,117 (P/B lý tưởng 1.1x, median 1.1x); Graham=28,216; MoS 30%.",
         "discount_to_fair_pct": 9.0,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "KBC": {
         "symbol": "KBC",
@@ -5651,7 +5762,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=22,308 (P/E lý tưởng 12.0x, median 14.6x); PB_method=29,920 (P/B lý tưởng 1.1x, median 1.1x); Graham=34,041; MoS 30%.",
         "discount_to_fair_pct": -22.9,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "IDC": {
         "symbol": "IDC",
@@ -5800,7 +5914,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=52,380 (P/E lý tưởng 12.0x, median 14.6x); PB_method=18,780 (P/B lý tưởng 1.1x, median 1.1x); Graham=41,326; MoS 30%.",
         "discount_to_fair_pct": -18.1,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "SZC": {
         "symbol": "SZC",
@@ -5950,7 +6067,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=10,692 (P/E lý tưởng 12.0x, median 14.6x); PB_method=18,521 (P/B lý tưởng 1.1x, median 1.1x); Graham=18,542; MoS 30%.",
         "discount_to_fair_pct": -37.5,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "BCM": {
         "symbol": "BCM",
@@ -6099,7 +6219,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=22,560 (P/E lý tưởng 12.0x, median 14.6x); PB_method=23,117 (P/B lý tưởng 1.1x, median 1.1x); Graham=30,090; MoS 30%.",
         "discount_to_fair_pct": -57.5,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "PHR": {
         "symbol": "PHR",
@@ -6251,7 +6374,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=54,216 (P/E lý tưởng 12.0x, median 14.6x); PB_method=21,744 (P/B lý tưởng 1.1x, median 1.1x); Graham=45,240; MoS 30%.",
         "discount_to_fair_pct": 4.9,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "HPG": {
         "symbol": "HPG",
@@ -6403,7 +6529,10 @@
         "fair_value_rationale": "[NGUYEN_VAT_LIEU_CHU_KY] PE_method=31,918 (P/E lý tưởng 9.8x, median 8.5x); PB_method=21,500 (P/B lý tưởng 1.2x, median 1.2x); Graham=35,752; MoS 30%.",
         "discount_to_fair_pct": 3.9,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "HSG": {
         "symbol": "HSG",
@@ -6553,7 +6682,10 @@
         "fair_value_rationale": "[NGUYEN_VAT_LIEU_CHU_KY] PE_method=6,593 (P/E lý tưởng 8.5x, median 8.5x); PB_method=18,122 (P/B lý tưởng 1.2x, median 1.2x); Graham=15,997; MoS 30%.",
         "discount_to_fair_pct": 1.3,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "NKG": {
         "symbol": "NKG",
@@ -6702,7 +6834,10 @@
         "fair_value_rationale": "[NGUYEN_VAT_LIEU_CHU_KY] PE_method=4,219 (P/E lý tưởng 8.5x, median 8.5x); PB_method=19,462 (P/B lý tưởng 1.2x, median 1.2x); Graham=13,262; MoS 30%.",
         "discount_to_fair_pct": -25.7,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "CTD": {
         "symbol": "CTD",
@@ -6851,7 +6986,10 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=79,785 (P/E lý tưởng 11.2x, median 9.7x); PB_method=79,084 (P/B lý tưởng 0.9x, median 0.9x); Graham=120,198; MoS 30%.",
         "discount_to_fair_pct": -18.2,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VCG": {
         "symbol": "VCG",
@@ -7000,7 +7138,10 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=17,933 (P/E lý tưởng 11.2x, median 9.7x); PB_method=14,667 (P/B lý tưởng 0.9x, median 0.9x); Graham=24,541; MoS 30%.",
         "discount_to_fair_pct": -19.0,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "HHV": {
         "symbol": "HHV",
@@ -7149,7 +7290,10 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=11,594 (P/E lý tưởng 9.7x, median 9.7x); PB_method=17,600 (P/B lý tưởng 0.9x, median 0.9x); Graham=23,180; MoS 30%.",
         "discount_to_fair_pct": 28.3,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "FPT": {
         "symbol": "FPT",
@@ -7301,7 +7445,10 @@
         "fair_value_rationale": "[CONG_NGHE_BAN_LE] PE_method=53,759 (P/E lý tưởng 9.9x, median 9.9x); PB_method=53,235 (P/B lý tưởng 2.4x, median 2.4x); Graham=52,341; MoS 20%.",
         "discount_to_fair_pct": -19.5,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "MWG": {
         "symbol": "MWG",
@@ -7453,7 +7600,10 @@
         "fair_value_rationale": "[CONG_NGHE_BAN_LE] PE_method=85,861 (P/E lý tưởng 11.3x, median 9.9x); PB_method=74,531 (P/B lý tưởng 2.4x, median 2.4x); Graham=72,985; MoS 20%.",
         "discount_to_fair_pct": -20.5,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "PNJ": {
         "symbol": "PNJ",
@@ -7605,7 +7755,10 @@
         "fair_value_rationale": "[CONG_NGHE_BAN_LE] PE_method=32,541 (P/E lý tưởng 9.9x, median 9.9x); PB_method=63,391 (P/B lý tưởng 2.4x, median 2.4x); Graham=44,437; MoS 20%.",
         "discount_to_fair_pct": 134.7,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "FRT": {
         "symbol": "FRT",
@@ -7757,7 +7910,10 @@
         "fair_value_rationale": "[CONG_NGHE_BAN_LE] PE_method=86,110 (P/E lý tưởng 11.3x, median 9.9x); PB_method=69,461 (P/B lý tưởng 2.4x, median 2.4x); Graham=70,562; MoS 20%.",
         "discount_to_fair_pct": -60.5,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VNM": {
         "symbol": "VNM",
@@ -7909,7 +8065,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=66,484 (P/E lý tưởng 12.2x, median 10.6x); PB_method=21,480 (P/B lý tưởng 1.3x, median 1.3x); Graham=45,029; MoS 25%.",
         "discount_to_fair_pct": -41.3,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "MSN": {
         "symbol": "MSN",
@@ -8058,7 +8217,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=75,566 (P/E lý tưởng 12.2x, median 10.6x); PB_method=36,646 (P/B lý tưởng 1.3x, median 1.3x); Graham=62,703; MoS 25%.",
         "discount_to_fair_pct": -34.3,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "SAB": {
         "symbol": "SAB",
@@ -8207,7 +8369,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=44,152 (P/E lý tưởng 12.2x, median 10.6x); PB_method=20,914 (P/B lý tưởng 1.3x, median 1.3x); Graham=36,209; MoS 25%.",
         "discount_to_fair_pct": -35.6,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "GAS": {
         "symbol": "GAS",
@@ -8359,7 +8524,10 @@
         "fair_value_rationale": "[DIEN_NUOC_HA_TANG] PE_method=48,545 (P/E lý tưởng 7.9x, median 6.9x); PB_method=37,749 (P/B lý tưởng 1.3x, median 1.3x); Graham=64,172; MoS 15%.",
         "discount_to_fair_pct": -44.7,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "PVD": {
         "symbol": "PVD",
@@ -8508,7 +8676,10 @@
         "fair_value_rationale": "[PETROLEUM] PE_method=9,726 (P/E lý tưởng 10.0x, median 10.0x); PB_method=24,675 (P/B lý tưởng 1.4x, median 1.4x); Graham=19,987; MoS 30%.",
         "discount_to_fair_pct": -19.1,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "PVS": {
         "symbol": "PVS",
@@ -8657,7 +8828,10 @@
         "fair_value_rationale": "[PETROLEUM] PE_method=34,085 (P/E lý tưởng 10.0x, median 10.0x); PB_method=33,818 (P/B lý tưởng 1.4x, median 1.4x); Graham=43,804; MoS 30%.",
         "discount_to_fair_pct": -19.7,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "BSR": {
         "symbol": "BSR",
@@ -8809,7 +8983,10 @@
         "fair_value_rationale": "[PETROLEUM] PE_method=64,044 (P/E lý tưởng 11.5x, median 10.0x); PB_method=22,583 (P/B lý tưởng 1.4x, median 1.4x); Graham=45,756; MoS 30%.",
         "discount_to_fair_pct": 20.9,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "POW": {
         "symbol": "POW",
@@ -8961,7 +9138,10 @@
         "fair_value_rationale": "[DIEN_NUOC_HA_TANG] PE_method=13,405 (P/E lý tưởng 6.9x, median 6.9x); PB_method=17,697 (P/B lý tưởng 1.3x, median 1.3x); Graham=24,760; MoS 15%.",
         "discount_to_fair_pct": 20.3,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "REE": {
         "symbol": "REE",
@@ -9113,7 +9293,10 @@
         "fair_value_rationale": "[DIEN_NUOC_HA_TANG] PE_method=30,515 (P/E lý tưởng 6.9x, median 6.9x); PB_method=46,050 (P/B lý tưởng 1.3x, median 1.3x); Graham=60,261; MoS 15%.",
         "discount_to_fair_pct": -15.0,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "PC1": {
         "symbol": "PC1",
@@ -9266,7 +9449,10 @@
         "fair_value_rationale": "[DIEN_NUOC_HA_TANG] PE_method=18,685 (P/E lý tưởng 6.9x, median 6.9x); PB_method=18,843 (P/B lý tưởng 1.3x, median 1.3x); Graham=30,164; MoS 15%.",
         "discount_to_fair_pct": -3.5,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "NT2": {
         "symbol": "NT2",
@@ -9418,7 +9604,10 @@
         "fair_value_rationale": "[DIEN_NUOC_HA_TANG] PE_method=40,273 (P/E lý tưởng 7.9x, median 6.9x); PB_method=22,422 (P/B lý tưởng 1.3x, median 1.3x); Graham=45,047; MoS 15%.",
         "discount_to_fair_pct": 51.5,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "GMD": {
         "symbol": "GMD",
@@ -9570,7 +9759,10 @@
         "fair_value_rationale": "[MARITIME] PE_method=44,564 (P/E lý tưởng 7.2x, median 7.2x); PB_method=33,291 (P/B lý tưởng 1.5x, median 1.7x); Graham=55,750; MoS 30%.",
         "discount_to_fair_pct": -40.7,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "HAH": {
         "symbol": "HAH",
@@ -9722,7 +9914,10 @@
         "fair_value_rationale": "[MARITIME] PE_method=56,148 (P/E lý tưởng 8.2x, median 7.2x); PB_method=42,763 (P/B lý tưởng 1.5x, median 1.7x); Graham=66,136; MoS 30%.",
         "discount_to_fair_pct": -19.4,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "PVT": {
         "symbol": "PVT",
@@ -9871,7 +10066,10 @@
         "fair_value_rationale": "[MARITIME] PE_method=21,308 (P/E lý tưởng 7.2x, median 7.2x); PB_method=28,091 (P/B lý tưởng 1.5x, median 1.7x); Graham=35,412; MoS 30%.",
         "discount_to_fair_pct": -4.5,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VJC": {
         "symbol": "VJC",
@@ -10020,7 +10218,10 @@
         "fair_value_rationale": "[AVIATION] PE_method=42,975 (P/E lý tưởng 15.0x, median 31.9x); PB_method=104,538 (P/B lý tưởng 3.0x, median 5.6x); Graham=47,395; MoS 35%.",
         "discount_to_fair_pct": -77.3,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "HVN": {
         "symbol": "HVN",
@@ -10170,7 +10371,10 @@
         "fair_value_rationale": "[AVIATION] PE_method=19,635 (P/E lý tưởng 15.0x, median 31.9x); PB_method=9,135 (P/B lý tưởng 3.0x, median 5.6x); Graham=9,470; MoS 35%.",
         "discount_to_fair_pct": -72.5,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VHC": {
         "symbol": "VHC",
@@ -10319,7 +10523,10 @@
         "fair_value_rationale": "[AGRI] PE_method=51,975 (P/E lý tưởng 8.8x, median 7.7x); PB_method=42,706 (P/B lý tưởng 0.9x, median 0.9x); Graham=78,161; MoS 25%.",
         "discount_to_fair_pct": -21.1,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "ANV": {
         "symbol": "ANV",
@@ -10468,7 +10675,10 @@
         "fair_value_rationale": "[AGRI] PE_method=26,169 (P/E lý tưởng 8.8x, median 7.7x); PB_method=14,366 (P/B lý tưởng 0.9x, median 0.9x); Graham=32,167; MoS 25%.",
         "discount_to_fair_pct": 11.8,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "APH": {
         "symbol": "APH",
@@ -10618,7 +10828,10 @@
         "fair_value_rationale": "[AGRI] PE_method=7,716 (P/E lý tưởng 7.7x, median 7.7x); PB_method=10,248 (P/B lý tưởng 0.9x, median 0.9x); Graham=15,820; MoS 25%.",
         "discount_to_fair_pct": 10.1,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "ASM": {
         "symbol": "ASM",
@@ -10768,7 +10981,10 @@
         "fair_value_rationale": "[AGRI] PE_method=2,744 (P/E lý tưởng 7.7x, median 7.7x); PB_method=12,979 (P/B lý tưởng 0.9x, median 0.9x); Graham=10,616; MoS 25%.",
         "discount_to_fair_pct": 77.3,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "BMP": {
         "symbol": "BMP",
@@ -10917,7 +11133,10 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=170,758 (P/E lý tưởng 11.2x, median 9.7x); PB_method=34,184 (P/B lý tưởng 0.9x, median 0.9x); Graham=115,609; MoS 30%.",
         "discount_to_fair_pct": -41.3,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "BVH": {
         "symbol": "BVH",
@@ -11065,7 +11284,10 @@
         "fair_value_rationale": "[INSURANCE] PE_method=48,325 (P/E lý tưởng 10.6x, median 10.6x); PB_method=46,078 (P/B lý tưởng 1.3x, median 1.3x); MoS 25%.",
         "discount_to_fair_pct": -43.2,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "CSM": {
         "symbol": "CSM",
@@ -11212,7 +11434,10 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=0 (P/E lý tưởng 9.7x, median 9.7x); PB_method=11,550 (P/B lý tưởng 0.9x, median 0.9x); MoS 30%.",
         "discount_to_fair_pct": -30.0,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "DBC": {
         "symbol": "DBC",
@@ -11362,7 +11587,10 @@
         "fair_value_rationale": "[AGRI] PE_method=20,742 (P/E lý tưởng 8.8x, median 7.7x); PB_method=18,500 (P/B lý tưởng 0.9x, median 0.9x); Graham=32,498; MoS 25%.",
         "discount_to_fair_pct": -0.3,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "DCM": {
         "symbol": "DCM",
@@ -11514,7 +11742,10 @@
         "fair_value_rationale": "[NGUYEN_VAT_LIEU_CHU_KY] PE_method=50,392 (P/E lý tưởng 9.8x, median 8.5x); PB_method=27,110 (P/B lý tưởng 1.2x, median 1.2x); Graham=50,444; MoS 30%.",
         "discount_to_fair_pct": 8.9,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "DHC": {
         "symbol": "DHC",
@@ -11666,7 +11897,10 @@
         "fair_value_rationale": "[NGUYEN_VAT_LIEU_CHU_KY] PE_method=55,361 (P/E lý tưởng 9.8x, median 8.5x); PB_method=28,582 (P/B lý tưởng 1.2x, median 1.2x); Graham=54,288; MoS 30%.",
         "discount_to_fair_pct": 4.8,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "DHG": {
         "symbol": "DHG",
@@ -11815,7 +12049,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=79,467 (P/E lý tưởng 12.2x, median 10.6x); PB_method=34,709 (P/B lý tưởng 1.3x, median 1.3x); Graham=62,579; MoS 25%.",
         "discount_to_fair_pct": -43.1,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "DPM": {
         "symbol": "DPM",
@@ -11967,7 +12204,10 @@
         "fair_value_rationale": "[NGUYEN_VAT_LIEU_CHU_KY] PE_method=19,804 (P/E lý tưởng 8.5x, median 8.5x); PB_method=20,311 (P/B lý tưởng 1.2x, median 1.2x); Graham=29,353; MoS 30%.",
         "discount_to_fair_pct": -27.6,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "DRC": {
         "symbol": "DRC",
@@ -12116,7 +12356,10 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=6,244 (P/E lý tưởng 9.7x, median 9.7x); PB_method=11,024 (P/B lý tưởng 0.9x, median 0.9x); Graham=13,463; MoS 30%.",
         "discount_to_fair_pct": -14.4,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "GEX": {
         "symbol": "GEX",
@@ -12265,7 +12508,10 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=7,389 (P/E lý tưởng 9.7x, median 9.7x); PB_method=13,497 (P/B lý tưởng 0.9x, median 0.9x); Graham=16,206; MoS 30%.",
         "discount_to_fair_pct": -58.4,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "GVR": {
         "symbol": "GVR",
@@ -12417,7 +12663,10 @@
         "fair_value_rationale": "[NGUYEN_VAT_LIEU_CHU_KY] PE_method=14,954 (P/E lý tưởng 8.5x, median 8.5x); PB_method=19,416 (P/B lý tưởng 1.2x, median 1.2x); Graham=24,938; MoS 30%.",
         "discount_to_fair_pct": -54.9,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "HAG": {
         "symbol": "HAG",
@@ -12566,7 +12815,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=31,779 (P/E lý tưởng 12.2x, median 10.6x); PB_method=16,578 (P/B lý tưởng 1.3x, median 1.3x); Graham=27,350; MoS 25%.",
         "discount_to_fair_pct": 47.6,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "IMP": {
         "symbol": "IMP",
@@ -12715,7 +12967,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=29,073 (P/E lý tưởng 12.2x, median 10.6x); PB_method=20,812 (P/B lý tưởng 1.3x, median 1.3x); Graham=29,310; MoS 25%.",
         "discount_to_fair_pct": -38.9,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "KDC": {
         "symbol": "KDC",
@@ -12864,7 +13119,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=27,783 (P/E lý tưởng 10.6x, median 10.6x); PB_method=26,156 (P/B lý tưởng 1.3x, median 1.3x); Graham=34,446; MoS 25%.",
         "discount_to_fair_pct": -58.6,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "LIG": {
         "symbol": "LIG",
@@ -13014,7 +13272,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=1,283 (P/E lý tưởng 10.6x, median 10.6x); PB_method=13,000 (P/B lý tưởng 1.3x, median 1.3x); Graham=5,218; MoS 25%.",
         "discount_to_fair_pct": 30.4,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "MSH": {
         "symbol": "MSH",
@@ -13167,7 +13428,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=68,154 (P/E lý tưởng 12.2x, median 10.6x); PB_method=26,073 (P/B lý tưởng 1.3x, median 1.3x); Graham=50,230; MoS 25%.",
         "discount_to_fair_pct": 6.1,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "NTC": {
         "symbol": "NTC",
@@ -13316,7 +13580,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=164,626 (P/E lý tưởng 12.2x, median 10.6x); PB_method=81,391 (P/B lý tưởng 1.3x, median 1.3x); Graham=137,929; MoS 25%.",
         "discount_to_fair_pct": -20.2,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "PAN": {
         "symbol": "PAN",
@@ -13465,7 +13732,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=52,131 (P/E lý tưởng 10.6x, median 10.6x); PB_method=28,701 (P/B lý tưởng 1.3x, median 1.3x); Graham=49,427; MoS 25%.",
         "discount_to_fair_pct": 118.1,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "PLX": {
         "symbol": "PLX",
@@ -13614,7 +13884,10 @@
         "fair_value_rationale": "[PETROLEUM] PE_method=34,689 (P/E lý tưởng 11.5x, median 10.0x); PB_method=30,042 (P/B lý tưởng 1.4x, median 1.4x); Graham=38,840; MoS 30%.",
         "discount_to_fair_pct": -27.9,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "SBA": {
         "symbol": "SBA",
@@ -13763,7 +14036,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=28,232 (P/E lý tưởng 12.2x, median 10.6x); PB_method=20,378 (P/B lý tưởng 1.3x, median 1.3x); Graham=28,581; MoS 25%.",
         "discount_to_fair_pct": -8.7,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "SBT": {
         "symbol": "SBT",
@@ -13912,7 +14188,10 @@
         "fair_value_rationale": "[AGRI] PE_method=6,970 (P/E lý tưởng 7.7x, median 7.7x); PB_method=12,353 (P/B lý tưởng 0.9x, median 0.9x); Graham=16,508; MoS 25%.",
         "discount_to_fair_pct": -56.1,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "SJS": {
         "symbol": "SJS",
@@ -14064,7 +14343,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=65,292 (P/E lý tưởng 12.0x, median 14.6x); PB_method=17,661 (P/B lý tưởng 1.1x, median 1.1x); Graham=44,743; MoS 30%.",
         "discount_to_fair_pct": -43.7,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "TCD": {
         "symbol": "TCD",
@@ -14172,7 +14454,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=0 (P/E lý tưởng 10.6x, median 10.6x); PB_method=6,842 (P/B lý tưởng 1.3x, median 1.3x); MoS 25%.",
         "discount_to_fair_pct": 413.1,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "TID": {
         "symbol": "TID",
@@ -14322,7 +14607,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=8,395 (P/E lý tưởng 10.6x, median 10.6x); PB_method=19,136 (P/B lý tưởng 1.3x, median 1.3x); Graham=16,196; MoS 25%.",
         "discount_to_fair_pct": -34.0,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "TLG": {
         "symbol": "TLG",
@@ -14474,7 +14762,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=58,049 (P/E lý tưởng 12.2x, median 10.6x); PB_method=34,434 (P/B lý tưởng 1.3x, median 1.3x); Graham=53,273; MoS 25%.",
         "discount_to_fair_pct": -26.4,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VCB": {
         "symbol": "VCB",
@@ -14622,7 +14913,10 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=42,365 (P/E lý tưởng 8.5x, median 7.4x); PB_method=36,533 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -37.5,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VDP": {
         "symbol": "VDP",
@@ -14772,7 +15066,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=21,889 (P/E lý tưởng 10.6x, median 10.6x); PB_method=33,000 (P/B lý tưởng 1.3x, median 1.3x); Graham=34,343; MoS 25%.",
         "discount_to_fair_pct": -25.0,
         "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VOS": {
         "symbol": "VOS",
@@ -14921,7 +15218,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=29,524 (P/E lý tưởng 12.2x, median 10.6x); PB_method=18,019 (P/B lý tưởng 1.3x, median 1.3x); Graham=27,483; MoS 25%.",
         "discount_to_fair_pct": 88.2,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VPG": {
         "symbol": "VPG",
@@ -15068,7 +15368,10 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=0 (P/E lý tưởng 10.6x, median 10.6x); PB_method=12,610 (P/B lý tưởng 1.3x, median 1.3x); MoS 25%.",
         "discount_to_fair_pct": 875.0,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     "VPI": {
         "symbol": "VPI",
@@ -15217,7 +15520,10 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=10,404 (P/E lý tưởng 12.0x, median 14.6x); PB_method=16,785 (P/B lý tưởng 1.1x, median 1.1x); Graham=17,412; MoS 30%.",
         "discount_to_fair_pct": -81.0,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
     },
     "VTO": {
         "symbol": "VTO",
@@ -15366,6 +15672,9 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=25,660 (P/E lý tưởng 12.2x, median 10.6x); PB_method=19,406 (P/B lý tưởng 1.3x, median 1.3x); Graham=26,590; MoS 25%.",
         "discount_to_fair_pct": 86.8,
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
-        "valuation_calculated_at": "2026-11-05 14:48:33"
+        "valuation_calculated_at": "2026-11-05 15:04:33",
+        "final_decision": "❌ TRÁNH",
+        "final_decision_color": "rose",
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     }
 }
