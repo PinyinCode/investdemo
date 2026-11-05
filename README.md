@@ -54,3 +54,10 @@ Giả sử bạn muốn chạy lần 1 (khoảng 13-14 mã):
 • batch / total_batches: Để 1.
 • force: Tích chọn.
 👉 Bấm Run workflow. 
+
+#CMD
+github cmd
+git fetch origin
+git reset --hard origin/main
+
+git log --oneline -5
