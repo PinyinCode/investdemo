@@ -386,7 +386,7 @@ def generate_html():
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
 
-                <!-- 🎯 KHUNG KHUYẾN NGHỊ CUỐI CÙNG -->
+                <!-- KHUNG KHUYẾN NGHỊ CUỐI CÙNG -->
                 <div id="modal-final-decision"></div>
 
                 <!-- KHUNG VÙNG MUA -->
@@ -408,7 +408,7 @@ def generate_html():
                         <div><span class="text-rose-400 font-bold">❌ TRÁNH:</span> Giá đắt (vượt fair_high xa) HOẶC PTCB &lt; 20/50 HOẶC lợi nhuận ảo (CFO âm).</div>
                         <div><span class="text-slate-400 font-bold">👀 THEO DÕI:</span> Chưa đủ điều kiện rõ ràng.</div>
                         <div class="pt-1 border-t border-slate-800 text-[10px] text-slate-500 italic">
-                            Nhắc lại: Vùng mua chỉ là "giá". Quyết định cuối = Vùng mua + Chất lượng (PTCB) + Thời điểm (PTKT) + Định giá.
+                            Vùng mua chỉ là "giá". Quyết định cuối = Vùng mua + Chất lượng (PTCB) + Thời điểm (PTKT) + Định giá.
                         </div>
                     </div>
                 </details>
@@ -523,7 +523,7 @@ def generate_html():
         </div>
     </div>
 
-    <!-- MODAL BIỂU ĐỒ (giữ nguyên) -->
+    <!-- MODAL BIỂU ĐỒ -->
     <div id="chart-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm hidden p-1 md:p-3">
         <div id="chart-modal-box" class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300">
             <div class="p-0 bg-slate-900 flex-grow relative overflow-hidden">
@@ -590,6 +590,9 @@ def generate_html():
     </div>
 
     <script>
+        // ============================================================
+        // CẤU HÌNH VÀ KHỞI TẠO FIREBASE (BẮT BUỘC ĐẶT LÊN ĐẦU)
+        // ============================================================
         const firebaseConfig = {firebase_config_json_placeholder};
         const cheapStocksGroups = {cheap_stocks_json_placeholder};
         const cheapSymbolsSet = new Set({cheap_symbols_json_placeholder});
@@ -600,45 +603,9 @@ def generate_html():
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        auth.onAuthStateChanged(async (user) => {
-            const authOverlay = document.getElementById('auth-overlay');
-            const expiredModal = document.getElementById('expired-modal');
-            if (user) {
-                try {
-                    const emailKey = user.email.toLowerCase();
-                    const userDocRef = db.collection('allowed_users').doc(emailKey);
-                    const doc = await userDocRef.get();
-                    let userData = {};
-                    if (!doc.exists) {
-                        const expireDate = new Date();
-                        expireDate.setDate(expireDate.getDate() + 7);
-                        userData = { email: user.email, role: 'user', expiresAt: expireDate.toISOString() };
-                        await userDocRef.set(userData);
-                    } else { userData = doc.data(); }
-                    const now = new Date();
-                    const expireTime = parseDate(userData.expiresAt);
-                    if (expireTime && now > expireTime && userData.role !== 'admin') {
-                        authOverlay.classList.add('hidden');
-                        expiredModal.classList.remove('hidden');
-                        document.getElementById('user-uid-text').innerText = user.uid;
-                        await auth.signOut();
-                        return;
-                    } else {
-                        authOverlay.classList.add('hidden');
-                        expiredModal.classList.add('hidden');
-                    }
-                    if (userData.role === 'admin') {
-                        const adminBtn = document.getElementById('btn-admin-panel');
-                        if (adminBtn) { adminBtn.classList.remove('hidden'); adminBtn.classList.add('flex'); }
-                    }
-                } catch (err) { console.warn("⚠️ Lỗi kiểm tra Firestore:", err); }
-                loadData(true);
-            } else {
-                authOverlay.classList.remove('hidden');
-                expiredModal.classList.add('hidden');
-            }
-        });
-
+        // ============================================================
+        // XỬ LÝ AUTH
+        // ============================================================
         function parseDate(val) {
             if (!val) return null;
             if (typeof val.toDate === 'function') return val.toDate();
@@ -668,8 +635,12 @@ def generate_html():
             const pass = document.getElementById('login-password').value;
             const errBox = document.getElementById('login-error');
             errBox.classList.add('hidden');
-            try { await auth.signInWithEmailAndPassword(email, pass); }
-            catch (err) { errBox.innerText = "Lỗi đăng nhập: " + err.message; errBox.classList.remove('hidden'); }
+            try { 
+                await auth.signInWithEmailAndPassword(email, pass); 
+            } catch (err) { 
+                errBox.innerText = "Lỗi đăng nhập: " + err.message; 
+                errBox.classList.remove('hidden'); 
+            }
         }
 
         async function handleRegister(e) {
@@ -686,11 +657,66 @@ def generate_html():
                     email: email, role: 'user', expiresAt: expireDate.toISOString()
                 });
                 alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
-            } catch (err) { errBox.innerText = "Lỗi đăng ký: " + err.message; errBox.classList.remove('hidden'); }
+            } catch (err) { 
+                errBox.innerText = "Lỗi đăng ký: " + err.message; 
+                errBox.classList.remove('hidden'); 
+            }
         }
 
-        async function handleLogout() { await auth.signOut(); window.location.reload(); }
+        async function handleLogout() { 
+            await auth.signOut(); 
+            window.location.reload(); 
+        }
 
+        // ============================================================
+        // LẮNG NGHE TRẠNG THÁI ĐĂNG NHẬP
+        // ============================================================
+        auth.onAuthStateChanged(async (user) => {
+            const authOverlay = document.getElementById('auth-overlay');
+            const expiredModal = document.getElementById('expired-modal');
+            if (user) {
+                try {
+                    const emailKey = user.email.toLowerCase();
+                    const userDocRef = db.collection('allowed_users').doc(emailKey);
+                    const doc = await userDocRef.get();
+                    let userData = {};
+                    if (!doc.exists) {
+                        const expireDate = new Date();
+                        expireDate.setDate(expireDate.getDate() + 7);
+                        userData = { email: user.email, role: 'user', expiresAt: expireDate.toISOString() };
+                        await userDocRef.set(userData);
+                    } else { userData = doc.data(); }
+                    
+                    const now = new Date();
+                    const expireTime = parseDate(userData.expiresAt);
+                    
+                    if (expireTime && now > expireTime && userData.role !== 'admin') {
+                        authOverlay.classList.add('hidden');
+                        expiredModal.classList.remove('hidden');
+                        document.getElementById('user-uid-text').innerText = user.uid;
+                        await auth.signOut();
+                        return;
+                    } else {
+                        authOverlay.classList.add('hidden');
+                        expiredModal.classList.add('hidden');
+                    }
+                    if (userData.role === 'admin') {
+                        const adminBtn = document.getElementById('btn-admin-panel');
+                        if (adminBtn) { adminBtn.classList.remove('hidden'); adminBtn.classList.add('flex'); }
+                    }
+                } catch (err) { console.warn("⚠️ Lỗi kiểm tra Firestore:", err); }
+                
+                // Gọi loadData sau khi xác thực thành công
+                if (typeof loadData === 'function') loadData(true);
+            } else {
+                authOverlay.classList.remove('hidden');
+                expiredModal.classList.add('hidden');
+            }
+        });
+
+        // ============================================================
+        // CÁC HÀM QUẢN LÝ TÀI KHOẢN / ADMIN
+        // ============================================================
         async function openAccountModal() {
             const user = auth.currentUser;
             if (!user) return;
@@ -740,6 +766,9 @@ def generate_html():
 
         function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
 
+        // ============================================================
+        // BIẾN TOÀN CỤC & HÀM XỬ LÝ CHÍNH
+        // ============================================================
         let screenerResults = [];
         let symbolSimRates = {};
         let quarterlyMeanDetails = {};
@@ -759,7 +788,6 @@ def generate_html():
             "KHAC": "Khác"
         };
 
-        // 🆕 Map màu quyết định
         const FINAL_DECISION_STYLE = {
             "emerald": { bg: "bg-emerald-500/15", border: "border-emerald-500/50", text: "text-emerald-300", icon: "fa-circle-check" },
             "amber":   { bg: "bg-amber-500/15",   border: "border-amber-500/50",   text: "text-amber-300",   icon: "fa-hourglass-half" },
@@ -858,7 +886,6 @@ def generate_html():
                         fair_value_rationale: extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || ""),
                         sub_sector: extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || ""),
 
-                        // 🆕 QUYẾT ĐỊNH CUỐI CÙNG
                         final_decision: extraData.final_decision !== undefined ? extraData.final_decision : (item.final_decision || ""),
                         final_decision_color: extraData.final_decision_color !== undefined ? extraData.final_decision_color : (item.final_decision_color || "slate"),
                         final_decision_reason: extraData.final_decision_reason !== undefined ? extraData.final_decision_reason : (item.final_decision_reason || ""),
@@ -899,7 +926,6 @@ def generate_html():
                 return matchSearch && matchSector && matchCheap;
             });
 
-            // 🆕 Sort logic (thêm các chế độ MỚI)
             if (rankingMode === "FINAL_BUY_ONLY") {
                 filtered = filtered.filter(i => (i.final_decision || "").includes("MUA"));
                 const order = { "🎯 MUA MẠNH": 0, "✅ MUA TÍCH SẢN": 1 };
@@ -947,13 +973,11 @@ def generate_html():
                     borderColor = "border-amber-500/30";
                 }
 
-                // 🎯 BADGE KHUYẾN NGHỊ CUỐI CÙNG (ưu tiên)
                 const finalDec = item.final_decision || "";
                 const finalColor = item.final_decision_color || "slate";
                 const finalReason = item.final_decision_reason || "";
                 const fdStyle = FINAL_DECISION_STYLE[finalColor] || FINAL_DECISION_STYLE.slate;
 
-                // Viền theo màu quyết định
                 if (finalColor === "emerald") {
                     borderColor = "border-emerald-500/60";
                     cardGlow = "glow-cheap-zone";
@@ -971,16 +995,13 @@ def generate_html():
                     </div>`;
                 }
 
-                // Verdict vùng mua (badge nhỏ)
                 const verdict = item.valuation_verdict || "";
                 let verdictBadgeHtml = "";
                 if (verdict.includes("RẺ")) {
                     verdictBadgeHtml = `<span class="bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-crosshairs"></i> Trong vùng mua</span>`;
                 } else if (verdict.includes("HỢP LÝ")) {
                     verdictBadgeHtml = `<span class="bg-amber-500/15 text-amber-300 border border-amber-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-scale-balanced"></i> Giá hợp lý</span>`;
-                } else if (verdict.includes("HƠI ĐẮT")) {
-                    verdictBadgeHtml = `<span class="bg-amber-500/15 text-amber-300 border border-amber-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-hourglass-half"></i> Chờ giá tốt hơn</span>`;
-                } else if (verdict.includes("ĐẮT")) {
+                } else if (verdict.includes("HƠI ĐẮT") || verdict.includes("ĐẮT")) {
                     verdictBadgeHtml = `<span class="bg-rose-500/15 text-rose-300 border border-rose-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-hourglass-half"></i> Chờ giá tốt hơn</span>`;
                 }
 
@@ -1134,7 +1155,6 @@ def generate_html():
                 gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
             }
 
-            // 🎯 KHUNG QUYẾT ĐỊNH CUỐI CÙNG
             const finalEl = document.getElementById('modal-final-decision');
             if (finalEl) {
                 const fd = item.final_decision || "";
@@ -1169,7 +1189,6 @@ def generate_html():
                 }
             }
 
-            // KHUNG VÙNG MUA
             const fairLow = item.fair_value_low || 0;
             const fairHigh = item.fair_value_high || 0;
             const verdict = item.valuation_verdict || "";
@@ -1184,8 +1203,7 @@ def generate_html():
                     let verdictIcon = "fa-circle-info";
                     if (verdict.includes("RẺ")) { verdictColor = "text-emerald-300 bg-emerald-500/15 border-emerald-500/40"; verdictIcon = "fa-circle-check"; }
                     else if (verdict.includes("HỢP LÝ")) { verdictColor = "text-amber-300 bg-amber-500/15 border-amber-500/40"; verdictIcon = "fa-scale-balanced"; }
-                    else if (verdict.includes("HƠI ĐẮT")) { verdictColor = "text-amber-300 bg-amber-500/15 border-amber-500/40"; verdictIcon = "fa-hourglass-half"; }
-                    else if (verdict.includes("ĐẮT")) { verdictColor = "text-rose-300 bg-rose-500/15 border-rose-500/40"; verdictIcon = "fa-hourglass-half"; }
+                    else if (verdict.includes("HƠI ĐẮT") || verdict.includes("ĐẮT")) { verdictColor = "text-rose-300 bg-rose-500/15 border-rose-500/40"; verdictIcon = "fa-hourglass-half"; }
 
                     fairZoneEl.innerHTML = `
                         <div class="bg-gradient-to-br from-indigo-500/10 to-emerald-500/10 border border-indigo-500/30 rounded-xl p-3 space-y-2">
@@ -1229,7 +1247,6 @@ def generate_html():
             }
             document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-            // 🆕 Badge nguồn AI
             const aiSourceEl = document.getElementById('modal-ai-source');
             if (aiSourceEl) {
                 const src = item.ai_source || "";
@@ -1699,14 +1716,14 @@ def generate_html():
 """
 
     html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
-    html_content = html_template.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
+    html_content = html_content.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
     html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
     html_content = html_content.replace("{last_update_str}", last_update_str)
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"✅ Đã render thành công {OUTPUT_HTML} — đồng bộ 100% với screener.py mới.")
+    print(f"✅ Đã render thành công {OUTPUT_HTML}")
 
 
 if __name__ == "__main__":
