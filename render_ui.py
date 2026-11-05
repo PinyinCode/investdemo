@@ -1,14 +1,38 @@
 import os
 import json
-import time
 from datetime import datetime
 from simulator import run_complex_backtest_simulation
 
 OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
 
+
+# ============================================================
+# FIREBASE CONFIG — đọc từ 1 secret duy nhất FIREBASE_CONFIG
+# ============================================================
+def get_firebase_config():
+    """Đọc toàn bộ Firebase config từ 1 secret JSON duy nhất (env FIREBASE_CONFIG)."""
+    raw = os.environ.get("FIREBASE_CONFIG", "").strip()
+    if not raw:
+        print("⚠️ Thiếu secret FIREBASE_CONFIG — dùng config rỗng.")
+        return {}
+
+    try:
+        config = json.loads(raw)
+    except json.JSONDecodeError as e:
+        print(f"❌ FIREBASE_CONFIG không phải JSON hợp lệ: {e}")
+        return {}
+
+    required = ["apiKey", "authDomain", "projectId", "appId"]
+    missing = [k for k in required if not config.get(k)]
+    if missing:
+        print(f"⚠️ FIREBASE_CONFIG thiếu key: {', '.join(missing)}")
+
+    return config
+
+
 def get_last_update_string():
-    """Đọc mốc thời gian cào dữ liệu thực tế vừa lưu từ file last_update.json"""
+    """Đọc mốc thời gian cào dữ liệu thực tế từ file last_update.json"""
     if os.path.exists(LAST_UPDATE_FILE):
         try:
             with open(LAST_UPDATE_FILE, "r", encoding="utf-8") as f:
@@ -19,13 +43,21 @@ def get_last_update_string():
             print(f"⚠️ Lỗi đọc file last_update.json: {e}")
     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
+
 def generate_html():
+    # 1) Chạy mô phỏng (giữ nguyên logic simulator của bạn)
     sim_data = run_complex_backtest_simulation()
-    print(f"📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
+    print("📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
 
+    # 2) Lấy mốc thời gian cập nhật
     last_update_str = get_last_update_string()
-    print(f"🕒 Mốc thời gian cập nhật dữ liệu được sử dụng: {last_update_str}")
+    print(f"🕒 Mốc thời gian cập nhật dữ liệu: {last_update_str}")
 
+    # 3) Lấy firebase config từ secret (env)
+    firebase_config = get_firebase_config()
+    firebase_config_json = json.dumps(firebase_config, ensure_ascii=False)
+
+    # 4) Template HTML (giữ nguyên như bản gốc, chỉ 2 placeholder)
     html_template = r"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -34,12 +66,12 @@ def generate_html():
     <title>Pro Quant Screener & Investment Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    
+
     <script src="./lightweight-charts.js"></script>
 
     <style>
@@ -48,7 +80,7 @@ def generate_html():
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         .spinner { animation: spin 1s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
+
         .glow-top1 { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); border-color: #eab308; }
         .glow-top2 { box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }
         .glow-top3 { box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }
@@ -210,7 +242,7 @@ def generate_html():
                     <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: {last_update_str}</span></p>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-2">
                 <button type="button" onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
@@ -233,13 +265,13 @@ def generate_html():
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-xs md:text-sm"></i>
                     </span>
-                    <input type="text" id="search-input" placeholder="Tìm mã..." 
+                    <input type="text" id="search-input" placeholder="Tìm mã..."
                         class="w-full pl-7 md:pl-10 pr-7 md:pr-8 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500 transition">
                     <button type="button" onclick="clearInput('search-input')" class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-slate-400 hover:text-white transition" title="Xóa nhanh">
                         <i class="fa-solid fa-xmark text-xs"></i>
                     </button>
                 </div>
-                
+
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-filter text-xs md:text-sm"></i>
@@ -292,14 +324,14 @@ def generate_html():
                     <button type="button" onclick="navigateModalSymbol(-1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã trước">
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
-                    
+
                     <div class="relative flex items-center">
                         <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-20 md:w-24 text-center text-base md:text-lg font-black text-indigo-400 bg-indigo-500/10 px-2 py-1 pr-6 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
                         <button type="button" onclick="clearInput('modal-symbol-input')" class="absolute right-1 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
-                    
+
                     <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
@@ -315,7 +347,7 @@ def generate_html():
                     </button>
                 </div>
             </div>
-            
+
             <!-- TABS -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
@@ -343,15 +375,14 @@ def generate_html():
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
 
-                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP MỚI (LINH HOẠT THEO NGÀNH) -->
+                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP -->
                 <div>
                     <button type="button" onclick="toggleProMetrics()" id="btn-toggle-prometrics" class="w-full py-2 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-chart-pie text-emerald-400" id="prometrics-icon"></i> 
+                        <i class="fa-solid fa-chart-pie text-emerald-400" id="prometrics-icon"></i>
                         <span id="prometrics-text">Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)</span>
                         <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 ml-1 transition-transform duration-200" id="prometrics-chevron"></i>
                     </button>
 
-                    <!-- KHUNG CHỈ SỐ CHUYÊN NGHIỆP (ẨN MẶC ĐỊNH) -->
                     <div id="pro-metrics-box" class="hidden mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 bg-slate-950/80 p-3 rounded-xl border border-emerald-500/30 text-center animate-fadeIn">
                         <div>
                             <span class="text-[10px] text-slate-400 block" id="label-cfo" title="Dòng tiền hoạt động kinh doanh">Dòng tiền CFO</span>
@@ -362,7 +393,7 @@ def generate_html():
                             <span id="modal-de" class="text-xs font-bold text-amber-400">--</span>
                         </div>
                         <div>
-                            <span class="text-[10px] text-slate-400 block" id="label-gm" title="Biên lợi nhuận gộp (Doanh nghiệp thường) / Biên đặc thù">Biên gộp</span>
+                            <span class="text-[10px] text-slate-400 block" id="label-gm" title="Biên lợi nhuận gộp">Biên gộp</span>
                             <span id="modal-gm" class="text-xs font-bold text-blue-400">--</span>
                         </div>
                         <div>
@@ -371,7 +402,7 @@ def generate_html():
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- TAB ĐÁNH GIÁ AI -->
                 <div id="tab-content-eval" class="space-y-4">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
@@ -396,7 +427,7 @@ def generate_html():
                     </div>
                 </div>
 
-                <!-- TAB GIẢ LẬP TÍCH SẢN DCA RIÊNG CHO MÃ -->
+                <!-- TAB GIẢ LẬP TÍCH SẢN DCA -->
                 <div id="tab-content-simulator" class="space-y-4 hidden">
                     <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-xs space-y-2">
                         <div class="flex justify-between items-center">
@@ -484,7 +515,6 @@ def generate_html():
 
                     <button type="button" onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-right text-[9px]"></i></button>
 
-                    <!-- Khung thời gian kết hợp nút Đường Quý & Vùng Quý dạng Icon -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button type="button" onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
                         <button type="button" onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
@@ -500,7 +530,6 @@ def generate_html():
                         <button type="button" onclick="toggleIndicator('RSI')" id="btn-ind-rsi" class="px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition">RSI</button>
                     </div>
 
-                    <!-- 2 NÚT ĐIỀU HƯỚNG NHANH QUÝ ĐẦU & QUÝ CUỐI (Dùng mũi tên < >) -->
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button type="button" onclick="jumpToQuarter('start')" class="px-2 py-0.5 text-[10px] font-bold rounded bg-amber-600 text-white transition" title="Nhảy tới Quý đầu 5 năm trước">&lt;&lt;</button>
                         <button type="button" onclick="jumpToQuarter('end')" class="px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition" title="Nhảy tới Quý cuối hiện tại">&gt;&gt;</button>
@@ -535,15 +564,8 @@ def generate_html():
     </div>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyA8VlFQvE_om-51pxffgd7hd2Ud6hQm11k",
-            authDomain: "hoc-tieng-trung-64b8d.firebaseapp.com",
-            projectId: "hoc-tieng-trung-64b8d",
-            storageBucket: "hoc-tieng-trung-64b8d.appspot.com",
-            messagingSenderId: "614326539390",
-            appId: "1:614326539390:web:57344a021d7cbc7b18b42f",
-            databaseURL: "https://hoc-tieng-trung-64b8d-default-rtdb.asia-southeast1.firebasedatabase.app"
-        };
+        // 🔐 Firebase config được inject từ Python (đọc từ GitHub Secret FIREBASE_CONFIG)
+        const firebaseConfig = {firebase_config_json_placeholder};
 
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -746,20 +768,20 @@ def generate_html():
         let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
         let currentActiveTab = 'eval';
 
-        const SECTOR_NAMES = { 
-            "NGAN_HANG": "Ngân hàng", 
-            "CHUNG_KHOAN": "Chứng khoán", 
-            "BAT_DONG_SAN": "Bất động sản", 
+        const SECTOR_NAMES = {
+            "NGAN_HANG": "Ngân hàng",
+            "CHUNG_KHOAN": "Chứng khoán",
+            "BAT_DONG_SAN": "Bất động sản",
             "CONG_NGHE_BAN_LE": "Công nghệ & Bán lẻ",
             "DIEN_NUOC_HA_TANG": "Điện, Nước & Hạ tầng",
             "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ",
             "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
-            "KHAC": "Khác" 
+            "KHAC": "Khác"
         };
 
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
-            let val = (num < 1000 && num > 0) ? num * 1000 : num; 
+            let val = (num < 1000 && num > 0) ? num * 1000 : num;
             return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
         function formatPercent(num) {
@@ -802,7 +824,7 @@ def generate_html():
             const box = document.getElementById('pro-metrics-box');
             const textEl = document.getElementById('prometrics-text');
             const chevron = document.getElementById('prometrics-chevron');
-            
+
             if (box.classList.contains('hidden')) {
                 box.classList.remove('hidden');
                 textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
@@ -854,7 +876,7 @@ def generate_html():
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
-                        
+
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
@@ -934,7 +956,7 @@ def generate_html():
                 const card = document.createElement('div');
                 card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
                 card.onclick = () => openChartModal(item.symbol);
-                
+
                 card.innerHTML = `
                     ${topBadge}
                     <div>
@@ -996,12 +1018,11 @@ def generate_html():
             if (!item) return;
 
             switchAiTab(currentActiveTab);
-            
+
             document.getElementById('modal-symbol-input').value = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
             document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
-            
-            // Chỉ hiển thị tên công ty, ẩn vốn hóa và tổng số cổ phiếu
+
             document.getElementById('modal-company-name').innerText = item.company_name || '—';
 
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
@@ -1012,7 +1033,7 @@ def generate_html():
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
             const isBankOrSec = (item.sector === "NGAN_HANG" || item.sector === "CHUNG_KHOAN");
-            
+
             document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
             document.getElementById('modal-ttm').innerText = (item.net_profit_ttm !== undefined && item.net_profit_ttm !== null) ? item.net_profit_ttm + ' Tỷ' : '—';
 
@@ -1049,7 +1070,7 @@ def generate_html():
 
             document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá từ AI.";
-            
+
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
@@ -1112,7 +1133,7 @@ def generate_html():
             let futureVal = p0 * Math.pow(1 + rate, years);
             let monthlyRate = rate / 12;
             let totalMonths = years * 12;
-            
+
             for (let i = 1; i <= totalMonths; i++) {
                 futureVal += pMonthly * Math.pow(1 + monthlyRate, totalMonths - i + 1);
             }
@@ -1180,7 +1201,7 @@ def generate_html():
             ['d1', 'w1', 'mn'].forEach(i => {
                 const btn = document.getElementById(`btn-${i}`);
                 if (btn) {
-                    btn.className = i === interval.toLowerCase() 
+                    btn.className = i === interval.toLowerCase()
                         ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
                         : "px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition";
                 }
@@ -1245,8 +1266,8 @@ def generate_html():
 
             chartData.forEach((bar, idx) => {
                 const barDate = new Date(bar.time);
-                if (barDate.getFullYear() === year && 
-                    (barDate.getMonth() + 1) >= startMonth && 
+                if (barDate.getFullYear() === year &&
+                    (barDate.getMonth() + 1) >= startMonth &&
                     (barDate.getMonth() + 1) <= endMonth) {
                     indices.push(idx);
                     if (bar.low < qMinPrice) qMinPrice = bar.low;
@@ -1257,7 +1278,7 @@ def generate_html():
             if (indices.length > 0 && chartInstance) {
                 const minIdx = indices[0];
                 const maxIdx = indices[indices.length - 1];
-                
+
                 chartInstance.priceScale('right').applyOptions({
                     autoScale: true,
                 });
@@ -1415,14 +1436,14 @@ def generate_html():
                         const parts = quarterStr.split('Q');
                         const year = parseInt(parts[0]);
                         const q = parseInt(parts[1]);
-                        
+
                         const startMonth = (q - 1) * 3 + 1;
                         const endMonth = q * 3;
 
                         const quarterBars = allBars.filter(bar => {
                             const barDate = new Date(bar.time);
-                            return barDate.getFullYear() === year && 
-                                   (barDate.getMonth() + 1) >= startMonth && 
+                            return barDate.getFullYear() === year &&
+                                   (barDate.getMonth() + 1) >= startMonth &&
                                    (barDate.getMonth() + 1) <= endMonth;
                         });
 
@@ -1525,7 +1546,7 @@ def generate_html():
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
                     if (index > 0) changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
-                    
+
                     legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
                     legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
@@ -1563,12 +1584,16 @@ def generate_html():
 </html>
 """
 
-    html_content = html_template.replace("{last_update_str}", last_update_str)
+    # 5) Inject config + thời gian vào template
+    html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
+    html_content = html_content.replace("{last_update_str}", last_update_str)
 
+    # 6) Ghi file
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
-    
-    print(f"✅ Đã tự động render thành công toàn bộ giao diện ra file {OUTPUT_HTML} (Mốc thời gian dữ liệu: {last_update_str})!")
+
+    print(f"✅ Đã render thành công {OUTPUT_HTML} (cập nhật: {last_update_str})")
+
 
 if __name__ == "__main__":
     generate_html()
