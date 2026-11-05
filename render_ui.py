@@ -70,6 +70,8 @@ def generate_html():
         for item in symbols_list:
             if "symbol" in item:
                 cheap_symbols_set.add(item["symbol"])
+            elif isinstance(item, str): # fallback nếu json là list các string
+                cheap_symbols_set.add(item)
 
     # 3) Lấy firebase config từ secret (env)
     firebase_config = get_firebase_config()
@@ -974,14 +976,46 @@ def generate_html():
                     cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ thực sự (P/E & P/B hấp dẫn)"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
                 }
 
+                // 🌟 Dòng điểm: Cơ bản | Kỹ thuật | Định giá | Tổng hợp
                 let scoreHtml = "";
                 if (rankingMode !== "NONE") {
-                    let label = "Điểm Tổng hợp";
-                    let valScore = item.total_score;
-                    if (rankingMode === "FUNDAMENTAL") { label = "Điểm Cơ bản"; valScore = item.fundamental_score; }
-                    else if (rankingMode === "TECHNICAL") { label = "Điểm Kỹ thuật"; valScore = item.technical_score; }
+                    const isFundActive  = rankingMode === "FUNDAMENTAL";
+                    const isTechActive  = rankingMode === "TECHNICAL";
+                    const isAllActive   = rankingMode === "ALL_SCORE";
 
-                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${label}: <strong>${valScore}/100</strong></div>`;
+                    const clsBase = "flex flex-col items-center justify-center py-1 rounded-md border text-[9px] leading-tight";
+                    const clsFund = isFundActive 
+                        ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300" 
+                        : "bg-slate-900/60 border-slate-800 text-slate-400";
+                    const clsTech = isTechActive 
+                        ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" 
+                        : "bg-slate-900/60 border-slate-800 text-slate-400";
+                    const clsVal  = isAllActive 
+                        ? "bg-amber-500/20 border-amber-500/50 text-amber-300" 
+                        : "bg-slate-900/60 border-slate-800 text-slate-400";
+
+                    scoreHtml = `
+                        <div class="mt-1 bg-slate-950/60 rounded-lg border border-slate-800 p-1.5">
+                            <div class="grid grid-cols-4 gap-1">
+                                <div class="${clsBase} ${clsFund}">
+                                    <span class="font-semibold opacity-80">Cơ bản</span>
+                                    <span class="font-black text-[11px]">${item.fundamental_score ?? '—'}</span>
+                                </div>
+                                <div class="${clsBase} ${clsTech}">
+                                    <span class="font-semibold opacity-80">Kỹ thuật</span>
+                                    <span class="font-black text-[11px]">${item.technical_score ?? '—'}</span>
+                                </div>
+                                <div class="${clsBase} ${clsVal}">
+                                    <span class="font-semibold opacity-80">Định giá</span>
+                                    <span class="font-black text-[11px]">${item.valuation_score ?? item.value_score ?? '—'}</span>
+                                </div>
+                                <div class="${clsBase} bg-indigo-500/15 border-indigo-500/40 text-indigo-200">
+                                    <span class="font-semibold opacity-80">Tổng hợp</span>
+                                    <span class="font-black text-[11px] text-amber-300">${item.total_score ?? '—'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 }
 
                 const card = document.createElement('div');
@@ -992,22 +1026,25 @@ def generate_html():
                     ${topBadge}
                     <div>
                         <div class="flex justify-between items-start mb-3">
-                            <div class="flex flex-col">
-                                <div class="flex items-center gap-2">
+                            <!-- Cột trái: Mã, nút AI, status, ngành & tên công ty -->
+                            <div class="flex flex-col min-w-0 pr-2">
+                                <div class="flex items-center gap-2 flex-wrap">
                                     <span class="text-xl font-black text-white">${item.symbol}</span>
                                     <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
                                         <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
                                     <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
-                                    ${cheapBadgeHtml}
                                 </div>
-                                <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
-                                    <span><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
-                                    ${item.company_name ? `<span class="text-slate-500">•</span> <span class="text-slate-300 font-medium truncate max-w-[180px] sm:max-w-[220px]" title="${item.company_name}">${item.company_name}</span>` : ''}
+                                <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400 truncate">
+                                    <span class="shrink-0"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
+                                    ${item.company_name ? `<span class="text-slate-500 shrink-0">•</span> <span class="text-slate-300 font-medium truncate" title="${item.company_name}">${item.company_name}</span>` : ''}
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
+
+                            <!-- Cột phải: Giá & Badge định giá rẻ xếp thẳng hàng dọc -->
+                            <div class="text-right flex flex-col items-end shrink-0 ml-2">
+                                <span class="block text-lg font-bold text-emerald-400 leading-tight">${formatNumber(item.close_price)}</span>
+                                ${cheapBadgeHtml ? `<div class="mt-1.5">${cheapBadgeHtml}</div>` : ''}
                             </div>
                         </div>
 
