@@ -16,7 +16,7 @@ on:
         default: 'top'
         type: choice
         options:
-          - top      # Chỉ chạy top đầu mỗi ngành (không chia batch)
+          - top      # Chỉ chạy top đầu mỗi ngành
           - rest     # Chỉ chạy phần còn lại (chia batch)
           - all      # Chạy cả top và batch hiện tại của phần còn lại
       batch:
@@ -34,20 +34,18 @@ on:
         required: false
         default: false
         type: boolean
-
-      # 🆕 TUỲ CHỌN AI
       use_ai:
-        description: 'Có gọi AI (tốn phí) hay chỉ dùng template fallback (miễn phí)?'
+        description: 'Chế độ phân tích'
         required: true
         default: 'auto'
         type: choice
         options:
-          - 'auto'   # Tự động: có API key → dùng AI, không có → template
-          - 'yes'    # Bắt buộc dùng AI (báo lỗi nếu thiếu key)
-          - 'no'     # Không gọi AI, chỉ template (miễn phí)
+          - 'auto'   # Tự động: có key → AI, không key → template
+          - 'yes'    # Bắt buộc dùng AI
+          - 'no'     # Chỉ dùng template (miễn phí)
 
 jobs:
-  ai-analysis:
+  analysis:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -66,43 +64,45 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      # 🆕 Kiểm tra trạng thái API key & chọn mode thực tế
-      - name: Resolve AI mode
-        id: resolve
+      # ============================================================
+      # NHÁNH 1: TEMPLATE (KHÔNG AI)
+      # Chạy khi: user chọn 'no' HOẶC (không phải 'yes' và không có key)
+      # ============================================================
+      - name: Run Analysis (TEMPLATE — NO AI)
+        if: |
+          inputs.use_ai == 'no' ||
+          (inputs.use_ai != 'yes' && secrets.ALIBABA_API_KEY == '')
         env:
-          HAS_KEY: ${{ secrets.ALIBABA_API_KEY != '' }}
-          USER_CHOICE: ${{ inputs.use_ai || 'auto' }}
+          INPUT_SYMBOLS: ${{ inputs.symbols }}
+          PYTHONUNBUFFERED: 1
+          MODE: ${{ inputs.mode || 'top' }}
+          BATCH: ${{ inputs.batch || '1' }}
+          TOTAL_BATCHES: ${{ inputs.total_batches || '1' }}
+          FORCE: ${{ inputs.force && '--force' || '' }}
+          # ❗ Không truyền ALIBABA_API_KEY trong nhánh này
         run: |
-          echo "API key có sẵn: $HAS_KEY"
-          echo "Lựa chọn người dùng: $USER_CHOICE"
+          echo "=========================================="
+          echo "📝 CHẾ ĐỘ: TEMPLATE (miễn phí, KHÔNG dùng AI)"
+          echo "  Mode        : $MODE"
+          echo "  Batch       : $BATCH/$TOTAL_BATCHES"
+          echo "  Force       : ${FORCE:-no}"
+          echo "  Symbols     : ${INPUT_SYMBOLS:-<auto by sector>}"
+          echo "=========================================="
+          python ai_analyzer.py \
+            --mode "$MODE" \
+            --batch "$BATCH" \
+            --total-batches "$TOTAL_BATCHES" \
+            --no-ai \
+            $FORCE
 
-          if [ "$USER_CHOICE" = "no" ]; then
-            echo "→ Chế độ: TEMPLATE (người dùng chọn --no-ai)"
-            echo "flag=" >> $GITHUB_OUTPUT
-            echo "mode=template" >> $GITHUB_OUTPUT
-          elif [ "$USER_CHOICE" = "yes" ]; then
-            if [ "$HAS_KEY" = "true" ]; then
-              echo "→ Chế độ: AI (người dùng chọn --ai)"
-              echo "flag=--ai" >> $GITHUB_OUTPUT
-              echo "mode=ai" >> $GITHUB_OUTPUT
-            else
-              echo "❌ Bạn chọn dùng AI nhưng secret ALIBABA_API_KEY chưa được cấu hình!"
-              exit 1
-            fi
-          else
-            # auto
-            if [ "$HAS_KEY" = "true" ]; then
-              echo "→ Chế độ: AUTO (có API key, sẽ dùng AI)"
-              echo "flag=" >> $GITHUB_OUTPUT
-              echo "mode=auto-ai" >> $GITHUB_OUTPUT
-            else
-              echo "→ Chế độ: AUTO (không có API key, dùng TEMPLATE)"
-              echo "flag=--no-ai" >> $GITHUB_OUTPUT
-              echo "mode=auto-template" >> $GITHUB_OUTPUT
-            fi
-          fi
-
-      - name: Run Analysis
+      # ============================================================
+      # NHÁNH 2: AI (có gọi API)
+      # Chạy khi: user chọn 'yes' HOẶC (không phải 'no' và có key)
+      # ============================================================
+      - name: Run Analysis (AI)
+        if: |
+          inputs.use_ai == 'yes' ||
+          (inputs.use_ai != 'no' && secrets.ALIBABA_API_KEY != '')
         env:
           ALIBABA_API_KEY: ${{ secrets.ALIBABA_API_KEY }}
           INPUT_SYMBOLS: ${{ inputs.symbols }}
@@ -111,19 +111,20 @@ jobs:
           BATCH: ${{ inputs.batch || '1' }}
           TOTAL_BATCHES: ${{ inputs.total_batches || '1' }}
           FORCE: ${{ inputs.force && '--force' || '' }}
-          AI_FLAG: ${{ steps.resolve.outputs.flag }}
-          RESOLVED_MODE: ${{ steps.resolve.outputs.mode }}
         run: |
           echo "=========================================="
-          echo "🚀 Bắt đầu phân tích"
+          echo "🤖 CHẾ ĐỘ: AI (qwen3.7-max)"
           echo "  Mode        : $MODE"
           echo "  Batch       : $BATCH/$TOTAL_BATCHES"
           echo "  Force       : ${FORCE:-no}"
           echo "  Symbols     : ${INPUT_SYMBOLS:-<auto by sector>}"
-          echo "  AI mode     : $RESOLVED_MODE"
-          echo "  AI flag     : ${AI_FLAG:-<auto by key>}"
           echo "=========================================="
-          python ai_analyzer.py --mode "$MODE" --batch "$BATCH" --total-batches "$TOTAL_BATCHES" $FORCE $AI_FLAG
+          python ai_analyzer.py \
+            --mode "$MODE" \
+            --batch "$BATCH" \
+            --total-batches "$TOTAL_BATCHES" \
+            --ai \
+            $FORCE
 
       - name: Commit and push results
         if: always()
@@ -134,8 +135,8 @@ jobs:
           if git diff --quiet && git diff --staged --quiet; then
             echo "Không có thay đổi để commit."
           else
-            RESOLVED_MODE="${{ steps.resolve.outputs.mode }}"
-            LABEL="${{ inputs.symbols || (inputs.mode == 'rest' && format('Rest batch {0}/{1}', inputs.batch, inputs.total_batches)) || 'Top ngành tự động' }}"
-            git commit -m "🤖 [$RESOLVED_MODE] ${LABEL} [$(date +'%Y-%m-%d %H:%M')]"
+            LABEL="${{ inputs.symbols || (inputs.mode == 'rest' && format('Rest {0}/{1}', inputs.batch, inputs.total_batches)) || 'Top ngành' }}"
+            MODE_LABEL="${{ inputs.use_ai || 'auto' }}"
+            git commit -m "🤖 [${MODE_LABEL}] ${LABEL} [$(date +'%Y-%m-%d %H:%M')]"
             git push
           fi
