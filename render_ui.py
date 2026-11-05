@@ -77,7 +77,7 @@ def generate_html():
     cheap_stocks_json = json.dumps(cheap_stocks_groups, ensure_ascii=False)
     cheap_symbols_json = json.dumps(list(cheap_symbols_set), ensure_ascii=False)
 
-    # 4) Template HTML đầy đủ toàn bộ logic gốc + tích hợp nhãn và dropdown định giá rẻ
+    # 4) Template HTML đầy đủ toàn bộ logic gốc + tích hợp checkbox Định giá rẻ gọn gàng
     html_template = r"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -278,9 +278,9 @@ def generate_html():
     </header>
 
     <main class="max-w-7xl mx-auto px-2 md:px-4 py-4">
-        <!-- Bộ lọc & Dropdown chọn nhanh Định giá rẻ -->
-        <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-1.5 md:gap-3">
+        <!-- Bộ lọc & Ô tick chọn nhanh Định giá rẻ (Tối ưu mobile grid-cols-2 gộp 2 hàng) -->
+        <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4 space-y-2">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3">
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-xs md:text-sm"></i>
@@ -311,40 +311,29 @@ def generate_html():
                     </span>
                 </div>
 
-                <!-- DROPDOWN ĐỊNH GIÁ RẺ THEO NGÀNH -->
-                <div class="relative w-full">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-emerald-400">
-                        <i class="fa-solid fa-tags text-xs md:text-sm"></i>
-                    </span>
-                    <select id="cheap-stocks-filter" onchange="filterCheapStocksDropdown(this.value)" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-emerald-500/50 rounded-lg text-xs md:text-sm text-emerald-300 font-semibold focus:outline-none focus:border-emerald-400 appearance-none transition truncate">
-                        <option value="ALL">💎 Toàn bộ cổ phiếu định giá rẻ</option>
-                        <option value="NGAN_HANG">💎 Ngân hàng định giá rẻ</option>
-                        <option value="CHUNG_KHOAN">💎 Chứng khoán định giá rẻ</option>
-                        <option value="BAT_DONG_SAN">💎 Bất động sản định giá rẻ</option>
-                        <option value="CONG_NGHE_BAN_LE">💎 Công nghệ & Bán lẻ định giá rẻ</option>
-                        <option value="DIEN_NUOC_HA_TANG">💎 Điện, Nước & Hạ tầng định giá rẻ</option>
-                        <option value="NGUYEN_VAT_LIEU_CHU_KY">💎 Vật liệu & Chu kỳ định giá rẻ</option>
-                        <option value="SAN_XUAT_TIEU_DUNG_PHONG_THU">💎 Sản xuất & Tiêu dùng định giá rẻ</option>
-                    </select>
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-emerald-400 pointer-events-none">
-                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                    </span>
-                </div>
-
-                <div class="relative w-full">
+                <div class="relative w-full col-span-2 md:col-span-1">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-trophy text-xs md:text-sm"></i>
                     </span>
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
                         <option value="NONE">Mặc định (A-Z)</option>
-                        <option value="ALL_SCORE">🏆 Sắp xếp Tổng hợp</option>
-                        <option value="FUNDAMENTAL" selected>💰 Sắp xếp Cơ bản</option>
-                        <option value="TECHNICAL">📈 Sắp xếp Kỹ thuật</option>
+                        <option value="ALL_SCORE">🏆 Điểm Tổng hợp</option>
+                        <option value="FUNDAMENTAL" selected>💰 Điểm Cơ bản</option>
+                        <option value="TECHNICAL">📈 Điểm Kỹ thuật</option>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-amber-400 pointer-events-none">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </span>
                 </div>
+            </div>
+
+            <!-- Ô TICK (CHECKBOX) LỌC ĐỊNH GIÁ RẺ KẾT HỢP NHÓM NGÀNH HIỆN CÓ -->
+            <div class="flex items-center justify-between px-1 pt-1 border-t border-slate-800/80 text-xs">
+                <label class="flex items-center gap-2 cursor-pointer select-none text-emerald-300 font-bold hover:text-emerald-200 transition">
+                    <input type="checkbox" id="cheap-stocks-checkbox" onchange="renderCards()" class="w-4 h-4 rounded bg-slate-950 border-emerald-500 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer">
+                    <span><i class="fa-solid fa-gem mr-1 text-emerald-400"></i> Chỉ lọc cổ phiếu Định giá rẻ theo ngành đã chọn</span>
+                </label>
+                <span id="active-filter-status" class="text-[10px] text-slate-400 hidden md:inline">Hiển thị toàn bộ danh sách</span>
             </div>
         </div>
 
@@ -920,17 +909,13 @@ def generate_html():
             }
         }
 
-        function filterCheapStocksDropdown(val) {
-            renderCards();
-        }
-
         function renderCards() {
             const container = document.getElementById('stock-container');
             if (!container) return;
 
             const searchTerm = document.getElementById('search-input').value.toUpperCase();
             const selectedSector = document.getElementById('sector-filter').value;
-            const cheapFilterVal = document.getElementById('cheap-stocks-filter').value;
+            const isCheapOnly = document.getElementById('cheap-stocks-checkbox').checked;
             const rankingMode = document.getElementById('ranking-filter').value;
 
             let filtered = screenerResults.filter(item => {
@@ -938,10 +923,14 @@ def generate_html():
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
                 
                 let matchCheap = true;
-                if (cheapFilterVal !== "ALL") {
-                    let sectorCheapList = cheapStocksGroups[cheapFilterVal] || [];
-                    let cheapSymbolsInSector = new Set(sectorCheapList.map(s => s.symbol));
-                    matchCheap = cheapSymbolsInSector.has(item.symbol);
+                if (isCheapOnly) {
+                    if (selectedSector === "ALL") {
+                        matchCheap = cheapSymbolsSet.has(item.symbol);
+                    } else {
+                        let sectorCheapList = cheapStocksGroups[selectedSector] || [];
+                        let cheapSymbolsInSector = new Set(sectorCheapList.map(s => s.symbol));
+                        matchCheap = cheapSymbolsInSector.has(item.symbol);
+                    }
                 }
 
                 return matchSearch && matchSector && matchCheap;
@@ -953,7 +942,7 @@ def generate_html():
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">Không tìm thấy mã nào phù hợp.</div>`;
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">Không tìm thấy mã nào phù hợp với bộ lọc.</div>`;
                 return;
             }
 
@@ -1639,7 +1628,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"✅ Đã render thành công {OUTPUT_HTML} (cập nhật: {last_update_str}) với đầy đủ logic cũ và nhãn Định giá rẻ.")
+    print(f"✅ Đã render thành công {OUTPUT_HTML} với ô tick lọc định giá rẻ kết hợp nhóm ngành.")
 
 
 if __name__ == "__main__":
