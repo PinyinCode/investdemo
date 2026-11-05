@@ -25,7 +25,7 @@ VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
 def fetch_financial_reports(symbol):
     try:
-        # SỬA LỖI 2: Đổi thành chữ HOA để đồng bộ với script cào giá
+        # Đồng bộ tên file thành chữ HOA
         file_path = os.path.join(OUTPUT_DIR, f"{symbol.upper()}.json")
         
         if os.path.exists(file_path):
@@ -42,6 +42,13 @@ def fetch_financial_reports(symbol):
             df_cashflow = stock_obj.cash_flow(period='quarter')
         except Exception as e:
             print(f"⚠️ Không lấy được bảng Cash Flow cho {symbol}: {e}")
+            
+        # BỔ SUNG: Cào thêm bảng Chỉ số tài chính & Định giá (P/E, P/B, P/S, ROE, ROA, Biên gộp...)
+        df_ratio = None
+        try:
+            df_ratio = stock_obj.ratio(period='quarter')
+        except Exception as e:
+            print(f"⚠️ Không lấy được bảng Chỉ số tài chính (ratio) cho {symbol}: {e}")
         
         reports = {}
         if df_balance is not None and not df_balance.empty:
@@ -50,6 +57,8 @@ def fetch_financial_reports(symbol):
             reports['income_statement'] = df_income.to_dict(orient="records")
         if df_cashflow is not None and not df_cashflow.empty:
             reports['cash_flow'] = df_cashflow.to_dict(orient="records")
+        if df_ratio is not None and not df_ratio.empty:
+            reports['ratios'] = df_ratio.to_dict(orient="records")
             
         if not reports:
             print(f"⚠️ Không có dữ liệu BCTC cho mã: {symbol}")
@@ -60,7 +69,7 @@ def fetch_financial_reports(symbol):
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(reports, f, ensure_ascii=False, indent=4)
         
-        print(f"✅ Đã tải và làm mới BCTC đầy đủ (kèm Cash Flow) cho mã: {symbol}")
+        print(f"✅ Đã tải và làm mới BCTC đầy đủ (kèm Cash Flow & Ratios) cho mã: {symbol}")
         return True
         
     except Exception as e:
@@ -71,7 +80,6 @@ def auto_git_push_bctc():
     try:
         print("\n📤 Đang tự động đồng bộ thư mục 'bctc_data' lên GitHub...")
         
-        # SỬA LỖI 1: Thêm fetch và pull an toàn
         subprocess.run(["git", "fetch", "origin", "main"], check=True)
         pull_result = subprocess.run(
             ["git", "pull", "origin", "main", "--rebase", "--autostash"], 
@@ -83,13 +91,12 @@ def auto_git_push_bctc():
 
         subprocess.run(["git", "add", "bctc_data/"], check=True)
         
-        # Kiểm tra xem có sự thay đổi thực sự không
         status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
         if not status_result.stdout.strip():
             print("ℹ️ Không có dữ liệu BCTC mới nào thay đổi để đẩy lên.")
             return
 
-        commit_msg = f"Auto update full BCTC data (with Cash Flow) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update full BCTC data (with Cash Flow & Ratios) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push", "origin", "main"], check=True)
         print("🚀 Đẩy dữ liệu BCTC lên GitHub thành công!")
@@ -99,7 +106,7 @@ def auto_git_push_bctc():
 
 def main():
     print("==================================================")
-    print("   CÀO ĐẦY ĐỦ BÁO CÁO TÀI CHÍNH (KÈM LƯU CHUYỂN TIỀN TỆ)")
+    print("   CÀO ĐẦY ĐỦ BÁO CÁO TÀI CHÍNH & CHỈ SỐ TÀI CHÍNH")
     print("==================================================")
     print("1. Cào TOÀN BỘ danh sách VN100")
     print("2. Cào MỘT NHÓM MÃ hoặc MÃ LẺ (Tùy chọn)")
@@ -120,14 +127,14 @@ def main():
             print("⚠️ Không nhận được mã hợp lệ, mặc định cào mã: FPT")
 
     total = len(target_symbols)
-    print(f"\n🚀 Bắt đầu lấy dữ liệu BCTC qua vnstock v5 cho {total} mã...")
+    print(f"\n🚀 Bắt đầu lấy dữ liệu BCTC & Ratios qua vnstock cho {total} mã...")
     
     successful_symbols = []
     for i, symbol in enumerate(target_symbols):
         print(f"[{i+1}/{total}] Xử lý: {symbol}...")
         if fetch_financial_reports(symbol):
             successful_symbols.append(symbol)
-        time.sleep(0.5) # Tăng thời gian nghỉ lên 0.5s để tránh bị API chặn (rate limit)
+        time.sleep(0.5) 
         
     print(f"\n🎉 Hoàn tất! Đã làm mới thành công {len(successful_symbols)}/{total} file BCTC.")
     
