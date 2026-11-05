@@ -33,7 +33,7 @@ SECTOR_MAPPING = {
 }
 
 # ============================================================
-# PHÂN NHÓM CON (SUB-SECTOR) — ĐỊNH GIÁ CHÍNH XÁC HƠN
+# PHÂN NHÓM CON (SUB-SECTOR)
 # ============================================================
 SUB_SECTOR_MAPPING = {
     "INSURANCE": ["BVH"],
@@ -284,6 +284,119 @@ def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
 
 
 # ============================================================
+# 🎯 BƯỚC 3.5: QUYẾT ĐỊNH CUỐI CÙNG — CẦN ĐỦ 4 YẾU TỐ
+# (Vùng mua + PTCB + PTKT + Điểm định giá)
+# ============================================================
+def compute_final_decision(fund_score, tech_score, val_score, total_score,
+                           verdict, cfo, npat, roe, debt_to_equity,
+                           discount_to_fair_pct=0.0):
+    """
+    QUY TẮC THÉP: Quyết định mua phải thỏa mãn ĐỒNG THỜI:
+      1. VÙNG MUA  : verdict = "RẺ - TRONG VÙNG MUA" (giá <= fair_low)
+      2. PTCB      : fundamental_score >= 30/50 (doanh nghiệp đủ tốt)
+      3. PTKT      : technical_score >= 10/20 (không bắt đáy dao rơi)
+      4. ĐỊNH GIÁ  : valuation_score >= 18/30 (rẻ thực sự theo chỉ số ngành)
+
+    Nếu thiếu BẤT KỲ điều kiện nào → KHÔNG MUA (trừ trường hợp TRÁNH).
+
+    Trả về (decision_label, color_key, reason_text).
+    """
+    is_bank_or_sec = roe > 0 and debt_to_equity > 3.0
+
+    # ============================================================
+    # RULE 0: TRÁNH TUYỆT ĐỐI (kiểm tra trước, loại khỏi danh sách mua)
+    # ============================================================
+    # Giá quá đắt so với fair_high
+    if verdict == "ĐẮT - TRÁNH":
+        return ("❌ TRÁNH", "rose",
+                f"Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH.")
+
+    # Doanh nghiệp quá yếu về cơ bản
+    if fund_score < 20:
+        return ("❌ TRÁNH", "rose",
+                f"PTCB chỉ {fund_score}/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.")
+
+    # Cảnh báo lợi nhuận ảo (không áp dụng ngân hàng/CK)
+    if not is_bank_or_sec and cfo < 0 and npat > 0 and fund_score < 25:
+        return ("⚠️ CẢNH BÁO LỢI NHUẬN ẢO", "amber",
+                f"CFO âm ({cfo:,.0f} tỷ) trong khi LNST dương ({npat:,.0f} tỷ) — lợi nhuận không có tiền mặt thật.")
+
+    # ============================================================
+    # RULE 1: MUA MẠNH — Đủ CẢ 4 YẾU TỐ Ở MỨC XUẤT SẮC
+    # ============================================================
+    if (verdict == "RẺ - TRONG VÙNG MUA"
+            and fund_score >= 40   # PTCB xuất sắc
+            and tech_score >= 15   # PTKT breakout có volume
+            and val_score >= 24    # Định giá rẻ rõ rệt
+            and total_score >= 75  # Tổng điểm cao
+            and discount_to_fair_pct >= 5):  # Có biên an toàn thực
+        return ("🎯 MUA MẠNH", "emerald",
+                f"ĐỦ 4 YẾU TỐ: Vùng mua (giá ≤ fair_low, CK {discount_to_fair_pct:.1f}%) "
+                f"+ PTCB {fund_score}/50 + PTKT {tech_score}/20 + Định giá {val_score}/30 "
+                f"+ Tổng {total_score}đ. Setup lý tưởng.")
+
+    # ============================================================
+    # RULE 2: MUA TÍCH SẢN — Đủ CẢ 4 YẾU TỐ Ở MỨC TỐT
+    # ============================================================
+    if (verdict == "RẺ - TRONG VÙNG MUA"
+            and fund_score >= 30   # PTCB đủ tốt
+            and tech_score >= 10   # PTKT không xấu (không cần breakout)
+            and val_score >= 18    # Định giá hợp lý (rẻ so với ngành)
+            and total_score >= 60):
+        return ("✅ MUA TÍCH SẢN", "emerald",
+                f"ĐỦ 4 YẾU TỐ: Vùng mua (CK {discount_to_fair_pct:.1f}%) "
+                f"+ PTCB {fund_score}/50 + PTKT {tech_score}/20 + Định giá {val_score}/30 "
+                f"+ Tổng {total_score}đ. Có thể giải ngân từng phần.")
+
+    # ============================================================
+    # RULE 3: CHỜ VỀ VÙNG MUA — Doanh nghiệp tốt nhưng giá chưa rẻ
+    # ============================================================
+    # Điều kiện: PTCB tốt + Định giá tốt, nhưng giá chưa vào vùng mua
+    if (fund_score >= 30 and val_score >= 18
+            and verdict in ("HỢP LÝ - CHỜ ĐIỀU CHỈNH", "HƠI ĐẮT - KHÔNG MUA")):
+        return ("⚠️ CHỜ VỀ VÙNG MUA", "amber",
+                f"Doanh nghiệp tốt (PTCB {fund_score}/50, Định giá {val_score}/30) "
+                f"nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.")
+
+    # ============================================================
+    # RULE 4: CHỜ XÁC NHẬN KỸ THUẬT — Giá rẻ + cơ bản tốt nhưng PTKT xấu
+    # ============================================================
+    if (verdict == "RẺ - TRONG VÙNG MUA"
+            and fund_score >= 30
+            and val_score >= 18
+            and tech_score < 10):
+        return ("⏳ CHỜ XÁC NHẬN KỸ THUẬT", "amber",
+                f"Đã đủ 3/4 yếu tố (Vùng mua + PTCB {fund_score}/50 + Định giá {val_score}/30) "
+                f"nhưng PTKT yếu ({tech_score}/20). Chờ tín hiệu đảo chiều trước khi mua.")
+
+    # ============================================================
+    # RULE 5: CHỜ ĐỊNH GIÁ TỐT HƠN — Vào vùng mua nhưng định giá chưa hấp dẫn
+    # ============================================================
+    if (verdict == "RẺ - TRONG VÙNG MUA"
+            and fund_score >= 30
+            and val_score < 18):
+        return ("⏳ CHỜ ĐỊNH GIÁ TỐT HƠN", "amber",
+                f"Giá trong vùng mua + PTCB {fund_score}/50 tốt, "
+                f"nhưng điểm định giá chỉ {val_score}/30 (P/E, P/B chưa thực sự rẻ so với ngành).")
+
+    # ============================================================
+    # RULE 6: THEO DÕI — Chưa đủ điều kiện
+    # ============================================================
+    missing = []
+    if verdict != "RẺ - TRONG VÙNG MUA":
+        missing.append(f"giá chưa vào vùng mua ({verdict})")
+    if fund_score < 30:
+        missing.append(f"PTCB {fund_score}/50 < 30")
+    if tech_score < 10:
+        missing.append(f"PTKT {tech_score}/20 < 10")
+    if val_score < 18:
+        missing.append(f"Định giá {val_score}/30 < 18")
+
+    return ("👀 THEO DÕI", "slate",
+            f"Chưa đủ điều kiện: {', '.join(missing) if missing else 'cần thêm thời gian'}.")
+
+
+# ============================================================
 # BƯỚC 4: ĐÁNH GIÁ TỪNG MÃ
 # ============================================================
 def evaluate_stock(symbol, nd, sector_median, group_label, config):
@@ -439,7 +552,21 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
     elif total_score >= 60:
         potential_zone = "VÙNG MUA AN TOÀN (B)"
 
+    # ============ 🎯 TÍNH VÙNG MUA & QUYẾT ĐỊNH CUỐI CÙNG ============
     fv = compute_fair_value_zone(symbol, nd, sector_median, config, group_label)
+
+    final_decision, final_color, final_reason = compute_final_decision(
+        fund_score=fundamental_score,
+        tech_score=technical_score,
+        val_score=valuation_score,
+        total_score=total_score,
+        verdict=fv["verdict"],
+        cfo=cfo_latest,
+        npat=net_profit_ttm,
+        roe=roe,
+        debt_to_equity=debt_to_equity,
+        discount_to_fair_pct=fv["discount_to_fair_pct"],
+    )
 
     return {
         "symbol": symbol,
@@ -471,22 +598,21 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "fair_value_rationale": fv["rationale"],
         "discount_to_fair_pct": fv["discount_to_fair_pct"],
         "valuation_verdict": fv["verdict"],
+
+        # 🆕 Quyết định cuối cùng
+        "final_decision": final_decision,
+        "final_decision_color": final_color,
+        "final_decision_reason": final_reason,
     }
 
 
 # ============================================================
-# BƯỚC 5: GHI CÁC TRƯỜNG MỚI VÀO data.json (AN TOÀN)
+# BƯỚC 5: GHI CÁC TRƯỜNG MỚI VÀO data.json
 # ============================================================
 def update_data_json_with_valuation(normalized_db, sector_medians):
-    """
-    Ghi các trường định giá MỚI vào data.json.
-    ✅ KHÔNG ĐỘNG vào các trường AI_FIELDS.
-    ✅ Backup trước khi ghi.
-    """
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         raw_db = json.load(f)
 
-    # Backup
     backup_path = f"{DATA_FILE}.bak.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     shutil.copy(DATA_FILE, backup_path)
     print(f"   🔒 Backup: {backup_path}")
@@ -505,7 +631,6 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
         median, _ = get_median_for_symbol(symbol, sector_medians)
         fv = compute_fair_value_zone(symbol, nd, median, config, group_label)
 
-        # Ghi trường mới — an toàn: chỉ gán key, không xóa gì
         raw["sector"] = sector
         raw["sub_sector"] = group_label
         raw["bvps"] = round(nd["bvps"], 0)
@@ -519,7 +644,22 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
         raw["valuation_verdict"] = fv["verdict"]
         raw["valuation_calculated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # Kiểm tra an toàn: không được làm mất trường AI
+        # 🆕 Quyết định cuối cùng
+        fund_s = raw.get("fundamental_score", 0) or 0
+        tech_s = raw.get("technical_score", 0) or 0
+        val_s = raw.get("valuation_score", 0) or 0
+        total_s = raw.get("total_score", 0) or 0
+
+        fd_label, fd_color, fd_reason = compute_final_decision(
+            fund_score=fund_s, tech_score=tech_s, val_score=val_s, total_score=total_s,
+            verdict=fv["verdict"], cfo=nd["cfo_latest"], npat=nd["net_profit_ttm"],
+            roe=nd["roe"], debt_to_equity=nd["debt_to_equity"],
+            discount_to_fair_pct=fv["discount_to_fair_pct"],
+        )
+        raw["final_decision"] = fd_label
+        raw["final_decision_color"] = fd_color
+        raw["final_decision_reason"] = fd_reason
+
         for ai_field in AI_FIELDS:
             if ai_field in raw and not raw.get(ai_field):
                 print(f"   ⚠️ Cảnh báo: {symbol} mất trường AI '{ai_field}'")
@@ -537,7 +677,7 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
 # MAIN
 # ============================================================
 def main():
-    print("🚀 Bộ lọc Quant + Vùng mua deterministic (100% từ data.json)...")
+    print("🚀 Bộ lọc Quant + Vùng mua + Quyết định cuối cùng (đủ 4 yếu tố)...")
 
     if not os.path.exists(DATA_FILE):
         print(f"⚠️ Không tìm thấy {DATA_FILE}")
@@ -546,27 +686,20 @@ def main():
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         stock_db = json.load(f)
 
-    # Bước 1: Chuẩn hóa
-    normalized_db = {}
-    for symbol, raw in stock_db.items():
-        normalized_db[symbol] = normalize_stock_data(symbol, raw)
+    normalized_db = {s: normalize_stock_data(s, r) for s, r in stock_db.items()}
 
-    # Bước 2: Median ngành
     print("📊 Đang tính median ngành...")
     sector_medians = compute_sector_medians(normalized_db)
     for sec, m in sector_medians.items():
         print(f"   [{sec:18s}] n={m['n']:2d} | P/E={m['pe']:6.2f} | P/B={m['pb']:5.2f} | ROE={m['roe']:5.1f}%")
 
-    # Bước 3: Đánh giá
     results = []
     for symbol, nd in normalized_db.items():
         sector = get_sector(symbol)
         group_label = get_sub_sector(symbol)
-        if group_label in SUB_SECTOR_CONFIG:
-            config = SUB_SECTOR_CONFIG[group_label]
-        else:
-            config = SUB_SECTOR_CONFIG.get(sector, SUB_SECTOR_CONFIG["SAN_XUAT_TIEU_DUNG_PHONG_THU"])
-
+        config = SUB_SECTOR_CONFIG.get(group_label) or SUB_SECTOR_CONFIG.get(
+            sector, SUB_SECTOR_CONFIG["SAN_XUAT_TIEU_DUNG_PHONG_THU"]
+        )
         median, _ = get_median_for_symbol(symbol, sector_medians)
         res = evaluate_stock(symbol, nd, median, group_label, config)
         if res:
@@ -578,37 +711,54 @@ def main():
 
     results = sorted(results, key=lambda x: (x.get("total_score", 0), x.get("fundamental_score", 0)), reverse=True)
 
-    # Ghi screener_results.json + CSV
     with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
         json.dump(results, jf, ensure_ascii=False, indent=4)
 
-    df = pd.DataFrame(results)
-    df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
-
+    pd.DataFrame(results).to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
     print(f"\n✅ Đã tạo: {OUTPUT_JSON}, {OUTPUT_CSV}")
 
-    # In báo cáo
+    # ============ BÁO CÁO ============
     print("\n💰 TOP 10 MÃ ĐANG TRONG VÙNG MUA (giá <= fair_low):")
     cheap = [r for r in results if r["valuation_verdict"] == "RẺ - TRONG VÙNG MUA"]
     cheap.sort(key=lambda x: x["discount_to_fair_pct"], reverse=True)
     for r in cheap[:10]:
         print(f"   {r['symbol']:5s} [{r['sub_sector']:14s}] | "
-              f"Giá {r['close_price']:>10,.0f} | "
-              f"Mua <= {r['fair_value_low']:>10,.0f} | "
-              f"Fair {r['fair_value_high']:>10,.0f} | "
+              f"Giá {r['close_price']:>10,.0f} | Mua ≤ {r['fair_value_low']:>10,.0f} | "
               f"CK {r['discount_to_fair_pct']:>5.1f}% | Điểm {r['total_score']}")
 
-    print("\n⚠️ TOP 5 MÃ ĐẮT (nên tránh):")
-    expensive = [r for r in results if r["valuation_verdict"] == "ĐẮT - TRÁNH"]
-    expensive.sort(key=lambda x: x["close_price"] / max(x["fair_value_high"], 1), reverse=True)
-    for r in expensive[:5]:
-        print(f"   {r['symbol']:5s} | Giá {r['close_price']:>10,.0f} | Fair {r['fair_value_high']:>10,.0f} | Điểm {r['total_score']}")
+    print("\n" + "=" * 70)
+    print("🎯 BÁO CÁO QUYẾT ĐỊNH CUỐI CÙNG (Đủ 4: Vùng mua + PTCB + PTKT + Định giá)")
+    print("=" * 70)
 
-    # ============ 🔥 GHI TRƯỜNG MỚI VÀO data.json ============
-    print("\n💾 Đang ghi các trường định giá vào data.json (không đụng trường AI)...")
+    decision_groups = [
+        ("🎯 MUA MẠNH", "🎯 MUA MẠNH — Đủ 4 yếu tố xuất sắc"),
+        ("✅ MUA TÍCH SẢN", "✅ MUA TÍCH SẢN — Đủ 4 yếu tố tốt"),
+        ("⚠️ CHỜ VỀ VÙNG MUA", "⚠️ CHỜ VỀ VÙNG MUA — Doanh nghiệp tốt, giá chưa rẻ"),
+        ("⏳ CHỜ XÁC NHẬN KỸ THUẬT", "⏳ CHỜ XÁC NHẬN KỸ THUẬT — PTKT yếu"),
+        ("⏳ CHỜ ĐỊNH GIÁ TỐT HƠN", "⏳ CHỜ ĐỊNH GIÁ TỐT HƠN — Định giá chưa hấp dẫn"),
+        ("❌ TRÁNH", "❌ TRÁNH — Không nên mua"),
+        ("⚠️ CẢNH BÁO LỢI NHUẬN ẢO", "⚠️ CẢNH BÁO LỢI NHUẬN ẢO — CFO âm"),
+        ("👀 THEO DÕI", "👀 THEO DÕI — Chưa đủ điều kiện"),
+    ]
+
+    for key, label in decision_groups:
+        group = [r for r in results if r["final_decision"] == key]
+        print(f"\n{label} ({len(group)} mã):")
+        if group:
+            for r in group[:10]:
+                print(f"   {r['symbol']:5s} | Giá {r['close_price']:>10,.0f} | "
+                      f"PTCB {r['fundamental_score']:>2}/50 | "
+                      f"PTKT {r['technical_score']:>2}/20 | "
+                      f"Định giá {r['valuation_score']:>2}/30 | "
+                      f"Tổng {r['total_score']:>3} | {r['valuation_verdict']}")
+        else:
+            print("   (Không có mã nào)")
+
+    # ============ GHI VÀO data.json ============
+    print("\n💾 Đang ghi các trường vào data.json (không đụng trường AI)...")
     n_updated = update_data_json_with_valuation(normalized_db, sector_medians)
-    print(f"   ✅ Đã cập nhật {n_updated} mã với 12 trường định giá mới.")
-    print("   🔒 Các trường AI (bctc, catalyst, outlook, ai_recommendation, ...) được giữ nguyên.")
+    print(f"   ✅ Đã cập nhật {n_updated} mã với 15 trường định giá + quyết định.")
+    print("   🔒 Trường AI được giữ nguyên.")
 
 
 if __name__ == "__main__":
