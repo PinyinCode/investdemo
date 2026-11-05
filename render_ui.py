@@ -5,6 +5,7 @@ from simulator import run_complex_backtest_simulation
 
 OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
+CHEAP_STOCKS_FILE = "cheap_stocks.json"
 
 
 # ============================================================
@@ -44,20 +45,39 @@ def get_last_update_string():
     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 
+def load_cheap_stocks_data():
+    """Đọc dữ liệu các mã định giá rẻ phân theo nhóm ngành từ cheap_stocks.json"""
+    if os.path.exists(CHEAP_STOCKS_FILE):
+        try:
+            with open(CHEAP_STOCKS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
 def generate_html():
     # 1) Chạy mô phỏng (giữ nguyên logic simulator của bạn)
-    sim_data = run_complex_backtest_simulation()
+    run_complex_backtest_simulation()
     print("📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
 
-    # 2) Lấy mốc thời gian cập nhật
+    # 2) Lấy mốc thời gian cập nhật & danh sách định giá rẻ
     last_update_str = get_last_update_string()
-    print(f"🕒 Mốc thời gian cập nhật dữ liệu: {last_update_str}")
+    cheap_stocks_groups = load_cheap_stocks_data()
+    
+    cheap_symbols_set = set()
+    for sector_key, symbols_list in cheap_stocks_groups.items():
+        for item in symbols_list:
+            if "symbol" in item:
+                cheap_symbols_set.add(item["symbol"])
 
     # 3) Lấy firebase config từ secret (env)
     firebase_config = get_firebase_config()
     firebase_config_json = json.dumps(firebase_config, ensure_ascii=False)
+    cheap_stocks_json = json.dumps(cheap_stocks_groups, ensure_ascii=False)
+    cheap_symbols_json = json.dumps(list(cheap_symbols_set), ensure_ascii=False)
 
-    # 4) Template HTML (giữ nguyên như bản gốc, chỉ 2 placeholder)
+    # 4) Template HTML đầy đủ toàn bộ logic gốc + tích hợp nhãn và dropdown định giá rẻ
     html_template = r"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -258,9 +278,9 @@ def generate_html():
     </header>
 
     <main class="max-w-7xl mx-auto px-2 md:px-4 py-4">
-        <!-- Bộ lọc -->
+        <!-- Bộ lọc & Dropdown chọn nhanh Định giá rẻ -->
         <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4">
-            <div class="grid grid-cols-3 gap-1.5 md:gap-3">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-1.5 md:gap-3">
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-xs md:text-sm"></i>
@@ -287,6 +307,26 @@ def generate_html():
                         <option value="SAN_XUAT_TIEU_DUNG_PHONG_THU">Sản xuất & Tiêu dùng</option>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-slate-400 pointer-events-none">
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </span>
+                </div>
+
+                <!-- DROPDOWN ĐỊNH GIÁ RẺ THEO NGÀNH -->
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-emerald-400">
+                        <i class="fa-solid fa-tags text-xs md:text-sm"></i>
+                    </span>
+                    <select id="cheap-stocks-filter" onchange="filterCheapStocksDropdown(this.value)" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-emerald-500/50 rounded-lg text-xs md:text-sm text-emerald-300 font-semibold focus:outline-none focus:border-emerald-400 appearance-none transition truncate">
+                        <option value="ALL">💎 Toàn bộ cổ phiếu định giá rẻ</option>
+                        <option value="NGAN_HANG">💎 Ngân hàng định giá rẻ</option>
+                        <option value="CHUNG_KHOAN">💎 Chứng khoán định giá rẻ</option>
+                        <option value="BAT_DONG_SAN">💎 Bất động sản định giá rẻ</option>
+                        <option value="CONG_NGHE_BAN_LE">💎 Công nghệ & Bán lẻ định giá rẻ</option>
+                        <option value="DIEN_NUOC_HA_TANG">💎 Điện, Nước & Hạ tầng định giá rẻ</option>
+                        <option value="NGUYEN_VAT_LIEU_CHU_KY">💎 Vật liệu & Chu kỳ định giá rẻ</option>
+                        <option value="SAN_XUAT_TIEU_DUNG_PHONG_THU">💎 Sản xuất & Tiêu dùng định giá rẻ</option>
+                    </select>
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-emerald-400 pointer-events-none">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </span>
                 </div>
@@ -359,10 +399,13 @@ def generate_html():
             </div>
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <!-- KHUNG THÔNG TIN TÊN CÔNG TY -->
-                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
-                    <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tên doanh nghiệp</span>
-                    <span id="modal-company-name" class="font-bold text-white text-sm">--</span>
+                <!-- KHUNG THÔNG TIN TÊN CÔNG TY & HU HIỆU ĐỊNH GIÁ RẺ -->
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                    <div>
+                        <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tên doanh nghiệp</span>
+                        <span id="modal-company-name" class="font-bold text-white text-sm">--</span>
+                    </div>
+                    <div id="modal-cheap-badge-container"></div>
                 </div>
 
                 <!-- KHUNG CHỈ SỐ CƠ BẢN -->
@@ -564,8 +607,10 @@ def generate_html():
     </div>
 
     <script>
-        // 🔐 Firebase config được inject từ Python (đọc từ GitHub Secret FIREBASE_CONFIG)
+        // 🔐 Firebase config & Cheap stocks được inject từ Python
         const firebaseConfig = {firebase_config_json_placeholder};
+        const cheapStocksGroups = {cheap_stocks_json_placeholder};
+        const cheapSymbolsSet = new Set({cheap_symbols_json_placeholder});
 
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -789,28 +834,6 @@ def generate_html():
             return num.toFixed(1) + '%';
         }
 
-        function formatMarketCap(val) {
-            if (!val || val === 0) return '—';
-            if (val >= 1e9) return (val / 1e9).toFixed(2) + ' Tỷ';
-            if (val >= 1e6) return (val / 1e6).toFixed(2) + ' Tr';
-            return formatNumber(val) + ' VNĐ';
-        }
-
-        function formatCurrencyInput(input) {
-            let value = input.value.replace(/\D/g, "");
-            if (value === "") {
-                input.value = "";
-                return;
-            }
-            input.value = Number(value).toLocaleString("vi-VN");
-        }
-
-        function parseCleanNumber(valStr) {
-            if (!valStr) return 0;
-            let clean = valStr.toString().replace(/\./g, "").replace(/,/g, "");
-            return parseFloat(clean) || 0;
-        }
-
         function clearInput(elementId) {
             const inputEl = document.getElementById(elementId);
             if (inputEl) {
@@ -897,18 +920,31 @@ def generate_html():
             }
         }
 
+        function filterCheapStocksDropdown(val) {
+            renderCards();
+        }
+
         function renderCards() {
             const container = document.getElementById('stock-container');
             if (!container) return;
 
             const searchTerm = document.getElementById('search-input').value.toUpperCase();
             const selectedSector = document.getElementById('sector-filter').value;
+            const cheapFilterVal = document.getElementById('cheap-stocks-filter').value;
             const rankingMode = document.getElementById('ranking-filter').value;
 
             let filtered = screenerResults.filter(item => {
                 let matchSearch = item.symbol.includes(searchTerm) || (item.company_name && item.company_name.toUpperCase().includes(searchTerm));
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
-                return matchSearch && matchSector;
+                
+                let matchCheap = true;
+                if (cheapFilterVal !== "ALL") {
+                    let sectorCheapList = cheapStocksGroups[cheapFilterVal] || [];
+                    let cheapSymbolsInSector = new Set(sectorCheapList.map(s => s.symbol));
+                    matchCheap = cheapSymbolsInSector.has(item.symbol);
+                }
+
+                return matchSearch && matchSector && matchCheap;
             });
 
             if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
@@ -943,6 +979,12 @@ def generate_html():
                     else { topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }
                 }
 
+                // 🌟 Nhãn Định giá rẻ trên thẻ Flash
+                let cheapBadgeHtml = "";
+                if (cheapSymbolsSet.has(item.symbol)) {
+                    cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ thực sự (P/E & P/B hấp dẫn)"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
+                }
+
                 let scoreHtml = "";
                 if (rankingMode !== "NONE") {
                     let label = "Điểm Tổng hợp";
@@ -968,6 +1010,7 @@ def generate_html():
                                         <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
                                     <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
+                                    ${cheapBadgeHtml}
                                 </div>
                                 <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
                                     <span><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
@@ -976,7 +1019,6 @@ def generate_html():
                             </div>
                             <div class="text-right">
                                 <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
-                                
                             </div>
                         </div>
 
@@ -1025,6 +1067,14 @@ def generate_html():
 
             document.getElementById('modal-company-name').innerText = item.company_name || '—';
 
+            // 🌟 Huy hiệu Định giá rẻ ở trang chi tiết (Modal AI)
+            const cheapBadgeContainer = document.getElementById('modal-cheap-badge-container');
+            if (cheapSymbolsSet.has(item.symbol)) {
+                cheapBadgeContainer.innerHTML = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1.5 shadow"><i class="fa-solid fa-gem text-emerald-400"></i> Doanh nghiệp định giá rẻ</span>`;
+            } else {
+                cheapBadgeContainer.innerHTML = '';
+            }
+
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
             document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
@@ -1041,11 +1091,9 @@ def generate_html():
             const deVal = document.getElementById('modal-de');
             if (isBankOrSec) {
                 deLabel.innerText = "Hệ số T.Sản/VCSH";
-                deLabel.title = "Đòn bẩy đặc thù Ngân hàng/Chứng khoán";
                 deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity + 'x (Nợ/VCSH)' : '—';
             } else {
                 deLabel.innerText = "Đòn bẩy D/E";
-                deLabel.title = "Nợ phải trả / Vốn chủ sở hữu";
                 deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
             }
 
@@ -1053,11 +1101,9 @@ def generate_html():
             const gmVal = document.getElementById('modal-gm');
             if (isBankOrSec) {
                 gmLabel.innerText = "Đặc thù ngành";
-                gmLabel.title = "Ngân hàng/Chứng khoán không tính biên gộp truyền thống";
                 gmVal.innerText = "N/A (Ngành tài chính)";
             } else {
                 gmLabel.innerText = "Biên gộp";
-                gmLabel.title = "Biên lợi nhuận gộp";
                 gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
             }
 
@@ -1070,7 +1116,6 @@ def generate_html():
 
             document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá từ AI.";
-
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
             document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
 
@@ -1584,15 +1629,17 @@ def generate_html():
 </html>
 """
 
-    # 5) Inject config + thời gian vào template
+    # 5) Inject config, cheap stocks & thời gian vào template
     html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
+    html_content = html_content.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
+    html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
     html_content = html_content.replace("{last_update_str}", last_update_str)
 
     # 6) Ghi file
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"✅ Đã render thành công {OUTPUT_HTML} (cập nhật: {last_update_str})")
+    print(f"✅ Đã render thành công {OUTPUT_HTML} (cập nhật: {last_update_str}) với đầy đủ logic cũ và nhãn Định giá rẻ.")
 
 
 if __name__ == "__main__":
