@@ -88,13 +88,24 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     discount_pct = float(stock_metrics.get("discount_to_fair_pct", 0) or 0)
     verdict = stock_metrics.get("valuation_verdict", "CHƯA TÍNH")
     mos_pct = float(stock_metrics.get("margin_of_safety_pct", 0) or 0)
-    final_decision = stock_metrics.get("final_decision", "CHƯA XÁC ĐỊNH")
-
+    
     fund_score = screener_item.get("fundamental_score", 0)
     val_score = screener_item.get("valuation_score", 0)
     tech_score = screener_item.get("technical_score", 0)
     total_score = screener_item.get("total_score", 0)
     growth_yoy = float(screener_item.get("profit_growth_yoy", 0) or 0)
+
+    # 🎯 TỰ ĐỘNG TÍNH LẠI QUYẾT ĐỊNH (Tránh đọc rác từ data.json)
+    if verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 40 and tech_score >= 15 and val_score >= 24 and total_score >= 75:
+        final_decision = "🎯 MUA MẠNH"
+    elif verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and tech_score >= 10 and val_score >= 18 and total_score >= 60:
+        final_decision = "✅ MUA TÍCH SẢN"
+    elif verdict == "ĐẮT - TRÁNH" or fund_score < 20:
+        final_decision = "❌ TRÁNH"
+    elif verdict in ("HỢP LÝ - CHỜ ĐIỀU CHỈNH", "HƠI ĐẮT - KHÔNG MUA") and fund_score >= 30:
+        final_decision = "⚠️ CHỜ VỀ VÙNG MUA"
+    else:
+        final_decision = "👀 THEO DÕI"
 
     sector_name = SECTOR_NAMES.get(sector, sector)
     is_bank_or_sec = sector in ("NGAN_HANG", "CHUNG_KHOAN")
