@@ -8,6 +8,7 @@ from ptkt import (
 )  # Gọi module PTKT chuyên nghiệp từ ptkt.py
 
 DATA_FILE = "data.json"
+BCTC_DIR = "bctc_data"
 OUTPUT_JSON = "screener_results.json"
 OUTPUT_CSV = "screener_summary.csv"
 
@@ -108,31 +109,58 @@ def get_sector(symbol):
     return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
 
 
+def load_bctc_supplement(symbol):
+    """Fallback đọc dữ liệu bổ sung từ thư mục bctc_data nếu dữ liệu API hàng ngày bị thiếu"""
+    bctc_path = os.path.join(BCTC_DIR, f"{symbol.upper()}.json")
+    if os.path.exists(bctc_path):
+        try:
+            with open(bctc_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
 def evaluate_stock(symbol, data):
     sector = get_sector(symbol)
-    pe = data.get("pe", 0)
-    pb = data.get("pb", 0)
-    roe = data.get("roe", 0)
-    roa = data.get("roa", 0)
-    dividend_yield = data.get("dividend_yield", 0)
-    close_price = data.get("close", 0)
+    
+    # Lấy các chỉ số, hỗ trợ fallback an toàn nếu bằng 0 hoặc None
+    pe = data.get("pe", 0) or 0
+    pb = data.get("pb", 0) or 0
+    ps = data.get("ps", 0) or 0
+    roe = data.get("roe", 0) or 0
+    roa = data.get("roa", 0) or 0
+    dividend_yield = data.get("dividend_yield", 0) or 0
+    close_price = data.get("close", 0) or 0
 
-    # Các chỉ số nâng cao lấy từ data.json
-    cfo_latest = data.get("cfo_latest", 0)
-    net_profit_ttm = data.get("net_profit_ttm", 0)
-    debt_to_equity = data.get("debt_to_equity", 0)
-    gross_margin = data.get("gross_margin", 0)
+    cfo_latest = data.get("cfo_latest", 0) or 0
+    net_profit_ttm = data.get("net_profit_ttm", 0) or 0
+    debt_to_equity = data.get("debt_to_equity", 0) or 0
+    gross_margin = data.get("gross_margin", 0) or 0
+
+    # Nếu thiếu thông số định giá trực tiếp, thử tra cứu fallback từ ratios trong bctc_data
+    if pe == 0 or pb == 0:
+        bctc_supp = load_bctc_supplement(symbol)
+        ratios_list = bctc_supp.get("ratios", [])
+        if ratios_list:
+            latest_ratio = ratios_list[0]
+            if pe == 0:
+                pe = latest_ratio.get("PE") or latest_ratio.get("PRICE_TO_EARNINGS") or 0
+            if pb == 0:
+                pb = latest_ratio.get("PB") or latest_ratio.get("PRICE_TO_BOOK") or 0
+            if ps == 0:
+                ps = latest_ratio.get("PS") or latest_ratio.get("PRICE_TO_SALES") or 0
 
     bctc_history = data.get("bctc_history", [])
-    if not bctc_history:
-        return None
-
-    latest = bctc_history[0]
-    profit_growth_yoy = latest.get("profit_growth_yoy", 0)
-    credit_growth_yoy = latest.get("credit_growth_yoy", 0)
+    profit_growth_yoy = 0
+    credit_growth_yoy = 0
+    if bctc_history:
+        latest = bctc_history[0]
+        profit_growth_yoy = latest.get("profit_growth_yoy", 0) or 0
+        credit_growth_yoy = latest.get("credit_growth_yoy", 0) or 0
 
     # =========================================================================
-    # 1. ĐIỂM CƠ BẢN (Tối đa 50 điểm) - Đa tiêu chí chuẩn đặc thù 7 nhóm ngành
+    # 1. ĐIỂM CƠ BẢN (50 điểm) - CHẤT LƯỢNG DOANH NGHIỆP (Tách hoàn toàn P/E, P/B)
     # =========================================================================
     fundamental_score = 0
     fund_notes = []
@@ -272,14 +300,66 @@ def evaluate_stock(symbol, data):
     fundamental_score = int(np.clip(fundamental_score, 0, 50))
 
     # =========================================================================
-    # 2. ĐIỂM KỸ THUẬT (Tối đa 30 điểm) - Đọc từ history/*.json qua ptkt.py
+    # 2. ĐIỂM ĐỊNH GIÁ (30 điểm) - ĐỊNH GIÁ LINH HOẠT THEO NGÀNH (Giải quyết điểm mù)
+    # =========================================================================
+    valuation_score = 0
+
+    if sector == "BAT_DONG_SAN":
+        # BĐS: Định giá theo P/B (tài sản sổ sách/quỹ đất) và P/S (doanh thu/dòng tiền đặt cọc)
+        if (0 < pb < 1.5) or (0 < ps < 2.0):
+            valuation_score = 30
+        elif (0 < pb < 2.2) or (0 < ps < 3.5):
+            valuation_score = 18
+        else:
+            valuation_score = 8
+
+    elif sector == "NGUYEN_VAT_LIEU_CHU_KY":
+        # Ngành chu kỳ: Tránh bẫy P/E đắt ở đáy chu kỳ bằng cách dùng P/S kết hợp P/E
+        if (0 < ps < 1.2) or (0 < pe < 12):
+            valuation_score = 30
+        elif (0 < ps < 2.0) or (0 < pe < 18):
+            valuation_score = 18
+        else:
+            valuation_score = 8
+
+    elif sector == "CONG_NGHE_BAN_LE":
+        # Ngành tăng trưởng: Cho phép P/E cao hơn nếu tăng trưởng tốt
+        if 0 < pe < 18 or (profit_growth_yoy > 20 and pe < 25):
+            valuation_score = 30
+        elif 0 < pe < 25:
+            valuation_score = 18
+        else:
+            valuation_score = 8
+
+    elif sector in ["NGAN_HANG", "CHUNG_KHOAN"]:
+        # Ngân hàng & Chứng khoán: Định giá P/B tương quan với khả năng sinh lời ROE
+        if 0 < pb < 1.3 or (roe >= 16 and pb < 1.8):
+            valuation_score = 30
+        elif 0 < pb < 2.0:
+            valuation_score = 18
+        else:
+            valuation_score = 8
+
+    else:
+        # Tiêu dùng, Hạ tầng: Chuẩn P/E kết hợp Cổ tức
+        if 0 < pe < 15 or dividend_yield >= 5.0:
+            valuation_score = 30
+        elif 0 < pe < 20 or dividend_yield >= 3.0:
+            valuation_score = 18
+        else:
+            valuation_score = 8
+
+    valuation_score = int(np.clip(valuation_score, 0, 30))
+
+    # =========================================================================
+    # 3. ĐIỂM KỸ THUẬT (20 điểm) - Đọc từ history/*.json qua ptkt.py
     # =========================================================================
     technical_score_raw = 50
     technical_status = "Tích lũy sideway"
     pattern = "Tích lũy"
     volume_analysis = "Chưa phân tích volume"
 
-    history_path = f"history/{symbol}.json"
+    history_path = f"history/{symbol.upper()}.json"
     if os.path.exists(history_path):
         try:
             analyzer = ProfessionalTechnicalAnalyzer(history_path)
@@ -293,29 +373,16 @@ def evaluate_stock(symbol, data):
         except Exception as e:
             print(f"⚠️ Lỗi phân tích kỹ thuật {symbol}: {e}")
 
-    # Quy đổi điểm kỹ thuật từ thang 100 về thang tối đa 30 điểm
-    technical_score = int(round((technical_score_raw / 100.0) * 30))
-    technical_score = int(np.clip(technical_score, 0, 30))
+    # Quy đổi điểm kỹ thuật từ thang 100 về thang chuẩn 20 điểm
+    technical_score = int(round((technical_score_raw / 100.0) * 20))
+    technical_score = int(np.clip(technical_score, 0, 20))
 
-    # =========================================================================
-    # 3. ĐIỂM ĐỊNH GIÁ AN TOÀN (Tối đa 20 điểm) - Dựa trên P/E & P/B
-    # =========================================================================
-    valuation_score = 0
-    if 0 < pe < 15 and 0 < pb < 2.2:
-        valuation_score += 20
-    elif 0 < pe < 20 and 0 < pb < 3.2:
-        valuation_score += 12
-    else:
-        valuation_score += 4
-
-    valuation_score = int(np.clip(valuation_score, 0, 20))
-
-    # TỔNG ĐIỂM QUY CHUẨN (50 + 30 + 20 = 100 điểm)
-    total_score = fundamental_score + technical_score + valuation_score
+    # TỔNG ĐIỂM QUY CHUẨN (50 PTCB + 30 Định giá + 20 PTKT = 100 điểm)
+    total_score = fundamental_score + valuation_score + technical_score
 
     potential_zone = "THEO DÕI THÊM"
     if total_score >= 75:
-        potential_zone = "VÙNG TÍCH SẢN ĐẦU TƯ (A+)"
+        potential_zone = "VÙNG TÍCH SẢN TỐI ƯU (A+)"
     elif total_score >= 60:
         potential_zone = "VÙNG MUA AN TOÀN (B)"
 
@@ -325,6 +392,7 @@ def evaluate_stock(symbol, data):
         "close_price": close_price,
         "pe": pe,
         "pb": pb,
+        "ps": ps,
         "roe": roe,
         "roa": roa,
         "dividend_yield": dividend_yield,
@@ -333,9 +401,9 @@ def evaluate_stock(symbol, data):
         "debt_to_equity": debt_to_equity,
         "gross_margin": gross_margin,
         "fundamental_score": fundamental_score,  # Tối đa 50đ
-        "technical_score": technical_score,  # Tối đa 30đ
-        "valuation_score": valuation_score,  # Tối đa 20đ
-        "total_score": total_score,  # Tối đa 100đ
+        "valuation_score": valuation_score,      # Tối đa 30đ
+        "technical_score": technical_score,      # Tối đa 20đ
+        "total_score": total_score,              # Tối đa 100đ
         "potential_zone": potential_zone,
         "pattern": pattern,
         "technical_status": technical_status,
@@ -346,7 +414,7 @@ def evaluate_stock(symbol, data):
 
 def main():
     print(
-        "🚀 Chạy bộ lọc định lượng Quant: PTCB (50đ) + PTKT & Volume (30đ) + Định giá (20đ)..."
+        "🚀 Chạy bộ lọc định lượng Quant: PTCB (50đ) + Định giá Ngành (30đ) + PTKT & Volume (20đ)..."
     )
 
     if not os.path.exists(DATA_FILE):
@@ -366,7 +434,7 @@ def main():
         print("⚠️ Không có dữ liệu để xử lý.")
         return
 
-    # Sắp xếp theo tổng điểm từ cao xuống thấp
+    # Sắp xếp theo tổng điểm từ cao xuống thấp, ưu tiên điểm cơ bản
     results = sorted(
         results,
         key=lambda x: (
