@@ -8,6 +8,7 @@
         "ps": 0,
         "roe": 31.1,
         "roa": 20.4,
+        "eps": 5454,
         "dividend_yield": 8.19,
         "profit_growth_yoy": 17.99,
         "cfo_latest": 4272.03,
@@ -21,7 +22,19 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.4x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (20.4%) | Cấu trúc tài chính an toàn (D/E: 0.51)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (20.4%) | Cấu trúc tài chính an toàn (D/E: 0.51)",
+        "fair_value_high": 45029.0,
+        "fair_value_low": 33772.0,
+        "graham_number": 45029.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 66233.0,
+            "PB_method": 21067.0,
+            "Graham": 45029.0
+        },
+        "fair_value_rationale": "PE_method=66,233 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=21,067 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=45,029; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -41.3,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "DCM",
@@ -32,6 +45,7 @@
         "ps": 0,
         "roe": 24.2,
         "roa": 14.3,
+        "eps": 5131,
         "dividend_yield": 6.06,
         "profit_growth_yoy": 31.81,
         "cfo_latest": 2173.83,
@@ -45,7 +59,19 @@
         "pattern": "Accumulation",
         "technical_status": "📦 Siết Nền Tích Lũy (Cạn Cung Wyckoff)",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROE chu kỳ tốt | ROA rất cao (14.3%) | Cấu trúc tài chính an toàn (D/E: 0.67)"
+        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROE chu kỳ tốt | ROA rất cao (14.3%) | Cấu trúc tài chính an toàn (D/E: 0.67)",
+        "fair_value_high": 50392.0,
+        "fair_value_low": 35274.0,
+        "graham_number": 50444.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 50392.0,
+            "PB_method": 27110.0,
+            "Graham": 50444.0
+        },
+        "fair_value_rationale": "PE_method=50,392 (P/E lý tưởng 9.8x, median ngành 8.5x); PB_method=27,110 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=50,444; Biên an toàn 30% theo ngành NGUYEN_VAT_LIEU_CHU_KY.",
+        "discount_to_fair_pct": 8.9,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "DHC",
@@ -56,6 +82,7 @@
         "ps": 0,
         "roe": 25.4,
         "roa": 15.7,
+        "eps": 5637,
         "dividend_yield": 5.04,
         "profit_growth_yoy": 49.65,
         "cfo_latest": 362.7,
@@ -69,7 +96,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.5x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROE chu kỳ tốt | ROA rất cao (15.7%) | Cấu trúc tài chính an toàn (D/E: 0.58)"
+        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROE chu kỳ tốt | ROA rất cao (15.7%) | Cấu trúc tài chính an toàn (D/E: 0.58)",
+        "fair_value_high": 54288.0,
+        "fair_value_low": 38002.0,
+        "graham_number": 54288.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 55361.0,
+            "PB_method": 28582.0,
+            "Graham": 54288.0
+        },
+        "fair_value_rationale": "PE_method=55,361 (P/E lý tưởng 9.8x, median ngành 8.5x); PB_method=28,582 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=54,288; Biên an toàn 30% theo ngành NGUYEN_VAT_LIEU_CHU_KY.",
+        "discount_to_fair_pct": 4.8,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "HPG",
@@ -80,6 +119,7 @@
         "ps": 0,
         "roe": 19.9,
         "roa": 10.4,
+        "eps": 3250,
         "dividend_yield": 2.09,
         "profit_growth_yoy": 106.01,
         "cfo_latest": 8294.63,
@@ -93,7 +133,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROE chu kỳ tốt | ROA rất cao (10.4%) | Cấu trúc tài chính an toàn (D/E: 0.9)"
+        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROE chu kỳ tốt | ROA rất cao (10.4%) | Cấu trúc tài chính an toàn (D/E: 0.9)",
+        "fair_value_high": 31918.0,
+        "fair_value_low": 22343.0,
+        "graham_number": 35752.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 31918.0,
+            "PB_method": 21500.0,
+            "Graham": 35752.0
+        },
+        "fair_value_rationale": "PE_method=31,918 (P/E lý tưởng 9.8x, median ngành 8.5x); PB_method=21,500 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=35,752; Biên an toàn 30% theo ngành NGUYEN_VAT_LIEU_CHU_KY.",
+        "discount_to_fair_pct": 3.9,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "GMD",
@@ -104,6 +156,7 @@
         "ps": 0,
         "roe": 17.6,
         "roa": 13.1,
+        "eps": 6224,
         "dividend_yield": 2.79,
         "profit_growth_yoy": 35.58,
         "cfo_latest": 496.79,
@@ -117,7 +170,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (13.1%) | Cấu trúc tài chính an toàn (D/E: 0.37)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (13.1%) | Cấu trúc tài chính an toàn (D/E: 0.37)",
+        "fair_value_high": 55750.0,
+        "fair_value_low": 41812.0,
+        "graham_number": 55750.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 75584.0,
+            "PB_method": 28297.0,
+            "Graham": 55750.0
+        },
+        "fair_value_rationale": "PE_method=75,584 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=28,297 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=55,750; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -20.5,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "TLG",
@@ -128,6 +193,7 @@
         "ps": 0,
         "roe": 18.4,
         "roa": 12.5,
+        "eps": 4762,
         "dividend_yield": 8.15,
         "profit_growth_yoy": 42.62,
         "cfo_latest": 181.5,
@@ -141,7 +207,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.6x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (12.5%) | Cấu trúc tài chính an toàn (D/E: 0.49)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (12.5%) | Cấu trúc tài chính an toàn (D/E: 0.49)",
+        "fair_value_high": 53273.0,
+        "fair_value_low": 39955.0,
+        "graham_number": 53273.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 57830.0,
+            "PB_method": 33772.0,
+            "Graham": 53273.0
+        },
+        "fair_value_rationale": "PE_method=57,830 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=33,772 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=53,273; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -26.4,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "BSR",
@@ -152,6 +230,7 @@
         "ps": 0,
         "roe": 40.5,
         "roa": 27.9,
+        "eps": 5583,
         "dividend_yield": 1.13,
         "profit_growth_yoy": 887.13,
         "cfo_latest": 7689.62,
@@ -165,7 +244,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (27.9%) | Cấu trúc tài chính an toàn (D/E: 0.44)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (27.9%) | Cấu trúc tài chính an toàn (D/E: 0.44)",
+        "fair_value_high": 45756.0,
+        "fair_value_low": 34317.0,
+        "graham_number": 45756.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 67800.0,
+            "PB_method": 21250.0,
+            "Graham": 45756.0
+        },
+        "fair_value_rationale": "PE_method=67,800 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=21,250 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=45,756; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 29.5,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "BID",
@@ -176,6 +267,7 @@
         "ps": 0,
         "roe": 18.5,
         "roa": 1.0,
+        "eps": 4452,
         "dividend_yield": 2.55,
         "profit_growth_yoy": 39.2,
         "cfo_latest": -19191.84,
@@ -189,7 +281,18 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 37835.0,
+        "fair_value_low": 30268.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 37835.0,
+            "PB_method": 30738.0
+        },
+        "fair_value_rationale": "PE_method=37,835 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=30,738 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -6.1,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "VRE",
@@ -200,6 +303,7 @@
         "ps": 0,
         "roe": 15.1,
         "roa": 12.0,
+        "eps": 3254,
         "dividend_yield": 4.13,
         "profit_growth_yoy": 10.58,
         "cfo_latest": -572.01,
@@ -213,7 +317,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (12.0%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.23)"
+        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (12.0%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.23)",
+        "fair_value_high": 40504.0,
+        "fair_value_low": 28353.0,
+        "graham_number": 40504.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 54448.0,
+            "PB_method": 24200.0,
+            "Graham": 40504.0
+        },
+        "fair_value_rationale": "PE_method=54,448 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=24,200 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=40,504; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": 17.2,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "MBB",
@@ -224,6 +340,7 @@
         "ps": 0,
         "roe": 21.8,
         "roa": 2.0,
+        "eps": 3232,
         "dividend_yield": 4.16,
         "profit_growth_yoy": 42.26,
         "cfo_latest": -12063.09,
@@ -237,7 +354,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Cổ tức tiền mặt tốt (4.16%)"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Cổ tức tiền mặt tốt (4.16%)",
+        "fair_value_high": 27467.0,
+        "fair_value_low": 21974.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 27467.0,
+            "PB_method": 19341.0
+        },
+        "fair_value_rationale": "PE_method=27,467 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=19,341 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": 12.7,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "HDB",
@@ -248,6 +376,7 @@
         "ps": 0,
         "roe": 23.3,
         "roa": 2.0,
+        "eps": 3856,
         "dividend_yield": 0,
         "profit_growth_yoy": 7.02,
         "cfo_latest": 20277.55,
@@ -261,7 +390,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 32770.0,
+        "fair_value_low": 26216.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 32770.0,
+            "PB_method": 17012.0,
+            "CFO_boost": 36047.0
+        },
+        "fair_value_rationale": "PE_method=32,770 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=17,012 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": 16.8,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "HAH",
@@ -272,6 +413,7 @@
         "ps": 0,
         "roe": 22.5,
         "roa": 14.1,
+        "eps": 6819,
         "dividend_yield": 5.54,
         "profit_growth_yoy": 3.69,
         "cfo_latest": 633.32,
@@ -285,7 +427,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.4x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN ổn định | ROE sản xuất cao (>=14%) | ROA rất cao (14.1%) | Cấu trúc tài chính an toàn (D/E: 0.59)"
+        "fundamental_notes": "LN ổn định | ROE sản xuất cao (>=14%) | ROA rất cao (14.1%) | Cấu trúc tài chính an toàn (D/E: 0.59)",
+        "fair_value_high": 66136.0,
+        "fair_value_low": 49602.0,
+        "graham_number": 66136.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 82810.0,
+            "PB_method": 36349.0,
+            "Graham": 66136.0
+        },
+        "fair_value_rationale": "PE_method=82,810 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=36,349 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=66,136; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 1.7,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "HAG",
@@ -296,6 +450,7 @@
         "ps": 0,
         "roe": 21.1,
         "roa": 12.0,
+        "eps": 2607,
         "dividend_yield": 0,
         "profit_growth_yoy": 8.85,
         "cfo_latest": 134.73,
@@ -309,7 +464,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN ổn định | ROE sản xuất cao (>=14%) | ROA rất cao (12.0%) | Cấu trúc tài chính an toàn (D/E: 0.67)"
+        "fundamental_notes": "LN ổn định | ROE sản xuất cao (>=14%) | ROA rất cao (12.0%) | Cấu trúc tài chính an toàn (D/E: 0.67)",
+        "fair_value_high": 27350.0,
+        "fair_value_low": 20512.0,
+        "graham_number": 27350.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 31659.0,
+            "PB_method": 16259.0,
+            "Graham": 27350.0
+        },
+        "fair_value_rationale": "PE_method=31,659 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=16,259 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=27,350; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 47.6,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "MWG",
@@ -320,6 +487,7 @@
         "ps": 0,
         "roe": 29.5,
         "roa": 12.1,
+        "eps": 7576,
         "dividend_yield": 1.34,
         "profit_growth_yoy": 97.41,
         "cfo_latest": -531.28,
@@ -333,7 +501,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.5x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "Tăng trưởng lõi mạnh (>=20%) | ROE xuất sắc | ROA rất cao (12.1%) | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "Tăng trưởng lõi mạnh (>=20%) | ROE xuất sắc | ROA rất cao (12.1%) | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 74531.0,
+        "fair_value_low": 59625.0,
+        "graham_number": 72985.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 85861.0,
+            "PB_method": 74531.0,
+            "Graham": 72985.0
+        },
+        "fair_value_rationale": "PE_method=85,861 (P/E lý tưởng 11.3x, median ngành 9.9x); PB_method=74,531 (P/B lý tưởng 2.4x, median ngành 2.4x); Graham=72,985; Biên an toàn 20% theo ngành CONG_NGHE_BAN_LE.",
+        "discount_to_fair_pct": -20.5,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "PAN",
@@ -344,6 +524,7 @@
         "ps": 0,
         "roe": 13.4,
         "roa": 7.5,
+        "eps": 4918,
         "dividend_yield": 14.62,
         "profit_growth_yoy": 26.04,
         "cfo_latest": 640.23,
@@ -357,7 +538,19 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản cạn kiệt (0.7x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA rất cao (7.5%) | Cấu trúc tài chính an toàn (D/E: 0.76)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA rất cao (7.5%) | Cấu trúc tài chính an toàn (D/E: 0.76)",
+        "fair_value_high": 49427.0,
+        "fair_value_low": 37070.0,
+        "graham_number": 49427.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 59724.0,
+            "PB_method": 28149.0,
+            "Graham": 49427.0
+        },
+        "fair_value_rationale": "PE_method=59,724 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=28,149 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=49,427; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 118.1,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "MSH",
@@ -368,6 +561,7 @@
         "ps": 0,
         "roe": 26.3,
         "roa": 13.1,
+        "eps": 5591,
         "dividend_yield": 14.37,
         "profit_growth_yoy": -2.21,
         "cfo_latest": 552.82,
@@ -381,7 +575,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.1x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (13.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | Cấu trúc tài chính an toàn (D/E: 0.91)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (13.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | Cấu trúc tài chính an toàn (D/E: 0.91)",
+        "fair_value_high": 50230.0,
+        "fair_value_low": 37672.0,
+        "graham_number": 50230.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 67897.0,
+            "PB_method": 25572.0,
+            "Graham": 50230.0,
+            "CFO_boost": 74687.0
+        },
+        "fair_value_rationale": "PE_method=67,897 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=25,572 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=50,230; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 6.1,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "IMP",
@@ -392,6 +599,7 @@
         "ps": 0,
         "roe": 15.8,
         "roa": 12.7,
+        "eps": 2385,
         "dividend_yield": 1.71,
         "profit_growth_yoy": 9.2,
         "cfo_latest": 96.79,
@@ -405,7 +613,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.4x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN ổn định | ROE sản xuất cao (>=14%) | ROA rất cao (12.7%) | Cấu trúc tài chính an toàn (D/E: 0.22)"
+        "fundamental_notes": "LN ổn định | ROE sản xuất cao (>=14%) | ROA rất cao (12.7%) | Cấu trúc tài chính an toàn (D/E: 0.22)",
+        "fair_value_high": 28963.0,
+        "fair_value_low": 21722.0,
+        "graham_number": 29310.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 28963.0,
+            "PB_method": 20411.0,
+            "Graham": 29310.0
+        },
+        "fair_value_rationale": "PE_method=28,963 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=20,411 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=29,310; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -39.2,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "REE",
@@ -416,6 +636,7 @@
         "ps": 0,
         "roe": 10.9,
         "roa": 6.7,
+        "eps": 4416,
         "dividend_yield": 1.89,
         "profit_growth_yoy": 12.26,
         "cfo_latest": 649.64,
@@ -429,7 +650,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.4x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Có chia cổ tức (1.89%) | ROE ổn định phòng thủ | ROA rất cao (6.7%) | Cấu trúc tài chính an toàn (D/E: 0.68)"
+        "fundamental_notes": "Có chia cổ tức (1.89%) | ROE ổn định phòng thủ | ROA rất cao (6.7%) | Cấu trúc tài chính an toàn (D/E: 0.68)",
+        "fair_value_high": 46050.0,
+        "fair_value_low": 39142.0,
+        "graham_number": 60261.0,
+        "margin_of_safety_pct": 15.0,
+        "fair_value_methods": {
+            "PE_method": 30515.0,
+            "PB_method": 46050.0,
+            "Graham": 60261.0
+        },
+        "fair_value_rationale": "PE_method=30,515 (P/E lý tưởng 6.9x, median ngành 6.9x); PB_method=46,050 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=60,261; Biên an toàn 15% theo ngành DIEN_NUOC_HA_TANG.",
+        "discount_to_fair_pct": -15.0,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "TPB",
@@ -440,6 +673,7 @@
         "ps": 0,
         "roe": 17.9,
         "roa": 1.6,
+        "eps": 3046,
         "dividend_yield": 0,
         "profit_growth_yoy": 54.62,
         "cfo_latest": 22602.79,
@@ -453,7 +687,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.4x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 25886.0,
+        "fair_value_low": 20709.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 25886.0,
+            "PB_method": 17949.0,
+            "CFO_boost": 28475.0
+        },
+        "fair_value_rationale": "PE_method=25,886 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=17,949 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": 61.8,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "TCH",
@@ -464,6 +710,7 @@
         "ps": 0,
         "roe": 5.5,
         "roa": 3.7,
+        "eps": 793,
         "dividend_yield": 0,
         "profit_growth_yoy": 1232.07,
         "cfo_latest": -1482.63,
@@ -477,7 +724,19 @@
         "pattern": "Darvas Breakout",
         "technical_status": "🚀 Darvas Breakout (Volume Xác Nhận)",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.8x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "LN duy trì tăng trưởng | Có lãi dương | ROA tốt (3.7%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.45)"
+        "fundamental_notes": "LN duy trì tăng trưởng | Có lãi dương | ROA tốt (3.7%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.45)",
+        "fair_value_high": 13371.0,
+        "fair_value_low": 9360.0,
+        "graham_number": 14863.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 11538.0,
+            "PB_method": 13371.0,
+            "Graham": 14863.0
+        },
+        "fair_value_rationale": "PE_method=11,538 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=13,371 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=14,863; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -28.0,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "FRT",
@@ -488,6 +747,7 @@
         "ps": 0,
         "roe": 25.4,
         "roa": 5.3,
+        "eps": 7598,
         "dividend_yield": 0,
         "profit_growth_yoy": 110.27,
         "cfo_latest": 1246.12,
@@ -501,7 +761,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.3x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "Tăng trưởng lõi mạnh (>=20%) | ROE xuất sắc | ROA rất cao (5.3%) | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.68)"
+        "fundamental_notes": "Tăng trưởng lõi mạnh (>=20%) | ROE xuất sắc | ROA rất cao (5.3%) | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.68)",
+        "fair_value_high": 70562.0,
+        "fair_value_low": 56450.0,
+        "graham_number": 70562.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 86110.0,
+            "PB_method": 69461.0,
+            "Graham": 70562.0
+        },
+        "fair_value_rationale": "PE_method=86,110 (P/E lý tưởng 11.3x, median ngành 9.9x); PB_method=69,461 (P/B lý tưởng 2.4x, median ngành 2.4x); Graham=70,562; Biên an toàn 20% theo ngành CONG_NGHE_BAN_LE.",
+        "discount_to_fair_pct": -60.5,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "MSN",
@@ -512,6 +784,7 @@
         "ps": 0,
         "roe": 20.0,
         "roa": 7.1,
+        "eps": 6199,
         "dividend_yield": 0,
         "profit_growth_yoy": 143.98,
         "cfo_latest": -756.97,
@@ -525,7 +798,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (7.1%) | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE sản xuất cao (>=14%) | ROA rất cao (7.1%) | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 62703.0,
+        "fair_value_low": 47027.0,
+        "graham_number": 62703.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 75281.0,
+            "PB_method": 35941.0,
+            "Graham": 62703.0
+        },
+        "fair_value_rationale": "PE_method=75,281 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=35,941 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=62,703; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -34.3,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "PVT",
@@ -536,6 +821,7 @@
         "ps": 0,
         "roe": 12.9,
         "roa": 6.9,
+        "eps": 2976,
         "dividend_yield": 0,
         "profit_growth_yoy": 40.23,
         "cfo_latest": 947.19,
@@ -549,7 +835,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.6x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA rất cao (6.9%) | Cấu trúc tài chính an toàn (D/E: 0.84)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA rất cao (6.9%) | Cấu trúc tài chính an toàn (D/E: 0.84)",
+        "fair_value_high": 31427.0,
+        "fair_value_low": 23570.0,
+        "graham_number": 35412.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 31427.0,
+            "PB_method": 23877.0,
+            "Graham": 35412.0
+        },
+        "fair_value_rationale": "PE_method=31,427 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=23,877 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=35,412; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 14.4,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "MSB",
@@ -560,6 +858,7 @@
         "ps": 0,
         "roe": 14.3,
         "roa": 1.5,
+        "eps": 1673,
         "dividend_yield": 0,
         "profit_growth_yoy": 29.43,
         "cfo_latest": 0,
@@ -573,7 +872,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 12363.0,
+        "fair_value_low": 9890.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 12363.0,
+            "PB_method": 15250.0
+        },
+        "fair_value_rationale": "PE_method=12,363 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=15,250 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -37.2,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "GAS",
@@ -584,6 +894,7 @@
         "ps": 0,
         "roe": 21.1,
         "roa": 15.1,
+        "eps": 6109,
         "dividend_yield": 2.15,
         "profit_growth_yoy": 74.87,
         "cfo_latest": 5615.33,
@@ -597,7 +908,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Có chia cổ tức (2.15%) | ROE ổn định phòng thủ | ROA rất cao (15.1%) | Cấu trúc tài chính an toàn (D/E: 0.41)"
+        "fundamental_notes": "Có chia cổ tức (2.15%) | ROE ổn định phòng thủ | ROA rất cao (15.1%) | Cấu trúc tài chính an toàn (D/E: 0.41)",
+        "fair_value_high": 48545.0,
+        "fair_value_low": 41263.0,
+        "graham_number": 64172.0,
+        "margin_of_safety_pct": 15.0,
+        "fair_value_methods": {
+            "PE_method": 48545.0,
+            "PB_method": 37749.0,
+            "Graham": 64172.0
+        },
+        "fair_value_rationale": "PE_method=48,545 (P/E lý tưởng 7.9x, median ngành 6.9x); PB_method=37,749 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=64,172; Biên an toàn 15% theo ngành DIEN_NUOC_HA_TANG.",
+        "discount_to_fair_pct": -44.7,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "TCB",
@@ -608,6 +931,7 @@
         "ps": 0,
         "roe": 15.4,
         "roa": 2.3,
+        "eps": 4041,
         "dividend_yield": 5.13,
         "profit_growth_yoy": 26.06,
         "cfo_latest": 7494.85,
@@ -621,7 +945,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.6x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Cổ tức tiền mặt tốt (5.13%)"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Cổ tức tiền mặt tốt (5.13%)",
+        "fair_value_high": 29863.0,
+        "fair_value_low": 23890.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 29863.0,
+            "PB_method": 21596.0
+        },
+        "fair_value_rationale": "PE_method=29,863 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=21,596 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": 8.8,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "VPB",
@@ -632,6 +967,7 @@
         "ps": 0,
         "roe": 17.0,
         "roa": 2.3,
+        "eps": 3118,
         "dividend_yield": 1.79,
         "profit_growth_yoy": 20.36,
         "cfo_latest": 34031.62,
@@ -645,7 +981,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 23042.0,
+        "fair_value_low": 18434.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 23042.0,
+            "PB_method": 22642.0,
+            "CFO_boost": 25346.0
+        },
+        "fair_value_rationale": "PE_method=23,042 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=22,642 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -15.8,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "SAB",
@@ -656,6 +1004,7 @@
         "ps": 0,
         "roe": 20.1,
         "roa": 14.8,
+        "eps": 3622,
         "dividend_yield": 11.81,
         "profit_growth_yoy": -9.4,
         "cfo_latest": 2439.76,
@@ -669,7 +1018,19 @@
         "pattern": "Accumulation",
         "technical_status": "📦 Siết Nền Tích Lũy (Cạn Cung Wyckoff)",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (14.8%) | Cấu trúc tài chính an toàn (D/E: 0.32)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (14.8%) | Cấu trúc tài chính an toàn (D/E: 0.32)",
+        "fair_value_high": 36209.0,
+        "fair_value_low": 27157.0,
+        "graham_number": 36209.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 43986.0,
+            "PB_method": 20512.0,
+            "Graham": 36209.0
+        },
+        "fair_value_rationale": "PE_method=43,986 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=20,512 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=36,209; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -35.6,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "BMP",
@@ -680,6 +1041,7 @@
         "ps": 0,
         "roe": 41.1,
         "roa": 34.3,
+        "eps": 15292,
         "dividend_yield": 10.81,
         "profit_growth_yoy": -8.91,
         "cfo_latest": 547.88,
@@ -693,7 +1055,19 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (34.3%) | Cấu trúc tài chính an toàn (D/E: 0.18)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (34.3%) | Cấu trúc tài chính an toàn (D/E: 0.18)",
+        "fair_value_high": 115609.0,
+        "fair_value_low": 86707.0,
+        "graham_number": 115609.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 185706.0,
+            "PB_method": 49527.0,
+            "Graham": 115609.0
+        },
+        "fair_value_rationale": "PE_method=185,706 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=49,527 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=115,609; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -37.1,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "SHB",
@@ -704,6 +1078,7 @@
         "ps": 0,
         "roe": 19.0,
         "roa": 1.5,
+        "eps": 2796,
         "dividend_yield": 0,
         "profit_growth_yoy": 58.01,
         "cfo_latest": 236.43,
@@ -717,7 +1092,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.6x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "Tín dụng khá | ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng khá | ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 23762.0,
+        "fair_value_low": 19010.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 23762.0,
+            "PB_method": 19779.0
+        },
+        "fair_value_rationale": "PE_method=23,762 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=19,779 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": 77.7,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "ANV",
@@ -728,6 +1114,7 @@
         "ps": 0,
         "roe": 21.1,
         "roa": 12.8,
+        "eps": 2961,
         "dividend_yield": 6.39,
         "profit_growth_yoy": -27.0,
         "cfo_latest": 173.17,
@@ -741,7 +1128,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (12.8%) | Cấu trúc tài chính an toàn (D/E: 0.66)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (12.8%) | Cấu trúc tài chính an toàn (D/E: 0.66)",
+        "fair_value_high": 32167.0,
+        "fair_value_low": 24125.0,
+        "graham_number": 32167.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 35958.0,
+            "PB_method": 19802.0,
+            "Graham": 32167.0
+        },
+        "fair_value_rationale": "PE_method=35,958 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=19,802 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=32,167; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 37.5,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "PHR",
@@ -752,6 +1151,7 @@
         "ps": 0,
         "roe": 24.1,
         "roa": 16.6,
+        "eps": 4518,
         "dividend_yield": 0.03,
         "profit_growth_yoy": 63.73,
         "cfo_latest": 46.14,
@@ -765,7 +1165,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (16.6%) | Cấu trúc tài chính an toàn (D/E: 0.46)"
+        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (16.6%) | Cấu trúc tài chính an toàn (D/E: 0.46)",
+        "fair_value_high": 45240.0,
+        "fair_value_low": 31668.0,
+        "graham_number": 45240.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 75597.0,
+            "PB_method": 21744.0,
+            "Graham": 45240.0
+        },
+        "fair_value_rationale": "PE_method=75,597 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=21,744 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=45,240; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": 4.9,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "ACB",
@@ -776,6 +1188,7 @@
         "ps": 0,
         "roe": 16.5,
         "roa": 1.6,
+        "eps": 2773,
         "dividend_yield": 3.02,
         "profit_growth_yoy": 9.77,
         "cfo_latest": -3317.23,
@@ -789,7 +1202,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.7x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 20492.0,
+        "fair_value_low": 16394.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 20492.0,
+            "PB_method": 21992.0
+        },
+        "fair_value_rationale": "PE_method=20,492 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=21,992 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -20.2,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "POW",
@@ -800,6 +1224,7 @@
         "ps": 0,
         "roe": 15.3,
         "roa": 6.4,
+        "eps": 1940,
         "dividend_yield": 0.37,
         "profit_growth_yoy": 118.6,
         "cfo_latest": 5682.46,
@@ -813,7 +1238,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Có chia cổ tức (0.37%) | ROE ổn định phòng thủ | ROA rất cao (6.4%)"
+        "fundamental_notes": "Có chia cổ tức (0.37%) | ROE ổn định phòng thủ | ROA rất cao (6.4%)",
+        "fair_value_high": 17697.0,
+        "fair_value_low": 15042.0,
+        "graham_number": 24760.0,
+        "margin_of_safety_pct": 15.0,
+        "fair_value_methods": {
+            "PE_method": 13405.0,
+            "PB_method": 17697.0,
+            "Graham": 24760.0
+        },
+        "fair_value_rationale": "PE_method=13,405 (P/E lý tưởng 6.9x, median ngành 6.9x); PB_method=17,697 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=24,760; Biên an toàn 15% theo ngành DIEN_NUOC_HA_TANG.",
+        "discount_to_fair_pct": 20.3,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "NT2",
@@ -824,6 +1261,7 @@
         "ps": 0,
         "roe": 29.4,
         "roa": 14.9,
+        "eps": 5068,
         "dividend_yield": 3.09,
         "profit_growth_yoy": 95.4,
         "cfo_latest": 421.61,
@@ -837,7 +1275,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.7x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "Có chia cổ tức (3.09%) | ROE ổn định phòng thủ | ROA rất cao (14.9%)"
+        "fundamental_notes": "Có chia cổ tức (3.09%) | ROE ổn định phòng thủ | ROA rất cao (14.9%)",
+        "fair_value_high": 40273.0,
+        "fair_value_low": 34232.0,
+        "graham_number": 45047.0,
+        "margin_of_safety_pct": 15.0,
+        "fair_value_methods": {
+            "PE_method": 40273.0,
+            "PB_method": 22422.0,
+            "Graham": 45047.0
+        },
+        "fair_value_rationale": "PE_method=40,273 (P/E lý tưởng 7.9x, median ngành 6.9x); PB_method=22,422 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=45,047; Biên an toàn 15% theo ngành DIEN_NUOC_HA_TANG.",
+        "discount_to_fair_pct": 51.5,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "VTO",
@@ -848,6 +1298,7 @@
         "ps": 0,
         "roe": 14.2,
         "roa": 10.7,
+        "eps": 2105,
         "dividend_yield": 10.67,
         "profit_growth_yoy": -44.63,
         "cfo_latest": 74.47,
@@ -861,7 +1312,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.3x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (10.7%) | Cấu trúc tài chính an toàn (D/E: 0.35)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (10.7%) | Cấu trúc tài chính an toàn (D/E: 0.35)",
+        "fair_value_high": 25563.0,
+        "fair_value_low": 19172.0,
+        "graham_number": 26590.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 25563.0,
+            "PB_method": 19033.0,
+            "Graham": 26590.0
+        },
+        "fair_value_rationale": "PE_method=25,563 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=19,033 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=26,590; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 86.1,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "FPT",
@@ -872,6 +1335,7 @@
         "ps": 0,
         "roe": 24.3,
         "roa": 13.2,
+        "eps": 5455,
         "dividend_yield": 3.35,
         "profit_growth_yoy": -5.94,
         "cfo_latest": 2097.64,
@@ -885,7 +1349,19 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROE xuất sắc | ROA rất cao (13.2%) | Cấu trúc tài chính an toàn (D/E: 0.71)"
+        "fundamental_notes": "ROE xuất sắc | ROA rất cao (13.2%) | Cấu trúc tài chính an toàn (D/E: 0.71)",
+        "fair_value_high": 53235.0,
+        "fair_value_low": 42588.0,
+        "graham_number": 52341.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 53759.0,
+            "PB_method": 53235.0,
+            "Graham": 52341.0
+        },
+        "fair_value_rationale": "PE_method=53,759 (P/E lý tưởng 9.9x, median ngành 9.9x); PB_method=53,235 (P/B lý tưởng 2.4x, median ngành 2.4x); Graham=52,341; Biên an toàn 20% theo ngành CONG_NGHE_BAN_LE.",
+        "discount_to_fair_pct": -19.5,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "CTG",
@@ -896,6 +1372,7 @@
         "ps": 0,
         "roe": 22.5,
         "roa": 1.5,
+        "eps": 5479,
         "dividend_yield": 2.45,
         "profit_growth_yoy": 27.71,
         "cfo_latest": -17526.75,
@@ -909,7 +1386,18 @@
         "pattern": "Darvas Breakout",
         "technical_status": "🚀 Darvas Breakout (Volume Xác Nhận)",
         "volume_analysis": "Thanh khoản đột biến mạnh (2.2x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "ROE xuất sắc (>=18%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 46563.0,
+        "fair_value_low": 37250.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 46563.0,
+            "PB_method": 32950.0
+        },
+        "fair_value_rationale": "PE_method=46,563 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=32,950 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": 17.9,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "DHG",
@@ -920,6 +1408,7 @@
         "ps": 0,
         "roe": 21.8,
         "roa": 16.8,
+        "eps": 6519,
         "dividend_yield": 12.05,
         "profit_growth_yoy": -53.02,
         "cfo_latest": 48.77,
@@ -933,7 +1422,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.6x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (16.8%) | Cấu trúc tài chính an toàn (D/E: 0.25)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (16.8%) | Cấu trúc tài chính an toàn (D/E: 0.25)",
+        "fair_value_high": 62579.0,
+        "fair_value_low": 46934.0,
+        "graham_number": 62579.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 79167.0,
+            "PB_method": 34041.0,
+            "Graham": 62579.0
+        },
+        "fair_value_rationale": "PE_method=79,167 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=34,041 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=62,579; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -43.1,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "VHM",
@@ -944,6 +1445,7 @@
         "ps": 0,
         "roe": 36.6,
         "roa": 10.1,
+        "eps": 12038,
         "dividend_yield": 4.7,
         "profit_growth_yoy": 419.0,
         "cfo_latest": 92493.63,
@@ -957,7 +1459,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (10.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.35)"
+        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (10.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.35)",
+        "fair_value_high": 97326.0,
+        "fair_value_low": 68128.0,
+        "graham_number": 97326.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 201426.0,
+            "PB_method": 37770.0,
+            "Graham": 97326.0,
+            "CFO_boost": 221568.0
+        },
+        "fair_value_rationale": "PE_method=201,426 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=37,770 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=97,326; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": 7.6,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "VIB",
@@ -968,6 +1483,7 @@
         "ps": 0,
         "roe": 16.2,
         "roa": 1.4,
+        "eps": 2071,
         "dividend_yield": 5.77,
         "profit_growth_yoy": 18.49,
         "cfo_latest": -10213.25,
@@ -981,7 +1497,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Tín dụng khá | ROE tốt (>=14%) | Cổ tức tiền mặt tốt (5.77%)"
+        "fundamental_notes": "Tín dụng khá | ROE tốt (>=14%) | Cổ tức tiền mặt tốt (5.77%)",
+        "fair_value_high": 15305.0,
+        "fair_value_low": 12244.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 15305.0,
+            "PB_method": 16077.0
+        },
+        "fair_value_rationale": "PE_method=15,305 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=16,077 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -13.2,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "DPM",
@@ -992,6 +1519,7 @@
         "ps": 0,
         "roe": 13.7,
         "roa": 8.6,
+        "eps": 2319,
         "dividend_yield": 7.51,
         "profit_growth_yoy": -81.18,
         "cfo_latest": 1200.2,
@@ -1005,7 +1533,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROE chu kỳ tốt | ROA rất cao (8.6%) | Cấu trúc tài chính an toàn (D/E: 0.6)"
+        "fundamental_notes": "ROE chu kỳ tốt | ROA rất cao (8.6%) | Cấu trúc tài chính an toàn (D/E: 0.6)",
+        "fair_value_high": 20311.0,
+        "fair_value_low": 14218.0,
+        "graham_number": 29353.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 19804.0,
+            "PB_method": 20311.0,
+            "Graham": 29353.0
+        },
+        "fair_value_rationale": "PE_method=19,804 (P/E lý tưởng 8.5x, median ngành 8.5x); PB_method=20,311 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=29,353; Biên an toàn 30% theo ngành NGUYEN_VAT_LIEU_CHU_KY.",
+        "discount_to_fair_pct": -27.6,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "VOS",
@@ -1016,6 +1556,7 @@
         "ps": 0,
         "roe": 16.6,
         "roa": 8.6,
+        "eps": 2422,
         "dividend_yield": 14.15,
         "profit_growth_yoy": -41.61,
         "cfo_latest": -87.23,
@@ -1029,7 +1570,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.5x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (8.6%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.92)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (8.6%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.92)",
+        "fair_value_high": 27483.0,
+        "fair_value_low": 20612.0,
+        "graham_number": 27483.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 29413.0,
+            "PB_method": 17672.0,
+            "Graham": 27483.0
+        },
+        "fair_value_rationale": "PE_method=29,413 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=17,672 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=27,483; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 88.2,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "PC1",
@@ -1040,6 +1593,7 @@
         "ps": 0,
         "roe": 12.4,
         "roa": 4.6,
+        "eps": 2704,
         "dividend_yield": 0,
         "profit_growth_yoy": 5.55,
         "cfo_latest": 1289.14,
@@ -1053,7 +1607,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "ROE ổn định phòng thủ | ROA tốt (4.6%) | Dòng tiền kinh doanh (CFO) mạnh mẽ"
+        "fundamental_notes": "ROE ổn định phòng thủ | ROA tốt (4.6%) | Dòng tiền kinh doanh (CFO) mạnh mẽ",
+        "fair_value_high": 18843.0,
+        "fair_value_low": 16017.0,
+        "graham_number": 30164.0,
+        "margin_of_safety_pct": 15.0,
+        "fair_value_methods": {
+            "PE_method": 18685.0,
+            "PB_method": 18843.0,
+            "Graham": 30164.0,
+            "CFO_boost": 20553.0
+        },
+        "fair_value_rationale": "PE_method=18,685 (P/E lý tưởng 6.9x, median ngành 6.9x); PB_method=18,843 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=30,164; Biên an toàn 15% theo ngành DIEN_NUOC_HA_TANG.",
+        "discount_to_fair_pct": -3.5,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "BVH",
@@ -1064,6 +1631,7 @@
         "ps": 0,
         "roe": 12.9,
         "roa": 1.1,
+        "eps": 4559,
         "dividend_yield": 1.74,
         "profit_growth_yoy": 6.17,
         "cfo_latest": 3229.91,
@@ -1077,7 +1645,20 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN ổn định | ROE khá | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 10.2)"
+        "fundamental_notes": "LN ổn định | ROE khá | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 10.2)",
+        "fair_value_high": 48143.0,
+        "fair_value_low": 36107.0,
+        "graham_number": 60298.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 48143.0,
+            "PB_method": 45192.0,
+            "Graham": 60298.0,
+            "CFO_boost": 52957.0
+        },
+        "fair_value_rationale": "PE_method=48,143 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=45,192 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=60,298; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -43.4,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "SJS",
@@ -1088,6 +1669,7 @@
         "ps": 0,
         "roe": 42.5,
         "roa": 19.8,
+        "eps": 5441,
         "dividend_yield": 0,
         "profit_growth_yoy": 32584.23,
         "cfo_latest": 870.54,
@@ -1101,7 +1683,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.1x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (19.8%) | Cấu trúc tài chính an toàn (D/E: 0.78)"
+        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (19.8%) | Cấu trúc tài chính an toàn (D/E: 0.78)",
+        "fair_value_high": 44743.0,
+        "fair_value_low": 31320.0,
+        "graham_number": 44743.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 91042.0,
+            "PB_method": 17661.0,
+            "Graham": 44743.0
+        },
+        "fair_value_rationale": "PE_method=91,042 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=17,661 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=44,743; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -43.7,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "SZC",
@@ -1112,6 +1706,7 @@
         "ps": 0,
         "roe": 5.1,
         "roa": 1.9,
+        "eps": 891,
         "dividend_yield": 4.85,
         "profit_growth_yoy": 3.81,
         "cfo_latest": 261.36,
@@ -1125,7 +1720,20 @@
         "pattern": "Darvas Breakout",
         "technical_status": "🚀 Darvas Breakout (Volume Xác Nhận)",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.7x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "Có lãi dương | Dòng tiền kinh doanh (CFO) mạnh mẽ"
+        "fundamental_notes": "Có lãi dương | Dòng tiền kinh doanh (CFO) mạnh mẽ",
+        "fair_value_high": 18521.0,
+        "fair_value_low": 12965.0,
+        "graham_number": 18542.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 12964.0,
+            "PB_method": 18521.0,
+            "Graham": 18542.0,
+            "CFO_boost": 14260.0
+        },
+        "fair_value_rationale": "PE_method=12,964 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=18,521 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=18,542; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -37.5,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "GVR",
@@ -1136,6 +1744,7 @@
         "ps": 0,
         "roe": 10.9,
         "roa": 8.1,
+        "eps": 1751,
         "dividend_yield": 1.32,
         "profit_growth_yoy": 68.19,
         "cfo_latest": 4129.63,
@@ -1149,7 +1758,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.6x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROA rất cao (8.1%) | Cấu trúc tài chính an toàn (D/E: 0.37)"
+        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh | ROA rất cao (8.1%) | Cấu trúc tài chính an toàn (D/E: 0.37)",
+        "fair_value_high": 19416.0,
+        "fair_value_low": 13591.0,
+        "graham_number": 24938.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 14954.0,
+            "PB_method": 19416.0,
+            "Graham": 24938.0
+        },
+        "fair_value_rationale": "PE_method=14,954 (P/E lý tưởng 8.5x, median ngành 8.5x); PB_method=19,416 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=24,938; Biên an toàn 30% theo ngành NGUYEN_VAT_LIEU_CHU_KY.",
+        "discount_to_fair_pct": -54.9,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "PVS",
@@ -1160,6 +1781,7 @@
         "ps": 0,
         "roe": 12.8,
         "roa": 5.1,
+        "eps": 3417,
         "dividend_yield": 0,
         "profit_growth_yoy": 2.05,
         "cfo_latest": 589.27,
@@ -1173,7 +1795,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN ổn định | ROE khá | ROA rất cao (5.1%)"
+        "fundamental_notes": "LN ổn định | ROE khá | ROA rất cao (5.1%)",
+        "fair_value_high": 36084.0,
+        "fair_value_low": 27063.0,
+        "graham_number": 43804.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 36084.0,
+            "PB_method": 31821.0,
+            "Graham": 43804.0
+        },
+        "fair_value_rationale": "PE_method=36,084 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=31,821 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=43,804; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -8.9,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "KBC",
@@ -1184,6 +1818,7 @@
         "ps": 0,
         "roe": 6.5,
         "roa": 2.4,
+        "eps": 1859,
         "dividend_yield": 0,
         "profit_growth_yoy": 200.47,
         "cfo_latest": -29.87,
@@ -1197,7 +1832,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN duy trì tăng trưởng | Có lãi dương | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "LN duy trì tăng trưởng | Có lãi dương | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 29920.0,
+        "fair_value_low": 20944.0,
+        "graham_number": 34041.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 27048.0,
+            "PB_method": 29920.0,
+            "Graham": 34041.0
+        },
+        "fair_value_rationale": "PE_method=27,048 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=29,920 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=34,041; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -22.9,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "NTC",
@@ -1208,6 +1855,7 @@
         "ps": 0,
         "roe": 24.6,
         "roa": 5.2,
+        "eps": 13505,
         "dividend_yield": 0.07,
         "profit_growth_yoy": -63.4,
         "cfo_latest": 194.47,
@@ -1221,7 +1869,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.3x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (5.2%) | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.73)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (5.2%) | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.73)",
+        "fair_value_high": 137929.0,
+        "fair_value_low": 103447.0,
+        "graham_number": 137929.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 164005.0,
+            "PB_method": 79826.0,
+            "Graham": 137929.0
+        },
+        "fair_value_rationale": "PE_method=164,005 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=79,826 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=137,929; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -20.2,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "HVN",
@@ -1232,6 +1892,7 @@
         "ps": 0,
         "roe": 45.4,
         "roa": 5.2,
+        "eps": 1309,
         "dividend_yield": 0,
         "profit_growth_yoy": -56.34,
         "cfo_latest": 4702.82,
@@ -1245,7 +1906,20 @@
         "pattern": "Darvas Breakout",
         "technical_status": "🚀 Darvas Breakout (Volume Xác Nhận)",
         "volume_analysis": "Thanh khoản đột biến mạnh (3.2x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (5.2%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 7.14)"
+        "fundamental_notes": "ROE sản xuất cao (>=14%) | ROA rất cao (5.2%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 7.14)",
+        "fair_value_high": 9470.0,
+        "fair_value_low": 7102.0,
+        "graham_number": 9470.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 15896.0,
+            "PB_method": 3882.0,
+            "Graham": 9470.0,
+            "CFO_boost": 17486.0
+        },
+        "fair_value_rationale": "PE_method=15,896 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=3,882 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=9,470; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -68.2,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "PLX",
@@ -1256,6 +1930,7 @@
         "ps": 0,
         "roe": 13.0,
         "roa": 4.0,
+        "eps": 3024,
         "dividend_yield": 3.67,
         "profit_growth_yoy": 93.08,
         "cfo_latest": -3432.49,
@@ -1269,7 +1944,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.7x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA tốt (4.0%) | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA tốt (4.0%) | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 36723.0,
+        "fair_value_low": 27542.0,
+        "graham_number": 38840.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 36723.0,
+            "PB_method": 28268.0,
+            "Graham": 38840.0
+        },
+        "fair_value_rationale": "PE_method=36,723 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=28,268 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=38,840; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -18.3,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "HDG",
@@ -1280,6 +1967,7 @@
         "ps": 0,
         "roe": 9.7,
         "roa": 5.6,
+        "eps": 1999,
         "dividend_yield": 2.97,
         "profit_growth_yoy": -32.28,
         "cfo_latest": 202.44,
@@ -1293,7 +1981,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (2.3x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "Có lãi dương | ROA rất cao (5.6%) | Cấu trúc tài chính an toàn (D/E: 0.66)"
+        "fundamental_notes": "Có lãi dương | ROA rất cao (5.6%) | Cấu trúc tài chính an toàn (D/E: 0.66)",
+        "fair_value_high": 28216.0,
+        "fair_value_low": 19751.0,
+        "graham_number": 28216.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 33448.0,
+            "PB_method": 19117.0,
+            "Graham": 28216.0
+        },
+        "fair_value_rationale": "PE_method=33,448 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=19,117 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=28,216; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": 28.3,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "DIG",
@@ -1304,6 +2004,7 @@
         "ps": 0,
         "roe": 6.5,
         "roa": 3.3,
+        "eps": 748,
         "dividend_yield": 0,
         "profit_growth_yoy": -64.21,
         "cfo_latest": -219.74,
@@ -1317,7 +2018,19 @@
         "pattern": "Darvas Breakout",
         "technical_status": "🚀 Darvas Breakout (Volume Xác Nhận)",
         "volume_analysis": "Thanh khoản đột biến mạnh (2.0x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "Có lãi dương | ROA tốt (3.3%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.95)"
+        "fundamental_notes": "Có lãi dương | ROA tốt (3.3%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.95)",
+        "fair_value_high": 13337.0,
+        "fair_value_low": 9336.0,
+        "graham_number": 14417.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 10883.0,
+            "PB_method": 13337.0,
+            "Graham": 14417.0
+        },
+        "fair_value_rationale": "PE_method=10,883 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=13,337 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=14,417; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -8.9,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "VDP",
@@ -1328,6 +2041,7 @@
         "ps": 0,
         "roe": 8.6,
         "roa": 6.1,
+        "eps": 2065,
         "dividend_yield": 1.47,
         "profit_growth_yoy": 30.31,
         "cfo_latest": 252.79,
@@ -1341,7 +2055,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.1x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROA rất cao (6.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | Cấu trúc tài chính an toàn (D/E: 0.49)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROA rất cao (6.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | Cấu trúc tài chính an toàn (D/E: 0.49)",
+        "fair_value_high": 32365.0,
+        "fair_value_low": 24274.0,
+        "graham_number": 34343.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 21806.0,
+            "PB_method": 32365.0,
+            "Graham": 34343.0,
+            "CFO_boost": 23987.0
+        },
+        "fair_value_rationale": "PE_method=21,806 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=32,365 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=34,343; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -26.4,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "VHC",
@@ -1352,6 +2079,7 @@
         "ps": 0,
         "roe": 12.2,
         "roa": 9.0,
+        "eps": 5881,
         "dividend_yield": 4.35,
         "profit_growth_yoy": -49.65,
         "cfo_latest": 55.37,
@@ -1365,7 +2093,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROE khá | ROA rất cao (9.0%) | Cấu trúc tài chính an toàn (D/E: 0.43)"
+        "fundamental_notes": "ROE khá | ROA rất cao (9.0%) | Cấu trúc tài chính an toàn (D/E: 0.43)",
+        "fair_value_high": 62103.0,
+        "fair_value_low": 46577.0,
+        "graham_number": 78161.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 62103.0,
+            "PB_method": 58864.0,
+            "Graham": 78161.0
+        },
+        "fair_value_rationale": "PE_method=62,103 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=58,864 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=78,161; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -5.7,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "APH",
@@ -1376,6 +2116,7 @@
         "ps": 0,
         "roe": 4.1,
         "roa": 1.9,
+        "eps": 1004,
         "dividend_yield": 0,
         "profit_growth_yoy": 17.03,
         "cfo_latest": 556.22,
@@ -1389,7 +2130,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.4x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN tăng trưởng tốt | Dòng tiền kinh doanh (CFO) mạnh mẽ"
+        "fundamental_notes": "LN tăng trưởng tốt | Dòng tiền kinh doanh (CFO) mạnh mẽ",
+        "fair_value_high": 14126.0,
+        "fair_value_low": 10594.0,
+        "graham_number": 15820.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 10602.0,
+            "PB_method": 14126.0,
+            "Graham": 15820.0,
+            "CFO_boost": 11662.0
+        },
+        "fair_value_rationale": "PE_method=10,602 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=14,126 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=15,820; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 51.8,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "SBA",
@@ -1400,6 +2154,7 @@
         "ps": 0,
         "roe": 13.7,
         "roa": 12.6,
+        "eps": 2316,
         "dividend_yield": 7.27,
         "profit_growth_yoy": -48.99,
         "cfo_latest": 18.77,
@@ -1413,7 +2168,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.3x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "ROE khá | ROA rất cao (12.6%) | Cấu trúc tài chính an toàn (D/E: 0.07)"
+        "fundamental_notes": "ROE khá | ROA rất cao (12.6%) | Cấu trúc tài chính an toàn (D/E: 0.07)",
+        "fair_value_high": 28126.0,
+        "fair_value_low": 21094.0,
+        "graham_number": 28581.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 28126.0,
+            "PB_method": 19986.0,
+            "Graham": 28581.0
+        },
+        "fair_value_rationale": "PE_method=28,126 (P/E lý tưởng 12.1x, median ngành 10.6x); PB_method=19,986 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=28,581; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -9.1,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "KDH",
@@ -1424,6 +2191,7 @@
         "ps": 0,
         "roe": 8.2,
         "roa": 4.5,
+        "eps": 1512,
         "dividend_yield": 0,
         "profit_growth_yoy": -67.9,
         "cfo_latest": 1949.33,
@@ -1437,7 +2205,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.4x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Có lãi dương | ROA tốt (4.5%) | Dòng tiền kinh doanh (CFO) mạnh mẽ"
+        "fundamental_notes": "Có lãi dương | ROA tốt (4.5%) | Dòng tiền kinh doanh (CFO) mạnh mẽ",
+        "fair_value_high": 23162.0,
+        "fair_value_low": 16213.0,
+        "graham_number": 23162.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 25300.0,
+            "PB_method": 17031.0,
+            "Graham": 23162.0,
+            "CFO_boost": 27829.0
+        },
+        "fair_value_rationale": "PE_method=25,300 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=17,031 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=23,162; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": 13.0,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "DBC",
@@ -1448,6 +2229,7 @@
         "ps": 0,
         "roe": 12.1,
         "roa": 6.1,
+        "eps": 2347,
         "dividend_yield": 1.11,
         "profit_growth_yoy": -41.63,
         "cfo_latest": 1188.79,
@@ -1461,7 +2243,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.4x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "ROE khá | ROA rất cao (6.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ"
+        "fundamental_notes": "ROE khá | ROA rất cao (6.1%) | Dòng tiền kinh doanh (CFO) mạnh mẽ",
+        "fair_value_high": 25500.0,
+        "fair_value_low": 19125.0,
+        "graham_number": 32498.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 24784.0,
+            "PB_method": 25500.0,
+            "Graham": 32498.0,
+            "CFO_boost": 27263.0
+        },
+        "fair_value_rationale": "PE_method=24,784 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=25,500 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=32,498; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 22.6,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "LPB",
@@ -1472,6 +2267,7 @@
         "ps": 0,
         "roe": 26.3,
         "roa": 2.0,
+        "eps": 4047,
         "dividend_yield": 8.31,
         "profit_growth_yoy": 28.95,
         "cfo_latest": 0,
@@ -1485,7 +2281,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (2.0x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Cổ tức tiền mặt tốt (8.31%)"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | ROE xuất sắc (>=18%) | Cổ tức tiền mặt tốt (8.31%)",
+        "fair_value_high": 34393.0,
+        "fair_value_low": 27514.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 34393.0,
+            "PB_method": 18221.0
+        },
+        "fair_value_rationale": "PE_method=34,393 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=18,221 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -20.2,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "KDC",
@@ -1496,6 +2303,7 @@
         "ps": 0,
         "roe": 10.5,
         "roa": 5.5,
+        "eps": 2621,
         "dividend_yield": 3.11,
         "profit_growth_yoy": 226.2,
         "cfo_latest": 74.17,
@@ -1509,7 +2317,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA rất cao (5.5%)"
+        "fundamental_notes": "LN tăng trưởng tốt | ROE khá | ROA rất cao (5.5%)",
+        "fair_value_high": 27678.0,
+        "fair_value_low": 20758.0,
+        "graham_number": 34446.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 27678.0,
+            "PB_method": 25653.0,
+            "Graham": 34446.0
+        },
+        "fair_value_rationale": "PE_method=27,678 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=25,653 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=34,446; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -58.7,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "VIC",
@@ -1520,6 +2340,7 @@
         "ps": 0,
         "roe": 24.0,
         "roa": 3.4,
+        "eps": 5581,
         "dividend_yield": 0,
         "profit_growth_yoy": 652.31,
         "cfo_latest": 107499.82,
@@ -1533,7 +2354,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.5x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA tốt (3.4%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 5.85)"
+        "fundamental_notes": "LN duy trì tăng trưởng | ROE BĐS đạt chuẩn (>=12%) | ROA tốt (3.4%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 5.85)",
+        "fair_value_high": 56567.0,
+        "fair_value_low": 39597.0,
+        "graham_number": 56567.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 93384.0,
+            "PB_method": 27520.0,
+            "Graham": 56567.0,
+            "CFO_boost": 102722.0
+        },
+        "fair_value_rationale": "PE_method=93,384 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=27,520 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=56,567; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -83.4,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "VCB",
@@ -1544,6 +2378,7 @@
         "ps": 0,
         "roe": 17.6,
         "roa": 1.6,
+        "eps": 4985,
         "dividend_yield": 1.64,
         "profit_growth_yoy": 0.17,
         "cfo_latest": -49547.93,
@@ -1557,7 +2392,18 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Tín dụng khá | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng khá | ROE tốt (>=14%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 42365.0,
+        "fair_value_low": 33892.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 42365.0,
+            "PB_method": 36533.0
+        },
+        "fair_value_rationale": "PE_method=42,365 (P/E lý tưởng 8.5x, median ngành 7.4x); PB_method=36,533 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -37.5,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "NLG",
@@ -1568,6 +2414,7 @@
         "ps": 0,
         "roe": 4.2,
         "roa": 2.3,
+        "eps": 1272,
         "dividend_yield": 6.9,
         "profit_growth_yoy": -97.71,
         "cfo_latest": -365.09,
@@ -1581,7 +2428,19 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.5x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.71)"
+        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.71)",
+        "fair_value_high": 27564.0,
+        "fair_value_low": 19295.0,
+        "graham_number": 27564.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 18508.0,
+            "PB_method": 28671.0,
+            "Graham": 27564.0
+        },
+        "fair_value_rationale": "PE_method=18,508 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=28,671 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=27,564; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -13.5,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "IDC",
@@ -1592,6 +2451,7 @@
         "ps": 0,
         "roe": 20.9,
         "roa": 7.9,
+        "eps": 4365,
         "dividend_yield": 7.73,
         "profit_growth_yoy": -44.92,
         "cfo_latest": 216.62,
@@ -1605,7 +2465,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.6x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (7.9%)"
+        "fundamental_notes": "ROE BĐS đạt chuẩn (>=12%) | ROA rất cao (7.9%)",
+        "fair_value_high": 41326.0,
+        "fair_value_low": 28928.0,
+        "graham_number": 41326.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 73037.0,
+            "PB_method": 18780.0,
+            "Graham": 41326.0
+        },
+        "fair_value_rationale": "PE_method=73,037 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=18,780 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=41,326; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -18.1,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "PDR",
@@ -1616,6 +2488,7 @@
         "ps": 0,
         "roe": 4.3,
         "roa": 1.9,
+        "eps": 538,
         "dividend_yield": 0,
         "profit_growth_yoy": -84.04,
         "cfo_latest": 2425.05,
@@ -1629,7 +2502,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Có lãi dương | Dòng tiền kinh doanh (CFO) mạnh mẽ"
+        "fundamental_notes": "Có lãi dương | Dòng tiền kinh doanh (CFO) mạnh mẽ",
+        "fair_value_high": 12395.0,
+        "fair_value_low": 8676.0,
+        "graham_number": 12395.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 7828.0,
+            "PB_method": 13708.0,
+            "Graham": 12395.0,
+            "CFO_boost": 8611.0
+        },
+        "fair_value_rationale": "PE_method=7,828 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=13,708 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=12,395; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -24.9,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "HHV",
@@ -1640,6 +2526,7 @@
         "ps": 0,
         "roe": 5.4,
         "roa": 1.7,
+        "eps": 1194,
         "dividend_yield": 0,
         "profit_growth_yoy": 39.65,
         "cfo_latest": 186.95,
@@ -1653,7 +2540,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN tăng trưởng tốt"
+        "fundamental_notes": "LN tăng trưởng tốt",
+        "fair_value_high": 23180.0,
+        "fair_value_low": 17385.0,
+        "graham_number": 23180.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 12609.0,
+            "PB_method": 25500.0,
+            "Graham": 23180.0
+        },
+        "fair_value_rationale": "PE_method=12,609 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=25,500 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=23,180; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 81.1,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "OCB",
@@ -1664,6 +2563,7 @@
         "ps": 0,
         "roe": 13.0,
         "roa": 1.3,
+        "eps": 1482,
         "dividend_yield": 0.01,
         "profit_growth_yoy": 7.0,
         "cfo_latest": 0,
@@ -1677,7 +2577,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Tín dụng khá | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng khá | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 10952.0,
+        "fair_value_low": 8762.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 10952.0,
+            "PB_method": 14233.0
+        },
+        "fair_value_rationale": "PE_method=10,952 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=14,233 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -13.7,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "SSB",
@@ -1688,6 +2599,7 @@
         "ps": 0,
         "roe": 7.8,
         "roa": 0.8,
+        "eps": 939,
         "dividend_yield": 0,
         "profit_growth_yoy": 34.96,
         "cfo_latest": -5317.03,
@@ -1701,7 +2613,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Tín dụng khá | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng khá | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 6939.0,
+        "fair_value_low": 5551.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 6939.0,
+            "PB_method": 15150.0
+        },
+        "fair_value_rationale": "PE_method=6,939 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=15,150 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -63.4,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "PNJ",
@@ -1712,6 +2635,7 @@
         "ps": 0,
         "roe": 12.7,
         "roa": 8.6,
+        "eps": 3302,
         "dividend_yield": 10.75,
         "profit_growth_yoy": -152.02,
         "cfo_latest": -2874.07,
@@ -1725,7 +2649,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROE tốt | ROA rất cao (8.6%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.52)"
+        "fundamental_notes": "ROE tốt | ROA rất cao (8.6%) | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.52)",
+        "fair_value_high": 44437.0,
+        "fair_value_low": 35550.0,
+        "graham_number": 44437.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 32541.0,
+            "PB_method": 63391.0,
+            "Graham": 44437.0
+        },
+        "fair_value_rationale": "PE_method=32,541 (P/E lý tưởng 9.9x, median ngành 9.9x); PB_method=63,391 (P/B lý tưởng 2.4x, median ngành 2.4x); Graham=44,437; Biên an toàn 20% theo ngành CONG_NGHE_BAN_LE.",
+        "discount_to_fair_pct": 134.7,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "STB",
@@ -1736,6 +2672,7 @@
         "ps": 0,
         "roe": 2.5,
         "roa": 0.2,
+        "eps": 809,
         "dividend_yield": 0,
         "profit_growth_yoy": -53.58,
         "cfo_latest": 58864.23,
@@ -1749,7 +2686,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.4x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Tín dụng mạnh (>=12%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Tín dụng mạnh (>=12%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 6576.0,
+        "fair_value_low": 5261.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 5979.0,
+            "PB_method": 42424.0,
+            "CFO_boost": 6576.0
+        },
+        "fair_value_rationale": "PE_method=5,979 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=42,424 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -92.4,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "HSG",
@@ -1760,6 +2709,7 @@
         "ps": 0,
         "roe": 5.4,
         "roa": 2.9,
+        "eps": 772,
         "dividend_yield": 0,
         "profit_growth_yoy": -36.93,
         "cfo_latest": 731.74,
@@ -1773,7 +2723,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "ROA tốt (2.9%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | Cấu trúc tài chính an toàn (D/E: 0.9)"
+        "fundamental_notes": "ROA tốt (2.9%) | Dòng tiền kinh doanh (CFO) mạnh mẽ | Cấu trúc tài chính an toàn (D/E: 0.9)",
+        "fair_value_high": 15997.0,
+        "fair_value_low": 11198.0,
+        "graham_number": 15997.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 6593.0,
+            "PB_method": 18122.0,
+            "Graham": 15997.0,
+            "CFO_boost": 7252.0
+        },
+        "fair_value_rationale": "PE_method=6,593 (P/E lý tưởng 8.5x, median ngành 8.5x); PB_method=18,122 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=15,997; Biên an toàn 30% theo ngành NGUYEN_VAT_LIEU_CHU_KY.",
+        "discount_to_fair_pct": 1.3,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "ASM",
@@ -1784,6 +2747,7 @@
         "ps": 0,
         "roe": 1.8,
         "roa": 0.6,
+        "eps": 357,
         "dividend_yield": 0,
         "profit_growth_yoy": 4.38,
         "cfo_latest": 224.66,
@@ -1797,7 +2761,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.7x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "LN ổn định | Dòng tiền kinh doanh (CFO) mạnh mẽ"
+        "fundamental_notes": "LN ổn định | Dòng tiền kinh doanh (CFO) mạnh mẽ",
+        "fair_value_high": 10616.0,
+        "fair_value_low": 7962.0,
+        "graham_number": 10616.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 3770.0,
+            "PB_method": 17890.0,
+            "Graham": 10616.0,
+            "CFO_boost": 4147.0
+        },
+        "fair_value_rationale": "PE_method=3,770 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=17,890 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=10,616; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 77.3,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "CEO",
@@ -1808,6 +2785,7 @@
         "ps": 0,
         "roe": 2.8,
         "roa": 1.9,
+        "eps": 310,
         "dividend_yield": 0,
         "profit_growth_yoy": -22.71,
         "cfo_latest": -1312.94,
@@ -1821,7 +2799,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.8x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.67)"
+        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.67)",
+        "fair_value_high": 8681.0,
+        "fair_value_low": 6077.0,
+        "graham_number": 8681.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 4510.0,
+            "PB_method": 11668.0,
+            "Graham": 8681.0
+        },
+        "fair_value_rationale": "PE_method=4,510 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=11,668 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=8,681; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -49.8,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "DXG",
@@ -1832,6 +2822,7 @@
         "ps": 0,
         "roe": 0.6,
         "roa": 0.3,
+        "eps": 90,
         "dividend_yield": 0,
         "profit_growth_yoy": -98.04,
         "cfo_latest": -448.22,
@@ -1845,7 +2836,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.2x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.95)"
+        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | Cấu trúc tài chính an toàn (D/E: 0.95)",
+        "fair_value_high": 4838.0,
+        "fair_value_low": 3387.0,
+        "graham_number": 4838.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 1310.0,
+            "PB_method": 12484.0,
+            "Graham": 4838.0
+        },
+        "fair_value_rationale": "PE_method=1,310 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=12,484 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=4,838; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -68.5,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "BCM",
@@ -1856,6 +2859,7 @@
         "ps": 0,
         "roe": 8.7,
         "roa": 3.2,
+        "eps": 1880,
         "dividend_yield": 0,
         "profit_growth_yoy": 37.16,
         "cfo_latest": -450.95,
@@ -1869,7 +2873,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "LN duy trì tăng trưởng | Có lãi dương | ROA tốt (3.2%) | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "LN duy trì tăng trưởng | Có lãi dương | ROA tốt (3.2%) | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 30090.0,
+        "fair_value_low": 21063.0,
+        "graham_number": 30090.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 31457.0,
+            "PB_method": 23117.0,
+            "Graham": 30090.0
+        },
+        "fair_value_rationale": "PE_method=31,457 (P/E lý tưởng 16.7x, median ngành 14.6x); PB_method=23,117 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=30,090; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -44.7,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "VIX",
@@ -1880,6 +2896,7 @@
         "ps": 0,
         "roe": 6.5,
         "roa": 4.8,
+        "eps": 650,
         "dividend_yield": 0,
         "profit_growth_yoy": -92.9,
         "cfo_latest": -871.17,
@@ -1893,7 +2910,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (3.0x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "ROA tốt (4.8%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "ROA tốt (4.8%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 9100.0,
+        "fair_value_low": 6825.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 9100.0,
+            "PB_method": 18922.0
+        },
+        "fair_value_rationale": "PE_method=9,100 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=18,922 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -47.9,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "ORS",
@@ -1904,6 +2932,7 @@
         "ps": 0,
         "roe": 5.0,
         "roa": 2.4,
+        "eps": 556,
         "dividend_yield": 0,
         "profit_growth_yoy": -35.27,
         "cfo_latest": -1598.06,
@@ -1917,7 +2946,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 7784.0,
+        "fair_value_low": 5838.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 7784.0,
+            "PB_method": 17722.0
+        },
+        "fair_value_rationale": "PE_method=7,784 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=17,722 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -59.7,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "NKG",
@@ -1928,6 +2968,7 @@
         "ps": 0,
         "roe": 3.2,
         "roa": 1.4,
+        "eps": 494,
         "dividend_yield": 0,
         "profit_growth_yoy": 157.74,
         "cfo_latest": 26.26,
@@ -1941,7 +2982,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.1x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh"
+        "fundamental_notes": "Hưởng lợi chu kỳ / LN tăng mạnh",
+        "fair_value_high": 13262.0,
+        "fair_value_low": 9283.0,
+        "graham_number": 13262.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 4219.0,
+            "PB_method": 19462.0,
+            "Graham": 13262.0
+        },
+        "fair_value_rationale": "PE_method=4,219 (P/E lý tưởng 8.5x, median ngành 8.5x); PB_method=19,462 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=13,262; Biên an toàn 30% theo ngành NGUYEN_VAT_LIEU_CHU_KY.",
+        "discount_to_fair_pct": -25.7,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "SSI",
@@ -1952,6 +3005,7 @@
         "ps": 0,
         "roe": 12.2,
         "roa": 4.7,
+        "eps": 1483,
         "dividend_yield": 7.47,
         "profit_growth_yoy": -23.76,
         "cfo_latest": 5217.43,
@@ -1965,7 +3019,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.6x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "ROE ổn định | ROA tốt (4.7%) | Cổ tức tiền mặt tốt (7.47%)"
+        "fundamental_notes": "ROE ổn định | ROA tốt (4.7%) | Cổ tức tiền mặt tốt (7.47%)",
+        "fair_value_high": 20762.0,
+        "fair_value_low": 15572.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 20762.0,
+            "PB_method": 18581.0,
+            "CFO_boost": 22838.0
+        },
+        "fair_value_rationale": "PE_method=20,762 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=18,581 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -23.7,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "MBS",
@@ -1976,6 +3042,7 @@
         "ps": 0,
         "roe": 13.1,
         "roa": 3.8,
+        "eps": 1214,
         "dividend_yield": 9.46,
         "profit_growth_yoy": -5.25,
         "cfo_latest": 109.84,
@@ -1989,7 +3056,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "ROE ổn định | ROA tốt (3.8%) | Cổ tức tiền mặt tốt (9.46%)"
+        "fundamental_notes": "ROE ổn định | ROA tốt (3.8%) | Cổ tức tiền mặt tốt (9.46%)",
+        "fair_value_high": 16996.0,
+        "fair_value_low": 12747.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 16996.0,
+            "PB_method": 16000.0
+        },
+        "fair_value_rationale": "PE_method=16,996 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=16,000 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -20.3,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "BSI",
@@ -2000,6 +3078,7 @@
         "ps": 0,
         "roe": 8.4,
         "roa": 2.6,
+        "eps": 1749,
         "dividend_yield": 0,
         "profit_growth_yoy": -23.45,
         "cfo_latest": -388.94,
@@ -2013,7 +3092,18 @@
         "pattern": "Darvas Breakout",
         "technical_status": "🚀 Darvas Breakout (Volume Xác Nhận)",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.5x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "ROA tốt (2.6%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "ROA tốt (2.6%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 24486.0,
+        "fair_value_low": 18364.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 24486.0,
+            "PB_method": 30388.0
+        },
+        "fair_value_rationale": "PE_method=24,486 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=30,388 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -36.5,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "EIB",
@@ -2024,6 +3114,7 @@
         "ps": 0,
         "roe": 0.7,
         "roa": 0.1,
+        "eps": 102,
         "dividend_yield": 0,
         "profit_growth_yoy": -67.62,
         "cfo_latest": 0,
@@ -2037,7 +3128,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 754.0,
+        "fair_value_low": 603.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 20.0,
+        "fair_value_methods": {
+            "PE_method": 754.0,
+            "PB_method": 17328.0
+        },
+        "fair_value_rationale": "PE_method=754 (P/E lý tưởng 7.4x, median ngành 7.4x); PB_method=17,328 (P/B lý tưởng 1.2x, median ngành 1.2x); Graham=0; Biên an toàn 20% theo ngành NGAN_HANG.",
+        "discount_to_fair_pct": -96.2,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "CTD",
@@ -2048,6 +3150,7 @@
         "ps": 0,
         "roe": 8.4,
         "roa": 2.2,
+        "eps": 7145,
         "dividend_yield": 1.33,
         "profit_growth_yoy": 3.6,
         "cfo_latest": -774.53,
@@ -2061,7 +3164,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN ổn định | ⚠️ Cảnh báo: CFO âm | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.11)"
+        "fundamental_notes": "LN ổn định | ⚠️ Cảnh báo: CFO âm | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 3.11)",
+        "fair_value_high": 114582.0,
+        "fair_value_low": 85936.0,
+        "graham_number": 120198.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 75451.0,
+            "PB_method": 114582.0,
+            "Graham": 120198.0
+        },
+        "fair_value_rationale": "PE_method=75,451 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=114,582 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=120,198; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 25.8,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "DRC",
@@ -2072,6 +3187,7 @@
         "ps": 0,
         "roe": 5.2,
         "roa": 2.5,
+        "eps": 643,
         "dividend_yield": 5.54,
         "profit_growth_yoy": -63.64,
         "cfo_latest": -58.38,
@@ -2085,7 +3201,19 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROA tốt (2.5%) | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "ROA tốt (2.5%) | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 13463.0,
+        "fair_value_low": 10097.0,
+        "graham_number": 13463.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 6790.0,
+            "PB_method": 15973.0,
+            "Graham": 13463.0
+        },
+        "fair_value_rationale": "PE_method=6,790 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=15,973 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=13,463; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 11.9,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "VCG",
@@ -2096,6 +3224,7 @@
         "ps": 0,
         "roe": 8.9,
         "roa": 3.8,
+        "eps": 1606,
         "dividend_yield": 4.85,
         "profit_growth_yoy": -88.77,
         "cfo_latest": -177.3,
@@ -2109,7 +3238,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROA tốt (3.8%) | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "ROA tốt (3.8%) | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 21250.0,
+        "fair_value_low": 15938.0,
+        "graham_number": 24541.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 16959.0,
+            "PB_method": 21250.0,
+            "Graham": 24541.0
+        },
+        "fair_value_rationale": "PE_method=16,959 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=21,250 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=24,541; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 2.8,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "NVL",
@@ -2120,6 +3261,7 @@
         "ps": 0,
         "roe": 7.4,
         "roa": 1.7,
+        "eps": 1755,
         "dividend_yield": 0.03,
         "profit_growth_yoy": -195.58,
         "cfo_latest": -1752.18,
@@ -2133,7 +3275,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 2.9)"
+        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 2.9)",
+        "fair_value_high": 25535.0,
+        "fair_value_low": 17874.0,
+        "graham_number": 28170.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 25535.0,
+            "PB_method": 21704.0,
+            "Graham": 28170.0
+        },
+        "fair_value_rationale": "PE_method=25,535 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=21,704 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=28,170; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": 71.0,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "TCD",
@@ -2144,6 +3298,7 @@
         "ps": 0,
         "roe": -21.3,
         "roa": -5.7,
+        "eps": -1304,
         "dividend_yield": 0,
         "profit_growth_yoy": -117.28,
         "cfo_latest": -73.67,
@@ -2157,7 +3312,17 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 6711.0,
+        "fair_value_low": 5033.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PB_method": 6711.0
+        },
+        "fair_value_rationale": "PE_method=0 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=6,711 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=0; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 403.3,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "TID",
@@ -2168,6 +3333,7 @@
         "ps": 0,
         "roe": 3.3,
         "roa": 0.9,
+        "eps": 792,
         "dividend_yield": 6.52,
         "profit_growth_yoy": -37.94,
         "cfo_latest": 1149.63,
@@ -2181,7 +3347,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.0x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 2.88)"
+        "fundamental_notes": "Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 2.88)",
+        "fair_value_high": 16196.0,
+        "fair_value_low": 12147.0,
+        "graham_number": 16196.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 8364.0,
+            "PB_method": 18768.0,
+            "Graham": 16196.0,
+            "CFO_boost": 9200.0
+        },
+        "fair_value_rationale": "PE_method=8,364 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=18,768 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=16,196; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -34.0,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "VPG",
@@ -2192,6 +3371,7 @@
         "ps": 0,
         "roe": -49.0,
         "roa": -17.2,
+        "eps": -5817,
         "dividend_yield": 0,
         "profit_growth_yoy": -87.91,
         "cfo_latest": -2.05,
@@ -2205,7 +3385,17 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản cạn kiệt (0.2x trung bình 20 phiên) - Trạng thái No Supply (Cạn cung), rủi ro bán tháo thấp.",
-        "fundamental_notes": "⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 12368.0,
+        "fair_value_low": 9276.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PB_method": 12368.0
+        },
+        "fair_value_rationale": "PE_method=0 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=12,368 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=0; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 856.3,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "VCI",
@@ -2216,6 +3406,7 @@
         "ps": 0,
         "roe": 8.5,
         "roa": 3.8,
+        "eps": 1216,
         "dividend_yield": 2.73,
         "profit_growth_yoy": -12.58,
         "cfo_latest": -1645.36,
@@ -2229,7 +3420,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.5x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "ROA tốt (3.8%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "ROA tốt (3.8%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 17024.0,
+        "fair_value_low": 12768.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 17024.0,
+            "PB_method": 20776.0
+        },
+        "fair_value_rationale": "PE_method=17,024 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=20,776 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -36.3,
+        "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA"
     },
     {
         "symbol": "FTS",
@@ -2240,6 +3442,7 @@
         "ps": 0,
         "roe": 9.1,
         "roa": 2.9,
+        "eps": 1054,
         "dividend_yield": 2.32,
         "profit_growth_yoy": -34.99,
         "cfo_latest": -730.78,
@@ -2253,7 +3456,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản đột biến mạnh (1.6x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "ROA tốt (2.9%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "ROA tốt (2.9%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 14756.0,
+        "fair_value_low": 11067.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 14756.0,
+            "PB_method": 16698.0
+        },
+        "fair_value_rationale": "PE_method=14,756 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=16,698 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -43.2,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "GEX",
@@ -2264,6 +3478,7 @@
         "ps": 0,
         "roe": 3.1,
         "roa": 1.3,
+        "eps": 761,
         "dividend_yield": 2.43,
         "profit_growth_yoy": 12.94,
         "cfo_latest": 2378.04,
@@ -2277,7 +3492,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN tăng trưởng tốt"
+        "fundamental_notes": "LN tăng trưởng tốt",
+        "fair_value_high": 16206.0,
+        "fair_value_low": 12154.0,
+        "graham_number": 16206.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 8036.0,
+            "PB_method": 19556.0,
+            "Graham": 16206.0
+        },
+        "fair_value_rationale": "PE_method=8,036 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=19,556 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=16,206; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -46.5,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "LIG",
@@ -2288,6 +3515,7 @@
         "ps": 0,
         "roe": 0.9,
         "roa": 0.2,
+        "eps": 121,
         "dividend_yield": 0,
         "profit_growth_yoy": 120.31,
         "cfo_latest": 341.59,
@@ -2301,7 +3529,20 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN tăng trưởng tốt | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 5.51)"
+        "fundamental_notes": "LN tăng trưởng tốt | Dòng tiền kinh doanh (CFO) mạnh mẽ | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 5.51)",
+        "fair_value_high": 5218.0,
+        "fair_value_low": 3914.0,
+        "graham_number": 5218.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 1278.0,
+            "PB_method": 12750.0,
+            "Graham": 5218.0,
+            "CFO_boost": 1406.0
+        },
+        "fair_value_rationale": "PE_method=1,278 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=12,750 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=5,218; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 30.4,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "PVD",
@@ -2312,6 +3553,7 @@
         "ps": 0,
         "roe": 5.2,
         "roa": 3.1,
+        "eps": 975,
         "dividend_yield": 1.73,
         "profit_growth_yoy": -70.5,
         "cfo_latest": 28.36,
@@ -2325,7 +3567,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "ROA tốt (3.1%) | Cấu trúc tài chính an toàn (D/E: 0.74)"
+        "fundamental_notes": "ROA tốt (3.1%) | Cấu trúc tài chính an toàn (D/E: 0.74)",
+        "fair_value_high": 19987.0,
+        "fair_value_low": 14990.0,
+        "graham_number": 19987.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 10296.0,
+            "PB_method": 23218.0,
+            "Graham": 19987.0
+        },
+        "fair_value_rationale": "PE_method=10,296 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=23,218 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=19,987; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -13.4,
+        "valuation_verdict": "HỢP LÝ - CHỜ ĐIỀU CHỈNH"
     },
     {
         "symbol": "CTS",
@@ -2336,6 +3590,7 @@
         "ps": 0,
         "roe": 3.9,
         "roa": 0.9,
+        "eps": 409,
         "dividend_yield": 0,
         "profit_growth_yoy": -98.16,
         "cfo_latest": 379.62,
@@ -2349,7 +3604,19 @@
         "pattern": "Darvas Breakout",
         "technical_status": "🚀 Darvas Breakout (Volume Xác Nhận)",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.5x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 6299.0,
+        "fair_value_low": 4724.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 5726.0,
+            "PB_method": 14820.0,
+            "CFO_boost": 6299.0
+        },
+        "fair_value_rationale": "PE_method=5,726 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=14,820 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -79.3,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "HCM",
@@ -2360,6 +3627,7 @@
         "ps": 0,
         "roe": 8.6,
         "roa": 2.7,
+        "eps": 1070,
         "dividend_yield": 2.6,
         "profit_growth_yoy": -32.53,
         "cfo_latest": 6064.38,
@@ -2373,7 +3641,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.1x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "ROA tốt (2.7%) | Ngân hàng tối ưu giữ vốn mở rộng"
+        "fundamental_notes": "ROA tốt (2.7%) | Ngân hàng tối ưu giữ vốn mở rộng",
+        "fair_value_high": 14987.0,
+        "fair_value_low": 11240.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 14980.0,
+            "PB_method": 14987.0,
+            "CFO_boost": 16478.0
+        },
+        "fair_value_rationale": "PE_method=14,980 (P/E lý tưởng 14.0x, median ngành 18.5x); PB_method=14,987 (P/B lý tưởng 1.4x, median ngành 1.4x); Graham=0; Biên an toàn 25% theo ngành CHUNG_KHOAN.",
+        "discount_to_fair_pct": -53.2,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "VPI",
@@ -2384,6 +3664,7 @@
         "ps": 0,
         "roe": 5.5,
         "roa": 2.0,
+        "eps": 867,
         "dividend_yield": 0.02,
         "profit_growth_yoy": -83.03,
         "cfo_latest": -182.15,
@@ -2397,7 +3678,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.3x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "Có lãi dương | ⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 16785.0,
+        "fair_value_low": 11750.0,
+        "graham_number": 17412.0,
+        "margin_of_safety_pct": 30.0,
+        "fair_value_methods": {
+            "PE_method": 12615.0,
+            "PB_method": 16785.0,
+            "Graham": 17412.0
+        },
+        "fair_value_rationale": "PE_method=12,615 (P/E lý tưởng 14.6x, median ngành 14.6x); PB_method=16,785 (P/B lý tưởng 1.1x, median ngành 1.1x); Graham=17,412; Biên an toàn 30% theo ngành BAT_DONG_SAN.",
+        "discount_to_fair_pct": -81.0,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "CSM",
@@ -2408,6 +3701,7 @@
         "ps": 0,
         "roe": -0.3,
         "roa": -0.1,
+        "eps": -34,
         "dividend_yield": 0,
         "profit_growth_yoy": -225.91,
         "cfo_latest": -559.29,
@@ -2421,7 +3715,17 @@
         "pattern": "Spring/Washout",
         "technical_status": "🎯 Quét Đáy Rũ Bỏ (Spring + Dòng Tiền Lớn)",
         "volume_analysis": "Thanh khoản đột biến mạnh (2.1x trung bình 20 phiên) - Dòng tiền lớn đang tham gia chủ động.",
-        "fundamental_notes": "⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 16734.0,
+        "fair_value_low": 12550.0,
+        "graham_number": 0.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PB_method": 16734.0
+        },
+        "fair_value_rationale": "PE_method=0 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=16,734 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=0; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": 8.7,
+        "valuation_verdict": "RẺ - TRONG VÙNG MUA"
     },
     {
         "symbol": "VJC",
@@ -2432,6 +3736,7 @@
         "ps": 0,
         "roe": 8.6,
         "roa": 1.6,
+        "eps": 2865,
         "dividend_yield": 0,
         "profit_growth_yoy": 8.75,
         "cfo_latest": -531.45,
@@ -2445,7 +3750,19 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản gia tăng nhẹ (1.1x trung bình 20 phiên) - Dòng tiền bắt đầu chú ý.",
-        "fundamental_notes": "LN ổn định | ⚠️ Cảnh báo: CFO âm | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 4.75)"
+        "fundamental_notes": "LN ổn định | ⚠️ Cảnh báo: CFO âm | ⚠️ Cảnh báo: Đòn bẩy nợ cao (D/E: 4.75)",
+        "fair_value_high": 44429.0,
+        "fair_value_low": 33322.0,
+        "graham_number": 47395.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 30254.0,
+            "PB_method": 44429.0,
+            "Graham": 47395.0
+        },
+        "fair_value_rationale": "PE_method=30,254 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=44,429 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=47,395; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -75.5,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     },
     {
         "symbol": "SBT",
@@ -2456,6 +3773,7 @@
         "ps": 0,
         "roe": 7.1,
         "roa": 2.3,
+        "eps": 907,
         "dividend_yield": 0.47,
         "profit_growth_yoy": -21.82,
         "cfo_latest": -385.03,
@@ -2469,6 +3787,18 @@
         "pattern": "Tích lũy",
         "technical_status": "Tích lũy sideway",
         "volume_analysis": "Thanh khoản ở mức ổn định tương đương trung bình 20 phiên.",
-        "fundamental_notes": "⚠️ Cảnh báo: CFO âm"
+        "fundamental_notes": "⚠️ Cảnh báo: CFO âm",
+        "fair_value_high": 16508.0,
+        "fair_value_low": 12381.0,
+        "graham_number": 16508.0,
+        "margin_of_safety_pct": 25.0,
+        "fair_value_methods": {
+            "PE_method": 9578.0,
+            "PB_method": 17027.0,
+            "Graham": 16508.0
+        },
+        "fair_value_rationale": "PE_method=9,578 (P/E lý tưởng 10.6x, median ngành 10.6x); PB_method=17,027 (P/B lý tưởng 1.3x, median ngành 1.3x); Graham=16,508; Biên an toàn 25% theo ngành SAN_XUAT_TIEU_DUNG_PHONG_THU.",
+        "discount_to_fair_pct": -41.3,
+        "valuation_verdict": "ĐẮT - TRÁNH"
     }
 ]
