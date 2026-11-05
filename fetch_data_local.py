@@ -9,7 +9,7 @@ from vnstock import Quote
 
 DATA_FILE = "data.json"
 LAST_UPDATE_FILE = "last_update.json"
-CHEAP_STOCKS_FILE = "cheap_stocks.json"  # File riêng lưu các mã định giá rẻ thật
+CHEAP_STOCKS_FILE = "cheap_stocks.json"  
 HISTORY_DIR = "history"
 BCTC_DIR = "bctc_data"
 JS_LIB_FILE = "lightweight-charts.js"
@@ -28,7 +28,6 @@ VN100_SYMBOLS = [
 ]
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
-# Phân loại nhóm ngành phục vụ cho bộ lọc chuyên sâu
 SECTOR_MAPPING = {
     "NGAN_HANG": [
         "ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB",
@@ -186,10 +185,42 @@ def get_vndirect_ratio(symbol, ratio_code):
         if r.status_code == 200:
             data = r.json().get("data", [])
             if data:
-                return float(data[0].get("value", 0))
+                val = data[0].get("value")
+                if val is not None:
+                    return float(val)
     except Exception:
         pass
-    return 0
+    return None
+
+
+def get_fallback_ratios_from_bctc(symbol):
+    """
+    Fallback đọc dữ liệu từ bctc_data/{symbol}.json nếu API trực tiếp bằng 0 hoặc không có
+    """
+    filepath = os.path.join(BCTC_DIR, f"{symbol.upper()}.json")
+    if not os.path.exists(filepath):
+        return {}
+
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        
+        ratios_list = data.get("ratios", [])
+        if ratios_list:
+            # Lấy quý mới nhất
+            latest = ratios_list[0]
+            return {
+                "pe": latest.get("PE") or latest.get("PRICE_TO_EARNINGS") or 0,
+                "pb": latest.get("PB") or latest.get("PRICE_TO_BOOK") or 0,
+                "ps": latest.get("PS") or latest.get("PRICE_TO_SALES") or 0,
+                "eps": latest.get("EPS") or 0,
+                "roe": latest.get("ROE") or 0,
+                "roa": latest.get("ROA") or 0,
+                "dividend_yield": latest.get("DIVIDEND_YIELD") or 0
+            }
+    except Exception:
+        pass
+    return {}
 
 
 def get_company_overview(symbol, close_price=0):
@@ -210,8 +241,8 @@ def get_company_overview(symbol, close_price=0):
             data = r.json().get("data", [])
             if data:
                 total_shares = float(data[0].get("value", 0) or 0)
-    except Exception as e:
-        print(f"   ⚠️ VNDirect SHARE_OUTSTANDING lỗi cho {symbol}: {e}")
+    except Exception:
+        pass
 
     if total_shares == 0:
         try:
@@ -229,8 +260,8 @@ def get_company_overview(symbol, close_price=0):
                     market_cap = float(data[0].get("value", 0) or 0)
                     if market_cap > 0 and close_price > 0:
                         total_shares = market_cap / (close_price * 1000)
-        except Exception as e:
-            print(f"   ⚠️ VNDirect MARKET_CAP lỗi cho {symbol}: {e}")
+        except Exception:
+            pass
 
     if market_cap == 0 and close_price > 0 and total_shares > 0:
         market_cap = close_price * 1000 * total_shares
@@ -291,7 +322,7 @@ def fetch_history_with_fallback(symbol, start_date, end_date):
 
 
 def parse_bctc_history(symbol):
-    filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
+    filepath = os.path.join(BCTC_DIR, f"{symbol.upper()}.json")
     if not os.path.exists(filepath):
         return []
 
@@ -367,7 +398,7 @@ def parse_bctc_history(symbol):
 
 
 def extract_advanced_metrics_from_bctc(symbol):
-    filepath = os.path.join(BCTC_DIR, f"{symbol}.json")
+    filepath = os.path.join(BCTC_DIR, f"{symbol.upper()}.json")
     if not os.path.exists(filepath):
         return {"cfo_latest": 0, "debt_to_equity": 0, "gross_margin": 0, "net_profit_ttm": 0}
 
@@ -455,11 +486,6 @@ def extract_advanced_metrics_from_bctc(symbol):
 
 
 def filter_and_save_cheap_stocks(stock_db):
-    """
-    Lọc định giá rẻ kết hợp nhóm ngành:
-    - Tiêu chí 'rẻ thật': P/E từ 0 đến 12, P/B <= 1.5, ROE >= 8% (đảm bảo sinh lời, tránh bẫy giá rẻ).
-    - Phân loại rõ theo từng nhóm ngành và lưu riêng vào file `cheap_stocks.json`.
-    """
     sector_cheap_groups = {}
     total_cheap_count = 0
 
@@ -469,28 +495,24 @@ def filter_and_save_cheap_stocks(stock_db):
         roe = info.get("roe", 0)
         net_profit = info.get("net_profit_ttm", 0)
 
-        # Điều kiện khắt khe để xác định "rẻ thật" (P/E, P/B hấp dẫn + Kinh doanh có lãi/ROE ổn định)
         if 0 < pe <= 12 and 0 < pb <= 1.5 and roe >= 8.0 and net_profit > 0:
             sector = get_sector(symbol)
             info['sector'] = sector
             sector_cheap_groups.setdefault(sector, []).append(info)
             total_cheap_count += 1
 
-    # Sắp xếp các mã trong từng ngành theo P/E tăng dần (rẻ nhất xếp đầu)
     for sector in sector_cheap_groups:
         sector_cheap_groups[sector] = sorted(sector_cheap_groups[sector], key=lambda x: x['pe'])
 
-    # Lưu thành file riêng biệt
     with open(CHEAP_STOCKS_FILE, "w", encoding="utf-8") as f:
         json.dump(sector_cheap_groups, f, ensure_ascii=False, indent=4)
     
-    print(f"📊 Đã lọc xong: Tìm thấy tổng cộng {total_cheap_count} mã 'rẻ thật' phân bố theo các nhóm ngành và lưu vào {CHEAP_STOCKS_FILE}.")
+    print(f"📊 Đã lọc xong: Tìm thấy tổng cộng {total_cheap_count} mã định giá rẻ phân theo nhóm ngành.")
 
 
 def auto_git_push():
     try:
         print("🔄 Đang đồng bộ dữ liệu lên GitHub...")
-        
         subprocess.run(["git", "fetch", "origin", "main"], check=True)
         pull_result = subprocess.run(
             ["git", "pull", "origin", "main", "--rebase", "--autostash"], 
@@ -499,7 +521,6 @@ def auto_git_push():
         if pull_result.returncode != 0:
             subprocess.run(["git", "rebase", "--abort"], check=False)
         
-        # Add toàn bộ các file quan trọng bao gồm cả file lọc định giá rẻ riêng
         subprocess.run(["git", "add", DATA_FILE], check=True)
         subprocess.run(["git", "add", LAST_UPDATE_FILE], check=True)
         subprocess.run(["git", "add", CHEAP_STOCKS_FILE], check=True)
@@ -517,12 +538,9 @@ def auto_git_push():
         commit_msg = f"Auto update data & cheap stocks by sector - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push", "origin", "main"], check=True)
-        print("🚀 Đẩy dữ liệu và file định giá rẻ lên GitHub thành công!")
-        
-    except subprocess.CalledProcessError as e:
-        print(f"⚠️ Lỗi Git automation: {e}")
+        print("🚀 Đẩy dữ liệu lên GitHub thành công!")
     except Exception as e:
-        print(f"⚠️ Lỗi không xác định khi Git push: {e}")
+        print(f"⚠️ Lỗi Git automation: {e}")
 
 
 def main():
@@ -538,37 +556,25 @@ def main():
         raw_input_symbols = input("Nhập mã cổ phiếu muốn cào (cách nhau bởi dấu phẩy, VD: FPT,MWG,ACB): ").strip()
         if raw_input_symbols:
             target_symbols = [s.strip().upper() for s in raw_input_symbols.split(",") if s.strip()]
-            print(f"-> Đã chọn cào riêng các mã: {target_symbols}")
-        else:
-            print("⚠️ Không nhận được mã hợp lệ, tự động quay về cào toàn bộ VN100.")
-    else:
-        print("-> Đã chọn: Cào toàn bộ danh sách VN100.")
 
     print("\n==================================================")
     print("        BƯỚC 2: CHỌN SỐ PHIÊN GIAO DỊCH         ")
     print("==================================================")
     print("1. Gần nhất: 30 phiên giao dịch gần nhất (Mặc định)")
     print("2. Dài hạn: 10 năm gần đây (~2500 phiên)")
-    print("3. Tùy chỉnh: Nhập số phiên tự do (VD: 2, 5, 100 phiên)")
+    print("3. Tùy chỉnh: Nhập số phiên tự do")
 
     choice = input("Nhập lựa chọn số phiên (1/2/3, mặc định 1): ").strip()
-
     num_sessions = 30
     if choice == '2':
         num_sessions = 2500
-        print("-> Đã chọn chế độ cào 10 năm dữ liệu (~2500 phiên).")
     elif choice == '3':
         try:
-            custom_sessions = int(input("Nhập số phiên muốn cào (ví dụ: 2, 5, 100): ").strip())
+            custom_sessions = int(input("Nhập số phiên muốn cào: ").strip())
             if custom_sessions > 0:
                 num_sessions = custom_sessions
-                print(f"-> Đã chọn cào tùy chỉnh: {num_sessions} phiên.")
         except ValueError:
-            print("⚠️ Nhập sai định dạng, tự động quay về mặc định 30 phiên.")
-    else:
-        print("-> Đã chọn chế độ mặc định (30 phiên gần nhất).")
-
-    print(f"\n🚀 Bắt đầu cào dữ liệu cho {len(target_symbols)} mã (Lấy đúng {num_sessions} phiên giao dịch gần nhất)...")
+            pass
 
     if not os.path.exists(HISTORY_DIR):
         os.makedirs(HISTORY_DIR)
@@ -596,7 +602,6 @@ def main():
             df = fetch_history_with_fallback(symbol, start_date, end_date)
             if df is not None and not df.empty:
                 df = df.tail(num_sessions)
-
                 closes = df['close'].tolist()
                 volumes = df['volume'].tolist()
                 close_price = closes[-1]
@@ -616,7 +621,7 @@ def main():
                         "volume": int(row.get('volume', 0))
                     })
 
-                history_file_path = os.path.join(HISTORY_DIR, f"{symbol}.json")
+                history_file_path = os.path.join(HISTORY_DIR, f"{symbol.upper()}.json")
                 existing_history_d1 = []
 
                 if os.path.exists(history_file_path):
@@ -632,10 +637,8 @@ def main():
                     merged_dict[item['time']] = item
 
                 history_d1 = sorted(list(merged_dict.values()), key=lambda x: x['time'])
-
                 closes = [bar['close'] for bar in history_d1]
                 volumes = [bar['volume'] for bar in history_d1]
-
         except Exception as e:
             print(f"⚠️ Lỗi xử lý lịch sử {symbol}: {e}")
 
@@ -646,10 +649,20 @@ def main():
         company_overview = get_company_overview(symbol, close_price)
         time.sleep(0.3)
 
+        # 1. ƯU TIÊN LẤY TỪ API HÀNG NGÀY
         ratios = {}
         for key, code in VNDIRECT_RATIOS.items():
-            ratios[key] = get_vndirect_ratio(symbol, code)
+            val = get_vndirect_ratio(symbol, code)
+            ratios[key] = val if val is not None else 0
             time.sleep(0.2)
+
+        # 2. FALLBACK TỪ BCTC NẾU API THIẾU HOẶC BẰNG 0
+        if ratios.get("pe", 0) == 0 or ratios.get("pb", 0) == 0:
+            fallback_data = get_fallback_ratios_from_bctc(symbol)
+            if fallback_data:
+                for k, v in fallback_data.items():
+                    if ratios.get(k, 0) == 0 and v != 0:
+                        ratios[k] = v
 
         status = "ĐANG TÍCH LŨY NỀN"
         detail = "Đang siết nền tích lũy biên độ hẹp."
@@ -677,7 +690,7 @@ def main():
             "history_w1": history_w1,
             "history_mn": history_mn
         }
-        with open(os.path.join(HISTORY_DIR, f"{symbol}.json"), "w", encoding="utf-8") as sf:
+        with open(os.path.join(HISTORY_DIR, f"{symbol.upper()}.json"), "w", encoding="utf-8") as sf:
             json.dump(symbol_history_data, sf, ensure_ascii=False)
 
         bctc_history = parse_bctc_history(symbol)
@@ -695,10 +708,11 @@ def main():
             "volume": int(volume),
             "pe": round(ratios.get("pe", 0), 2),
             "pb": round(ratios.get("pb", 0), 2),
+            "ps": round(ratios.get("ps", 0), 2),
             "eps": int(ratios.get("eps", 0)),
-            "roe": round(ratios.get("roe", 0) * 100, 1),
-            "roa": round(ratios.get("roa", 0) * 100, 1),
-            "dividend_yield": round(ratios.get("dividend_yield", 0) * 100, 2),
+            "roe": round(ratios.get("roe", 0) * (100 if ratios.get("roe", 0) <= 1 else 1), 1),
+            "roa": round(ratios.get("roa", 0) * (100 if ratios.get("roa", 0) <= 1 else 1), 1),
+            "dividend_yield": round(ratios.get("dividend_yield", 0) * (100 if ratios.get("dividend_yield", 0) <= 1 else 1), 2),
             "cfo_latest": adv_metrics["cfo_latest"],
             "debt_to_equity": adv_metrics["debt_to_equity"],
             "gross_margin": adv_metrics["gross_margin"],
@@ -710,13 +724,11 @@ def main():
         }
 
         stock_db[symbol] = {**old_data, **crawled_data}
-
-        time.sleep(1.5)
+        time.sleep(1.0)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
 
-    # 1. Thực hiện lọc và lưu riêng file danh sách mã định giá rẻ thật phân theo nhóm ngành
     filter_and_save_cheap_stocks(stock_db)
 
     crawl_timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -724,8 +736,6 @@ def main():
         json.dump({"last_update": crawl_timestamp}, f, ensure_ascii=False)
 
     print(f"✅ Đã lưu file {LAST_UPDATE_FILE} với mốc thời gian: {crawl_timestamp}")
-
-    # 2. Đồng bộ tự động toàn bộ lên GitHub
     auto_git_push()
 
 
