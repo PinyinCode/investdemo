@@ -49,6 +49,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # Tạo biến môi trường chứa trạng thái có secret hay không
+      HAS_API_KEY: ${{ secrets.ALIBABA_API_KEY != '' }}
 
     steps:
       - name: Checkout code
@@ -71,7 +74,7 @@ jobs:
       - name: Run Analysis (TEMPLATE — NO AI)
         if: |
           inputs.use_ai == 'no' ||
-          (inputs.use_ai != 'yes' && secrets.ALIBABA_API_KEY == '')
+          (inputs.use_ai != 'yes' && env.HAS_API_KEY == 'false')
         env:
           INPUT_SYMBOLS: ${{ inputs.symbols }}
           PYTHONUNBUFFERED: 1
@@ -102,7 +105,7 @@ jobs:
       - name: Run Analysis (AI)
         if: |
           inputs.use_ai == 'yes' ||
-          (inputs.use_ai != 'no' && secrets.ALIBABA_API_KEY != '')
+          (inputs.use_ai != 'no' && env.HAS_API_KEY == 'true')
         env:
           ALIBABA_API_KEY: ${{ secrets.ALIBABA_API_KEY }}
           INPUT_SYMBOLS: ${{ inputs.symbols }}
