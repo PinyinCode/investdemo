@@ -1430,28 +1430,6 @@
         "fundamental_notes": "LN duy trì tăng trưởng | Có lãi dương | ⚠️ Cảnh báo: CFO âm"
     },
     {
-        "symbol": "APH",
-        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 6980,
-        "pe": 7.0,
-        "pb": 0.63,
-        "roe": 4.1,
-        "roa": 1.9,
-        "dividend_yield": 0.0,
-        "profit_growth_yoy": 17.03,
-        "cfo_latest": 556.22,
-        "debt_to_equity": 1.17,
-        "gross_margin": 17.4,
-        "fundamental_score": 20,
-        "technical_score": 17,
-        "valuation_score": 30,
-        "total_score": 67,
-        "potential_zone": "VÙNG MUA AN TOÀN (B)",
-        "technical_status": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
-        "technical_notes": "Tích lũy cạn cung (Rủi ro thấp)",
-        "fundamental_notes": "LN tăng trưởng tốt | Dòng tiền kinh doanh (CFO) mạnh mẽ"
-    },
-    {
         "symbol": "BVH",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "close_price": 63800,
