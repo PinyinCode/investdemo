@@ -9,6 +9,7 @@ from vnstock import Quote
 
 DATA_FILE = "data.json"
 LAST_UPDATE_FILE = "last_update.json"
+CHEAP_STOCKS_FILE = "cheap_stocks.json"  # File riêng lưu các mã định giá rẻ thật
 HISTORY_DIR = "history"
 BCTC_DIR = "bctc_data"
 JS_LIB_FILE = "lightweight-charts.js"
@@ -27,7 +28,36 @@ VN100_SYMBOLS = [
 ]
 VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
 
-# Hardcode tên công ty đầy đủ cho các mã VN100
+# Phân loại nhóm ngành phục vụ cho bộ lọc chuyên sâu
+SECTOR_MAPPING = {
+    "NGAN_HANG": [
+        "ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB",
+        "SHB", "SSB", "MSB", "OCB", "EIB", "VCB"
+    ],
+    "CHUNG_KHOAN": [
+        "SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"
+    ],
+    "BAT_DONG_SAN": [
+        "VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG",
+        "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR", "SJS", "VPI"
+    ],
+    "CONG_NGHE_BAN_LE": [
+        "FPT", "MWG", "PNJ", "FRT"
+    ],
+    "DIEN_NUOC_HA_TANG": [
+        "POW", "REE", "PC1", "NT2", "GAS"
+    ],
+    "NGUYEN_VAT_LIEU_CHU_KY": [
+        "HPG", "HSG", "NKG", "DCM", "DPM", "GVR", "DHC", "BSR"
+    ],
+    "SAN_XUAT_TIEU_DUNG_PHONG_THU": [
+        "SAB", "VNM", "MSN", "VHC", "ANV", "BVH", "PLX", "PVD", "PVS",
+        "GMD", "HAH", "PVT", "HVN", "APH", "ASM", "DBC", "KDC", "MSH",
+        "PAN", "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "IMP", "SBA",
+        "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG", "CTD", "VCG", "HHV", "GEX"
+    ]
+}
+
 COMPANY_NAMES = {
     "ACB": "Ngân hàng TMCP Á Châu",
     "BCM": "Tổng Công ty Đầu tư và Phát triển Công nghiệp - CTCP (Becamex IDC)",
@@ -138,6 +168,13 @@ VNDIRECT_RATIOS = {
     "roa": "ROAA_TR_AVG5Q",
     "dividend_yield": "DIVIDEND_YIELD"
 }
+
+
+def get_sector(symbol):
+    for sector, symbols in SECTOR_MAPPING.items():
+        if symbol in symbols:
+            return sector
+    return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
 
 
 def get_vndirect_ratio(symbol, ratio_code):
@@ -417,42 +454,70 @@ def extract_advanced_metrics_from_bctc(symbol):
     }
 
 
+def filter_and_save_cheap_stocks(stock_db):
+    """
+    Lọc định giá rẻ kết hợp nhóm ngành:
+    - Tiêu chí 'rẻ thật': P/E từ 0 đến 12, P/B <= 1.5, ROE >= 8% (đảm bảo sinh lời, tránh bẫy giá rẻ).
+    - Phân loại rõ theo từng nhóm ngành và lưu riêng vào file `cheap_stocks.json`.
+    """
+    sector_cheap_groups = {}
+    total_cheap_count = 0
+
+    for symbol, info in stock_db.items():
+        pe = info.get("pe", 0)
+        pb = info.get("pb", 0)
+        roe = info.get("roe", 0)
+        net_profit = info.get("net_profit_ttm", 0)
+
+        # Điều kiện khắt khe để xác định "rẻ thật" (P/E, P/B hấp dẫn + Kinh doanh có lãi/ROE ổn định)
+        if 0 < pe <= 12 and 0 < pb <= 1.5 and roe >= 8.0 and net_profit > 0:
+            sector = get_sector(symbol)
+            info['sector'] = sector
+            sector_cheap_groups.setdefault(sector, []).append(info)
+            total_cheap_count += 1
+
+    # Sắp xếp các mã trong từng ngành theo P/E tăng dần (rẻ nhất xếp đầu)
+    for sector in sector_cheap_groups:
+        sector_cheap_groups[sector] = sorted(sector_cheap_groups[sector], key=lambda x: x['pe'])
+
+    # Lưu thành file riêng biệt
+    with open(CHEAP_STOCKS_FILE, "w", encoding="utf-8") as f:
+        json.dump(sector_cheap_groups, f, ensure_ascii=False, indent=4)
+    
+    print(f"📊 Đã lọc xong: Tìm thấy tổng cộng {total_cheap_count} mã 'rẻ thật' phân bố theo các nhóm ngành và lưu vào {CHEAP_STOCKS_FILE}.")
+
+
 def auto_git_push():
     try:
         print("🔄 Đang đồng bộ dữ liệu lên GitHub...")
         
-        # 1. Fetch thông tin mới nhất
         subprocess.run(["git", "fetch", "origin", "main"], check=True)
-        
-        # 2. Pull với --autostash để bảo vệ file data.json đang sửa
         pull_result = subprocess.run(
             ["git", "pull", "origin", "main", "--rebase", "--autostash"], 
             capture_output=True, text=True
         )
         if pull_result.returncode != 0:
-            print("⚠️ Có xung đột khi pull, tự động hủy rebase để ưu tiên file data.json dưới máy...")
             subprocess.run(["git", "rebase", "--abort"], check=False)
         
-        # 3. Add các file thay đổi
+        # Add toàn bộ các file quan trọng bao gồm cả file lọc định giá rẻ riêng
         subprocess.run(["git", "add", DATA_FILE], check=True)
         subprocess.run(["git", "add", LAST_UPDATE_FILE], check=True)
+        subprocess.run(["git", "add", CHEAP_STOCKS_FILE], check=True)
         subprocess.run(["git", "add", HISTORY_DIR], check=True)
         if os.path.exists(BCTC_DIR):
             subprocess.run(["git", "add", BCTC_DIR], check=True)
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
 
-        # 4. Kiểm tra thay đổi thực sự
         status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
         if not status_result.stdout.strip():
             print("ℹ️ Không có dữ liệu thay đổi nào mới để đẩy lên.")
             return
 
-        # 5. Commit và Push
-        commit_msg = f"Auto update symbols data & last_update timestamp - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update data & cheap stocks by sector - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push", "origin", "main"], check=True)
-        print("🚀 Đẩy dữ liệu lên GitHub thành công!")
+        print("🚀 Đẩy dữ liệu và file định giá rẻ lên GitHub thành công!")
         
     except subprocess.CalledProcessError as e:
         print(f"⚠️ Lỗi Git automation: {e}")
@@ -650,11 +715,9 @@ def main():
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
-    
-    # In log xác nhận
-    print(f"✅ Đã ghi dữ liệu của {len(stock_db)} mã vào {DATA_FILE}")
-    if "ACB" in stock_db:
-        print(f"   [DEBUG] ACB close = {stock_db['ACB'].get('close')} | updated_at = {stock_db['ACB'].get('updated_at')}")
+
+    # 1. Thực hiện lọc và lưu riêng file danh sách mã định giá rẻ thật phân theo nhóm ngành
+    filter_and_save_cheap_stocks(stock_db)
 
     crawl_timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     with open(LAST_UPDATE_FILE, "w", encoding="utf-8") as f:
@@ -662,6 +725,7 @@ def main():
 
     print(f"✅ Đã lưu file {LAST_UPDATE_FILE} với mốc thời gian: {crawl_timestamp}")
 
+    # 2. Đồng bộ tự động toàn bộ lên GitHub
     auto_git_push()
 
 
