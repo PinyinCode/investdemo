@@ -886,9 +886,10 @@ def generate_html():
                         fair_value_rationale: extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || ""),
                         sub_sector: extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || ""),
 
-                        final_decision: extraData.final_decision !== undefined ? extraData.final_decision : (item.final_decision || ""),
-                        final_decision_color: extraData.final_decision_color !== undefined ? extraData.final_decision_color : (item.final_decision_color || "slate"),
-                        final_decision_reason: extraData.final_decision_reason !== undefined ? extraData.final_decision_reason : (item.final_decision_reason || ""),
+                        // 🆕 QUYẾT ĐỊNH CUỐI CÙNG (Ưu tiên item từ screener_results.json)
+                        final_decision: item.final_decision !== undefined ? item.final_decision : (extraData.final_decision || ""),
+                        final_decision_color: item.final_decision_color !== undefined ? item.final_decision_color : (extraData.final_decision_color || "slate"),
+                        final_decision_reason: item.final_decision_reason !== undefined ? item.final_decision_reason : (extraData.final_decision_reason || ""),
                     };
                 });
                 renderCards();
