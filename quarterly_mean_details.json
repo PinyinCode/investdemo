@@ -1,10 +1,10 @@
 {
     "ACB": {
-        "annual_rate_percent": 9.1,
+        "annual_rate_percent": 9.09,
         "start_quarter": "2021Q4",
         "start_price_mean": 13.51,
         "end_quarter": "2026Q4",
-        "end_price_mean": 20.7
+        "end_price_mean": 20.69
     },
     "ANV": {
         "annual_rate_percent": 3.03,
@@ -32,7 +32,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 54.78,
         "end_quarter": "2026Q4",
-        "end_price_mean": 39.09
+        "end_price_mean": 39.08
     },
     "BID": {
         "annual_rate_percent": 7.63,
@@ -84,11 +84,11 @@
         "end_price_mean": 12.19
     },
     "CTD": {
-        "annual_rate_percent": 3.06,
+        "annual_rate_percent": 3.05,
         "start_quarter": "2021Q4",
         "start_price_mean": 55.04,
         "end_quarter": "2026Q4",
-        "end_price_mean": 63.8
+        "end_price_mean": 63.79
     },
     "CTG": {
         "annual_rate_percent": 9.07,
@@ -116,7 +116,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 27.32,
         "end_quarter": "2026Q4",
-        "end_price_mean": 33.89
+        "end_price_mean": 33.88
     },
     "DHC": {
         "annual_rate_percent": -3.48,
@@ -172,14 +172,14 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 43.78,
         "end_quarter": "2026Q4",
-        "end_price_mean": 56.76
+        "end_price_mean": 56.77
     },
     "FRT": {
-        "annual_rate_percent": 37.41,
+        "annual_rate_percent": 37.42,
         "start_quarter": "2021Q4",
         "start_price_mean": 30.76,
         "end_quarter": "2026Q4",
-        "end_price_mean": 146.16
+        "end_price_mean": 146.17
     },
     "FTS": {
         "annual_rate_percent": -6.67,
@@ -193,7 +193,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 67.34,
         "end_quarter": "2026Q4",
-        "end_price_mean": 78.03
+        "end_price_mean": 78.04
     },
     "GEX": {
         "annual_rate_percent": -1.5,
@@ -221,14 +221,14 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 9.97,
         "end_quarter": "2026Q4",
-        "end_price_mean": 14.41
+        "end_price_mean": 14.4
     },
     "HAH": {
-        "annual_rate_percent": 19.42,
+        "annual_rate_percent": 19.43,
         "start_quarter": "2021Q4",
         "start_price_mean": 20.87,
         "end_quarter": "2026Q4",
-        "end_price_mean": 49.84
+        "end_price_mean": 49.85
     },
     "HCM": {
         "annual_rate_percent": 4.71,
@@ -238,7 +238,7 @@
         "end_price_mean": 23.61
     },
     "HDB": {
-        "annual_rate_percent": 19.42,
+        "annual_rate_percent": 19.43,
         "start_quarter": "2021Q4",
         "start_price_mean": 9.32,
         "end_quarter": "2026Q4",
@@ -277,7 +277,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 18.7,
         "end_quarter": "2026Q4",
-        "end_price_mean": 20.81
+        "end_price_mean": 20.8
     },
     "IDC": {
         "annual_rate_percent": -4.29,
@@ -336,7 +336,7 @@
         "end_price_mean": 19.41
     },
     "MBS": {
-        "annual_rate_percent": 0.3,
+        "annual_rate_percent": 0.31,
         "start_quarter": "2021Q4",
         "start_price_mean": 15.02,
         "end_quarter": "2026Q4",
@@ -371,7 +371,7 @@
         "end_price_mean": 74.55
     },
     "NKG": {
-        "annual_rate_percent": -14.83,
+        "annual_rate_percent": -14.82,
         "start_quarter": "2021Q4",
         "start_price_mean": 23.87,
         "end_quarter": "2026Q4",
@@ -417,7 +417,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 22.21,
         "end_quarter": "2026Q4",
-        "end_price_mean": 14.08
+        "end_price_mean": 14.07
     },
     "PAN": {
         "annual_rate_percent": -8.53,
@@ -438,7 +438,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 57.64,
         "end_quarter": "2026Q4",
-        "end_price_mean": 11.38
+        "end_price_mean": 11.37
     },
     "PHR": {
         "annual_rate_percent": 1.23,
@@ -476,7 +476,7 @@
         "end_price_mean": 18.09
     },
     "PVS": {
-        "annual_rate_percent": 10.68,
+        "annual_rate_percent": 10.67,
         "start_quarter": "2021Q4",
         "start_price_mean": 19.53,
         "end_quarter": "2026Q4",
@@ -578,7 +578,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 13.49,
         "end_quarter": "2026Q4",
-        "end_price_mean": 11.51
+        "end_price_mean": 11.5
     },
     "TID": {
         "annual_rate_percent": -17.96,
@@ -595,18 +595,18 @@
         "end_price_mean": 54.6
     },
     "TPB": {
-        "annual_rate_percent": -2.87,
+        "annual_rate_percent": -2.86,
         "start_quarter": "2021Q4",
         "start_price_mean": 14.12,
         "end_quarter": "2026Q4",
-        "end_price_mean": 12.24
+        "end_price_mean": 12.25
     },
     "VCB": {
         "annual_rate_percent": 5.66,
         "start_quarter": "2021Q4",
         "start_price_mean": 42.97,
         "end_quarter": "2026Q4",
-        "end_price_mean": 56.28
+        "end_price_mean": 56.27
     },
     "VCG": {
         "annual_rate_percent": -11.47,
@@ -644,7 +644,7 @@
         "end_price_mean": 63.73
     },
     "VIB": {
-        "annual_rate_percent": -0.6,
+        "annual_rate_percent": -0.61,
         "start_quarter": "2021Q4",
         "start_price_mean": 14.26,
         "end_quarter": "2026Q4",
@@ -655,10 +655,10 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 49.49,
         "end_quarter": "2026Q4",
-        "end_price_mean": 228.5
+        "end_price_mean": 228.49
     },
     "VIX": {
-        "annual_rate_percent": 0.71,
+        "annual_rate_percent": 0.72,
         "start_quarter": "2021Q4",
         "start_price_mean": 11.65,
         "end_quarter": "2026Q4",
@@ -669,14 +669,14 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 96.73,
         "end_quarter": "2026Q4",
-        "end_price_mean": 129.9
+        "end_price_mean": 129.91
     },
     "VNM": {
-        "annual_rate_percent": -2.73,
+        "annual_rate_percent": -2.74,
         "start_quarter": "2021Q4",
         "start_price_mean": 66.03,
         "end_quarter": "2026Q4",
-        "end_price_mean": 57.64
+        "end_price_mean": 57.63
     },
     "VOS": {
         "annual_rate_percent": -8.0,

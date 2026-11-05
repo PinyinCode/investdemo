@@ -1,6 +1,6 @@
 {
     "ACB": {
-        "annual_rate_percent": 9.1
+        "annual_rate_percent": 9.09
     },
     "ANV": {
         "annual_rate_percent": 3.03
@@ -36,7 +36,7 @@
         "annual_rate_percent": -7.53
     },
     "CTD": {
-        "annual_rate_percent": 3.06
+        "annual_rate_percent": 3.05
     },
     "CTG": {
         "annual_rate_percent": 9.07
@@ -75,7 +75,7 @@
         "annual_rate_percent": 5.44
     },
     "FRT": {
-        "annual_rate_percent": 37.41
+        "annual_rate_percent": 37.42
     },
     "FTS": {
         "annual_rate_percent": -6.67
@@ -96,13 +96,13 @@
         "annual_rate_percent": 7.79
     },
     "HAH": {
-        "annual_rate_percent": 19.42
+        "annual_rate_percent": 19.43
     },
     "HCM": {
         "annual_rate_percent": 4.71
     },
     "HDB": {
-        "annual_rate_percent": 19.42
+        "annual_rate_percent": 19.43
     },
     "HDG": {
         "annual_rate_percent": -12.48
@@ -144,7 +144,7 @@
         "annual_rate_percent": 13.7
     },
     "MBS": {
-        "annual_rate_percent": 0.3
+        "annual_rate_percent": 0.31
     },
     "MSB": {
         "annual_rate_percent": 38.97
@@ -159,7 +159,7 @@
         "annual_rate_percent": 3.31
     },
     "NKG": {
-        "annual_rate_percent": -14.83
+        "annual_rate_percent": -14.82
     },
     "NLG": {
         "annual_rate_percent": -15.28
@@ -204,7 +204,7 @@
         "annual_rate_percent": 7.35
     },
     "PVS": {
-        "annual_rate_percent": 10.68
+        "annual_rate_percent": 10.67
     },
     "PVT": {
         "annual_rate_percent": 9.85
@@ -255,7 +255,7 @@
         "annual_rate_percent": 13.81
     },
     "TPB": {
-        "annual_rate_percent": -2.87
+        "annual_rate_percent": -2.86
     },
     "VCB": {
         "annual_rate_percent": 5.66
@@ -276,19 +276,19 @@
         "annual_rate_percent": 10.74
     },
     "VIB": {
-        "annual_rate_percent": -0.6
+        "annual_rate_percent": -0.61
     },
     "VIC": {
         "annual_rate_percent": 36.61
     },
     "VIX": {
-        "annual_rate_percent": 0.71
+        "annual_rate_percent": 0.72
     },
     "VJC": {
         "annual_rate_percent": 6.2
     },
     "VNM": {
-        "annual_rate_percent": -2.73
+        "annual_rate_percent": -2.74
     },
     "VOS": {
         "annual_rate_percent": -8.0
