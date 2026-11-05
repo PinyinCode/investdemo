@@ -156,10 +156,6 @@ def get_vndirect_ratio(symbol, ratio_code):
 
 
 def get_company_overview(symbol, close_price=0):
-    """
-    Lấy tên doanh nghiệp trực tiếp từ từ điển hardcode COMPANY_NAMES (không gọi API).
-    Lấy số cổ phiếu và vốn hóa từ VNDirect API.
-    """
     company_name = COMPANY_NAMES.get(symbol, symbol)
     total_shares = 0
     market_cap = 0
@@ -425,18 +421,19 @@ def auto_git_push():
     try:
         print("🔄 Đang đồng bộ dữ liệu lên GitHub...")
         
-        # 1. Fetch thông tin mới nhất từ GitHub về
+        # 1. Fetch thông tin mới nhất
         subprocess.run(["git", "fetch", "origin", "main"], check=True)
         
-        # 2. Thử pull về. Nếu có conflict, tự động hủy rebase đang kẹt và ưu tiên data.json từ PC
-        pull_result = subprocess.run(["git", "pull", "origin", "main", "--rebase"], capture_output=True, text=True)
+        # 2. Pull với --autostash để bảo vệ file data.json đang sửa
+        pull_result = subprocess.run(
+            ["git", "pull", "origin", "main", "--rebase", "--autostash"], 
+            capture_output=True, text=True
+        )
         if pull_result.returncode != 0:
-            print("⚠️ Phát hiện xung đột, đang xử lý ưu tiên file data.json trên PC...")
+            print("⚠️ Có xung đột khi pull, tự động hủy rebase để ưu tiên file data.json dưới máy...")
             subprocess.run(["git", "rebase", "--abort"], check=False)
-            subprocess.run(["git", "checkout", "--ours", DATA_FILE], check=False)
-            subprocess.run(["git", "add", DATA_FILE], check=False)
-
-        # 3. Add lại các file thay đổi từ quá trình cào trên PC
+        
+        # 3. Add các file thay đổi
         subprocess.run(["git", "add", DATA_FILE], check=True)
         subprocess.run(["git", "add", LAST_UPDATE_FILE], check=True)
         subprocess.run(["git", "add", HISTORY_DIR], check=True)
@@ -445,16 +442,16 @@ def auto_git_push():
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
 
-        # 4. Kiểm tra xem có thay đổi thực sự hay không
+        # 4. Kiểm tra thay đổi thực sự
         status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
         if not status_result.stdout.strip():
             print("ℹ️ Không có dữ liệu thay đổi nào mới để đẩy lên.")
             return
 
-        # 5. Commit và Push lên GitHub
+        # 5. Commit và Push
         commit_msg = f"Auto update symbols data & last_update timestamp - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        subprocess.run(["git", "push", "origin", "main", "--force-with-lease"], check=True)
+        subprocess.run(["git", "push", "origin", "main"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
         
     except subprocess.CalledProcessError as e:
@@ -578,7 +575,7 @@ def main():
             print(f"⚠️ Lỗi xử lý lịch sử {symbol}: {e}")
 
         if close_price <= 0:
-            print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
+            print(f"⚠️ BỎ QUA {symbol}: Không lấy được giá từ API.")
             continue
 
         company_overview = get_company_overview(symbol, close_price)
@@ -653,6 +650,11 @@ def main():
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
+    
+    # In log xác nhận
+    print(f"✅ Đã ghi dữ liệu của {len(stock_db)} mã vào {DATA_FILE}")
+    if "ACB" in stock_db:
+        print(f"   [DEBUG] ACB close = {stock_db['ACB'].get('close')} | updated_at = {stock_db['ACB'].get('updated_at')}")
 
     crawl_timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     with open(LAST_UPDATE_FILE, "w", encoding="utf-8") as f:
