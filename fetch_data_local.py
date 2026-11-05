@@ -156,6 +156,10 @@ def get_vndirect_ratio(symbol, ratio_code):
 
 
 def get_company_overview(symbol, close_price=0):
+    """
+    Lấy tên doanh nghiệp trực tiếp từ từ điển hardcode COMPANY_NAMES (không gọi API).
+    Lấy số cổ phiếu và vốn hóa từ VNDirect API.
+    """
     company_name = COMPANY_NAMES.get(symbol, symbol)
     total_shares = 0
     market_cap = 0
@@ -424,23 +428,15 @@ def auto_git_push():
         # 1. Fetch thông tin mới nhất từ GitHub về
         subprocess.run(["git", "fetch", "origin", "main"], check=True)
         
-        # 2. Thực hiện pull với chiến lược: 
-        # - Riêng data.json: Nếu có xung đột từ remote, ưu tiên tuyệt đối file trên PC (--ours)
-        # - Các file khác: Giữ nguyên commit mới từ remote nếu có (--theirs)
+        # 2. Thử pull về. Nếu có conflict, tự động hủy rebase đang kẹt và ưu tiên data.json từ PC
         pull_result = subprocess.run(["git", "pull", "origin", "main", "--rebase"], capture_output=True, text=True)
         if pull_result.returncode != 0:
-            print("⚠️ Phát hiện xung đột, đang xử lý riêng biệt cho data.json và các file khác...")
-            # Ép buộc lấy data.json từ PC làm chuẩn
+            print("⚠️ Phát hiện xung đột, đang xử lý ưu tiên file data.json trên PC...")
+            subprocess.run(["git", "rebase", "--abort"], check=False)
             subprocess.run(["git", "checkout", "--ours", DATA_FILE], check=False)
             subprocess.run(["git", "add", DATA_FILE], check=False)
-            
-            # Đối với các file còn lại (history, bctc, ...), nếu có trên remote thì giữ nguyên bản remote
-            subprocess.run(["git", "checkout", "--theirs", LAST_UPDATE_FILE], check=False)
-            subprocess.run(["git", "add", LAST_UPDATE_FILE], check=False)
-            
-            subprocess.run(["git", "rebase", "--continue"], check=False)
 
-        # 3. Add lại các file thay đổi từ quá trình cào trên PC (data.json sẽ luôn được ghi đè/cập nhật)
+        # 3. Add lại các file thay đổi từ quá trình cào trên PC
         subprocess.run(["git", "add", DATA_FILE], check=True)
         subprocess.run(["git", "add", LAST_UPDATE_FILE], check=True)
         subprocess.run(["git", "add", HISTORY_DIR], check=True)
