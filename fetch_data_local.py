@@ -156,15 +156,10 @@ def get_vndirect_ratio(symbol, ratio_code):
 
 
 def get_company_overview(symbol, close_price=0):
-    """
-    Lấy tên doanh nghiệp trực tiếp từ từ điển hardcode COMPANY_NAMES (không gọi API).
-    Lấy số cổ phiếu và vốn hóa từ VNDirect API.
-    """
     company_name = COMPANY_NAMES.get(symbol, symbol)
     total_shares = 0
     market_cap = 0
 
-    # 1. Thử lấy SHARE_OUTSTANDING từ VNDirect
     try:
         url = "https://api-finfo.vndirect.com.vn/v4/ratios"
         params = {
@@ -181,7 +176,6 @@ def get_company_overview(symbol, close_price=0):
     except Exception as e:
         print(f"   ⚠️ VNDirect SHARE_OUTSTANDING lỗi cho {symbol}: {e}")
 
-    # 2. Nếu VNDirect không có, thử lấy MARKET_CAP trực tiếp
     if total_shares == 0:
         try:
             url = "https://api-finfo.vndirect.com.vn/v4/ratios"
@@ -201,7 +195,6 @@ def get_company_overview(symbol, close_price=0):
         except Exception as e:
             print(f"   ⚠️ VNDirect MARKET_CAP lỗi cho {symbol}: {e}")
 
-    # 3. Tính market_cap nếu chưa có
     if market_cap == 0 and close_price > 0 and total_shares > 0:
         market_cap = close_price * 1000 * total_shares
 
@@ -426,12 +419,28 @@ def extract_advanced_metrics_from_bctc(symbol):
 
 def auto_git_push():
     try:
-        print("🔄 Đang chuẩn bị đồng bộ dữ liệu lên GitHub (Ưu tiên dữ liệu trên PC)...")
+        print("🔄 Đang đồng bộ dữ liệu lên GitHub...")
         
-        # 1. Fetch thông tin mới nhất từ GitHub về trước
+        # 1. Fetch thông tin mới nhất từ GitHub về
         subprocess.run(["git", "fetch", "origin", "main"], check=True)
         
-        # 2. Add toàn bộ dữ liệu mới vừa cào xong trên PC vào staging area
+        # 2. Thực hiện pull với chiến lược: 
+        # - Riêng data.json: Nếu có xung đột từ remote, ưu tiên tuyệt đối file trên PC (--ours)
+        # - Các file khác: Giữ nguyên commit mới từ remote nếu có (--theirs)
+        pull_result = subprocess.run(["git", "pull", "origin", "main", "--rebase"], capture_output=True, text=True)
+        if pull_result.returncode != 0:
+            print("⚠️ Phát hiện xung đột, đang xử lý riêng biệt cho data.json và các file khác...")
+            # Ép buộc lấy data.json từ PC làm chuẩn
+            subprocess.run(["git", "checkout", "--ours", DATA_FILE], check=False)
+            subprocess.run(["git", "add", DATA_FILE], check=False)
+            
+            # Đối với các file còn lại (history, bctc, ...), nếu có trên remote thì giữ nguyên bản remote
+            subprocess.run(["git", "checkout", "--theirs", LAST_UPDATE_FILE], check=False)
+            subprocess.run(["git", "add", LAST_UPDATE_FILE], check=False)
+            
+            subprocess.run(["git", "rebase", "--continue"], check=False)
+
+        # 3. Add lại các file thay đổi từ quá trình cào trên PC (data.json sẽ luôn được ghi đè/cập nhật)
         subprocess.run(["git", "add", DATA_FILE], check=True)
         subprocess.run(["git", "add", LAST_UPDATE_FILE], check=True)
         subprocess.run(["git", "add", HISTORY_DIR], check=True)
@@ -440,34 +449,18 @@ def auto_git_push():
         if os.path.exists(JS_LIB_FILE):
             subprocess.run(["git", "add", JS_LIB_FILE], check=True)
 
-        # 3. Kiểm tra xem có thay đổi thực sự hay không
+        # 4. Kiểm tra xem có thay đổi thực sự hay không
         status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
         if not status_result.stdout.strip():
-            print("ℹ️ Không có dữ liệu thay đổi nào mới trên PC để đẩy lên.")
+            print("ℹ️ Không có dữ liệu thay đổi nào mới để đẩy lên.")
             return
 
-        # 4. Commit các thay đổi của PC
+        # 5. Commit và Push lên GitHub
         commit_msg = f"Auto update symbols data & last_update timestamp - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+        subprocess.run(["git", "push", "origin", "main", "--force-with-lease"], check=True)
+        print("🚀 Đẩy dữ liệu lên GitHub thành công!")
         
-        # 5. Thử push lên. Nếu bị từ chối do xung đột, thực hiện rebase, 
-        # ép buộc lấy dữ liệu hiện tại trên PC và push đè lên an toàn.
-        push_result = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True)
-        
-        if push_result.returncode != 0:
-            print("⚠️ Phát hiện xung đột với GitHub. Đang tiến hành ép buộc lấy dữ liệu từ PC làm chuẩn...")
-            subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=False)
-            
-            # Ưu tiên tuyệt đối phiên bản file trên máy PC của bạn (--ours) khi xảy ra tranh chấp
-            subprocess.run(["git", "checkout", "--ours", DATA_FILE], check=False)
-            subprocess.run(["git", "add", DATA_FILE], check=False)
-            
-            subprocess.run(["git", "rebase", "--continue"], check=False)
-            subprocess.run(["git", "push", "origin", "main", "--force-with-lease"], check=True)
-            print("🚀 Đẩy dữ liệu (ưu tiên từ PC) lên GitHub thành công!")
-        else:
-            print("🚀 Đẩy dữ liệu lên GitHub thành công!")
-            
     except subprocess.CalledProcessError as e:
         print(f"⚠️ Lỗi Git automation: {e}")
     except Exception as e:
@@ -592,7 +585,6 @@ def main():
             print(f"⚠️ Bỏ qua {symbol} do không lấy được giá.")
             continue
 
-        # Lấy hồ sơ công ty: tên doanh nghiệp từ hardcode, số cổ phiếu và vốn hóa từ API
         company_overview = get_company_overview(symbol, close_price)
         time.sleep(0.3)
 
@@ -636,7 +628,6 @@ def main():
 
         current_time_str = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-        # Chỉ các trường này được phép cập nhật từ quá trình cào
         crawled_data = {
             "symbol": symbol,
             "company_name": company_overview["company_name"],
@@ -660,8 +651,6 @@ def main():
             "bctc_history": bctc_history,
         }
 
-        # Gộp: giữ nguyên toàn bộ trường cũ (outlook, ai_*, bctc, catalyst, risks, ...)
-        # rồi ghi đè bằng dữ liệu mới cào được
         stock_db[symbol] = {**old_data, **crawled_data}
 
         time.sleep(1.5)
