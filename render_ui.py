@@ -1,5 +1,5 @@
-import os
 import json
+import os
 from datetime import datetime
 from simulator import run_complex_backtest_simulation
 
@@ -57,9 +57,9 @@ def load_cheap_stocks_data():
 
 
 def generate_html():
-    # 1) Chạy mô phỏng (giữ nguyên logic simulator của bạn)
+    # 1) Chạy mô phỏng & screener tích hợp PTKT mới
     run_complex_backtest_simulation()
-    print("📊 Đã tính toán xong lãi suất lịch sử cho các mã cổ phiếu.")
+    print("📊 Đã hoàn tất mô phỏng & quét tín hiệu PTKT / Volume.")
 
     # 2) Lấy mốc thời gian cập nhật & danh sách định giá rẻ
     last_update_str = get_last_update_string()
@@ -77,7 +77,7 @@ def generate_html():
     cheap_stocks_json = json.dumps(cheap_stocks_groups, ensure_ascii=False)
     cheap_symbols_json = json.dumps(list(cheap_symbols_set), ensure_ascii=False)
 
-    # 4) Template HTML đầy đủ toàn bộ logic gốc + tích hợp checkbox Định giá rẻ gọn gàng
+    # 4) Template HTML hiển thị đầy đủ tín hiệu PTKT Quant (Darvas, 2 Đáy, Spring, Cạn Cung, Volume)
     html_template = r"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -130,7 +130,7 @@ def generate_html():
                     <i class="fa-solid fa-scale-balanced text-xl"></i>
                 </div>
                 <h2 class="text-xl font-black text-white">Pro Quant Screener</h2>
-                <p class="text-xs text-slate-400 mt-1">Đăng nhập để sử dụng hệ thống lọc & phân tích AI</p>
+                <p class="text-xs text-slate-400 mt-1">Đăng nhập để sử dụng hệ thống lọc & phân tích Quant</p>
             </div>
 
             <div class="flex border-b border-slate-800 mb-6">
@@ -259,7 +259,7 @@ def generate_html():
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: {last_update_str}</span></p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm 50/30/20 (PTCB / PTKT / Định giá) | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: {last_update_str}</span></p>
                 </div>
             </div>
 
@@ -278,7 +278,7 @@ def generate_html():
     </header>
 
     <main class="max-w-7xl mx-auto px-2 md:px-4 py-4">
-        <!-- Bộ lọc & Ô tick chọn nhanh Định giá rẻ (Tối ưu mobile grid-cols-2 gộp 2 hàng) -->
+        <!-- Bộ lọc & Ô tick chọn nhanh Định giá rẻ -->
         <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4 space-y-2">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3">
                 <div class="relative w-full">
@@ -317,9 +317,9 @@ def generate_html():
                     </span>
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
                         <option value="NONE">Mặc định (A-Z)</option>
-                        <option value="ALL_SCORE">🏆 Điểm Tổng hợp</option>
-                        <option value="FUNDAMENTAL" selected>💰 Điểm Cơ bản</option>
-                        <option value="TECHNICAL">📈 Điểm Kỹ thuật</option>
+                        <option value="ALL_SCORE" selected>🏆 Điểm Tổng hợp (100đ)</option>
+                        <option value="FUNDAMENTAL">💰 Điểm Cơ bản (50đ)</option>
+                        <option value="TECHNICAL">📈 Điểm Kỹ thuật (30đ)</option>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-amber-400 pointer-events-none">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -327,13 +327,13 @@ def generate_html():
                 </div>
             </div>
 
-            <!-- Ô TICK (CHECKBOX) LỌC ĐỊNH GIÁ RẺ KẾT HỢP NHÓM NGÀNH HIỆN CÓ -->
+            <!-- Ô TICK (CHECKBOX) LỌC ĐỊNH GIÁ RẺ KẾT HỢP NHÓM NGÀNH -->
             <div class="flex items-center justify-between px-1 pt-1 border-t border-slate-800/80 text-xs">
                 <label class="flex items-center gap-2 cursor-pointer select-none text-emerald-300 font-bold hover:text-emerald-200 transition">
                     <input type="checkbox" id="cheap-stocks-checkbox" onchange="renderCards()" class="w-4 h-4 rounded bg-slate-950 border-emerald-500 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer">
                     <span><i class="fa-solid fa-gem mr-1 text-emerald-400"></i> Chỉ lọc cổ phiếu Định giá rẻ theo ngành đã chọn</span>
                 </label>
-                <span id="active-filter-status" class="text-[10px] text-slate-400 hidden md:inline">Hiển thị toàn bộ danh sách</span>
+                <span id="active-filter-status" class="text-[10px] text-slate-400 hidden md:inline">Hệ thống quét mô hình Quant chuyên nghiệp</span>
             </div>
         </div>
 
@@ -345,7 +345,7 @@ def generate_html():
         </div>
     </main>
 
-    <!-- MODAL CHI TIẾT AI & GIẢ LẬP ĐẦU TƯ TỪNG MÃ -->
+    <!-- MODAL CHI TIẾT PTKT & GIẢ LẬP ĐẦU TƯ TỪNG MÃ -->
     <div id="ai-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-3 md:p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center sticky top-0 z-10 gap-2">
@@ -380,7 +380,7 @@ def generate_html():
             <!-- TABS -->
             <div class="flex border-b border-slate-800 bg-slate-900 px-5 pt-2 gap-3">
                 <button type="button" onclick="switchAiTab('eval')" id="tab-btn-eval" class="px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">
-                    <i class="fa-solid fa-robot mr-1.5"></i> Đánh Giá & Phân Tích AI
+                    <i class="fa-solid fa-chart-line mr-1.5"></i> Phân Tích Cấu Trúc Kỹ Thuật (Quant)
                 </button>
                 <button type="button" onclick="switchAiTab('simulator')" id="tab-btn-simulator" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-calculator mr-1.5 text-emerald-400"></i> Giả Lập Tích Sản (DCA)
@@ -388,7 +388,7 @@ def generate_html():
             </div>
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <!-- KHUNG THÔNG TIN TÊN CÔNG TY & HU HIỆU ĐỊNH GIÁ RẺ -->
+                <!-- TÊN CÔNG TY & HU HIỆU ĐỊNH GIÁ RẺ -->
                 <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
                     <div>
                         <span class="text-[10px] text-slate-400 block uppercase font-semibold">Tên doanh nghiệp</span>
@@ -397,65 +397,37 @@ def generate_html():
                     <div id="modal-cheap-badge-container"></div>
                 </div>
 
-                <!-- KHUNG CHỈ SỐ CƠ BẢN -->
+                <!-- BẢNG ĐIỂM SỐ CHI TIẾT (50 / 30 / 20) -->
+                <div class="grid grid-cols-4 gap-2 bg-indigo-500/10 p-3 rounded-xl border border-indigo-500/30 text-center">
+                    <div><span class="text-[10px] text-slate-400 block">Tổng Điểm</span><span id="modal-score-total" class="text-base font-black text-amber-400">-- / 100</span></div>
+                    <div><span class="text-[10px] text-slate-400 block">Cơ bản (PTCB)</span><span id="modal-score-fund" class="text-sm font-bold text-slate-200">-- / 50</span></div>
+                    <div><span class="text-[10px] text-slate-400 block">Kỹ thuật (PTKT)</span><span id="modal-score-tech" class="text-sm font-bold text-emerald-400">-- / 30</span></div>
+                    <div><span class="text-[10px] text-slate-400 block">Định giá</span><span id="modal-score-val" class="text-sm font-bold text-blue-400">-- / 20</span></div>
+                </div>
+
+                <!-- KHUNG CHỈ SỐ CƠ BẢN & KỸ THUẬT -->
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/B</span><span id="modal-pb" class="text-sm font-bold text-slate-200">--</span></div>
-                    <div><span class="text-[10px] text-slate-500 block">EPS</span><span id="modal-eps" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">ROE</span><span id="modal-roe" class="text-sm font-bold text-blue-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">ROA</span><span id="modal-roa" class="text-sm font-bold text-indigo-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
+                    <div><span class="text-[10px] text-slate-500 block">Mô hình</span><span id="modal-pattern" class="text-xs font-bold text-emerald-400 truncate">--</span></div>
                 </div>
 
-                <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP -->
-                <div>
-                    <button type="button" onclick="toggleProMetrics()" id="btn-toggle-prometrics" class="w-full py-2 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-chart-pie text-emerald-400" id="prometrics-icon"></i>
-                        <span id="prometrics-text">Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)</span>
-                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 ml-1 transition-transform duration-200" id="prometrics-chevron"></i>
-                    </button>
-
-                    <div id="pro-metrics-box" class="hidden mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 bg-slate-950/80 p-3 rounded-xl border border-emerald-500/30 text-center animate-fadeIn">
-                        <div>
-                            <span class="text-[10px] text-slate-400 block" id="label-cfo" title="Dòng tiền hoạt động kinh doanh">Dòng tiền CFO</span>
-                            <span id="modal-cfo" class="text-xs font-bold text-emerald-400">--</span>
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-slate-400 block" id="label-de" title="Nợ phải trả / Vốn chủ sở hữu">Đòn bẩy D/E</span>
-                            <span id="modal-de" class="text-xs font-bold text-amber-400">--</span>
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-slate-400 block" id="label-gm" title="Biên lợi nhuận gộp">Biên gộp</span>
-                            <span id="modal-gm" class="text-xs font-bold text-blue-400">--</span>
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-slate-400 block">LN TTM (4Q)</span>
-                            <span id="modal-ttm" class="text-xs font-bold text-indigo-400">--</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB ĐÁNH GIÁ AI -->
+                <!-- TAB PHÂN TÍCH KỸ THUẬT & VOLUME -->
                 <div id="tab-content-eval" class="space-y-4">
                     <div id="modal-ai-rec-box" class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Khuyến nghị của AI</h4>
-                        <p id="modal-ai-rec" class="text-lg font-black text-white mb-2"></p>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2"><i class="fa-solid fa-bullseye mr-1.5"></i> Trạng Thái Kỹ Thuật (Quant Signal)</h4>
+                        <p id="modal-ai-rec" class="text-base font-black text-white mb-2"></p>
                         <div class="bg-slate-900/50 p-2.5 rounded border border-indigo-500/20">
-                            <span class="text-[10px] text-slate-400 block mb-1">Chiến lược hành động:</span>
-                            <p id="modal-ai-price" class="text-sm text-emerald-300 font-medium">--</p>
+                            <span class="text-[10px] text-slate-400 block mb-1">Đánh giá hành vi khối lượng (Volume Analysis):</span>
+                            <p id="modal-volume-analysis" class="text-xs text-emerald-300 font-medium leading-relaxed">--</p>
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i> Phân tích Sức khỏe Tài chính & BCTC [AI]</h4>
-                        <p id="modal-bctc" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-chart-line text-blue-500 mr-1.5"></i> Định giá & Hành động giá [AI]</h4>
-                        <p id="modal-outlook" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-globe text-amber-500 mr-1.5"></i> Vĩ mô & Sóng ngành [AI]</h4>
-                        <p id="modal-macro" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i> Ghi chú & Đánh giá Nền tảng Cơ bản</h4>
+                        <p id="modal-fund-notes" class="text-sm bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 leading-relaxed">--</p>
                     </div>
                 </div>
 
@@ -513,7 +485,7 @@ def generate_html():
             </div>
 
             <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center text-[10px] text-slate-500">
-                <span id="modal-time">AI cập nhật: --</span>
+                <span id="modal-time">Hệ thống Quant tự động cập nhật</span>
                 <button type="button" onclick="closeModal()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-bold shadow">Đóng</button>
             </div>
         </div>
@@ -587,7 +559,7 @@ def generate_html():
                 <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">{last_update_str}</strong></span>
                 <div class="flex gap-2">
                     <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold flex items-center gap-1.5">
-                        <i class="fa-solid fa-robot"></i> Xem AI chi tiết
+                        <i class="fa-solid fa-chart-line"></i> Xem chi tiết kỹ thuật
                     </button>
                     <button type="button" onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold">Đóng</button>
                 </div>
@@ -712,7 +684,7 @@ def generate_html():
             errBox.classList.add('hidden');
 
             try {
-                const cred = await auth.createUserWithEmailAndPassword(email, pass);
+                await auth.createUserWithEmailAndPassword(email, pass);
                 const expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 7);
                 await db.collection('allowed_users').doc(email.toLowerCase()).set({
@@ -832,22 +804,6 @@ def generate_html():
             }
         }
 
-        function toggleProMetrics() {
-            const box = document.getElementById('pro-metrics-box');
-            const textEl = document.getElementById('prometrics-text');
-            const chevron = document.getElementById('prometrics-chevron');
-
-            if (box.classList.contains('hidden')) {
-                box.classList.remove('hidden');
-                textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
-                chevron.style.transform = "rotate(180deg)";
-            } else {
-                box.classList.add('hidden');
-                textEl.innerText = "Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)";
-                chevron.style.transform = "rotate(0deg)";
-            }
-        }
-
         async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
@@ -876,33 +832,14 @@ def generate_html():
                         ...item,
                         company_name: extraData.company_name !== undefined ? extraData.company_name : (item.company_name || extraData.organ_name || item.organ_name || ""),
                         market_cap: extraData.market_cap !== undefined ? extraData.market_cap : (item.market_cap || 0),
-                        total_shares: extraData.total_shares !== undefined ? extraData.total_shares : (item.total_shares || 0),
-                        eps: extraData.eps !== undefined ? extraData.eps : item.eps,
-                        dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
-                        pe: extraData.pe !== undefined ? extraData.pe : item.pe,
-                        pb: extraData.pb !== undefined ? extraData.pb : item.pb,
-                        roe: extraData.roe !== undefined ? extraData.roe : item.roe,
-                        roa: extraData.roa !== undefined ? extraData.roa : item.roa,
-                        cfo_latest: extraData.cfo_latest !== undefined ? extraData.cfo_latest : (item.cfo_latest || 0),
-                        debt_to_equity: extraData.debt_to_equity !== undefined ? extraData.debt_to_equity : (item.debt_to_equity || 0),
-                        gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
-                        net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         close_price: extraData.close !== undefined ? extraData.close : item.close_price,
-
-                        bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
-                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
-                        outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
-                        ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
-                        ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
-                        macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
-                        ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at
                     };
                 });
                 renderCards();
             } catch (error) {
                 const container = document.getElementById('stock-container');
                 if (container && showSpinner) {
-                    container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
+                    container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json! Hãy chạy python screener.py trước.</div>`;
                 }
             } finally {
                 if (showSpinner && icon) icon.classList.remove('spinner');
@@ -936,9 +873,9 @@ def generate_html():
                 return matchSearch && matchSector && matchCheap;
             });
 
-            if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
+            if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
+            else if (rankingMode === "FUNDAMENTAL") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
-            else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
 
             if (filtered.length === 0) {
@@ -951,10 +888,11 @@ def generate_html():
                 let statusColor = "text-slate-400 bg-slate-800";
                 let borderColor = "border-slate-700";
                 let displayRec = item.technical_status || "Tích lũy";
-                if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {
+                
+                if (displayRec.includes("Breakout") || displayRec.includes("Đáy") || displayRec.includes("Dòng Tiền")) {
                     statusColor = "text-emerald-400 bg-emerald-500/10";
                     borderColor = "border-emerald-500/30";
-                } else if (displayRec.includes("CHỜ") || displayRec.includes("TÍCH LŨY") || displayRec.includes("CẠN CUNG")) {
+                } else if (displayRec.includes("Cạn Cung") || displayRec.includes("Tích Lũy")) {
                     statusColor = "text-amber-400 bg-amber-500/10";
                     borderColor = "border-amber-500/30";
                 }
@@ -968,20 +906,9 @@ def generate_html():
                     else { topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }
                 }
 
-                // 🌟 Nhãn Định giá rẻ trên thẻ Flash
                 let cheapBadgeHtml = "";
                 if (cheapSymbolsSet.has(item.symbol)) {
-                    cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ thực sự (P/E & P/B hấp dẫn)"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
-                }
-
-                let scoreHtml = "";
-                if (rankingMode !== "NONE") {
-                    let label = "Điểm Tổng hợp";
-                    let valScore = item.total_score;
-                    if (rankingMode === "FUNDAMENTAL") { label = "Điểm Cơ bản"; valScore = item.fundamental_score; }
-                    else if (rankingMode === "TECHNICAL") { label = "Điểm Kỹ thuật"; valScore = item.technical_score; }
-
-                    scoreHtml = `<div class="text-[10px] text-center mb-1 bg-indigo-500/10 text-indigo-300 rounded py-1 border border-indigo-500/20">${label}: <strong>${valScore}/100</strong></div>`;
+                    cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ theo ngành"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
                 }
 
                 const card = document.createElement('div');
@@ -995,15 +922,15 @@ def generate_html():
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-2">
                                     <span class="text-xl font-black text-white">${item.symbol}</span>
-                                    <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
-                                        <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
+                                    <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết Quant">
+                                        <i class="fa-solid fa-chart-line"></i> <span class="hidden sm:inline">Chi tiết</span>
                                     </button>
-                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
+                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor} truncate max-w-[150px] sm:max-w-[200px]" title="${displayRec}">${displayRec}</span>
                                     ${cheapBadgeHtml}
                                 </div>
                                 <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
                                     <span><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
-                                    ${item.company_name ? `<span class="text-slate-500">•</span> <span class="text-slate-300 font-medium truncate max-w-[180px] sm:max-w-[220px]" title="${item.company_name}">${item.company_name}</span>` : ''}
+                                    ${item.company_name ? `<span class="text-slate-500">•</span> <span class="text-slate-300 font-medium truncate max-w-[160px] sm:max-w-[200px]" title="${item.company_name}">${item.company_name}</span>` : ''}
                                 </div>
                             </div>
                             <div class="text-right">
@@ -1011,14 +938,13 @@ def generate_html():
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50 text-center">
-                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${item.pe > 0 ? item.pe.toFixed(1) : '—'}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${item.pb > 0 ? item.pb.toFixed(1) : '—'}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
-                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
+                        <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50 text-center text-xs">
+                            <div><span class="block text-[9px] text-slate-500">PTCB (50đ)</span><span class="font-bold text-slate-200">${item.fundamental_score}đ</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[9px] text-slate-500">PTKT (30đ)</span><span class="font-bold text-emerald-400">${item.technical_score}đ</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[9px] text-slate-500">Định giá (20đ)</span><span class="font-bold text-blue-400">${item.valuation_score}đ</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[9px] text-slate-500">Tổng điểm</span><span class="font-black text-amber-400">${item.total_score}đ</span></div>
                         </div>
                     </div>
-                    ${scoreHtml}
                 `;
                 container.appendChild(card);
             });
@@ -1052,11 +978,10 @@ def generate_html():
 
             document.getElementById('modal-symbol-input').value = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
-            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
-
+            document.getElementById('modal-price').innerText = formatNumber(item.close_price);
             document.getElementById('modal-company-name').innerText = item.company_name || '—';
 
-            // 🌟 Huy hiệu Định giá rẻ ở trang chi tiết (Modal AI)
+            // Huy hiệu Định giá rẻ trong Modal
             const cheapBadgeContainer = document.getElementById('modal-cheap-badge-container');
             if (cheapSymbolsSet.has(item.symbol)) {
                 cheapBadgeContainer.innerHTML = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1.5 shadow"><i class="fa-solid fa-gem text-emerald-400"></i> Doanh nghiệp định giá rẻ</span>`;
@@ -1064,49 +989,22 @@ def generate_html():
                 cheapBadgeContainer.innerHTML = '';
             }
 
+            // Điểm số chi tiết
+            document.getElementById('modal-score-total').innerText = `${item.total_score} / 100`;
+            document.getElementById('modal-score-fund').innerText = `${item.fundamental_score} / 50`;
+            document.getElementById('modal-score-tech').innerText = `${item.technical_score} / 30`;
+            document.getElementById('modal-score-val').innerText = `${item.valuation_score} / 20`;
+
             document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
             document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
-            document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
+            document.getElementById('modal-pattern').innerText = item.pattern || 'Tích lũy';
 
-            const isBankOrSec = (item.sector === "NGAN_HANG" || item.sector === "CHUNG_KHOAN");
-
-            document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
-            document.getElementById('modal-ttm').innerText = (item.net_profit_ttm !== undefined && item.net_profit_ttm !== null) ? item.net_profit_ttm + ' Tỷ' : '—';
-
-            const deLabel = document.getElementById('label-de');
-            const deVal = document.getElementById('modal-de');
-            if (isBankOrSec) {
-                deLabel.innerText = "Hệ số T.Sản/VCSH";
-                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity + 'x (Nợ/VCSH)' : '—';
-            } else {
-                deLabel.innerText = "Đòn bẩy D/E";
-                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
-            }
-
-            const gmLabel = document.getElementById('label-gm');
-            const gmVal = document.getElementById('modal-gm');
-            if (isBankOrSec) {
-                gmLabel.innerText = "Đặc thù ngành";
-                gmVal.innerText = "N/A (Ngành tài chính)";
-            } else {
-                gmLabel.innerText = "Biên gộp";
-                gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
-            }
-
-            document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
-            let priceZoneText = item.ai_price_zone;
-            if (typeof priceZoneText === 'object' && priceZoneText !== null) {
-                priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
-            }
-            document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
-
-            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC từ AI.";
-            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá từ AI.";
-            document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô từ AI.";
-            document.getElementById('modal-time').innerText = `AI cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
+            document.getElementById('modal-ai-rec').innerText = item.technical_status || 'Tích lũy sideway';
+            document.getElementById('modal-volume-analysis').innerText = item.volume_analysis || 'Chưa có phân tích volume.';
+            document.getElementById('modal-fund-notes').innerText = item.fundamental_notes || 'Không có ghi chú cơ bản.';
 
             let histRate = 15;
             if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
@@ -1176,6 +1074,12 @@ def generate_html():
             document.getElementById('modal-sim-principal').innerText = Math.round(totalPrincipal).toLocaleString("vi-VN") + " VNĐ";
             document.getElementById('modal-sim-profit').innerText = "+" + Math.round(profit).toLocaleString("vi-VN") + " VNĐ";
             document.getElementById('modal-sim-total').innerText = Math.round(futureVal).toLocaleString("vi-VN") + " VNĐ";
+        }
+
+        function parseCleanNumber(valStr) {
+            if (!valStr) return 0;
+            let clean = valStr.toString().replace(/\./g, "").replace(/,/g, "");
+            return parseFloat(clean) || 0;
         }
 
         function navigateSymbol(direction) {
@@ -1313,9 +1217,7 @@ def generate_html():
                 const minIdx = indices[0];
                 const maxIdx = indices[indices.length - 1];
 
-                chartInstance.priceScale('right').applyOptions({
-                    autoScale: true,
-                });
+                chartInstance.priceScale('right').applyOptions({ autoScale: true });
 
                 const rangeSpan = Math.max(15, (maxIdx - minIdx) * 2);
                 const from = Math.max(0, minIdx - Math.floor(rangeSpan / 2));
@@ -1628,7 +1530,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"✅ Đã render thành công {OUTPUT_HTML} với ô tick lọc định giá rẻ kết hợp nhóm ngành.")
+    print(f"✅ Đã render thành công {OUTPUT_HTML} tích hợp đầy đủ tín hiệu PTKT / Volume.")
 
 
 if __name__ == "__main__":
