@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 import os
+import shutil
 import numpy as np
 import pandas as pd
 from ptkt import ProfessionalTechnicalAnalyzer
@@ -9,6 +10,14 @@ DATA_FILE = "data.json"
 BCTC_DIR = "bctc_data"
 OUTPUT_JSON = "screener_results.json"
 OUTPUT_CSV = "screener_summary.csv"
+
+# Các trường AI KHÔNG BAO GIỜ ĐƯỢC GHI ĐÈ
+AI_FIELDS = {
+    "bctc", "catalyst", "risks", "outlook", "macro_view",
+    "ai_recommendation", "ai_price_zone", "ai_updated_at",
+    "recommendation", "price_zone", "updated_at",
+    "bctc_history",
+}
 
 # ============================================================
 # PHÂN NHÓM NGÀNH CHÍNH (7 ngành)
@@ -24,27 +33,18 @@ SECTOR_MAPPING = {
 }
 
 # ============================================================
-# PHÂN NHÓM CON (SUB-SECTOR) — ĐỂ ĐỊNH GIÁ CHÍNH XÁC
-# Chỉ những mã có bản chất tài chính KHÁC với phần còn lại của ngành chính.
+# PHÂN NHÓM CON (SUB-SECTOR) — ĐỊNH GIÁ CHÍNH XÁC HƠN
 # ============================================================
 SUB_SECTOR_MAPPING = {
-    # Bảo hiểm: dùng P/B + ROE, giống ngân hàng
     "INSURANCE": ["BVH"],
-    # Xăng dầu: dùng P/E thấp + biên gộp mỏng, chu kỳ giá dầu
     "PETROLEUM": ["PLX", "PVD", "PVS", "BSR"],
-    # Vận tải biển: chu kỳ cước tàu, dùng P/B + P/S
     "MARITIME": ["GMD", "HAH", "PVT"],
-    # Hàng không: đặc thù, CFO âm khi mở rộng đội bay
     "AVIATION": ["VJC", "HVN"],
-    # Xây dựng & VLXD (trong ngành Sản xuất): dùng P/B, tránh P/E bẫy
     "CONSTRUCTION": ["CTD", "VCG", "HHV", "GEX", "DRC", "CSM", "BMP"],
-    # Nông - Thủy sản: P/E + biên gộp, khá giống sản xuất
     "AGRI": ["VHC", "ANV", "DBC", "SBT", "ASM", "APH"],
 }
 
-# Cấu hình định giá cho từng nhóm (tất cả giá trị đều có thể kiểm chứng từ data.json)
 SUB_SECTOR_CONFIG = {
-    # Nhóm chính
     "NGAN_HANG":                    {"cap_pe": 14, "cap_pb": 1.8, "mos": 0.20, "primary_metric": "PB"},
     "CHUNG_KHOAN":                  {"cap_pe": 14, "cap_pb": 1.8, "mos": 0.25, "primary_metric": "PB"},
     "BAT_DONG_SAN":                 {"cap_pe": 12, "cap_pb": 2.0, "mos": 0.30, "primary_metric": "PB"},
@@ -53,11 +53,10 @@ SUB_SECTOR_CONFIG = {
     "NGUYEN_VAT_LIEU_CHU_KY":       {"cap_pe": 12, "cap_pb": 2.0, "mos": 0.30, "primary_metric": "PB"},
     "SAN_XUAT_TIEU_DUNG_PHONG_THU": {"cap_pe": 18, "cap_pb": 2.5, "mos": 0.25, "primary_metric": "PE"},
 
-    # Nhóm con đặc thù
     "INSURANCE":    {"cap_pe": 16, "cap_pb": 2.0, "mos": 0.25, "primary_metric": "PB"},
-    "PETROLEUM":    {"cap_pe": 12, "cap_pb": 1.5, "mos": 0.30, "primary_metric": "PE"},  # P/E thấp vì biên mỏng
-    "MARITIME":     {"cap_pe": 10, "cap_pb": 1.5, "mos": 0.30, "primary_metric": "PB"},  # chu kỳ cước
-    "AVIATION":     {"cap_pe": 15, "cap_pb": 3.0, "mos": 0.35, "primary_metric": "PB"},  # rủi ro cao
+    "PETROLEUM":    {"cap_pe": 12, "cap_pb": 1.5, "mos": 0.30, "primary_metric": "PE"},
+    "MARITIME":     {"cap_pe": 10, "cap_pb": 1.5, "mos": 0.30, "primary_metric": "PB"},
+    "AVIATION":     {"cap_pe": 15, "cap_pb": 3.0, "mos": 0.35, "primary_metric": "PB"},
     "CONSTRUCTION": {"cap_pe": 12, "cap_pb": 1.5, "mos": 0.30, "primary_metric": "PB"},
     "AGRI":         {"cap_pe": 14, "cap_pb": 2.0, "mos": 0.25, "primary_metric": "PE"},
 }
@@ -71,7 +70,6 @@ def get_sector(symbol):
 
 
 def get_sub_sector(symbol):
-    """Trả về sub-sector nếu có, ngược lại trả về sector chính."""
     for sub, symbols in SUB_SECTOR_MAPPING.items():
         if symbol in symbols:
             return sub
@@ -79,7 +77,6 @@ def get_sub_sector(symbol):
 
 
 def load_bctc_supplement(symbol):
-    """Fallback đọc bctc_data nếu data.json thiếu PE/PB/PS."""
     bctc_path = os.path.join(BCTC_DIR, f"{symbol.upper()}.json")
     if os.path.exists(bctc_path):
         try:
@@ -91,14 +88,9 @@ def load_bctc_supplement(symbol):
 
 
 # ============================================================
-# BƯỚC 1: LÀM SẠCH VÀ CHUẨN HÓA DỮ LIỆU TỪ data.json
+# BƯỚC 1: CHUẨN HÓA DỮ LIỆU
 # ============================================================
 def normalize_stock_data(symbol, data):
-    """
-    Đọc data.json và trả về dict CHUẨN với đầy đủ trường dùng để tính toán.
-    Tất cả giá trị fallback về 0 hoặc None — KHÔNG BAO GIỜ bịa.
-    """
-    # Các trường cơ bản có thể có trong data.json
     close_price = float(data.get("close", data.get("close_price", 0)) or 0)
     pe = float(data.get("pe", 0) or 0)
     pb = float(data.get("pb", 0) or 0)
@@ -112,7 +104,6 @@ def normalize_stock_data(symbol, data):
     debt_to_equity = float(data.get("debt_to_equity", 0) or 0)
     gross_margin = float(data.get("gross_margin", 0) or 0)
 
-    # Fallback: PE/PB/PS từ bctc_data nếu thiếu
     if pe == 0 or pb == 0 or ps == 0:
         supp = load_bctc_supplement(symbol)
         ratios_list = supp.get("ratios", [])
@@ -122,14 +113,11 @@ def normalize_stock_data(symbol, data):
             if pb == 0: pb = float(latest.get("PB") or latest.get("PRICE_TO_BOOK") or 0)
             if ps == 0: ps = float(latest.get("PS") or latest.get("PRICE_TO_SALES") or 0)
 
-    # Suy EPS từ close/PE nếu eps = 0 nhưng có PE
     if eps == 0 and pe > 0 and close_price > 0:
         eps = close_price / pe
 
-    # Suy BVPS từ close/PB
     bvps = (close_price / pb) if pb > 0 and close_price > 0 else 0
 
-    # Tăng trưởng từ bctc_history
     profit_growth_yoy = 0.0
     credit_growth_yoy = 0.0
     bctc_history = data.get("bctc_history", [])
@@ -154,13 +142,9 @@ def normalize_stock_data(symbol, data):
 
 
 # ============================================================
-# BƯỚC 2: TÍNH MEDIAN NGÀNH TỪ CHÍNH data.json
+# BƯỚC 2: MEDIAN NGÀNH
 # ============================================================
 def compute_sector_medians(normalized_db):
-    """
-    Tính median P/E, P/B, P/S, ROE của từng sub-sector (dùng sub-sector để chính xác hơn).
-    Nếu sub-sector có < 3 mã → fallback về sector chính.
-    """
     buckets = {}
     for symbol, nd in normalized_db.items():
         sub = get_sub_sector(symbol)
@@ -176,7 +160,7 @@ def compute_sector_medians(normalized_db):
     for key, b in buckets.items():
         n = len(b["pe"]) + len(b["pb"])
         if n < 3:
-            continue  # bỏ qua bucket quá nhỏ
+            continue
         medians[key] = {
             "pe": float(np.median(b["pe"])) if b["pe"] else 0.0,
             "pb": float(np.median(b["pb"])) if b["pb"] else 0.0,
@@ -188,7 +172,6 @@ def compute_sector_medians(normalized_db):
 
 
 def get_median_for_symbol(symbol, sector_medians):
-    """Ưu tiên median sub-sector; nếu không có, fallback về sector chính; cuối cùng là giá trị mặc định."""
     sub = get_sub_sector(symbol)
     sector = get_sector(symbol)
     if sub in sector_medians and sector_medians[sub]["n"] >= 3:
@@ -199,17 +182,9 @@ def get_median_for_symbol(symbol, sector_medians):
 
 
 # ============================================================
-# BƯỚC 3: TÍNH VÙNG MUA THEO TỪNG NHÓM
+# BƯỚC 3: TÍNH VÙNG MUA
 # ============================================================
 def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
-    """
-    Tính vùng mua bằng 3-4 phương pháp, TẤT CẢ đều dùng dữ liệu có trong data.json.
-
-    Input bắt buộc:
-      - nd["eps"], nd["bvps"]: từ data.json (hoặc suy từ close/PE, close/PB)
-      - sector_median["pe"], ["pb"]: median ngành
-      - config: cấu hình theo nhóm (cap_pe, cap_pb, mos)
-    """
     eps = nd["eps"]
     bvps = nd["bvps"]
     close = nd["close_price"]
@@ -230,31 +205,24 @@ def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
     mos = config["mos"]
     is_financial = group_label in ("NGAN_HANG", "CHUNG_KHOAN", "INSURANCE")
 
-    # ---- Phương pháp A: P/E method (nếu EPS > 0) ----
     if eps > 0 and med_pe > 0:
-        # Thưởng 15% nếu ROE > median (doanh nghiệp tốt hơn trung bình ngành)
         roe_bonus = 1.15 if (roe > 0 and roe > med_roe) else 1.0
         rational_pe = min(med_pe * roe_bonus, cap_pe)
         methods["PE_method"] = round(eps * rational_pe, 0)
 
-    # ---- Phương pháp B: P/B method (nếu BVPS > 0) ----
     if bvps > 0 and med_pb > 0:
         rational_pb = min(med_pb, cap_pb)
         methods["PB_method"] = round(bvps * rational_pb, 0)
 
-    # ---- Phương pháp C: Graham Number (chỉ phi tài chính) ----
     if not is_financial and eps > 0 and bvps > 0:
         graham = (22.5 * eps * bvps) ** 0.5
         methods["Graham"] = round(graham, 0)
 
-    # ---- Phương pháp D: CFO boost (chất lượng lợi nhuận) ----
     if not is_financial and npat > 0 and cfo > 0 and (cfo / npat) >= 0.8 and eps > 0 and med_pe > 0:
         rational_pe = min(med_pe, cap_pe)
         methods["CFO_boost"] = round(eps * rational_pe * 1.10, 0)
 
-    # ---- Phương pháp E: P/S method (dùng cho ngành bán lẻ, chu kỳ, BĐS) ----
     if config["primary_metric"] in ("PB",) and ps > 0 and sector_median.get("ps", 0) > 0:
-        # Suy doanh thu/cp từ close/PS → áp P/S mục tiêu
         sales_per_share = close / ps if ps > 0 else 0
         target_ps = min(sector_median["ps"], 2.5)
         if sales_per_share > 0:
@@ -269,7 +237,6 @@ def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
             "verdict": "KHÔNG ĐỦ DỮ LIỆU",
         }
 
-    # ---- Lấy trung vị có trọng số ----
     weights = {"PE_method": 2, "PB_method": 1.5, "Graham": 2, "CFO_boost": 1, "PS_method": 1}
     weighted = []
     for k, v in methods.items():
@@ -278,10 +245,7 @@ def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
     n = len(weighted)
     fair_high = weighted[n // 2] if n % 2 else (weighted[n // 2 - 1] + weighted[n // 2]) / 2
 
-    # ---- Trừ biên an toàn ----
     fair_low = fair_high * (1 - mos)
-
-    # ---- So sánh giá hiện tại ----
     discount_to_fair = ((fair_low - close) / close * 100) if close > 0 else 0.0
 
     if close <= 0:
@@ -325,11 +289,8 @@ def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
 def evaluate_stock(symbol, nd, sector_median, group_label, config):
     sector = get_sector(symbol)
 
-    pe = nd["pe"]
-    pb = nd["pb"]
-    ps = nd["ps"]
-    roe = nd["roe"]
-    roa = nd["roa"]
+    pe = nd["pe"]; pb = nd["pb"]; ps = nd["ps"]
+    roe = nd["roe"]; roa = nd["roa"]
     dividend_yield = nd["dividend_yield"]
     close_price = nd["close_price"]
     cfo_latest = nd["cfo_latest"]
@@ -478,7 +439,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
     elif total_score >= 60:
         potential_zone = "VÙNG MUA AN TOÀN (B)"
 
-    # ============ 💰 VÙNG MUA ============
     fv = compute_fair_value_zone(symbol, nd, sector_median, config, group_label)
 
     return {
@@ -487,7 +447,7 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "sub_sector": group_label,
         "close_price": close_price,
         "pe": pe, "pb": pb, "ps": ps,
-        "roe": roe, "roa": roa, "eps": nd["eps"], "bvps": round(nd["bvps"], 0),
+        "roe": roe, "roa": roa, "eps": round(nd["eps"], 0), "bvps": round(nd["bvps"], 0),
         "dividend_yield": dividend_yield,
         "profit_growth_yoy": profit_growth_yoy,
         "cfo_latest": cfo_latest,
@@ -503,7 +463,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "volume_analysis": volume_analysis,
         "fundamental_notes": " | ".join(fund_notes),
 
-        # 💰 Vùng mua (deterministic — dùng dữ liệu từ data.json)
         "fair_value_high": fv["fair_high"],
         "fair_value_low": fv["fair_low"],
         "graham_number": fv["graham"],
@@ -513,6 +472,65 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "discount_to_fair_pct": fv["discount_to_fair_pct"],
         "valuation_verdict": fv["verdict"],
     }
+
+
+# ============================================================
+# BƯỚC 5: GHI CÁC TRƯỜNG MỚI VÀO data.json (AN TOÀN)
+# ============================================================
+def update_data_json_with_valuation(normalized_db, sector_medians):
+    """
+    Ghi các trường định giá MỚI vào data.json.
+    ✅ KHÔNG ĐỘNG vào các trường AI_FIELDS.
+    ✅ Backup trước khi ghi.
+    """
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        raw_db = json.load(f)
+
+    # Backup
+    backup_path = f"{DATA_FILE}.bak.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    shutil.copy(DATA_FILE, backup_path)
+    print(f"   🔒 Backup: {backup_path}")
+
+    updated = 0
+    for symbol, raw in raw_db.items():
+        if symbol not in normalized_db:
+            continue
+
+        nd = normalized_db[symbol]
+        sector = get_sector(symbol)
+        group_label = get_sub_sector(symbol)
+        config = SUB_SECTOR_CONFIG.get(group_label) or SUB_SECTOR_CONFIG.get(
+            sector, SUB_SECTOR_CONFIG["SAN_XUAT_TIEU_DUNG_PHONG_THU"]
+        )
+        median, _ = get_median_for_symbol(symbol, sector_medians)
+        fv = compute_fair_value_zone(symbol, nd, median, config, group_label)
+
+        # Ghi trường mới — an toàn: chỉ gán key, không xóa gì
+        raw["sector"] = sector
+        raw["sub_sector"] = group_label
+        raw["bvps"] = round(nd["bvps"], 0)
+        raw["fair_value_high"] = fv["fair_high"]
+        raw["fair_value_low"] = fv["fair_low"]
+        raw["graham_number"] = fv["graham"]
+        raw["margin_of_safety_pct"] = fv["mos_pct"]
+        raw["fair_value_methods"] = fv["methods"]
+        raw["fair_value_rationale"] = fv["rationale"]
+        raw["discount_to_fair_pct"] = fv["discount_to_fair_pct"]
+        raw["valuation_verdict"] = fv["verdict"]
+        raw["valuation_calculated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Kiểm tra an toàn: không được làm mất trường AI
+        for ai_field in AI_FIELDS:
+            if ai_field in raw and not raw.get(ai_field):
+                print(f"   ⚠️ Cảnh báo: {symbol} mất trường AI '{ai_field}'")
+
+        raw_db[symbol] = raw
+        updated += 1
+
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(raw_db, f, ensure_ascii=False, indent=4)
+
+    return updated
 
 
 # ============================================================
@@ -528,29 +546,28 @@ def main():
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         stock_db = json.load(f)
 
-    # Bước 1: Chuẩn hóa dữ liệu
+    # Bước 1: Chuẩn hóa
     normalized_db = {}
     for symbol, raw in stock_db.items():
         normalized_db[symbol] = normalize_stock_data(symbol, raw)
 
-    # Bước 2: Tính median ngành & sub-ngành
+    # Bước 2: Median ngành
     print("📊 Đang tính median ngành...")
     sector_medians = compute_sector_medians(normalized_db)
     for sec, m in sector_medians.items():
         print(f"   [{sec:18s}] n={m['n']:2d} | P/E={m['pe']:6.2f} | P/B={m['pb']:5.2f} | ROE={m['roe']:5.1f}%")
 
-    # Bước 3: Đánh giá từng mã
+    # Bước 3: Đánh giá
     results = []
     for symbol, nd in normalized_db.items():
         sector = get_sector(symbol)
         group_label = get_sub_sector(symbol)
-        # Lấy config: ưu tiên sub-sector, fallback về sector chính
         if group_label in SUB_SECTOR_CONFIG:
             config = SUB_SECTOR_CONFIG[group_label]
         else:
             config = SUB_SECTOR_CONFIG.get(sector, SUB_SECTOR_CONFIG["SAN_XUAT_TIEU_DUNG_PHONG_THU"])
 
-        median, median_label = get_median_for_symbol(symbol, sector_medians)
+        median, _ = get_median_for_symbol(symbol, sector_medians)
         res = evaluate_stock(symbol, nd, median, group_label, config)
         if res:
             results.append(res)
@@ -561,17 +578,16 @@ def main():
 
     results = sorted(results, key=lambda x: (x.get("total_score", 0), x.get("fundamental_score", 0)), reverse=True)
 
+    # Ghi screener_results.json + CSV
     with open(OUTPUT_JSON, "w", encoding="utf-8") as jf:
         json.dump(results, jf, ensure_ascii=False, indent=4)
 
     df = pd.DataFrame(results)
     df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
 
-    print(f"\n✅ Hoàn tất!")
-    print(f"   - {OUTPUT_JSON}")
-    print(f"   - {OUTPUT_CSV}")
+    print(f"\n✅ Đã tạo: {OUTPUT_JSON}, {OUTPUT_CSV}")
 
-    # In top 10 vùng mua hấp dẫn
+    # In báo cáo
     print("\n💰 TOP 10 MÃ ĐANG TRONG VÙNG MUA (giá <= fair_low):")
     cheap = [r for r in results if r["valuation_verdict"] == "RẺ - TRONG VÙNG MUA"]
     cheap.sort(key=lambda x: x["discount_to_fair_pct"], reverse=True)
@@ -582,12 +598,17 @@ def main():
               f"Fair {r['fair_value_high']:>10,.0f} | "
               f"CK {r['discount_to_fair_pct']:>5.1f}% | Điểm {r['total_score']}")
 
-    # Cảnh báo mã đắt
     print("\n⚠️ TOP 5 MÃ ĐẮT (nên tránh):")
     expensive = [r for r in results if r["valuation_verdict"] == "ĐẮT - TRÁNH"]
     expensive.sort(key=lambda x: x["close_price"] / max(x["fair_value_high"], 1), reverse=True)
     for r in expensive[:5]:
         print(f"   {r['symbol']:5s} | Giá {r['close_price']:>10,.0f} | Fair {r['fair_value_high']:>10,.0f} | Điểm {r['total_score']}")
+
+    # ============ 🔥 GHI TRƯỜNG MỚI VÀO data.json ============
+    print("\n💾 Đang ghi các trường định giá vào data.json (không đụng trường AI)...")
+    n_updated = update_data_json_with_valuation(normalized_db, sector_medians)
+    print(f"   ✅ Đã cập nhật {n_updated} mã với 12 trường định giá mới.")
+    print("   🔒 Các trường AI (bctc, catalyst, outlook, ai_recommendation, ...) được giữ nguyên.")
 
 
 if __name__ == "__main__":
