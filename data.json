@@ -18,7 +18,7 @@
         "net_profit_ttm": 16096.39,
         "recommendation": "ĐANG TÍCH LŨY NỀN (CẠN CUNG)",
         "price_zone": "Khối lượng cạn kiệt ở mức 0.68x MA20.",
-        "updated_at": "05/11/2026 17:54:23",
+        "updated_at": "05/11/2026 20:50:13",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -132,7 +132,8 @@
         "ai_updated_at": "2026-11-04 14:15:06",
         "bctc": "Bức tranh tài chính của ACB phản ánh rõ nét bản chất của một định chế tài chính khỏe mạnh, nơi các chỉ số truyền thống như biên lợi nhuận gộp (vốn không áp dụng cho ngân hàng) hay D/E = 9.62 không mang ý nghĩa tiêu cực mà thực chất là minh chứng cho khả năng huy động vốn dân cư xuất sắc. Việc dòng tiền kinh doanh (CFO) âm 3.317 tỷ đồng hoàn toàn phù hợp với chu kỳ mở rộng bảng cân đối kế toán, khi ngân hàng đẩy mạnh giải ngân tín dụng để kiến tạo lợi nhuận tương lai thay vì găm giữ tiền mặt. Hiệu suất sinh lời trên vốn chủ sở hữu (ROE) đạt 16.5% và ROA 1.6% là những con số ấn tượng, vượt trội so với mặt bằng chung ngành, cho thấy ban lãnh đạo sử dụng đòn bẩy tài chính và tài sản sinh lời cực kỳ hiệu quả. Lợi nhuận trượt 4 quý (TTM) lên tới 16.096 tỷ đồng cùng mức tăng trưởng LNST YoY gần 10% khẳng định sức chống chịu và khả năng duy trì đà tăng trưởng ngay cả trong môi trường vĩ mô biến động. Chất lượng tài sản của ACB từ lâu đã được thị trường định giá là hàng hiệu trong nhóm ngân hàng tư nhân nhờ khẩu vị rủi ro thận trọng và tỷ lệ bao phủ nợ xấu (LLR) luôn ở mức an toàn. EPS đạt 2.773 VNĐ kết hợp với cổ tức tiền mặt đều đặn 3.06% mang lại dòng thu nhập thụ động hấp dẫn cho nhà đầu tư giá trị. Ngân hàng đang tối ưu hóa việc giữ lại lợi nhuận để bổ sung vốn lõi, tạo đệm đỡ vững chắc cho room tín dụng mở rộng trên 12% trong các năm tới. Tổng thể, bảng cân đối kế toán của ACB không chỉ sạch mà còn mang tính phòng thủ cao, đúng chuẩn mực của một doanh nghiệp có con hào kinh tế về chất lượng tài sản.",
         "catalyst": "Lợi thế cạnh tranh cốt lõi của ACB nằm ở tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro thuộc top đầu ngành. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi việc nới room tín dụng mạnh mẽ khi nền kinh tế phục hồi, đặc biệt ở các phân khúc cho vay mua nhà và SME mà ngân hàng có thế mạnh thẩm định. Quá trình chuyển đổi số và tối ưu hóa chi phí vận hành sẽ tiếp tục giúp cải thiện biên lãi ròng (NIM) ngay cả khi mặt bằng lãi suất cho vay có xu hướng giảm. Hơn nữa, việc chủ động trích lập dự phòng sớm tạo ra kho dự trữ lợi nhuận, sẵn sàng hạch toán ngược để hỗ trợ tăng trưởng đột phá khi chu kỳ nợ xấu đi qua.",
-        "risks": "Rủi ro lớn nhất đối với ACB đến từ sự đóng băng của thị trường bất động sản, có thể làm gia tăng nợ xấu nhóm 2 và nhóm 3 ở các khoản vay thế chấp hoặc trái phiếu doanh nghiệp liên quan. Áp lực thu hẹp biên lãi ròng (NIM) là hiện hữu khi ngân hàng buộc phải giảm lãi suất cho vay để hỗ trợ nền kinh tế và cạnh tranh giành thị phần với các ngân hàng quốc doanh. Ngoài ra, rủi ro thanh khoản cục bộ trên thị trường trái phiếu hoặc sự cố niềm tin hệ thống luôn là biến số khó lường đối với bất kỳ ngân hàng thương mại cổ phần nào."
+        "risks": "Rủi ro lớn nhất đối với ACB đến từ sự đóng băng của thị trường bất động sản, có thể làm gia tăng nợ xấu nhóm 2 và nhóm 3 ở các khoản vay thế chấp hoặc trái phiếu doanh nghiệp liên quan. Áp lực thu hẹp biên lãi ròng (NIM) là hiện hữu khi ngân hàng buộc phải giảm lãi suất cho vay để hỗ trợ nền kinh tế và cạnh tranh giành thị phần với các ngân hàng quốc doanh. Ngoài ra, rủi ro thanh khoản cục bộ trên thị trường trái phiếu hoặc sự cố niềm tin hệ thống luôn là biến số khó lường đối với bất kỳ ngân hàng thương mại cổ phần nào.",
+        "ps": 0
     },
     "BID": {
         "symbol": "BID",
@@ -5582,7 +5583,7 @@
         "net_profit_ttm": 27634.2,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "05/11/2026 17:58:29",
+        "updated_at": "05/11/2026 20:50:19",
         "bctc_history": [
             {
                 "period": "2026-Q3",
@@ -5696,7 +5697,8 @@
         "ai_updated_at": "2026-11-04 15:18:59",
         "bctc": "Bức tranh tài chính của HPG phản ánh vị thế của một con quái vật trong ngành thép chu kỳ, thể hiện qua mức ROE ấn tượng 19.9% và ROA 10.4% ngay cả khi ngành vật liệu xây dựng chưa hoàn toàn thoát đáy. Biên lợi nhuận gộp duy trì ở mức 19.2% cho thấy năng lực kiểm soát chi phí và lợi thế quy mô vượt trội so với các đối thủ nội địa khi giá nguyên liệu đầu vào biến động. Tăng trưởng LNST YoY đạt 106.01% là minh chứng rõ nét cho việc HPG đang bước vào giai đoạn đầu của chu kỳ phục hồi lợi nhuận sau thời gian dài nén giá. Điểm sáng lớn nhất nằm ở chất lượng dòng tiền với CFO đạt 8,295 tỷ đồng, đảm bảo khả năng tự chủ vốn cho các đại dự án mà không phụ thuộc quá nhiều vào đòn bẩy tài chính. Tỷ lệ D/E ở mức 0.9 là một cấu trúc vốn cực kỳ an toàn và linh hoạt cho một doanh nghiệp thâm dụng vốn, giúp HPG vượt qua các giai đoạn thắt chặt tiền tệ hay lãi suất neo cao. Lợi nhuận trượt 4 quý lên tới 27,634 tỷ đồng tạo ra một lớp đệm tài chính dày dặn, hấp thụ tốt các cú sốc từ giá than cốc và quặng sắt trên thị trường thế giới. Việc duy trì cổ tức tiền mặt đều đặn 2.14% càng củng cố cam kết chia sẻ lợi ích thực tế với cổ đông thay vì chỉ là những con số lợi nhuận kế toán. Nhìn chung, sức khỏe nội tại của HPG đang ở trạng thái sung sức nhất để bứt phá khi cầu thép toàn cầu và nội địa đồng pha phục hồi.",
         "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của HPG nằm ở chuỗi giá trị khép kín, quy mô sản xuất lớn nhất Đông Nam Á và hệ thống logistics tự chủ giúp tối ưu hóa chi phí vận chuyển. Động lực tăng trưởng bùng nổ trong 2-3 năm tới được bảo chứng bởi siêu dự án Dung Quất 2, dự kiến nâng tổng công suất thép thô lên hơn 14 triệu tấn/năm và mở rộng mạnh mẽ vào mảng thép cuộn cán nóng (HRC) vốn đang phải nhập khẩu. Sự phục hồi của thị trường bất động sản nội địa kết hợp với làn sóng giải ngân đầu tư công sẽ là chất xúc tác kép giúp HPG chiếm lĩnh thêm thị phần từ các đối thủ yếu thế hơn. Hơn nữa, việc tự chủ được nguồn cung HRC sẽ mở ra cơ hội xuất khẩu các sản phẩm thép chế tạo sâu, gia tăng đáng kể biên lợi nhuận dài hạn.",
-        "risks": "Rủi ro lớn nhất đối với HPG là tính chất chu kỳ khắc nghiệt của ngành thép, khi biên lợi nhuận có thể bốc hơi nhanh chóng nếu giá quặng sắt và than cốc tăng đột biến trong khi giá thép đầu ra bị kìm hãm bởi cầu yếu. Sự phục hồi chậm chạp hoặc đóng băng kéo dài của thị trường bất động sản dân cư nội địa sẽ tiếp tục tạo áp lực lên sản lượng tiêu thụ thép xây dựng truyền thống. Ngoài ra, các rào cản phòng vệ thương mại và nguy cơ bị áp thuế chống bán phá giá từ các thị trường xuất khẩu chủ lực như Mỹ và EU luôn là ẩn số khó lường đối với bài toán tiêu thụ toàn cầu."
+        "risks": "Rủi ro lớn nhất đối với HPG là tính chất chu kỳ khắc nghiệt của ngành thép, khi biên lợi nhuận có thể bốc hơi nhanh chóng nếu giá quặng sắt và than cốc tăng đột biến trong khi giá thép đầu ra bị kìm hãm bởi cầu yếu. Sự phục hồi chậm chạp hoặc đóng băng kéo dài của thị trường bất động sản dân cư nội địa sẽ tiếp tục tạo áp lực lên sản lượng tiêu thụ thép xây dựng truyền thống. Ngoài ra, các rào cản phòng vệ thương mại và nguy cơ bị áp thuế chống bán phá giá từ các thị trường xuất khẩu chủ lực như Mỹ và EU luôn là ẩn số khó lường đối với bài toán tiêu thụ toàn cầu.",
+        "ps": 0
     },
     "HSG": {
         "symbol": "HSG",
