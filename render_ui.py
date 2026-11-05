@@ -70,7 +70,7 @@ def generate_html():
         for item in symbols_list:
             if "symbol" in item:
                 cheap_symbols_set.add(item["symbol"])
-            elif isinstance(item, str): # fallback nếu json là list các string
+            elif isinstance(item, str):
                 cheap_symbols_set.add(item)
 
     # 3) Lấy firebase config từ secret (env)
@@ -79,7 +79,7 @@ def generate_html():
     cheap_stocks_json = json.dumps(cheap_stocks_groups, ensure_ascii=False)
     cheap_symbols_json = json.dumps(list(cheap_symbols_set), ensure_ascii=False)
 
-    # 4) Template HTML đầy đủ toàn bộ logic gốc + tích hợp checkbox Định giá rẻ gọn gàng
+    # 4) Template HTML đầy đủ
     html_template = r"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -106,6 +106,9 @@ def generate_html():
         .glow-top1 { box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); border-color: #eab308; }
         .glow-top2 { box-shadow: 0 0 10px rgba(148, 163, 184, 0.3); border-color: #94a3b8; }
         .glow-top3 { box-shadow: 0 0 10px rgba(180, 83, 9, 0.3); border-color: #b45309; }
+
+        /* 🆕 Glow cho mã đang trong vùng mua */
+        .glow-cheap-zone { box-shadow: 0 0 12px rgba(16, 185, 129, 0.25); }
 
         #chart-modal-box { max-height: 96dvh; }
         #chart-modal-box.fullscreen {
@@ -280,7 +283,7 @@ def generate_html():
     </header>
 
     <main class="max-w-7xl mx-auto px-2 md:px-4 py-4">
-        <!-- Bộ lọc & Ô tick chọn nhanh Định giá rẻ (Tối ưu mobile grid-cols-2 gộp 2 hàng) -->
+        <!-- Bộ lọc & Ô tick chọn nhanh Định giá rẻ -->
         <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4 space-y-2">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3">
                 <div class="relative w-full">
@@ -322,6 +325,7 @@ def generate_html():
                         <option value="ALL_SCORE">🏆 Điểm Tổng hợp</option>
                         <option value="FUNDAMENTAL" selected>💰 Điểm Cơ bản</option>
                         <option value="TECHNICAL">📈 Điểm Kỹ thuật</option>
+                        <option value="VALUATION_VERDICT">🎯 Ưu tiên TRONG VÙNG MUA</option>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-amber-400 pointer-events-none">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -329,7 +333,6 @@ def generate_html():
                 </div>
             </div>
 
-            <!-- Ô TICK (CHECKBOX) LỌC ĐỊNH GIÁ RẺ KẾT HỢP NHÓM NGÀNH HIỆN CÓ -->
             <div class="flex items-center justify-between px-1 pt-1 border-t border-slate-800/80 text-xs">
                 <label class="flex items-center gap-2 cursor-pointer select-none text-emerald-300 font-bold hover:text-emerald-200 transition">
                     <input type="checkbox" id="cheap-stocks-checkbox" onchange="renderCards()" class="w-4 h-4 rounded bg-slate-950 border-emerald-500 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer">
@@ -408,6 +411,9 @@ def generate_html():
                     <div><span class="text-[10px] text-slate-500 block">ROA</span><span id="modal-roa" class="text-sm font-bold text-indigo-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
                 </div>
+
+                <!-- 🆕 KHUNG VÙNG MUA DETERMINISTIC -->
+                <div id="modal-fair-zone"></div>
 
                 <!-- NÚT ẨN/HIỆN CHỈ SỐ CHUYÊN NGHIỆP -->
                 <div>
@@ -897,7 +903,16 @@ def generate_html():
                         ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
                         ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
                         macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
-                        ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at
+                        ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at,
+
+                        // 🆕 Vùng mua deterministic từ screener.py
+                        fair_value_low: extraData.fair_value_low !== undefined ? extraData.fair_value_low : (item.fair_value_low || 0),
+                        fair_value_high: extraData.fair_value_high !== undefined ? extraData.fair_value_high : (item.fair_value_high || 0),
+                        valuation_verdict: extraData.valuation_verdict !== undefined ? extraData.valuation_verdict : (item.valuation_verdict || ""),
+                        discount_to_fair_pct: extraData.discount_to_fair_pct !== undefined ? extraData.discount_to_fair_pct : (item.discount_to_fair_pct || 0),
+                        margin_of_safety_pct: extraData.margin_of_safety_pct !== undefined ? extraData.margin_of_safety_pct : (item.margin_of_safety_pct || 0),
+                        fair_value_rationale: extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || ""),
+                        sub_sector: extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || ""),
                     };
                 });
                 renderCards();
@@ -938,7 +953,17 @@ def generate_html():
                 return matchSearch && matchSector && matchCheap;
             });
 
-            if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
+            // 🆕 Ưu tiên mã TRONG VÙNG MUA nếu chọn VALUATION_VERDICT
+            if (rankingMode === "VALUATION_VERDICT") {
+                const order = { "RẺ - TRONG VÙNG MUA": 0, "HỢP LÝ - CHỜ ĐIỀU CHỈNH": 1, "HƠI ĐẮT - KHÔNG MUA": 2, "ĐẮT - TRÁNH": 3, "KHÔNG ĐỦ DỮ LIỆU": 4 };
+                filtered.sort((a, b) => {
+                    const va = order[a.valuation_verdict] ?? 5;
+                    const vb = order[b.valuation_verdict] ?? 5;
+                    if (va !== vb) return va - vb;
+                    return (b.discount_to_fair_pct || 0) - (a.discount_to_fair_pct || 0);
+                });
+            }
+            else if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
             else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
@@ -952,6 +977,7 @@ def generate_html():
             filtered.forEach((item, index) => {
                 let statusColor = "text-slate-400 bg-slate-800";
                 let borderColor = "border-slate-700";
+                let cardGlow = "";
                 let displayRec = item.technical_status || "Tích lũy";
                 if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {
                     statusColor = "text-emerald-400 bg-emerald-500/10";
@@ -961,8 +987,22 @@ def generate_html():
                     borderColor = "border-amber-500/30";
                 }
 
+                // 🆕 Viền thẻ theo Verdict vùng mua (ưu tiên hơn status)
+                const verdict = item.valuation_verdict || "";
+                let verdictBadgeHtml = "";
+                if (verdict.includes("RẺ")) {
+                    borderColor = "border-emerald-500/60";
+                    cardGlow = "glow-cheap-zone";
+                    verdictBadgeHtml = `<span class="bg-emerald-500/25 text-emerald-200 border border-emerald-500/50 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Giá hiện tại đang thấp hơn fair_low ${Math.abs(item.discount_to_fair_pct || 0).toFixed(1)}%"><i class="fa-solid fa-crosshairs"></i> Trong vùng mua</span>`;
+                } else if (verdict.includes("HỢP LÝ")) {
+                    borderColor = "border-amber-500/40";
+                    verdictBadgeHtml = `<span class="bg-amber-500/20 text-amber-200 border border-amber-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Giá đang ở vùng hợp lý, chờ điều chỉnh"><i class="fa-solid fa-scale-balanced"></i> Giá hợp lý</span>`;
+                } else if (verdict.includes("ĐẮT")) {
+                    borderColor = "border-rose-500/50";
+                    verdictBadgeHtml = `<span class="bg-rose-500/20 text-rose-200 border border-rose-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Giá đang cao hơn fair_high"><i class="fa-solid fa-triangle-exclamation"></i> Đắt</span>`;
+                }
+
                 let topBadge = "";
-                let cardGlow = "";
                 if (rankingMode !== "NONE") {
                     if (index === 0) { topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }
                     else if (index === 1) { topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }
@@ -970,13 +1010,13 @@ def generate_html():
                     else { topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }
                 }
 
-                // 🌟 Nhãn Định giá rẻ trên thẻ Flash
+                // 🌟 Nhãn Định giá rẻ (từ cheap_stocks.json)
                 let cheapBadgeHtml = "";
                 if (cheapSymbolsSet.has(item.symbol)) {
-                    cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ thực sự (P/E & P/B hấp dẫn)"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
+                    cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ (P/E & P/B hấp dẫn)"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
                 }
 
-                // 🌟 Dòng điểm: Cơ bản | Kỹ thuật | Định giá | Tổng hợp
+                // 🌟 Dòng điểm
                 let scoreHtml = "";
                 if (rankingMode !== "NONE") {
                     const isFundActive  = rankingMode === "FUNDAMENTAL";
@@ -1026,7 +1066,7 @@ def generate_html():
                     ${topBadge}
                     <div>
                         <div class="flex justify-between items-start mb-3">
-                            <!-- Cột trái: Mã, nút AI, status, ngành & tên công ty -->
+                            <!-- Cột trái -->
                             <div class="flex flex-col min-w-0 pr-2">
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <span class="text-xl font-black text-white">${item.symbol}</span>
@@ -1041,10 +1081,11 @@ def generate_html():
                                 </div>
                             </div>
 
-                            <!-- Cột phải: Giá & Badge định giá rẻ xếp thẳng hàng dọc -->
-                            <div class="text-right flex flex-col items-end shrink-0 ml-2">
+                            <!-- Cột phải -->
+                            <div class="text-right flex flex-col items-end shrink-0 ml-2 gap-1">
                                 <span class="block text-lg font-bold text-emerald-400 leading-tight">${formatNumber(item.close_price)}</span>
-                                ${cheapBadgeHtml ? `<div class="mt-1.5">${cheapBadgeHtml}</div>` : ''}
+                                ${verdictBadgeHtml}
+                                ${cheapBadgeHtml}
                             </div>
                         </div>
 
@@ -1054,6 +1095,16 @@ def generate_html():
                             <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
                             <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
                         </div>
+
+                        <!-- 🆕 Dải vùng mua nhỏ gọn -->
+                        ${(item.fair_value_low > 0 && item.fair_value_high > 0) ? `
+                        <div class="flex items-center justify-between text-[10px] bg-slate-950/40 px-2 py-1 rounded border border-slate-800/60 mb-1">
+                            <span class="text-slate-400"><i class="fa-solid fa-crosshairs text-emerald-400 mr-1"></i>Mua ≤</span>
+                            <span class="font-bold text-emerald-300">${formatNumber(item.fair_value_low)}</span>
+                            <span class="text-slate-500">|</span>
+                            <span class="text-slate-400">Fair</span>
+                            <span class="font-bold text-indigo-300">${formatNumber(item.fair_value_high)}</span>
+                        </div>` : ''}
                     </div>
                     ${scoreHtml}
                 `;
@@ -1093,7 +1144,7 @@ def generate_html():
 
             document.getElementById('modal-company-name').innerText = item.company_name || '—';
 
-            // 🌟 Huy hiệu Định giá rẻ ở trang chi tiết (Modal AI)
+            // Huy hiệu Định giá rẻ
             const cheapBadgeContainer = document.getElementById('modal-cheap-badge-container');
             if (cheapSymbolsSet.has(item.symbol)) {
                 cheapBadgeContainer.innerHTML = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1.5 shadow"><i class="fa-solid fa-gem text-emerald-400"></i> Doanh nghiệp định giá rẻ</span>`;
@@ -1131,6 +1182,68 @@ def generate_html():
             } else {
                 gmLabel.innerText = "Biên gộp";
                 gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
+            }
+
+            // 🆕 Hiển thị khung VÙNG MUA
+            const fairLow = item.fair_value_low || 0;
+            const fairHigh = item.fair_value_high || 0;
+            const verdict = item.valuation_verdict || "";
+            const discountPct = item.discount_to_fair_pct || 0;
+            const mosPct = item.margin_of_safety_pct || 0;
+            const closeNow = item.close_price || 0;
+
+            const fairZoneEl = document.getElementById('modal-fair-zone');
+            if (fairZoneEl) {
+                if (fairLow > 0 && fairHigh > 0) {
+                    let verdictColor = "text-slate-300 bg-slate-800 border-slate-700";
+                    let verdictIcon = "fa-circle-info";
+                    if (verdict.includes("RẺ")) {
+                        verdictColor = "text-emerald-300 bg-emerald-500/15 border-emerald-500/40";
+                        verdictIcon = "fa-circle-check";
+                    } else if (verdict.includes("HỢP LÝ")) {
+                        verdictColor = "text-amber-300 bg-amber-500/15 border-amber-500/40";
+                        verdictIcon = "fa-scale-balanced";
+                    } else if (verdict.includes("HƠI ĐẮT") || verdict.includes("ĐẮT")) {
+                        verdictColor = "text-rose-300 bg-rose-500/15 border-rose-500/40";
+                        verdictIcon = "fa-triangle-exclamation";
+                    }
+                    fairZoneEl.innerHTML = `
+                        <div class="bg-gradient-to-br from-indigo-500/10 to-emerald-500/10 border border-indigo-500/30 rounded-xl p-3 space-y-2">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-300">
+                                    <i class="fa-solid fa-crosshairs mr-1.5"></i> Vùng Mua Hợp Lý (Deterministic)
+                                </h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded border font-bold ${verdictColor}">
+                                    <i class="fa-solid ${verdictIcon} mr-1"></i>${verdict}
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
+                                    <span class="text-[10px] text-slate-400 block">Giá hiện tại</span>
+                                    <span class="text-sm font-bold text-white">${formatNumber(closeNow)}</span>
+                                </div>
+                                <div class="bg-emerald-500/10 p-2 rounded border border-emerald-500/30">
+                                    <span class="text-[10px] text-emerald-400 block">Vùng mua (fair_low)</span>
+                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatNumber(fairLow)}</span>
+                                </div>
+                                <div class="bg-indigo-500/10 p-2 rounded border border-indigo-500/30">
+                                    <span class="text-[10px] text-indigo-400 block">Fair value (fair_high)</span>
+                                    <span class="text-sm font-bold text-indigo-300">${formatNumber(fairHigh)}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/60">
+                                <span>Biên an toàn: <strong class="text-amber-400">${mosPct}%</strong></span>
+                                <span>Chiết khấu: <strong class="${discountPct > 0 ? 'text-emerald-400' : 'text-rose-400'}">${discountPct > 0 ? '+' : ''}${discountPct.toFixed(1)}%</strong></span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    fairZoneEl.innerHTML = `
+                        <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 text-center text-xs text-slate-500">
+                            <i class="fa-solid fa-hourglass-half mr-1"></i> Chưa có dữ liệu vùng mua — chạy screener.py trước.
+                        </div>
+                    `;
+                }
             }
 
             document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
@@ -1665,7 +1778,7 @@ def generate_html():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"✅ Đã render thành công {OUTPUT_HTML} với ô tick lọc định giá rẻ kết hợp nhóm ngành.")
+    print(f"✅ Đã render thành công {OUTPUT_HTML} với badge vùng mua deterministic.")
 
 
 if __name__ == "__main__":
