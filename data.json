@@ -6631,10 +6631,10 @@
     "PNJ": {
         "symbol": "PNJ",
         "company_name": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
-        "market_cap": 0,
+        "market_cap": 0.0,
         "total_shares": 0,
-        "close": 14750,
-        "volume": 10772700,
+        "close": 15400,
+        "volume": 7236400,
         "pe": 4.47,
         "pb": 0.57,
         "eps": 3302,
@@ -6647,7 +6647,7 @@
         "net_profit_ttm": 1688.59,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "04/11/2026 19:26:53",
+        "updated_at": "05/11/2026 11:58:05",
         "bctc_history": [
             {
                 "period": "2026-Q3",
