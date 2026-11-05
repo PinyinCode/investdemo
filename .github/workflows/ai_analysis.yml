@@ -35,6 +35,17 @@ on:
         default: false
         type: boolean
 
+      # 🆕 TUỲ CHỌN AI
+      use_ai:
+        description: 'Có gọi AI (tốn phí) hay chỉ dùng template fallback (miễn phí)?'
+        required: true
+        default: 'auto'
+        type: choice
+        options:
+          - 'auto'   # Tự động: có API key → dùng AI, không có → template
+          - 'yes'    # Bắt buộc dùng AI (báo lỗi nếu thiếu key)
+          - 'no'     # Không gọi AI, chỉ template (miễn phí)
+
 jobs:
   ai-analysis:
     runs-on: ubuntu-latest
@@ -55,7 +66,43 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Run AI Deep Analysis
+      # 🆕 Kiểm tra trạng thái API key & chọn mode thực tế
+      - name: Resolve AI mode
+        id: resolve
+        env:
+          HAS_KEY: ${{ secrets.ALIBABA_API_KEY != '' }}
+          USER_CHOICE: ${{ inputs.use_ai || 'auto' }}
+        run: |
+          echo "API key có sẵn: $HAS_KEY"
+          echo "Lựa chọn người dùng: $USER_CHOICE"
+
+          if [ "$USER_CHOICE" = "no" ]; then
+            echo "→ Chế độ: TEMPLATE (người dùng chọn --no-ai)"
+            echo "flag=" >> $GITHUB_OUTPUT
+            echo "mode=template" >> $GITHUB_OUTPUT
+          elif [ "$USER_CHOICE" = "yes" ]; then
+            if [ "$HAS_KEY" = "true" ]; then
+              echo "→ Chế độ: AI (người dùng chọn --ai)"
+              echo "flag=--ai" >> $GITHUB_OUTPUT
+              echo "mode=ai" >> $GITHUB_OUTPUT
+            else
+              echo "❌ Bạn chọn dùng AI nhưng secret ALIBABA_API_KEY chưa được cấu hình!"
+              exit 1
+            fi
+          else
+            # auto
+            if [ "$HAS_KEY" = "true" ]; then
+              echo "→ Chế độ: AUTO (có API key, sẽ dùng AI)"
+              echo "flag=" >> $GITHUB_OUTPUT
+              echo "mode=auto-ai" >> $GITHUB_OUTPUT
+            else
+              echo "→ Chế độ: AUTO (không có API key, dùng TEMPLATE)"
+              echo "flag=--no-ai" >> $GITHUB_OUTPUT
+              echo "mode=auto-template" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Run Analysis
         env:
           ALIBABA_API_KEY: ${{ secrets.ALIBABA_API_KEY }}
           INPUT_SYMBOLS: ${{ inputs.symbols }}
@@ -64,12 +111,22 @@ jobs:
           BATCH: ${{ inputs.batch || '1' }}
           TOTAL_BATCHES: ${{ inputs.total_batches || '1' }}
           FORCE: ${{ inputs.force && '--force' || '' }}
+          AI_FLAG: ${{ steps.resolve.outputs.flag }}
+          RESOLVED_MODE: ${{ steps.resolve.outputs.mode }}
         run: |
-          echo "Mode=$MODE | Batch=$BATCH/$TOTAL_BATCHES | Force=$FORCE | Symbols=$INPUT_SYMBOLS"
-          python analyze_ai.py --mode "$MODE" --batch "$BATCH" --total-batches "$TOTAL_BATCHES" $FORCE
+          echo "=========================================="
+          echo "🚀 Bắt đầu phân tích"
+          echo "  Mode        : $MODE"
+          echo "  Batch       : $BATCH/$TOTAL_BATCHES"
+          echo "  Force       : ${FORCE:-no}"
+          echo "  Symbols     : ${INPUT_SYMBOLS:-<auto by sector>}"
+          echo "  AI mode     : $RESOLVED_MODE"
+          echo "  AI flag     : ${AI_FLAG:-<auto by key>}"
+          echo "=========================================="
+          python ai_analyzer.py --mode "$MODE" --batch "$BATCH" --total-batches "$TOTAL_BATCHES" $FORCE $AI_FLAG
 
-      - name: Commit and push AI results
-        if: always()   # vẫn commit nếu chạy xong một phần (vì script đã ghi data.json sau mỗi mã)
+      - name: Commit and push results
+        if: always()
         run: |
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "action@github.com"
@@ -77,7 +134,8 @@ jobs:
           if git diff --quiet && git diff --staged --quiet; then
             echo "Không có thay đổi để commit."
           else
+            RESOLVED_MODE="${{ steps.resolve.outputs.mode }}"
             LABEL="${{ inputs.symbols || (inputs.mode == 'rest' && format('Rest batch {0}/{1}', inputs.batch, inputs.total_batches)) || 'Top ngành tự động' }}"
-            git commit -m "🤖 [AI Analysis] ${LABEL} [$(date +'%Y-%m-%d %H:%M')]"
+            git commit -m "🤖 [$RESOLVED_MODE] ${LABEL} [$(date +'%Y-%m-%d %H:%M')]"
             git push
           fi
