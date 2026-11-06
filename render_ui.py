@@ -103,6 +103,31 @@ def generate_html():
         #chart-modal-box.fullscreen #tv-chart-container {
             height: calc(100dvh - 45px) !important; width: 100% !important;
         }
+        /* Dropdown sắp xếp — chuẩn tài chính */
+        #ranking-filter optgroup {
+            background-color: #020617;
+            color: #f59e0b;
+            font-weight: 700;
+            font-size: 10.5px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 8px 10px;
+            border-top: 1px solid #1e293b;
+        }
+        #ranking-filter option {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 9px 12px;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        #ranking-filter option:checked {
+            background: linear-gradient(90deg, #78350f 0%, #b45309 100%);
+            color: #fef3c7;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
@@ -292,34 +317,29 @@ def generate_html():
                     </span>
                 </div>
 
-                <!-- 🆕 DROPDOWN SẮP XẾP (KHÔNG ICON, PHÂN NHÓM RÕ RÀNG) -->
+                <!-- DROPDOWN SẮP XẾP — CHUẨN TÀI CHÍNH -->
                 <div class="relative w-full col-span-2 md:col-span-1">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400 pointer-events-none">
                         <i class="fa-solid fa-compass text-xs md:text-sm"></i>
                     </span>
-                    <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
-                        <optgroup label="Ưu tiên: Mua tích sản">
-                            <option value="FINAL_BUY_ONLY" selected>Chỉ lọc mã MUA (Mạnh + Tích sản)</option>
-                            <option value="FINAL_DECISION_SORT">Xếp hạng theo Quyết định cuối</option>
+                    <select id="ranking-filter"
+                        class="w-full pl-7 md:pl-10 pr-8 py-2 bg-slate-950 border border-amber-500/60 rounded-lg text-xs md:text-sm text-amber-200 font-semibold focus:outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/30 appearance-none transition truncate cursor-pointer hover:border-amber-400">
+                        <optgroup label="Khuyến nghị">
+                            <option value="FINAL_BUY_ONLY" selected>Danh mục MUA</option>
+                            <option value="FINAL_DECISION_SORT">Toàn thị trường</option>
+                            <option value="FINAL_AVOID_ONLY">Danh mục TRÁNH</option>
                         </optgroup>
-                        
-                        <optgroup label="Săn hàng rẻ">
-                            <option value="VALUATION_VERDICT">Tìm mã đang Rẻ (Trong vùng mua)</option>
-                            <option value="VALUATION_SCORE">Xếp hạng theo Điểm Định giá</option>
+                        <optgroup label="Định giá">
+                            <option value="VALUATION_VERDICT">Trong vùng mua</option>
+                            <option value="VALUATION_SCORE">Theo Điểm định giá</option>
                         </optgroup>
-                        
-                        <optgroup label="Phân tích chuyên sâu">
-                            <option value="ALL_SCORE">Xếp hạng theo Tổng điểm</option>
-                            <option value="TECHNICAL">Xếp hạng theo Điểm Kỹ thuật</option>
-                            <option value="FUNDAMENTAL">Xếp hạng theo Điểm Cơ bản</option>
+                        <optgroup label="Phân tích">
+                            <option value="ALL_SCORE">Theo Tổng điểm</option>
+                            <option value="TECHNICAL">Theo Kỹ thuật</option>
+                            <option value="FUNDAMENTAL">Theo Cơ bản</option>
                         </optgroup>
-
-                        <optgroup label="Kiểm tra rủi ro">
-                            <option value="FINAL_AVOID_ONLY">Chỉ lọc các mã cần TRÁNH</option>
-                        </optgroup>
-
                         <optgroup label="Khác">
-                            <option value="NONE">Sắp xếp theo tên (A-Z)</option>
+                            <option value="NONE">Theo mã (A–Z)</option>
                         </optgroup>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-amber-400 pointer-events-none">
