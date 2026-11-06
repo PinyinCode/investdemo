@@ -7,7 +7,7 @@ import argparse
 
 SCREENER_FILE = "screener_results.json"
 DATA_FILE = "data.json"
-CONFIG_FILE = "config.json"  # 🆕 File cấu hình model
+CONFIG_FILE = "config.json"
 
 ALIBABA_API_KEY = os.getenv("ALIBABA_API_KEY", "").strip()
 INPUT_SYMBOLS = os.getenv("INPUT_SYMBOLS", "").strip()
@@ -16,19 +16,25 @@ API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatib
 RESUME_DAYS = 7
 
 # ============================================================
-# 🆕 CẤU HÌNH AI — Đọc từ config.json
+# 🆕 CẤU HÌNH AI — CHỈ ĐỌC model_name VÀ temperature TỪ config.json
 # ============================================================
 def load_config():
     if not os.path.exists(CONFIG_FILE):
-        raise FileNotFoundError(f"❌ Không tìm thấy {CONFIG_FILE}. Vui lòng tạo file này với nội dung: {{\"model_name\": \"...\", \"temperature\": ...}}")
+        raise FileNotFoundError(
+            f"❌ Không tìm thấy {CONFIG_FILE}. Vui lòng tạo file với nội dung:\n"
+            f'{{"model_name": "qwen3.7-max", "temperature": 0.15}}'
+        )
+    try:
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            config = json.load(f)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"❌ {CONFIG_FILE} không phải JSON hợp lệ: {e}")
 
-    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-        config = json.load(f)
-
-    if "model_name" not in config or not config["model_name"]:
-        raise ValueError(f"❌ {CONFIG_FILE} thiếu key 'model_name' hoặc giá trị rỗng.")
-    if "temperature" not in config:
-        raise ValueError(f"❌ {CONFIG_FILE} thiếu key 'temperature'.")
+    for key in ("model_name", "temperature"):
+        if key not in config:
+            raise ValueError(f"❌ {CONFIG_FILE} thiếu key bắt buộc: '{key}'")
+    if not config["model_name"]:
+        raise ValueError(f"❌ {CONFIG_FILE}: 'model_name' không được để trống.")
 
     return config
 
@@ -90,9 +96,6 @@ DECISION_TO_RECOMMENDATION = {
 }
 
 
-# ============================================================
-# 📝 TEMPLATE FALLBACK — KHÔNG CẦN AI VẪN CÓ BÁO CÁO
-# ============================================================
 def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     close = float(stock_metrics.get("close", stock_metrics.get("close_price", 0)) or 0)
     pe = float(stock_metrics.get("pe", 0) or 0)
@@ -123,7 +126,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     sector_name = SECTOR_NAMES.get(sector, sector)
     is_bank_or_sec = sector in ("NGAN_HANG", "CHUNG_KHOAN")
 
-    # BCTC
     bctc_parts = [
         f"Chỉ số sinh lời: ROE đạt {roe:.1f}%, ROA {roa:.1f}% — "
         + ("vượt trội so với mặt bằng chung ngành." if roe >= 15 else "ở mức trung bình ngành." if roe >= 10 else "còn khá thấp, cần cải thiện.")
@@ -153,7 +155,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     bctc_parts.append(f"EPS đạt {eps:,.0f} VNĐ" + (f", cổ tức {div_yield}%/năm — thu nhập thụ động hấp dẫn." if div_yield > 0 else "."))
     bctc = " ".join(bctc_parts)
 
-    # Catalyst
     moat_map = {
         "NGAN_HANG": "tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành",
         "CHUNG_KHOAN": "thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật",
@@ -173,7 +174,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
         catalyst_parts.append(f"Tăng trưởng LNST hiện ở mức {growth_yoy:.1f}% YoY, cần theo dõi thêm.")
     catalyst = " ".join(catalyst_parts)
 
-    # Risks
     risk_map = {
         "NGAN_HANG": f"Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức {de:.2f}. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
         "CHUNG_KHOAN": f"Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE {roe:.1f}% không duy trì được khi chu kỳ xuống.",
@@ -185,7 +185,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     }
     risks = risk_map.get(sector, f"Rủi ro chung của ngành {sector_name} và biến động thị trường.")
 
-    # Outlook
     if verdict == "RẺ - TRONG VÙNG MUA":
         outlook = (
             f"Giá hiện tại {close:,.0f} VNĐ nằm dưới vùng mua an toàn {fair_low:,.0f} VNĐ, "
@@ -487,7 +486,6 @@ def build_target_lists(screener_map):
 
     top_symbols = {}
     for sector, items in industry_groups.items():
-        # 🆕 TỐI ƯU: Ưu tiên Tổng điểm > Cơ bản > Chiết khấu
         items_sorted = sorted(
             items,
             key=lambda x: (
@@ -606,7 +604,7 @@ def main():
 
     source = "AI" if use_ai else "TEMPLATE"
     if use_ai:
-        print(f"🤖 Chế độ: AI (model {MODEL_NAME})")
+        print(f"🤖 Chế độ: AI (model {MODEL_NAME}, temp={TEMPERATURE})")
     else:
         if not ALIBABA_API_KEY:
             print(f"📝 Chế độ: TEMPLATE fallback (không có ALIBABA_API_KEY)")
