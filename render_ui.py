@@ -1713,9 +1713,9 @@ def generate_html():
 """
 
     html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
-    html_content = html_template.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
-    html_content = html_template.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
-    html_content = html_template.replace("{last_update_str}", last_update_str)
+    html_content = html_content.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
+    html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
+    html_content = html_content.replace("{last_update_str}", last_update_str)
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
