@@ -285,44 +285,63 @@ def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
 
 # ============================================================
 # 🎯 BƯỚC 3.5: QUYẾT ĐỊNH CUỐI CÙNG — CẦN ĐỦ 4 YẾU TỐ
-# (Vùng mua + PTCB + PTKT + Điểm định giá)
 # ============================================================
 def compute_final_decision(fund_score, tech_score, val_score, total_score,
                            verdict, cfo, npat, roe, debt_to_equity,
-                           discount_to_fair_pct=0.0):
+                           discount_to_fair_pct=0.0, close_price=0.0,
+                           fair_high=0.0, fair_low=0.0):
     is_bank_or_sec = roe > 0 and debt_to_equity > 3.0
 
-    # RULE 0: TRÁNH TUYỆT ĐỐI
-    if verdict == "ĐẮT - TRÁNH":
-        return ("❌ TRÁNH", "rose", f"Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH.")
-
+    # ============================================================
+    # RULE 0: KIỂM TRA CÁC TRƯỜNG HỢP ĐẶC BIỆT
+    # ============================================================
     if fund_score < 20:
         return ("❌ TRÁNH", "rose", f"PTCB chỉ {fund_score}/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.")
 
     if not is_bank_or_sec and cfo < 0 and npat > 0 and fund_score < 25:
         return ("⚠️ CẢNH BÁO LỢI NHUẬN ẢO", "amber", f"CFO âm ({cfo:,.0f} tỷ) trong khi LNST dương ({npat:,.0f} tỷ) — lợi nhuận không có tiền mặt thật.")
 
+    # Nếu giá quá đắt so với Fair Value (vượt xa fair_high > 20%)
+    if close_price > 0 and fair_high > 0 and close_price > fair_high * 1.2:
+        return ("❌ TRÁNH", "rose", f"Giá {close_price:,.0f} đã vượt xa fair_high {fair_high:,.0f} quá nhiều. Định giá quá đắt so với giá trị thực.")
+
+    # Nếu doanh nghiệp cơ bản tốt nhưng giá đang cao hơn fair_high -> Chờ
+    if close_price > 0 and fair_high > 0 and close_price > fair_high:
+        return ("⚠️ CHỜ VỀ VÙNG MUA", "amber", f"Giá {close_price:,.0f} cao hơn fair_high {fair_high:,.0f}. Doanh nghiệp tốt (PTCB {fund_score}/50) nhưng định giá đã đắt, chờ điều chỉnh.")
+
+    # ============================================================
     # RULE 1: MUA MẠNH
+    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 40 and tech_score >= 15 and val_score >= 24 and total_score >= 75 and discount_to_fair_pct >= 5):
         return ("🎯 MUA MẠNH", "emerald", f"ĐỦ 4 YẾU TỐ: Vùng mua (CK {discount_to_fair_pct:.1f}%) + PTCB {fund_score}/50 + PTKT {tech_score}/20 + Định giá {val_score}/30 + Tổng {total_score}đ. Setup lý tưởng.")
 
+    # ============================================================
     # RULE 2: MUA TÍCH SẢN
+    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and tech_score >= 10 and val_score >= 18 and total_score >= 60):
         return ("✅ MUA TÍCH SẢN", "emerald", f"ĐỦ 4 YẾU TỐ: Vùng mua (CK {discount_to_fair_pct:.1f}%) + PTCB {fund_score}/50 + PTKT {tech_score}/20 + Định giá {val_score}/30 + Tổng {total_score}đ. Có thể giải ngân từng phần.")
 
+    # ============================================================
     # RULE 3: CHỜ VỀ VÙNG MUA
+    # ============================================================
     if (fund_score >= 30 and val_score >= 18 and verdict in ("HỢP LÝ - CHỜ ĐIỀU CHỈNH", "HƠI ĐẮT - KHÔNG MUA")):
         return ("⚠️ CHỜ VỀ VÙNG MUA", "amber", f"Doanh nghiệp tốt (PTCB {fund_score}/50, Định giá {val_score}/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.")
 
+    # ============================================================
     # RULE 4: CHỜ XÁC NHẬN KỸ THUẬT
+    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and val_score >= 18 and tech_score < 10):
         return ("⏳ CHỜ XÁC NHẬN KỸ THUẬT", "amber", f"Đã đủ 3/4 yếu tố (Vùng mua + PTCB {fund_score}/50 + Định giá {val_score}/30) nhưng PTKT yếu ({tech_score}/20). Chờ tín hiệu đảo chiều trước khi mua.")
 
+    # ============================================================
     # RULE 5: CHỜ ĐỊNH GIÁ TỐT HƠN
+    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and val_score < 18):
         return ("⏳ CHỜ ĐỊNH GIÁ TỐT HƠN", "amber", f"Giá trong vùng mua + PTCB {fund_score}/50 tốt, nhưng điểm định giá chỉ {val_score}/30 (P/E, P/B chưa thực sự rẻ so với ngành).")
 
+    # ============================================================
     # RULE 6: THEO DÕI
+    # ============================================================
     missing = []
     if verdict != "RẺ - TRONG VÙNG MUA": missing.append(f"giá chưa vào vùng mua ({verdict})")
     if fund_score < 30: missing.append(f"PTCB {fund_score}/50 < 30")
@@ -402,7 +421,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         elif profit_growth_yoy >= 0:
             fundamental_score += 10; fund_notes.append("Duy trì nhịp cơ bản")
         else:
-            # 🆕 PHẠT NẶNG: Tăng trưởng âm là bẫy giá trị của ngành chu kỳ
             fundamental_score -= 15; fund_notes.append("⚠️ LNST tăng trưởng âm (suy thoái chu kỳ)")
             
         if roe >= 12:
@@ -509,6 +527,9 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         roe=roe,
         debt_to_equity=debt_to_equity,
         discount_to_fair_pct=fv["discount_to_fair_pct"],
+        close_price=close_price,
+        fair_high=fv["fair_high"],
+        fair_low=fv["fair_low"]
     )
 
     return {
@@ -598,6 +619,7 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
             verdict=fv["verdict"], cfo=nd["cfo_latest"], npat=nd["net_profit_ttm"],
             roe=nd["roe"], debt_to_equity=nd["debt_to_equity"],
             discount_to_fair_pct=fv["discount_to_fair_pct"],
+            close_price=nd["close_price"], fair_high=fv["fair_high"], fair_low=fv["fair_low"]
         )
         raw["final_decision"] = fd_label
         raw["final_decision_color"] = fd_color
