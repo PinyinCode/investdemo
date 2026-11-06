@@ -280,14 +280,14 @@
                 "roe_quarter": 5.48
             }
         ],
-        "outlook": "Giá 32,250 VNĐ nằm giữa vùng mua 30,268 và fair value 37,835 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: ⚠️ CHỜ VỀ VÙNG MUA. Nếu giá điều chỉnh về 30,268 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Giá hiện tại 32,250 VNĐ đang nằm trong vùng hợp lý nhưng chưa đủ rẻ khi so sánh với vùng mua (fair_low) 30,268 VNĐ và fair value 37,835 VNĐ. Hệ thống phát tín hiệu '⚠️ CHỜ VỀ VÙNG MUA' vì chiết khấu so với fair_low đang là -6.1%, chưa đáp ứng đủ Biên an toàn (Margin of Safety) 20.0% theo trường phái đầu tư giá trị. Mặc dù doanh nghiệp có nền tảng cơ bản xuất sắc và mẫu hình kỹ thuật Spring/Washout, việc giải ngân lúc này sẽ làm giảm tỷ suất sinh lời kỳ vọng. Do đó, nhà đầu tư cần kiên nhẫn chờ đợi các nhịp điều chỉnh của thị trường đưa giá về sát mốc 30,268 VNĐ để tối ưu hóa biên an toàn trước khi tích sản.",
         "ai_recommendation": "CHỜ VỀ VÙNG MUA — Tỷ trọng 0% — Chờ giá về fair_low mới mua",
         "ai_price_zone": "Vùng mua: 30,268 — 37,835 | Giá hiện tại: 32,250 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 18.5%, ROA 1.0% — vượt trội so với mặt bằng chung ngành. P/E 7.29x và P/B 1.28x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 16.21 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ -0.55x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 4,452 VNĐ, cổ tức 2.55%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 39.2% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức 16.21. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
+        "macro_view": "Ngành ngân hàng đang hưởng lợi trực tiếp từ chính sách nới lỏng tiền tệ và các gói hỗ trợ tín dụng của Ngân hàng Nhà nước nhằm thúc đẩy tăng trưởng GDP. Lãi suất điều hành duy trì ở mức thấp giúp giảm chi phí vốn (COF) cho BID, từ đó mở rộng biên lãi ròng (NIM) khi cầu tín dụng phục hồi. Tuy nhiên, áp lực từ tỷ giá hối đoái và lạm phát toàn cầu có thể khiến NHNN phải cân nhắc kỹ lưỡng trong việc duy trì thanh khoản dồi dào quá lâu. Sự phục hồi của thị trường bất động sản và trái phiếu doanh nghiệp cũng là yếu tố vĩ mô then chốt giúp giải tỏa áp lực trích lập dự phòng rủi ro tín dụng cho BID trong thời gian tới.",
+        "ai_updated_at": "2026-11-06 04:35:53",
+        "bctc": "BID thể hiện chất lượng tài sản và hiệu quả sinh lời xuất sắc với ROE đạt 18.5% và ROA ở mức 1.0%, phản ánh năng lực tối ưu hóa vốn của một ngân hàng đầu ngành. Lợi nhuận sau thuế TTM đạt 35,137 tỷ đồng với mức tăng trưởng ấn tượng 39.2% YoY, cho thấy động lực tăng trưởng tín dụng mạnh mẽ. Hệ số D/E ở mức 16.21 là hoàn toàn bình thường đối với đặc thù ngành ngân hàng khi nợ phải trả chủ yếu là tiền gửi khách hàng. Dòng tiền kinh doanh (CFO) đạt -19,192 tỷ đồng, kéo theo tỷ lệ CFO/LNST là -0.55x, nhưng đây là hiện tượng phổ biến khi ngân hàng mở rộng quy mô tín dụng. Về định giá, P/E hiện ở mức 7.29x và P/B là 1.28x, cho thấy thị trường đang chiết khấu so với tiềm năng tăng trưởng. EPS đạt 4,452 VNĐ và BVPS là 25,195 VNĐ củng cố nền tảng tài chính vững chắc. Kết luận, lợi nhuận của BID là lợi nhuận thật, đến từ hoạt động cốt lõi là cấp tín dụng và huy động vốn, không phải từ các bút toán tài chính ảo.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của BID nằm ở vị thế ngân hàng quốc doanh đầu ngành với chi phí vốn thấp nhờ mạng lưới huy động vốn rộng khắp và tệp khách hàng doanh nghiệp lớn trung thành. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi kỳ vọng phục hồi kinh tế vĩ mô, giúp đẩy mạnh tăng trưởng tín dụng (hiện đang >=12%) và cải thiện biên lãi ròng (NIM). Ngoài ra, việc chuyển đổi số và tối ưu hóa chi phí hoạt động sẽ tiếp tục hỗ trợ duy trì mức ROE xuất sắc >=18% trong dài hạn.",
+        "risks": "Rủi ro trọng yếu nhất đối với BID là áp lực nợ xấu (NPL) tiềm ẩn khi kinh tế vĩ mô biến động, đặc biệt từ các khoản vay trái phiếu doanh nghiệp và bất động sản. Bên cạnh đó, biên lãi ròng (NIM) có thể bị thu hẹp nếu cuộc đua lãi suất huy động diễn ra gay gắt trong khi lãi suất cho vay bị kiềm chế để hỗ trợ nền kinh tế. Cuối cùng, rủi ro pháp lý và các chính sách điều hành tín dụng đột ngột từ Ngân hàng Nhà nước có thể làm chậm lại tốc độ tăng trưởng quy mô tài sản.",
         "ps": 0,
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
@@ -307,7 +307,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "CTG": {
         "symbol": "CTG",
@@ -745,14 +745,14 @@
                 "roe_quarter": 5.45
             }
         ],
-        "outlook": "Giá hiện tại 19,500 VNĐ nằm dưới vùng mua an toàn 21,974 VNĐ, tạo biên an toàn thực 12.7% (MoS 20%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 5.96x và P/B 1.23x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với giá hiện tại 19,500 VNĐ, MBB đang giao dịch thấp hơn vùng mua (fair_low) 21,974 VNĐ một khoảng chiết khấu 12.7% và thấp hơn nhiều so với giá trị thực (fair value) 27,467 VNĐ. Biên an toàn (Margin of Safety) lên tới 20.0% kết hợp với định giá P/B 1.23x mang lại một cơ hội đầu tư giá trị cực kỳ rõ ràng cho tầm nhìn dài hạn. Hệ thống đánh giá tổng điểm 82/100 (Cơ bản 40/50, Định giá 30/30) hoàn toàn thuyết phục để đưa ra quyết định ✅ MUA TÍCH SẢN. Đây là thời điểm tối ưu để gom cổ phiếu khi thị trường đang bỏ qua nội tại doanh nghiệp xuất sắc và định giá rẻ bất thường.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 21,974 — 27,467 | Giá hiện tại: 19,500 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 21.8%, ROA 2.0% — vượt trội so với mặt bằng chung ngành. P/E 5.96x và P/B 1.23x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 10.20 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ -0.36x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 3,232 VNĐ, cổ tức 4.16%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 42.3% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức 10.20. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
+        "macro_view": "Chính sách tiền tệ của Ngân hàng Nhà nước đang duy trì trạng thái nới lỏng có kiểm soát nhằm hỗ trợ phục hồi kinh tế, tạo điều kiện thuận lợi cho các ngân hàng thương mại đẩy mạnh tăng trưởng tín dụng. Việc giảm lãi suất điều hành và các gói hỗ trợ lãi suất giúp cải thiện khả năng tiếp cận vốn của doanh nghiệp, từ đó thúc đẩy nhu cầu vay vốn và giảm áp lực nợ xấu cho MBB. Tuy nhiên, áp lực lạm phát toàn cầu và tỷ giá hối đoái có thể khiến NHNN phải cân nhắc kỹ lưỡng trong việc nới lỏng thêm, gây ra những nhịp điều chỉnh ngắn hạn của ngành. Dù vậy, với vị thế ngân hàng tối ưu vốn và chi phí rẻ, MBB sẽ là nhóm hưởng lợi đầu tiên và nhiều nhất khi chu kỳ tín dụng mới bùng nổ.",
+        "ai_updated_at": "2026-11-06 04:50:10",
+        "bctc": "MBB thể hiện chất lượng tài sản và hiệu quả sinh lời vượt trội với ROE đạt 21.8% và ROA ở mức 2.0%, thuộc nhóm ngân hàng tối ưu vốn tốt nhất thị trường. Lợi nhuận sau thuế TTM đạt 33,303 Tỷ đồng, tăng trưởng ấn tượng 42.26% so với cùng kỳ, phản ánh năng lực mở rộng tín dụng mạnh mẽ. Hệ số D/E = 10.2 là đặc thù bình thường của ngành ngân hàng do nợ phải trả chủ yếu là tiền gửi khách hàng. Dòng tiền kinh doanh (CFO) đạt -12,063 Tỷ đồng, kéo theo tỷ lệ CFO/LNST = -0.36x, tuy nhiên đây là hiện tượng CFO âm bình thường khi ngân hàng đẩy mạnh tăng trưởng tín dụng. Định giá hiện tại cực kỳ hấp dẫn với P/E chỉ 5.96 và P/B = 1.23 so với BVPS 15,854 VNĐ. EPS đạt 3,232 VNĐ cùng cổ tức tiền mặt 4.16%/năm cho thấy lợi nhuận tạo ra là thực chất và dòng tiền cổ tức được duy trì đều đặn. Kết luận, lợi nhuận của MBB là lợi nhuận thật, đến từ cốt lõi hoạt động tín dụng và dịch vụ, không phải từ các bút toán tài chính ảo.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của MBB nằm ở hệ sinh thái số độc bản với tập khách hàng khổng lồ và chi phí vốn (COF) thuộc nhóm thấp nhất ngành nhờ lượng tiền gửi không kỳ hạn (CASA) dồi dào. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi dư địa mở rộng tín dụng mạnh mẽ (>=12%) và khả năng tối ưu hóa vốn xuất sắc khi ROE liên tục duy trì trên 18%. Bên cạnh đó, việc đẩy mạnh bán chéo bảo hiểm và dịch vụ tài chính số sẽ tiếp tục cải thiện biên lãi ròng (NIM) và đa dạng hóa nguồn thu ngoài lãi.",
+        "risks": "Rủi ro trọng yếu nhất đối với MBB đến từ áp lực nợ xấu tiềm ẩn khi chu kỳ kinh tế vĩ mô biến động làm suy giảm khả năng trả nợ của nhóm khách hàng doanh nghiệp và bán lẻ. Thứ hai, biên lãi ròng (NIM) có thể bị thu hẹp nếu lãi suất huy động tăng nhanh hơn lãi suất cho vay trong môi trường cạnh tranh gay gắt. Cuối cùng, rủi ro pháp lý liên quan đến trái phiếu doanh nghiệp hoặc các tài sản đảm bảo là bất động sản có thể ảnh hưởng đến tiến độ trích lập dự phòng và chất lượng tài sản.",
         "ps": 0,
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
@@ -772,7 +772,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "STB": {
         "symbol": "STB",
@@ -1210,14 +1210,14 @@
                 "roe_quarter": 5.71
             }
         ],
-        "outlook": "Giá hiện tại 22,450 VNĐ nằm dưới vùng mua an toàn 26,216 VNĐ, tạo biên an toàn thực 16.8% (MoS 20%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 7.48x và P/B 1.61x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với giá hiện tại là 22,450 VNĐ, cổ phiếu HDB đang thấp hơn vùng mua (fair_low) 26,216 VNĐ một khoảng chiết khấu lên tới 16.8%, tạo ra biên an toàn (Margin of Safety) cực kỳ hấp dẫn cho nhà đầu tư giá trị. Mục tiêu định giá dài hạn (fair value) được xác định ở mức 32,770 VNĐ, mở ra dư địa tăng trưởng giá rất lớn. Hệ thống khuyến nghị ✅ MUA TÍCH SẢN vì cổ phiếu hội tụ đủ 4 yếu tố: Vùng mua, PTCB 40/50, PTKT 12/20 và Định giá 30/30, đạt tổng điểm 82/100. Đây là cơ hội tích lũy tối ưu khi giá đang trong pha sideway tích lũy và nằm sâu dưới giá trị thực.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 26,216 — 32,770 | Giá hiện tại: 22,450 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 23.3%, ROA 2.0% — vượt trội so với mặt bằng chung ngành. P/E 7.48x và P/B 1.61x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 11.12 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. Chất lượng lợi nhuận tốt với CFO 20,278 tỷ ≥ LNST 20,004 tỷ (CFO/LNST = 1.01x) — lợi nhuận thật, có tiền mặt. EPS đạt 3,856 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành. Tăng trưởng ổn định với LNST tăng 7.0% YoY.",
-        "risks": "Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức 11.12. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
+        "macro_view": "Chính sách tiền tệ của Ngân hàng Nhà nước đang duy trì trạng thái nới lỏng có kiểm soát để hỗ trợ phục hồi kinh tế, tạo điều kiện cho các ngân hàng thương mại đẩy mạnh tăng trưởng tín dụng. Việc giảm lãi suất điều hành giúp hạ thấp chi phí vốn (COF) cho HDB, từ đó bảo vệ và cải thiện biên lãi ròng (NIM) trong trung hạn. Tuy nhiên, áp lực lạm phát và tỷ giá hối đoái có thể khiến NHNN thận trọng hơn trong việc nới lỏng room tín dụng vào cuối năm. Nhìn chung, môi trường vĩ mô hiện tại đang ủng hộ nhóm ngân hàng có nền tảng vốn khỏe và chất lượng tài sản tốt như HDB.",
+        "ai_updated_at": "2026-11-06 04:48:07",
+        "bctc": "Báo cáo tài chính của HDB thể hiện chất lượng lợi nhuận xuất sắc với ROE đạt 23.3% và ROA ở mức 2.0%, vượt trội so với trung bình ngành. Lợi nhuận sau thuế TTM ghi nhận 20,004 Tỷ đồng, tăng trưởng 7.02% so với cùng kỳ. Dòng tiền kinh doanh (CFO) đạt 20,278 Tỷ đồng, tương đương tỷ lệ CFO/LNST là 1.01x, khẳng định đây là lợi nhuận thật bằng tiền chứ không phải bút toán. Hệ số D/E ở mức 11.12 là đặc thù bình thường của ngành ngân hàng do nợ chủ yếu là tiền gửi khách hàng. Định giá hiện tại rất hấp dẫn với P/E chỉ 7.48x và P/B là 1.61x so với giá trị sổ sách BVPS 13,944 VNĐ. EPS đạt 3,856 VNĐ cho thấy nền tảng sinh lời vững chắc. Tóm lại, sức khỏe tài chính của HDB rất minh bạch và bền vững.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của HDB nằm ở mạng lưới bán lẻ sâu rộng và khả năng tối ưu hóa vốn với ROE >=18% liên tục được duy trì. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi tốc độ tăng trưởng tín dụng mạnh (>=12%) và việc mở rộng biên lợi nhuận nhờ chuyển đổi số. Ngoài ra, việc kiểm soát tốt chi phí vốn và chất lượng tài sản sẽ giúp ngân hàng bứt phá khi chu kỳ kinh tế phục hồi.",
+        "risks": "Rủi ro lớn nhất đối với HDB là áp lực nợ xấu gia tăng nếu thị trường bất động sản và trái phiếu doanh nghiệp tiếp tục đóng băng, ảnh hưởng trực tiếp đến chất lượng tài sản. Bên cạnh đó, biên lãi ròng (NIM) có thể bị thu hẹp do cạnh tranh gay gắt trong việc huy động vốn và các chính sách hỗ trợ lãi suất từ Ngân hàng Nhà nước. Cuối cùng, rủi ro vĩ mô toàn cầu có thể làm chậm lại nhu cầu tín dụng của các doanh nghiệp xuất nhập khẩu.",
         "ps": 0,
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
@@ -1237,7 +1237,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "VIB": {
         "symbol": "VIB",
@@ -1520,11 +1520,11 @@
                 "roe_quarter": 4.53
             }
         ],
-        "outlook": "Giá hiện tại 12,800 VNĐ nằm dưới vùng mua an toàn 20,709 VNĐ, tạo biên an toàn thực 61.8% (MoS 20%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 4.81x và P/B 0.87x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với mức giá hiện tại chỉ 12,800 VNĐ, TPB đang giao dịch thấp hơn rất nhiều so với vùng mua (fair_low) 20,709 VNĐ và giá trị thực (fair value) 25,886 VNĐ. Hệ thống đánh giá chiết khấu lên tới 61.8% so với fair_low, tạo ra một Biên an toàn (Margin of Safety) cực kỳ dày dặn cho nhà đầu tư giá trị. Mẫu hình kỹ thuật đang ở pha tích lũy sideway, kết hợp với định giá 30/30 và điểm cơ bản 33/50, củng cố vững chắc cho quyết định ✅ MUA TÍCH SẢN. Đây là cơ hội hiếm có để thu gom cổ phiếu ngân hàng tối ưu vốn với mức giá rẻ hơn cả giá trị sổ sách.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 20,709 — 25,886 | Giá hiện tại: 12,800 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
-        "ai_updated_at": "2026-11-05 22:58:08",
+        "macro_view": "Chính sách tiền tệ của Ngân hàng Nhà nước đang duy trì trạng thái nới lỏng có kiểm soát để hỗ trợ phục hồi kinh tế, tạo điều kiện thuận lợi cho TPB đẩy mạnh tăng trưởng tín dụng. Lãi suất điều hành ổn định giúp ngân hàng giảm chi phí vốn (COF) và bảo vệ biên lãi ròng (NIM) trong bối cảnh cầu tín dụng dần hồi phục. Tuy nhiên, áp lực từ tỷ giá và lạm phát toàn cầu có thể khiến NHNN thận trọng hơn trong việc bơm thanh khoản, đòi hỏi TPB phải linh hoạt trong chiến lược huy động vốn. Nhìn chung, môi trường vĩ mô hiện tại đang ủng hộ chu kỳ mở rộng bảng cân đối kế toán của các ngân hàng bán lẻ có chất lượng tài sản tốt.",
+        "ai_updated_at": "2026-11-06 05:03:52",
         "ps": 0,
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
@@ -1544,10 +1544,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 17.9%, ROA 1.6% — vượt trội so với mặt bằng chung ngành. P/E 4.81x và P/B 0.87x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 10.44 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. Chất lượng lợi nhuận tốt với CFO 22,603 tỷ ≥ LNST 8,490 tỷ (CFO/LNST = 2.66x) — lợi nhuận thật, có tiền mặt. EPS đạt 3,046 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 54.6% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức 10.44. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Báo cáo tài chính của TPB cho thấy chất lượng lợi nhuận cực kỳ ấn tượng với chỉ số CFO/LNST đạt 2.66x, khẳng định dòng tiền thực tế mạnh mẽ hơn hẳn lợi nhuận sổ sách (lợi nhuận thật). Hiệu quả sinh lời trên vốn chủ sở hữu (ROE) duy trì ở mức xuất sắc 17.9%, vượt trội so với trung bình ngành và đáp ứng tiêu chuẩn ngân hàng tối ưu vốn. Tỷ suất sinh lời trên tổng tài sản (ROA) đạt 1.6%, phản ánh khả năng khai thác tài sản sinh lời hiệu quả. Tăng trưởng LNST YoY bứt phá lên đến 54.62%, cho thấy động lực mở rộng tín dụng và hoạt động lõi rất mạnh mẽ. Hệ số D/E ở mức 10.44 là đặc thù hoàn toàn bình thường của ngành ngân hàng do nợ phải trả chủ yếu là tiền gửi khách hàng. Định giá hiện tại cực kỳ hấp dẫn với P/E chỉ 4.81x và P/B 0.87x (thấp hơn giá trị sổ sách BVPS 14,713 VNĐ). EPS đạt 3,046 VNĐ càng củng cố nền tảng tài chính vững chắc cho các cổ đông hiện hữu.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của TPB nằm ở hệ sinh thái ngân hàng số tiên phong và khả năng tối ưu hóa chi phí vốn nhờ công nghệ. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi dư địa mở rộng tín dụng mạnh mẽ (đáp ứng tiêu chuẩn >=12% của hệ thống) và biên lợi nhuận ròng (NIM) được cải thiện từ các sản phẩm bán lẻ. Sự bứt phá 54.62% về lợi nhuận gần nhất là minh chứng rõ ràng cho chiến lược chuyển đổi số và khai thác phân khúc khách hàng trẻ, tạo đà tăng trưởng bền vững.",
+        "risks": "Rủi ro lớn nhất đối với TPB đến từ áp lực nợ xấu (NPL) tiềm ẩn khi chu kỳ kinh tế vĩ mô biến động và thị trường bất động sản hoặc trái phiếu doanh nghiệp gặp khó khăn. Bên cạnh đó, biên lãi ròng (NIM) có thể bị thu hẹp nếu cuộc đua lãi suất huy động gia tăng nhằm cạnh tranh tiền gửi khách hàng. Cuối cùng, việc ngân hàng không chia cổ tức tiền mặt (0.0%/năm) mà giữ lại lợi nhuận để bổ sung vốn CAR có thể làm giảm sức hút đối với nhóm nhà đầu tư ưa thích dòng tiền đều đặn.",
+        "ai_source": "AI"
     },
     "SHB": {
         "symbol": "SHB",
@@ -2125,11 +2125,11 @@
                 "roe_quarter": 4.39
             }
         ],
-        "outlook": "Giá 15,750 VNĐ đã vượt xa fair value 12,363 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
-        "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
+        "outlook": "Giá cổ phiếu MSB đang giao dịch ở mức 15,750 VNĐ, vượt xa vùng mua an toàn từ 9,890 VNĐ đến fair value 12,363 VNĐ. Việc thị trường đẩy giá lên cao khiến biên an toàn (Margin of Safety) rơi vào mức âm -37.2%, triệt tiêu hoàn toàn lợi thế của nhà đầu tư giá trị. Với định giá hiện tại, cổ phiếu đang ở vị thế ❌ ĐẮT (cao hơn fair_high 27.4%), tiềm ẩn rủi ro điều chỉnh mạnh khi kỳ vọng tăng trưởng đã phản ánh hết vào giá. Do đó, hệ thống đưa ra quyết định ❌ TRÁNH để bảo toàn vốn, chờ đợi nhịp điều chỉnh về vùng chiết khấu hợp lý hơn.",
+        "ai_recommendation": "TRÁNH",
         "ai_price_zone": "Vùng mua: 9,890 — 12,363 | Giá hiện tại: 15,750 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
-        "ai_updated_at": "2026-11-05 22:58:08",
+        "macro_view": "Đối với ngành Ngân hàng, chính sách tiền tệ của Ngân hàng Nhà nước và mặt bằng lãi suất là yếu tố vĩ mô tác động trực tiếp nhất đến biên lãi ròng (NIM) và tăng trưởng tín dụng. Hiện tại, môi trường lãi suất cho vay có xu hướng giảm để hỗ trợ nền kinh tế, gây áp lực lên NIM, nhưng lại kích thích cầu tín dụng phục hồi (phù hợp với mức tăng trưởng >= 12% của MSB). Bên cạnh đó, các chính sách tháo gỡ khó khăn cho thị trường bất động sản và trái phiếu doanh nghiệp sẽ quyết định trực tiếp đến chất lượng tài sản và tỷ lệ nợ xấu của ngân hàng. Nhà đầu tư cần theo dõi sát sao các chỉ số vĩ mô về cung tiền và lạm phát để đánh giá dư địa nới lỏng tín dụng trong các quý tới.",
+        "ai_updated_at": "2026-11-06 04:52:13",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
         "bvps": 12500.0,
@@ -2148,10 +2148,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 14.3%, ROA 1.5% — ở mức trung bình ngành. P/E 10.04x và P/B 1.26x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 0.00 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. EPS đạt 1,673 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 29.4% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức 0.00. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Dựa trên dữ liệu tài chính, MSB ghi nhận hiệu quả sinh lời ở mức khá với ROE đạt 14.3% và ROA là 1.5%, phản ánh năng lực tối ưu hóa vốn chủ sở hữu tốt. Hệ số P/E hiện ở mức 10.04x và P/B là 1.26x, cho thấy thị trường đang trả giá cao hơn so với giá trị sổ sách (BVPS 12,500 VNĐ). Tăng trưởng LNST YoY đạt 29.43% là một điểm sáng, tuy nhiên dữ liệu CFO và LNST TTM lại hiển thị 0 Tỷ, có thể do độ trễ cập nhật hoặc đặc thù hạch toán dòng tiền cuối kỳ. Chỉ số D/E được ghi nhận ở mức 0.00, dù thực tế ngành ngân hàng thường có đòn bẩy cao từ tiền gửi, nhưng số liệu này cho thấy rủi ro nợ vay tài chính trực tiếp là không đáng kể. EPS đạt 1,673 VNĐ củng cố nền tảng lợi nhuận trên mỗi cổ phiếu. Nhìn chung, lợi nhuận của MSB là thật và đến từ hoạt động cốt lõi, được kiểm chứng qua mức ROE >= 14% và tăng trưởng tín dụng mạnh.",
+        "catalyst": "Động lực tăng trưởng của MSB trong 2-3 năm tới đến từ việc duy trì tăng trưởng tín dụng mạnh (>= 12%) và chiến lược tối ưu hóa vốn ngân hàng. Lợi thế cạnh tranh (Economic Moat) nằm ở tệp khách hàng bán lẻ và khả năng duy trì ROE tốt (>= 14%) trong bối cảnh ngành có tính phân hóa cao. Việc mở rộng quy mô tài sản sinh lời sẽ tiếp tục là bệ phóng giúp ngân hàng gia tăng thị phần và cải thiện biên lợi nhuận.",
+        "risks": "Rủi ro trọng yếu nhất đối với MSB là áp lực nợ xấu (NPL) gia tăng khi chu kỳ kinh tế vĩ mô biến động và sức khỏe tài chính của nhóm khách hàng bất động sản, trái phiếu doanh nghiệp suy giảm. Bên cạnh đó, rủi ro từ biên lãi ròng (NIM) bị thu hẹp do cạnh tranh lãi suất huy động và chính sách điều hành lãi suất cho vay của NHNN. Cuối cùng, việc không chia trả cổ tức (0.0%/năm) có thể làm giảm sức hút đối với dòng tiền tìm kiếm thu nhập thụ động.",
+        "ai_source": "AI"
     },
     "OCB": {
         "symbol": "OCB",
@@ -2573,14 +2573,14 @@
                 "roe_quarter": 1.63
             }
         ],
-        "outlook": "Giá 20,400 VNĐ nằm giữa vùng mua 15,572 và fair value 20,762 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: ❌ TRÁNH. Nếu giá điều chỉnh về 15,572 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Giá hiện tại 20,400 VNĐ đang giao dịch sát với Fair value 20,762 VNĐ nhưng vẫn cao hơn đáng kể so với vùng mua an toàn (fair_low) 15,572 VNĐ. Hệ thống đưa ra quyết định ❌ TRÁNH vì điểm PTCB chỉ đạt 16/50, phản ánh nền tảng cơ bản đang yếu đi do tăng trưởng lợi nhuận âm. Với mức chiết khấu so với fair_low là -23.7%, biên an toàn hiện tại không đủ lớn để bảo vệ nhà đầu tư trước rủi ro biến động của ngành chứng khoán. Do đó, nhà đầu tư giá trị cần kiên nhẫn chờ đợi giá điều chỉnh về vùng 15,572 VNĐ để thiết lập vị thế.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 15,572 — 20,762 | Giá hiện tại: 20,400 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 12.2%, ROA 4.7% — ở mức trung bình ngành. P/E 13.75x và P/B 1.57x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 1.38 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. Chất lượng lợi nhuận tốt với CFO 5,217 tỷ ≥ LNST 4,454 tỷ (CFO/LNST = 1.17x) — lợi nhuận thật, có tiền mặt. EPS đạt 1,483 VNĐ, cổ tức 7.47%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật. Tăng trưởng LNST hiện ở mức -23.8% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE 12.2% không duy trì được khi chu kỳ xuống.",
+        "macro_view": "Ngành chứng khoán chịu tác động trực tiếp từ chính sách tiền tệ của Ngân hàng Nhà nước và dòng vốn ngoại tệ. Hiện tại, áp lực tỷ giá và lạm phát khiến chính sách nới lỏng tiền tệ bị kìm hãm, làm giảm kỳ vọng bơm thanh khoản vào hệ thống tài chính. Câu chuyện nâng hạng thị trường từ cận biên lên mới nổi là động lực dài hạn, nhưng các nút thắt về quy định pre-funding vẫn đang làm chậm tiến độ này. Do đó, môi trường vĩ mô hiện tại chưa tạo ra đủ xung lực để thúc đẩy nhóm ngành chứng khoán bứt phá mạnh mẽ trong ngắn hạn.",
+        "ai_updated_at": "2026-11-06 05:01:14",
+        "bctc": "Báo cáo tài chính của SSI cho thấy hiệu quả sinh lời ở mức trung bình với ROE=12.2% và ROA=4.7%. Hệ số đòn bẩy tài chính D/E=1.38 phản ánh việc sử dụng nợ vay ở mức chấp nhận được đối với một công ty chứng khoán để tài trợ cho hoạt động margin và tự doanh. Chất lượng lợi nhuận được đánh giá là lợi nhuận thật nhờ dòng tiền kinh doanh dương, thể hiện qua tỷ lệ CFO/LNST đạt 1.17x (CFO 5,217 Tỷ so với LNST TTM 4,454 Tỷ). Tuy nhiên, tăng trưởng LNST YoY đang suy giảm mạnh ở mức -23.76%, cho thấy áp lực từ bối cảnh thanh khoản thị trường. Về mặt định giá hiện tại, P/E=13.75 và P/B=1.57 cho thấy thị trường đang chiết khấu phần nào sự sụt giảm lợi nhuận này. Biên gộp duy trì ở mức cao 73.0% giúp doanh nghiệp giữ được khả năng sinh lời cốt lõi. Nhìn chung, lợi nhuận là thật nhưng động lực tăng trưởng ngắn hạn đang bị bào mòn.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của SSI nằm ở vị thế top đầu thị phần môi giới, hệ sinh thái khách hàng lớn và khả năng huy động vốn margin giá rẻ. Động lực tăng trưởng trong 2-3 năm tới sẽ đến từ câu chuyện nâng hạng thị trường chứng khoán Việt Nam và các chính sách vĩ mô nới lỏng tiền tệ giúp cải thiện thanh khoản. Tuy nhiên, sự phục hồi này cần thời gian để phản ánh rõ nét vào tăng trưởng LNST YoY vốn đang ở mức -23.76%.",
+        "risks": "Rủi ro trọng yếu nhất của SSI là sự phụ thuộc lớn vào thanh khoản thị trường chung và biến động của hoạt động tự doanh, khiến lợi nhuận dễ bị tổn thương khi thị trường sideway hoặc điều chỉnh. Bên cạnh đó, rủi ro từ tỷ lệ D/E=1.38 có thể gia tăng áp lực chi phí lãi vay nếu mặt bằng lãi suất huy động vốn đảo chiều tăng trở lại. Cuối cùng, việc tăng trưởng LNST YoY âm -23.76% cho thấy rủi ro suy thoái lợi nhuận ngắn hạn chưa được giải quyết triệt để.",
         "ps": 0,
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
@@ -2600,7 +2600,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "VCI": {
         "symbol": "VCI",
@@ -3038,11 +3038,11 @@
                 "roe_quarter": 0.7
             }
         ],
-        "outlook": "Giá 13,100 VNĐ đã vượt xa fair value 9,100 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá hiện tại 13,100 VNĐ đang cao hơn tới 44.0% so với vùng định giá hợp lý, dẫn đến mức chiết khấu so với fair_low là -47.9%. Theo nguyên tắc biên an toàn (Margin of Safety), nhà đầu tư giá trị chỉ giải ngân khi giá rơi về vùng mua 6,825 VNĐ hoặc tối đa là fair value 9,100 VNĐ. Việc hệ thống đưa ra quyết định '❌ TRÁNH' là hoàn toàn hợp lý khi PTCB chỉ đạt 8/50 và doanh nghiệp không chứng minh được chất lượng lợi nhuận. Mua ở vùng giá 13,100 VNĐ lúc này đồng nghĩa với việc chấp nhận rủi ro pha loãng tài sản và không có biên an toàn bảo vệ.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 6,825 — 9,100 | Giá hiện tại: 13,100 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
-        "ai_updated_at": "2026-11-05 22:58:08",
+        "macro_view": "Ngành chứng khoán đang chịu tác động trực tiếp từ chính sách điều hành lãi suất và tiến trình nâng hạng thị trường, yếu tố quyết định đến dòng tiền margin và thanh khoản. Tuy nhiên, áp lực tỷ giá và lạm phát toàn cầu có thể khiến NHNN duy trì chính sách tiền tệ thận trọng, làm hạn chế dư địa tăng trưởng tín dụng và cho vay ký quỹ của các CTCK như VIX. Ngoài ra, các quy định siết chặt quản trị rủi ro và minh bạch hóa thị trường trái phiếu sẽ làm giảm biên lợi nhuận của mảng tự doanh và tư vấn tài chính. Do đó, môi trường vĩ mô hiện tại chưa đủ lực đẩy để tạo ra chu kỳ bùng nổ lợi nhuận cho nhóm công ty chứng khoán top dưới.",
+        "ai_updated_at": "2026-11-06 05:05:44",
         "ps": 0,
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
@@ -3062,10 +3062,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 6.5%, ROA 4.8% — còn khá thấp, cần cải thiện. P/E 19.36x và P/B 0.99x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 0.21 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ -0.52x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 650 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật. Tăng trưởng LNST hiện ở mức -92.9% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE 6.5% không duy trì được khi chu kỳ xuống.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Chất lượng lợi nhuận của VIX đang có dấu hiệu báo động khi tăng trưởng LNST YoY sụt giảm nghiêm trọng -92.9% và dòng tiền kinh doanh (CFO) âm -871 Tỷ VNĐ. Hệ số CFO/LNST đạt -0.52x cho thấy lợi nhuận kế toán không được chuyển hóa thành tiền mặt thực tế, phản ánh chất lượng lợi nhuận kém bền vững. Hiệu quả sinh lời trên vốn chủ sở hữu (ROE) chỉ đạt 6.5%, thấp hơn nhiều so với kỳ vọng của ngành, dù ROA ở mức 4.8% và đòn bẩy tài chính D/E=0.21 khá an toàn. Biên gộp 14.8% cho thấy áp lực cạnh tranh và chi phí vốn đang bào mòn hiệu quả hoạt động cốt lõi. Về định giá dựa trên tài sản, P/B=0.99x có vẻ rẻ so với BVPS 13,232 VNĐ, nhưng P/E=19.36x lại cao do EPS sụt giảm mạnh về mức 650 VNĐ. Kết luận, lợi nhuận hiện tại mang tính chất 'ảo' do thiếu hụt dòng tiền thực và phụ thuộc lớn vào biến động thị trường thay vì năng lực cốt lõi.",
+        "catalyst": "VIX hiện chưa thiết lập được lợi thế cạnh tranh cốt lõi (Economic Moat) rõ ràng khi biên gộp chỉ đạt 14.8% và ROE 6.5% thấp hơn trung bình ngành. Động lực tăng trưởng trong 2-3 năm tới phụ thuộc hoàn toàn vào sự phục hồi của thanh khoản thị trường, hoạt động cho vay margin và mảng tự doanh. Tuy nhiên, với mức sụt giảm LNST YoY -92.9%, doanh nghiệp đang thiếu vắng các catalyst nội tại để bứt phá và mở rộng thị phần.",
+        "risks": "Rủi ro trọng yếu nhất của VIX nằm ở dòng tiền kinh doanh âm -871 Tỷ VNĐ, cho thấy doanh nghiệp đang bị giam vốn hoặc gặp khó khăn trong việc thu hồi các khoản cho vay margin và tự doanh. Thứ hai, sự phụ thuộc vào thanh khoản thị trường khiến lợi nhuận biến động mạnh, thể hiện qua mức lao dốc -92.9% của LNST YoY. Cuối cùng, rủi ro từ các nghiệp vụ tự doanh và trái phiếu có thể tiếp tục bào mòn tài sản nếu thị trường chung diễn biến bất lợi.",
+        "ai_source": "AI"
     },
     "MBS": {
         "symbol": "MBS",
@@ -3193,14 +3193,14 @@
                 "roe_quarter": 2.39
             }
         ],
-        "outlook": "Giá 16,000 VNĐ nằm giữa vùng mua 12,747 và fair value 16,996 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: ❌ TRÁNH. Nếu giá điều chỉnh về 12,747 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Với mức giá hiện tại 16,000 VNĐ, cổ phiếu đang nằm dưới Fair value 16,996 VNĐ nhưng vẫn cao hơn đáng kể so với vùng mua an toàn (fair_low) 12,747 VNĐ. Hệ thống đưa ra quyết định ❌ TRÁNH do điểm Cơ bản chỉ đạt 16/50, phản ánh nền tảng doanh nghiệp yếu bất chấp việc P/E và P/B có vẻ hợp lý. Việc mua ở vùng giá này không mang lại Biên an toàn (Margin of Safety) 25.0% theo nguyên tắc Value Investing, mà thực tế đang chịu mức chiết khấu so với fair_low là -20.3%. Do đó, nhà đầu tư tuyệt đối không nên giải ngân khi chưa có nhịp điều chỉnh sâu về vùng 12,747 VNĐ để bảo vệ vốn trước rủi ro dòng tiền kém.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 12,747 — 16,996 | Giá hiện tại: 16,000 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 13.1%, ROA 3.8% — ở mức trung bình ngành. P/E 13.26x và P/B 1.43x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 2.13 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ 0.09x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 1,214 VNĐ, cổ tức 9.46%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật. Tăng trưởng LNST hiện ở mức -5.2% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE 13.1% không duy trì được khi chu kỳ xuống.",
+        "macro_view": "Ngành chứng khoán đang ở giai đoạn nhạy cảm với các chính sách vĩ mô, đặc biệt là lộ trình nâng hạng thị trường và hệ thống KRX ảnh hưởng trực tiếp đến dòng vốn ngoại và thanh khoản. Chính sách tiền tệ nới lỏng hay thắt chặt của NHNN sẽ quyết định chi phí vốn huy động cho hoạt động cho vay margin, tác động mạnh đến biên lợi nhuận của MBS. Ngoài ra, việc áp dụng cơ chế pre-funding cho nhà đầu tư nước ngoài sẽ là biến số vĩ mô quan trọng thúc đẩy doanh thu môi giới trong trung hạn. Tuy nhiên, nếu mặt bằng lãi suất huy động tăng trở lại, áp lực lên mảng tự doanh và chi phí tài chính (D/E = 2.13) sẽ làm suy giảm đáng kể LNST của doanh nghiệp.",
+        "ai_updated_at": "2026-11-06 04:51:07",
+        "bctc": "Chất lượng lợi nhuận của MBS đang có dấu hiệu đáng lo ngại khi dòng tiền kinh doanh (CFO) chỉ đạt 110 Tỷ đồng, dẫn đến tỷ lệ CFO/LNST ở mức rất thấp là 0.09x, cho thấy lợi nhuận kế toán chưa chuyển hóa thành tiền mặt thực tế. Mặc dù biên gộp đạt 56.6% và ROE duy trì ở mức 13.1%, nhưng tăng trưởng LNST YoY lại âm -5.25%, phản ánh sự suy giảm hiệu quả hoạt động. Hệ số đòn bẩy tài chính D/E = 2.13 là mức chấp nhận được đối với đặc thù ngành chứng khoán nhưng vẫn cần theo dõi sát sao chi phí vốn. Về mặt định giá nội tại, P/E = 13.26x và P/B = 1.43x cho thấy thị trường đang trả giá vừa phải so với giá trị sổ sách (BVPS 11,189 VNĐ). Tuy nhiên, sự chênh lệch lớn giữa lợi nhuận TTM (1,216 Tỷ) và dòng tiền thực tế khiến nhà đầu tư giá trị phải đặt dấu hỏi về tính bền vững của con số EPS 1,214 VNĐ. Kết luận, lợi nhuận hiện tại mang tính chất ảo do thiếu hụt dòng tiền hỗ trợ, đòi hỏi sự thận trọng.",
+        "catalyst": "Lợi thế cạnh tranh của MBS chủ yếu dựa vào tệp khách hàng tổ chức và hệ sinh thái tài chính, tuy nhiên rào cản gia nhập ngành chứng khoán đang ngày càng thấp. Động lực tăng trưởng trong 2-3 năm tới phụ thuộc hoàn toàn vào sự phục hồi của thanh khoản thị trường chung và khả năng mở rộng dư nợ margin. Ngoài ra, mảng tự doanh và doanh thu từ phí môi giới sẽ là hai trụ cột chính quyết định việc công ty có thể đảo chiều mức tăng trưởng LNST YoY đang ở mức -5.25% hay không.",
+        "risks": "Rủi ro trọng yếu nhất đối với MBS là sự phụ thuộc nặng nề vào biến động thanh khoản và chu kỳ chính sách tiền tệ, vốn ảnh hưởng trực tiếp đến doanh thu môi giới và margin. Bên cạnh đó, tỷ lệ CFO/LNST = 0.09x cảnh báo rủi ro về chất lượng tài sản và khả năng thu hồi nợ vay ký quỹ trong các nhịp rung lắc mạnh của thị trường. Cuối cùng, áp lực cạnh tranh gay gắt về phí giao dịch từ các đối thủ đang bào mòn biên lợi nhuận ròng của doanh nghiệp.",
         "ps": 0,
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
@@ -3220,7 +3220,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "FTS": {
         "symbol": "FTS",
@@ -3503,11 +3503,11 @@
                 "roe_quarter": 1.8
             }
         ],
-        "outlook": "Giá 28,900 VNĐ đã vượt fair value 24,486 VNĐ. Định giá hiện tại chưa hấp dẫn cho tích sản mới. Verdict: HƠI ĐẮT - KHÔNG MUA. Quyết định hệ thống: ❌ TRÁNH. Chờ giá điều chỉnh về 18,364 VNĐ mới nên giải ngân.",
+        "outlook": "Giá cổ phiếu đang giao dịch ở mức 28,900 VNĐ, vượt xa so với vùng giá trị hợp lý 24,486 VNĐ và vùng mua mục tiêu 18,364 VNĐ. Việc thị trường định giá cao hơn fair_high tới 18.0% khiến cổ phiếu rơi vào trạng thái HƠI ĐẮT, triệt tiêu hoàn toàn yếu tố Biên an toàn (Margin of Safety) vốn là kim chỉ nam của đầu tư giá trị. Cụ thể, mức chiết khấu so với fair_low đang là -36.5%, đồng nghĩa với việc nhà đầu tư đang phải trả giá đắt cho một doanh nghiệp có dòng tiền âm và tăng trưởng lợi nhuận sụt giảm. Do đó, hệ thống đưa ra quyết định ❌ TRÁNH để bảo toàn vốn trước rủi ro điều chỉnh giá về đúng giá trị thực.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 18,364 — 24,486 | Giá hiện tại: 28,900 | Verdict: HƠI ĐẮT - KHÔNG MUA",
-        "macro_view": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
-        "ai_updated_at": "2026-11-05 22:58:07",
+        "macro_view": "Ngành chứng khoán đang chịu tác động trực tiếp từ chính sách điều hành lãi suất của Ngân hàng Nhà nước và dòng tiền tín dụng chảy vào kênh đầu tư rủi ro. Khi lãi suất huy động thấp, dòng tiền nhàn rỗi có xu hướng tìm kiếm cơ hội ở thị trường chứng khoán, hỗ trợ thanh khoản và doanh thu margin cho các công ty chứng khoán. Tuy nhiên, các chính sách siết chặt quản lý thị trường, thanh tra thao túng giá và yêu cầu nâng cao chuẩn mực kế toán đang làm chậm lại đà bùng nổ của thanh khoản đầu cơ. Đối với BSI, môi trường vĩ mô hiện tại đòi hỏi công ty phải tối ưu hóa chi phí vốn để duy trì lợi thế cạnh tranh khi chu kỳ nới lỏng tiền tệ có dấu hiệu chững lại.",
+        "ai_updated_at": "2026-11-06 04:36:53",
         "ps": 0,
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
@@ -3527,10 +3527,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 8.4%, ROA 2.6% — còn khá thấp, cần cải thiện. P/E 16.81x và P/B 1.36x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 2.40 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ -0.82x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 1,749 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật. Tăng trưởng LNST hiện ở mức -23.4% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE 8.4% không duy trì được khi chu kỳ xuống.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Chất lượng lợi nhuận của BSI đang có dấu hiệu đáng lo ngại khi tăng trưởng LNST YoY sụt giảm mạnh -23.45%. Hiệu quả sinh lời trên vốn chủ sở hữu chỉ đạt ROE=8.4%, trong khi ROA=2.6% cho thấy khả năng tối ưu hóa tài sản ở mức trung bình thấp so với ngành. Điểm sáng duy nhất là biên gộp đạt 61.9%, phản ánh lợi thế từ mảng môi giới và cho vay margin. Tuy nhiên, dòng tiền kinh doanh (CFO) âm -389 Tỷ đồng dẫn đến tỷ lệ CFO/LNST = -0.82x, cảnh báo lợi nhuận tạo ra chưa chuyển hóa thành tiền mặt thực tế. Cấu trúc vốn sử dụng đòn bẩy cao với D/E=2.4, tiềm ẩn rủi ro khi chi phí vốn tăng. Về định giá, P/E=16.81 và P/B=1.36 chưa phản ánh đúng sự suy giảm của chất lượng tài sản. Kết luận, lợi nhuận hiện tại mang tính chất ảo do dòng tiền âm và phụ thuộc nhiều vào đánh giá lại tài sản tự doanh hoặc hạch toán kế toán hơn là tiền tươi thóc thật.",
+        "catalyst": "Lợi thế cạnh tranh (Economic Moat) của BSI chủ yếu dựa vào tệp khách hàng doanh nghiệp và hệ sinh thái từ cổ đông lớn, giúp duy trì biên gộp 61.9%. Động lực tăng trưởng trong 2-3 năm tới sẽ phụ thuộc hoàn toàn vào việc nới lỏng room tín dụng cho vay margin và sự phục hồi của thanh khoản thị trường. Ngoài ra, câu chuyện nâng hạng thị trường và các chính sách tháo gỡ pháp lý có thể mang lại dòng vốn ngoại, hỗ trợ mảng tự doanh và môi giới của công ty.",
+        "risks": "Rủi ro lớn nhất đối với BSI là sự phụ thuộc nặng nề vào thanh khoản thị trường và biến động của mảng tự doanh, khiến lợi nhuận dễ bị tổn thương khi thị trường điều chỉnh. Tỷ lệ đòn bẩy D/E=2.4 kết hợp với dòng tiền CFO âm làm gia tăng áp lực thanh khoản và chi phí lãi vay nếu mặt bằng lãi suất huy động vốn neo cao. Bên cạnh đó, sự cạnh tranh khốc liệt về phí giao dịch từ các công ty chứng khoán vốn ngoại đang bào mòn dần thị phần và biên lợi nhuận môi giới truyền thống.",
+        "ai_source": "AI"
     },
     "CTS": {
         "symbol": "CTS",
@@ -3813,11 +3813,11 @@
                 "roe_quarter": 1.81
             }
         ],
-        "outlook": "Giá 14,500 VNĐ đã vượt xa fair value 7,784 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá hiện tại 14,500 VNĐ đang đắt hơn rất nhiều so với giá trị thực, khi vượt quá fair value 7,784 VNĐ và nằm xa vùng mua an toàn 5,838 VNĐ. Hệ thống đưa ra quyết định ❌ TRÁNH do cổ phiếu đang giao dịch với mức chiết khấu so với fair_low là -59.7%, tức là nhà đầu tư đang phải trả giá đắt hơn 86.3% so với ngưỡng hợp lý. Biên an toàn (Margin of Safety) hoàn toàn không tồn tại ở vùng giá này, đi ngược lại hoàn toàn triết lý đầu tư giá trị. Do đó, mọi nhịp tăng giá hiện tại đều tiềm ẩn rủi ro điều chỉnh mạnh về vùng định giá thực.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 5,838 — 7,784 | Giá hiện tại: 14,500 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
-        "ai_updated_at": "2026-11-05 22:58:08",
+        "macro_view": "Ngành chứng khoán đang chịu tác động trực tiếp từ chính sách tiền tệ của SBV, khi lãi suất huy động thấp thúc đẩy dòng tiền tìm kiếm cơ hội ở các kênh tài sản rủi ro hơn. Tuy nhiên, áp lực tỷ giá và lạm phát có thể khiến NHNN duy trì sự thận trọng, làm hạn chế dư địa nới lỏng tín dụng và dòng vốn margin. Câu chuyện nâng hạng thị trường từ cận biên lên mới nổi là động lực vĩ mô dài hạn, nhưng các nút thắt về pre-funding và giới hạn sở hữu nước ngoài (FOL) vẫn đang trong quá trình tháo gỡ. Do đó, thanh khoản hệ thống sẽ mang tính phân hóa mạnh, chỉ tập trung vào các mã vốn hóa lớn, gây bất lợi cho các CTCK quy mô nhỏ như ORS.",
+        "ai_updated_at": "2026-11-06 04:54:54",
         "ps": 0,
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
@@ -3837,10 +3837,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 5.0%, ROA 2.4% — còn khá thấp, cần cải thiện. P/E 26.59x và P/B 1.17x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 1.20 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ -4.60x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 556 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật. Tăng trưởng LNST hiện ở mức -35.3% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE 5.0% không duy trì được khi chu kỳ xuống.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Chất lượng lợi nhuận của ORS đang ở mức rất kém khi ROE=5.0% và ROA=2.4%, thấp hơn nhiều so với chi phí vốn bình quân. Điểm báo động lớn nhất nằm ở dòng tiền kinh doanh với CFO âm 1,598 Tỷ, khiến tỷ lệ CFO/LNST=-4.60x, cho thấy lợi nhuận kế toán 347 Tỷ không chuyển hóa được thành tiền mặt thực tế. Cấu trúc vốn sử dụng đòn bẩy với D/E=1.2, tạo áp lực lên biên lợi nhuận khi lãi suất biến động. Tăng trưởng LNST YoY sụt giảm mạnh -35.27% phản ánh sự suy yếu trong hoạt động lõi như margin và tự doanh. Với P/E=26.59 và P/B=1.17, thị trường đang trả giá cao cho một doanh nghiệp có chất lượng tài sản và dòng tiền yếu kém. Kết luận, lợi nhuận hiện tại mang tính chất ảo do thiếu hụt dòng tiền thực, rủi ro điều chỉnh bút toán là rất lớn.",
+        "catalyst": "ORS hiện tại không sở hữu lợi thế cạnh tranh bền vững (Economic Moat) rõ ràng khi thị phần môi giới và quy mô vốn tự doanh thua kém các công ty chứng khoán top đầu. Động lực tăng trưởng 2-3 năm tới phụ thuộc hoàn toàn vào câu chuyện nâng hạng thị trường và sự phục hồi của thanh khoản hệ thống. Tuy nhiên, với biên gộp 54.8% nhưng lợi nhuận ròng sụt giảm, doanh nghiệp thiếu vắng các mảng phí dịch vụ lõi để tạo ra dòng tiền đều đặn.",
+        "risks": "Rủi ro trọng yếu nhất là sự phụ thuộc vào thanh khoản thị trường và biến động của hoạt động tự doanh, vốn đang thể hiện qua đà giảm -35.27% của LNST YoY. Bên cạnh đó, dòng tiền kinh doanh âm sâu (-1,598 Tỷ) trong bối cảnh D/E=1.2 làm gia tăng rủi ro thanh khoản nội tại khi thị trường siết chặt margin. Rủi ro pháp lý và sự cạnh tranh khốc liệt về phí giao dịch từ các CTCK ngoại cũng sẽ tiếp tục bào mòn biên lợi nhuận của doanh nghiệp.",
+        "ai_source": "AI"
     },
     "VHM": {
         "symbol": "VHM",
@@ -3968,14 +3968,14 @@
                 "roe_quarter": 6.56
             }
         ],
-        "outlook": "Giá hiện tại 63,300 VNĐ nằm dưới vùng mua an toàn 68,128 VNĐ, tạo biên an toàn thực 7.6% (MoS 30%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 5.25x và P/B 1.81x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với thị giá 63,300 VNĐ, VHM đang chiết khấu 7.6% so với vùng mua an toàn (fair_low) 68,128 VNĐ và thấp hơn rất nhiều so với giá trị thực (fair value) 97,326 VNĐ. Biên an toàn (Margin of Safety) lên tới 30.0% so với Graham Number cung cấp một lớp đệm bảo vệ vững chắc trước những biến động ngắn hạn của thị trường. Việc giá đang nằm dưới vùng mua an toàn kết hợp với nền tảng P/E 5.25x và cổ tức 4.7%/năm tạo ra cơ hội tích lũy tài sản giá trị với rủi ro thấp. Do đó, hệ thống đưa ra quyết định ✅ MUA TÍCH SẢN, tận dụng nhịp điều chỉnh để xây dựng vị thế dài hạn.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 68,128 — 97,326 | Giá hiện tại: 63,300 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Pháp lý BĐS (Luật Đất đai, Luật Nhà ở) đang dần tháo gỡ. Tín dụng BĐS hồi phục nhưng chậm. Chu kỳ phục hồi phụ thuộc vào niềm tin người mua và thanh khoản ngân hàng.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 36.6%, ROA 10.1% — vượt trội so với mặt bằng chung ngành. Định giá P/E 5.25x và P/B 1.81x. Biên lợi nhuận gộp 60.3% duy trì ở mức tốt. CFO 92,494 tỷ so với LNST 103,081 tỷ (CFO/LNST = 0.90x) — chấp nhận được. ⚠️ Đòn bẩy cao D/E 3.35 cần được theo dõi. EPS đạt 12,038 VNĐ, cổ tức 4.7%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quỹ đất sạch tại vị trí đắc địa, pháp lý dự án hoàn thiện và thương hiệu chủ đầu tư uy tín. Động lực tăng trưởng mạnh: LNST tăng 419.0% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro pháp lý dự án, tiến độ bàn giao chậm. Rủi ro đòn bẩy nợ cao nếu D/E vượt ngưỡng an toàn. Rủi ro thanh khoản thị trường BĐS đóng băng.",
+        "macro_view": "Ngành Bất động sản đang ở giai đoạn bản lề của chu kỳ chính sách, khi các luật Đất đai, Nhà ở, Kinh doanh BĐS sửa đổi bắt đầu có hiệu lực giúp tháo gỡ nút thắt pháp lý cho các đại dự án. Lãi suất huy động duy trì ở mức thấp tạo điều kiện thuận lợi cho dòng tiền nhàn rỗi tìm đến kênh trú ẩn là BĐS nhà ở, đồng thời giảm áp lực chi phí lãi vay cho các chủ đầu tư. Tuy nhiên, độ trễ của chính sách và sức hấp thụ của thị trường đòi hỏi doanh nghiệp phải có quỹ đất sạch và năng lực tài chính mạnh mẽ như VHM mới có thể bứt phá. Sự phục hồi của thị trường trái phiếu doanh nghiệp và tín dụng BĐS cũng là yếu tố vĩ mô then chốt hỗ trợ cấu trúc vốn D/E = 3.35 của công ty.",
+        "ai_updated_at": "2026-11-06 05:04:51",
+        "bctc": "Báo cáo tài chính của VHM thể hiện sức khỏe nội tại cực kỳ ấn tượng với khả năng sinh lời trên vốn chủ sở hữu (ROE) đạt 36.6% và hiệu quả sử dụng tài sản (ROA) ở mức 10.1%, vượt xa chuẩn ngành BĐS. Lợi nhuận sau thuế TTM đạt 103,081 Tỷ VNĐ với mức tăng trưởng đột phá 419.0% so với cùng kỳ, phản ánh việc ghi nhận doanh thu theo tiến độ bàn giao dự án. Chất lượng lợi nhuận được kiểm chứng qua dòng tiền kinh doanh (CFO) đạt 92,494 Tỷ VNĐ, tỷ lệ CFO/LNST = 0.90x cho thấy lợi nhuận tạo ra là tiền thật chứ không phải bút toán kế toán. Biên lợi nhuận gộp duy trì ở mức cao 60.3% khẳng định vị thế của quỹ đất và sản phẩm. Tuy nhiên, nhà đầu tư cần lưu ý đòn bẩy tài chính với chỉ số D/E = 3.35, đòi hỏi sự theo dõi sát sao về áp lực trả nợ trong bối cảnh lãi suất biến động. Định giá hiện tại rất hấp dẫn với P/E = 5.25x và P/B = 1.81x so với nền tảng tài sản ròng (BVPS = 34,972 VNĐ). Tóm lại, đây là lợi nhuận thật, được bảo chứng bởi dòng tiền thực tế từ người mua trả trước.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của VHM nằm ở quỹ đất sạch khổng lồ, năng lực triển khai dự án thần tốc và hệ sinh thái bán lẻ - vận hành vượt trội giúp duy trì biên gộp 60.3%. Động lực tăng trưởng trong 2-3 năm tới đến từ việc mở bán và bàn giao các đại dự án mới, cùng dòng tiền người mua trả trước tích lũy (thể hiện qua CFO 92,494 Tỷ). Ngoài ra, chính sách tháo gỡ pháp lý BĐS và hạ tầng giao thông kết nối sẽ là chất xúc tác mạnh mẽ giúp đẩy nhanh tiến độ ghi nhận doanh thu.",
+        "risks": "Rủi ro trọng yếu nhất của VHM xuất phát từ cấu trúc vốn với tỷ lệ D/E = 3.35, khiến doanh nghiệp nhạy cảm với sự leo thang của lãi suất huy động và chi phí tài chính. Bên cạnh đó, tính chu kỳ của ngành BĐS và những nút thắt pháp lý kéo dài có thể làm chậm tiến độ bàn giao, ảnh hưởng trực tiếp đến thời điểm ghi nhận doanh thu. Cuối cùng, sự phụ thuộc vào tiến độ dự án khiến dòng tiền và lợi nhuận có thể biến động mạnh giữa các quý.",
         "ps": 0,
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
@@ -3997,7 +3997,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "VIC": {
         "symbol": "VIC",
@@ -4282,14 +4282,14 @@
                 "roe_quarter": 2.59
             }
         ],
-        "outlook": "Giá hiện tại 24,200 VNĐ nằm dưới vùng mua an toàn 27,334 VNĐ, tạo biên an toàn thực 12.9% (MoS 30%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 7.44x và P/B 1.08x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với mức giá hiện tại 24,200 VNĐ, VRE đang giao dịch thấp hơn vùng mua 27,334 VNĐ và chiết khấu sâu so với fair value 39,048 VNĐ. Biên an toàn 12.9% so với fair_low cung cấp một lớp đệm bảo vệ vững chắc cho nhà đầu tư giá trị trước các biến động ngắn hạn. Mẫu hình kỹ thuật đang tích lũy sideway cho thấy lực bán đã cạn kiệt và cổ phiếu đang được gom ở vùng đáy. Do đó, quyết định '✅ MUA TÍCH SẢN' là hoàn toàn hợp lý để nắm bắt cơ hội khi thị trường chưa phản ánh đúng giá trị nội tại.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 27,334 — 39,048 | Giá hiện tại: 24,200 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Pháp lý BĐS (Luật Đất đai, Luật Nhà ở) đang dần tháo gỡ. Tín dụng BĐS hồi phục nhưng chậm. Chu kỳ phục hồi phụ thuộc vào niềm tin người mua và thanh khoản ngân hàng.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 15.1%, ROA 12.0% — vượt trội so với mặt bằng chung ngành. Định giá P/E 7.44x và P/B 1.08x. Biên lợi nhuận gộp 51.5% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ -0.08x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 3,254 VNĐ, cổ tức 4.13%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quỹ đất sạch tại vị trí đắc địa, pháp lý dự án hoàn thiện và thương hiệu chủ đầu tư uy tín. Tăng trưởng ổn định với LNST tăng 10.6% YoY.",
-        "risks": "Rủi ro pháp lý dự án, tiến độ bàn giao chậm. Rủi ro đòn bẩy nợ cao nếu D/E vượt ngưỡng an toàn. Rủi ro thanh khoản thị trường BĐS đóng băng.",
+        "macro_view": "Ngành bán lẻ và BĐS thương mại đang hưởng lợi từ các chính sách vĩ mô nhằm kích cầu tiêu dùng nội địa và ổn định thị trường bất động sản. Lãi suất cho vay đã hạ nhiệt giúp giảm bớt áp lực tài chính cho cả chủ mặt bằng lẫn khách thuê, hỗ trợ tỷ lệ lấp đầy. Hơn nữa, dòng vốn FDI vào Việt Nam tiếp tục tăng trưởng kéo theo sự mở rộng của các thương hiệu bán lẻ quốc tế, tạo ra nhu cầu thuê mặt bằng cao cấp rất lớn. Đây là thời điểm vàng để tích sản các doanh nghiệp đầu ngành có quỹ đất sạch và vị trí đắc địa trước khi chu kỳ phục hồi bùng nổ.",
+        "ai_updated_at": "2026-11-06 05:07:31",
+        "bctc": "VRE thể hiện nền tảng tài chính vững chắc với khả năng sinh lời trên vốn chủ sở hữu ROE=15.1% và ROA=12.0%, vượt chuẩn ngành BĐS. Hệ số P/E=7.44 và P/B=1.08 cho thấy thị trường đang chiết khấu mạnh so với giá trị sổ sách và lợi nhuận thực tế. Biên lợi nhuận gộp duy trì ở mức ấn tượng 51.5%, phản ánh lợi thế cạnh tranh từ hệ thống trung tâm thương mại. Tuy nhiên, nhà đầu tư cần lưu ý chỉ số CFO/LNST=-0.08x (CFO âm -572 Tỷ), cho thấy dòng tiền kinh doanh chưa đồng pha với lợi nhuận kế toán. Dù vậy, cấu trúc vốn cực kỳ an toàn với D/E=0.23 giúp doanh nghiệp chịu đựng tốt các cú sốc lãi suất. Lợi nhuận TTM đạt 7,396 Tỷ và tăng trưởng 10.58% YoY khẳng định đây là lợi nhuận thật đến từ hoạt động cốt lõi, không phải từ đánh giá lại tài sản.",
+        "catalyst": "Economic Moat của VRE nằm ở vị thế độc tôn với mạng lưới trung tâm thương mại phủ sóng các vị trí đắc địa nhất toàn quốc, tạo ra rào cản gia nhập ngành cực lớn. Động lực tăng trưởng 2-3 năm tới đến từ việc mở rộng diện tích sàn bán lẻ và sự phục hồi của sức mua tiêu dùng nội địa. Bên cạnh đó, biên an toàn tài chính giúp VRE dễ dàng thâu tóm hoặc phát triển dự án mới khi thị trường BĐS đang trong giai đoạn thanh lọc.",
+        "risks": "Rủi ro lớn nhất hiện tại là dòng tiền kinh doanh âm (CFO = -572 Tỷ), có thể đến từ việc tăng cường đầu tư vốn lưu động hoặc mở rộng mặt bằng mới. Thứ hai, sức mua của người tiêu dùng suy giảm do áp lực vĩ mô sẽ tác động trực tiếp đến doanh thu của các khách thuê mặt bằng bán lẻ. Cuối cùng, sự thay đổi trong chính sách thuế hoặc quy hoạch đô thị có thể ảnh hưởng đến tiến độ các dự án trung tâm thương mại tương lai.",
         "ps": 0,
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
@@ -4310,7 +4310,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "NVL": {
         "symbol": "NVL",
@@ -5532,11 +5532,11 @@
                 "roe_quarter": 2.86
             }
         ],
-        "outlook": "Giá 13,000 VNĐ nằm giữa vùng mua 9,360 và fair value 13,371 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: 👀 THEO DÕI. Nếu giá điều chỉnh về 9,360 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Giá hiện tại 13,000 VNĐ đang giao dịch quanh mức định giá hợp lý (fair value 13,371 VNĐ) nhưng chưa chiết khấu đủ sâu để kích hoạt điểm mua. Hệ thống khuyến nghị 👀 THEO DÕI vì giá cần điều chỉnh về vùng mua 9,360 VNĐ để đảm bảo Biên an toàn (Margin of Safety) tiêu chuẩn 30.0%. Hiện tại, mức chiết khấu so với fair_low đang là -28.0%, nghĩa là giá thị trường đang cao hơn đáy an toàn, chưa đủ hấp dẫn cho một vị thế tích sản tối ưu. Do đó, nhà đầu tư giá trị nên kiên nhẫn chờ đợi nhịp điều chỉnh của thị trường để đưa PTCB về vùng điểm số cao hơn trước khi giải ngân.",
         "ai_recommendation": "NẮM GIỮ / THEO DÕI — Tỷ trọng 0% — Chưa đủ điều kiện mua",
         "ai_price_zone": "Vùng mua: 9,360 — 13,371 | Giá hiện tại: 13,000 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Pháp lý BĐS (Luật Đất đai, Luật Nhà ở) đang dần tháo gỡ. Tín dụng BĐS hồi phục nhưng chậm. Chu kỳ phục hồi phụ thuộc vào niềm tin người mua và thanh khoản ngân hàng.",
-        "ai_updated_at": "2026-11-05 22:58:08",
+        "macro_view": "Thị trường bất động sản đang trong giai đoạn nhạy cảm với các chính sách vĩ mô, đặc biệt là sự thay đổi trong lãi suất cho vay mua nhà và các quy định pháp lý mới ảnh hưởng trực tiếp đến tiến độ phê duyệt và bàn giao dự án. Dòng tiền vào ngành BĐS phụ thuộc lớn vào khả năng hấp thụ của thị trường và hạn mức tín dụng bất động sản từ hệ thống ngân hàng. Việc TCH ghi nhận CFO âm phản ánh phần nào thực trạng thanh khoản chung của ngành khi người mua nhà còn e dè và tiến độ giải ngân bị kéo dài. Tuy nhiên, với D/E an toàn ở mức 0.45, TCH có khả năng chống chịu tốt hơn so với các doanh nghiệp BĐS sử dụng đòn bẩy cao trong chu kỳ siết chặt tín dụng hiện tại.",
+        "ai_updated_at": "2026-11-06 05:02:08",
         "ps": 0,
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
@@ -5557,10 +5557,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 5.5%, ROA 3.7% — còn khá thấp, cần cải thiện. Định giá P/E 16.07x và P/B 1.05x. Biên lợi nhuận gộp 48.8% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ -1.40x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 793 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quỹ đất sạch tại vị trí đắc địa, pháp lý dự án hoàn thiện và thương hiệu chủ đầu tư uy tín. Động lực tăng trưởng mạnh: LNST tăng 1232.1% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro pháp lý dự án, tiến độ bàn giao chậm. Rủi ro đòn bẩy nợ cao nếu D/E vượt ngưỡng an toàn. Rủi ro thanh khoản thị trường BĐS đóng băng.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Báo cáo tài chính của TCH cho thấy sự phục hồi mạnh mẽ với tăng trưởng LNST YoY đạt 1232.07%, mang về 1,061 tỷ đồng lợi nhuận TTM. Tuy nhiên, chất lượng lợi nhuận cần được xem xét kỹ khi dòng tiền kinh doanh (CFO) âm 1,483 tỷ đồng, dẫn đến tỷ lệ CFO/LNST ở mức -1.40x, phản ánh việc ghi nhận doanh thu theo tiến độ dự án nhưng chưa thu được tiền mặt tương ứng. Hiệu quả sinh lời trên vốn chủ sở hữu (ROE) đạt 5.5% và ROA ở mức 3.7%, cho thấy khả năng sinh lời cơ bản vẫn được duy trì. Biên lợi nhuận gộp ấn tượng ở mức 48.8% là điểm sáng về mặt kiểm soát chi phí dự án. Cấu trúc tài chính khá an toàn với tỷ lệ nợ trên vốn chủ sở hữu (D/E) chỉ 0.45. Định giá hiện tại phản ánh đúng tài sản với P/B = 1.05x (so với BVPS 12,381 VNĐ) và P/E = 16.07x. Kết luận: Lợi nhuận có thật về mặt hạch toán kế toán theo tiến độ dự án BĐS, nhưng mang tính chất lợi nhuận giấy do dòng tiền thực tế chưa về, đòi hỏi nhà đầu tư phải theo dõi sát sao tiến độ bàn giao và thu tiền trong các quý tới.",
+        "catalyst": "Động lực tăng trưởng của TCH trong 2-3 năm tới đến từ việc tiếp tục ghi nhận doanh thu và lợi nhuận từ các dự án bất động sản đang triển khai, thể hiện qua mức tăng trưởng LNST YoY đột biến 1232.07%. Lợi thế cạnh tranh (Economic Moat) của doanh nghiệp nằm ở khả năng duy trì biên lợi nhuận gộp lên tới 48.8% nhờ tối ưu hóa chi phí phát triển dự án và quỹ đất sẵn có. Ngoài ra, cấu trúc nợ an toàn với D/E = 0.45 giúp TCH có dư địa để huy động vốn và mở rộng các dự án mới khi thị trường BĐS ấm lên.",
+        "risks": "Rủi ro trọng yếu nhất của TCH nằm ở dòng tiền kinh doanh âm 1,483 tỷ đồng (CFO/LNST = -1.40x), cho thấy rủi ro tắc nghẽn dòng tiền từ người mua trả trước hoặc tiến độ bàn giao dự án bị trì hoãn. Thứ hai, ngành bất động sản vẫn đối mặt với rủi ro pháp lý và siết chặt tín dụng, có thể làm chậm tiến độ ghi nhận doanh thu theo tiến độ dự án. Cuối cùng, việc không chia cổ tức (0.0%/năm) và phụ thuộc vào việc hạch toán lợi nhuận kế toán khiến cổ đông thiếu đi một lớp đệm bảo vệ bằng tiền mặt thực tế.",
+        "ai_source": "AI"
     },
     "HDG": {
         "symbol": "HDG",
@@ -6469,14 +6469,14 @@
                 "roe_quarter": 5.87
             }
         ],
-        "outlook": "Giá hiện tại 30,200 VNĐ nằm dưới vùng mua an toàn 31,668 VNĐ, tạo biên an toàn thực 4.9% (MoS 30%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 6.62x và P/B 1.50x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với giá hiện tại 30,200 VNĐ, PHR đang chiết khấu 4.9% so với vùng mua (fair_low) 31,668 VNĐ và thấp hơn tới 30.0% so với Fair value 45,240 VNĐ, tạo ra một Biên an toàn (Margin of Safety) cực kỳ hấp dẫn. Hệ thống đánh giá tổng điểm 73/100, trong đó điểm Cơ bản lên tới 45/50, củng cố vững chắc cho quyết định '✅ MUA TÍCH SẢN'. Việc giá đang nằm dưới cả vùng mua an toàn cho thấy thị trường đang định giá sai lệch hoặc bỏ qua tiềm năng tăng trưởng lợi nhuận 63.73% của doanh nghiệp. Đây là cơ hội vàng để tích lũy cổ phiếu BĐS có nền tảng tài chính lành mạnh (D/E 0.46) trước khi thị trường phản ánh lại đúng giá trị thực 45,240 VNĐ.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 31,668 — 45,240 | Giá hiện tại: 30,200 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Pháp lý BĐS (Luật Đất đai, Luật Nhà ở) đang dần tháo gỡ. Tín dụng BĐS hồi phục nhưng chậm. Chu kỳ phục hồi phụ thuộc vào niềm tin người mua và thanh khoản ngân hàng.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 24.1%, ROA 16.6% — vượt trội so với mặt bằng chung ngành. Định giá P/E 6.62x và P/B 1.50x. Biên lợi nhuận gộp 15.3% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.04x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 4,518 VNĐ, cổ tức 0.03%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quỹ đất sạch tại vị trí đắc địa, pháp lý dự án hoàn thiện và thương hiệu chủ đầu tư uy tín. Động lực tăng trưởng mạnh: LNST tăng 63.7% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro pháp lý dự án, tiến độ bàn giao chậm. Rủi ro đòn bẩy nợ cao nếu D/E vượt ngưỡng an toàn. Rủi ro thanh khoản thị trường BĐS đóng băng.",
+        "macro_view": "Ngành Bất động sản đang chịu tác động mạnh mẽ từ các chính sách vĩ mô nhằm tháo gỡ vướng mắc pháp lý và hạ lãi suất cho vay, giúp kích cầu nhà ở và cải thiện dòng tiền người mua trả trước. Việc sửa đổi Luật Đất đai, Luật Nhà ở và Luật Kinh doanh Bất động sản sẽ giúp các doanh nghiệp có quỹ đất sạch và pháp lý chuẩn bị như PHR đẩy nhanh tiến độ ghi nhận doanh thu. Tuy nhiên, độ trễ của chính sách và sự thận trọng của người mua nhà trong bối cảnh kinh tế phục hồi chậm vẫn là rào cản khiến dòng tiền thực (CFO 46 Tỷ) chưa thể bứt phá ngay lập tức. Do đó, chiến lược đầu tư giá trị vào các doanh nghiệp có P/B 1.50x và D/E an toàn 0.46 sẽ là hầm trú ẩn tốt nhất trước những biến động của chu kỳ chính sách BĐS.",
+        "ai_updated_at": "2026-11-06 04:56:36",
+        "bctc": "Báo cáo tài chính của PHR cho thấy hiệu quả sinh lời cực kỳ ấn tượng với ROE đạt 24.1% và ROA ở mức 16.6%, vượt xa chuẩn ngành BĐS (>=12%). Lợi nhuận sau thuế TTM đạt 1,123 Tỷ với mức tăng trưởng YoY đột phá 63.73%, phản ánh qua P/E hấp dẫn chỉ 6.62x và P/B hợp lý 1.50x so với BVPS 20,133 VNĐ. Tuy nhiên, chất lượng dòng tiền cần được theo dõi sát sao khi CFO chỉ đạt 46 Tỷ, kéo tỷ lệ CFO/LNST ở mức rất thấp 0.04x, cho thấy lợi nhuận có thể đang nằm ở khoản phải thu hoặc hàng tồn kho theo tiến độ dự án. Cấu trúc tài chính duy trì sự an toàn với hệ số D/E = 0.46, giúp doanh nghiệp giảm bớt áp lực chi phí lãi vay. Biên gộp 15.3% cho thấy khả năng kiểm soát chi phí dự án ở mức chấp nhận được. Kết luận, lợi nhuận của PHR là thật về mặt hạch toán kế toán nhưng tính thực tiễn của dòng tiền chưa cao, nhà đầu tư cần lưu ý rủi ro nghẽn dòng tiền từ người mua trả trước.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của PHR nằm ở quỹ đất sạch và khả năng phát triển dự án với biên lợi nhuận gộp 15.3% cùng ROE vượt trội 24.1%. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi việc ghi nhận doanh thu theo tiến độ bàn giao từ các dự án trọng điểm, giúp duy trì đà tăng trưởng LNST YoY 63.73%. Ngoài ra, việc mở rộng phát triển các khu đô thị vệ tinh sẽ là bệ phóng giúp EPS 4,518 VNĐ tiếp tục được cải thiện khi thị trường BĐS hồi phục.",
+        "risks": "Rủi ro trọng yếu nhất đối với PHR là sự tắc nghẽn dòng tiền thực, thể hiện qua tỷ lệ CFO/LNST chỉ đạt 0.04x, do đặc thù ghi nhận doanh thu theo tiến độ nhưng chưa thu được tiền mặt từ người mua. Bên cạnh đó, rủi ro pháp lý và tiến độ giải phóng mặt bằng có thể làm chậm trễ việc bàn giao dự án, ảnh hưởng trực tiếp đến việc hạch toán lợi nhuận 1,123 Tỷ trong các kỳ tới. Cuối cùng, biên gộp 15.3% có thể bị thu hẹp nếu chi phí xây dựng và vật liệu đầu vào gia tăng trong chu kỳ lạm phát.",
         "ps": 0,
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
@@ -6497,7 +6497,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "HPG": {
         "symbol": "HPG",
@@ -6625,14 +6625,14 @@
                 "roe_quarter": 2.45
             }
         ],
-        "outlook": "Giá hiện tại 21,500 VNĐ nằm dưới vùng mua an toàn 22,343 VNĐ, tạo biên an toàn thực 3.9% (MoS 30%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 6.68x và P/B 1.23x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với giá hiện tại 21,500 VNĐ, HPG đang giao dịch thấp hơn vùng mua (fair_low) 22,343 VNĐ một mức chiết khấu 3.9%, và thấp hơn rất nhiều so với Fair value 31,918 VNĐ. Biên an toàn (Margin of Safety) tổng thể lên tới 30.0% so với giá trị thực, kết hợp với Graham Number 35,752 VNĐ, tạo ra một cơ hội tích sản cực kỳ hấp dẫn cho tầm nhìn dài hạn. Hệ thống khuyến nghị MUA TÍCH SẢN bởi cổ phiếu hội tụ đủ 4 yếu tố: PTCB 45/50, Định giá 30/30, PTKT 12/20 và đang ở vùng tích lũy sideway an toàn. Đây là thời điểm tối ưu để giải ngân khi thị trường chưa phản ánh hết tiềm năng tăng trưởng lợi nhuận của doanh nghiệp đầu ngành.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 22,343 — 31,918 | Giá hiện tại: 21,500 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Chu kỳ giá hàng hóa phụ thuộc vào kinh tế Trung Quốc và chính sách bảo hộ thương mại toàn cầu. Cần theo dõi tồn kho và giá nguyên liệu đầu vào.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 19.9%, ROA 10.4% — vượt trội so với mặt bằng chung ngành. Định giá P/E 6.68x và P/B 1.23x. Biên lợi nhuận gộp 19.2% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.30x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 3,250 VNĐ, cổ tức 2.09%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quy mô sản xuất lớn, chi phí biên thấp và vị thế dẫn đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 106.0% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro giá hàng hóa đảo chiều làm biên gộp 19.2% co lại. Bẫy P/E 6.68x thấp tại đỉnh lợi nhuận chu kỳ. Rủi ro tồn kho cao nếu giá giảm.",
+        "macro_view": "Ngành nguyên vật liệu chu kỳ như thép đang bước vào giai đoạn phục hồi khi giá hàng hóa cơ bản ổn định và nhu cầu hạ tầng, đầu tư công được đẩy mạnh qua các chính sách vĩ mô. HPG với vị thế đầu ngành đang hưởng lợi trực tiếp từ chu kỳ này, thể hiện qua mức tăng trưởng LNST YoY 106.01% và ROE 19.9% vượt trội. Tuy nhiên, nhà đầu tư cần theo dõi sát sao chu kỳ giá quặng sắt và than cốc toàn cầu, vì sự đảo chiều của commodities có thể tác động mạnh đến biên gộp 19.2% trong các quý tiếp theo. Chính sách tiền tệ nới lỏng và mặt bằng lãi suất thấp cũng sẽ hỗ trợ giảm chi phí tài chính cho các doanh nghiệp có quy mô tài sản lớn và D/E 0.9 như HPG.",
+        "ai_updated_at": "2026-11-06 04:49:12",
+        "bctc": "Báo cáo tài chính của HPG cho thấy sức khỏe nội tại rất vững vàng với ROE đạt 19.9% và ROA ở mức cao 10.4%, phản ánh hiệu quả sử dụng vốn và tài sản xuất sắc trong ngành vật liệu chu kỳ. Lợi nhuận sau thuế TTM đạt 27,634 Tỷ với mức tăng trưởng đột phá 106.01% YoY, tuy nhiên hệ số CFO/LNST chỉ đạt 0.30x (CFO 8,295 Tỷ) là điểm cần lưu ý về chất lượng dòng tiền thực tế so với lợi nhuận kế toán. Cấu trúc vốn được kiểm soát an toàn với D/E = 0.9, giúp doanh nghiệp vượt qua các giai đoạn lãi suất biến động. Về định giá tương đối, P/E hiện ở mức 6.68x và P/B là 1.23x, thấp hơn nhiều so với trung vị ngành nhưng cần cảnh giác bẫy P/E thấp ở đỉnh chu kỳ. Biên gộp duy trì ở 19.2% cho thấy lợi thế cạnh tranh về quy mô và giá thành. Kết luận, lợi nhuận của HPG là thật và đến từ năng lực sản xuất lõi, dù dòng tiền kinh doanh đang bị chiếm dụng vốn lưu động do đặc thù tồn kho chu kỳ.",
+        "catalyst": "HPG sở hữu Economic Moat cực rộng nhờ lợi thế quy mô và chuỗi giá trị khép kín, giúp duy trì biên gộp 19.2% vượt trội so với các đối thủ trong ngành nguyên vật liệu chu kỳ. Động lực tăng trưởng 2-3 năm tới được củng cố bởi mức tăng trưởng LNST YoY ấn tượng 106.01%, cho thấy doanh nghiệp đang hưởng lợi lớn từ sự phục hồi của chu kỳ hàng hóa và nhu cầu thép xây dựng. Việc duy trì ROE 19.9% trong bối cảnh vĩ mô biến động chứng tỏ năng lực mở rộng thị phần và tối ưu hóa chi phí sản xuất lõi.",
+        "risks": "Rủi ro trọng yếu nhất đối với HPG nằm ở tính chu kỳ của giá hàng hóa cơ bản, có thể khiến bẫy P/E thấp 6.68x xuất hiện nếu nền kinh tế toàn cầu bước vào pha suy thoái làm giảm nhu cầu thép. Bên cạnh đó, tỷ lệ CFO/LNST chỉ đạt 0.30x cảnh báo rủi ro về việc lợi nhuận kế toán chưa chuyển hóa hoàn toàn thành tiền mặt, có thể do áp lực tồn kho hoặc công nợ phải thu trong giai đoạn chu kỳ đảo chiều. Cuối cùng, biến động giá quặng sắt và than cốc quốc tế có thể bào mòn biên gộp 19.2% nếu doanh nghiệp không phòng vệ kịp thời.",
         "ps": 0,
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
@@ -6653,7 +6653,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "HSG": {
         "symbol": "HSG",
@@ -7562,14 +7562,14 @@
                 "roe_quarter": 7.0
             }
         ],
-        "outlook": "Giá 52,900 VNĐ nằm giữa vùng mua 42,588 và fair value 53,235 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: 👀 THEO DÕI. Nếu giá điều chỉnh về 42,588 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Hiện tại, giá cổ phiếu FPT đang giao dịch ở mức 52,900 VNĐ, tiệm cận vùng định giá hợp lý (fair value 53,235 VNĐ) nhưng chưa chạm đến vùng mua an toàn (fair_low 42,588 VNĐ). Hệ thống khuyến nghị '👀 THEO DÕI' do giá hiện tại đang đắt hơn 19.5% so với mức chiết khấu lý tưởng, làm triệt tiêu Biên an toàn (Margin of Safety) 20.0% cần thiết cho một khoản đầu tư giá trị. Mặc dù PTKT xuất hiện mẫu hình Spring/Washout quét đáy rũ bỏ, việc giải ngân lúc này vi phạm nguyên tắc bảo vệ vốn khi PTCB chưa đủ điểm (27/50). Nhà đầu tư cần kiên nhẫn chờ đợi thị trường điều chỉnh về vùng 42,588 VNĐ để thiết lập vị thế với rủi ro thấp nhất.",
         "ai_recommendation": "NẮM GIỮ / THEO DÕI — Tỷ trọng 0% — Chưa đủ điều kiện mua",
         "ai_price_zone": "Vùng mua: 42,588 — 53,235 | Giá hiện tại: 52,900 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Sức mua tiêu dùng nội địa phục hồi dần. Xu hướng chuyển đổi số và thương mại điện tử tạo dư địa tăng trưởng. Cạnh tranh từ hàng nhập khẩu giá rẻ vẫn gay gắt.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 24.3%, ROA 13.2% — vượt trội so với mặt bằng chung ngành. Định giá P/E 9.88x và P/B 2.37x. Biên lợi nhuận gộp 31.0% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.19x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 5,455 VNĐ, cổ tức 3.35%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu mạnh, chuỗi cung ứng tối ưu và tệp khách hàng trung thành. Tăng trưởng LNST hiện ở mức -5.9% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro tăng trưởng chậm lại khi thị trường bão hòa. Rủi ro biên lợi nhuận gộp 31.0% bị thu hẹp do cạnh tranh. Rủi ro hàng tồn kho tăng cao.",
+        "macro_view": "Ngành công nghệ và bán lẻ đang hưởng lợi trực tiếp từ dòng vốn FDI dịch chuyển vào Việt Nam, kéo theo nhu cầu bùng nổ về hạ tầng số, điện toán đám mây và giải pháp ERP cho các nhà máy thông minh. Chu kỳ công nghệ toàn cầu đang chuyển dịch sang kỷ nguyên AI và bán dẫn, mở ra không gian xuất khẩu phần mềm và dịch vụ IT outsource rộng lớn cho các doanh nghiệp đầu ngành. Tuy nhiên, chính sách thắt chặt tiền tệ kéo dài ở các nền kinh tế lớn có thể làm chậm lại tiến độ giải ngân các hợp đồng chuyển đổi số của khối doanh nghiệp B2B. Do đó, vĩ mô đang tạo ra cơ hội dài hạn nhưng vẫn tồn tại lực cản ngắn hạn lên tốc độ tăng trưởng doanh thu.",
+        "ai_updated_at": "2026-11-06 04:42:19",
+        "bctc": "FPT duy trì vị thế tài chính vững mạnh với khả năng sinh lời trên vốn chủ sở hữu (ROE) xuất sắc ở mức 24.3% và ROA cao đạt 13.2%, phản ánh hiệu quả sử dụng tài sản vượt trội. Cấu trúc vốn an toàn với tỷ lệ D/E=0.71 giúp doanh nghiệp giảm thiểu rủi ro đòn bẩy trong môi trường vĩ mô biến động. Tuy nhiên, chất lượng dòng tiền cần được lưu ý khi tỷ lệ CFO/LNST chỉ đạt 0.19x, cho thấy lợi nhuận kế toán (LN TTM 10,771 Tỷ) chưa chuyển hóa hoàn toàn thành tiền mặt thực thu (CFO 2,098 Tỷ). Tăng trưởng LNST YoY đang ghi nhận mức âm -5.94%, đi ngược lại với kỳ vọng tăng trưởng nóng của ngành công nghệ. Về mặt định giá tương đối, P/E=9.88x và P/B=2.37x cho thấy thị trường đang định giá khá sát với nền tảng tài sản (BVPS 22,321 VNĐ) và lợi nhuận (EPS 5,455 VNĐ). Kết luận: Lợi nhuận của FPT là thật và đến từ cốt lõi kinh doanh, nhưng áp lực lên dòng tiền hoạt động và tăng trưởng âm ngắn hạn là điểm trừ về mặt chất lượng tăng trưởng.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của FPT nằm ở hệ sinh thái công nghệ toàn diện, tệp khách hàng doanh nghiệp lớn có chi phí chuyển đổi cao và năng lực cung ứng dịch vụ IT outsource toàn cầu. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi làn sóng chuyển đổi số doanh nghiệp, tích hợp AI vào giải pháp phần mềm và mở rộng thị trường xuất khẩu sang các nước phát triển. Biên gộp duy trì ở mức 31.0% là bệ đỡ giúp công ty tái đầu tư vào R&D và duy trì vị thế dẫn đầu ngành.",
+        "risks": "Rủi ro lớn nhất đối với FPT là sự phụ thuộc vào nhu cầu chi tiêu IT của các thị trường xuất khẩu trọng điểm, vốn dễ bị tổn thương bởi suy thoái kinh tế toàn cầu. Bên cạnh đó, áp lực cạnh tranh gay gắt về nhân sự công nghệ chất lượng cao có thể làm xói mòn biên lợi nhuận gộp 31.0% hiện tại. Cuối cùng, tỷ lệ CFO/LNST thấp (0.19x) tiềm ẩn rủi ro về tiến độ thu hồi công nợ từ các dự án công nghệ quy mô lớn.",
         "ps": 0,
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
@@ -7590,7 +7590,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "MWG": {
         "symbol": "MWG",
@@ -7718,14 +7718,14 @@
                 "roe_quarter": 3.03
             }
         ],
-        "outlook": "Giá 75,000 VNĐ đã vượt fair value 74,531 VNĐ. Định giá hiện tại chưa hấp dẫn cho tích sản mới. Verdict: HƠI ĐẮT - KHÔNG MUA. Quyết định hệ thống: ⚠️ CHỜ VỀ VÙNG MUA. Chờ giá điều chỉnh về 59,625 VNĐ mới nên giải ngân.",
+        "outlook": "Hiện tại, giá cổ phiếu MWG đang giao dịch ở mức 75,000 VNĐ, vượt qua vùng mua an toàn từ 59,625 VNĐ đến fair value 74,531 VNĐ. Hệ thống phát tín hiệu ⚠️ CHỜ VỀ VÙNG MUA vì định giá hiện tại đã phản ánh đầy đủ các kỳ vọng tích cực, khiến biên an toàn (Margin of Safety) bị âm -20.5% so với vùng fair_low. Việc mua vào ở vùng giá 75,000 VNĐ sẽ vi phạm nguyên tắc bảo vệ vốn của đầu tư giá trị khi không có đủ đệm đỡ trước các biến động thị trường. Do đó, hành động giá hiện tại yêu cầu sự kiên nhẫn, chờ đợi nhịp điều chỉnh về vùng 59,625 VNĐ để tối ưu hóa tỷ suất sinh lời và giảm thiểu rủi ro.",
         "ai_recommendation": "CHỜ VỀ VÙNG MUA — Tỷ trọng 0% — Chờ giá về fair_low mới mua",
         "ai_price_zone": "Vùng mua: 59,625 — 74,531 | Giá hiện tại: 75,000 | Verdict: HƠI ĐẮT - KHÔNG MUA",
-        "macro_view": "Sức mua tiêu dùng nội địa phục hồi dần. Xu hướng chuyển đổi số và thương mại điện tử tạo dư địa tăng trưởng. Cạnh tranh từ hàng nhập khẩu giá rẻ vẫn gay gắt.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 29.5%, ROA 12.1% — vượt trội so với mặt bằng chung ngành. Định giá P/E 9.83x và P/B 2.40x. Biên lợi nhuận gộp 21.7% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ -0.05x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 7,576 VNĐ, cổ tức 1.34%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu mạnh, chuỗi cung ứng tối ưu và tệp khách hàng trung thành. Động lực tăng trưởng mạnh: LNST tăng 97.4% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro tăng trưởng chậm lại khi thị trường bão hòa. Rủi ro biên lợi nhuận gộp 21.7% bị thu hẹp do cạnh tranh. Rủi ro hàng tồn kho tăng cao.",
+        "macro_view": "Đối với ngành công nghệ và bán lẻ, chu kỳ vĩ mô hiện tại đang chịu tác động mạnh bởi chính sách tiền tệ và sức khỏe tài chính của người tiêu dùng. Lãi suất cho vay tiêu dùng và thu nhập khả dụng là hai biến số quyết định trực tiếp đến doanh thu và tốc độ quay vòng hàng tồn kho của MWG. Khi lạm phát cơ bản được kiểm soát và các chính sách kích cầu tiêu dùng nội địa phát huy tác dụng, ngành bán lẻ sẽ bước vào pha mở rộng của chu kỳ, hỗ trợ cho đà tăng trưởng LNST 97.41%. Tuy nhiên, áp lực tỷ giá và chi phí logistics toàn cầu vẫn có thể gây áp lực lên biên gộp 21.7% nếu doanh nghiệp không chuyển giao được chi phí cho người dùng cuối.",
+        "ai_updated_at": "2026-11-06 04:53:05",
+        "bctc": "Báo cáo tài chính của MWG cho thấy hiệu quả sinh lời trên vốn chủ sở hữu cực kỳ ấn tượng với ROE=29.5% và ROA=12.1%, phản ánh năng lực sử dụng tài sản xuất sắc trong ngành bán lẻ. Lợi nhuận sau thuế TTM đạt 11,717 tỷ đồng với mức tăng trưởng đột phá 97.41% YoY, tuy nhiên chất lượng dòng tiền lại là một điểm trừ lớn khi CFO âm 531 tỷ đồng. Tỷ lệ CFO/LNST đạt -0.05x cho thấy lợi nhuận kế toán chưa được chuyển hóa thành tiền mặt thực tế, có thể do biến động vốn lưu động hoặc chính sách bán hàng. Cấu trúc vốn sử dụng đòn bẩy tài chính ở mức D/E=1.05, vẫn nằm trong ngưỡng kiểm soát đối với mô hình bán lẻ quy mô lớn. Biên lợi nhuận gộp duy trì ở 21.7%, kết hợp với định giá P/E=9.83 và P/B=2.4 cho thấy thị trường đang chiết khấu khá sâu so với tốc độ tăng trưởng. Kết luận, lợi nhuận của MWG là thật và đến từ sự phục hồi cốt lõi của hoạt động kinh doanh, nhưng nhà đầu tư cần theo dõi sát sao dòng tiền hoạt động trong các quý tới để xác nhận tính bền vững.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của MWG nằm ở mạng lưới phân phối phủ sóng toàn quốc, thương hiệu mạnh và khả năng tối ưu hóa chuỗi cung ứng giúp duy trì biên gộp 21.7%. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi sự phục hồi sức mua tiêu dùng, quá trình tái cấu trúc các chuỗi cửa hàng kém hiệu quả và việc mở rộng thị phần ở các ngành hàng mới. Mức tăng trưởng LNST YoY lên tới 97.41% là minh chứng rõ ràng cho thấy chiến lược tinh gọn bộ máy và tập trung vào trải nghiệm khách hàng đang phát huy tác dụng.",
+        "risks": "Rủi ro trọng yếu nhất đối với MWG là sự suy giảm sức mua vĩ mô và lạm phát làm xói mòn biên lợi nhuận gộp 21.7% của ngành bán lẻ công nghệ và tiêu dùng. Bên cạnh đó, dòng tiền kinh doanh CFO âm 531 tỷ đồng tiềm ẩn rủi ro về quản lý vốn lưu động và áp lực thanh khoản ngắn hạn nếu chu kỳ hàng tồn kho kéo dài. Cạnh tranh khốc liệt từ các sàn thương mại điện tử cũng có thể làm gia tăng chi phí bán hàng, gây áp lực lên mức P/E=9.83x hiện tại nếu tăng trưởng không duy trì được đà 97.41%.",
         "ps": 0,
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
@@ -7746,7 +7746,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "PNJ": {
         "symbol": "PNJ",
@@ -7874,14 +7874,14 @@
                 "roe_quarter": 6.49
             }
         ],
-        "outlook": "Giá hiện tại 15,150 VNĐ nằm dưới vùng mua an toàn 35,550 VNĐ, tạo biên an toàn thực 134.7% (MoS 20%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 4.47x và P/B 0.57x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá hiện tại 15,150 VNĐ đang thấp hơn rất nhiều so với vùng mua 35,550 VNĐ và fair value 44,437 VNĐ, tạo ra mức chiết khấu lên tới 134.7% và biên an toàn cực lớn trên lý thuyết. Tuy nhiên, hệ thống vẫn đưa ra quyết định '❌ TRÁNH' vì điểm PTCB chỉ đạt 15/50, phản ánh nội tại doanh nghiệp quá yếu kém bất chấp giá rẻ. Việc CFO âm và tăng trưởng âm -152.02% cho thấy đây có thể là bẫy giá trị (value trap) thay vì một cơ hội đầu tư an toàn. Nhà đầu tư không nên bắt đáy khi chất lượng tài sản và dòng tiền chưa được kiểm chứng và cải thiện.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 35,550 — 44,437 | Giá hiện tại: 15,150 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Sức mua tiêu dùng nội địa phục hồi dần. Xu hướng chuyển đổi số và thương mại điện tử tạo dư địa tăng trưởng. Cạnh tranh từ hàng nhập khẩu giá rẻ vẫn gay gắt.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 12.7%, ROA 8.6% — ở mức trung bình ngành. Định giá P/E 4.47x và P/B 0.57x. Biên lợi nhuận gộp 8.7% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ -1.70x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 3,302 VNĐ, cổ tức 10.75%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu mạnh, chuỗi cung ứng tối ưu và tệp khách hàng trung thành. Tăng trưởng LNST hiện ở mức -152.0% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro tăng trưởng chậm lại khi thị trường bão hòa. Rủi ro biên lợi nhuận gộp 8.7% bị thu hẹp do cạnh tranh. Rủi ro hàng tồn kho tăng cao.",
+        "macro_view": "Đối với ngành bán lẻ và đặc thù hàng hóa của PNJ, chu kỳ giá vàng thế giới và biến động tỷ giá tác động trực tiếp đến chi phí vốn lưu động và biên lợi nhuận gộp. Chính sách vĩ mô hiện tại với sức cầu tiêu dùng nội địa yếu đang kìm hãm sự phục hồi của ngành bán lẻ, thể hiện qua tăng trưởng LNST -152.02%. Khi biên gộp chỉ đạt 8.7%, doanh nghiệp cực kỳ nhạy cảm với lạm phát chi phí đẩy và sự thắt chặt tín dụng tiêu dùng. Do đó, áp lực vĩ mô lên chu kỳ hàng tồn kho và dòng tiền sẽ còn kéo dài cho đến khi sức mua tổng thể được kích cầu trở lại.",
+        "ai_updated_at": "2026-11-06 04:57:27",
+        "bctc": "Báo cáo tài chính của PNJ cho thấy sự mâu thuẫn lớn giữa lợi nhuận kế toán và dòng tiền thực tế. Mặc dù ROE=12.7% và ROA=8.6% cho thấy hiệu suất sinh lời trên vốn và tài sản vẫn ở mức khá, cùng P/E=4.47 và P/B=0.57 phản ánh định giá rẻ. Tuy nhiên, chất lượng lợi nhuận là dấu hỏi lớn khi CFO/LNST=-1.70x với dòng tiền kinh doanh (CFO) âm sâu -2,874 Tỷ đồng, trong khi LNST TTM đạt 1,689 Tỷ. Tăng trưởng LNST YoY sụt giảm nghiêm trọng -152.02%, kèm biên gộp mỏng chỉ 8.7% cho thấy áp lực lên cốt lõi kinh doanh. Cấu trúc vốn an toàn với D/E=0.52 là điểm sáng hiếm hoi. Kết luận: Lợi nhuận hiện tại mang tính chất 'ảo' hoặc bị giam vốn nặng nề, dòng tiền âm là tín hiệu cảnh báo đỏ về sức khỏe tài chính thực sự.",
+        "catalyst": "Lợi thế cạnh tranh (Economic Moat) của PNJ trong ngành bán lẻ nằm ở mạng lưới phân phối, tuy nhiên biên gộp 8.7% cho thấy rào cản gia nhập ngành đang bị thu hẹp và áp lực cạnh tranh gay gắt. Động lực tăng trưởng 2-3 năm tới hiện chưa rõ ràng khi tăng trưởng LNST YoY đang ở mức -152.02% và dòng tiền âm. Doanh nghiệp cần tái cấu trúc mạnh mẽ để giải phóng dòng tiền và cải thiện biên lợi nhuận trước khi có thể kỳ vọng vào sự phục hồi bền vững.",
+        "risks": "Rủi ro trọng yếu nhất là dòng tiền kinh doanh âm -2,874 Tỷ đồng, cho thấy doanh nghiệp không tạo ra tiền mặt thực từ hoạt động cốt lõi mà đang phụ thuộc vào nguồn vốn bên ngoài hoặc chiếm dụng. Thứ hai, tăng trưởng LNST YoY -152.02% phản ánh sự suy thoái nghiêm trọng trong hoạt động bán lẻ và sức cầu tiêu dùng. Cuối cùng, biên gộp 8.7% quá mỏng manh khiến doanh nghiệp dễ bị tổn thương trước bất kỳ biến động nào về chi phí đầu vào hoặc chi phí vận hành.",
         "ps": 0,
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
@@ -7902,7 +7902,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "FRT": {
         "symbol": "FRT",
@@ -8030,14 +8030,14 @@
                 "roe_quarter": 6.31
             }
         ],
-        "outlook": "Giá 143,000 VNĐ đã vượt xa fair value 70,562 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá cổ phiếu đang giao dịch ở mức 143,000 VNĐ, vượt xa vùng mua an toàn từ 56,450 VNĐ đến fair value 70,562 VNĐ. Với mức chiết khấu so với fair_low lên tới -60.5%, cổ phiếu đang bị định giá quá đắt và không hề có biên an toàn (Margin of Safety) cho nhà đầu tư giá trị. Hệ thống phát tín hiệu ❌ TRÁNH vì rủi ro điều chỉnh về giá trị thực là rất lớn khi PTCB và định giá không còn hỗ trợ. Nhà đầu tư tuyệt đối không nên giải ngân ở vùng giá này mà cần kiên nhẫn chờ đợi thị trường điều chỉnh về vùng 56,450 VNĐ.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 56,450 — 70,562 | Giá hiện tại: 143,000 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Sức mua tiêu dùng nội địa phục hồi dần. Xu hướng chuyển đổi số và thương mại điện tử tạo dư địa tăng trưởng. Cạnh tranh từ hàng nhập khẩu giá rẻ vẫn gay gắt.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 25.4%, ROA 5.3% — vượt trội so với mặt bằng chung ngành. Định giá P/E 18.95x và P/B 4.91x. Biên lợi nhuận gộp 20.0% duy trì ở mức tốt. CFO 1,246 tỷ so với LNST 1,733 tỷ (CFO/LNST = 0.72x) — chấp nhận được. ⚠️ Đòn bẩy cao D/E 3.68 cần được theo dõi. EPS đạt 7,598 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu mạnh, chuỗi cung ứng tối ưu và tệp khách hàng trung thành. Động lực tăng trưởng mạnh: LNST tăng 110.3% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro tăng trưởng chậm lại khi thị trường bão hòa. Rủi ro biên lợi nhuận gộp 20.0% bị thu hẹp do cạnh tranh. Rủi ro hàng tồn kho tăng cao.",
+        "macro_view": "Ngành bán lẻ công nghệ và dược phẩm chịu tác động trực tiếp từ sức mua tiêu dùng và lạm phát vĩ mô. Trong bối cảnh kinh tế phục hồi nhưng thu nhập khả dụng của người dân chưa tăng trưởng đột phá, việc duy trì tăng trưởng doanh thu sẽ là một thách thức. Chính sách tiền tệ và mặt bằng lãi suất cũng ảnh hưởng lớn đến chi phí tài chính của FRT, đặc biệt khi hệ số D/E đang ở mức 3.68. Do đó, áp lực vĩ mô lên sức cầu bán lẻ và chi phí vốn là hai biến số cần theo dõi sát sao.",
+        "ai_updated_at": "2026-11-06 04:43:14",
+        "bctc": "FRT ghi nhận hiệu quả sinh lời ấn tượng với ROE đạt 25.4% và ROA ở mức 5.3%, phản ánh năng lực tạo lời trên vốn chủ sở hữu xuất sắc. Tăng trưởng LNST YoY bùng nổ 110.27% cho thấy động lực mở rộng chuỗi bán lẻ rất mạnh mẽ. Tuy nhiên, chất lượng lợi nhuận cần được theo dõi khi CFO/LNST chỉ đạt 0.72x, nghĩa là dòng tiền thực thu chưa bắt kịp hoàn toàn với lợi nhuận kế toán. Cấu trúc vốn là một điểm trừ lớn khi hệ số D/E lên tới 3.68, cho thấy doanh nghiệp đang sử dụng đòn bẩy tài chính rất cao. Biên gộp duy trì ở mức 20.0%, phù hợp với đặc thù ngành bán lẻ. Định giá hiện tại với P/E 18.95x và P/B 4.91x phản ánh kỳ vọng lớn của thị trường vào EPS 7,598 VNĐ và BVPS 29,124 VNĐ. Kết luận: Lợi nhuận có tăng trưởng thật nhưng dòng tiền và áp lực nợ vay là rủi ro tiềm ẩn.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của FRT nằm ở mạng lưới phân phối bán lẻ rộng khắp và vị thế dẫn đầu trong mảng ICT và dược phẩm. Động lực tăng trưởng 2-3 năm tới được thúc đẩy bởi xu hướng số hóa tiêu dùng và nhu cầu chăm sóc sức khỏe, hỗ trợ mức tăng trưởng LNST YoY 110.27% hiện tại. Việc mở rộng độ phủ cửa hàng và tối ưu hóa chuỗi cung ứng sẽ tiếp tục là bệ phóng cho doanh thu và lợi nhuận.",
+        "risks": "Rủi ro trọng yếu nhất là áp lực từ đòn bẩy tài chính quá lớn với D/E = 3.68, khiến doanh nghiệp nhạy cảm với biến động lãi suất và chi phí vốn. Thứ hai, biên gộp 20.0% khá mỏng manh và dễ bị bào mòn bởi cuộc chiến giảm giá giành thị phần trong ngành bán lẻ. Cuối cùng, dòng tiền kinh doanh (CFO/LNST = 0.72x) chưa tương xứng với lợi nhuận, tiềm ẩn rủi ro về quản lý vốn lưu động khi mở rộng chuỗi.",
         "ps": 0,
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
@@ -8058,7 +8058,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "VNM": {
         "symbol": "VNM",
@@ -8186,14 +8186,14 @@
                 "roe_quarter": 5.93
             }
         ],
-        "outlook": "Giá 57,500 VNĐ đã vượt xa fair value 45,029 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá hiện tại 57,500 VNĐ đang vượt xa vùng mua an toàn 33,772 — 45,029 VNĐ, phản ánh sự hưng phấn quá mức của thị trường bất chấp nền tảng cơ bản. Với mức chiết khấu so với fair_low lên tới -41.3%, cổ phiếu hoàn toàn không có Biên an toàn (Margin of Safety) cho nhà đầu tư giá trị. Hệ thống định giá Graham Number chỉ ra mức giá trị thực tối đa là 45,029 VNĐ, do đó việc mua vào lúc này đồng nghĩa với việc trả giá đắt hơn 27.7% so với fair_high. Dù điểm kỹ thuật có tín hiệu Quét Đáy Rũ Bỏ (Spring), nhưng rủi ro điều chỉnh giá về đúng giá trị thực là rất lớn. Do đó, quyết định ❌ TRÁNH là bắt buộc để bảo toàn vốn, chờ đợi thị trường điều chỉnh về vùng định giá hợp lý.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 33,772 — 45,029 | Giá hiện tại: 57,500 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Tiêu dùng nội địa phục hồi nhưng chậm. Cạnh tranh từ hàng nhập khẩu và áp lực biên lợi nhuận từ chi phí nguyên liệu. Cơ hội từ xuất khẩu nếu tỷ giá thuận lợi.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 31.1%, ROA 20.4% — vượt trội so với mặt bằng chung ngành. Định giá P/E 10.52x và P/B 3.48x. Biên lợi nhuận gộp 41.4% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.37x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 5,454 VNĐ, cổ tức 8.19%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu quốc dân, mạng lưới phân phối rộng khắp và thị phần dẫn đầu. Động lực tăng trưởng mạnh: LNST tăng 18.0% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro cạnh tranh từ hàng nhập khẩu và thương hiệu mới. Rủi ro biên gộp 41.4% bị ép bởi chi phí nguyên liệu. Rủi ro sức mua tiêu dùng suy yếu.",
+        "macro_view": "Ngành sản xuất tiêu dùng phòng thủ như sữa đang chịu tác động trực tiếp từ chu kỳ giá hàng hóa nông sản và nguyên liệu bột sữa toàn cầu. Khi lạm phát lõi và giá nguyên liệu đầu vào neo ở mức cao, các doanh nghiệp đầu ngành buộc phải đánh đổi giữa việc giữ thị phần và bảo vệ biên lợi nhuận gộp. Sức mua tiêu dùng nội địa phục hồi chậm sau giai đoạn thắt chặt tín dụng cũng làm giảm tốc độ tăng trưởng sản lượng bán ra. Tuy nhiên, với vị thế phòng thủ, VNM ít bị ảnh hưởng bởi biến động vĩ mô cực đoan, nhưng chu kỳ tăng giá nguyên liệu sẽ là rào cản lớn cho việc mở rộng biên lợi nhuận trong 1-2 năm tới.",
+        "ai_updated_at": "2026-11-06 05:06:48",
+        "bctc": "VNM thể hiện vị thế của một doanh nghiệp đầu ngành với khả năng sinh lời trên vốn chủ sở hữu cực kỳ ấn tượng, đạt ROE=31.1% và ROA=20.4%. Cấu trúc tài chính rất lành mạnh và an toàn với tỷ lệ nợ vay trên vốn chủ sở hữu D/E=0.51, cho thấy doanh nghiệp không chịu áp lực đòn bẩy tài chính. Biên lợi nhuận gộp duy trì ở mức cao 41.4%, phản ánh sức mạnh thương hiệu và khả năng chuyển giao chi phí cho người tiêu dùng. Tuy nhiên, một điểm trừ lớn về chất lượng lợi nhuận là dòng tiền từ hoạt động kinh doanh (CFO) chỉ đạt 4,272 Tỷ, khiến tỷ lệ CFO/LNST = 0.37x, thấp hơn nhiều so với lợi nhuận kế toán 11,432 Tỷ. Điều này đặt ra dấu hỏi về việc lợi nhuận có đang bị giam trong vốn lưu động hay hàng tồn kho, thay vì chuyển hóa thành tiền mặt thực tế. Về mặt định giá lịch sử, P/E=10.52 và P/B=3.48 cho thấy thị trường đang trả mức giá khá cao cho tài sản ròng (BVPS = 16,523 VNĐ). Kết luận: Lợi nhuận trên sổ sách là có thật nhờ biên gộp tốt, nhưng chất lượng dòng tiền yếu (CFO/LNST = 0.37x) cảnh báo nhà đầu tư giá trị về rủi ro lợi nhuận ảo hoặc kém hiệu quả trong ngắn hạn.",
+        "catalyst": "Economic Moat của VNM nằm ở thương hiệu quốc gia, hệ thống phân phối độc quyền và thị phần áp đảo trong ngành sữa, tạo ra rào cản gia nhập cực lớn cho đối thủ. Động lực tăng trưởng 2-3 năm tới đến từ việc mở rộng danh mục sản phẩm biên lợi nhuận cao và chiến lược xuất khẩu sang các thị trường ngách. Bên cạnh đó, tăng trưởng LNST YoY = 17.99% và mức cổ tức tiền mặt hấp dẫn 8.19%/năm tiếp tục là bệ đỡ giữ chân nhà đầu tư dài hạn.",
+        "risks": "Rủi ro lớn nhất là sự biến động giá nguyên liệu đầu vào (bột sữa, đường) trên thị trường hàng hóa toàn cầu có thể bào mòn biên lợi nhuận gộp 41.4% nếu công ty không thể tăng giá bán. Áp lực cạnh tranh từ các hãng sữa ngoại và sự thay đổi thị hiếu người tiêu dùng sang các sản phẩm thay thế đe dọa thị phần cốt lõi. Ngoài ra, tỷ lệ CFO/LNST = 0.37x cảnh báo rủi ro về quản trị vốn lưu động, khi lợi nhuận không chuyển hóa kịp thời thành tiền mặt để tái đầu tư hoặc trả cổ tức.",
         "ps": 0,
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
@@ -8214,7 +8214,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "MSN": {
         "symbol": "MSN",
@@ -8654,14 +8654,14 @@
                 "roe_quarter": 3.33
             }
         ],
-        "outlook": "Giá 74,600 VNĐ đã vượt xa fair value 48,545 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
-        "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
-        "ai_price_zone": "Vùng mua: 41,263 — 48,545 | Giá hiện tại: 74,600 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Nhu cầu điện tăng theo tăng trưởng GDP. Chính sách phát triển năng lượng tái tạo tạo cơ hội. Rủi ro chính sách giá điện và thủy văn bất thường.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 21.1%, ROA 15.1% — vượt trội so với mặt bằng chung ngành. Định giá P/E 12.37x và P/B 2.49x. Biên lợi nhuận gộp 15.7% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.37x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 6,109 VNĐ, cổ tức 2.15%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở vị thế độc quyền tự nhiên, hợp đồng dài hạn và dòng tiền ổn định. Động lực tăng trưởng mạnh: LNST tăng 74.9% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro chính sách giá điện/nước thay đổi. Rủi ro chi phí vốn tăng khi lãi suất lên. Rủi ro thời tiết khắc nghiệt ảnh hưởng sản lượng.",
+        "outlook": "Giá hiện tại 74,600 VNĐ đang đắt hơn 53.7% so với fair_high 48,545 VNĐ và vượt xa cả Graham Number 64,172 VNĐ. Biên an toàn (Margin of Safety) so với vùng mua 41,263 VNĐ đang ở mức âm -44.7%, báo hiệu rủi ro điều chỉnh giá là rất lớn khi thị trường quay về giá trị thực. Hệ thống khuyến nghị '❌ TRÁNH' tuyệt đối ở vùng giá này, nhà đầu tư chỉ nên xem xét khi giá chiết khấu về vùng 41,263 - 48,545 VNĐ.",
+        "ai_recommendation": "BẮT BUỘC: 'TRÁNH' — Tỷ trọng 0% — Không mua",
+        "ai_price_zone": "BẮT BUỘC: 'Vùng mua: 41,263 — 48,545 | Giá hiện tại: 74,600 | Verdict: ĐẮT - TRÁNH'",
+        "macro_view": "Ngành tiện ích khí đốt đang chịu tác động mạnh bởi chu kỳ giá năng lượng toàn cầu và chính sách an ninh năng lượng quốc gia. Việc chuyển dịch sang nhập khẩu LNG khiến chi phí đầu vào phụ thuộc lớn vào tỷ giá và giá dầu khí thế giới, trong khi giá bán điện/khí đầu ra chịu sự kiểm soát chặt chẽ của nhà nước, tạo ra độ trễ và rủi ro cho biên lợi nhuận doanh nghiệp.",
+        "ai_updated_at": "2026-11-06 04:44:23",
+        "bctc": "GAS sở hữu nền tảng tài chính vững chắc với D/E thấp 0.41 và hiệu quả sinh lời vượt trội: ROE 21.1%, ROA 15.1%. Tăng trưởng LNST YoY đạt 74.87% là con số ấn tượng, tuy nhiên chất lượng lợi nhuận cần được xem xét thận trọng khi CFO/LNST chỉ đạt 0.37x (CFO 5,615 tỷ so với LNST 14,982 tỷ). Sự chênh lệch này cho thấy dòng tiền thực tế chưa tương xứng với lợi nhuận kế toán, có thể do biến động vốn lưu động hoặc các khoản mục phi tiền tệ. Với P/E 12.37x và P/B 2.49x, định giá hiện tại chưa phản ánh đầy đủ rủi ro về chất lượng dòng tiền này.",
+        "catalyst": "Lợi thế cạnh tranh độc quyền (Economic Moat) về hạ tầng đường ống dẫn khí và kho cảng LNG giúp GAS duy trì vị thế thống lĩnh ngành năng lượng. Động lực tăng trưởng trung hạn đến từ nhu cầu điện khí theo Quy hoạch điện VIII và việc đưa vào vận hành kho LNG Thị Vải, giúp đa dạng hóa nguồn cung và giảm phụ thuộc vào khí thiên nhiên nội địa đang suy giảm.",
+        "risks": "Rủi ro lớn nhất nằm ở cơ chế giá khí đầu vào và đầu ra chưa hoàn toàn theo thị trường, khiến biên lợi nhuận nhạy cảm với biến động giá LNG thế giới và tỷ giá hối đoái. Ngoài ra, sự cạnh tranh từ các nguồn năng lượng tái tạo và thủy điện trong dài hạn có thể gây áp lực lên sản lượng khí bao tiêu cho phát điện.",
         "ps": 0,
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
@@ -8682,7 +8682,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "PVD": {
         "symbol": "PVD",
@@ -9122,14 +9122,14 @@
                 "roe_quarter": -0.15
             }
         ],
-        "outlook": "Giá hiện tại 26,500 VNĐ nằm dưới vùng mua an toàn 32,029 VNĐ, tạo biên an toàn thực 20.9% (MoS 30%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 4.75x và P/B 1.59x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với mức giá hiện tại chỉ 26,500 VNĐ, cổ phiếu đang thấp hơn vùng mua 32,029 VNĐ và fair value 45,756 VNĐ, tạo ra biên an toàn (chiết khấu so với fair_low) lên đến 20.9%. Hệ thống đánh giá tổng điểm 85/100 với Định giá đạt tuyệt đối 30/30, hoàn toàn thuyết phục cho quyết định '✅ MUA TÍCH SẢN' tại vùng định giá rẻ bậc nhất thị trường. Việc giá đang đi ngang tích lũy sideway càng củng cố thêm luận điểm mua gom tài sản giá trị trước khi thị trường nhận ra sự bất hợp lý về mặt định giá. Đây là cơ hội hiếm có để sở hữu một doanh nghiệp đầu ngành với mức chiết khấu sâu, bảo vệ nhà đầu tư trước các cú sốc vĩ mô.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 32,029 — 45,756 | Giá hiện tại: 26,500 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Tiêu dùng nội địa phục hồi nhưng chậm. Cạnh tranh từ hàng nhập khẩu và áp lực biên lợi nhuận từ chi phí nguyên liệu. Cơ hội từ xuất khẩu nếu tỷ giá thuận lợi.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 40.5%, ROA 27.9% — vượt trội so với mặt bằng chung ngành. Định giá P/E 4.75x và P/B 1.59x. Biên lợi nhuận gộp 16.2% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.27x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 5,583 VNĐ, cổ tức 1.13%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu quốc dân, mạng lưới phân phối rộng khắp và thị phần dẫn đầu. Động lực tăng trưởng mạnh: LNST tăng 887.1% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro cạnh tranh từ hàng nhập khẩu và thương hiệu mới. Rủi ro biên gộp 16.2% bị ép bởi chi phí nguyên liệu. Rủi ro sức mua tiêu dùng suy yếu.",
+        "macro_view": "BSR hoạt động trong phân ngành Petroleum, do đó hiệu quả kinh doanh gắn liền với chu kỳ giá dầu thô và biên lợi nhuận lọc dầu (crack spread) toàn cầu. Hiện tại, căng thẳng địa chính trị và các chính sách cắt giảm sản lượng của OPEC+ đang giữ cho giá dầu ở mức nền cao, hỗ trợ trực tiếp cho biên gộp 16.2% và mức bùng nổ lợi nhuận của doanh nghiệp. Tuy nhiên, nguy cơ suy thoái kinh tế vĩ mô tại các quốc gia tiêu thụ lớn có thể làm giảm nhu cầu năng lượng, khiến chu kỳ hàng hóa chuyển sang pha điều chỉnh. Nhà đầu tư cần theo dõi sát sao diễn biến giá dầu Brent và tồn kho xăng dầu chiến lược để điều chỉnh kỳ vọng đối với nhóm cổ phiếu mang tính chu kỳ cao như BSR.",
+        "ai_updated_at": "2026-11-06 04:37:53",
+        "bctc": "BCTC của BSR thể hiện sức khỏe tài chính cực kỳ ấn tượng với khả năng sinh lời vượt trội cho một doanh nghiệp sản xuất. Cụ thể, ROE=40.5% và ROA=27.9% cho thấy hiệu quả sử dụng vốn và tài sản xuất sắc. Hệ số đòn bẩy tài chính được kiểm soát rất an toàn với D/E=0.44, giúp doanh nghiệp giảm thiểu rủi ro lãi vay. Tuy nhiên, tỷ lệ CFO/LNST chỉ đạt 0.27x, thấp hơn nhiều so với lợi nhuận sau thuế TTM lên đến 27,964 Tỷ đồng, đòi hỏi nhà đầu tư cần lưu ý về chất lượng dòng tiền. Dù vậy, với biên gộp 16.2% và tăng trưởng LNST YoY đột biến 887.13%, kết hợp với định giá P/E=4.75, P/B=1.59, có thể kết luận lợi nhuận hiện tại là thật và phản ánh đúng chu kỳ bùng nổ của ngành, dù chất lượng dòng tiền cần được theo dõi thêm.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của BSR nằm ở vị thế độc quyền tự nhiên và quy mô sản xuất lọc hóa dầu lớn nhất nhì cả nước, tạo ra rào cản gia nhập ngành cực lớn đối với bất kỳ đối thủ mới nào. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi việc tối ưu hóa công suất nhà máy, kiểm soát tốt chi phí và hưởng lợi từ biên lợi nhuận lọc dầu khi chuỗi cung ứng năng lượng toàn cầu tái cấu trúc. Bên cạnh đó, tăng trưởng LNST YoY lên đến 887.13% cho thấy doanh nghiệp đang ở điểm rơi phong độ, sẵn sàng bứt phá khi nhu cầu tiêu thụ xăng dầu nội địa và xuất khẩu phục hồi mạnh mẽ.",
+        "risks": "Rủi ro trọng yếu nhất đối với BSR là sự biến động khó lường của giá dầu thô thế giới và biên lợi nhuận lọc dầu, có thể làm suy giảm nhanh chóng mức tăng trưởng LNST YoY 887.13% hiện tại. Thứ hai, tỷ lệ CFO/LNST chỉ đạt 0.27x cảnh báo rủi ro về việc lợi nhuận có thể đang bị giam ở hàng tồn kho hoặc các khoản phải thu, gây áp lực lên thanh khoản nội tại nếu chu kỳ hàng hóa đảo chiều. Cuối cùng, các chính sách thuế môi trường hoặc rào cản kỹ thuật đối với sản phẩm hóa dầu có thể làm xói mòn biên gộp 16.2% trong dài hạn.",
         "ps": 0,
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "PETROLEUM",
@@ -9150,7 +9150,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "POW": {
         "symbol": "POW",
@@ -9278,14 +9278,14 @@
                 "roe_quarter": 0.29
             }
         ],
-        "outlook": "Giá hiện tại 12,500 VNĐ nằm dưới vùng mua an toàn 15,042 VNĐ, tạo biên an toàn thực 20.3% (MoS 15%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 6.41x và P/B 0.89x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với giá hiện tại chỉ 12,500 VNĐ, POW đang giao dịch thấp hơn tới 20.3% so với vùng mua an toàn (fair_low) 15,042 VNĐ và chiết khấu sâu so với Fair Value 17,697 VNĐ. Biên an toàn (Margin of Safety) cực dày này cung cấp một lớp đệm bảo vệ vững chắc trước các biến động vĩ mô, đồng thời mở ra dư địa tăng giá hấp dẫn khi thị trường định giá lại. Hệ thống khuyến nghị ✅ MUA TÍCH SẢN dựa trên sự hội tụ của định giá rẻ, nền tảng tài sản ròng BVPS 14,045 VNĐ và xu hướng kỹ thuật tích lũy sideway. Đây là cơ hội hiếm có để thu gom cổ phiếu hạ tầng thiết yếu với mức giá của một tài sản thanh lý.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 15,042 — 17,697 | Giá hiện tại: 12,500 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Nhu cầu điện tăng theo tăng trưởng GDP. Chính sách phát triển năng lượng tái tạo tạo cơ hội. Rủi ro chính sách giá điện và thủy văn bất thường.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 15.3%, ROA 6.4% — vượt trội so với mặt bằng chung ngành. Định giá P/E 6.41x và P/B 0.89x. Biên lợi nhuận gộp 13.8% duy trì ở mức tốt. CFO 5,682 tỷ so với LNST 7,724 tỷ (CFO/LNST = 0.74x) — chấp nhận được. EPS đạt 1,940 VNĐ, cổ tức 0.37%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở vị thế độc quyền tự nhiên, hợp đồng dài hạn và dòng tiền ổn định. Động lực tăng trưởng mạnh: LNST tăng 118.6% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro chính sách giá điện/nước thay đổi. Rủi ro chi phí vốn tăng khi lãi suất lên. Rủi ro thời tiết khắc nghiệt ảnh hưởng sản lượng.",
+        "macro_view": "Ngành điện đang hưởng lợi trực tiếp từ làn sóng FDI đổ vào Việt Nam, kéo theo nhu cầu tiêu thụ điện công nghiệp tăng trưởng hai chữ số mỗi năm. Chính sách vĩ mô nổi bật là việc thông qua và triển khai Quy hoạch Điện VIII, ưu tiên phát triển điện khí LNG và năng lượng tái tạo, tạo dư địa mở rộng công suất cho các ông lớn như POW. Bên cạnh đó, cơ chế điều chỉnh giá điện bán lẻ bình quân linh hoạt hơn giúp doanh nghiệp giảm bớt áp lực lỗ tỷ giá và chênh lệch giá nhiên liệu. Tuy nhiên, tiến độ giải phóng mặt bằng và thu xếp vốn cho các siêu dự án điện vẫn là điểm nghẽn vĩ mô cần được Chính phủ tháo gỡ.",
+        "ai_updated_at": "2026-11-06 04:58:28",
+        "bctc": "POW thể hiện chất lượng tài sản và hiệu quả sinh lời ấn tượng với ROE đạt 15.3% và ROA ở mức 6.4%, vượt trội so với mặt bằng chung ngành điện. Lợi nhuận sau thuế TTM đạt 7,724 tỷ đồng, tăng trưởng đột phá 118.6% so với cùng kỳ, phản ánh sự phục hồi mạnh mẽ. Dòng tiền kinh doanh (CFO) đạt 5,682 tỷ đồng, tỷ lệ CFO/LNST là 0.74x, ở mức chấp nhận được do đặc thù khấu hao lớn của ngành điện. Đòn bẩy tài chính D/E = 1.35 cho thấy áp lực nợ vay đầu tư hạ tầng vẫn hiện hữu nhưng nằm trong tầm kiểm soát. Biên gộp 13.8% cùng định giá P/E = 6.41x và P/B = 0.89x (thấp hơn BVPS 14,045 VNĐ) cho thấy cổ phiếu đang bị thị trường chiết khấu sâu. Kết luận: Lợi nhuận của POW là lợi nhuận thật, được bảo chứng bởi dòng tiền dương và tài sản ròng dày dặn, không có dấu hiệu của lợi nhuận ảo từ bút toán.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của POW nằm ở vị thế độc quyền tự nhiên trong hạ tầng phát điện quốc gia và rào cản gia nhập ngành cực lớn về vốn lẫn chính sách. Động lực tăng trưởng 2-3 năm tới được thúc đẩy bởi Quy hoạch Điện VIII, nhu cầu điện công nghiệp tăng cao và việc chuyển dịch sang các nhà máy điện khí LNG hiệu suất cao. Bên cạnh đó, biên lợi nhuận có thể cải thiện thêm khi cơ chế giá điện bán lẻ được điều chỉnh linh hoạt theo biến động giá nhiên liệu đầu vào.",
+        "risks": "Rủi ro trọng yếu nhất là sự biến động khó lường của giá nhiên liệu đầu vào (than, khí) trong khi giá bán điện bị kiểm soát chặt chẽ bởi Nhà nước. Ngoài ra, áp lực trả nợ gốc và lãi vay từ tỷ lệ D/E = 1.35 có thể ăn mòn dòng tiền nếu các dự án điện khí mới chậm tiến độ hoặc vượt tổng mức đầu tư. Rủi ro tỷ giá cũng là một yếu tố cần lưu ý khi POW phải nhập khẩu nhiên liệu và vay nợ bằng ngoại tệ.",
         "ps": 0,
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
@@ -9306,7 +9306,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "REE": {
         "symbol": "REE",
@@ -9434,14 +9434,14 @@
                 "roe_quarter": 3.93
             }
         ],
-        "outlook": "Giá 46,050 VNĐ nằm giữa vùng mua 39,142 và fair value 46,050 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: ⚠️ CHỜ VỀ VÙNG MUA. Nếu giá điều chỉnh về 39,142 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Giá hiện tại 46,050 VNĐ đang giao dịch đúng tại mức Fair Value, chưa tạo ra Biên an toàn (Margin of Safety) so với vùng mua mục tiêu 39,142 VNĐ. Quyết định '⚠️ CHỜ VỀ VÙNG MUA' được đưa ra do giá cần điều chỉnh thêm để đạt mức chiết khấu 15% hấp dẫn cho nhà đầu tư dài hạn. Mặc dù Graham Number lên tới 60,261 VNĐ, nhưng trong ngắn hạn, việc tích lũy sideway đòi hỏi sự kiên nhẫn để tối ưu hóa điểm giải ngân tại vùng giá rẻ hơn.",
         "ai_recommendation": "CHỜ VỀ VÙNG MUA — Tỷ trọng 0% — Chờ giá về fair_low mới mua",
         "ai_price_zone": "Vùng mua: 39,142 — 46,050 | Giá hiện tại: 46,050 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Nhu cầu điện tăng theo tăng trưởng GDP. Chính sách phát triển năng lượng tái tạo tạo cơ hội. Rủi ro chính sách giá điện và thủy văn bất thường.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 10.9%, ROA 6.7% — ở mức trung bình ngành. Định giá P/E 10.32x và P/B 1.26x. Biên lợi nhuận gộp 33.3% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.19x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 4,416 VNĐ, cổ tức 1.89%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở vị thế độc quyền tự nhiên, hợp đồng dài hạn và dòng tiền ổn định. Tăng trưởng ổn định với LNST tăng 12.3% YoY.",
-        "risks": "Rủi ro chính sách giá điện/nước thay đổi. Rủi ro chi phí vốn tăng khi lãi suất lên. Rủi ro thời tiết khắc nghiệt ảnh hưởng sản lượng.",
+        "macro_view": "Ngành tiện ích và hạ tầng đang hưởng lợi từ môi trường lãi suất thấp, giúp giảm chi phí vốn cho các dự án đầu tư dài hạn và bất động sản cho thuê. Chính sách đẩy mạnh đầu tư công và Quy hoạch điện 8 là động lực vĩ mô quan trọng hỗ trợ mảng M&E và danh mục điện của REE. Tuy nhiên, áp lực từ giá nhiên liệu thế giới và tỷ giá có thể gây biến động nhẹ đến lợi nhuận của các nhà máy điện liên kết trong ngắn hạn.",
+        "ai_updated_at": "2026-11-06 04:59:24",
+        "bctc": "REE duy trì nền tảng tài chính vững chắc với ROE 10.9% và ROA 6.7%, tuy nhiên chất lượng dòng tiền cần lưu ý khi CFO/LNST chỉ đạt 0.19x (CFO 650 tỷ so với LNST 3,416 tỷ), phản ánh lợi nhuận chủ yếu từ công ty liên kết chưa chuyển hóa thành tiền mặt ngay. Đòn bẩy D/E 0.68 ở mức an toàn, hỗ trợ khả năng mở rộng đầu tư mà không gây áp lực lên cân đối kế toán. Biên gộp 33.3% và tăng trưởng LNST 12.26% cho thấy hiệu quả hoạt động cốt lõi vẫn được duy trì tốt. Định giá P/E 10.32x và P/B 1.26x cho thấy thị trường đang phản ánh đúng giá trị nội tại, chưa có vùng chiết khấu sâu.",
+        "catalyst": "Lợi thế cạnh tranh (Moat) đến từ danh mục đầu tư chiến lược vào các nhà máy điện, nước có dòng tiền ổn định và quỹ đất văn phòng cho thuê vị trí đắc địa. Động lực tăng trưởng trung hạn được thúc đẩy bởi mảng M&E hưởng lợi từ đầu tư công và xu hướng mở rộng năng lượng tái tạo theo Quy hoạch điện 8. Việc tái cấu trúc danh mục đầu tư sang các tài sản sinh lời cao hơn sẽ tiếp tục cải thiện biên lợi nhuận trong 2-3 năm tới.",
+        "risks": "Rủi ro pháp lý về cơ chế giá điện và hợp đồng PPA có thể tác động đến hiệu quả của các công ty liên kết ngành điện. Thị trường văn phòng cho thuê đối mặt với áp lực cạnh tranh và nguồn cung mới, có thể ảnh hưởng đến tỷ lệ lấp đầy và giá thuê. Ngoài ra, biến động chi phí nhiên liệu đầu vào tại các nhà máy nhiệt điện liên kết là rủi ro tiềm ẩn đối với dòng cổ tức nhận về.",
         "ps": 0,
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
@@ -9462,7 +9462,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "PC1": {
         "symbol": "PC1",
@@ -9590,14 +9590,14 @@
                 "roe_quarter": 1.71
             }
         ],
-        "outlook": "Giá 16,600 VNĐ nằm giữa vùng mua 16,017 và fair value 18,843 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: 👀 THEO DÕI. Nếu giá điều chỉnh về 16,017 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Hiện tại, thị giá 16,600 VNĐ đang nằm trên vùng mua an toàn (fair_low 16,017 VNĐ) và thấp hơn giá trị thực (fair value 18,843 VNĐ). Tuy nhiên, hệ thống yêu cầu một biên an toàn (Margin of Safety) đủ lớn, trong khi mức chiết khấu hiện tại so với fair_low đang là -3.5%, chưa đủ hấp dẫn để giải ngân ngay lập tức. Mẫu hình kỹ thuật đang trong pha tích lũy sideway, củng cố cho chiến lược kiên nhẫn chờ đợi nhịp rung lắc của thị trường. Do đó, quyết định '👀 THEO DÕI' được đưa ra nhằm bảo vệ vốn, chờ giá điều chỉnh về sát hoặc dưới 16,017 VNĐ để tối ưu hóa tỷ suất sinh lời và giảm thiểu rủi ro vẽ xuống.",
         "ai_recommendation": "NẮM GIỮ / THEO DÕI — Tỷ trọng 0% — Chưa đủ điều kiện mua",
         "ai_price_zone": "Vùng mua: 16,017 — 18,843 | Giá hiện tại: 16,600 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Nhu cầu điện tăng theo tăng trưởng GDP. Chính sách phát triển năng lượng tái tạo tạo cơ hội. Rủi ro chính sách giá điện và thủy văn bất thường.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 12.4%, ROA 4.6% — ở mức trung bình ngành. Định giá P/E 6.91x và P/B 1.11x. Biên lợi nhuận gộp 27.6% duy trì ở mức tốt. CFO 1,289 tỷ so với LNST 1,546 tỷ (CFO/LNST = 0.83x) — chấp nhận được. EPS đạt 2,704 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở vị thế độc quyền tự nhiên, hợp đồng dài hạn và dòng tiền ổn định. Tăng trưởng ổn định với LNST tăng 5.5% YoY.",
-        "risks": "Rủi ro chính sách giá điện/nước thay đổi. Rủi ro chi phí vốn tăng khi lãi suất lên. Rủi ro thời tiết khắc nghiệt ảnh hưởng sản lượng.",
+        "macro_view": "Ngành hạ tầng điện và tiện ích đang hưởng lợi trực tiếp từ chu kỳ đẩy mạnh đầu tư công và quy hoạch điện VIII, đòi hỏi vốn ngân sách lớn cho mạng lưới truyền tải. Chính sách vĩ mô hiện tại đang ưu tiên ổn định giá điện đầu vào và khuyến khích phát triển lưới điện thông minh, tạo hành lang pháp lý thuận lợi cho các nhà thầu và chủ đầu tư hạ tầng như PC1. Tuy nhiên, biến động của giá nguyên vật liệu đầu vào như thép, đồng và xi măng có thể gây áp lực lên biên lợi nhuận gộp của mảng xây lắp EPC. Do đó, dòng tiền vào nhóm cổ phiếu điện - nước - hạ tầng sẽ mang tính chất phòng thủ và phân hóa mạnh dựa trên năng lực trúng thầu và tiến độ giải ngân thực tế của từng dự án trọng điểm.",
+        "ai_updated_at": "2026-11-06 04:55:38",
+        "bctc": "PC1 thể hiện nền tảng tài chính của một doanh nghiệp tiện ích với khả năng sinh lời ổn định, thể hiện qua ROE đạt 12.4% và ROA ở mức 4.6%. Chất lượng lợi nhuận được kiểm chứng rõ nét khi dòng tiền kinh doanh (CFO) đạt 1,289 Tỷ đồng, tương đương tỷ lệ CFO/LNST là 0.83x, cho thấy lợi nhuận tạo ra là tiền thật chứ không phải bút toán kế toán. Tuy nhiên, cấu trúc vốn sử dụng đòn bẩy khá cao với hệ số D/E = 1.51, đòi hỏi nhà đầu tư phải theo dõi sát chi phí lãi vay trong bối cảnh ngành hạ tầng điện cần vốn lớn. Về mặt định giá dựa trên tài sản và thu nhập, cổ phiếu đang giao dịch ở P/E = 6.91 và P/B = 1.11, phản ánh mức chiết khấu hợp lý so với giá trị sổ sách (BVPS 14,955 VNĐ). Biên gộp duy trì ở 27.6% cùng tăng trưởng LNST YoY 5.55% cho thấy doanh nghiệp vẫn giữ được khả năng phòng thủ trước biến động vĩ mô. Kết luận, lợi nhuận của PC1 là lợi nhuận thật, được bảo chứng bởi dòng tiền dương và tài sản ròng vững chắc.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của PC1 nằm ở vị thế độc quyền tự nhiên trong mảng hạ tầng lưới điện và các hợp đồng EPC mang tính rào cản gia nhập ngành cực cao. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi nhu cầu đầu tư công cho hạ tầng truyền tải điện quốc gia và xu hướng chuyển dịch năng lượng tái tạo. Bên cạnh đó, việc mở rộng sang các mảng tiện ích và khu công nghiệp sẽ giúp đa dạng hóa nguồn thu, bù đắp cho biên lợi nhuận có thể biến động của mảng xây lắp.",
+        "risks": "Rủi ro trọng yếu nhất đối với PC1 là áp lực từ chi phí lãi vay do tỷ lệ đòn bẩy tài chính cao (D/E = 1.51) trong môi trường lãi suất có thể biến động. Thứ hai, tiến độ giải ngân đầu tư công và các dự án truyền tải điện quốc gia nếu bị chậm trễ sẽ ảnh hưởng trực tiếp đến dòng tiền và doanh thu mảng xây lắp. Cuối cùng, rủi ro chính sách về giá điện và cơ chế hợp đồng PPA có thể tác động đến biên lợi nhuận gộp (hiện ở mức 27.6%) của các dự án điện tự đầu tư.",
         "ps": 0,
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
@@ -9619,7 +9619,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "NT2": {
         "symbol": "NT2",
@@ -9747,14 +9747,14 @@
                 "roe_quarter": 1.78
             }
         ],
-        "outlook": "Giá hiện tại 22,600 VNĐ nằm dưới vùng mua an toàn 34,232 VNĐ, tạo biên an toàn thực 51.5% (MoS 15%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 4.47x và P/B 1.27x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với mức giá hiện tại chỉ 22,600 VNĐ, NT2 đang giao dịch thấp hơn rất nhiều so với vùng mua an toàn (fair_low) 34,232 VNĐ và giá trị thực (fair value) 40,273 VNĐ. Điều này kiến tạo một biên an toàn (Margin of Safety) cực kỳ hấp dẫn lên tới 51.5%, bảo vệ nhà đầu tư trước các biến động tiêu cực của thị trường. Hệ thống đánh giá tổng điểm 72/100, trong đó điểm Định giá đạt tuyệt đối 30/30, là cơ sở vững chắc cho quyết định ✅ MUA TÍCH SẢN. Đây là cơ hội hiếm có để thu gom cổ phiếu tiện ích có ROE 29.4% và P/E 4.47x với mức chiết khấu sâu, phù hợp cho chiến lược nắm giữ dài hạn.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 34,232 — 40,273 | Giá hiện tại: 22,600 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Nhu cầu điện tăng theo tăng trưởng GDP. Chính sách phát triển năng lượng tái tạo tạo cơ hội. Rủi ro chính sách giá điện và thủy văn bất thường.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 29.4%, ROA 14.9% — vượt trội so với mặt bằng chung ngành. Định giá P/E 4.47x và P/B 1.27x. Biên lợi nhuận gộp 17.5% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.29x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 5,068 VNĐ, cổ tức 3.09%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở vị thế độc quyền tự nhiên, hợp đồng dài hạn và dòng tiền ổn định. Động lực tăng trưởng mạnh: LNST tăng 95.4% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro chính sách giá điện/nước thay đổi. Rủi ro chi phí vốn tăng khi lãi suất lên. Rủi ro thời tiết khắc nghiệt ảnh hưởng sản lượng.",
+        "macro_view": "Ngành điện đang bước vào chu kỳ thiếu hụt cục bộ và chịu áp lực từ nhu cầu sản xuất công nghiệp phục hồi, buộc Chính phủ phải đẩy mạnh giải ngân hạ tầng lưới điện và ưu tiên huy động các nguồn điện truyền thống. Chính sách vĩ mô về Quy hoạch Điện VIII và cơ chế giá điện mới sẽ tạo điều kiện cho các doanh nghiệp phát điện như NT2 đàm phán lại hoặc duy trì sản lượng huy động ở mức cao. Tuy nhiên, chu kỳ giá nhiên liệu (khí, than) trên thị trường thế giới vẫn là biến số vĩ mô cần theo dõi sát, vì nó tác động trực tiếp vào biên lợi nhuận gộp 17.5% của doanh nghiệp. Việc NT2 ghi nhận tăng trưởng LNST 95.4% cho thấy doanh nghiệp đang hưởng lợi tốt từ bối cảnh vĩ mô hiện tại và vượt qua được áp lực chi phí đầu vào.",
+        "ai_updated_at": "2026-11-06 04:54:00",
+        "bctc": "NT2 thể hiện hiệu quả sinh lời cực kỳ ấn tượng với ROE đạt 29.4% và ROA ở mức 14.9%, phản ánh năng lực tạo lời trên vốn chủ sở hữu và tài sản vượt trội trong ngành tiện ích. Lợi nhuận sau thuế TTM đạt 1,459 tỷ đồng, tăng trưởng đột biến 95.4% so với cùng kỳ, giúp định giá P/E ở mức rất rẻ chỉ 4.47x và P/B là 1.27x. Tuy nhiên, điểm trừ lớn nằm ở dòng tiền kinh doanh khi CFO chỉ đạt 422 tỷ đồng, kéo tỷ lệ CFO/LNST ở mức thấp 0.29x, cho thấy lợi nhuận kế toán chưa chuyển hóa hoàn toàn thành tiền mặt thực thu. Cấu trúc tài chính sử dụng đòn bẩy vừa phải với D/E = 1.05, biên gộp 17.5% đảm bảo khả năng trang trải lãi vay và duy trì hoạt động. EPS đạt 5,068 VNĐ và BVPS 17,795 VNĐ củng cố nền tảng tài sản vững chắc cho doanh nghiệp. Nhìn chung, lợi nhuận của NT2 là thật và đến từ hoạt động cốt lõi, nhưng nhà đầu tư cần theo dõi sát sao sự cải thiện của dòng tiền CFO trong các quý tới để xác nhận chất lượng lợi nhuận.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của NT2 nằm ở vị thế độc quyền tự nhiên của hạ tầng phát điện và các hợp đồng mua bán điện (PPA) dài hạn, tạo ra rào cản gia nhập ngành cực lớn. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi nhu cầu điện năng cho sản xuất công nghiệp phục hồi, cùng với việc tối ưu hóa chi phí nhiên liệu đầu vào giúp biên lợi nhuận gộp duy trì ở mức 17.5%. Ngoài ra, tăng trưởng LNST YoY lên tới 95.4% cho thấy doanh nghiệp đang bước vào chu kỳ mở rộng và hưởng lợi từ vĩ mô, đảm bảo nguồn thu ổn định để chi trả cổ tức tiền mặt 3.09%/năm.",
+        "risks": "Rủi ro trọng yếu nhất đối với NT2 là sự biến động của giá nhiên liệu đầu vào và cơ chế điều chỉnh giá bán điện, có thể gây áp lực lên biên lợi nhuận gộp 17.5% nếu không được bù đắp kịp thời. Bên cạnh đó, tỷ lệ CFO/LNST thấp (0.29x) cảnh báo rủi ro về chất lượng dòng tiền và khả năng chi trả cổ tức bằng tiền mặt trong dài hạn nếu lợi nhuận kế toán không đi kèm thực thu. Cuối cùng, đòn bẩy tài chính D/E = 1.05 trong môi trường lãi suất biến động có thể làm gia tăng chi phí tài chính, ăn mòn lợi nhuận ròng.",
         "ps": 0,
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
@@ -9775,7 +9775,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "GMD": {
         "symbol": "GMD",
@@ -9903,14 +9903,14 @@
                 "roe_quarter": 2.72
             }
         ],
-        "outlook": "Giá 52,600 VNĐ đã vượt fair value 44,564 VNĐ. Định giá hiện tại chưa hấp dẫn cho tích sản mới. Verdict: HƠI ĐẮT - KHÔNG MUA. Quyết định hệ thống: ⚠️ CHỜ VỀ VÙNG MUA. Chờ giá điều chỉnh về 31,195 VNĐ mới nên giải ngân.",
+        "outlook": "Hiện tại, thị giá 52,600 VNĐ đang cao hơn đáng kể so với vùng giá trị thực 44,564 VNĐ và vượt xa vùng mua lý tưởng 31,195 VNĐ. Hệ thống phát tín hiệu '⚠️ CHỜ VỀ VÙNG MUA' do cổ phiếu đang giao dịch với mức chiết khấu âm -40.7% so với fair_low, đồng nghĩa với việc biên an toàn (Margin of Safety) 30.0% đã bị phá vỡ hoàn toàn. Việc mua vào ở vùng giá hiện tại không chỉ vi phạm nguyên tắc bảo vệ vốn mà còn đối mặt với rủi ro điều chỉnh kỹ thuật sau nhịp tích lũy sideway. Nhà đầu tư giá trị cần kiên nhẫn chờ đợi thị trường chung điều chỉnh kéo cổ phiếu về vùng 31,195 - 44,564 VNĐ để thiết lập vị thế với biên an toàn đủ lớn.",
         "ai_recommendation": "CHỜ VỀ VÙNG MUA — Tỷ trọng 0% — Chờ giá về fair_low mới mua",
         "ai_price_zone": "Vùng mua: 31,195 — 44,564 | Giá hiện tại: 52,600 | Verdict: HƠI ĐẮT - KHÔNG MUA",
-        "macro_view": "Tiêu dùng nội địa phục hồi nhưng chậm. Cạnh tranh từ hàng nhập khẩu và áp lực biên lợi nhuận từ chi phí nguyên liệu. Cơ hội từ xuất khẩu nếu tỷ giá thuận lợi.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 17.6%, ROA 13.1% — vượt trội so với mặt bằng chung ngành. Định giá P/E 12.46x và P/B 2.37x. Biên lợi nhuận gộp 31.8% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.15x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 6,224 VNĐ, cổ tức 2.79%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu quốc dân, mạng lưới phân phối rộng khắp và thị phần dẫn đầu. Động lực tăng trưởng mạnh: LNST tăng 35.6% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro cạnh tranh từ hàng nhập khẩu và thương hiệu mới. Rủi ro biên gộp 31.8% bị ép bởi chi phí nguyên liệu. Rủi ro sức mua tiêu dùng suy yếu.",
+        "macro_view": "Ngành cảng biển và logistics đang bước vào chu kỳ phục hồi sau giai đoạn bình thường hóa cước vận tải toàn cầu, hưởng lợi trực tiếp từ các hiệp định thương mại tự do (FTA) thế hệ mới mà Việt Nam đã ký kết. Dòng vốn FDI giải ngân thực tế tăng trưởng ổn định tiếp tục mở rộng quy mô các khu công nghiệp, từ đó gia tăng sản lượng hàng hóa xuất nhập khẩu qua hệ thống cảng của GMD. Tuy nhiên, những bất ổn địa chính trị và nguy cơ suy thoái tại các thị trường tiêu thụ lớn như Mỹ, EU có thể làm chậm lại đà phục hồi của lưu lượng container. Do đó, vĩ mô đang ở pha trung tính thiên về tích cực dài hạn, nhưng ngắn hạn cần theo dõi sát chỉ số PMI và kim ngạch xuất nhập khẩu để xác nhận điểm rơi lợi nhuận.",
+        "ai_updated_at": "2026-11-06 04:45:18",
+        "bctc": "Chất lượng tài sản và hiệu quả sinh lời của GMD thể hiện sự vượt trội với ROE đạt 17.6% và ROA ở mức 13.1%, cho thấy năng lực tạo lời trên vốn chủ sở hữu và tổng tài sản rất ấn tượng. Cấu trúc vốn an toàn với tỷ lệ D/E=0.37 giúp doanh nghiệp giảm thiểu rủi ro lãi vay trong môi trường vĩ mô biến động. Biên gộp duy trì ở mức 31.8% phản ánh lợi thế cạnh tranh và vị thế độc quyền tương đối của hệ thống cảng biển. Tuy nhiên, dòng tiền kinh doanh cần được theo dõi sát khi CFO/LNST chỉ đạt 0.15x (CFO 497 Tỷ so với LNST 3,263 Tỷ), cho thấy lợi nhuận kế toán chưa chuyển hóa hoàn toàn thành tiền mặt thực thu. Dù tăng trưởng LNST YoY đạt 35.58% và EPS ở mức 6,224 VNĐ, nhà đầu tư cần lưu ý phần lợi nhuận này có thể mang tính chất 'ảo' về mặt dòng tiền ngắn hạn do đến từ các hoạt động tài chính hoặc ghi nhận một lần. Nhìn chung, nền tảng tài sản (BVPS 22,194 VNĐ) và định giá P/E=12.46, P/B=2.37 vẫn cho thấy một doanh nghiệp tốt về mặt cấu trúc nhưng cần thận trọng với chất lượng dòng tiền.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của GMD nằm ở hệ thống cảng biển nước sâu và mạng lưới logistics khép kín, tạo ra rào cản gia nhập ngành cực lớn đối với đối thủ mới. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi làn sóng dịch chuyển chuỗi cung ứng toàn cầu và sự gia tăng kim ngạch xuất nhập khẩu của Việt Nam. Việc mở rộng công suất các bến cảng trọng điểm sẽ giúp doanh nghiệp tiếp tục duy trì đà tăng trưởng lợi nhuận hai chữ số khi lưu lượng hàng hóa phục hồi.",
+        "risks": "Rủi ro lớn nhất đối với GMD là sự suy giảm của thương mại toàn cầu và cước phí vận tải biển do các nền kinh tế lớn thắt chặt tiền tệ hoặc suy thoái. Bên cạnh đó, áp lực cạnh tranh từ các cảng mới được quy hoạch và chi phí đầu tư hạ tầng logistics ngày càng tăng có thể bào mòn biên lợi nhuận gộp 31.8% hiện tại. Cuối cùng, tỷ lệ CFO/LNST thấp (0.15x) tiềm ẩn rủi ro về chất lượng dòng tiền nếu các khoản phải thu hoặc hoạt động đầu tư tài chính bị tắc nghẽn.",
         "ps": 0,
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "MARITIME",
@@ -9931,7 +9931,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "HAH": {
         "symbol": "HAH",
@@ -11932,14 +11932,14 @@
                 "roe_quarter": 3.66
             }
         ],
-        "outlook": "Giá hiện tại 32,400 VNĐ đang chiết khấu 8.9% so với vùng mua 35,274 VNĐ và thấp hơn nhiều so với fair value 50,392 VNĐ, mang lại biên an toàn 30.0%. Hệ thống đánh giá tổng điểm 91/100 (Cơ bản 45/50, Định giá 30/30, Kỹ thuật 16/20) cho thấy một setup lý tưởng kết hợp giữa định giá rẻ và pha siết nền tích lũy cạn cung. Việc định giá P/B 1.47x và Graham Number 50,444 VNĐ càng củng cố tiềm năng tăng trưởng dài hạn. Do đó, quyết định MUA MẠNH là hoàn toàn hợp lý để tối ưu hóa lợi nhuận khi cổ phiếu bước vào chu kỳ bùng nổ.",
+        "outlook": "Tại mức giá 32,400 VNĐ, DCM đang giao dịch thấp hơn ngưỡng vùng mua (fair_low) 35,274 VNĐ một biên độ 8.9%, xác nhận trạng thái định giá hấp dẫn. So với giá trị thực (Fair Value) 50,392 VNĐ, cổ phiếu đang bị thị trường định giá thấp nghiêm trọng, mở ra cơ hội tích sản với biên an toàn dày dặn. Hệ thống khuyến nghị '🎯 MUA MẠNH' dựa trên sự hội tụ của định giá rẻ (P/E 6.43x), nội tại khỏe (ROE 24.2%) và mẫu hình tích lũy Wyckoff. Đây là thời điểm lý tưởng để mua gom trước khi thị trường nhận ra giá trị thực và thiết lập mặt bằng giá mới.",
         "ai_recommendation": "MUA MẠNH — Tỷ trọng 20-30% — Giải ngân toàn bộ hoặc theo 2-3 đợt",
         "ai_price_zone": "Vùng mua: 35,274 — 50,392 | Giá hiện tại: 32,400 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Ngành nguyên vật liệu chu kỳ đang chịu tác động mạnh từ biến động vĩ mô toàn cầu, nơi lạm phát và lãi suất định hình lại chuỗi cung ứng và giá cả đầu vào. DCM đang ở vị thế hưởng lợi chu kỳ với tăng trưởng LNST YoY 31.81%, cho thấy nhu cầu thị trường và giá bán đầu ra đang hỗ trợ tốt cho biên lợi nhuận. Tuy nhiên, nhà đầu tư cần lưu ý đặc thù vật liệu chu kỳ, theo dõi sát P/B 1.47x và ROE 24.2% thay vì chỉ nhìn vào P/E 6.43x để tránh bẫy lợi nhuận đỉnh chu kỳ. Chính sách tài khóa và đầu tư công trong nước cũng sẽ là đòn bẩy vĩ mô giữ vững nhu cầu tiêu thụ nội địa cho doanh nghiệp.",
-        "ai_updated_at": "2026-11-06 00:21:29",
-        "bctc": "Báo cáo tài chính của DCM thể hiện chất lượng lợi nhuận thực với ROE đạt 24.2% và ROA ở mức cao 14.3%. Hệ số P/E hiện tại là 6.43x và P/B là 1.47x, phản ánh định giá hấp dẫn so với năng lực sinh lời. Dòng tiền kinh doanh (CFO) đạt 2,174 Tỷ đồng, tương đương tỷ lệ CFO/LNST là 0.80x, ở mức chấp nhận được và xác nhận lợi nhuận có dòng tiền thực backing. Cấu trúc vốn an toàn với D/E = 0.67, giúp doanh nghiệp chịu đựng tốt các biến động chu kỳ. Biên gộp duy trì ở 19.1% cùng tăng trưởng LNST YoY ấn tượng 31.81% và EPS đạt 5,131 VNĐ. Kết luận, lợi nhuận của DCM là lợi nhuận thật, được bảo chứng bởi dòng tiền dương và bảng cân đối kế toán lành mạnh.",
-        "catalyst": "DCM sở hữu lợi thế cạnh tranh từ vị thế doanh nghiệp đầu ngành vật liệu chu kỳ với biên gộp 19.1% và khả năng sinh lời vượt trội (ROE 24.2%). Động lực tăng trưởng trong 2-3 năm tới đến từ việc hưởng lợi chu kỳ ngành và năng lực mở rộng sản lượng, hỗ trợ bởi nền tảng tài chính vững chắc (D/E 0.67). Ngoài ra, mức cổ tức tiền mặt hấp dẫn 6.06%/năm và mẫu hình tích lũy Wyckoff cạn cung tạo bệ phóng vững chắc cho chu kỳ tăng giá mới.",
-        "risks": "Rủi ro trọng yếu nhất đối với ngành nguyên vật liệu chu kỳ là bẫy P/E thấp (hiện tại 6.43x) khi doanh nghiệp có thể đang ở vùng đỉnh chu kỳ lợi nhuận. Biến động giá cả hàng hóa toàn cầu có thể làm thu hẹp biên gộp 19.1% và ảnh hưởng trực tiếp đến tăng trưởng LNST YoY 31.81% trong các quý tới. Bên cạnh đó, tỷ lệ CFO/LNST 0.80x tuy chấp nhận được nhưng cần theo dõi sát sao nếu chu kỳ kinh doanh đảo chiều làm chậm dòng tiền thu về.",
+        "macro_view": "Ngành hóa chất và phân bón đang ở giai đoạn tạo đáy và bắt đầu chu kỳ phục hồi khi giá khí đốt tự nhiên ổn định và nhu cầu nông sản toàn cầu tăng trở lại. Trung Quốc tiếp tục duy trì chính sách hạn chế xuất khẩu phân bón để ưu tiên an ninh lương thực nội địa, tạo khoảng trống thị trường cho các doanh nghiệp Việt Nam như DCM. Vĩ mô trong nước hỗ trợ mạnh mẽ cho xuất khẩu gạo và nông sản, gián tiếp thúc đẩy nhu cầu sử dụng phân bón ure chất lượng cao. Do đó, DCM không chỉ hưởng lợi từ nội tại mà còn từ vị thế thuận lợi trong chuỗi cung ứng nông nghiệp khu vực.",
+        "ai_updated_at": "2026-11-06 04:38:58",
+        "bctc": "DCM thể hiện nền tảng tài chính vững chắc với ROE ấn tượng 24.2% và ROA đạt 14.3%, vượt xa trung bình ngành vật liệu chu kỳ. Chỉ số P/E thấp 6.43x kết hợp P/B 1.47x cho thấy thị trường đang chiết khấu sâu so với năng lực sinh lời thực tế của doanh nghiệp. Cấu trúc bảng cân đối kế toán an toàn với D/E chỉ 0.67, giúp công ty duy trì vị thế chủ động trước biến động lãi suất. Dòng tiền kinh doanh (CFO) đạt 2,174 tỷ đồng, tuy nhiên tỷ lệ CFO/LNST là 0.80x cho thấy chất lượng lợi nhuận ở mức chấp nhận được, cần lưu ý về vốn lưu động. Biên lợi nhuận gộp 19.1% được duy trì ổn định, hỗ trợ đà tăng trưởng LNST YoY 31.81% và mức cổ tức tiền mặt 6.06%/năm. Tổng kết lại, lợi nhuận của DCM là thật, đến từ hoạt động cốt lõi và có tính bền vững cao.",
+        "catalyst": "Lợi thế cạnh tranh (Moat) của DCM nằm ở vị thế độc quyền nguồn nguyên liệu khí và hệ thống phân phối sâu rộng tại vựa lúa ĐBSCL. Động lực tăng trưởng trong 2-3 năm tới đến từ việc tối ưu hóa chi phí sản xuất và nhu cầu phân bón chất lượng cao phục vụ xuất khẩu nông sản. Ngoài ra, việc mở rộng các dòng sản phẩm NPK và phân bón hữu cơ sẽ giúp đa dạng hóa nguồn thu, giảm phụ thuộc vào biến động giá Ure đơn thuần.",
+        "risks": "Rủi ro trọng yếu nằm ở tính chu kỳ của giá phân bón thế giới và cơ chế giá khí đầu vào có thể biến động theo giá dầu. Sự cạnh tranh từ nguồn phân bón giá rẻ nhập khẩu hoặc thay đổi chính sách thuế xuất khẩu có thể gây áp lực lên biên lợi nhuận gộp 19.1%. Ngoài ra, yếu tố thời tiết cực đoan ảnh hưởng đến mùa vụ cũng là rủi ro ngắn hạn đối với sản lượng tiêu thụ.",
         "ps": 0,
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
@@ -12088,14 +12088,14 @@
                 "roe_quarter": 2.45
             }
         ],
-        "outlook": "Giá hiện tại 36,250 VNĐ nằm dưới vùng mua an toàn 38,002 VNĐ, tạo biên an toàn thực 4.8% (MoS 30%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 6.39x và P/B 1.56x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Giá hiện tại 36,250 VNĐ đang chiết khấu 4.8% so với vùng mua (fair_low) 38,002 VNĐ và thấp hơn nhiều so với fair value 54,288 VNĐ, mang lại biên an toàn (Margin of Safety) lên tới 30.0%. Việc định giá đạt điểm tuyệt đối 30/30 kết hợp với PTCB 45/50 và PTKT 13/20 (mẫu hình tích lũy sideway) là cơ sở vững chắc cho quyết định ✅ MUA TÍCH SẢN. Đây là cơ hội hiếm hoi để gom mua cổ phiếu vật liệu chu kỳ có ROE 25.4% ở vùng định giá rẻ trước khi sóng ngành bùng nổ. Nhà đầu tư nên tận dụng nhịp điều chỉnh để tích lũy cho tầm nhìn trung và dài hạn.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 38,002 — 54,288 | Giá hiện tại: 36,250 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Chu kỳ giá hàng hóa phụ thuộc vào kinh tế Trung Quốc và chính sách bảo hộ thương mại toàn cầu. Cần theo dõi tồn kho và giá nguyên liệu đầu vào.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 25.4%, ROA 15.7% — vượt trội so với mặt bằng chung ngành. Định giá P/E 6.39x và P/B 1.56x. Biên lợi nhuận gộp 20.8% duy trì ở mức tốt. CFO 363 tỷ so với LNST 599 tỷ (CFO/LNST = 0.61x) — chấp nhận được. EPS đạt 5,637 VNĐ, cổ tức 5.04%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quy mô sản xuất lớn, chi phí biên thấp và vị thế dẫn đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 49.6% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro giá hàng hóa đảo chiều làm biên gộp 20.8% co lại. Bẫy P/E 6.39x thấp tại đỉnh lợi nhuận chu kỳ. Rủi ro tồn kho cao nếu giá giảm.",
+        "macro_view": "Ngành vật liệu chu kỳ đang ở giai đoạn bản lề khi chu kỳ hàng hóa bắt đầu có dấu hiệu tạo đáy và chuẩn bị bước vào pha phục hồi nhờ các chính sách thúc đẩy đầu tư công và tháo gỡ pháp lý bất động sản. DHC với P/B 1.56x và P/E 6.39x đang phản ánh kỳ vọng thấp của thị trường, trong khi nội tại ROE 25.4% cho thấy doanh nghiệp đã tối ưu hóa tốt trong giai đoạn khó khăn nhất của chu kỳ. Khi giá nguyên vật liệu ổn định và cầu xây dựng hồi phục, biên gộp 20.8% sẽ có dư địa mở rộng, tạo ra đòn bẩy lợi nhuận mạnh mẽ. Do đó, việc tích sản ở vùng đáy chu kỳ hàng hóa là chiến lược tối ưu cho nhóm cổ phiếu vật liệu xây dựng.",
+        "ai_updated_at": "2026-11-06 04:40:03",
+        "bctc": "Báo cáo tài chính của DHC thể hiện chất lượng lợi nhuận tốt với ROE đạt 25.4% và ROA ở mức cao 15.7%, phản ánh hiệu quả sử dụng vốn vượt trội trong ngành vật liệu chu kỳ. Hệ số P/E hiện tại là 6.39x và P/B là 1.56x, cho thấy định giá chưa phản ánh hết nội tại doanh nghiệp dù lợi nhuận sau thuế TTM đạt 599 Tỷ (tăng trưởng 49.65%). Dòng tiền kinh doanh (CFO) đạt 363 Tỷ, tỷ lệ CFO/LNST là 0.61x ở mức chấp nhận được, xác nhận lợi nhuận tạo ra có dòng tiền thực tế backing, không phải lợi nhuận ảo. Cấu trúc vốn an toàn với D/E=0.58 giúp doanh nghiệp chịu đựng tốt các cú sốc lãi suất. Biên gộp duy trì 20.8% là điểm sáng về khả năng kiểm soát chi phí đầu vào. Kết luận, lợi nhuận của DHC là lợi nhuận thật, được bảo chứng bởi dòng tiền và bảng cân đối kế toán lành mạnh.",
+        "catalyst": "Lợi thế cạnh tranh (Economic Moat) của DHC nằm ở khả năng kiểm soát chi phí và duy trì biên gộp 20.8% cùng ROE 25.4% vượt trội so với trung bình ngành vật liệu. Động lực tăng trưởng trong 2-3 năm tới đến từ việc hưởng lợi chu kỳ phục hồi của ngành bất động sản và đầu tư công, thúc đẩy sản lượng tiêu thụ. Bên cạnh đó, việc duy trì cổ tức tiền mặt 5.04%/năm và EPS 5,637 VNĐ tạo ra bệ đỡ vững chắc cho giá cổ phiếu khi chu kỳ mới bắt đầu.",
+        "risks": "Rủi ro trọng yếu nhất đối với DHC là bẫy P/E thấp (6.39x) tại đỉnh chu kỳ, khi lợi nhuận đột biến 49.65% có thể không duy trì được nếu giá hàng hóa đầu vào tăng mạnh hoặc cầu xây dựng suy thoái. Biến động giá nguyên vật liệu có thể bào mòn biên gộp 20.8% nếu doanh nghiệp không thể chuyển giao chi phí cho người tiêu dùng. Ngoài ra, rủi ro vĩ mô về tỷ giá và lãi suất có thể ảnh hưởng đến chi phí vốn dù D/E hiện tại đang an toàn ở mức 0.58.",
         "ps": 0,
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
@@ -12116,7 +12116,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "DHG": {
         "symbol": "DHG",
@@ -12400,14 +12400,14 @@
                 "roe_quarter": -0.14
             }
         ],
-        "outlook": "Giá 19,650 VNĐ nằm giữa vùng mua 14,218 và fair value 20,311 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: 👀 THEO DÕI. Nếu giá điều chỉnh về 14,218 VNĐ sẽ là vùng mua hấp dẫn.",
-        "ai_recommendation": "NẮM GIỮ / THEO DÕI — Tỷ trọng 0% — Chưa đủ điều kiện mua",
+        "outlook": "Giá hiện tại 19,650 VNĐ đang nằm trong vùng định giá hợp lý (14,218 - 20,311 VNĐ) nhưng chưa đủ sức hấp dẫn để giải ngân. Hệ thống đưa ra quyết định ❌ TRÁNH do điểm Cơ bản chỉ đạt 12/50, phản ánh nội tại doanh nghiệp đang yếu đi vì suy thoái chu kỳ. So với vùng mua an toàn (fair_low) 14,218 VNĐ, giá hiện tại đang có mức chiết khấu âm -27.6%, tức là chưa có Biên an toàn (Margin of Safety) để bảo vệ nhà đầu tư trước rủi ro chu kỳ. Do đó, nhà đầu tư giá trị cần kiên nhẫn chờ đợi thị trường điều chỉnh về vùng 14,218 VNĐ để đảm bảo biên an toàn 30.0% trước khi xem xét nắm giữ dài hạn.",
+        "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 14,218 — 20,311 | Giá hiện tại: 19,650 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Chu kỳ giá hàng hóa phụ thuộc vào kinh tế Trung Quốc và chính sách bảo hộ thương mại toàn cầu. Cần theo dõi tồn kho và giá nguyên liệu đầu vào.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 13.7%, ROA 8.6% — ở mức trung bình ngành. Định giá P/E 8.54x và P/B 1.19x. Biên lợi nhuận gộp 14.1% duy trì ở mức tốt. CFO 1,200 tỷ so với LNST 1,603 tỷ (CFO/LNST = 0.75x) — chấp nhận được. EPS đạt 2,319 VNĐ, cổ tức 7.51%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quy mô sản xuất lớn, chi phí biên thấp và vị thế dẫn đầu ngành. Tăng trưởng LNST hiện ở mức -81.2% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro giá hàng hóa đảo chiều làm biên gộp 14.1% co lại. Bẫy P/E 8.54x thấp tại đỉnh lợi nhuận chu kỳ. Rủi ro tồn kho cao nếu giá giảm.",
+        "macro_view": "Ngành vật liệu và phân bón đang chịu tác động mạnh mẽ từ chu kỳ giá hàng hóa toàn cầu, đặc biệt là sự biến động của giá khí đốt và nông sản. Khi giá khí đốt hạ nhiệt sau các cú sốc địa chính trị, chi phí đầu vào của DPM có thể giảm, nhưng giá bán phân bón cũng đồng thời suy yếu do nguồn cung toàn cầu phục hồi. Chính sách vĩ mô liên quan đến an ninh lương thực và hạn ngạch xuất khẩu nông sản của Việt Nam sẽ là yếu tố điều tiết cầu nội địa trong ngắn hạn. Nhà đầu tư cần theo dõi sát sao chu kỳ hàng hóa này, vì việc mua cổ phiếu vật liệu chu kỳ khi P/E thấp (8.54x) nhưng lợi nhuận đang suy thoái (-81.18%) thường dẫn đến bẫy giá trị.",
+        "ai_updated_at": "2026-11-06 04:41:20",
+        "bctc": "DPM đang trải qua giai đoạn suy thoái chu kỳ với tăng trưởng LNST YoY giảm sâu -81.18%, phản ánh áp lực từ ngành vật liệu chu kỳ. Tuy nhiên, chất lượng tài sản và hiệu quả sinh lời vẫn ở mức chấp nhận được với ROE đạt 13.7% và ROA ở mức 8.6%. Cấu trúc vốn an toàn với tỷ lệ D/E chỉ 0.60, giúp doanh nghiệp giảm thiểu rủi ro tài chính trong giai đoạn lãi suất biến động. Dòng tiền kinh doanh (CFO) đạt 1,200 Tỷ so với LNST 1,603 Tỷ, cho tỷ lệ CFO/LNST là 0.75x, ở mức chấp nhận được và xác nhận lợi nhuận tạo ra là thật, không phải lợi nhuận ảo từ bút toán. Biên gộp hiện tại chỉ đạt 14.1%, cho thấy sức ép lớn từ chi phí đầu vào và giá bán đầu ra. Về định giá cơ bản, P/E đang ở mức 8.54x và P/B là 1.19x, thoạt nhìn có vẻ rẻ nhưng đây là đặc thù bẫy P/E thấp tại cuối chu kỳ. Kết luận, lợi nhuận của DPM là thật và được bảo chứng bởi dòng tiền, nhưng quy mô lợi nhuận đang bị thu hẹp nghiêm trọng do yếu tố chu kỳ.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của DPM nằm ở vị thế là nhà sản xuất phân bón urê hàng đầu Việt Nam với hệ thống phân phối rộng khắp và sự hậu thuẫn từ hệ sinh thái PVN. Động lực tăng trưởng trong 2-3 năm tới phụ thuộc phần lớn vào việc ổn định nguồn cung khí đầu vào và các chính sách hỗ trợ nông nghiệp từ Chính phủ. Ngoài ra, việc tối ưu hóa chi phí sản xuất và mở rộng các dòng sản phẩm phân bón NPK, hóa chất sẽ giúp cải thiện biên lợi nhuận khi chu kỳ hàng hóa phục hồi.",
+        "risks": "Rủi ro trọng yếu nhất là sự biến động khó lường của giá khí đốt tự nhiên - nguyên liệu đầu vào chính, có thể bào mòn biên gộp vốn đang mỏng ở mức 14.1%. Ngành phân bón mang tính chu kỳ cao, do đó bẫy P/E thấp (8.54x) có thể khiến nhà đầu tư mua nhầm tại vùng suy thoái lợi nhuận (LNST YoY -81.18%). Cạnh tranh gay gắt từ phân bón nhập khẩu và các nhà sản xuất nội địa khác cũng gây áp lực lên thị phần và khả năng định giá sản phẩm của doanh nghiệp.",
         "ps": 0,
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
@@ -12428,7 +12428,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "DRC": {
         "symbol": "DRC",
@@ -12868,14 +12868,14 @@
                 "roe_quarter": 3.63
             }
         ],
-        "outlook": "Giá 30,150 VNĐ đã vượt xa fair value 19,416 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá hiện tại 30,150 VNĐ đang vượt quá xa so với vùng giá trị thực (fair value 19,416 VNĐ) và vùng mua an toàn (13,591 VNĐ). Việc thị trường định giá P/B lên tới 1.91x cho thấy cổ phiếu đang phản ánh kỳ vọng quá lạc quan về câu chuyện khu công nghiệp, bỏ qua rủi ro chu kỳ. Hệ thống xác định mức chiết khấu so với fair_low là -54.9%, đồng nghĩa với việc biên an toàn (Margin of Safety) hoàn toàn không tồn tại mà thay vào đó là rủi ro điều chỉnh giá sâu. Do đó, quyết định ❌ TRÁNH là bắt buộc để bảo vệ vốn, chờ đợi cổ phiếu quay về vùng tích lũy hợp lý hơn.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 13,591 — 19,416 | Giá hiện tại: 30,150 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Chu kỳ giá hàng hóa phụ thuộc vào kinh tế Trung Quốc và chính sách bảo hộ thương mại toàn cầu. Cần theo dõi tồn kho và giá nguyên liệu đầu vào.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 10.9%, ROA 8.1% — ở mức trung bình ngành. Định giá P/E 17.24x và P/B 1.91x. Biên lợi nhuận gộp 30.8% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.44x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 1,751 VNĐ, cổ tức 1.32%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quy mô sản xuất lớn, chi phí biên thấp và vị thế dẫn đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 68.2% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro giá hàng hóa đảo chiều làm biên gộp 30.8% co lại. Bẫy P/E 17.24x thấp tại đỉnh lợi nhuận chu kỳ. Rủi ro tồn kho cao nếu giá giảm.",
+        "macro_view": "Ngành cao su là vật liệu chu kỳ, chịu tác động trực tiếp từ giá hàng hóa toàn cầu và nhu cầu sản xuất lốp xe, găng tay y tế. Hiện tại, GVR đang ở giai đoạn hưởng lợi cuối chu kỳ khi tăng trưởng LNST YoY đạt 68.19%, nhưng nhà đầu tư cần cẩn trọng với bẫy kỳ vọng quá cao tại đỉnh chu kỳ hàng hóa. Lạm phát toàn cầu và nguy cơ suy thoái kinh tế có thể làm giảm nhu cầu tiêu thụ cao su tự nhiên, gây áp lực lên biên gộp 30.8% trong tương lai. Do đó, việc đánh giá GVR cần dựa trên P/B và tài sản ngầm thay vì chỉ nhìn vào lợi nhuận đột biến mang tính thời điểm.",
+        "ai_updated_at": "2026-11-06 04:46:18",
+        "bctc": "Hiệu quả sinh lời của GVR hiện ở mức khá với ROE đạt 10.9% và ROA là 8.1%, phản ánh khả năng tạo lời tốt trên tài sản. Tuy nhiên, chất lượng lợi nhuận cần được xem xét kỹ khi dòng tiền kinh doanh (CFO) chỉ đạt 4,130 Tỷ so với LNST TTM 9,407 Tỷ, kéo tỷ lệ CFO/LNST xuống mức 0.44x. Điều này cho thấy một phần lợi nhuận có thể đang nằm ở khoản phải thu hoặc hàng tồn kho, mang tính chất ảo và chưa thực sự chuyển hóa thành tiền mặt. Cấu trúc tài chính khá an toàn với hệ số nợ D/E=0.37, giúp doanh nghiệp giảm bớt áp lực chi phí lãi vay. Biên gộp duy trì ở mức 30.8% và tăng trưởng LNST YoY ấn tượng 68.19% cho thấy GVR đang hưởng lợi lớn từ chu kỳ ngành. Về định giá, P/E=17.24 và P/B=1.91 cho thấy thị trường đã phản ánh phần lớn kỳ vọng tăng trưởng vào giá cổ phiếu. Kết luận: Lợi nhuận có sự tăng trưởng mạnh nhưng chất lượng dòng tiền yếu là điểm trừ lớn, nhà đầu tư giá trị cần cảnh giác với bẫy lợi nhuận kế toán.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của GVR nằm ở quỹ đất nông nghiệp khổng lồ và vị thế độc quyền tự nhiên trong ngành cao su Việt Nam. Động lực tăng trưởng trong 2-3 năm tới đến từ việc chuyển đổi mục đích sử dụng đất sang khu công nghiệp, mang lại biên lợi nhuận đột phá. Bên cạnh đó, nhu cầu cao su tự nhiên toàn cầu phục hồi và chính sách đẩy mạnh đầu tư công hạ tầng sẽ hỗ trợ sản lượng tiêu thụ cốt lõi.",
+        "risks": "Rủi ro lớn nhất là tính chu kỳ của giá cao su thế giới, khi đà tăng trưởng LNST 68.19% có thể đã chạm đỉnh chu kỳ và dễ đảo chiều. Tiến độ chuyển đổi đất cao su sang khu công nghiệp thường xuyên bị trì hoãn do các vướng mắc về pháp lý và phê duyệt quy hoạch địa phương. Ngoài ra, tỷ lệ CFO/LNST thấp (0.44x) tiềm ẩn rủi ro thanh khoản nội tại nếu chu kỳ hàng hóa quay đầu giảm sâu.",
         "ps": 0,
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
@@ -12896,7 +12896,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "HAG": {
         "symbol": "HAG",
@@ -13024,11 +13024,11 @@
                 "roe_quarter": 2.24
             }
         ],
-        "outlook": "Giá hiện tại 13,900 VNĐ nằm dưới vùng mua an toàn 20,512 VNĐ, tạo biên an toàn thực 47.6% (MoS 25%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 5.27x và P/B 1.09x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: ✅ MUA TÍCH SẢN.",
+        "outlook": "Với giá hiện tại 13,900 VNĐ, cổ phiếu đang thấp hơn tới 47.6% so với vùng mua (fair_low) 20,512 VNĐ và chiết khấu sâu so với Fair value 27,350 VNĐ. Biên an toàn (Margin of Safety) lên tới 47.6% là một lớp đệm bảo vệ cực kỳ vững chắc cho nhà đầu tư giá trị trước những biến động khó lường của thị trường. Hệ thống đánh giá tổng điểm 80/100, trong đó điểm Định giá đạt tuyệt đối 30/30, củng cố vững chắc cho quyết định ✅ MUA TÍCH SẢN. Đây là cơ hội hiếm hoi để thu gom cổ phiếu của một doanh nghiệp có ROE 21.1% với mức định giá P/E chỉ 5.27x. Nhà đầu tư nên tận dụng nhịp điều chỉnh hoặc pha tích lũy sideway hiện tại để xây dựng vị thế dài hạn.",
         "ai_recommendation": "MUA TÍCH SẢN — Tỷ trọng 10-15% — Giải ngân từng phần (DCA)",
         "ai_price_zone": "Vùng mua: 20,512 — 27,350 | Giá hiện tại: 13,900 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Tiêu dùng nội địa phục hồi nhưng chậm. Cạnh tranh từ hàng nhập khẩu và áp lực biên lợi nhuận từ chi phí nguyên liệu. Cơ hội từ xuất khẩu nếu tỷ giá thuận lợi.",
-        "ai_updated_at": "2026-11-05 22:58:07",
+        "macro_view": "Ngành sản xuất tiêu dùng phòng thủ đang được hưởng lợi từ xu hướng tiêu dùng nội địa ổn định, bất chấp những biến động của chu kỳ kinh tế vĩ mô. Tuy nhiên, áp lực từ chu kỳ giá hàng hóa và nguyên vật liệu nông sản toàn cầu có thể tác động trực tiếp đến biên lợi nhuận gộp của doanh nghiệp trong ngắn hạn. Chính sách tiền tệ nới lỏng và mặt bằng lãi suất hạ nhiệt sẽ hỗ trợ giảm chi phí vốn cho các doanh nghiệp, dù D/E hiện tại 0.67 đã ở mức an toàn. Sức cầu tiêu dùng thiết yếu duy trì tốt giúp nhóm ngành này đóng vai trò là kênh trú ẩn an toàn khi thị trường chung đối mặt với rủi ro điều chỉnh.",
+        "ai_updated_at": "2026-11-06 04:47:18",
         "ps": 0,
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
@@ -13049,10 +13049,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 21.1%, ROA 12.0% — vượt trội so với mặt bằng chung ngành. Định giá P/E 5.27x và P/B 1.09x. Biên lợi nhuận gộp 45.6% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.04x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 2,607 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu quốc dân, mạng lưới phân phối rộng khắp và thị phần dẫn đầu. Tăng trưởng ổn định với LNST tăng 8.8% YoY.",
-        "risks": "Rủi ro cạnh tranh từ hàng nhập khẩu và thương hiệu mới. Rủi ro biên gộp 45.6% bị ép bởi chi phí nguyên liệu. Rủi ro sức mua tiêu dùng suy yếu.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Báo cáo tài chính của HAG ghi nhận hiệu quả sinh lời ấn tượng với ROE đạt 21.1% và ROA ở mức 12.0%, vượt trội so với trung bình ngành sản xuất tiêu dùng. Hệ số định giá hiện rất hấp dẫn khi P/E chỉ 5.27x và P/B là 1.09x, phản ánh thị trường đang chiết khấu sâu so với giá trị sổ sách. Tuy nhiên, chất lượng dòng tiền cần được theo dõi sát sao khi CFO chỉ đạt 135 Tỷ đồng, dẫn đến tỷ lệ CFO/LNST ở mức rất thấp 0.04x. Lợi nhuận sau thuế TTM đạt 3,603 Tỷ đồng với biên gộp duy trì ở mức cao 45.6%, cho thấy lợi thế cạnh tranh về chi phí sản xuất. Cấu trúc vốn được kiểm soát tốt với D/E = 0.67, giúp giảm thiểu rủi ro tài chính trong môi trường lãi suất biến động. Tăng trưởng LNST YoY đạt 8.85%, cho thấy sự ổn định nhưng chưa mang tính đột phá. Kết luận, lợi nhuận của HAG là thật và đến từ hoạt động cốt lõi nhờ biên gộp cao, nhưng dòng tiền kinh doanh chưa tương xứng với lợi nhuận kế toán, nhà đầu tư cần lưu ý điểm này khi tích sản.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của HAG nằm ở quy mô sản xuất lớn và biên gộp vượt trội 45.6%, tạo ra rào cản gia nhập ngành đối với các đối thủ mới. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi việc tối ưu hóa chuỗi giá trị sản xuất tiêu dùng phòng thủ, giúp duy trì tăng trưởng LNST YoY 8.85%. Bên cạnh đó, việc kiểm soát tốt đòn bẩy tài chính (D/E = 0.67) tạo dư địa để doanh nghiệp mở rộng thị phần mà không chịu áp lực chi phí lãi vay quá lớn.",
+        "risks": "Rủi ro trọng yếu nhất là chất lượng dòng tiền yếu khi CFO/LNST chỉ đạt 0.04x, cho thấy lợi nhuận có thể đang bị giam vốn trong hàng tồn kho hoặc khoản phải thu. Thứ hai, biến động giá nguyên vật liệu đầu vào có thể làm xói mòn biên gộp 45.6% nếu doanh nghiệp không thể chuyển giao chi phí cho người tiêu dùng. Cuối cùng, mẫu hình kỹ thuật đang tích lũy sideway có thể khiến dòng tiền nhàn rỗi bị chôn vốn nếu thị trường chưa có nhịp bùng nổ thông tin hỗ trợ.",
+        "ai_source": "AI"
     },
     "IMP": {
         "symbol": "IMP",
@@ -14586,14 +14586,14 @@
                 "roe_quarter": 4.18
             }
         ],
-        "outlook": "Giá 55,600 VNĐ đã vượt xa fair value 44,743 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá hiện tại 55,600 VNĐ đã vượt xa vùng mua an toàn từ 31,320 VNĐ đến fair value 44,743 VNĐ, khiến cổ phiếu rơi vào trạng thái ❌ ĐẮT với mức chiết khấu so với fair_low lên tới -43.7%. Trong đầu tư giá trị, biên an toàn (Margin of Safety) 30.0% chỉ được kích hoạt khi giá điều chỉnh về dưới 44,743 VNĐ, còn hiện tại việc mua vào đồng nghĩa với việc chấp nhận rủi ro định giá quá cao. Hệ thống đưa ra quyết định ❌ TRÁNH vì điểm Định giá chỉ đạt 8/30, phản ánh thị trường đã phản ánh quá mức kỳ vọng vào các dự án tương lai. Nhà đầu tư tuyệt đối không nên đuổi giá ở vùng 55,600 VNĐ mà cần kiên nhẫn chờ đợi các nhịp điều chỉnh sâu hơn về vùng 31,320 VNĐ để đảm bảo biên an toàn.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 31,320 — 44,743 | Giá hiện tại: 55,600 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Pháp lý BĐS (Luật Đất đai, Luật Nhà ở) đang dần tháo gỡ. Tín dụng BĐS hồi phục nhưng chậm. Chu kỳ phục hồi phụ thuộc vào niềm tin người mua và thanh khoản ngân hàng.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 42.5%, ROA 19.8% — vượt trội so với mặt bằng chung ngành. Định giá P/E 10.22x và P/B 3.40x. Biên lợi nhuận gộp 72.1% duy trì ở mức tốt. CFO 871 tỷ so với LNST 1,620 tỷ (CFO/LNST = 0.54x) — chấp nhận được. EPS đạt 5,441 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quỹ đất sạch tại vị trí đắc địa, pháp lý dự án hoàn thiện và thương hiệu chủ đầu tư uy tín. Động lực tăng trưởng mạnh: LNST tăng 32584.2% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro pháp lý dự án, tiến độ bàn giao chậm. Rủi ro đòn bẩy nợ cao nếu D/E vượt ngưỡng an toàn. Rủi ro thanh khoản thị trường BĐS đóng băng.",
+        "macro_view": "Ngành bất động sản đang chịu tác động mạnh mẽ từ các chính sách vĩ mô liên quan đến room tín dụng, lãi suất cho vay mua nhà và quá trình tháo gỡ vướng mắc pháp lý cho các dự án mới. Việc Ngân hàng Nhà nước điều hành chính sách tiền tệ linh hoạt sẽ ảnh hưởng trực tiếp đến dòng tiền người mua trả trước và khả năng hấp thụ sản phẩm của SJS. Ngoài ra, các quy định mới trong Luật Đất đai, Luật Nhà ở và Luật Kinh doanh Bất động sản sẽ định hình lại chu kỳ phát triển dự án, đòi hỏi doanh nghiệp phải có quỹ đất sạch và pháp lý hoàn thiện như SJS mới có thể duy trì biên gộp 72.1%. Do đó, áp lực từ môi trường vĩ mô và pháp lý là biến số cần theo dõi sát sao bên cạnh các chỉ số nội tại của doanh nghiệp.",
+        "ai_updated_at": "2026-11-06 05:00:19",
+        "bctc": "Báo cáo tài chính của SJS cho thấy hiệu quả sinh lời cực kỳ ấn tượng với ROE đạt 42.5% và ROA ở mức 19.8%, vượt xa chuẩn ngành BĐS (>=12%). Lợi nhuận sau thuế TTM đạt 1,620 Tỷ với mức tăng trưởng đột biến 32584.23% YoY, đi kèm biên gộp lên tới 72.1%. Tuy nhiên, chất lượng dòng tiền cần được theo dõi khi CFO đạt 871 Tỷ và tỷ lệ CFO/LNST chỉ ở mức 0.54x, cho thấy một phần lợi nhuận có thể đến từ ghi nhận theo tiến độ dự án thay vì tiền mặt thực thu. Cấu trúc vốn khá an toàn với hệ số D/E = 0.78, giúp giảm bớt áp lực lãi vay trong bối cảnh hiện tại. Về định giá dựa trên tài sản và thu nhập, P/E = 10.22x có vẻ hợp lý nhưng P/B = 3.40x phản ánh thị trường đang kỳ vọng lớn vào giá trị tài sản ròng (BVPS 16,353 VNĐ). Kết luận, lợi nhuận của SJS là thật và đến từ việc hạch toán các dự án BĐS có biên lợi nhuận cao, nhưng nhà đầu tư cần lưu ý độ trễ của dòng tiền thực tế.",
+        "catalyst": "Lợi thế cạnh tranh (Economic Moat) của SJS nằm ở quỹ đất sạch và khả năng phát triển các dự án bất động sản có biên gộp lên tới 72.1%, tạo ra rào cản gia nhập ngành đối với các đối thủ mới. Động lực tăng trưởng trong 2-3 năm tới được thúc đẩy bởi việc tiếp tục ghi nhận doanh thu từ các dự án trọng điểm đang triển khai, phản ánh qua mức tăng trưởng LNST YoY ấn tượng 32584.23%. Ngoài ra, việc duy trì ROE ở mức 42.5% cho thấy năng lực tái đầu tư và sinh lời trên vốn chủ sở hữu xuất sắc, làm bệ phóng cho các chu kỳ mở bán tiếp theo.",
+        "risks": "Rủi ro trọng yếu nhất đối với SJS là tính chu kỳ của ngành bất động sản và sự phụ thuộc vào tiến độ pháp lý cũng như việc bàn giao dự án để ghi nhận doanh thu. Tỷ lệ CFO/LNST = 0.54x cảnh báo rủi ro về độ trễ dòng tiền, khi lợi nhuận kế toán đã ghi nhận nhưng tiền mặt thực tế từ người mua trả trước chưa về đủ. Bên cạnh đó, việc không chia cổ tức (0.0%/năm) có thể làm giảm sức hút đối với các nhà đầu tư tìm kiếm dòng tiền thụ động trong thời gian chờ đợi chu kỳ dự án mới.",
         "ps": 0,
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
@@ -14614,7 +14614,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "TCD": {
         "symbol": "TCD",
@@ -15014,14 +15014,14 @@
                 "roe_quarter": 1.66
             }
         ],
-        "outlook": "Giá 54,300 VNĐ đã vượt fair value 53,273 VNĐ. Định giá hiện tại chưa hấp dẫn cho tích sản mới. Verdict: HƠI ĐẮT - KHÔNG MUA. Quyết định hệ thống: ⚠️ CHỜ VỀ VÙNG MUA. Chờ giá điều chỉnh về 39,955 VNĐ mới nên giải ngân.",
+        "outlook": "Hiện tại, giá cổ phiếu TLG đang giao dịch ở mức 54,300 VNĐ, cao hơn fair_high 53,273 VNĐ và vượt xa vùng mua an toàn (fair_low) tại 39,955 VNĐ. Việc mua vào ở vùng giá hiện tại khiến nhà đầu tư chịu mức chiết khấu âm -26.4% so với vùng giá tích sản tối ưu, triệt tiêu hoàn toàn Biên an toàn (Margin of Safety) 25.0% cần thiết của phương pháp đầu tư giá trị. Do đó, hệ thống đưa ra quyết định ⚠️ CHỜ VỀ VÙNG MUA để bảo vệ vốn trước rủi ro điều chỉnh ngắn hạn. Nhà đầu tư nên kiên nhẫn chờ đợi thị trường chung rung lắc đưa giá về vùng 39,955 - 53,273 VNĐ để tối ưu hóa tỷ suất sinh lời.",
         "ai_recommendation": "CHỜ VỀ VÙNG MUA — Tỷ trọng 0% — Chờ giá về fair_low mới mua",
         "ai_price_zone": "Vùng mua: 39,955 — 53,273 | Giá hiện tại: 54,300 | Verdict: HƠI ĐẮT - KHÔNG MUA",
-        "macro_view": "Tiêu dùng nội địa phục hồi nhưng chậm. Cạnh tranh từ hàng nhập khẩu và áp lực biên lợi nhuận từ chi phí nguyên liệu. Cơ hội từ xuất khẩu nếu tỷ giá thuận lợi.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 18.4%, ROA 12.5% — vượt trội so với mặt bằng chung ngành. Định giá P/E 11.36x và P/B 2.05x. Biên lợi nhuận gộp 49.9% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.37x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 4,762 VNĐ, cổ tức 8.15%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thương hiệu quốc dân, mạng lưới phân phối rộng khắp và thị phần dẫn đầu. Động lực tăng trưởng mạnh: LNST tăng 42.6% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro cạnh tranh từ hàng nhập khẩu và thương hiệu mới. Rủi ro biên gộp 49.9% bị ép bởi chi phí nguyên liệu. Rủi ro sức mua tiêu dùng suy yếu.",
+        "macro_view": "Đối với ngành sản xuất tiêu dùng phòng thủ, áp lực lạm phát và sức mua của tầng lớp trung lưu là hai biến số vĩ mô quan trọng nhất quyết định doanh thu. Hiện tại, giá hạt nhựa và nguyên phụ liệu đầu vào trên thị trường thế giới có xu hướng ổn định, hỗ trợ TLG duy trì biên gộp 49.9% mà không chịu áp lực tăng giá bán ra. Tuy nhiên, môi trường lãi suất và thắt chặt tín dụng tiêu dùng có thể làm giảm nhu cầu đối với các sản phẩm không thiết yếu, tác động trực tiếp đến tốc độ tăng trưởng LNST 42.62%. Do đó, việc nắm giữ tiền mặt và chờ đợi các chính sách kích cầu tiêu dùng nội địa từ Chính phủ là chiến lược vĩ mô phù hợp nhất lúc này.",
+        "ai_updated_at": "2026-11-06 05:03:04",
+        "bctc": "Chất lượng lợi nhuận của TLG thể hiện sự vững chắc của một doanh nghiệp sản xuất tiêu dùng phòng thủ với ROE đạt 18.4% và ROA ở mức 12.5%, vượt trội so với mặt bằng chung. Cấu trúc vốn rất an toàn khi hệ số D/E chỉ ở mức 0.49, giúp doanh nghiệp ít chịu áp lực từ chi phí lãi vay. Biên lợi nhuận gộp duy trì ở mức ấn tượng 49.9%, phản ánh sức mạnh thương hiệu và khả năng kiểm soát giá vốn. Tuy nhiên, dòng tiền kinh doanh (CFO) đạt 182 Tỷ so với lợi nhuận sau thuế (LNST) 492 Tỷ khiến tỷ lệ CFO/LNST chỉ đạt 0.37x, đây là điểm cần lưu ý về chất lượng dòng tiền thực tế so với lợi nhuận kế toán. Dù vậy, tăng trưởng LNST YoY lên tới 42.62% cho thấy động lực mở rộng thị phần mạnh mẽ. Với EPS đạt 4,762 VNĐ, mức định giá P/E=11.36 và P/B=2.05 cho thấy thị trường đã phản ánh phần nào tiềm năng sinh lời. Kết luận, lợi nhuận của TLG là thật và đến từ hoạt động cốt lõi, nhưng nhà đầu tư cần theo dõi thêm sự chuyển đổi từ lợi nhuận sang dòng tiền thực trong các kỳ tới.",
+        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) của TLG nằm ở thương hiệu quốc gia lâu đời trong ngành văn phòng phẩm và đồ dùng học tập, giúp duy trì biên gộp 49.9% và khả năng định giá sản phẩm. Động lực tăng trưởng trong 2-3 năm tới đến từ việc mở rộng thị phần xuất khẩu và tối ưu hóa chi phí sản xuất khi quy mô gia tăng. Bên cạnh đó, mức cổ tức tiền mặt đều đặn 8.15%/năm là bệ đỡ vững chắc thu hút dòng tiền tích sản dài hạn.",
+        "risks": "Rủi ro lớn nhất đối với ngành sản xuất tiêu dùng phòng thủ là sự biến động của chi phí nguyên vật liệu đầu vào có thể làm xói mòn biên lợi nhuận gộp 49.9% nếu không thể chuyển giao sang người tiêu dùng. Thứ hai, tỷ lệ CFO/LNST thấp (0.37x) cảnh báo rủi ro về việc lợi nhuận có thể đang nằm ở khoản phải thu hoặc hàng tồn kho thay vì tiền mặt. Cuối cùng, sức mua tiêu dùng nội địa suy yếu trong bối cảnh kinh tế vĩ mô thắt chặt có thể làm chậm lại đà tăng trưởng LNST 42.62% hiện tại.",
         "ps": 0,
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
@@ -15042,7 +15042,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "VCB": {
         "symbol": "VCB",
