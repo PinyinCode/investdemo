@@ -79,6 +79,7 @@ def generate_html():
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
     <script src="./lightweight-charts.js"></script>
+    
     <style>
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
@@ -295,7 +296,7 @@ def generate_html():
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-trophy text-xs md:text-sm"></i>
                     </span>
-                    <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
+                    <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-900 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
                         <option value="NONE">Mặc định (A-Z)</option>
                         <option value="ALL_SCORE">🏆 Điểm Tổng hợp</option>
                         <option value="FUNDAMENTAL" selected>💰 Điểm Cơ bản</option>
@@ -589,10 +590,11 @@ def generate_html():
         </div>
     </div>
 
+    <!-- ============================================================
+         KHU VỰC SCRIPT: KHỞI TẠO FIREBASE VÀ CÁC HÀM XỬ LÝ SỰ KIỆN
+         ============================================================ -->
     <script>
-        // ============================================================
-        // CẤU HÌNH VÀ KHỞI TẠO FIREBASE (BẮT BUỘC ĐẶT LÊN ĐẦU)
-        // ============================================================
+        // 1. Khởi tạo Firebase (Phải đặt trước các hàm khác)
         const firebaseConfig = {firebase_config_json_placeholder};
         const cheapStocksGroups = {cheap_stocks_json_placeholder};
         const cheapSymbolsSet = new Set({cheap_symbols_json_placeholder});
@@ -603,9 +605,7 @@ def generate_html():
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // ============================================================
-        // XỬ LÝ AUTH
-        // ============================================================
+        // 2. Các hàm xử lý Auth
         function parseDate(val) {
             if (!val) return null;
             if (typeof val.toDate === 'function') return val.toDate();
@@ -668,9 +668,7 @@ def generate_html():
             window.location.reload(); 
         }
 
-        // ============================================================
-        // LẮNG NGHE TRẠNG THÁI ĐĂNG NHẬP
-        // ============================================================
+        // 3. Lắng nghe trạng thái đăng nhập
         auth.onAuthStateChanged(async (user) => {
             const authOverlay = document.getElementById('auth-overlay');
             const expiredModal = document.getElementById('expired-modal');
@@ -714,9 +712,7 @@ def generate_html():
             }
         });
 
-        // ============================================================
-        // CÁC HÀM QUẢN LÝ TÀI KHOẢN / ADMIN
-        // ============================================================
+        // 4. Các hàm quản lý tài khoản / admin
         async function openAccountModal() {
             const user = auth.currentUser;
             if (!user) return;
@@ -766,9 +762,7 @@ def generate_html():
 
         function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
 
-        // ============================================================
-        // BIẾN TOÀN CỤC & HÀM XỬ LÝ CHÍNH
-        // ============================================================
+        // 5. Các biến toàn cục & hàm render dữ liệu
         let screenerResults = [];
         let symbolSimRates = {};
         let quarterlyMeanDetails = {};
@@ -886,7 +880,6 @@ def generate_html():
                         fair_value_rationale: extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || ""),
                         sub_sector: extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || ""),
 
-                        // 🆕 QUYẾT ĐỊNH CUỐI CÙNG (Ưu tiên item từ screener_results.json)
                         final_decision: item.final_decision !== undefined ? item.final_decision : (extraData.final_decision || ""),
                         final_decision_color: item.final_decision_color !== undefined ? item.final_decision_color : (extraData.final_decision_color || "slate"),
                         final_decision_reason: item.final_decision_reason !== undefined ? item.final_decision_reason : (extraData.final_decision_reason || ""),
@@ -1024,13 +1017,13 @@ def generate_html():
                     const isFundActive  = rankingMode === "FUNDAMENTAL";
                     const isTechActive  = rankingMode === "TECHNICAL";
                     const isAllActive   = rankingMode === "ALL_SCORE";
-                    const isValActive   = rankingMode === "VALUATION_VERDICT"; // 🆕 Thêm biến cho Định giá
+                    const isValActive   = rankingMode === "VALUATION_VERDICT"; 
 
                     const clsBase = "flex flex-col items-center justify-center py-1 rounded-md border text-[9px] leading-tight";
                     const clsFund = isFundActive ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300" : "bg-slate-900/60 border-slate-800 text-slate-400";
                     const clsTech = isTechActive ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" : "bg-slate-900/60 border-slate-800 text-slate-400";
                     const clsVal  = isValActive  ? "bg-amber-500/20 border-amber-500/50 text-amber-300"   : "bg-slate-900/60 border-slate-800 text-slate-400";
-                    const clsAll  = isAllActive  ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" : "bg-slate-900/60 border-slate-800 text-slate-400"; // 🆕 Class riêng cho Tổng hợp
+                    const clsAll  = isAllActive  ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" : "bg-slate-900/60 border-slate-800 text-slate-400"; 
 
                     scoreHtml = `
                         <div class="mt-1 bg-slate-950/60 rounded-lg border border-slate-800 p-1.5">
@@ -1721,8 +1714,8 @@ def generate_html():
 
     html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
     html_content = html_template.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
-    html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
-    html_content = html_content.replace("{last_update_str}", last_update_str)
+    html_content = html_template.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
+    html_content = html_template.replace("{last_update_str}", last_update_str)
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
