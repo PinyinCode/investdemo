@@ -287,15 +287,20 @@ def generate_html():
         <!-- BỘ LỌC -->
         <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4 space-y-2">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3">
+                <!-- Ô TÌM KIẾM MÃ (CÓ GỢI Ý) -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-xs md:text-sm"></i>
                     </span>
-                    <input type="text" id="search-input" placeholder="Tìm mã..."
+                    <input type="text" id="search-input" placeholder="Tìm mã..." autocomplete="off"
+                        oninput="handleSearchInput(this.value)"
+                        onkeydown="handleSearchKeyDown(event)"
                         class="w-full pl-7 md:pl-10 pr-7 md:pr-8 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500 transition">
                     <button type="button" onclick="clearInput('search-input')" class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-slate-400 hover:text-white transition" title="Xóa nhanh">
                         <i class="fa-solid fa-xmark text-xs"></i>
                     </button>
+                    <!-- DROPDOWN GỢI Ý SEARCH -->
+                    <div id="search-suggestions" class="absolute left-0 right-0 mt-1 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-40 max-h-60 overflow-y-auto p-1.5"></div>
                 </div>
 
                 <div class="relative w-full">
@@ -348,10 +353,6 @@ def generate_html():
             </div>
 
             <div class="flex flex-wrap items-center gap-x-4 gap-y-1 px-1 pt-1 border-t border-slate-800/80 text-xs">
-                <label class="flex items-center gap-2 cursor-pointer select-none text-emerald-300 font-bold hover:text-emerald-200 transition">
-                    <input type="checkbox" id="cheap-stocks-checkbox" onchange="renderCards()" class="w-4 h-4 rounded bg-slate-950 border-emerald-500 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer">
-                    <span><i class="fa-solid fa-gem mr-1 text-emerald-400"></i> Chỉ lọc cổ phiếu Định giá rẻ theo ngành đã chọn</span>
-                </label>
                 <label class="flex items-center gap-2 cursor-pointer select-none text-amber-300 font-bold hover:text-amber-200 transition">
                     <input type="checkbox" id="watchlist-filter" onchange="renderCards()" class="w-4 h-4 rounded bg-slate-950 border-amber-500 text-amber-600 focus:ring-amber-500 focus:ring-offset-slate-900 cursor-pointer">
                     <span><i class="fa-solid fa-bookmark mr-1 text-amber-400"></i> Chỉ xem mã đang theo dõi <span id="watchlist-count-badge" class="hidden ml-1 bg-amber-500 text-black text-[9px] font-black px-1.5 py-0.5 rounded-full">0</span></span>
@@ -376,15 +377,24 @@ def generate_html():
                     <button type="button" onclick="navigateModalSymbol(-1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã trước">
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
+                    <!-- Ô CHỌN MÃ TRONG MODAL (CÓ GỢI Ý) -->
                     <div class="relative flex items-center">
-                        <input type="text" id="modal-symbol-input" value="--" onchange="handleDirectSymbolInput(this.value)" class="w-20 md:w-24 text-center text-base md:text-lg font-black text-indigo-400 bg-indigo-500/10 px-2 py-1 pr-6 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" title="Nhập mã khác và nhấn Enter">
+                        <input type="text" id="modal-symbol-input" value="--" 
+                               oninput="handleModalSearchInput(this.value)"
+                               onkeydown="handleModalSearchKeyDown(event)"
+                               autocomplete="off"
+                               class="w-24 md:w-28 text-center text-base md:text-lg font-black text-indigo-400 bg-indigo-500/10 px-2 py-1 pr-6 rounded-lg border border-indigo-500/20 uppercase focus:outline-none focus:border-emerald-500" 
+                               title="Nhập mã khác và nhấn Enter">
                         <button type="button" onclick="clearInput('modal-symbol-input')" class="absolute right-1 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
+                        <!-- DROPDOWN GỢI Ý MODAL -->
+                        <div id="modal-search-suggestions" class="absolute left-0 top-full mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5"></div>
                     </div>
                     <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
+                    <!-- NÚT WATCHLIST TRONG MODAL AI -->
                     <button type="button" id="modal-watchlist-btn" onclick="toggleWatchlistFromModal()" class="px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 transition text-xs" title="Thêm/bỏ theo dõi">
                         <i class="fa-regular fa-bookmark"></i>
                     </button>
@@ -444,6 +454,9 @@ def generate_html():
                         <div><span class="text-amber-400 font-bold">⏳ CHỜ ĐỊNH GIÁ TỐT HƠN:</span> Vào vùng mua nhưng điểm định giá &lt;18/30.</div>
                         <div><span class="text-rose-400 font-bold">❌ TRÁNH:</span> Giá đắt (vượt fair_high xa) HOẶC PTCB &lt; 20/50 HOẶC lợi nhuận ảo (CFO âm).</div>
                         <div><span class="text-slate-400 font-bold">👀 THEO DÕI:</span> Chưa đủ điều kiện rõ ràng.</div>
+                        <div class="pt-1 border-t border-slate-800 text-[10px] text-slate-500 italic">
+                            Vùng mua chỉ là "giá". Quyết định cuối = Vùng mua + Chất lượng (PTCB) + Thời điểm (PTKT) + Định giá.
+                        </div>
                     </div>
                 </details>
 
@@ -569,7 +582,7 @@ def generate_html():
                         </button>
                         <div id="symbol-dropdown" class="absolute left-0 mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5">
                             <div class="relative mb-1">
-                                <input type="text" id="dropdown-search" placeholder="Lọc mã..." oninput="filterDropdownSymbols(this.value)" class="w-full px-2.5 py-1.5 pr-6 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500">
+                                <input type="text" id="dropdown-search" placeholder="Lọc mã..." oninput="filterDropdownSymbols(this.value)" onkeydown="handleDropdownSearchKeyDown(event)" autocomplete="off" class="w-full px-2.5 py-1.5 pr-6 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500">
                                 <button type="button" onclick="clearInput('dropdown-search'); filterDropdownSymbols('')" class="absolute right-1.5 inset-y-0 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
@@ -578,6 +591,10 @@ def generate_html():
                         </div>
                     </div>
                     <button type="button" onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-right text-[9px]"></i></button>
+                    <!-- NÚT WATCHLIST TRONG MODAL BIỂU ĐỒ -->
+                    <button type="button" id="chart-watchlist-btn" onclick="toggleWatchlistFromChart()" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition text-[10px]" title="Thêm/bỏ theo dõi">
+                        <i class="fa-regular fa-bookmark"></i>
+                    </button>
                     <div class="flex items-center bg-slate-950/20 p-0.5 rounded-lg border border-slate-800/40 gap-0.5">
                         <button type="button" onclick="switchInterval('D1')" id="btn-d1" class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition">D1</button>
                         <button type="button" onclick="switchInterval('W1')" id="btn-w1" class="px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition">W1</button>
@@ -632,7 +649,6 @@ def generate_html():
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // ===== WATCHLIST STATE =====
         let userWatchlist = new Set();
         let currentUser = null;
 
@@ -733,7 +749,6 @@ def generate_html():
                     }
                 } catch (err) { console.warn("⚠️ Lỗi kiểm tra Firestore:", err); }
                 
-                // 🆕 Load watchlist
                 currentUser = user;
                 await loadUserWatchlist(user.uid);
                 
@@ -746,7 +761,6 @@ def generate_html():
             }
         });
 
-        // ===== WATCHLIST FUNCTIONS =====
         async function loadUserWatchlist(uid) {
             try {
                 const doc = await db.collection('watchlists').doc(uid).get();
@@ -777,6 +791,7 @@ def generate_html():
             updateWatchlistButton(symbol, isAdding);
             updateWatchlistBadge();
             updateModalWatchlistBtn(symbol);
+            updateChartWatchlistBtn(symbol);
 
             try {
                 await db.collection('watchlists').doc(currentUser.uid).set({
@@ -791,11 +806,16 @@ def generate_html():
                 updateWatchlistButton(symbol, !isAdding);
                 updateWatchlistBadge();
                 updateModalWatchlistBtn(symbol);
+                updateChartWatchlistBtn(symbol);
                 alert('Không thể lưu — vui lòng thử lại!');
             }
         }
 
         function toggleWatchlistFromModal() {
+            if (currentSymbol) toggleWatchlist(currentSymbol, null);
+        }
+
+        function toggleWatchlistFromChart() {
             if (currentSymbol) toggleWatchlist(currentSymbol, null);
         }
 
@@ -822,6 +842,18 @@ def generate_html():
             } else {
                 btn.innerHTML = '<i class="fa-regular fa-bookmark text-slate-400"></i>';
                 btn.className = 'px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 transition text-xs';
+            }
+        }
+
+        function updateChartWatchlistBtn(symbol) {
+            const btn = document.getElementById('chart-watchlist-btn');
+            if (!btn) return;
+            if (userWatchlist.has(symbol)) {
+                btn.innerHTML = '<i class="fa-solid fa-bookmark text-amber-400"></i>';
+                btn.className = 'text-amber-400 bg-amber-500/20 hover:bg-amber-500/30 px-1.5 py-0.5 rounded border border-amber-500/40 transition text-[10px]';
+            } else {
+                btn.innerHTML = '<i class="fa-regular fa-bookmark text-slate-400"></i>';
+                btn.className = 'text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition text-[10px]';
             }
         }
 
@@ -931,7 +963,14 @@ def generate_html():
             if (inputEl) {
                 inputEl.value = '';
                 inputEl.focus();
-                if (elementId === 'search-input') renderCards();
+                if (elementId === 'search-input') {
+                    document.getElementById('search-suggestions').classList.add('hidden');
+                    renderCards();
+                } else if (elementId === 'modal-symbol-input') {
+                    document.getElementById('modal-search-suggestions').classList.add('hidden');
+                } else if (elementId === 'dropdown-search') {
+                    filterDropdownSymbols('');
+                }
             }
         }
 
@@ -1029,24 +1068,14 @@ def generate_html():
 
             const searchTerm = document.getElementById('search-input').value.toUpperCase();
             const selectedSector = document.getElementById('sector-filter').value;
-            const isCheapOnly = document.getElementById('cheap-stocks-checkbox').checked;
             const isWatchlistOnly = document.getElementById('watchlist-filter').checked;
             const rankingMode = document.getElementById('ranking-filter').value;
 
             let filtered = screenerResults.filter(item => {
                 let matchSearch = item.symbol.includes(searchTerm) || (item.company_name && item.company_name.toUpperCase().includes(searchTerm));
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
-                let matchCheap = true;
-                if (isCheapOnly) {
-                    if (selectedSector === "ALL") matchCheap = cheapSymbolsSet.has(item.symbol);
-                    else {
-                        let sectorCheapList = cheapStocksGroups[selectedSector] || [];
-                        let cheapSymbolsInSector = new Set(sectorCheapList.map(s => s.symbol));
-                        matchCheap = cheapSymbolsInSector.has(item.symbol);
-                    }
-                }
                 let matchWatchlist = !isWatchlistOnly || userWatchlist.has(item.symbol);
-                return matchSearch && matchSector && matchCheap && matchWatchlist;
+                return matchSearch && matchSector && matchWatchlist;
             });
 
             if (rankingMode === "FINAL_BUY_ONLY") {
@@ -1225,6 +1254,131 @@ def generate_html():
                 container.appendChild(card);
             });
         }
+
+        // ================== SEARCH SUGGESTIONS ==================
+        let currentSuggestions = [];
+        
+        function handleSearchInput(val) {
+            const term = val.trim().toUpperCase();
+            const suggestBox = document.getElementById('search-suggestions');
+            if (!term) {
+                suggestBox.classList.add('hidden');
+                renderCards();
+                return;
+            }
+            
+            currentSuggestions = screenerResults.filter(item => 
+                item.symbol.includes(term) || (item.company_name && item.company_name.toUpperCase().includes(term))
+            ).slice(0, 8);
+
+            if (currentSuggestions.length === 0) {
+                suggestBox.innerHTML = `<div class="px-2 py-1.5 text-xs text-slate-500">Không tìm thấy mã.</div>`;
+                suggestBox.classList.remove('hidden');
+            } else {
+                let html = '';
+                currentSuggestions.forEach((item, idx) => {
+                    html += `<button type="button" onclick="selectSuggestion('${item.symbol}')" class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-bold transition flex justify-between items-center hover:bg-slate-800 text-slate-300 ${idx === 0 ? 'bg-slate-800/50' : ''}">
+                        <span>${item.symbol}</span>
+                        <span class="text-[9px] text-slate-500 font-normal truncate max-w-[100px]">${item.company_name || ''}</span>
+                    </button>`;
+                });
+                suggestBox.innerHTML = html;
+                suggestBox.classList.remove('hidden');
+            }
+        }
+
+        function handleSearchKeyDown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (currentSuggestions.length > 0) {
+                    selectSuggestion(currentSuggestions[0].symbol);
+                }
+            }
+        }
+
+        function selectSuggestion(symbol) {
+            document.getElementById('search-input').value = symbol;
+            document.getElementById('search-suggestions').classList.add('hidden');
+            renderCards();
+        }
+
+        // Đóng gợi ý khi click ra ngoài
+        window.addEventListener('click', (e) => {
+            const searchBox = document.getElementById('search-input');
+            const searchSuggest = document.getElementById('search-suggestions');
+            if (searchBox && searchSuggest && !searchBox.contains(e.target) && !searchSuggest.contains(e.target)) {
+                searchSuggest.classList.add('hidden');
+            }
+        });
+
+        // ================== MODAL SEARCH SUGGESTIONS ==================
+        let currentModalSuggestions = [];
+        
+        function handleModalSearchInput(val) {
+            const term = val.trim().toUpperCase();
+            const suggestBox = document.getElementById('modal-search-suggestions');
+            if (!term) {
+                suggestBox.classList.add('hidden');
+                return;
+            }
+            
+            currentModalSuggestions = screenerResults.filter(item => 
+                item.symbol.includes(term)
+            ).slice(0, 8);
+
+            if (currentModalSuggestions.length === 0) {
+                suggestBox.innerHTML = `<div class="px-2 py-1.5 text-xs text-slate-500">Không tìm thấy.</div>`;
+                suggestBox.classList.remove('hidden');
+            } else {
+                let html = '';
+                currentModalSuggestions.forEach((item) => {
+                    html += `<button type="button" onclick="selectModalSuggestion('${item.symbol}')" class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-bold transition flex justify-between items-center hover:bg-slate-800 text-slate-300">
+                        <span>${item.symbol}</span>
+                    </button>`;
+                });
+                suggestBox.innerHTML = html;
+                suggestBox.classList.remove('hidden');
+            }
+        }
+
+        function handleModalSearchKeyDown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (currentModalSuggestions.length > 0) {
+                    selectModalSuggestion(currentModalSuggestions[0].symbol);
+                }
+            }
+        }
+
+        function selectModalSuggestion(symbol) {
+            document.getElementById('modal-search-suggestions').classList.add('hidden');
+            document.getElementById('modal-symbol-input').value = symbol;
+            openModal(symbol); // Load lại thông tin mã mới
+        }
+
+        // Đóng modal gợi ý khi click ngoài
+        window.addEventListener('click', (e) => {
+            const modalSearchBox = document.getElementById('modal-symbol-input');
+            const modalSuggest = document.getElementById('modal-search-suggestions');
+            if (modalSearchBox && modalSuggest && !modalSearchBox.contains(e.target) && !modalSuggest.contains(e.target)) {
+                modalSuggest.classList.add('hidden');
+            }
+        });
+
+        // ================== CHART DROPDOWN SEARCH SUGGESTIONS ==================
+        let currentChartSuggestions = [];
+        function handleDropdownSearchKeyDown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                // Lấy danh sách đang hiển thị
+                const firstBtn = document.querySelector('#dropdown-symbol-list button');
+                if (firstBtn) {
+                    firstBtn.click();
+                }
+            }
+        }
+
+        // =======================================================
 
         function switchAiTab(tabName) {
             currentActiveTab = tabName;
@@ -1441,16 +1595,6 @@ def generate_html():
             }
         }
 
-        function handleDirectSymbolInput(val) {
-            const cleanSymbol = val.trim().toUpperCase();
-            const found = screenerResults.find(s => s.symbol === cleanSymbol);
-            if (found) openModal(cleanSymbol);
-            else {
-                alert("Không tìm thấy mã cổ phiếu: " + cleanSymbol);
-                document.getElementById('modal-symbol-input').value = currentSymbol;
-            }
-        }
-
         function calculateModalSimulation() {
             let p0 = parseCleanNumber(document.getElementById('modal-sim-initial').value);
             let pMonthly = parseCleanNumber(document.getElementById('modal-sim-monthly').value);
@@ -1647,6 +1791,7 @@ def generate_html():
             document.getElementById('current-symbol-text').innerText = symbol;
             document.getElementById('symbol-dropdown').classList.add('hidden');
             document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
+            updateChartWatchlistBtn(symbol);
             document.getElementById('chart-modal').classList.remove('hidden');
             document.getElementById('chart-loading').classList.remove('hidden');
             try {
