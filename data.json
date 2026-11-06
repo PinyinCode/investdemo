@@ -11932,14 +11932,14 @@
                 "roe_quarter": 3.66
             }
         ],
-        "outlook": "Giá hiện tại 32,400 VNĐ nằm dưới vùng mua an toàn 35,274 VNĐ, tạo biên an toàn thực 8.9% (MoS 30%). Hệ thống xác định Verdict: RẺ - TRONG VÙNG MUA. Với P/E 6.43x và P/B 1.47x, đây là vùng định giá hấp dẫn cho tích sản dài hạn. Quyết định hệ thống: 🎯 MUA MẠNH.",
-        "ai_recommendation": "MUA MẠNH — Tỷ trọng 20-30% — Giải ngân toàn bộ hoặc theo 2-3 đợt",
+        "outlook": "Giá hiện tại 32,400 VNĐ đang thấp hơn fair_low 35,274 VNĐ (chiết khấu 8.9%) và thấp hơn nhiều so với fair value 50,392 VNĐ, đưa cổ phiếu vào vùng mua hấp dẫn về mặt toán học. Mặc dù định giá rẻ và PTKT đang ở pha Siết Nền Tích Lũy, hệ thống vẫn phát đi tín hiệu TRÁNH do mâu thuẫn dữ liệu: khối quyết định ghi nhận PTCB chỉ 0/50 (doanh nghiệp yếu về cơ bản) trong khi khối điểm số lại báo 45/50. Với tư cách chuyên gia đầu tư giá trị, tôi tuân thủ tuyệt đối nguyên tắc an toàn vốn: không mua cổ phiếu chu kỳ khi có tín hiệu cảnh báo đỏ từ hệ thống lõi về chất lượng cơ bản dài hạn, bất chấp giá đang rẻ. Do đó, quyết định cuối cùng là đứng ngoài quan sát.",
+        "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 35,274 — 50,392 | Giá hiện tại: 32,400 | Verdict: RẺ - TRONG VÙNG MUA",
-        "macro_view": "Chu kỳ giá hàng hóa phụ thuộc vào kinh tế Trung Quốc và chính sách bảo hộ thương mại toàn cầu. Cần theo dõi tồn kho và giá nguyên liệu đầu vào.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 24.2%, ROA 14.3% — vượt trội so với mặt bằng chung ngành. Định giá P/E 6.43x và P/B 1.47x. Biên lợi nhuận gộp 19.1% duy trì ở mức tốt. CFO 2,174 tỷ so với LNST 2,719 tỷ (CFO/LNST = 0.80x) — chấp nhận được. EPS đạt 5,131 VNĐ, cổ tức 6.06%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quy mô sản xuất lớn, chi phí biên thấp và vị thế dẫn đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 31.8% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro giá hàng hóa đảo chiều làm biên gộp 19.1% co lại. Bẫy P/E 6.43x thấp tại đỉnh lợi nhuận chu kỳ. Rủi ro tồn kho cao nếu giá giảm.",
+        "macro_view": "Ngành vật liệu chu kỳ như phân bón đang đối mặt với áp lực nguồn cung toàn cầu gia tăng, khiến chu kỳ siêu lợi nhuận có dấu hiệu tạo đỉnh. Giá khí tự nhiên biến động khó lường ảnh hưởng trực tiếp đến chi phí sản xuất, làm suy yếu lợi thế biên gộp 19.1% trong các quý tới. Chính sách an ninh lương thực và xuất khẩu nông sản là các yếu tố vĩ mô duy trì lực cầu nền, nhưng không đủ để tạo ra đột phá tăng trưởng dài hạn. Nhà đầu tư giá trị cần nhận diện đây là giai đoạn cuối của chu kỳ bùng nổ lợi nhuận, nơi bẫy P/E=6.43x thường xuyên xuất hiện.",
+        "ai_updated_at": "2026-11-06 00:05:25",
+        "bctc": "DCM ghi nhận ROE=24.2% và ROA=14.3%, cho thấy hiệu quả sinh lời trên vốn và tài sản đang ở mức rất cao, đặc trưng của doanh nghiệp vật liệu chu kỳ đang ở vùng đỉnh lợi nhuận. Hệ số P/E=6.43x kết hợp với P/B=1.47x phản ánh rủi ro bẫy giá trị khi thị trường chiết khấu mạnh do kỳ vọng chu kỳ suy giảm. Biên gộp đạt 19.1% cùng tăng trưởng LNST YoY=31.81% cho thấy kết quả kinh doanh hiện tại vẫn khả quan. Tuy nhiên, tỷ lệ CFO/LNST=0.80x chỉ ở mức chấp nhận được, dòng tiền thực tế chưa hoàn toàn khớp với lợi nhuận kế toán. Cấu trúc tài chính an toàn với D/E=0.67, giúp doanh nghiệp chịu đựng được biến động chu kỳ. Kết luận: Lợi nhuận hiện tại là thật và được hỗ trợ bởi dòng tiền, nhưng mang tính chất chu kỳ cao chứ không phải tăng trưởng bền vững.",
+        "catalyst": "DCM sở hữu lợi thế cạnh tranh nhờ vị thế đầu ngành phân bón với quy mô sản xuất lớn và hệ thống phân phối nội địa khó sao chép. Động lực tăng trưởng 2-3 năm tới phụ thuộc vào việc mở rộng sang các dòng phân bón cao cấp và tối ưu hóa chi phí khí đầu vào. Tuy nhiên, do đặc thù ngành vật liệu chu kỳ, biên lợi nhuận khó duy trì mức đỉnh 19.1% khi nguồn cung toàn cầu phục hồi.",
+        "risks": "Rủi ro trọng yếu nhất là bẫy P/E thấp tại đỉnh chu kỳ, khi lợi nhuận đột biến làm méo mó các chỉ số định giá lịch sử. Biến động giá khí đầu vào và chính sách thuế phân bón có thể bào mòn nhanh chóng biên gộp 19.1% hiện tại. Ngoài ra, mâu thuẫn trong hệ thống chấm điểm (PTCB được ghi nhận là 0/50 ở quyết định cuối nhưng lại là 45/50 ở chi tiết) cảnh báo rủi ro tiềm ẩn về chất lượng tài sản hoặc yếu tố cơ bản dài hạn chưa được phản ánh đầy đủ.",
         "ps": 0,
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
@@ -11960,7 +11960,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "DHC": {
         "symbol": "DHC",
