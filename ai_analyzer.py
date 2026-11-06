@@ -477,9 +477,14 @@ def build_target_lists(screener_map):
 
     top_symbols = {}
     for sector, items in industry_groups.items():
+        # 🆕 TỐI ƯU: Ưu tiên chọn mã có Tổng điểm cao nhất (bao gồm cả Định giá & Kỹ thuật), sau đó đến Điểm cơ bản và Chiết khấu
         items_sorted = sorted(
             items,
-            key=lambda x: (x.get('fundamental_score', 0), x.get('dividend_yield', 0), x.get('roe', 0)),
+            key=lambda x: (
+                x.get('total_score', 0),          # Ưu tiên 1: Điểm tổng (thể hiện toàn diện)
+                x.get('fundamental_score', 0),    # Ưu tiên 2: Nền tảng doanh nghiệp
+                x.get('discount_to_fair_pct', 0)  # Ưu tiên 3: Mức độ rẻ so với giá trị thực
+            ),
             reverse=True
         )
         for itm in items_sorted[:TOP_PER_SECTOR]:
