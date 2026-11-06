@@ -292,19 +292,27 @@ def generate_html():
                     </span>
                 </div>
 
+                <!-- 🆕 TỐI ƯU DROPDOWN SẮP XẾP -->
                 <div class="relative w-full col-span-2 md:col-span-1">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-trophy text-xs md:text-sm"></i>
                     </span>
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-900 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
-                        <option value="NONE">Mặc định (A-Z)</option>
-                        <option value="ALL_SCORE">🏆 Điểm Tổng hợp</option>
-                        <option value="FUNDAMENTAL" selected>💰 Điểm Cơ bản</option>
-                        <option value="TECHNICAL">📈 Điểm Kỹ thuật</option>
-                        <option value="VALUATION_VERDICT">🎯 Ưu tiên TRONG VÙNG MUA</option>
-                        <option value="FINAL_BUY_ONLY">✅ Chỉ MUA MẠNH / MUA TÍCH SẢN</option>
-                        <option value="FINAL_AVOID_ONLY">❌ Chỉ mã TRÁNH</option>
-                        <option value="FINAL_DECISION_SORT">🏅 Ưu tiên theo Quyết định cuối</option>
+                        <optgroup label="Theo Điểm số">
+                            <option value="ALL_SCORE">🏆 Điểm Tổng hợp</option>
+                            <option value="FUNDAMENTAL" selected>💰 Điểm Cơ bản</option>
+                            <option value="TECHNICAL">📈 Điểm Kỹ thuật</option>
+                            <option value="VALUATION_SCORE">⚖️ Điểm Định giá</option>
+                        </optgroup>
+                        <optgroup label="Theo Trạng thái">
+                            <option value="VALUATION_VERDICT">🎯 Ưu tiên TRONG VÙNG MUA</option>
+                            <option value="FINAL_BUY_ONLY">✅ Chỉ MUA MẠNH / MUA TÍCH SẢN</option>
+                            <option value="FINAL_AVOID_ONLY">❌ Chỉ mã TRÁNH</option>
+                            <option value="FINAL_DECISION_SORT">🏅 Ưu tiên theo Quyết định cuối</option>
+                        </optgroup>
+                        <optgroup label="Khác">
+                            <option value="NONE">Mặc định (A-Z)</option>
+                        </optgroup>
                     </select>
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-amber-400 pointer-events-none">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -943,7 +951,10 @@ def generate_html():
                     if (va !== vb) return va - vb;
                     return (b.discount_to_fair_pct || 0) - (a.discount_to_fair_pct || 0);
                 });
-            } else if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
+            } 
+            // 🆕 THÊM ĐIỂM ĐỊNH GIÁ VÀO XỬ LÝ SẮP XẾP
+            else if (rankingMode === "VALUATION_SCORE") filtered.sort((a, b) => (b.valuation_score || 0) - (a.valuation_score || 0));
+            else if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
             else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
             else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
             else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
@@ -1017,7 +1028,7 @@ def generate_html():
                     const isFundActive  = rankingMode === "FUNDAMENTAL";
                     const isTechActive  = rankingMode === "TECHNICAL";
                     const isAllActive   = rankingMode === "ALL_SCORE";
-                    const isValActive   = rankingMode === "VALUATION_VERDICT"; 
+                    const isValActive   = rankingMode === "VALUATION_VERDICT" || rankingMode === "VALUATION_SCORE"; 
 
                     const clsBase = "flex flex-col items-center justify-center py-1 rounded-md border text-[9px] leading-tight";
                     const clsFund = isFundActive ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300" : "bg-slate-900/60 border-slate-800 text-slate-400";
