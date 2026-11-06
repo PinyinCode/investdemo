@@ -6938,11 +6938,11 @@
                 "roe_quarter": 0.31
             }
         ],
-        "outlook": "Giá 12,500 VNĐ nằm giữa vùng mua 9,283 và fair value 13,262 VNĐ. Định giá hợp lý nhưng chưa có biên an toàn. Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH. Quyết định hệ thống: 👀 THEO DÕI. Nếu giá điều chỉnh về 9,283 VNĐ sẽ là vùng mua hấp dẫn.",
+        "outlook": "Với giá hiện tại 12,500 VNĐ, cổ phiếu đang nằm dưới Fair value 13,262 VNĐ nhưng vẫn cao hơn đáng kể so với vùng mua an toàn (fair_low) 9,283 VNĐ. Hệ thống yêu cầu biên an toàn 30.0%, trong khi mức chiết khấu so với fair_low đang là -25.7%, nghĩa là giá chưa đủ rẻ để kích hoạt điểm mua mới. Do đó, quyết định 👀 THEO DÕI được đưa ra nhằm chờ đợi một nhịp điều chỉnh sâu hơn về vùng 9,283 VNĐ để đảm bảo biên an toàn trước biến động của ngành vật liệu chu kỳ. Nhà đầu tư giá trị tuyệt đối không nên FOMO ở vùng giá 12,500 VNĐ khi chất lượng dòng tiền chưa đủ sức thuyết phục.",
         "ai_recommendation": "NẮM GIỮ / THEO DÕI — Tỷ trọng 0% — Chưa đủ điều kiện mua",
         "ai_price_zone": "Vùng mua: 9,283 — 13,262 | Giá hiện tại: 12,500 | Verdict: HỢP LÝ - CHỜ ĐIỀU CHỈNH",
-        "macro_view": "Chu kỳ giá hàng hóa phụ thuộc vào kinh tế Trung Quốc và chính sách bảo hộ thương mại toàn cầu. Cần theo dõi tồn kho và giá nguyên liệu đầu vào.",
-        "ai_updated_at": "2026-11-05 22:58:08",
+        "macro_view": "Ngành thép và tôn mạ mang tính chu kỳ cao, do đó lợi nhuận của NKG phụ thuộc mật thiết vào chu kỳ giá hàng hóa toàn cầu, đặc biệt là giá HRC và nhu cầu từ thị trường Trung Quốc. Hiện tại, áp lực từ nguồn cung dư thừa và sự chậm lại của ngành bất động sản toàn cầu đang kìm hãm đà tăng của giá thép, khiến biên gộp của doanh nghiệp khó đột phá. Tuy nhiên, các chính sách kích thích kinh tế và đầu tư công trong nước có thể tạo ra lực cầu đệm, giúp hấp thụ một phần sản lượng. Nhà đầu tư cần theo dõi sát sao chính sách tiền tệ và chu kỳ tồn kho thép để xác định đúng điểm đảo chiều của sóng ngành vật liệu xây dựng.",
+        "ai_updated_at": "2026-11-06 08:35:19",
         "ps": 0,
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
@@ -6963,10 +6963,10 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "bctc": "Chỉ số sinh lời: ROE đạt 3.2%, ROA 1.4% — còn khá thấp, cần cải thiện. Định giá P/E 25.30x và P/B 0.79x. Biên lợi nhuận gộp 9.0% duy trì ở mức tốt. ⚠️ Cảnh báo: CFO/LNST chỉ 0.11x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 494 VNĐ.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở quy mô sản xuất lớn, chi phí biên thấp và vị thế dẫn đầu ngành. Động lực tăng trưởng mạnh: LNST tăng 157.7% YoY, kỳ vọng duy trì đà tăng trong 2-3 năm tới.",
-        "risks": "Rủi ro giá hàng hóa đảo chiều làm biên gộp 9.0% co lại. Bẫy P/E 25.30x thấp tại đỉnh lợi nhuận chu kỳ. Rủi ro tồn kho cao nếu giá giảm.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "bctc": "Chất lượng lợi nhuận của NKG hiện tại cần được xem xét thận trọng khi ROE chỉ đạt 3.2% và ROA ở mức 1.4%, phản ánh hiệu quả sử dụng vốn và tài sản còn khá khiêm tốn. Tuy nhiên, doanh nghiệp đang cho thấy sự phục hồi mạnh mẽ với tăng trưởng LNST YoY lên tới 157.74%, mang về 242 Tỷ đồng lợi nhuận TTM. Điểm trừ lớn về chất lượng dòng tiền thể hiện qua chỉ số CFO/LNST chỉ đạt 0.11x, khi CFO vỏn vẹn 26 Tỷ đồng so với lợi nhuận kế toán. Điều này cho thấy lợi nhuận hiện tại mang tính chất ảo hoặc chưa chuyển hóa thành tiền mặt thực tế, một phần do đặc thù vốn lưu động của ngành thép. Cấu trúc tài chính cũng chịu áp lực với tỷ lệ D/E ở mức 1.57, cho thấy đòn bẩy tài chính khá cao. Biên gộp duy trì ở mức 9.0%, kết hợp với P/E=25.30x và P/B=0.79x (thấp hơn BVPS 15,823 VNĐ), cho thấy cổ phiếu đang phản ánh kỳ vọng phục hồi chu kỳ hơn là nền tảng sinh lời bền vững.",
+        "catalyst": "Lợi thế cạnh tranh của NKG chủ yếu đến từ quy mô sản xuất và mạng lưới xuất khẩu thép tôn mạ đã được thiết lập, giúp hưởng lợi khi chu kỳ hàng hóa đảo chiều. Động lực tăng trưởng trong 2-3 năm tới sẽ phụ thuộc vào sự phục hồi của nhu cầu thép toàn cầu và các chính sách thúc đẩy đầu tư công, bất động sản trong nước. Việc mở rộng công suất và tối ưu hóa chi phí sản xuất sẽ là đòn bẩy giúp cải thiện biên gộp 9.0% hiện tại khi giá nguyên liệu đầu vào ổn định.",
+        "risks": "Rủi ro trọng yếu nhất đối với NKG là biến động mạnh của giá thép thế giới khi chu kỳ hàng hóa bước vào giai đoạn suy thoái, dễ dàng bào mòn biên gộp 9.0%. Tỷ lệ D/E=1.57 khiến doanh nghiệp rất nhạy cảm với mặt bằng lãi suất cho vay, gây áp lực lên chi phí tài chính. Ngoài ra, các rào cản thương mại và kiện chống bán phá giá từ thị trường xuất khẩu luôn là mối đe dọa thường trực đối với nhóm tôn mạ.",
+        "ai_source": "AI"
     },
     "CTD": {
         "symbol": "CTD",
