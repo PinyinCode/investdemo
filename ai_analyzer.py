@@ -7,12 +7,36 @@ import argparse
 
 SCREENER_FILE = "screener_results.json"
 DATA_FILE = "data.json"
+CONFIG_FILE = "config.json" # 🆕 Thêm file cấu hình
 
 ALIBABA_API_KEY = os.getenv("ALIBABA_API_KEY", "").strip()
 INPUT_SYMBOLS = os.getenv("INPUT_SYMBOLS", "").strip()
 API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
 
 RESUME_DAYS = 7
+
+# 🆕 Hàm đọc cấu hình từ file JSON
+def load_config():
+    default_config = {
+        "model_name": "qwen3.7-max",
+        "temperature": 0.15,
+        "max_tokens": 2048
+    }
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                config = json.load(f)
+                # Merge với default để phòng trường hợp thiếu key
+                default_config.update(config)
+                return default_config
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc {CONFIG_FILE}: {e}. Dùng cấu hình mặc định.")
+    return default_config
+
+AI_CONFIG = load_config()
+MODEL_NAME = AI_CONFIG.get("model_name", "qwen3.7-max")
+TEMPERATURE = AI_CONFIG.get("temperature", 0.15)
+MAX_TOKENS = AI_CONFIG.get("max_tokens", 2048)
 
 SECTOR_MAPPING = {
     "NGAN_HANG": ["ACB","BID","CTG","TCB","MBB","STB","VPB","HDB","VIB","TPB","SHB","SSB","LPB","MSB","OCB","EIB","VCB"],
@@ -67,9 +91,6 @@ DECISION_TO_RECOMMENDATION = {
 }
 
 
-# ============================================================
-# 📝 TEMPLATE FALLBACK — KHÔNG CẦN AI VẪN CÓ BÁO CÁO
-# ============================================================
 def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     close = float(stock_metrics.get("close", stock_metrics.get("close_price", 0)) or 0)
     pe = float(stock_metrics.get("pe", 0) or 0)
@@ -89,20 +110,17 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     verdict = stock_metrics.get("valuation_verdict", "CHƯA TÍNH")
     mos_pct = float(stock_metrics.get("margin_of_safety_pct", 0) or 0)
     
-    # Đọc điểm số từ screener_item (file screener_results.json - luôn chuẩn xác)
     fund_score = screener_item.get("fundamental_score", 0)
     val_score = screener_item.get("valuation_score", 0)
     tech_score = screener_item.get("technical_score", 0)
     total_score = screener_item.get("total_score", 0)
     growth_yoy = float(screener_item.get("profit_growth_yoy", 0) or 0)
 
-    # ĐỌC TRỰC TIẾP QUYẾT ĐỊNH TỪ SCREENER_RESULTS.JSON
     final_decision = screener_item.get("final_decision", "CHƯA XÁC ĐỊNH")
 
     sector_name = SECTOR_NAMES.get(sector, sector)
     is_bank_or_sec = sector in ("NGAN_HANG", "CHUNG_KHOAN")
 
-    # BCTC
     bctc_parts = [
         f"Chỉ số sinh lời: ROE đạt {roe:.1f}%, ROA {roa:.1f}% — "
         + ("vượt trội so với mặt bằng chung ngành." if roe >= 15 else "ở mức trung bình ngành." if roe >= 10 else "còn khá thấp, cần cải thiện.")
@@ -132,7 +150,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     bctc_parts.append(f"EPS đạt {eps:,.0f} VNĐ" + (f", cổ tức {div_yield}%/năm — thu nhập thụ động hấp dẫn." if div_yield > 0 else "."))
     bctc = " ".join(bctc_parts)
 
-    # Catalyst
     moat_map = {
         "NGAN_HANG": "tệp khách hàng bán lẻ trung thành, chi phí vốn thấp nhờ mạng lưới huy động dân cư sâu rộng và hệ thống quản trị rủi ro top đầu ngành",
         "CHUNG_KHOAN": "thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật",
@@ -152,7 +169,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
         catalyst_parts.append(f"Tăng trưởng LNST hiện ở mức {growth_yoy:.1f}% YoY, cần theo dõi thêm.")
     catalyst = " ".join(catalyst_parts)
 
-    # Risks
     risk_map = {
         "NGAN_HANG": f"Rủi ro nợ xấu gia tăng từ bất động sản và SME, đặc biệt khi D/E hiện ở mức {de:.2f}. Áp lực thu hẹp NIM khi lãi suất cho vay giảm. Rủi ro thanh khoản cục bộ trên thị trường trái phiếu.",
         "CHUNG_KHOAN": f"Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE {roe:.1f}% không duy trì được khi chu kỳ xuống.",
@@ -164,7 +180,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     }
     risks = risk_map.get(sector, f"Rủi ro chung của ngành {sector_name} và biến động thị trường.")
 
-    # Outlook (TẬP TRUNG VÀO BIÊN AN TOÀN)
     if verdict == "RẺ - TRONG VÙNG MUA":
         outlook = (
             f"Giá hiện tại {close:,.0f} VNĐ nằm dưới vùng mua an toàn {fair_low:,.0f} VNĐ, "
@@ -206,7 +221,6 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
         f"Giá hiện tại: {close:,.0f} | Verdict: {verdict}"
     )
 
-    # Vĩ mô (TẬP TRUNG VÀO CHU KỲ NGÀNH)
     macro_map = {
         "NGAN_HANG": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
         "CHUNG_KHOAN": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
@@ -269,7 +283,6 @@ def build_verified_facts(symbol, stock_metrics, screener_item, sector):
     methods = stock_metrics.get("fair_value_methods", {})
     sub_sector = stock_metrics.get("sub_sector", sector)
     
-    # ĐỌC TỪ SCREENER_RESULTS.JSON (Chuẩn xác nhất)
     final_decision = screener_item.get("final_decision", "CHƯA XÁC ĐỊNH")
     final_reason = screener_item.get("final_decision_reason", "")
 
@@ -344,7 +357,6 @@ def build_verified_facts(symbol, stock_metrics, screener_item, sector):
 
 
 def call_ai_api(symbol, stock_metrics, screener_item, sector):
-    """Gọi AI, trả về dict hoặc None nếu lỗi."""
     verified_facts = build_verified_facts(symbol, stock_metrics, screener_item, sector)
     sector_guidance = get_sector_guidance(sector)
 
@@ -354,7 +366,6 @@ def call_ai_api(symbol, stock_metrics, screener_item, sector):
     discount_pct = float(stock_metrics.get("discount_to_fair_pct", 0) or 0)
     close_price = float(stock_metrics.get("close", stock_metrics.get("close_price", 0)) or 0)
     
-    # Lấy từ screener_item
     final_decision = screener_item.get("final_decision", "CHƯA XÁC ĐỊNH")
     final_reason = screener_item.get("final_decision_reason", "")
 
@@ -394,9 +405,10 @@ TUYỆT ĐỐI KHÔNG ĐƯỢC TỰ ĐỔI SANG CHỮ "TRÁNH" HAY BẤT KỲ T�
 
     headers = {"Authorization": f"Bearer {ALIBABA_API_KEY}", "Content-Type": "application/json"}
     payload = {
-        "model": "qwen3.7-max",
+        "model": MODEL_NAME, # 🆕 Sử dụng biến từ config
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.15,
+        "temperature": TEMPERATURE, # 🆕 Sử dụng biến từ config
+        "max_tokens": MAX_TOKENS, # 🆕 Sử dụng biến từ config
     }
 
     for attempt in range(3):
@@ -455,16 +467,12 @@ TUYỆT ĐỐI KHÔNG ĐƯỢC TỰ ĐỔI SANG CHỮ "TRÁNH" HAY BẤT KỲ T�
 
 
 def analyze_stock(symbol, stock_metrics, screener_item, sector, use_ai=True):
-    """
-    Hàm dispatch: gọi AI nếu use_ai=True và có API key, ngược lại dùng template.
-    """
     if use_ai and ALIBABA_API_KEY:
         result = call_ai_api(symbol, stock_metrics, screener_item, sector)
         if result is not None:
             return result
         print(f"  → AI lỗi, chuyển sang template fallback cho {symbol}")
 
-    # Fallback: template (không cần AI)
     return build_fallback_narrative(symbol, stock_metrics, screener_item, sector)
 
 
@@ -477,13 +485,12 @@ def build_target_lists(screener_map):
 
     top_symbols = {}
     for sector, items in industry_groups.items():
-        # 🆕 TỐI ƯU: Ưu tiên chọn mã có Tổng điểm cao nhất (bao gồm cả Định giá & Kỹ thuật), sau đó đến Điểm cơ bản và Chiết khấu
         items_sorted = sorted(
             items,
             key=lambda x: (
-                x.get('total_score', 0),          # Ưu tiên 1: Điểm tổng (thể hiện toàn diện)
-                x.get('fundamental_score', 0),    # Ưu tiên 2: Nền tảng doanh nghiệp
-                x.get('discount_to_fair_pct', 0)  # Ưu tiên 3: Mức độ rẻ so với giá trị thực
+                x.get('total_score', 0),
+                x.get('fundamental_score', 0),
+                x.get('discount_to_fair_pct', 0)
             ),
             reverse=True
         )
@@ -557,7 +564,6 @@ def run_group(symbols_dict, label, stock_db, screener_map, sleep_time, use_ai=Tr
             print(f"  -> ❌ Lỗi")
 
         save_db(stock_db)
-        # Nếu dùng template không cần sleep (không bị rate limit)
         if use_ai and ALIBABA_API_KEY:
             time.sleep(sleep_time)
 
@@ -574,7 +580,6 @@ def main():
     parser.add_argument("--force", action="store_true", help="Bỏ qua resume")
     parser.add_argument("--sleep", type=float, default=3.0, help="Nghỉ giữa các mã (chỉ khi dùng AI)")
 
-    # 🎯 FLAG MỚI: Chọn dùng AI hay không
     parser.add_argument("--no-ai", action="store_true",
                         help="KHÔNG gọi AI, chỉ dùng template fallback (miễn phí, không cần API key)")
     parser.add_argument("--ai", dest="use_ai", action="store_true", default=None,
@@ -584,7 +589,6 @@ def main():
 
     args = parser.parse_args()
 
-    # Xác định use_ai
     if args.no_ai:
         use_ai = False
     elif args.use_ai is True:
@@ -595,12 +599,11 @@ def main():
     elif args.use_ai is False:
         use_ai = False
     else:
-        # Mặc định: dùng AI nếu có key
         use_ai = bool(ALIBABA_API_KEY)
 
     source = "AI" if use_ai else "TEMPLATE"
     if use_ai:
-        print(f"🤖 Chế độ: AI (model qwen3.7-max)")
+        print(f"🤖 Chế độ: AI (model {MODEL_NAME})") # 🆕 Log tên model từ config
     else:
         if not ALIBABA_API_KEY:
             print(f"📝 Chế độ: TEMPLATE fallback (không có ALIBABA_API_KEY)")
