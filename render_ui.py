@@ -292,30 +292,30 @@ def generate_html():
                     </span>
                 </div>
 
-                <!-- 🆕 TỐI ƯU DROPDOWN SẮP XẾP -->
+                <!-- 🆕 DROPDOWN SẮP XẾP (KHÔNG ICON, PHÂN NHÓM RÕ RÀNG) -->
                 <div class="relative w-full col-span-2 md:col-span-1">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-amber-400">
                         <i class="fa-solid fa-compass text-xs md:text-sm"></i>
                     </span>
                     <select id="ranking-filter" class="w-full pl-7 md:pl-10 pr-5 md:pr-8 py-2 bg-slate-950 border border-amber-500/50 rounded-lg text-xs md:text-sm text-amber-300 font-semibold focus:outline-none focus:border-amber-400 appearance-none transition truncate">
-                        <optgroup label="👉 DÀNH CHO MUA TÍCH SẢN (An toàn nhất)">
-                            <option value="FINAL_BUY_ONLY" selected>✅ Chỉ lọc mã MUA (Mạnh + Tích sản)</option>
-                            <option value="FINAL_DECISION_SORT">🏅 Xếp hạng: Mua > Chờ > Tránh</option>
+                        <optgroup label="Ưu tiên: Mua tích sản">
+                            <option value="FINAL_BUY_ONLY" selected>Chỉ lọc mã MUA (Mạnh + Tích sản)</option>
+                            <option value="FINAL_DECISION_SORT">Xếp hạng theo Quyết định cuối</option>
                         </optgroup>
                         
-                        <optgroup label="👉 DÀNH CHO SĂN HÀNG RẺ (Bắt đáy)">
-                            <option value="VALUATION_VERDICT">🎯 Tìm mã đang Rẻ nhất (Trong vùng mua)</option>
-                            <option value="VALUATION_SCORE">⚖️ Xếp hạng theo Điểm Định giá</option>
+                        <optgroup label="Săn hàng rẻ">
+                            <option value="VALUATION_VERDICT">Tìm mã đang Rẻ (Trong vùng mua)</option>
+                            <option value="VALUATION_SCORE">Xếp hạng theo Điểm Định giá</option>
                         </optgroup>
                         
-                        <optgroup label="👉 DÀNH CHO LƯỚT SÓNG / PHÂN TÍCH CHUYÊN SÂU">
-                            <option value="ALL_SCORE">🏆 Xếp hạng theo Tổng điểm (Toàn diện)</option>
-                            <option value="TECHNICAL">📈 Tìm mã có Kỹ thuật mạnh nhất</option>
-                            <option value="FUNDAMENTAL">💰 Tìm mã có Cơ bản tốt nhất</option>
+                        <optgroup label="Phân tích chuyên sâu">
+                            <option value="ALL_SCORE">Xếp hạng theo Tổng điểm</option>
+                            <option value="TECHNICAL">Xếp hạng theo Điểm Kỹ thuật</option>
+                            <option value="FUNDAMENTAL">Xếp hạng theo Điểm Cơ bản</option>
                         </optgroup>
 
-                        <optgroup label="👉 KIỂM TRA RỦI RO">
-                            <option value="FINAL_AVOID_ONLY">❌ Chỉ lọc các mã cần TRÁNH</option>
+                        <optgroup label="Kiểm tra rủi ro">
+                            <option value="FINAL_AVOID_ONLY">Chỉ lọc các mã cần TRÁNH</option>
                         </optgroup>
 
                         <optgroup label="Khác">
@@ -1730,6 +1730,7 @@ def generate_html():
         f.write(html_content)
 
     print(f"✅ Đã render thành công {OUTPUT_HTML}")
+
 
 if __name__ == "__main__":
     generate_html()
