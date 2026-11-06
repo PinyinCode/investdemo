@@ -4,7 +4,6 @@ from datetime import datetime
 from simulator import run_complex_backtest_simulation
 
 # Import module gốc của bạn (giả sử file là accounts.py)
-# Nếu bạn đặt tên file khác, hãy sửa lại dòng dưới đây
 try:
     import accounts
 except ImportError:
@@ -104,7 +103,6 @@ def generate_html():
     
     <!-- CSS từ module Accounts -->
     <style>
-        /* CSS Gốc của bạn */
         {accounts_css}
     </style>
 
@@ -540,36 +538,103 @@ def generate_html():
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════
-         NHÚNG TOÀN BỘ JS MODULE ACCOUNTS (Auth, Admin, Renewal...)
+         KHAI BÁO BIẾN TOÀN CỤC (KHÔNG KHỞI TẠO FIREBASE Ở ĐÂY)
          ═══════════════════════════════════════════════════════════════ -->
     <script>
-        // KHAI BÁO CẤU HÌNH FIREBASE GỐC
+        // Chỉ khai báo biến, không dùng firebase.initializeApp() để tránh xung đột
         const FIREBASE_CONFIG = {firebase_config_json_placeholder};
-        
-        // CÁC BIẾN TOÀN CỤC KHÁC
         const cheapStocksGroups = {cheap_stocks_json_placeholder};
         const cheapSymbolsSet = new Set({cheap_symbols_json_placeholder});
     </script>
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         NHÚNG TOÀN BỘ JS MODULE ACCOUNTS (Chứa logic Auth, Firebase, Admin...)
+         ═══════════════════════════════════════════════════════════════ -->
     <script>
-        /* JS từ module Accounts (Chứa logic Auth, Admin Panel...) */
         {accounts_js}
     </script>
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         LOGIC RIÊNG CỦA TRANG QUANT SCREENER
+         ═══════════════════════════════════════════════════════════════ -->
     <script>
-        // ═══════════════════════════════════════════════════════════════
-        // LOGIC RIÊNG CỦA TRANG QUANT SCREENER
-        // ═══════════════════════════════════════════════════════════════
-
-        // Biến state watchlist cục bộ cho trang này (để hiển thị badge/nút)
+        // Lấy instance auth, db từ module accounts (đã khởi tạo toàn cục)
+        // KHÔNG KHAI BÁO LẠI const auth / const db để tránh lỗi SyntaxError
+        
         let userWatchlist = new Set();
-        let currentUserAccount = null; // Lưu user từ module gốc
+        let currentUserAccount = null;
+        let screenerResults = [];
+        let symbolSimRates = {};
+        let quarterlyMeanDetails = {};
+        let currentSymbolHistory = null;
+        let chartInstance = null;
+        let candleSeriesInstance = null;
+        let volumeSeriesInstance = null;
+        let currentSymbol = null;
+        let currentInterval = 'D1';
+        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
+        let currentActiveTab = 'eval';
+        let currentSuggestions = [];
+        let currentModalSuggestions = [];
 
-        // Hàm lắng nghe sự kiện Auth từ module gốc
-        function syncUserWithQuantApp(user) {
+        const SECTOR_NAMES = {
+            "NGAN_HANG": "Ngân hàng", "CHUNG_KHOAN": "Chứng khoán", "BAT_DONG_SAN": "Bất động sản",
+            "CONG_NGHE_BAN_LE": "Công nghệ & Bán lẻ", "DIEN_NUOC_HA_TANG": "Điện, Nước & Hạ tầng",
+            "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ", "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
+            "KHAC": "Khác"
+        };
+
+        const FINAL_DECISION_STYLE = {
+            "emerald": { bg: "bg-emerald-500/15", border: "border-emerald-500/50", text: "text-emerald-300", icon: "fa-circle-check" },
+            "amber":   { bg: "bg-amber-500/15",   border: "border-amber-500/50",   text: "text-amber-300",   icon: "fa-hourglass-half" },
+            "rose":    { bg: "bg-rose-500/15",    border: "border-rose-500/50",    text: "text-rose-300",    icon: "fa-triangle-exclamation" },
+            "slate":   { bg: "bg-slate-700/40",   border: "border-slate-600/50",   text: "text-slate-300",   icon: "fa-eye" },
+        };
+
+        // Hàm định dạng số
+        function formatNumber(num) {
+            if (num === undefined || num === null || num === 0) return '—';
+            let val = (num < 1000 && num > 0) ? num * 1000 : num;
+            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        function formatPercent(num) {
+            if (num === undefined || num === null) return '—';
+            return num.toFixed(1) + '%';
+        }
+        function clearInput(elementId) {
+            const inputEl = document.getElementById(elementId);
+            if (inputEl) {
+                inputEl.value = '';
+                inputEl.focus();
+                if (elementId === 'search-input') {
+                    document.getElementById('search-suggestions').classList.add('hidden');
+                    renderCards();
+                } else if (elementId === 'modal-symbol-input') {
+                    document.getElementById('modal-search-suggestions').classList.add('hidden');
+                } else if (elementId === 'dropdown-search') {
+                    filterDropdownSymbols('');
+                }
+            }
+        }
+        function toggleProMetrics() {
+            const box = document.getElementById('pro-metrics-box');
+            const textEl = document.getElementById('prometrics-text');
+            const chevron = document.getElementById('prometrics-chevron');
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
+                chevron.style.transform = "rotate(180deg)";
+            } else {
+                box.classList.add('hidden');
+                textEl.innerText = "Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)";
+                chevron.style.transform = "rotate(0deg)";
+            }
+        }
+
+        // Lắng nghe Auth để load Watchlist
+        auth.onAuthStateChanged((user) => {
             currentUserAccount = user;
             if (user) {
-                // Load watchlist từ Firestore
                 db.collection('watchlists').doc(user.uid).get().then(doc => {
                     if (doc.exists) {
                         userWatchlist = new Set(doc.data().symbols || []);
@@ -578,22 +643,19 @@ def generate_html():
                     }
                     updateWatchlistBadge();
                     renderCards();
-                }).catch(err => console.warn('Lỗi tải watchlist:', err));
+                }).catch(err => {
+                    console.warn('Lỗi tải watchlist:', err);
+                    userWatchlist = new Set();
+                    updateWatchlistBadge();
+                });
             } else {
                 userWatchlist = new Set();
                 updateWatchlistBadge();
                 renderCards();
             }
-        }
+        });
 
-        // Gọi hàm này sau khi module accounts khởi tạo xong
-        setTimeout(() => {
-            if (typeof auth !== 'undefined') {
-                auth.onAuthStateChanged(syncUserWithQuantApp);
-            }
-        }, 1000);
-
-        // Các hàm xử lý Watchlist
+        // Hàm toggle Watchlist
         async function toggleWatchlist(symbol, event) {
             if (event) event.stopPropagation();
             if (!currentUserAccount) {
@@ -629,9 +691,44 @@ def generate_html():
         function toggleWatchlistFromModal() {
             if (currentSymbol) toggleWatchlist(currentSymbol, null);
         }
-
         function toggleWatchlistFromChart() {
             if (currentSymbol) toggleWatchlist(currentSymbol, null);
+        }
+
+        function updateWatchlistButton(symbol, isWatched) {
+            const btn = document.querySelector(`[data-watch-btn="${symbol}"]`);
+            if (!btn) return;
+            if (isWatched) {
+                btn.innerHTML = '<i class="fa-solid fa-bookmark text-amber-400"></i>';
+                btn.className = 'px-1.5 py-0.5 rounded-md bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs transition';
+            } else {
+                btn.innerHTML = '<i class="fa-regular fa-bookmark text-slate-400"></i>';
+                btn.className = 'px-1.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 text-xs transition';
+            }
+        }
+
+        function updateModalWatchlistBtn(symbol) {
+            const btn = document.getElementById('modal-watchlist-btn');
+            if (!btn) return;
+            if (userWatchlist.has(symbol)) {
+                btn.innerHTML = '<i class="fa-solid fa-bookmark text-amber-400"></i>';
+                btn.className = 'px-2 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 transition text-xs';
+            } else {
+                btn.innerHTML = '<i class="fa-regular fa-bookmark text-slate-400"></i>';
+                btn.className = 'px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 transition text-xs';
+            }
+        }
+
+        function updateChartWatchlistBtn(symbol) {
+            const btn = document.getElementById('chart-watchlist-btn');
+            if (!btn) return;
+            if (userWatchlist.has(symbol)) {
+                btn.innerHTML = '<i class="fa-solid fa-bookmark text-amber-400"></i>';
+                btn.className = 'text-amber-400 bg-amber-500/20 hover:bg-amber-500/30 px-1.5 py-0.5 rounded border border-amber-500/40 transition text-[10px]';
+            } else {
+                btn.innerHTML = '<i class="fa-regular fa-bookmark text-slate-400"></i>';
+                btn.className = 'text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition text-[10px]';
+            }
         }
 
         function updateWatchlistBadge() {
@@ -647,17 +744,1005 @@ def generate_html():
             }
         }
 
-        // Các hàm render UI khác (giữ nguyên)
-        function formatNumber(num) { /* ... */ }
-        function formatPercent(num) { /* ... */ }
-        // ... Copy toàn bộ logic renderCards, search suggestions, chart từ file trước ...
+        // Hàm load data
+        async function loadData(showSpinner = false) {
+            const icon = document.getElementById('refresh-icon');
+            if (showSpinner && icon) icon.classList.add('spinner');
+            try {
+                const [screenerRes, ratesRes, detailsRes] = await Promise.all([
+                    fetch('screener_results.json?t=' + new Date().getTime()),
+                    fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
+                    fetch('quarterly_mean_details.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
+                ]);
+                if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
+                let screenerData = await screenerRes.json();
+                if (ratesRes.ok) symbolSimRates = await ratesRes.json();
+                if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
-        // Lưu ý: Hàm loadData() vẫn giữ nguyên để load data.json
-        // Các hàm openModal, openChartModal vẫn giữ nguyên
+                let rawStockData = {};
+                try {
+                    const dataRes = await fetch('data.json?t=' + new Date().getTime());
+                    if (dataRes.ok) rawStockData = await dataRes.json();
+                } catch (e) {}
+
+                screenerResults = screenerData.map(item => {
+                    const sym = item.symbol;
+                    const extraData = rawStockData[sym] || {};
+                    return {
+                        ...item,
+                        company_name: extraData.company_name !== undefined ? extraData.company_name : (item.company_name || extraData.organ_name || item.organ_name || ""),
+                        market_cap: extraData.market_cap !== undefined ? extraData.market_cap : (item.market_cap || 0),
+                        total_shares: extraData.total_shares !== undefined ? extraData.total_shares : (item.total_shares || 0),
+                        eps: extraData.eps !== undefined ? extraData.eps : item.eps,
+                        dividend_yield: extraData.dividend_yield !== undefined ? extraData.dividend_yield : item.dividend_yield,
+                        pe: extraData.pe !== undefined ? extraData.pe : item.pe,
+                        pb: extraData.pb !== undefined ? extraData.pb : item.pb,
+                        roe: extraData.roe !== undefined ? extraData.roe : item.roe,
+                        roa: extraData.roa !== undefined ? extraData.roa : item.roa,
+                        cfo_latest: extraData.cfo_latest !== undefined ? extraData.cfo_latest : (item.cfo_latest || 0),
+                        debt_to_equity: extraData.debt_to_equity !== undefined ? extraData.debt_to_equity : (item.debt_to_equity || 0),
+                        gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
+                        net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
+                        close_price: extraData.close !== undefined ? extraData.close : item.close_price,
+
+                        bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
+                        bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
+                        outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
+                        ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
+                        ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
+                        macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
+                        ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at,
+                        ai_source: extraData.ai_source !== undefined ? extraData.ai_source : (item.ai_source || ""),
+
+                        fair_value_low: extraData.fair_value_low !== undefined ? extraData.fair_value_low : (item.fair_value_low || 0),
+                        fair_value_high: extraData.fair_value_high !== undefined ? extraData.fair_value_high : (item.fair_value_high || 0),
+                        valuation_verdict: extraData.valuation_verdict !== undefined ? extraData.valuation_verdict : (item.valuation_verdict || ""),
+                        discount_to_fair_pct: extraData.discount_to_fair_pct !== undefined ? extraData.discount_to_fair_pct : (item.discount_to_fair_pct || 0),
+                        margin_of_safety_pct: extraData.margin_of_safety_pct !== undefined ? extraData.margin_of_safety_pct : (item.margin_of_safety_pct || 0),
+                        fair_value_rationale: extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || ""),
+                        sub_sector: extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || ""),
+
+                        final_decision: item.final_decision !== undefined ? item.final_decision : (extraData.final_decision || ""),
+                        final_decision_color: item.final_decision_color !== undefined ? item.final_decision_color : (extraData.final_decision_color || "slate"),
+                        final_decision_reason: item.final_decision_reason !== undefined ? item.final_decision_reason : (extraData.final_decision_reason || ""),
+                    };
+                });
+                renderCards();
+            } catch (error) {
+                const container = document.getElementById('stock-container');
+                if (container && showSpinner) {
+                    container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
+                }
+            } finally {
+                if (showSpinner && icon) icon.classList.remove('spinner');
+            }
+        }
+
+        // Hàm render thẻ cổ phiếu
+        function renderCards() {
+            const container = document.getElementById('stock-container');
+            if (!container) return;
+
+            const searchTerm = document.getElementById('search-input').value.toUpperCase();
+            const selectedSector = document.getElementById('sector-filter').value;
+            const isWatchlistOnly = document.getElementById('watchlist-filter').checked;
+            const rankingMode = document.getElementById('ranking-filter').value;
+
+            let filtered = screenerResults.filter(item => {
+                let matchSearch = item.symbol.includes(searchTerm) || (item.company_name && item.company_name.toUpperCase().includes(searchTerm));
+                let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
+                let matchWatchlist = !isWatchlistOnly || userWatchlist.has(item.symbol);
+                return matchSearch && matchSector && matchWatchlist;
+            });
+
+            if (rankingMode === "FINAL_BUY_ONLY") {
+                filtered = filtered.filter(i => (i.final_decision || "").includes("MUA"));
+                const order = { "🎯 MUA MẠNH": 0, "✅ MUA TÍCH SẢN": 1 };
+                filtered.sort((a, b) => (order[a.final_decision] ?? 9) - (order[b.final_decision] ?? 9) || b.total_score - a.total_score);
+            } else if (rankingMode === "FINAL_AVOID_ONLY") {
+                filtered = filtered.filter(i => (i.final_decision || "").includes("TRÁNH"));
+                filtered.sort((a, b) => a.total_score - b.total_score);
+            } else if (rankingMode === "FINAL_DECISION_SORT") {
+                const order = {
+                    "🎯 MUA MẠNH": 0, "✅ MUA TÍCH SẢN": 1,
+                    "⏳ CHỜ XÁC NHẬN KỸ THUẬT": 2, "⏳ CHỜ ĐỊNH GIÁ TỐT HƠN": 3,
+                    "⚠️ CHỜ VỀ VÙNG MUA": 4, "👀 THEO DÕI": 5,
+                    "⚠️ CẢNH BÁO LỢI NHUẬN ẢO": 6, "❌ TRÁNH": 7,
+                };
+                filtered.sort((a, b) => (order[a.final_decision] ?? 9) - (order[b.final_decision] ?? 9) || b.total_score - a.total_score);
+            } else if (rankingMode === "VALUATION_VERDICT") {
+                const order = { "RẺ - TRONG VÙNG MUA": 0, "HỢP LÝ - CHỜ ĐIỀU CHỈNH": 1, "HƠI ĐẮT - KHÔNG MUA": 2, "ĐẮT - TRÁNH": 3, "KHÔNG ĐỦ DỮ LIỆU": 4 };
+                filtered.sort((a, b) => {
+                    const va = order[a.valuation_verdict] ?? 5;
+                    const vb = order[b.valuation_verdict] ?? 5;
+                    if (va !== vb) return va - vb;
+                    return (b.discount_to_fair_pct || 0) - (a.discount_to_fair_pct || 0);
+                });
+            } else if (rankingMode === "FUNDAMENTAL" || rankingMode === "NONE") filtered.sort((a, b) => b.fundamental_score - a.fundamental_score);
+            else if (rankingMode === "TECHNICAL") filtered.sort((a, b) => b.technical_score - a.technical_score);
+            else if (rankingMode === "VALUATION_SCORE") filtered.sort((a, b) => (b.valuation_score || 0) - (a.valuation_score || 0));
+            else if (rankingMode === "ALL_SCORE") filtered.sort((a, b) => b.total_score - a.total_score);
+            else filtered.sort((a, b) => a.symbol.localeCompare(b.symbol));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">Không tìm thấy mã nào phù hợp với bộ lọc.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            filtered.forEach((item, index) => {
+                let statusColor = "text-slate-400 bg-slate-800";
+                let borderColor = "border-slate-700";
+                let cardGlow = "";
+                let displayRec = item.technical_status || "Tích lũy";
+                if (displayRec.includes("MUA") || displayRec.includes("BREAKOUT") || displayRec.includes("GOM")) {
+                    statusColor = "text-emerald-400 bg-emerald-500/10";
+                    borderColor = "border-emerald-500/30";
+                } else if (displayRec.includes("CHỜ") || displayRec.includes("TÍCH LŨY") || displayRec.includes("CẠN CUNG")) {
+                    statusColor = "text-amber-400 bg-amber-500/10";
+                    borderColor = "border-amber-500/30";
+                }
+
+                const finalDec = item.final_decision || "";
+                const finalColor = item.final_decision_color || "slate";
+                const finalReason = item.final_decision_reason || "";
+                const fdStyle = FINAL_DECISION_STYLE[finalColor] || FINAL_DECISION_STYLE.slate;
+
+                if (finalColor === "emerald") {
+                    borderColor = "border-emerald-500/60";
+                    cardGlow = "glow-cheap-zone";
+                } else if (finalColor === "rose") {
+                    borderColor = "border-rose-500/50";
+                } else if (finalColor === "amber") {
+                    borderColor = "border-amber-500/40";
+                }
+
+                let decisionBadgeHtml = "";
+                if (finalDec) {
+                    decisionBadgeHtml = `<div class="${fdStyle.bg} ${fdStyle.border} border rounded-lg px-2 py-1.5 mb-2 flex items-center gap-1.5" title="${finalReason}">
+                        <i class="fa-solid ${fdStyle.icon} ${fdStyle.text} text-xs"></i>
+                        <span class="${fdStyle.text} text-[11px] font-black">${finalDec}</span>
+                    </div>`;
+                }
+
+                const verdict = item.valuation_verdict || "";
+                let verdictBadgeHtml = "";
+                if (verdict.includes("RẺ")) {
+                    verdictBadgeHtml = `<span class="bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-crosshairs"></i> Trong vùng mua</span>`;
+                } else if (verdict.includes("HỢP LÝ")) {
+                    verdictBadgeHtml = `<span class="bg-amber-500/15 text-amber-300 border border-amber-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-scale-balanced"></i> Giá hợp lý</span>`;
+                } else if (verdict.includes("HƠI ĐẮT") || verdict.includes("ĐẮT")) {
+                    verdictBadgeHtml = `<span class="bg-rose-500/15 text-rose-300 border border-rose-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-hourglass-half"></i> Chờ giá tốt hơn</span>`;
+                }
+
+                let topBadge = "";
+                if (rankingMode !== "NONE") {
+                    if (index === 0) { topBadge = `<span class="absolute -top-3 -left-2 bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded shadow">#1</span>`; cardGlow = "glow-top1"; }
+                    else if (index === 1) { topBadge = `<span class="absolute -top-3 -left-2 bg-slate-300 text-black text-xs font-black px-2 py-1 rounded shadow">#2</span>`; cardGlow = "glow-top2"; }
+                    else if (index === 2) { topBadge = `<span class="absolute -top-3 -left-2 bg-amber-700 text-white text-xs font-black px-2 py-1 rounded shadow">#3</span>`; cardGlow = "glow-top3"; }
+                    else { topBadge = `<span class="absolute -top-3 -left-2 bg-indigo-600 text-white text-xs font-black px-2 py-1 rounded shadow">#${index + 1}</span>`; }
+                }
+
+                let cheapBadgeHtml = "";
+                if (cheapSymbolsSet.has(item.symbol)) {
+                    cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
+                }
+
+                const isWatched = userWatchlist.has(item.symbol);
+                const watchBtnHtml = `<button type="button" data-watch-btn="${item.symbol}" onclick="toggleWatchlist('${item.symbol}', event)" 
+                    class="px-1.5 py-0.5 rounded-md ${isWatched ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300' : 'bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400'} text-xs transition"
+                    title="${isWatched ? 'Đang theo dõi — click để bỏ' : 'Thêm vào danh mục theo dõi'}">
+                    <i class="fa-${isWatched ? 'solid' : 'regular'} fa-bookmark ${isWatched ? 'text-amber-400' : 'text-slate-400'}"></i>
+                </button>`;
+
+                let scoreHtml = "";
+                if (rankingMode !== "NONE") {
+                    const isFundActive  = rankingMode === "FUNDAMENTAL";
+                    const isTechActive  = rankingMode === "TECHNICAL";
+                    const isAllActive   = rankingMode === "ALL_SCORE";
+                    const isValActive   = rankingMode === "VALUATION_VERDICT" || rankingMode === "VALUATION_SCORE"; 
+
+                    const clsBase = "flex flex-col items-center justify-center py-1 rounded-md border text-[9px] leading-tight";
+                    const clsFund = isFundActive ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300" : "bg-slate-900/60 border-slate-800 text-slate-400";
+                    const clsTech = isTechActive ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" : "bg-slate-900/60 border-slate-800 text-slate-400";
+                    const clsVal  = isValActive  ? "bg-amber-500/20 border-amber-500/50 text-amber-300"   : "bg-slate-900/60 border-slate-800 text-slate-400";
+                    const clsAll  = isAllActive  ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" : "bg-slate-900/60 border-slate-800 text-slate-400"; 
+
+                    scoreHtml = `
+                        <div class="mt-1 bg-slate-950/60 rounded-lg border border-slate-800 p-1.5">
+                            <div class="grid grid-cols-4 gap-1">
+                                <div class="${clsBase} ${clsFund}"><span class="font-semibold opacity-80">Cơ bản</span><span class="font-black text-[11px]">${item.fundamental_score ?? '—'}</span></div>
+                                <div class="${clsBase} ${clsTech}"><span class="font-semibold opacity-80">Kỹ thuật</span><span class="font-black text-[11px]">${item.technical_score ?? '—'}</span></div>
+                                <div class="${clsBase} ${clsVal}"><span class="font-semibold opacity-80">Định giá</span><span class="font-black text-[11px]">${item.valuation_score ?? item.value_score ?? '—'}</span></div>
+                                <div class="${clsBase} ${clsAll}"><span class="font-semibold opacity-80">Tổng hợp</span><span class="font-black text-[11px] text-amber-300">${item.total_score ?? '—'}</span></div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const card = document.createElement('div');
+                card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
+                card.onclick = () => openChartModal(item.symbol);
+
+                card.innerHTML = `
+                    ${topBadge}
+                    <div>
+                        ${decisionBadgeHtml}
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex flex-col min-w-0 pr-2">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-xl font-black text-white">${item.symbol}</span>
+                                    ${watchBtnHtml}
+                                    <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
+                                        <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
+                                    </button>
+                                    <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
+                                </div>
+                                <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400 truncate">
+                                    <span class="shrink-0"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
+                                    ${item.company_name ? `<span class="text-slate-500 shrink-0">•</span> <span class="text-slate-300 font-medium truncate" title="${item.company_name}">${item.company_name}</span>` : ''}
+                                </div>
+                            </div>
+                            <div class="text-right flex flex-col items-end shrink-0 ml-2 gap-1">
+                                <span class="block text-lg font-bold text-emerald-400 leading-tight">${formatNumber(item.close_price)}</span>
+                                ${verdictBadgeHtml}
+                                ${cheapBadgeHtml}
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-2 mb-2 bg-slate-950/50 p-2 rounded-lg border border-slate-800/50 text-center">
+                            <div><span class="block text-[10px] text-slate-500 mb-0.5">P/E</span><span class="text-xs font-semibold text-slate-200">${item.pe > 0 ? item.pe.toFixed(1) : '—'}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">P/B</span><span class="text-xs font-semibold text-slate-200">${item.pb > 0 ? item.pb.toFixed(1) : '—'}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">ROE</span><span class="text-xs font-semibold text-blue-400">${formatPercent(item.roe)}</span></div>
+                            <div class="border-l border-slate-800"><span class="block text-[10px] text-slate-500 mb-0.5">Điểm</span><span class="text-xs font-semibold text-amber-400">${item.total_score}đ</span></div>
+                        </div>
+
+                        ${(item.fair_value_low > 0 && item.fair_value_high > 0) ? `
+                        <div class="flex items-center justify-between text-[10px] bg-slate-950/40 px-2 py-1 rounded border border-slate-800/60 mb-1">
+                            <span class="text-slate-400"><i class="fa-solid fa-crosshairs text-emerald-400 mr-1"></i>Mua ≤</span>
+                            <span class="font-bold text-emerald-300">${formatNumber(item.fair_value_low)}</span>
+                            <span class="text-slate-500">|</span>
+                            <span class="text-slate-400">Fair</span>
+                            <span class="font-bold text-indigo-300">${formatNumber(item.fair_value_high)}</span>
+                        </div>` : ''}
+                    </div>
+                    ${scoreHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- SEARCH SUGGESTIONS ---
+        function handleSearchInput(val) {
+            const term = val.trim().toUpperCase();
+            const suggestBox = document.getElementById('search-suggestions');
+            if (!term) {
+                suggestBox.classList.add('hidden');
+                renderCards();
+                return;
+            }
+            
+            currentSuggestions = screenerResults.filter(item => 
+                item.symbol.includes(term) || (item.company_name && item.company_name.toUpperCase().includes(term))
+            ).slice(0, 8);
+
+            if (currentSuggestions.length === 0) {
+                suggestBox.innerHTML = `<div class="px-2 py-1.5 text-xs text-slate-500">Không tìm thấy mã.</div>`;
+                suggestBox.classList.remove('hidden');
+            } else {
+                let html = '';
+                currentSuggestions.forEach((item, idx) => {
+                    html += `<button type="button" onclick="selectSuggestion('${item.symbol}')" class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-bold transition flex justify-between items-center hover:bg-slate-800 text-slate-300 ${idx === 0 ? 'bg-slate-800/50' : ''}">
+                        <span>${item.symbol}</span>
+                        <span class="text-[9px] text-slate-500 font-normal truncate max-w-[100px]">${item.company_name || ''}</span>
+                    </button>`;
+                });
+                suggestBox.innerHTML = html;
+                suggestBox.classList.remove('hidden');
+            }
+        }
+
+        function handleSearchKeyDown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (currentSuggestions.length > 0) {
+                    selectSuggestion(currentSuggestions[0].symbol);
+                }
+            }
+        }
+
+        function selectSuggestion(symbol) {
+            document.getElementById('search-input').value = symbol;
+            document.getElementById('search-suggestions').classList.add('hidden');
+            renderCards();
+        }
+
+        window.addEventListener('click', (e) => {
+            const searchBox = document.getElementById('search-input');
+            const searchSuggest = document.getElementById('search-suggestions');
+            if (searchBox && searchSuggest && !searchBox.contains(e.target) && !searchSuggest.contains(e.target)) {
+                searchSuggest.classList.add('hidden');
+            }
+        });
+
+        // --- MODAL SEARCH SUGGESTIONS ---
+        function handleModalSearchInput(val) {
+            const term = val.trim().toUpperCase();
+            const suggestBox = document.getElementById('modal-search-suggestions');
+            if (!term) {
+                suggestBox.classList.add('hidden');
+                return;
+            }
+            
+            currentModalSuggestions = screenerResults.filter(item => 
+                item.symbol.includes(term)
+            ).slice(0, 8);
+
+            if (currentModalSuggestions.length === 0) {
+                suggestBox.innerHTML = `<div class="px-2 py-1.5 text-xs text-slate-500">Không tìm thấy.</div>`;
+                suggestBox.classList.remove('hidden');
+            } else {
+                let html = '';
+                currentModalSuggestions.forEach((item) => {
+                    html += `<button type="button" onclick="selectModalSuggestion('${item.symbol}')" class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-bold transition flex justify-between items-center hover:bg-slate-800 text-slate-300">
+                        <span>${item.symbol}</span>
+                    </button>`;
+                });
+                suggestBox.innerHTML = html;
+                suggestBox.classList.remove('hidden');
+            }
+        }
+
+        function handleModalSearchKeyDown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (currentModalSuggestions.length > 0) {
+                    selectModalSuggestion(currentModalSuggestions[0].symbol);
+                }
+            }
+        }
+
+        function selectModalSuggestion(symbol) {
+            document.getElementById('modal-search-suggestions').classList.add('hidden');
+            document.getElementById('modal-symbol-input').value = symbol;
+            openModal(symbol);
+        }
+
+        window.addEventListener('click', (e) => {
+            const modalSearchBox = document.getElementById('modal-symbol-input');
+            const modalSuggest = document.getElementById('modal-search-suggestions');
+            if (modalSearchBox && modalSuggest && !modalSearchBox.contains(e.target) && !modalSuggest.contains(e.target)) {
+                modalSuggest.classList.add('hidden');
+            }
+        });
+
+        // --- CHART DROPDOWN SEARCH ---
+        function handleDropdownSearchKeyDown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const firstBtn = document.querySelector('#dropdown-symbol-list button');
+                if (firstBtn) {
+                    firstBtn.click();
+                }
+            }
+        }
+
+        // --- AI MODAL LOGIC ---
+        function switchAiTab(tabName) {
+            currentActiveTab = tabName;
+            ['eval', 'simulator'].forEach(t => {
+                const contentEl = document.getElementById(`tab-content-${t}`);
+                const btnEl = document.getElementById(`tab-btn-${t}`);
+                if (contentEl) contentEl.classList.add('hidden');
+                if (btnEl) btnEl.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
+            });
+            const activeContent = document.getElementById(`tab-content-${tabName}`);
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (activeContent) activeContent.classList.remove('hidden');
+            if (activeBtn) activeBtn.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
+            if (tabName === 'simulator') calculateModalSimulation();
+        }
+
+        function openModal(symbol) {
+            currentSymbol = symbol;
+            const item = screenerResults.find(s => s.symbol === symbol);
+            if (!item) return;
+
+            switchAiTab(currentActiveTab);
+            document.getElementById('modal-symbol-input').value = item.symbol;
+            document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
+            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
+            document.getElementById('modal-company-name').innerText = item.company_name || '—';
+            updateModalWatchlistBtn(item.symbol);
+
+            const cheapBadgeContainer = document.getElementById('modal-cheap-badge-container');
+            if (cheapSymbolsSet.has(item.symbol)) {
+                cheapBadgeContainer.innerHTML = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1.5 shadow"><i class="fa-solid fa-gem text-emerald-400"></i> Doanh nghiệp định giá rẻ</span>`;
+            } else {
+                cheapBadgeContainer.innerHTML = '';
+            }
+
+            document.getElementById('modal-pe').innerText = item.pe > 0 ? item.pe.toFixed(1) : '—';
+            document.getElementById('modal-pb').innerText = item.pb > 0 ? item.pb.toFixed(1) : '—';
+            document.getElementById('modal-eps').innerText = item.eps ? formatNumber(item.eps) : '—';
+            document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
+            document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
+            document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
+
+            const isBankOrSec = (item.sector === "NGAN_HANG" || item.sector === "CHUNG_KHOAN");
+            document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
+            document.getElementById('modal-ttm').innerText = (item.net_profit_ttm !== undefined && item.net_profit_ttm !== null) ? item.net_profit_ttm + ' Tỷ' : '—';
+
+            const deLabel = document.getElementById('label-de');
+            const deVal = document.getElementById('modal-de');
+            if (isBankOrSec) {
+                deLabel.innerText = "Hệ số T.Sản/VCSH";
+                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity + 'x (Nợ/VCSH)' : '—';
+            } else {
+                deLabel.innerText = "Đòn bẩy D/E";
+                deVal.innerText = (item.debt_to_equity !== undefined && item.debt_to_equity !== null) ? item.debt_to_equity : '—';
+            }
+
+            const gmLabel = document.getElementById('label-gm');
+            const gmVal = document.getElementById('modal-gm');
+            if (isBankOrSec) {
+                gmLabel.innerText = "Đặc thù ngành";
+                gmVal.innerText = "N/A (Ngành tài chính)";
+            } else {
+                gmLabel.innerText = "Biên gộp";
+                gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
+            }
+
+            const finalEl = document.getElementById('modal-final-decision');
+            if (finalEl) {
+                const fd = item.final_decision || "";
+                const fc = item.final_decision_color || "slate";
+                const fr = item.final_decision_reason || "";
+                const cm = FINAL_DECISION_STYLE[fc] || FINAL_DECISION_STYLE.slate;
+                if (fd) {
+                    finalEl.innerHTML = `
+                        <div class="${cm.bg} ${cm.border} border rounded-xl p-3 space-y-1.5">
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid ${cm.icon} ${cm.text} text-xl"></i>
+                                    <div>
+                                        <div class="text-[10px] text-slate-400 uppercase font-semibold">Khuyến nghị cuối cùng</div>
+                                        <div class="${cm.text} text-base font-black">${fd}</div>
+                                    </div>
+                                </div>
+                                <div class="text-right text-[10px] text-slate-400 space-y-0.5">
+                                    <div>PTCB: <strong class="text-emerald-300">${item.fundamental_score || 0}/50</strong></div>
+                                    <div>PTKT: <strong class="text-indigo-300">${item.technical_score || 0}/20</strong></div>
+                                    <div>Định giá: <strong class="text-blue-300">${item.valuation_score || 0}/30</strong></div>
+                                    <div>Tổng: <strong class="text-amber-300">${item.total_score || 0}/100</strong></div>
+                                </div>
+                            </div>
+                            <div class="text-[11px] text-slate-300 leading-relaxed pt-1.5 border-t border-slate-800/60">
+                                <i class="fa-solid fa-quote-left text-slate-500 mr-1 text-[9px]"></i>${fr}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    finalEl.innerHTML = '';
+                }
+            }
+
+            const fairLow = item.fair_value_low || 0;
+            const fairHigh = item.fair_value_high || 0;
+            const verdict = item.valuation_verdict || "";
+            const discountPct = item.discount_to_fair_pct || 0;
+            const mosPct = item.margin_of_safety_pct || 0;
+            const closeNow = item.close_price || 0;
+
+            const fairZoneEl = document.getElementById('modal-fair-zone');
+            if (fairZoneEl) {
+                if (fairLow > 0 && fairHigh > 0) {
+                    let verdictColor = "text-slate-300 bg-slate-800 border-slate-700";
+                    let verdictIcon = "fa-circle-info";
+                    if (verdict.includes("RẺ")) { verdictColor = "text-emerald-300 bg-emerald-500/15 border-emerald-500/40"; verdictIcon = "fa-circle-check"; }
+                    else if (verdict.includes("HỢP LÝ")) { verdictColor = "text-amber-300 bg-amber-500/15 border-amber-500/40"; verdictIcon = "fa-scale-balanced"; }
+                    else if (verdict.includes("HƠI ĐẮT") || verdict.includes("ĐẮT")) { verdictColor = "text-rose-300 bg-rose-500/15 border-rose-500/40"; verdictIcon = "fa-hourglass-half"; }
+
+                    fairZoneEl.innerHTML = `
+                        <div class="bg-gradient-to-br from-indigo-500/10 to-emerald-500/10 border border-indigo-500/30 rounded-xl p-3 space-y-2">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-300">
+                                    <i class="fa-solid fa-crosshairs mr-1.5"></i> Vùng Mua Hợp Lý (Deterministic)
+                                </h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded border font-bold ${verdictColor}">
+                                    <i class="fa-solid ${verdictIcon} mr-1"></i>${verdict}
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
+                                    <span class="text-[10px] text-slate-400 block">Giá hiện tại</span>
+                                    <span class="text-sm font-bold text-white">${formatNumber(closeNow)}</span>
+                                </div>
+                                <div class="bg-emerald-500/10 p-2 rounded border border-emerald-500/30">
+                                    <span class="text-[10px] text-emerald-400 block">Vùng mua (fair_low)</span>
+                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatNumber(fairLow)}</span>
+                                </div>
+                                <div class="bg-indigo-500/10 p-2 rounded border border-indigo-500/30">
+                                    <span class="text-[10px] text-indigo-400 block">Fair value (fair_high)</span>
+                                    <span class="text-sm font-bold text-indigo-300">${formatNumber(fairHigh)}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/60">
+                                <span>Biên an toàn: <strong class="text-amber-400">${mosPct}%</strong></span>
+                                <span>Chiết khấu: <strong class="${discountPct > 0 ? 'text-emerald-400' : 'text-rose-400'}">${discountPct > 0 ? '+' : ''}${discountPct.toFixed(1)}%</strong></span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    fairZoneEl.innerHTML = `<div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3 text-center text-xs text-slate-500"><i class="fa-solid fa-hourglass-half mr-1"></i> Chưa có dữ liệu vùng mua — chạy screener.py trước.</div>`;
+                }
+            }
+
+            document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
+            let priceZoneText = item.ai_price_zone;
+            if (typeof priceZoneText === 'object' && priceZoneText !== null) {
+                priceZoneText = priceZoneText.text || priceZoneText.detail || priceZoneText.strategy || JSON.stringify(priceZoneText);
+            }
+            document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
+
+            const aiSourceEl = document.getElementById('modal-ai-source');
+            if (aiSourceEl) {
+                const src = item.ai_source || "";
+                if (src === "AI" || src === "auto-ai") {
+                    aiSourceEl.className = "text-[9px] px-2 py-0.5 rounded border font-bold bg-indigo-500/20 text-indigo-300 border-indigo-500/40";
+                    aiSourceEl.innerHTML = `<i class="fa-solid fa-robot mr-1"></i>AI`;
+                    aiSourceEl.classList.remove('hidden');
+                } else if (src === "TEMPLATE_FALLBACK" || src === "auto-template") {
+                    aiSourceEl.className = "text-[9px] px-2 py-0.5 rounded border font-bold bg-slate-700/40 text-slate-300 border-slate-600/50";
+                    aiSourceEl.innerHTML = `<i class="fa-solid fa-file-lines mr-1"></i>Template`;
+                    aiSourceEl.classList.remove('hidden');
+                } else {
+                    aiSourceEl.classList.add('hidden');
+                }
+            }
+
+            document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC.";
+            document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá.";
+            document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô.";
+            document.getElementById('modal-time').innerText = `Cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
+
+            let histRate = 15;
+            if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
+                histRate = symbolSimRates[symbol].annual_rate_percent;
+                document.getElementById('sim-historical-rate-text').innerText = histRate + "% / năm (Quá khứ thực tế)";
+            } else {
+                document.getElementById('sim-historical-rate-text').innerText = "15% / năm (Mức chuẩn cơ sở)";
+            }
+            const details = quarterlyMeanDetails[symbol];
+            if (details) {
+                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${details.start_price_mean.toLocaleString('vi-VN')} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${details.end_price_mean.toLocaleString('vi-VN')} đ`;
+            } else {
+                document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
+                document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
+            }
+
+            document.getElementById('modal-sim-rate').value = histRate;
+            document.getElementById('modal-sim-initial').value = "20.000.000";
+            document.getElementById('modal-sim-monthly').value = "3.000.000";
+            document.getElementById('modal-sim-years').value = "3";
+
+            document.getElementById('ai-modal').classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
+
+        function navigateModalSymbol(direction) {
+            const symbols = screenerResults.map(s => s.symbol).sort();
+            const currentIndex = symbols.indexOf(currentSymbol);
+            if (currentIndex !== -1) {
+                let newIndex = currentIndex + direction;
+                if (newIndex < 0) newIndex = symbols.length - 1;
+                if (newIndex >= symbols.length) newIndex = 0;
+                openModal(symbols[newIndex]);
+            }
+        }
+
+        function calculateModalSimulation() {
+            let p0 = parseCleanNumber(document.getElementById('modal-sim-initial').value);
+            let pMonthly = parseCleanNumber(document.getElementById('modal-sim-monthly').value);
+            let years = parseFloat(document.getElementById('modal-sim-years').value) || 1;
+            let rate = (parseFloat(document.getElementById('modal-sim-rate').value) || 15) / 100;
+            let totalPrincipal = p0 + (pMonthly * 12 * years);
+            let futureVal = p0 * Math.pow(1 + rate, years);
+            let monthlyRate = rate / 12;
+            let totalMonths = years * 12;
+            for (let i = 1; i <= totalMonths; i++) {
+                futureVal += pMonthly * Math.pow(1 + monthlyRate, totalMonths - i + 1);
+            }
+            let profit = futureVal - totalPrincipal;
+            document.getElementById('modal-sim-principal').innerText = Math.round(totalPrincipal).toLocaleString("vi-VN") + " VNĐ";
+            document.getElementById('modal-sim-profit').innerText = "+" + Math.round(profit).toLocaleString("vi-VN") + " VNĐ";
+            document.getElementById('modal-sim-total').innerText = Math.round(futureVal).toLocaleString("vi-VN") + " VNĐ";
+        }
+
+        function parseCleanNumber(str) {
+            if (typeof str === 'number') return str;
+            return parseFloat(String(str).replace(/[^0-9]/g, '')) || 0;
+        }
+        function formatCurrencyInput(input) {
+            let cursorPos = input.selectionStart;
+            let originalLen = input.value.length;
+            let num = parseCleanNumber(input.value);
+            input.value = num.toLocaleString('vi-VN');
+            let newLen = input.value.length;
+            input.setSelectionRange(cursorPos + (newLen - originalLen), cursorPos + (newLen - originalLen));
+        }
+
+        // --- CHART LOGIC ---
+        function navigateSymbol(direction) {
+            const symbols = screenerResults.map(s => s.symbol).sort();
+            const currentIndex = symbols.indexOf(currentSymbol);
+            if (currentIndex !== -1) {
+                let newIndex = currentIndex + direction;
+                if (newIndex < 0) newIndex = symbols.length - 1;
+                if (newIndex >= symbols.length) newIndex = 0;
+                openChartModal(symbols[newIndex]);
+            }
+        }
+
+        function toggleSymbolDropdown() {
+            const dropdown = document.getElementById('symbol-dropdown');
+            dropdown.classList.toggle('hidden');
+            if (!dropdown.classList.contains('hidden')) {
+                document.getElementById('dropdown-search').value = '';
+                renderDropdownSymbolList(screenerResults.map(s => s.symbol));
+                document.getElementById('dropdown-search').focus();
+            }
+        }
+
+        function renderDropdownSymbolList(symbols) {
+            const listContainer = document.getElementById('dropdown-symbol-list');
+            listContainer.innerHTML = '';
+            symbols.sort().forEach(sym => {
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = `w-full text-left px-2 py-1 rounded-lg text-xs font-bold transition flex justify-between items-center ${sym === currentSymbol ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`;
+                item.innerHTML = `<span>${sym}</span>`;
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    document.getElementById('symbol-dropdown').classList.add('hidden');
+                    openChartModal(sym);
+                };
+                listContainer.appendChild(item);
+            });
+        }
+
+        function filterDropdownSymbols(keyword) {
+            const upper = keyword.toUpperCase();
+            const matched = screenerResults.map(s => s.symbol).filter(sym => sym.includes(upper));
+            renderDropdownSymbolList(matched);
+        }
+
+        window.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('symbol-dropdown');
+            const symbolBtn = document.getElementById('chart-modal-symbol');
+            if (dropdown && !dropdown.contains(e.target) && !symbolBtn.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        function switchInterval(interval) {
+            currentInterval = interval;
+            ['d1', 'w1', 'mn'].forEach(i => {
+                const btn = document.getElementById(`btn-${i}`);
+                if (btn) {
+                    btn.className = i === interval.toLowerCase()
+                        ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
+                        : "px-1.5 py-0.5 text-[10px] font-bold rounded text-slate-400 hover:text-white transition";
+                }
+            });
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function toggleIndicator(name) {
+            activeIndicators[name] = !activeIndicators[name];
+            const btn = document.getElementById(`btn-ind-${name.toLowerCase()}`);
+            if (btn) {
+                btn.className = activeIndicators[name]
+                    ? "px-1.5 py-0.5 text-[9px] font-bold rounded bg-indigo-600 text-white border border-indigo-400/50 transition"
+                    : "px-1.5 py-0.5 text-[9px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function toggleQuarterLines() {
+            activeIndicators.QLINES = !activeIndicators.QLINES;
+            const btn = document.getElementById('btn-ind-qlines');
+            if (btn) {
+                btn.className = activeIndicators.QLINES
+                    ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition ml-1"
+                    : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition ml-1";
+            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function toggleQuarterZone() {
+            activeIndicators.QZONE = !activeIndicators.QZONE;
+            const btn = document.getElementById('btn-ind-qzone');
+            if (btn) {
+                btn.className = activeIndicators.QZONE
+                    ? "px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-600 text-white transition"
+                    : "px-1.5 py-0.5 text-[10px] font-bold rounded bg-slate-900/40 text-slate-400 hover:text-white transition";
+            }
+            if (currentSymbolHistory) renderChartInstance(currentSymbolHistory);
+        }
+
+        function jumpToQuarter(type) {
+            const details = quarterlyMeanDetails[currentSymbol];
+            if (!details || !currentSymbolHistory) return;
+            let chartData = [];
+            if (currentInterval === 'D1') chartData = currentSymbolHistory.history_d1 || [];
+            else if (currentInterval === 'W1') chartData = currentSymbolHistory.history_w1 || [];
+            else if (currentInterval === 'MN') chartData = currentSymbolHistory.history_mn || [];
+            const quarterStr = (type === 'start') ? details.start_quarter : details.end_quarter;
+            if (!quarterStr) return;
+            const parts = quarterStr.split('Q');
+            const year = parseInt(parts[0]);
+            const q = parseInt(parts[1]);
+            const startMonth = (q - 1) * 3 + 1;
+            const endMonth = q * 3;
+            let indices = [];
+            let qMinPrice = Infinity, qMaxPrice = -Infinity;
+            chartData.forEach((bar, idx) => {
+                const barDate = new Date(bar.time);
+                if (barDate.getFullYear() === year && (barDate.getMonth() + 1) >= startMonth && (barDate.getMonth() + 1) <= endMonth) {
+                    indices.push(idx);
+                    if (bar.low < qMinPrice) qMinPrice = bar.low;
+                    if (bar.high > qMaxPrice) qMaxPrice = bar.high;
+                }
+            });
+            if (indices.length > 0 && chartInstance) {
+                const minIdx = indices[0];
+                const maxIdx = indices[indices.length - 1];
+                chartInstance.priceScale('right').applyOptions({ autoScale: true });
+                const rangeSpan = Math.max(15, (maxIdx - minIdx) * 2);
+                const from = Math.max(0, minIdx - Math.floor(rangeSpan / 2));
+                const to = Math.min(chartData.length - 1, maxIdx + Math.floor(rangeSpan / 2));
+                chartInstance.timeScale().setVisibleLogicalRange({ from, to });
+                if (qMinPrice !== Infinity && qMaxPrice !== -Infinity) {
+                    const pricePadding = (qMaxPrice - qMinPrice) * 0.5;
+                    chartInstance.priceScale('right').setVisiblePriceRange({ from: qMinPrice - pricePadding, to: qMaxPrice + pricePadding });
+                }
+            } else {
+                alert(`Không tìm thấy dữ liệu thời gian cho ${quarterStr}!`);
+            }
+        }
+
+        function resizeChart() {
+            if (chartInstance) {
+                const container = document.getElementById('tv-chart-container');
+                if (container) chartInstance.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+            }
+        }
+
+        function toggleFullscreen() {
+            const modalBox = document.getElementById('chart-modal-box');
+            const fsBtnIcon = document.querySelector('#fullscreen-btn i');
+            modalBox.classList.toggle('fullscreen');
+            fsBtnIcon.className = modalBox.classList.contains('fullscreen') ? "fa-solid fa-compress text-xs" : "fa-solid fa-expand text-xs";
+            setTimeout(resizeChart, 200);
+        }
+
+        window.addEventListener('resize', () => {
+            if (!document.getElementById('chart-modal').classList.contains('hidden')) setTimeout(resizeChart, 300);
+        });
+
+        async function openChartModal(symbol) {
+            currentSymbol = symbol;
+            currentInterval = 'D1';
+            switchInterval('D1');
+            document.getElementById('current-symbol-text').innerText = symbol;
+            document.getElementById('symbol-dropdown').classList.add('hidden');
+            document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
+            updateChartWatchlistBtn(symbol);
+            document.getElementById('chart-modal').classList.remove('hidden');
+            document.getElementById('chart-loading').classList.remove('hidden');
+            try {
+                const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
+                if (!res.ok) throw new Error();
+                currentSymbolHistory = await res.json();
+                renderChartInstance(currentSymbolHistory);
+            } catch (err) {
+                document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
+            } finally {
+                document.getElementById('chart-loading').classList.add('hidden');
+            }
+        }
+
+        function calculateMA(data, period) {
+            let result = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i < period - 1) continue;
+                let sum = 0;
+                for (let j = 0; j < period; j++) sum += data[i - j].close;
+                result.push({ time: data[i].time, value: sum / period });
+            }
+            return result;
+        }
+
+        function calculateVolumeMA(data, period = 20) {
+            let result = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i < period - 1) continue;
+                let sum = 0;
+                for (let j = 0; j < period; j++) sum += data[i - j].volume;
+                result.push({ time: data[i].time, value: sum / period });
+            }
+            return result;
+        }
+
+        function calculateRSI(data, period = 14) {
+            let result = [];
+            let gains = 0, losses = 0;
+            for (let i = 1; i < data.length; i++) {
+                let change = data[i].close - data[i - 1].close;
+                if (i <= period) {
+                    if (change >= 0) gains += change; else losses -= change;
+                    if (i === period) {
+                        let avgGain = gains / period, avgLoss = losses / period;
+                        let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+                        result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
+                    }
+                } else {
+                    gains = (gains * (period - 1) + (change >= 0 ? change : 0)) / period;
+                    losses = (losses * (period - 1) + (change < 0 ? -change : 0)) / period;
+                    let rs = losses === 0 ? 100 : gains / losses;
+                    result.push({ time: data[i].time, value: 100 - (100 / (1 + rs)) });
+                }
+            }
+            return result;
+        }
+
+        function renderChartInstance(historyDataObj) {
+            const container = document.getElementById('tv-chart-container');
+            container.innerHTML = '';
+            const LC = window.LightweightCharts;
+            if (!LC) return;
+            const width = container.clientWidth || 600;
+            const height = container.clientHeight || 380;
+            const hasRSI = activeIndicators.RSI;
+            chartInstance = LC.createChart(container, {
+                width: width, height: height,
+                layout: { background: { type: 'solid', color: '#0f172a' }, textColor: '#94a3b8' },
+                grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
+                timeScale: { borderColor: '#334155' }
+            });
+            candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {
+                upColor: '#10b981', downColor: '#f43f5e',
+                borderUpColor: '#10b981', borderDownColor: '#f43f5e',
+                wickUpColor: '#10b981', wickDownColor: '#f43f5e',
+            }, 0);
+            volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
+                priceFormat: { type: 'volume' }, priceScaleId: 'volumeScale'
+            }, 0);
+            chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.75, bottom: 0 } });
+
+            let chartData = [];
+            if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
+            else if (currentInterval === 'W1') chartData = historyDataObj.history_w1 || [];
+            else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
+
+            if (chartData && chartData.length > 0) {
+                candleSeriesInstance.setData(chartData);
+                volumeSeriesInstance.setData(chartData.map(row => ({
+                    time: row.time, value: row.volume,
+                    color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
+                })));
+
+                const details = quarterlyMeanDetails[currentSymbol];
+                if (details) {
+                    function getQuarterBoxInfo(quarterStr, allBars) {
+                        if (!quarterStr) return null;
+                        const parts = quarterStr.split('Q');
+                        const year = parseInt(parts[0]);
+                        const q = parseInt(parts[1]);
+                        const startMonth = (q - 1) * 3 + 1;
+                        const endMonth = q * 3;
+                        const quarterBars = allBars.filter(bar => {
+                            const barDate = new Date(bar.time);
+                            return barDate.getFullYear() === year && (barDate.getMonth() + 1) >= startMonth && (barDate.getMonth() + 1) <= endMonth;
+                        });
+                        if (quarterBars.length === 0) return null;
+                        let qHigh = -Infinity, qLow = Infinity;
+                        quarterBars.forEach(b => {
+                            if (b.high > qHigh) qHigh = b.high;
+                            if (b.low < qLow) qLow = b.low;
+                        });
+                        return { high: qHigh, low: qLow, data: quarterBars.map(row => ({ time: row.time, value: qHigh, baseValue: qLow })) };
+                    }
+                    if (activeIndicators.QZONE) {
+                        const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
+                        if (startBoxInfo && startBoxInfo.data.length > 0) {
+                            const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
+                                baseValue: { type: 'price', price: startBoxInfo.low },
+                                topFillColor1: 'rgba(59, 130, 246, 0.45)', topFillColor2: 'rgba(59, 130, 246, 0.15)',
+                                topLineColor: '#2563eb', bottomLineColor: '#2563eb', lineWidth: 2
+                            }, 0);
+                            startBoxSeries.setData(startBoxInfo.data);
+                        }
+                        const endBoxInfo = getQuarterBoxInfo(details.end_quarter, chartData);
+                        if (endBoxInfo && endBoxInfo.data.length > 0) {
+                            const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
+                                baseValue: { type: 'price', price: endBoxInfo.low },
+                                topFillColor1: 'rgba(16, 185, 129, 0.45)', topFillColor2: 'rgba(16, 185, 129, 0.15)',
+                                topLineColor: '#059669', bottomLineColor: '#059669', lineWidth: 2
+                            }, 0);
+                            endBoxSeries.setData(endBoxInfo.data);
+                        }
+                    }
+                    if (activeIndicators.QLINES) {
+                        candleSeriesInstance.createPriceLine({
+                            price: details.start_price_mean, color: '#f97316', lineWidth: 2,
+                            lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true,
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
+                        });
+                        candleSeriesInstance.createPriceLine({
+                            price: details.end_price_mean, color: '#10b981', lineWidth: 2,
+                            lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true,
+                            title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
+                        });
+                    }
+                }
+                if (activeIndicators.MA20) chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
+                if (activeIndicators.MA50) chartInstance.addSeries(LC.LineSeries, { color: '#eab308', lineWidth: 1 }, 0).setData(calculateMA(chartData, 50));
+                if (activeIndicators.VOLMA) chartInstance.addSeries(LC.LineSeries, { color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }, 0).setData(calculateVolumeMA(chartData, 20));
+                if (hasRSI) {
+                    const rsiSeries = chartInstance.addSeries(LC.LineSeries, { color: '#a855f7', lineWidth: 1.5 }, 1);
+                    rsiSeries.createPriceLine({ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
+                    rsiSeries.createPriceLine({ price: 30, color: '#26a69a', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
+                    rsiSeries.setData(calculateRSI(chartData, 14));
+                }
+                const legendTime = document.getElementById('legend-time');
+                const legendClose = document.getElementById('legend-close');
+                const legendChange = document.getElementById('legend-change');
+                const legendVol = document.getElementById('legend-vol');
+                const latestBar = chartData[chartData.length - 1];
+                if (latestBar) updateLegend(latestBar, chartData);
+                function updateLegend(bar, dataArr) {
+                    legendTime.innerText = bar.time;
+                    legendClose.innerText = formatNumber(bar.close);
+                    const index = dataArr.findIndex(item => item.time === bar.time);
+                    let changePct = 0;
+                    if (index > 0) changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
+                    legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
+                    legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                    legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+                    legendVol.innerText = formatNumber(bar.volume);
+                }
+                chartInstance.subscribeCrosshairMove(param => {
+                    if (!param.point || !param.time) { if (latestBar) updateLegend(latestBar, chartData); }
+                    else {
+                        const dataPoint = param.seriesData.get(candleSeriesInstance);
+                        if (dataPoint) updateLegend({ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }, chartData);
+                    }
+                });
+                setTimeout(() => {
+                    const totalBars = chartData.length;
+                    let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
+                    if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
+                    else chartInstance.timeScale().fitContent();
+                }, 50);
+            }
+        }
+
+        function closeChartModal() {
+            document.getElementById('chart-modal').classList.add('hidden');
+            if (chartInstance) { chartInstance.remove(); chartInstance = null; }
+            currentSymbolHistory = null;
+        }
 
         document.getElementById('search-input').addEventListener('input', renderCards);
         document.getElementById('sector-filter').addEventListener('change', renderCards);
         document.getElementById('ranking-filter').addEventListener('change', renderCards);
+
+        // Khởi động loadData
+        setTimeout(() => { loadData(true); }, 500);
     </script>
 </body>
 </html>
