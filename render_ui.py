@@ -3,13 +3,6 @@ import json
 from datetime import datetime
 from simulator import run_complex_backtest_simulation
 
-# Import module gốc của bạn (giả sử file là accounts.py)
-try:
-    import accounts
-except ImportError:
-    accounts = None
-    print("⚠️ Không tìm thấy module accounts.py, sẽ dùng giao diện mặc định.")
-
 OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
 CHEAP_STOCKS_FILE = "cheap_stocks.json"
@@ -74,16 +67,6 @@ def generate_html():
     cheap_stocks_json = json.dumps(cheap_stocks_groups, ensure_ascii=False)
     cheap_symbols_json = json.dumps(list(cheap_symbols_set), ensure_ascii=False)
 
-    # Lấy mã HTML/CSS/JS từ module accounts (nếu có)
-    accounts_css = ""
-    accounts_html = ""
-    accounts_js = ""
-    if accounts:
-        try:
-            accounts_css, accounts_html, accounts_js = accounts.build_all_auth({})
-        except Exception as e:
-            print(f"⚠️ Lỗi load module accounts: {e}")
-
     html_template = r"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -92,20 +75,11 @@ def generate_html():
     <title>Pro Quant Screener & Investment Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    
     <script src="./lightweight-charts.js"></script>
     
-    <!-- CSS từ module Accounts -->
-    <style>
-        {accounts_css}
-    </style>
-
     <style>
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
@@ -157,10 +131,133 @@ def generate_html():
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
 
-    <!-- NHÚNG HTML MODULE ACCOUNTS (Bao gồm Modal đăng nhập, Dropdown user menu, Admin Modal) -->
-    {accounts_html}
+    <!-- MÀN HÌNH ĐĂNG NHẬP / XÁC THỰC -->
+    <div id="auth-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl p-6 relative">
+            <div class="text-center mb-6">
+                <div class="inline-block bg-emerald-600 text-white p-3 rounded-xl shadow-lg shadow-emerald-500/30 mb-2">
+                    <i class="fa-solid fa-scale-balanced text-xl"></i>
+                </div>
+                <h2 class="text-xl font-black text-white">Pro Quant Screener</h2>
+                <p class="text-xs text-slate-400 mt-1">Đăng nhập để sử dụng hệ thống lọc & phân tích AI</p>
+            </div>
+            <div class="flex border-b border-slate-800 mb-6">
+                <button type="button" onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition">Đăng Nhập</button>
+                <button type="button" onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition">Đăng Ký Tài Khoản</button>
+            </div>
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Email</label>
+                    <input type="email" id="login-email" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Mật khẩu</label>
+                    <input type="password" id="login-password" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div id="login-error" class="text-xs text-rose-400 hidden"></div>
+                <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition text-sm shadow-lg shadow-emerald-600/30">
+                    Đăng Nhập Ngay
+                </button>
+            </form>
+            <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Email đăng ký</label>
+                    <input type="email" id="reg-email" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Mật khẩu (ít nhất 6 ký tự)</label>
+                    <input type="password" id="reg-password" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div id="register-error" class="text-xs text-rose-400 hidden"></div>
+                <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition text-sm shadow-lg shadow-indigo-600/30">
+                    Đăng Ký Trải Nghiệm
+                </button>
+            </form>
+        </div>
+    </div>
 
-    <!-- HEADER CỦA TRANG QUANT -->
+    <!-- MODAL HẾT HẠN -->
+    <div id="expired-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md hidden p-4">
+        <div class="bg-slate-900 border border-rose-500/40 w-full max-w-md rounded-2xl shadow-2xl p-6 text-center">
+            <div class="inline-block bg-rose-500/10 text-rose-400 p-3 rounded-full mb-3 border border-rose-500/20">
+                <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-1">Tài Khoản Đã Hết Hạn Dùng Thử</h3>
+            <p class="text-xs text-slate-400 mb-6">Thời gian sử dụng dịch vụ của bạn đã kết thúc. Vui lòng liên hệ Admin để gia hạn.</p>
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-left mb-4 text-xs space-y-1">
+                <div><span class="text-slate-500">Mã tài khoản (UID):</span> <span id="user-uid-text" class="text-indigo-400 font-mono">--</span></div>
+            </div>
+            <button type="button" onclick="handleLogout()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold text-xs transition">
+                Đăng Xuất
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL ADMIN -->
+    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
+            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i>
+                    <h3 class="text-sm font-bold text-white">Quản Trị Hệ Thống (Admin Panel)</h3>
+                </div>
+                <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                          <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
+                           <th class="p-3">Email</th>
+                           <th class="p-3">Hạn sử dụng</th>
+                           <th class="p-3">Quyền</th>
+                          </tr>
+                         </thead>
+                        <tbody id="admin-users-list" class="divide-y divide-slate-800">
+                            <tr><td colspan="3" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
+                <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TÀI KHOẢN -->
+    <div id="account-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-user-gear text-emerald-400"></i>
+                    <h3 class="text-sm font-bold text-white">Thông Tin Tài Khoản</h3>
+                </div>
+                <button type="button" onclick="closeAccountModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-5 space-y-4 text-xs">
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <div class="flex justify-between"><span class="text-slate-400">Email đăng nhập:</span> <span id="acc-modal-email" class="font-semibold text-white">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Loại tài khoản:</span> <span id="acc-modal-role" class="font-bold text-amber-400">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Thời hạn sử dụng:</span> <span id="acc-modal-expire" class="font-semibold text-emerald-400">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Mã UID:</span> <span id="acc-modal-uid" class="font-mono text-indigo-400">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Mã theo dõi:</span> <span id="acc-modal-watchlist-count" class="font-semibold text-amber-400">0 mã</span></div>
+                </div>
+            </div>
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center">
+                <button type="button" onclick="handleLogout()" class="px-4 py-2 bg-rose-600/20 hover:bg-rose-600/30 border border-rose-500/40 text-rose-300 rounded-lg font-semibold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất
+                </button>
+                <button type="button" onclick="closeAccountModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
@@ -176,9 +273,10 @@ def generate_html():
                 <button type="button" onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
                 </button>
-                
-                <!-- NÚT TÀI KHOẢN (KÍCH HOẠT AVATAR CỦA MODULE ACCOUNTS) -->
-                <button type="button" onclick="document.getElementById('userAvatar').click()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Tài khoản cá nhân">
+                <button type="button" id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
+                    <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline">Admin</span>
+                </button>
+                <button type="button" onclick="openAccountModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Tài khoản cá nhân">
                     <i class="fa-solid fa-user-gear text-emerald-400"></i> <span class="hidden md:inline">Tài khoản</span>
                 </button>
             </div>
@@ -189,6 +287,7 @@ def generate_html():
         <!-- BỘ LỌC -->
         <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4 space-y-2">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3">
+                <!-- Ô TÌM KIẾM MÃ (CÓ GỢI Ý) -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-xs md:text-sm"></i>
@@ -200,6 +299,7 @@ def generate_html():
                     <button type="button" onclick="clearInput('search-input')" class="absolute inset-y-0 right-0 flex items-center pr-2 md:pr-3 text-slate-400 hover:text-white transition" title="Xóa nhanh">
                         <i class="fa-solid fa-xmark text-xs"></i>
                     </button>
+                    <!-- DROPDOWN GỢI Ý SEARCH -->
                     <div id="search-suggestions" class="absolute left-0 right-0 mt-1 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-40 max-h-60 overflow-y-auto p-1.5"></div>
                 </div>
 
@@ -277,6 +377,7 @@ def generate_html():
                     <button type="button" onclick="navigateModalSymbol(-1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã trước">
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
+                    <!-- Ô CHỌN MÃ TRONG MODAL (CÓ GỢI Ý) -->
                     <div class="relative flex items-center">
                         <input type="text" id="modal-symbol-input" value="--" 
                                oninput="handleModalSearchInput(this.value)"
@@ -287,11 +388,13 @@ def generate_html():
                         <button type="button" onclick="clearInput('modal-symbol-input')" class="absolute right-1 text-slate-400 hover:text-white text-xs transition" title="Xóa nhanh">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
+                        <!-- DROPDOWN GỢI Ý MODAL -->
                         <div id="modal-search-suggestions" class="absolute left-0 top-full mt-1 w-48 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl hidden z-50 max-h-60 overflow-y-auto p-1.5"></div>
                     </div>
                     <button type="button" onclick="navigateModalSymbol(1)" class="text-slate-400 hover:text-white px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition" title="Mã tiếp theo">
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
+                    <!-- NÚT WATCHLIST TRONG MODAL AI -->
                     <button type="button" id="modal-watchlist-btn" onclick="toggleWatchlistFromModal()" class="px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 transition text-xs" title="Thêm/bỏ theo dõi">
                         <i class="fa-regular fa-bookmark"></i>
                     </button>
@@ -351,6 +454,9 @@ def generate_html():
                         <div><span class="text-amber-400 font-bold">⏳ CHỜ ĐỊNH GIÁ TỐT HƠN:</span> Vào vùng mua nhưng điểm định giá &lt;18/30.</div>
                         <div><span class="text-rose-400 font-bold">❌ TRÁNH:</span> Giá đắt (vượt fair_high xa) HOẶC PTCB &lt; 20/50 HOẶC lợi nhuận ảo (CFO âm).</div>
                         <div><span class="text-slate-400 font-bold">👀 THEO DÕI:</span> Chưa đủ điều kiện rõ ràng.</div>
+                        <div class="pt-1 border-t border-slate-800 text-[10px] text-slate-500 italic">
+                            Vùng mua chỉ là "giá". Quyết định cuối = Vùng mua + Chất lượng (PTCB) + Thời điểm (PTKT) + Định giá.
+                        </div>
                     </div>
                 </details>
 
@@ -485,6 +591,7 @@ def generate_html():
                         </div>
                     </div>
                     <button type="button" onclick="navigateSymbol(1)" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition"><i class="fa-solid fa-chevron-right text-[9px]"></i></button>
+                    <!-- NÚT WATCHLIST TRONG MODAL BIỂU ĐỒ -->
                     <button type="button" id="chart-watchlist-btn" onclick="toggleWatchlistFromChart()" class="text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-900/40 border border-slate-700/50 transition text-[10px]" title="Thêm/bỏ theo dõi">
                         <i class="fa-regular fa-bookmark"></i>
                     </button>
@@ -530,118 +637,149 @@ def generate_html():
         </div>
     </div>
 
-    <!-- SCRIPT KHAI BÁO BIẾN TOÀN CỤC -->
+    <!-- SCRIPT -->
     <script>
-        const FIREBASE_CONFIG = {firebase_config_json_placeholder};
+        const firebaseConfig = {firebase_config_json_placeholder};
         const cheapStocksGroups = {cheap_stocks_json_placeholder};
         const cheapSymbolsSet = new Set({cheap_symbols_json_placeholder});
-    </script>
 
-    <!-- SCRIPT CỦA MODULE ACCOUNTS -->
-    <script>
-        {accounts_js}
-    </script>
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
-    <!-- SCRIPT LOGIC RIÊNG CỦA QUANT SCREENER -->
-    <script>
         let userWatchlist = new Set();
-        let currentUserAccount = null;
-        let screenerResults = [];
-        let symbolSimRates = {};
-        let quarterlyMeanDetails = {};
-        let currentSymbolHistory = null;
-        let chartInstance = null;
-        let candleSeriesInstance = null;
-        let volumeSeriesInstance = null;
-        let currentSymbol = null;
-        let currentInterval = 'D1';
-        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
-        let currentActiveTab = 'eval';
-        let currentSuggestions = [];
-        let currentModalSuggestions = [];
+        let currentUser = null;
 
-        const SECTOR_NAMES = {
-            "NGAN_HANG": "Ngân hàng", "CHUNG_KHOAN": "Chứng khoán", "BAT_DONG_SAN": "Bất động sản",
-            "CONG_NGHE_BAN_LE": "Công nghệ & Bán lẻ", "DIEN_NUOC_HA_TANG": "Điện, Nước & Hạ tầng",
-            "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ", "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
-            "KHAC": "Khác"
-        };
+        function parseDate(val) {
+            if (!val) return null;
+            if (typeof val.toDate === 'function') return val.toDate();
+            const d = new Date(val);
+            return isNaN(d.getTime()) ? null : d;
+        }
 
-        const FINAL_DECISION_STYLE = {
-            "emerald": { bg: "bg-emerald-500/15", border: "border-emerald-500/50", text: "text-emerald-300", icon: "fa-circle-check" },
-            "amber":   { bg: "bg-amber-500/15",   border: "border-amber-500/50",   text: "text-amber-300",   icon: "fa-hourglass-half" },
-            "rose":    { bg: "bg-rose-500/15",    border: "border-rose-500/50",    text: "text-rose-300",    icon: "fa-triangle-exclamation" },
-            "slate":   { bg: "bg-slate-700/40",   border: "border-slate-600/50",   text: "text-slate-300",   icon: "fa-eye" },
-        };
-
-        // Hàm định dạng số
-        function formatNumber(num) {
-            if (num === undefined || num === null || num === 0) return '—';
-            let val = (num < 1000 && num > 0) ? num * 1000 : num;
-            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-        function formatPercent(num) {
-            if (num === undefined || num === null) return '—';
-            return num.toFixed(1) + '%';
-        }
-        function clearInput(elementId) {
-            const inputEl = document.getElementById(elementId);
-            if (inputEl) {
-                inputEl.value = '';
-                inputEl.focus();
-                if (elementId === 'search-input') {
-                    document.getElementById('search-suggestions').classList.add('hidden');
-                    renderCards();
-                } else if (elementId === 'modal-symbol-input') {
-                    document.getElementById('modal-search-suggestions').classList.add('hidden');
-                } else if (elementId === 'dropdown-search') {
-                    filterDropdownSymbols('');
-                }
-            }
-        }
-        function toggleProMetrics() {
-            const box = document.getElementById('pro-metrics-box');
-            const textEl = document.getElementById('prometrics-text');
-            const chevron = document.getElementById('prometrics-chevron');
-            if (box.classList.contains('hidden')) {
-                box.classList.remove('hidden');
-                textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
-                chevron.style.transform = "rotate(180deg)";
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const loginBtn = document.getElementById('tab-login-btn');
+            const registerBtn = document.getElementById('tab-register-btn');
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden'); registerForm.classList.add('hidden');
+                loginBtn.className = "flex-1 pb-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
+                registerBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
             } else {
-                box.classList.add('hidden');
-                textEl.innerText = "Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)";
-                chevron.style.transform = "rotate(0deg)";
+                loginForm.classList.add('hidden'); registerForm.classList.remove('hidden');
+                registerBtn.className = "flex-1 pb-2 text-xs font-bold text-indigo-400 border-b-2 border-emerald-500 transition";
+                loginBtn.className = "flex-1 pb-2 text-xs font-bold text-slate-400 hover:text-white transition";
             }
         }
 
-        // Lắng nghe Auth để load Watchlist
-        auth.onAuthStateChanged((user) => {
-            currentUserAccount = user;
-            if (user) {
-                db.collection('watchlists').doc(user.uid).get().then(doc => {
-                    if (doc.exists) {
-                        userWatchlist = new Set(doc.data().symbols || []);
-                    } else {
-                        userWatchlist = new Set();
-                    }
-                    updateWatchlistBadge();
-                    renderCards();
-                }).catch(err => {
-                    console.warn('Lỗi tải watchlist:', err);
-                    userWatchlist = new Set();
-                    updateWatchlistBadge();
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+            const errBox = document.getElementById('login-error');
+            errBox.classList.add('hidden');
+            try { 
+                await auth.signInWithEmailAndPassword(email, pass); 
+            } catch (err) { 
+                errBox.innerText = "Lỗi đăng nhập: " + err.message; 
+                errBox.classList.remove('hidden'); 
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-password').value;
+            const errBox = document.getElementById('register-error');
+            errBox.classList.add('hidden');
+            try {
+                await auth.createUserWithEmailAndPassword(email, pass);
+                const expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 7);
+                await db.collection('allowed_users').doc(email.toLowerCase()).set({
+                    email: email, role: 'user', expiresAt: expireDate.toISOString()
                 });
+                alert("Đăng ký thành công tài khoản trải nghiệm 7 ngày!");
+            } catch (err) { 
+                errBox.innerText = "Lỗi đăng ký: " + err.message; 
+                errBox.classList.remove('hidden'); 
+            }
+        }
+
+        async function handleLogout() { 
+            await auth.signOut(); 
+            window.location.reload(); 
+        }
+
+        auth.onAuthStateChanged(async (user) => {
+            const authOverlay = document.getElementById('auth-overlay');
+            const expiredModal = document.getElementById('expired-modal');
+            if (user) {
+                try {
+                    const emailKey = user.email.toLowerCase();
+                    const userDocRef = db.collection('allowed_users').doc(emailKey);
+                    const doc = await userDocRef.get();
+                    let userData = {};
+                    if (!doc.exists) {
+                        const expireDate = new Date();
+                        expireDate.setDate(expireDate.getDate() + 7);
+                        userData = { email: user.email, role: 'user', expiresAt: expireDate.toISOString() };
+                        await userDocRef.set(userData);
+                    } else { userData = doc.data(); }
+                    
+                    const now = new Date();
+                    const expireTime = parseDate(userData.expiresAt);
+                    
+                    if (expireTime && now > expireTime && userData.role !== 'admin') {
+                        authOverlay.classList.add('hidden');
+                        expiredModal.classList.remove('hidden');
+                        document.getElementById('user-uid-text').innerText = user.uid;
+                        await auth.signOut();
+                        return;
+                    } else {
+                        authOverlay.classList.add('hidden');
+                        expiredModal.classList.add('hidden');
+                    }
+                    if (userData.role === 'admin') {
+                        const adminBtn = document.getElementById('btn-admin-panel');
+                        if (adminBtn) { adminBtn.classList.remove('hidden'); adminBtn.classList.add('flex'); }
+                    }
+                } catch (err) { console.warn("⚠️ Lỗi kiểm tra Firestore:", err); }
+                
+                currentUser = user;
+                await loadUserWatchlist(user.uid);
+                
+                if (typeof loadData === 'function') loadData(true);
             } else {
+                currentUser = null;
                 userWatchlist = new Set();
-                updateWatchlistBadge();
-                renderCards();
+                authOverlay.classList.remove('hidden');
+                expiredModal.classList.add('hidden');
             }
         });
 
-        // Hàm toggle Watchlist
+        async function loadUserWatchlist(uid) {
+            try {
+                const doc = await db.collection('watchlists').doc(uid).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    userWatchlist = new Set(data.symbols || []);
+                } else {
+                    userWatchlist = new Set();
+                }
+                updateWatchlistBadge();
+            } catch (err) {
+                console.warn('⚠️ Không tải được watchlist:', err);
+                userWatchlist = new Set();
+            }
+        }
+
         async function toggleWatchlist(symbol, event) {
             if (event) event.stopPropagation();
-            if (!currentUserAccount) {
+            if (!currentUser) {
                 alert('Vui lòng đăng nhập để dùng tính năng theo dõi!');
                 return;
             }
@@ -656,9 +794,9 @@ def generate_html():
             updateChartWatchlistBtn(symbol);
 
             try {
-                await db.collection('watchlists').doc(currentUserAccount.uid).set({
+                await db.collection('watchlists').doc(currentUser.uid).set({
                     symbols: Array.from(userWatchlist),
-                    email: currentUserAccount.email,
+                    email: currentUser.email,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
             } catch (err) {
@@ -667,6 +805,8 @@ def generate_html():
                 else userWatchlist.add(symbol);
                 updateWatchlistButton(symbol, !isAdding);
                 updateWatchlistBadge();
+                updateModalWatchlistBtn(symbol);
+                updateChartWatchlistBtn(symbol);
                 alert('Không thể lưu — vui lòng thử lại!');
             }
         }
@@ -674,6 +814,7 @@ def generate_html():
         function toggleWatchlistFromModal() {
             if (currentSymbol) toggleWatchlist(currentSymbol, null);
         }
+
         function toggleWatchlistFromChart() {
             if (currentSymbol) toggleWatchlist(currentSymbol, null);
         }
@@ -684,9 +825,11 @@ def generate_html():
             if (isWatched) {
                 btn.innerHTML = '<i class="fa-solid fa-bookmark text-amber-400"></i>';
                 btn.className = 'px-1.5 py-0.5 rounded-md bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs transition';
+                btn.title = 'Đang theo dõi — click để bỏ';
             } else {
                 btn.innerHTML = '<i class="fa-regular fa-bookmark text-slate-400"></i>';
                 btn.className = 'px-1.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 text-xs transition';
+                btn.title = 'Thêm vào danh mục theo dõi';
             }
         }
 
@@ -725,9 +868,127 @@ def generate_html():
                     badge.classList.add('hidden');
                 }
             }
+            const accCount = document.getElementById('acc-modal-watchlist-count');
+            if (accCount) accCount.innerText = userWatchlist.size + ' mã';
         }
 
-        // Hàm load data
+        async function openAccountModal() {
+            const user = auth.currentUser;
+            if (!user) return;
+            document.getElementById('account-modal').classList.remove('hidden');
+            document.getElementById('acc-modal-email').innerText = user.email || '--';
+            document.getElementById('acc-modal-uid').innerText = user.uid;
+            document.getElementById('acc-modal-expire').innerText = 'Đang tải...';
+            document.getElementById('acc-modal-role').innerText = 'Đang tải...';
+            document.getElementById('acc-modal-watchlist-count').innerText = userWatchlist.size + ' mã';
+            try {
+                const doc = await db.collection('allowed_users').doc(user.email.toLowerCase()).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('acc-modal-role').innerText = (data.role || 'user').toUpperCase();
+                    const expDate = parseDate(data.expiresAt);
+                    document.getElementById('acc-modal-expire').innerText = expDate ? expDate.toLocaleDateString('vi-VN') : 'Vô thời hạn';
+                } else {
+                    document.getElementById('acc-modal-role').innerText = 'USER';
+                    document.getElementById('acc-modal-expire').innerText = 'Chưa thiết lập';
+                }
+            } catch (err) { document.getElementById('acc-modal-expire').innerText = 'Không thể tải hạn dùng'; }
+        }
+
+        function closeAccountModal() { document.getElementById('account-modal').classList.add('hidden'); }
+
+        async function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+            const listEl = document.getElementById('admin-users-list');
+            listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i>Đang tải danh sách...</td></tr>`;
+            try {
+                const snapshot = await db.collection('allowed_users').get();
+                listEl.innerHTML = '';
+                if (snapshot.empty) { listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`; return; }
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const expDate = parseDate(data.expiresAt);
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-800/50 transition";
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-white">${data.email || doc.id}</td>
+                        <td class="p-3 text-slate-300">${expDate ? expDate.toLocaleDateString('vi-VN') : '—'}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                    `;
+                    listEl.appendChild(tr);
+                });
+            } catch (err) { listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập danh sách.</td></tr>`; }
+        }
+
+        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+
+        let screenerResults = [];
+        let symbolSimRates = {};
+        let quarterlyMeanDetails = {};
+        let currentSymbolHistory = null;
+        let chartInstance = null;
+        let candleSeriesInstance = null;
+        let volumeSeriesInstance = null;
+        let currentSymbol = null;
+        let currentInterval = 'D1';
+        let activeIndicators = { VOLMA: false, MA20: true, MA50: false, RSI: false, QLINES: true, QZONE: true };
+        let currentActiveTab = 'eval';
+
+        const SECTOR_NAMES = {
+            "NGAN_HANG": "Ngân hàng", "CHUNG_KHOAN": "Chứng khoán", "BAT_DONG_SAN": "Bất động sản",
+            "CONG_NGHE_BAN_LE": "Công nghệ & Bán lẻ", "DIEN_NUOC_HA_TANG": "Điện, Nước & Hạ tầng",
+            "NGUYEN_VAT_LIEU_CHU_KY": "Vật liệu & Chu kỳ", "SAN_XUAT_TIEU_DUNG_PHONG_THU": "Sản xuất & Tiêu dùng",
+            "KHAC": "Khác"
+        };
+
+        const FINAL_DECISION_STYLE = {
+            "emerald": { bg: "bg-emerald-500/15", border: "border-emerald-500/50", text: "text-emerald-300", icon: "fa-circle-check" },
+            "amber":   { bg: "bg-amber-500/15",   border: "border-amber-500/50",   text: "text-amber-300",   icon: "fa-hourglass-half" },
+            "rose":    { bg: "bg-rose-500/15",    border: "border-rose-500/50",    text: "text-rose-300",    icon: "fa-triangle-exclamation" },
+            "slate":   { bg: "bg-slate-700/40",   border: "border-slate-600/50",   text: "text-slate-300",   icon: "fa-eye" },
+        };
+
+        function formatNumber(num) {
+            if (num === undefined || num === null || num === 0) return '—';
+            let val = (num < 1000 && num > 0) ? num * 1000 : num;
+            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        function formatPercent(num) {
+            if (num === undefined || num === null) return '—';
+            return num.toFixed(1) + '%';
+        }
+
+        function clearInput(elementId) {
+            const inputEl = document.getElementById(elementId);
+            if (inputEl) {
+                inputEl.value = '';
+                inputEl.focus();
+                if (elementId === 'search-input') {
+                    document.getElementById('search-suggestions').classList.add('hidden');
+                    renderCards();
+                } else if (elementId === 'modal-symbol-input') {
+                    document.getElementById('modal-search-suggestions').classList.add('hidden');
+                } else if (elementId === 'dropdown-search') {
+                    filterDropdownSymbols('');
+                }
+            }
+        }
+
+        function toggleProMetrics() {
+            const box = document.getElementById('pro-metrics-box');
+            const textEl = document.getElementById('prometrics-text');
+            const chevron = document.getElementById('prometrics-chevron');
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                textEl.innerText = "Ẩn bớt chỉ số chuyên nghiệp";
+                chevron.style.transform = "rotate(180deg)";
+            } else {
+                box.classList.add('hidden');
+                textEl.innerText = "Hiển thị thêm chỉ số chuyên nghiệp (CFO, D/E, Biên gộp, TTM)";
+                chevron.style.transform = "rotate(0deg)";
+            }
+        }
+
         async function loadData(showSpinner = false) {
             const icon = document.getElementById('refresh-icon');
             if (showSpinner && icon) icon.classList.add('spinner');
@@ -801,7 +1062,6 @@ def generate_html():
             }
         }
 
-        // Hàm render thẻ cổ phiếu
         function renderCards() {
             const container = document.getElementById('stock-container');
             if (!container) return;
@@ -995,7 +1255,9 @@ def generate_html():
             });
         }
 
-        // --- SEARCH SUGGESTIONS ---
+        // ================== SEARCH SUGGESTIONS ==================
+        let currentSuggestions = [];
+        
         function handleSearchInput(val) {
             const term = val.trim().toUpperCase();
             const suggestBox = document.getElementById('search-suggestions');
@@ -1040,6 +1302,7 @@ def generate_html():
             renderCards();
         }
 
+        // Đóng gợi ý khi click ra ngoài
         window.addEventListener('click', (e) => {
             const searchBox = document.getElementById('search-input');
             const searchSuggest = document.getElementById('search-suggestions');
@@ -1048,7 +1311,9 @@ def generate_html():
             }
         });
 
-        // --- MODAL SEARCH SUGGESTIONS ---
+        // ================== MODAL SEARCH SUGGESTIONS ==================
+        let currentModalSuggestions = [];
+        
         function handleModalSearchInput(val) {
             const term = val.trim().toUpperCase();
             const suggestBox = document.getElementById('modal-search-suggestions');
@@ -1088,9 +1353,10 @@ def generate_html():
         function selectModalSuggestion(symbol) {
             document.getElementById('modal-search-suggestions').classList.add('hidden');
             document.getElementById('modal-symbol-input').value = symbol;
-            openModal(symbol);
+            openModal(symbol); // Load lại thông tin mã mới
         }
 
+        // Đóng modal gợi ý khi click ngoài
         window.addEventListener('click', (e) => {
             const modalSearchBox = document.getElementById('modal-symbol-input');
             const modalSuggest = document.getElementById('modal-search-suggestions');
@@ -1099,10 +1365,12 @@ def generate_html():
             }
         });
 
-        // --- CHART DROPDOWN SEARCH ---
+        // ================== CHART DROPDOWN SEARCH SUGGESTIONS ==================
+        let currentChartSuggestions = [];
         function handleDropdownSearchKeyDown(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
+                // Lấy danh sách đang hiển thị
                 const firstBtn = document.querySelector('#dropdown-symbol-list button');
                 if (firstBtn) {
                     firstBtn.click();
@@ -1110,7 +1378,8 @@ def generate_html():
             }
         }
 
-        // --- AI MODAL LOGIC ---
+        // =======================================================
+
         function switchAiTab(tabName) {
             currentActiveTab = tabName;
             ['eval', 'simulator'].forEach(t => {
@@ -1357,7 +1626,6 @@ def generate_html():
             input.setSelectionRange(cursorPos + (newLen - originalLen), cursorPos + (newLen - originalLen));
         }
 
-        // --- CHART LOGIC ---
         function navigateSymbol(direction) {
             const symbols = screenerResults.map(s => s.symbol).sort();
             const currentIndex = symbols.indexOf(currentSymbol);
@@ -1723,24 +1991,15 @@ def generate_html():
         document.getElementById('search-input').addEventListener('input', renderCards);
         document.getElementById('sector-filter').addEventListener('change', renderCards);
         document.getElementById('ranking-filter').addEventListener('change', renderCards);
-
-        // Khởi động loadData
-        setTimeout(() => { loadData(true); }, 500);
     </script>
 </body>
 </html>
 """
 
-    # Tiến hành thay thế các placeholder
     html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
     html_content = html_content.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
     html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
     html_content = html_content.replace("{last_update_str}", last_update_str)
-    
-    # Nhúng mã từ module accounts
-    html_content = html_content.replace("{accounts_css}", accounts_css)
-    html_content = html_content.replace("{accounts_html}", accounts_html)
-    html_content = html_content.replace("{accounts_js}", accounts_js)
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
