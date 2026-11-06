@@ -96,7 +96,7 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     total_score = screener_item.get("total_score", 0)
     growth_yoy = float(screener_item.get("profit_growth_yoy", 0) or 0)
 
-    # ĐỌC TRỰC TIẾP QUYẾT ĐỊNH TỪ SCREENER_RESULTS.JSON (Đã được tính toán chuẩn xác)
+    # ĐỌC TRỰC TIẾP QUYẾT ĐỊNH TỪ SCREENER_RESULTS.JSON
     final_decision = screener_item.get("final_decision", "CHƯA XÁC ĐỊNH")
 
     sector_name = SECTOR_NAMES.get(sector, sector)
@@ -164,7 +164,7 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     }
     risks = risk_map.get(sector, f"Rủi ro chung của ngành {sector_name} và biến động thị trường.")
 
-    # Outlook
+    # Outlook (TẬP TRUNG VÀO BIÊN AN TOÀN)
     if verdict == "RẺ - TRONG VÙNG MUA":
         outlook = (
             f"Giá hiện tại {close:,.0f} VNĐ nằm dưới vùng mua an toàn {fair_low:,.0f} VNĐ, "
@@ -206,6 +206,7 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
         f"Giá hiện tại: {close:,.0f} | Verdict: {verdict}"
     )
 
+    # Vĩ mô (TẬP TRUNG VÀO CHU KỲ NGÀNH)
     macro_map = {
         "NGAN_HANG": "Chu kỳ tín dụng đang phục hồi khi lãi suất huy động duy trì thấp. NIM có thể chịu áp lực khi Chính phủ thúc đẩy giảm lãi vay. Luật Các TCTD sửa đổi tạo lợi thế cho ngân hàng quản trị minh bạch. Rủi ro nợ xấu BĐS còn hiện hữu trong ngắn hạn.",
         "CHUNG_KHOAN": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
@@ -375,9 +376,9 @@ NHIỆM VỤ: Diễn giải dữ liệu đã tính sẵn cho mã {symbol}. KHÔN
 1. MỌI nhận định phải có SỐ CỤ THỂ từ dữ kiện.
 2. VỀ VÙNG MUA: PHẢI dùng đúng 2 con số: fair value {fair_high:,.0f}, vùng mua {fair_low:,.0f}.
 3. VỀ KHUYẾN NGHỊ: Hệ thống đã tính → "{final_decision}". BẠN PHẢI trả về recommendation = "{rec_text}" và weight = "{rec_weight}". 
-TUYỆT ĐỐI KHÔNG ĐƯỢC TỰ ĐỔI SANG CHỮ "TRÁNH" HAY BẤT KỲ TỪ NÀO KHÁC. Nếu bạn thấy rủi ro (ví dụ: lợi nhuận tăng trưởng âm), hãy viết rủi ro đó vào phần "risks" hoặc "outlook", nhưng KHÔNG ĐƯỢC đổi phần "recommendation".
-4. KHÔNG dùng từ hoa mỹ chung chung.
-5. Nếu phát hiện mâu thuẫn, chỉ ra nhưng vẫn giữ recommendation = "{rec_text}".
+TUYỆT ĐỐI KHÔNG ĐƯỢC TỰ ĐỔI SANG CHỮ "TRÁNH" HAY BẤT KỲ TỪ NÀO KHÁC.
+4. VỀ "ĐỊNH GIÁ & HÀNH ĐỘNG GIÁ" (outlook): Phải làm nổi bật "Biên an toàn" (Margin of Safety). Nếu giá đang trong vùng mua, phải kết luận rõ đây là cơ hội. Nếu giá đắt, phải nói rõ rủi ro.
+5. VỀ "VĨ MÔ & SÓNG NGÀNH" (macro_view): Phân tích dựa trên chu kỳ giá hàng hóa (đối với ngành Vật liệu/Phân bón/Hóa chất/Thép) hoặc chính sách vĩ mô (đối với Ngân hàng/BĐS). KHÔNG nói chung chung về VN-Index.
 
 --- ĐỊNH DẠNG: JSON THUẦN TÚY (KHÔNG ```json) ---
 {{
@@ -385,10 +386,10 @@ TUYỆT ĐỐI KHÔNG ĐƯỢC TỰ ĐỔI SANG CHỮ "TRÁNH" HAY BẤT KỲ T�
   "catalyst": "3-4 câu. Economic Moat cụ thể + động lực tăng trưởng 2-3 năm.",
   "risks": "3 câu. Rủi ro trọng yếu nhất phù hợp ngành.",
   "valuation_verdict": "Copy nguyên văn: '{verdict}'",
-  "outlook": "4-5 câu. So sánh giá {close_price:,.0f} với vùng mua {fair_low:,.0f}-{fair_high:,.0f}. Giải thích quyết định '{final_decision}'.",
+  "outlook": "4-5 câu. So sánh giá {close_price:,.0f} với vùng mua {fair_low:,.0f}-{fair_high:,.0f}. Giải thích quyết định '{final_decision}'. Nhấn mạnh biên an toàn {discount_pct:.1f}%.",
   "recommendation": "BẮT BUỘC: '{rec_text}' — {rec_weight}",
   "price_zone": "BẮT BUỘC: 'Vùng mua: {fair_low:,.0f} — {fair_high:,.0f} | Giá hiện tại: {close_price:,.0f} | Verdict: {verdict}'",
-  "macro_view": "4-5 câu. Yếu tố vĩ mô/chu kỳ thực sự ảnh hưởng doanh nghiệp."
+  "macro_view": "4-5 câu. Phân tích chu kỳ hàng hóa hoặc vĩ mô tác động trực tiếp đến doanh nghiệp."
 }}"""
 
     headers = {"Authorization": f"Bearer {ALIBABA_API_KEY}", "Content-Type": "application/json"}
