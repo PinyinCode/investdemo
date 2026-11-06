@@ -39,7 +39,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 57,500 đã vượt xa fair_high 45,029 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "DCM",
@@ -207,7 +207,7 @@
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
         "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
         "final_decision_color": "amber",
-        "final_decision_reason": "Doanh nghiệp tốt (PTCB 45/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua."
+        "final_decision_reason": "Giá 52,600 cao hơn fair_high 44,564. Doanh nghiệp tốt (PTCB 45/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "TLG",
@@ -249,7 +249,7 @@
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
         "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
         "final_decision_color": "amber",
-        "final_decision_reason": "Doanh nghiệp tốt (PTCB 45/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua."
+        "final_decision_reason": "Giá 54,300 cao hơn fair_high 53,273. Doanh nghiệp tốt (PTCB 45/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "BSR",
@@ -582,7 +582,7 @@
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
         "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
         "final_decision_color": "amber",
-        "final_decision_reason": "Doanh nghiệp tốt (PTCB 35/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua."
+        "final_decision_reason": "Giá 75,000 cao hơn fair_high 74,531. Doanh nghiệp tốt (PTCB 35/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "PAN",
@@ -666,7 +666,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 35,700 đã vượt xa fair_high 29,073 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "REE",
@@ -833,7 +833,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 143,000 đã vượt xa fair_high 70,562 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "MSN",
@@ -875,7 +875,7 @@
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
         "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
         "final_decision_color": "amber",
-        "final_decision_reason": "Doanh nghiệp tốt (PTCB 35/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua."
+        "final_decision_reason": "Giá 71,600 cao hơn fair_high 62,703. Doanh nghiệp tốt (PTCB 35/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "PVT",
@@ -958,7 +958,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 15,750 đã vượt xa fair_high 12,363 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "GAS",
@@ -1000,7 +1000,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 74,600 đã vượt xa fair_high 48,545 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "TCB",
@@ -1206,7 +1206,7 @@
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
         "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
         "final_decision_color": "amber",
-        "final_decision_reason": "Doanh nghiệp tốt (PTCB 33/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua."
+        "final_decision_reason": "Giá 20,550 cao hơn fair_high 20,492. Doanh nghiệp tốt (PTCB 33/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "POW",
@@ -1584,7 +1584,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 18/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "SJS",
@@ -1626,7 +1626,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 55,600 đã vượt xa fair_high 44,743 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "SAB",
@@ -1666,9 +1666,9 @@
         "fair_value_rationale": "[SAN_XUAT_TIEU_DUNG_PHONG_THU] PE_method=44,152 (P/E lý tưởng 12.2x, median 10.6x); PB_method=20,914 (P/B lý tưởng 1.3x, median 1.3x); Graham=36,209; MoS 25%.",
         "discount_to_fair_pct": -35.6,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "final_decision": "👀 THEO DÕI",
-        "final_decision_color": "slate",
-        "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HƠI ĐẮT - KHÔNG MUA), PTCB 20/50 < 30."
+        "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
+        "final_decision_color": "amber",
+        "final_decision_reason": "Giá 42,150 cao hơn fair_high 36,209. Doanh nghiệp tốt (PTCB 20/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "BMP",
@@ -1708,9 +1708,9 @@
         "fair_value_rationale": "[CONSTRUCTION] PE_method=170,758 (P/E lý tưởng 11.2x, median 9.7x); PB_method=34,184 (P/B lý tưởng 0.9x, median 0.9x); Graham=115,609; MoS 30%.",
         "discount_to_fair_pct": -41.3,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "final_decision": "👀 THEO DÕI",
-        "final_decision_color": "slate",
-        "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HƠI ĐẮT - KHÔNG MUA), PTCB 20/50 < 30."
+        "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
+        "final_decision_color": "amber",
+        "final_decision_reason": "Giá 137,900 cao hơn fair_high 115,609. Doanh nghiệp tốt (PTCB 20/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "SZC",
@@ -1795,7 +1795,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 30,150 đã vượt xa fair_high 19,416 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "PVS",
@@ -2217,7 +2217,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 82,500 đã vượt xa fair_high 62,579 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "KDH",
@@ -2299,9 +2299,9 @@
         "fair_value_rationale": "[NGAN_HANG] PE_method=34,393 (P/E lý tưởng 8.5x, median 7.4x); PB_method=18,221 (P/B lý tưởng 1.2x, median 1.2x); MoS 20%.",
         "discount_to_fair_pct": -20.2,
         "valuation_verdict": "HƠI ĐẮT - KHÔNG MUA",
-        "final_decision": "👀 THEO DÕI",
-        "final_decision_color": "slate",
-        "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HƠI ĐẮT - KHÔNG MUA), Định giá 8/30 < 18."
+        "final_decision": "⚠️ CHỜ VỀ VÙNG MUA",
+        "final_decision_color": "amber",
+        "final_decision_reason": "Giá 34,500 cao hơn fair_high 34,393. Doanh nghiệp tốt (PTCB 40/50) nhưng định giá đã đắt, chờ điều chỉnh."
     },
     {
         "symbol": "KDC",
@@ -2343,7 +2343,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 50,300 đã vượt xa fair_high 27,783 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "VIC",
@@ -2386,7 +2386,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 238,000 đã vượt xa fair_high 56,567 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "VCB",
@@ -2427,7 +2427,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 54,200 đã vượt xa fair_high 42,365 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "NLG",
@@ -2720,7 +2720,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "PNJ",
@@ -2803,7 +2803,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "Giá 69,200 đã vượt xa fair_high 5,979 quá nhiều. Định giá quá đắt so với giá trị thực."
     },
     {
         "symbol": "NTC",
@@ -2888,7 +2888,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "ASM",
@@ -2973,7 +2973,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 10/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "DXG",
@@ -3015,7 +3015,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 10/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "DPM",
@@ -3181,9 +3181,9 @@
         "fair_value_rationale": "[BAT_DONG_SAN] PE_method=22,560 (P/E lý tưởng 12.0x, median 14.6x); PB_method=23,117 (P/B lý tưởng 1.1x, median 1.1x); Graham=30,090; MoS 30%.",
         "discount_to_fair_pct": -57.5,
         "valuation_verdict": "ĐẮT - TRÁNH",
-        "final_decision": "❌ TRÁNH",
-        "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision": "⚠️ CẢNH BÁO LỢI NHUẬN ẢO",
+        "final_decision_color": "amber",
+        "final_decision_reason": "CFO âm (-451 tỷ) trong khi LNST dương (2,134 tỷ) — lợi nhuận không có tiền mặt thật."
     },
     {
         "symbol": "VIX",
@@ -3224,7 +3224,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "DBC",
@@ -3308,7 +3308,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 5/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "NKG",
@@ -3514,7 +3514,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 5/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "CTD",
@@ -3887,7 +3887,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "HSG",
@@ -3972,7 +3972,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "LIG",
@@ -4056,7 +4056,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 5/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "HCM",
@@ -4097,7 +4097,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "PVD",
@@ -4181,7 +4181,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 5/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "CSM",
@@ -4263,7 +4263,7 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "SBT",
@@ -4305,6 +4305,6 @@
         "valuation_verdict": "ĐẮT - TRÁNH",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH."
+        "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     }
 ]
