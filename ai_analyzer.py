@@ -89,23 +89,15 @@ def build_fallback_narrative(symbol, stock_metrics, screener_item, sector):
     verdict = stock_metrics.get("valuation_verdict", "CHƯA TÍNH")
     mos_pct = float(stock_metrics.get("margin_of_safety_pct", 0) or 0)
     
+    # Đọc điểm số từ screener_item (file screener_results.json - luôn chuẩn xác)
     fund_score = screener_item.get("fundamental_score", 0)
     val_score = screener_item.get("valuation_score", 0)
     tech_score = screener_item.get("technical_score", 0)
     total_score = screener_item.get("total_score", 0)
     growth_yoy = float(screener_item.get("profit_growth_yoy", 0) or 0)
 
-    # 🎯 TỰ ĐỘNG TÍNH LẠI QUYẾT ĐỊNH (Tránh đọc rác từ data.json)
-    if verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 40 and tech_score >= 15 and val_score >= 24 and total_score >= 75:
-        final_decision = "🎯 MUA MẠNH"
-    elif verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and tech_score >= 10 and val_score >= 18 and total_score >= 60:
-        final_decision = "✅ MUA TÍCH SẢN"
-    elif verdict == "ĐẮT - TRÁNH" or fund_score < 20:
-        final_decision = "❌ TRÁNH"
-    elif verdict in ("HỢP LÝ - CHỜ ĐIỀU CHỈNH", "HƠI ĐẮT - KHÔNG MUA") and fund_score >= 30:
-        final_decision = "⚠️ CHỜ VỀ VÙNG MUA"
-    else:
-        final_decision = "👀 THEO DÕI"
+    # ĐỌC TRỰC TIẾP QUYẾT ĐỊNH TỪ SCREENER_RESULTS.JSON (Đã được tính toán chuẩn xác)
+    final_decision = screener_item.get("final_decision", "CHƯA XÁC ĐỊNH")
 
     sector_name = SECTOR_NAMES.get(sector, sector)
     is_bank_or_sec = sector in ("NGAN_HANG", "CHUNG_KHOAN")
@@ -275,8 +267,10 @@ def build_verified_facts(symbol, stock_metrics, screener_item, sector):
     rationale = stock_metrics.get("fair_value_rationale", "")
     methods = stock_metrics.get("fair_value_methods", {})
     sub_sector = stock_metrics.get("sub_sector", sector)
-    final_decision = stock_metrics.get("final_decision", "CHƯA XÁC ĐỊNH")
-    final_reason = stock_metrics.get("final_decision_reason", "")
+    
+    # ĐỌC TỪ SCREENER_RESULTS.JSON (Chuẩn xác nhất)
+    final_decision = screener_item.get("final_decision", "CHƯA XÁC ĐỊNH")
+    final_reason = screener_item.get("final_decision_reason", "")
 
     growth_yoy = float(screener_item.get("profit_growth_yoy", 0) or 0)
     total_score = screener_item.get("total_score", 0)
@@ -358,8 +352,10 @@ def call_ai_api(symbol, stock_metrics, screener_item, sector):
     verdict = stock_metrics.get("valuation_verdict", "CHƯA TÍNH")
     discount_pct = float(stock_metrics.get("discount_to_fair_pct", 0) or 0)
     close_price = float(stock_metrics.get("close", stock_metrics.get("close_price", 0)) or 0)
-    final_decision = stock_metrics.get("final_decision", "CHƯA XÁC ĐỊNH")
-    final_reason = stock_metrics.get("final_decision_reason", "")
+    
+    # Lấy từ screener_item
+    final_decision = screener_item.get("final_decision", "CHƯA XÁC ĐỊNH")
+    final_reason = screener_item.get("final_decision_reason", "")
 
     rec_text, rec_weight = DECISION_TO_RECOMMENDATION.get(
         final_decision, ("NẮM GIỮ / THEO DÕI", "Tỷ trọng 0%")
@@ -378,7 +374,8 @@ NHIỆM VỤ: Diễn giải dữ liệu đã tính sẵn cho mã {symbol}. KHÔN
 --- QUY TẮC BẮT BUỘC ---
 1. MỌI nhận định phải có SỐ CỤ THỂ từ dữ kiện.
 2. VỀ VÙNG MUA: PHẢI dùng đúng 2 con số: fair value {fair_high:,.0f}, vùng mua {fair_low:,.0f}.
-3. VỀ KHUYẾN NGHỊ: Hệ thống đã tính → "{final_decision}". BẠN PHẢI trả về recommendation = "{rec_text}" và weight = "{rec_weight}". KHÔNG ĐƯỢC KHÁC.
+3. VỀ KHUYẾN NGHỊ: Hệ thống đã tính → "{final_decision}". BẠN PHẢI trả về recommendation = "{rec_text}" và weight = "{rec_weight}". 
+TUYỆT ĐỐI KHÔNG ĐƯỢC TỰ ĐỔI SANG CHỮ "TRÁNH" HAY BẤT KỲ TỪ NÀO KHÁC. Nếu bạn thấy rủi ro (ví dụ: lợi nhuận tăng trưởng âm), hãy viết rủi ro đó vào phần "risks" hoặc "outlook", nhưng KHÔNG ĐƯỢC đổi phần "recommendation".
 4. KHÔNG dùng từ hoa mỹ chung chung.
 5. Nếu phát hiện mâu thuẫn, chỉ ra nhưng vẫn giữ recommendation = "{rec_text}".
 
@@ -437,8 +434,8 @@ NHIỆM VỤ: Diễn giải dữ liệu đã tính sẵn cho mã {symbol}. KHÔN
                 # Post-check recommendation
                 ai_rec = parsed_data.get("recommendation", "").upper()
                 expected_rec = rec_text.upper()
-                if expected_rec not in ai_rec and ai_rec not in expected_rec:
-                    print(f"  ⚠️ [{symbol}] AI không tuân thủ → Ghi đè: '{rec_text}'")
+                if expected_rec not in ai_rec:
+                    print(f"  ⚠️ [{symbol}] AI tự đổi khuyến nghị → Ghi đè: '{rec_text}'")
                     parsed_data["recommendation"] = f"{rec_text} — {rec_weight}"
 
                 parsed_data["_source"] = "AI"
@@ -528,11 +525,11 @@ def run_group(symbols_dict, label, stock_db, screener_map, sleep_time, use_ai=Tr
             print(f"[{idx}/{total}] ⚠️ [{sector}] {symbol} — CHƯA CÓ VÙNG MUA. Chạy screener.py trước. Bỏ qua.")
             continue
 
-        if not stock_metrics.get("final_decision"):
+        if not screener_item.get("final_decision"):
             print(f"[{idx}/{total}] ⚠️ [{sector}] {symbol} — Thiếu final_decision. Chạy screener.py để cập nhật.")
             continue
 
-        final_dec = stock_metrics.get('final_decision', '?')
+        final_dec = screener_item.get('final_decision', '?')
         print(f"[{idx}/{total}] 🔍 [{sector}] {symbol} | {final_dec}")
 
         ai_result = analyze_stock(symbol, stock_metrics, screener_item, sector, use_ai=use_ai)
