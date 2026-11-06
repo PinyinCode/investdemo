@@ -19,20 +19,22 @@ RESUME_DAYS = 7
 # 🆕 CẤU HÌNH AI — Đọc từ config.json
 # ============================================================
 def load_config():
-    default_config = {"model_name": "qwen3.7-max", "temperature": 0.15}
-    if os.path.exists(CONFIG_FILE):
-        try:
-            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-                config = json.load(f)
-                default_config.update(config)
-                return default_config
-        except Exception as e:
-            print(f"⚠️ Lỗi đọc {CONFIG_FILE}: {e}. Dùng cấu hình mặc định.")
-    return default_config
+    if not os.path.exists(CONFIG_FILE):
+        raise FileNotFoundError(f"❌ Không tìm thấy {CONFIG_FILE}. Vui lòng tạo file này với nội dung: {{\"model_name\": \"...\", \"temperature\": ...}}")
+
+    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+        config = json.load(f)
+
+    if "model_name" not in config or not config["model_name"]:
+        raise ValueError(f"❌ {CONFIG_FILE} thiếu key 'model_name' hoặc giá trị rỗng.")
+    if "temperature" not in config:
+        raise ValueError(f"❌ {CONFIG_FILE} thiếu key 'temperature'.")
+
+    return config
 
 AI_CONFIG = load_config()
-MODEL_NAME = AI_CONFIG.get("model_name", "qwen3.7-max")
-TEMPERATURE = AI_CONFIG.get("temperature", 0.15)
+MODEL_NAME = AI_CONFIG["model_name"]
+TEMPERATURE = AI_CONFIG["temperature"]
 
 
 SECTOR_MAPPING = {
