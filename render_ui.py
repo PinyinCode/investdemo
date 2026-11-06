@@ -1024,10 +1024,13 @@ def generate_html():
                     const isFundActive  = rankingMode === "FUNDAMENTAL";
                     const isTechActive  = rankingMode === "TECHNICAL";
                     const isAllActive   = rankingMode === "ALL_SCORE";
+                    const isValActive   = rankingMode === "VALUATION_VERDICT"; // 🆕 Thêm biến cho Định giá
+
                     const clsBase = "flex flex-col items-center justify-center py-1 rounded-md border text-[9px] leading-tight";
                     const clsFund = isFundActive ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300" : "bg-slate-900/60 border-slate-800 text-slate-400";
                     const clsTech = isTechActive ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" : "bg-slate-900/60 border-slate-800 text-slate-400";
-                    const clsVal  = isAllActive  ? "bg-amber-500/20 border-amber-500/50 text-amber-300"   : "bg-slate-900/60 border-slate-800 text-slate-400";
+                    const clsVal  = isValActive  ? "bg-amber-500/20 border-amber-500/50 text-amber-300"   : "bg-slate-900/60 border-slate-800 text-slate-400";
+                    const clsAll  = isAllActive  ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300" : "bg-slate-900/60 border-slate-800 text-slate-400"; // 🆕 Class riêng cho Tổng hợp
 
                     scoreHtml = `
                         <div class="mt-1 bg-slate-950/60 rounded-lg border border-slate-800 p-1.5">
@@ -1035,7 +1038,7 @@ def generate_html():
                                 <div class="${clsBase} ${clsFund}"><span class="font-semibold opacity-80">Cơ bản</span><span class="font-black text-[11px]">${item.fundamental_score ?? '—'}</span></div>
                                 <div class="${clsBase} ${clsTech}"><span class="font-semibold opacity-80">Kỹ thuật</span><span class="font-black text-[11px]">${item.technical_score ?? '—'}</span></div>
                                 <div class="${clsBase} ${clsVal}"><span class="font-semibold opacity-80">Định giá</span><span class="font-black text-[11px]">${item.valuation_score ?? item.value_score ?? '—'}</span></div>
-                                <div class="${clsBase} bg-indigo-500/15 border-indigo-500/40 text-indigo-200"><span class="font-semibold opacity-80">Tổng hợp</span><span class="font-black text-[11px] text-amber-300">${item.total_score ?? '—'}</span></div>
+                                <div class="${clsBase} ${clsAll}"><span class="font-semibold opacity-80">Tổng hợp</span><span class="font-black text-[11px] text-amber-300">${item.total_score ?? '—'}</span></div>
                             </div>
                         </div>
                     `;
@@ -1717,7 +1720,7 @@ def generate_html():
 """
 
     html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
-    html_content = html_content.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
+    html_content = html_template.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
     html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
     html_content = html_content.replace("{last_update_str}", last_update_str)
 
