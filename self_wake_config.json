@@ -1,0 +1,60 @@
+{
+    "_comment": "Đã cập nhật trỏ về Server gộp 5-in-1. Giữ nguyên dấu / ở cuối để tương thích với code Frontend cũ.",
+    
+    "enabled": true,
+    
+    "servers": [
+        {
+            "name": "OTP Server",
+            "url": "https://server-vopb.onrender.com/"
+        },
+        {
+            "name": "Grading Server",
+            "url": "https://server-vopb.onrender.com/"
+        },
+        {
+            "name": "Vocab API",
+            "url": "https://server-vopb.onrender.com/"
+        },
+        {
+            "name": "Delete API",
+            "url": "https://server-vopb.onrender.com/"
+        }
+    ],
+    
+    "ping_interval_ms": 300000,
+    "_ping_interval_comment": "5 phút. Tối thiểu 60000 (1 phút).",
+    
+    "ping_timeout_ms": 15000,
+    "_ping_timeout_comment": "Timeout mỗi request. 15000ms = 15s.",
+    
+    "reping_on_visible_after_ms": 120000,
+    "_reping_comment": "Ping lại khi user quay lại tab sau 2 phút.",
+    
+    "initial_jitter_ms": 30000,
+    "_initial_jitter_comment": "Jitter khi load trang.",
+    
+    "heartbeat_jitter_ms": 60000,
+    "_heartbeat_comment": "Jitter mỗi heartbeat.",
+    
+    "cooldown_factor": 0.9,
+    "_cooldown_comment": "Cho phép ping nếu quá 90% interval.",
+    
+    "max_concurrent_ping": 2,
+    "_concurrent_comment": "Ping tối đa 2 server cùng lúc.",
+    
+    "ping_on_first_click": false,
+    "_click_comment": "Đã tắt ping khi click lần đầu.",
+    
+    "heartbeat_enabled": false,
+    "_heartbeat_comment": "Đã tắt ping định kỳ khi tab visible.",
+    
+    "use_localstorage": true,
+    "_ls_comment": "Dùng localStorage để nhớ lần ping cuối.",
+    
+    "pause_when_hidden": true,
+    "_pause_comment": "Không ping khi tab ẩn.",
+    
+    "debug": true,
+    "_debug_comment": "Bật true để xem log [self-wake] trong Console."
+}
