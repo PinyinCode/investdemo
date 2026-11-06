@@ -3348,14 +3348,14 @@
                 "roe_quarter": 3.87
             }
         ],
-        "outlook": "Giá 19,500 VNĐ đã vượt xa fair value 14,756 VNĐ. Định giá đắt rõ rệt, không phù hợp đầu tư giá trị. Verdict: ĐẮT - TRÁNH. Quyết định hệ thống: ❌ TRÁNH.",
+        "outlook": "Giá cổ phiếu FTS đang giao dịch ở mức 19,500 VNĐ, vượt xa so với vùng mua an toàn từ 11,067 VNĐ đến giá trị thực (fair value) 14,756 VNĐ. Việc thị trường định giá cao hơn fair_high tới 32.1% đồng nghĩa với việc biên an toàn (Margin of Safety) không những không có mà còn bị chiết khấu âm -43.2% so với fair_low. Với nền tảng cơ bản yếu, việc mua vào ở vùng giá này tiềm ẩn rủi ro điều chỉnh sâu khi thị trường nhận ra sự thiếu hụt dòng tiền. Do đó, hệ thống đưa ra quyết định '❌ TRÁNH' để bảo toàn vốn, chờ đợi cổ phiếu quay về vùng định giá hấp dẫn hơn. Nhà đầu tư giá trị tuyệt đối không nên giải ngân khi tài sản đang bị thổi phồng quá mức so với nội tại.",
         "ai_recommendation": "TRÁNH — Tỷ trọng 0% — Không mua",
         "ai_price_zone": "Vùng mua: 11,067 — 14,756 | Giá hiện tại: 19,500 | Verdict: ĐẮT - TRÁNH",
-        "macro_view": "Thanh khoản thị trường là yếu tố quyết định doanh thu ngành. Chính sách nâng hạng thị trường (FTSE) tạo catalyst trung hạn. Chu kỳ lãi suất thấp hỗ trợ dòng tiền vào chứng khoán.",
-        "ai_updated_at": "2026-11-05 22:58:07",
-        "bctc": "Chỉ số sinh lời: ROE đạt 9.1%, ROA 2.9% — còn khá thấp, cần cải thiện. P/E 18.54x và P/B 1.67x phản ánh mức định giá của một định chế tài chính. Với đặc thù ngân hàng, D/E 2.06 là bản chất từ tiền gửi khách hàng, không phải dấu hiệu rủi ro. ⚠️ Cảnh báo: CFO/LNST chỉ -1.82x — lợi nhuận kém tiền mặt, cần theo dõi khoản phải thu. EPS đạt 1,054 VNĐ, cổ tức 2.32%/năm — thu nhập thụ động hấp dẫn.",
-        "catalyst": "Lợi thế cạnh tranh cốt lõi (Economic Moat) nằm ở thị phần môi giới ổn định, quan hệ với nhà đầu tư tổ chức và năng lực tự doanh có kỷ luật. Tăng trưởng LNST hiện ở mức -35.0% YoY, cần theo dõi thêm.",
-        "risks": "Rủi ro thanh khoản thị trường suy giảm làm giảm doanh thu môi giới và margin. Rủi ro danh mục tự doanh khi thị trường đảo chiều. Rủi ro ROE 9.1% không duy trì được khi chu kỳ xuống.",
+        "macro_view": "Ngành chứng khoán đang chịu tác động trực tiếp từ chính sách tiền tệ của Ngân hàng Nhà nước và tiến trình nâng hạng thị trường của Bộ Tài chính. Môi trường lãi suất cho vay margin có xu hướng cạnh tranh khốc liệt, gây áp lực lên biên lãi ròng của các công ty chứng khoán có chi phí vốn cao như FTS. Bên cạnh đó, các chính sách siết chặt quản lý thị trường, thanh lọc thao túng giá và yêu cầu nâng cấp hệ thống giao dịch là những yếu tố vĩ mô định hình lại thị phần và thanh khoản trong dài hạn. Do đó, triển vọng ngành phụ thuộc lớn vào dòng vốn ngoại và câu chuyện nâng hạng Emerging Market hơn là các yếu tố nội tại ngắn hạn.",
+        "ai_updated_at": "2026-11-06 01:23:28",
+        "bctc": "FTS ghi nhận ROE đạt 9.1% và ROA ở mức 2.9%, cho thấy hiệu quả sử dụng tài sản và vốn chủ sở hữu chỉ ở mức trung bình thấp so với ngành. Hệ số đòn bẩy tài chính khá cao với D/E = 2.06, phản ánh việc công ty chứng khoán này đang sử dụng nợ vay lớn để tài trợ cho hoạt động margin và tự doanh. Tuy nhiên, chất lượng lợi nhuận là một điểm trừ lớn khi LNST TTM chỉ đạt 402 Tỷ đồng và tăng trưởng LNST YoY sụt giảm mạnh -34.99%. Đáng báo động hơn, dòng tiền kinh doanh (CFO) âm sâu -731 Tỷ đồng, dẫn đến tỷ lệ CFO/LNST = -1.82x, cho thấy lợi nhuận kế toán không được chuyển hóa thành tiền mặt thực tế mà đang bị giam vốn trong các khoản cho vay. Với P/E = 18.54x và P/B = 1.67x, thị trường đang trả mức giá khá cao cho một doanh nghiệp có tăng trưởng âm và dòng tiền yếu. Kết luận, lợi nhuận hiện tại mang tính chất 'ảo' do thiếu hụt dòng tiền thực, rủi ro trích lập dự phòng là hiện hữu.",
+        "catalyst": "Lợi thế cạnh tranh (Economic Moat) của FTS chủ yếu dựa vào tệp khách hàng doanh nghiệp và hệ sinh thái từ cổ đông lớn, tuy nhiên rào cản gia nhập ngành chứng khoán đang ngày càng thấp. Động lực tăng trưởng trong 2-3 năm tới sẽ phụ thuộc hoàn toàn vào việc thị trường chứng khoán Việt Nam được nâng hạng giúp gia tăng thanh khoản và dư nợ margin. Ngoài ra, biên gộp 29.0% cần được cải thiện thông qua việc mở rộng thị phần môi giới và tối ưu hóa chi phí vốn vay để vượt qua giai đoạn sideway hiện tại.",
+        "risks": "Rủi ro trọng yếu nhất của FTS nằm ở dòng tiền kinh doanh âm (-731 Tỷ) và đòn bẩy cao (D/E = 2.06), khiến công ty dễ bị tổn thương khi lãi suất huy động vốn tăng hoặc thị trường biến động mạnh. Thứ hai, sự phụ thuộc vào thanh khoản thị trường và hoạt động tự doanh làm cho lợi nhuận biến động khó lường, thể hiện qua việc tăng trưởng LNST YoY lao dốc -34.99%. Cuối cùng, rủi ro pháp lý và siết chặt quy định cho vay margin từ cơ quan quản lý có thể làm thu hẹp dư nợ và ảnh hưởng trực tiếp đến doanh thu tài chính.",
         "ps": 0,
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
@@ -3375,7 +3375,7 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "Giá đã vượt xa fair_high. Verdict: ĐẮT - TRÁNH.",
-        "ai_source": "TEMPLATE_FALLBACK"
+        "ai_source": "AI"
     },
     "BSI": {
         "symbol": "BSI",
