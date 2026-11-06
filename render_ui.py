@@ -93,7 +93,7 @@ def generate_html():
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDK (Dùng chung cho cả module gốc và module này) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
@@ -157,12 +157,10 @@ def generate_html():
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         NHÚNG TOÀN BỘ HTML MODULE ACCOUNTS (Login, Admin, Renewal...)
-         ═══════════════════════════════════════════════════════════════ -->
+    <!-- NHÚNG HTML MODULE ACCOUNTS (Bao gồm Modal đăng nhập, Dropdown user menu, Admin Modal) -->
     {accounts_html}
 
-    <!-- HEADER -->
+    <!-- HEADER CỦA TRANG QUANT -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
@@ -179,13 +177,8 @@ def generate_html():
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
                 </button>
                 
-                <!-- NÚT ADMIN GỌI HÀM CỦA MODULE ACCOUNTS -->
-                <button type="button" id="btn-admin-panel" onclick="openAdminPanel()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
-                    <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline">Admin</span>
-                </button>
-                
-                <!-- NÚT TÀI KHOẢN GỌI HÀM CỦA MODULE ACCOUNTS -->
-                <button type="button" onclick="document.getElementById('userDropdown').classList.toggle('show')" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Tài khoản cá nhân">
+                <!-- NÚT TÀI KHOẢN (KÍCH HOẠT AVATAR CỦA MODULE ACCOUNTS) -->
+                <button type="button" onclick="document.getElementById('userAvatar').click()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg text-xs font-semibold transition flex items-center gap-1.5" title="Tài khoản cá nhân">
                     <i class="fa-solid fa-user-gear text-emerald-400"></i> <span class="hidden md:inline">Tài khoản</span>
                 </button>
             </div>
@@ -537,30 +530,20 @@ def generate_html():
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         KHAI BÁO BIẾN TOÀN CỤC (KHÔNG KHỞI TẠO FIREBASE Ở ĐÂY)
-         ═══════════════════════════════════════════════════════════════ -->
+    <!-- SCRIPT KHAI BÁO BIẾN TOÀN CỤC -->
     <script>
-        // Chỉ khai báo biến, không dùng firebase.initializeApp() để tránh xung đột
         const FIREBASE_CONFIG = {firebase_config_json_placeholder};
         const cheapStocksGroups = {cheap_stocks_json_placeholder};
         const cheapSymbolsSet = new Set({cheap_symbols_json_placeholder});
     </script>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         NHÚNG TOÀN BỘ JS MODULE ACCOUNTS (Chứa logic Auth, Firebase, Admin...)
-         ═══════════════════════════════════════════════════════════════ -->
+    <!-- SCRIPT CỦA MODULE ACCOUNTS -->
     <script>
         {accounts_js}
     </script>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         LOGIC RIÊNG CỦA TRANG QUANT SCREENER
-         ═══════════════════════════════════════════════════════════════ -->
+    <!-- SCRIPT LOGIC RIÊNG CỦA QUANT SCREENER -->
     <script>
-        // Lấy instance auth, db từ module accounts (đã khởi tạo toàn cục)
-        // KHÔNG KHAI BÁO LẠI const auth / const db để tránh lỗi SyntaxError
-        
         let userWatchlist = new Set();
         let currentUserAccount = null;
         let screenerResults = [];
