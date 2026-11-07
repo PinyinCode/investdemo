@@ -65,13 +65,27 @@ def auto_git_push():
             print("ℹ️ Không có dữ liệu mới để đẩy lên.")
             return
 
-        commit_msg = f"Auto update company info (name & shares) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update company info - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push", "origin", "main"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
         
     except Exception as e:
         print(f"⚠️ Lỗi Git push: {e}")
+
+def print_symbol_list(symbols):
+    """In danh sách mã kèm STT để người dùng dễ chọn"""
+    print("\n📋 DANH SÁCH MÃ VÀ SỐ THỨ TỰ:")
+    # In thành 4 cột cho gọn màn hình
+    for i in range(0, len(symbols), 4):
+        row_str = ""
+        for j in range(4):
+            if i + j < len(symbols):
+                stt = i + j + 1
+                sym = symbols[i + j]
+                row_str += f"{stt:>3}. {sym:<6}   "
+        print(row_str)
+    print()
 
 def main():
     print("==================================================")
@@ -86,22 +100,53 @@ def main():
         all_symbols = json.load(f)
 
     old_data = get_old_data()
-    
-    # 1. Kiểm tra xem đã có dữ liệu cũ chưa
     crawled_symbols = [sym for sym, data in old_data.items() if data.get("total_shares", 0) > 0]
     
     print(f"📊 Trạng thái hiện tại: Đã cào được {len(crawled_symbols)}/{len(all_symbols)} mã.")
     print("1. Cào TIẾP (Chỉ lấy những mã chưa có trong file)")
     print("2. Cào LẠI TỪ ĐẦU (Xóa file cũ, cào lại 100 mã)")
+    print("3. Cào CÁC MÃ CỤ THỂ (Nhập 1 hoặc nhiều mã, cách nhau bởi dấu phẩy)")
+    print("4. Cào THEO SỐ THỨ TỰ (VD: Từ STT 1 đến STT 30)")
     
-    choice = input("Nhập lựa chọn của bạn (1/2, mặc định 1): ").strip()
+    choice = input("Nhập lựa chọn của bạn (1/2/3/4, mặc định 1): ").strip()
+    
+    symbols_to_crawl = []
     
     if choice == '2':
         if os.path.exists(OUTPUT_FILE):
             os.remove(OUTPUT_FILE)
-            old_data = {} # Reset lại dữ liệu trong bộ nhớ
+            old_data = {}
         symbols_to_crawl = all_symbols
         print("🔄 Đã xóa dữ liệu cũ. Sẽ cào lại từ đầu.")
+        
+    elif choice == '3':
+        raw_symbols = input("Nhập các mã muốn cào (VD: FPT, ANV, HPG): ").strip().upper()
+        if raw_symbols:
+            input_list = [s.strip() for s in raw_symbols.split(",") if s.strip()]
+            symbols_to_crawl = list(dict.fromkeys(input_list))
+            print(f"🎯 Sẽ cào riêng {len(symbols_to_crawl)} mã: {', '.join(symbols_to_crawl)}")
+        else:
+            print("❌ Không nhận được mã. Thoát.")
+            return
+            
+    elif choice == '4':
+        print_symbol_list(all_symbols)
+        try:
+            start_str = input(f"Nhập STT bắt đầu (1 - {len(all_symbols)}): ").strip()
+            end_str = input(f"Nhập STT kết thúc (1 - {len(all_symbols)}): ").strip()
+            
+            start_idx = int(start_str) - 1
+            end_idx = int(end_str)  # Cắt list Python không bao gồm phần tử cuối, nên giữ nguyên
+            
+            if start_idx < 0 or end_idx > len(all_symbols) or start_idx >= end_idx:
+                print("❌ Khoảng STT không hợp lệ. Thoát.")
+                return
+                
+            symbols_to_crawl = all_symbols[start_idx:end_idx]
+            print(f"🎯 Sẽ cào {len(symbols_to_crawl)} mã từ STT {start_str} đến {end_str}: {', '.join(symbols_to_crawl)}")
+        except ValueError:
+            print("❌ Bạn phải nhập số. Thoát.")
+            return
     else:
         symbols_to_crawl = [s for s in all_symbols if s not in crawled_symbols]
         print(f"⏩ Sẽ cào tiếp {len(symbols_to_crawl)} mã còn lại.")
@@ -124,7 +169,6 @@ def main():
             print(f" ❌ Bị lỗi/khóa IP")
             count_fail_consecutive += 1
             
-            # Nếu bị lỗi 3 lần liên tiếp => Dừng hẳn để đổi IP
             if count_fail_consecutive >= 3:
                 print("\n🚨 BỊ KHÓA IP! Đã lỗi 3 lần liên tiếp. Dừng script để bảo vệ dữ liệu.")
                 print("👉 Hãy tắt/bật lại Modem mạng (hoặc dùng 4G), sau đó chạy lại script để cào tiếp.")
@@ -133,7 +177,6 @@ def main():
             time.sleep(15)
             continue
 
-        # Cào thành công
         count_fail_consecutive = 0
         count_success += 1
 
@@ -153,7 +196,6 @@ def main():
 
         time.sleep(3) 
 
-    # Chỉ Git Push nếu có dữ liệu mới
     if count_success > 0:
         auto_git_push()
     else:
