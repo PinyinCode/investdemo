@@ -8,9 +8,8 @@
     },
     {
         "symbol": "ANV",
-        "company_name": "ANV",
-        "market_cap": 0,
-        "total_shares": 0,
+        "company_name": "Công ty Cổ phần Nam Việt",
+        "total_shares": 266667500,
         "close_price": 17350
     },
     {
@@ -30,7 +29,6 @@
     {
         "symbol": "BAF",
         "company_name": "Công ty Cổ phần Nông nghiệp BAF Việt Nam",
-        "market_cap": 12525655085400,
         "total_shares": 364824906,
         "close_price": 30900
     },
@@ -73,7 +71,6 @@
     {
         "symbol": "BWE",
         "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
-        "market_cap": 10782787200900,
         "total_shares": 219928644,
         "close_price": 42900
     },
@@ -87,14 +84,12 @@
     {
         "symbol": "CII",
         "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh",
-        "market_cap": 9273397015800,
         "total_shares": 671985291,
         "close_price": 13800
     },
     {
         "symbol": "CMG",
         "company_name": "Công ty Cổ phần Tập đoàn Công nghệ CMC",
-        "market_cap": 4098897580800,
         "total_shares": 232954608,
         "close_price": 17600
     },
@@ -120,7 +115,6 @@
     {
         "symbol": "CTR",
         "company_name": "Tổng Công ty Cổ phần Công trình Viettel",
-        "market_cap": 8365552504900,
         "total_shares": 128109533,
         "close_price": 65300
     },
@@ -145,7 +139,6 @@
     {
         "symbol": "DGW",
         "company_name": "Công ty Cổ phần Thế Giới Số",
-        "market_cap": 8599398500000,
         "total_shares": 223520169,
         "close_price": 38500
     },
@@ -185,7 +178,6 @@
     {
         "symbol": "DSE",
         "company_name": "Công ty Cổ phần Chứng khoán DNSE",
-        "market_cap": 8607821100600,
         "total_shares": 428249806,
         "close_price": 20100
     },
@@ -198,14 +190,12 @@
     {
         "symbol": "EIB",
         "company_name": "Ngân hàng Thương mại Cổ phần Xuất nhập khẩu Việt Nam",
-        "market_cap": 30176073833400,
         "total_shares": 1868810607,
         "close_price": 16200
     },
     {
         "symbol": "EVF",
         "company_name": "Công ty Tài chính Tổng hợp Cổ phần Điện Lực",
-        "market_cap": 8898619883400,
         "total_shares": 760565802,
         "close_price": 11700
     },
@@ -236,7 +226,6 @@
     {
         "symbol": "GEE",
         "company_name": "Công ty Cổ phần Công nghiệp Gelex",
-        "market_cap": 42016748241600,
         "total_shares": 640499211,
         "close_price": 65600
     },
