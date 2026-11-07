@@ -1125,7 +1125,7 @@ def generate_html():
 
         // ================== LOG CONSOLE HELPER ==================
         let isLogMinimized = false;
-        let logTimeout = null;
+        let isLogVisible = false;
 
         function toggleLogConsole() {
             const contentEl = document.getElementById('log-content');
@@ -1143,30 +1143,33 @@ def generate_html():
         }
 
         function showLogConsole() {
-            const consoleEl = document.getElementById('log-console');
-            consoleEl.classList.remove('hidden');
-            setTimeout(() => {
-                consoleEl.classList.remove('translate-y-full', 'opacity-0');
-            }, 10);
+            if (isLogVisible) return;
+            isLogVisible = true;
+            isLogMinimized = false; // Reset trạng thái thu nhỏ
             
-            if (logTimeout) clearTimeout(logTimeout);
-            logTimeout = setTimeout(() => {
-                consoleEl.classList.add('translate-y-full', 'opacity-0');
-                setTimeout(() => consoleEl.classList.add('hidden'), 300);
-            }, 15000);
+            const consoleEl = document.getElementById('log-console');
+            const contentEl = document.getElementById('log-content');
+            const chevron = document.getElementById('log-chevron');
+            
+            // Hiển thị console và xóa trạng thái ẩn
+            consoleEl.classList.remove('hidden', 'translate-y-full', 'opacity-0');
+            
+            // Đảm bảo nội dung đang mở
+            contentEl.classList.remove('hidden');
+            if (chevron) chevron.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        }
+
+        function hideLogConsole() {
+            isLogVisible = false;
+            const consoleEl = document.getElementById('log-console');
+            consoleEl.classList.add('translate-y-full', 'opacity-0');
+            setTimeout(() => consoleEl.classList.add('hidden'), 300);
         }
 
         function addLog(message, type = 'info') {
             const contentEl = document.getElementById('log-content');
             const badge = document.getElementById('log-status-badge');
-            const consoleEl = document.getElementById('log-console');
             
-            if (logTimeout) clearTimeout(logTimeout);
-            logTimeout = setTimeout(() => {
-                consoleEl.classList.add('translate-y-full', 'opacity-0');
-                setTimeout(() => consoleEl.classList.add('hidden'), 300);
-            }, 15000);
-
             let colorClass = "text-slate-300";
             let icon = "";
             if (type === 'success') { colorClass = "text-emerald-400"; icon = "✅ "; }
@@ -1174,6 +1177,7 @@ def generate_html():
             else if (type === 'warning') { colorClass = "text-amber-400"; icon = "⚠️ "; }
             else if (type === 'processing') { colorClass = "text-indigo-400"; icon = "⏳ "; }
 
+            // Cập nhật Badge trạng thái
             if (type === 'processing') {
                 badge.className = "text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 animate-pulse";
                 badge.innerText = "Đang chạy...";
@@ -1183,6 +1187,9 @@ def generate_html():
             } else if (type === 'error') {
                 badge.className = "text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30";
                 badge.innerText = "Có lỗi";
+            } else if (type === 'warning') {
+                badge.className = "text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30";
+                badge.innerText = "Cảnh báo";
             }
 
             const time = new Date().toLocaleTimeString('vi-VN');
@@ -1191,8 +1198,12 @@ def generate_html():
             div.innerHTML = `<span class="text-slate-500 shrink-0">[${time}]</span> <span class="break-all">${icon}${message}</span>`;
             contentEl.appendChild(div);
 
-            contentEl.scrollTop = contentEl.scrollHeight;
+            // Tự động cuộn xuống dòng mới nhất (chỉ khi không bị thu nhỏ)
+            if (!isLogMinimized) {
+                contentEl.scrollTop = contentEl.scrollHeight;
+            }
 
+            // Giới hạn 100 dòng để không bị lag
             if (contentEl.children.length > 100) {
                 contentEl.removeChild(contentEl.firstChild);
             }
@@ -1234,7 +1245,7 @@ def generate_html():
             if (icon) icon.classList.add('spinner');
             if (headerBtn) headerBtn.disabled = true;
             
-            showLogConsole();
+            showLogConsole(); // Hiện khung log
             document.getElementById('log-content').innerHTML = '';
             updateProgress(0, 1);
             
@@ -1318,6 +1329,11 @@ def generate_html():
                 isRefreshingAll = false;
                 if (icon) icon.classList.remove('spinner');
                 if (headerBtn) headerBtn.disabled = false;
+                
+                // TỰ ĐỘNG ẨN KHUNG LOG SAU KHI XONG (Sau 3 giây để người dùng kịp đọc)
+                setTimeout(() => {
+                    if (!isLogMinimized) hideLogConsole();
+                }, 3000);
             }
         }
 
@@ -1378,6 +1394,11 @@ def generate_html():
                 isRefreshingSingle = false;
                 btnElement.disabled = false;
                 if (icon) icon.classList.remove('spinner');
+                
+                // TỰ ĐỘNG ẨN KHUNG LOG SAU KHI XONG
+                setTimeout(() => {
+                    if (!isLogMinimized) hideLogConsole();
+                }, 2000);
             }
         }
 
@@ -2354,13 +2375,12 @@ def generate_html():
     html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
     html_content = html_content.replace("{price_api_url}", PRICE_API_URL)
     
-    # Đã xóa dòng thay thế {last_update_str} vì giờ đã chuyển sang gọi API
+    # Không còn dùng {last_update_str} ghi cứng nữa
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
     print(f"✅ Đã render thành công {OUTPUT_HTML}")
-
 
 if __name__ == "__main__":
     generate_html()
