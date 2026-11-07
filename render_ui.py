@@ -1234,8 +1234,8 @@ def generate_html():
         let isRefreshingAll = false;
 
         async function refreshPrices() {
-            if (isRefreshingAll) {
-                addLog(`Hệ thống đang cập nhật toàn bộ, vui lòng đợi!`, 'warning');
+            if (isRefreshingAll || isRefreshingSingle) {
+                addLog(`Hệ thống đang bận, vui lòng đợi tiến trình hiện tại xong!`, 'warning');
                 return; 
             }
             isRefreshingAll = true;
@@ -1245,6 +1245,12 @@ def generate_html():
             if (icon) icon.classList.add('spinner');
             if (headerBtn) headerBtn.disabled = true;
             
+            // KHÓA TẤT CẢ CÁC NÚT CẬP NHẬT RIÊNG LẺ TRÊN CÁC THẺ
+            document.querySelectorAll('[data-refresh-single]').forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+
             showLogConsole(); // Hiện khung log
             document.getElementById('log-content').innerHTML = '';
             updateProgress(0, 1);
@@ -1255,6 +1261,10 @@ def generate_html():
                 isRefreshingAll = false;
                 if (icon) icon.classList.remove('spinner');
                 if (headerBtn) headerBtn.disabled = false;
+                document.querySelectorAll('[data-refresh-single]').forEach(btn => {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                });
                 return;
             }
 
@@ -1330,6 +1340,12 @@ def generate_html():
                 if (icon) icon.classList.remove('spinner');
                 if (headerBtn) headerBtn.disabled = false;
                 
+                // MỞ KHÓA LẠI CÁC NÚT CẬP NHẬT RIÊNG LẺ
+                document.querySelectorAll('[data-refresh-single]').forEach(btn => {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                });
+
                 // TỰ ĐỘNG ẨN KHUNG LOG SAU KHI XONG (Sau 3 giây để người dùng kịp đọc)
                 setTimeout(() => {
                     if (!isLogMinimized) hideLogConsole();
@@ -1340,8 +1356,8 @@ def generate_html():
         let isRefreshingSingle = false;
 
         async function refreshSinglePrice(symbol, btnElement) {
-            if (isRefreshingSingle) {
-                addLog(`Đang có tiến trình khác, đợi xíu nhé!`, 'warning');
+            if (isRefreshingAll || isRefreshingSingle) {
+                addLog(`Hệ thống đang bận, đợi xíu nhé!`, 'warning');
                 return;
             }
             if (btnElement.disabled) return;
@@ -1350,6 +1366,13 @@ def generate_html():
             btnElement.disabled = true;
             const icon = btnElement.querySelector('i');
             if (icon) icon.classList.add('spinner');
+
+            // KHÓA NÚT CẬP NHẬT TẤT CẢ Ở HEADER
+            const headerBtn = document.getElementById('refresh-icon')?.closest('button');
+            if (headerBtn) {
+                headerBtn.disabled = true;
+                headerBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
 
             showLogConsole();
             document.getElementById('log-content').innerHTML = '';
@@ -1395,10 +1418,13 @@ def generate_html():
                 btnElement.disabled = false;
                 if (icon) icon.classList.remove('spinner');
                 
-                // TỰ ĐỘNG ẨN KHUNG LOG SAU KHI XONG
-                setTimeout(() => {
-                    if (!isLogMinimized) hideLogConsole();
-                }, 2000);
+                // MỞ KHÓA NÚT CẬP NHẬT TẤT CẢ Ở HEADER
+                if (headerBtn) {
+                    headerBtn.disabled = false;
+                    headerBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                
+                setTimeout(() => { if (!isLogMinimized) hideLogConsole(); }, 2000);
             }
         }
 
@@ -1518,7 +1544,7 @@ def generate_html():
                     <i class="fa-${isWatched ? 'solid' : 'regular'} fa-bookmark ${isWatched ? 'text-amber-400' : 'text-slate-400'}"></i>
                 </button>`;
 
-                const refreshBtnHtml = `<button type="button" onclick="event.stopPropagation(); refreshSinglePrice('${item.symbol}', this)" 
+                const refreshBtnHtml = `<button type="button" data-refresh-single onclick="event.stopPropagation(); refreshSinglePrice('${item.symbol}', this)" 
                     class="px-1.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 text-xs transition"
                     title="Cập nhật giá realtime cho mã này">
                     <i class="fa-solid fa-rotate"></i>
