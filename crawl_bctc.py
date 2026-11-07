@@ -6,26 +6,38 @@ import datetime
 from vnstock import Fundamental
 
 OUTPUT_DIR = "bctc_data"
+SYMBOLS_FILE = "vn100_symbols.json" # File chứa danh sách mã đã cào
+
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-VN100_SYMBOLS = [
-    "ACB", "BCM", "BID", "BVH", "CTG", "FPT", "GAS", "GVR", "HDB", "HPG",
-    "MBB", "MSN", "MWG", "PLX", "POW", "SAB", "SHB", "SSB", "SSI", "STB",
-    "TCB", "TPB", "VCB", "VHM", "VIB", "VIC", "VJC", "VNM", "VPB", "VRE",
-    "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS", "NVL", "PDR",
-    "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC",
-    "PHR", "HSG", "NKG", "CTD", "VCG", "HHV", "PNJ", "FRT", "PVD", "PVS",
-    "BSR", "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "HVN", "VHC", "ANV",
-    "APH", "ASM", "DBC", "DCM", "DPM", "GEX", "KDC", "LIG", "MSH", "PAN",
-    "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "DHC", "IMP", "SBA", "SJS",
-    "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
-]
-VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
+def get_symbols_from_json():
+    """Đọc danh sách mã từ file vn100_symbols.json"""
+    if os.path.exists(SYMBOLS_FILE):
+        try:
+            with open(SYMBOLS_FILE, "r", encoding="utf-8") as f:
+                symbols = json.load(f)
+                if isinstance(symbols, list) and len(symbols) > 0:
+                    # Đảm bảo tất cả đều là chữ HOA và không trùng lặp
+                    return sorted(list(set([str(s).upper() for s in symbols])))
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc file {SYMBOLS_FILE}: {e}")
+            
+    # Fallback: Nếu không có file JSON, quét các file đã cào trong bctc_data
+    print("⚠️ Không tìm thấy vn100_symbols.json. Quét thư mục bctc_data...")
+    existing_symbols = []
+    if os.path.exists(OUTPUT_DIR):
+        for filename in os.listdir(OUTPUT_DIR):
+            if filename.endswith(".json"):
+                existing_symbols.append(filename.replace(".json", "").upper())
+                
+    if existing_symbols:
+        return sorted(list(set(existing_symbols)))
+        
+    return []
 
 def fetch_financial_reports(symbol):
     try:
-        # Đồng bộ tên file thành chữ HOA
         file_path = os.path.join(OUTPUT_DIR, f"{symbol.upper()}.json")
         
         if os.path.exists(file_path):
@@ -108,15 +120,23 @@ def main():
     print("==================================================")
     print("   CÀO ĐẦY ĐỦ BÁO CÁO TÀI CHÍNH & CHỈ SỐ TÀI CHÍNH")
     print("==================================================")
-    print("1. Cào TOÀN BỘ danh sách VN100")
+    
+    # Lấy danh sách mã từ file JSON
+    vn100_symbols = get_symbols_from_json()
+    if not vn100_symbols:
+        print("❌ Không tìm thấy danh sách mã nào. Vui lòng chạy script lấy danh sách VN100 trước.")
+        return
+
+    print(f"📋 Đã tải danh sách {len(vn100_symbols)} mã từ file JSON.")
+    print("1. Cào TOÀN BỘ danh sách này")
     print("2. Cào MỘT NHÓM MÃ hoặc MÃ LẺ (Tùy chọn)")
     
     mode_choice = input("Nhập lựa chọn của bạn (1/2, mặc định 2): ").strip()
     
     target_symbols = []
     if mode_choice == '1':
-        target_symbols = VN100_SYMBOLS
-        print("-> Đã chọn chế độ cào toàn bộ danh sách VN100.")
+        target_symbols = vn100_symbols
+        print("-> Đã chọn chế độ cào toàn bộ danh sách.")
     else:
         raw_input_symbols = input("Nhập mã cần cào (cách nhau bởi dấu phẩy, VD: FPT,MWG,HPG): ").strip()
         if raw_input_symbols:
