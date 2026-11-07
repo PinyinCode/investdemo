@@ -7,6 +7,8 @@ OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
 CHEAP_STOCKS_FILE = "cheap_stocks.json"
 
+# LINK API RENDER CỦA BẠN
+PRICE_API_URL = "https://quant-price-api.onrender.com"
 
 def get_firebase_config():
     raw = os.environ.get("FIREBASE_CONFIG", "").strip()
@@ -24,7 +26,6 @@ def get_firebase_config():
         print(f"⚠️ FIREBASE_CONFIG thiếu key: {', '.join(missing)}")
     return config
 
-
 def get_last_update_string():
     if os.path.exists(LAST_UPDATE_FILE):
         try:
@@ -36,7 +37,6 @@ def get_last_update_string():
             print(f"⚠️ Lỗi đọc file last_update.json: {e}")
     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-
 def load_cheap_stocks_data():
     if os.path.exists(CHEAP_STOCKS_FILE):
         try:
@@ -45,7 +45,6 @@ def load_cheap_stocks_data():
         except Exception:
             pass
     return {}
-
 
 def generate_html():
     run_complex_backtest_simulation()
@@ -266,12 +265,13 @@ def generate_html():
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: {last_update_str}</span></p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: <span id="header-last-update">{last_update_str}</span></span></p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <button type="button" onclick="loadData(true)" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2">
-                    <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới</span>
+                <!-- NÚT LÀM MỚI GIÁ -->
+                <button type="button" onclick="refreshPrices()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-600/20" title="Lấy giá realtime và lưu vào MongoDB">
+                    <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới giá</span>
                 </button>
                 <button type="button" id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
                     <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline">Admin</span>
@@ -645,6 +645,7 @@ def generate_html():
         const firebaseConfig = {firebase_config_json_placeholder};
         const cheapStocksGroups = {cheap_stocks_json_placeholder};
         const cheapSymbolsSet = new Set({cheap_symbols_json_placeholder});
+        const PRICE_API_URL = "{price_api_url}";
 
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -1006,15 +1007,30 @@ def generate_html():
                 if (ratesRes.ok) symbolSimRates = await ratesRes.json();
                 if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
+                // 1. Lấy dữ liệu tĩnh (giá quá khứ, P/E, ROE...) từ data.json
                 let rawStockData = {};
                 try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
                     if (dataRes.ok) rawStockData = await dataRes.json();
                 } catch (e) {}
 
+                // 2. Lấy dữ liệu giá realtime mới nhất từ MongoDB qua API
+                let mongoPrices = {};
+                try {
+                    const mongoRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
+                    if (mongoRes.ok) {
+                        const mongoJson = await mongoRes.json();
+                        mongoPrices = mongoJson.data || {};
+                    }
+                } catch (e) { 
+                    console.warn("Không lấy được giá từ MongoDB:", e); 
+                }
+
                 screenerResults = screenerData.map(item => {
                     const sym = item.symbol;
                     const extraData = rawStockData[sym] || {};
+                    const liveData = mongoPrices[sym] || {};
+                    
                     return {
                         ...item,
                         company_name: extraData.company_name !== undefined ? extraData.company_name : (item.company_name || extraData.organ_name || item.organ_name || ""),
@@ -1030,7 +1046,9 @@ def generate_html():
                         debt_to_equity: extraData.debt_to_equity !== undefined ? extraData.debt_to_equity : (item.debt_to_equity || 0),
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
-                        close_price: extraData.close !== undefined ? extraData.close : item.close_price,
+                        
+                        // ƯU TIÊN GIÁ TỪ MONGODB, NẾU KHÔNG CÓ MỚI DÙNG GIÁ CŨ
+                        close_price: liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : item.close_price),
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -1062,6 +1080,59 @@ def generate_html():
                 }
             } finally {
                 if (showSpinner && icon) icon.classList.remove('spinner');
+            }
+        }
+
+        // HÀM MỚI: Gọi API đồng bộ giá VÀ ghi đè vào MongoDB
+        async function refreshPrices() {
+            const icon = document.getElementById('refresh-icon');
+            if (icon) icon.classList.add('spinner');
+            
+            try {
+                const symbols = screenerResults.map(item => item.symbol);
+                if (symbols.length === 0) return;
+
+                // Chia nhỏ lô 20 mã để gọi API
+                const chunkSize = 20;
+                const chunks = [];
+                for (let i = 0; i < symbols.length; i += chunkSize) {
+                    chunks.push(symbols.slice(i, i + chunkSize));
+                }
+
+                let updatedCount = 0;
+                let lastUpdateTime = "";
+
+                // Gọi song song tất cả các chunk
+                await Promise.all(chunks.map(async (chunk) => {
+                    const symQuery = chunk.join(',');
+                    // GỌI /api/sync ĐỂ BACKEND GHI ĐÈ VÀO MONGODB
+                    const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symQuery}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        lastUpdateTime = data.updated_at;
+                        if (data.updated_data) {
+                            for (const [sym, price] of Object.entries(data.updated_data)) {
+                                const item = screenerResults.find(s => s.symbol === sym);
+                                if (item) item.close_price = price;
+                                updatedCount++;
+                            }
+                        }
+                    }
+                }));
+
+                // Vẽ lại giao diện với giá mới
+                renderCards();
+                
+                if (lastUpdateTime) {
+                    document.getElementById('header-last-update').innerText = lastUpdateTime + " (Đã lưu DB)";
+                }
+                alert(`✅ Đã cập nhật và ghi đè ${updatedCount} mã vào MongoDB!`);
+
+            } catch (err) {
+                console.error(err);
+                alert("❌ Không thể kết nối tới máy chủ API.");
+            } finally {
+                if (icon) icon.classList.remove('spinner');
             }
         }
 
@@ -2013,6 +2084,7 @@ def generate_html():
     html_content = html_template.replace("{firebase_config_json_placeholder}", firebase_config_json)
     html_content = html_content.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
     html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
+    html_content = html_content.replace("{price_api_url}", PRICE_API_URL)
     html_content = html_content.replace("{last_update_str}", last_update_str)
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
