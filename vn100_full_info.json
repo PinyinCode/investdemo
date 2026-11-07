@@ -13,20 +13,6 @@
         "close_price": 17350
     },
     {
-        "symbol": "APH",
-        "company_name": "APH",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 7150
-    },
-    {
-        "symbol": "ASM",
-        "company_name": "ASM",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 4470
-    },
-    {
         "symbol": "BAF",
         "company_name": "Công ty Cổ phần Nông nghiệp BAF Việt Nam",
         "total_shares": 364824906,
@@ -75,13 +61,6 @@
         "close_price": 42900
     },
     {
-        "symbol": "CEO",
-        "company_name": "CEO",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 12300
-    },
-    {
         "symbol": "CII",
         "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh",
         "total_shares": 671985291,
@@ -92,13 +71,6 @@
         "company_name": "Công ty Cổ phần Tập đoàn Công nghệ CMC",
         "total_shares": 232954608,
         "close_price": 17600
-    },
-    {
-        "symbol": "CSM",
-        "company_name": "CSM",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 11550
     },
     {
         "symbol": "CTD",
@@ -143,20 +115,6 @@
         "close_price": 38500
     },
     {
-        "symbol": "DHC",
-        "company_name": "DHC",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 36450
-    },
-    {
-        "symbol": "DHG",
-        "company_name": "DHG",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 83500
-    },
-    {
         "symbol": "DIG",
         "company_name": "Tổng Công ty Cổ phần Đầu tư Phát triển Xây dựng",
         "total_shares": 844192763,
@@ -167,13 +125,6 @@
         "company_name": "Tổng Công ty Phân bón và Hóa chất Dầu khí - Công ty Cổ phần",
         "total_shares": 679990761,
         "close_price": 19650
-    },
-    {
-        "symbol": "DRC",
-        "company_name": "DRC",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 8910
     },
     {
         "symbol": "DSE",
@@ -254,13 +205,6 @@
         "close_price": 13600
     },
     {
-        "symbol": "HAH",
-        "company_name": "HAH",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 47900
-    },
-    {
         "symbol": "HCM",
         "company_name": "Công ty Cổ phần Chứng khoán Thành phố Hồ Chí Minh",
         "total_shares": 1372786256,
@@ -304,27 +248,6 @@
         "close_price": 12750
     },
     {
-        "symbol": "HVN",
-        "company_name": "HVN",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 21850
-    },
-    {
-        "symbol": "IDC",
-        "company_name": "IDC",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 34900
-    },
-    {
-        "symbol": "IMP",
-        "company_name": "IMP",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 35000
-    },
-    {
         "symbol": "KBC",
         "company_name": "Tổng Công ty Phát triển Đô thị Kinh Bắc - CTCP",
         "total_shares": 941754759,
@@ -350,13 +273,6 @@
         "close_price": 3680
     },
     {
-        "symbol": "LIG",
-        "company_name": "LIG",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 3100
-    },
-    {
         "symbol": "LPB",
         "company_name": "Ngân hàng Thương mại Cổ phần Lộc Phát Việt Nam",
         "market_cap": 106048514550000,
@@ -368,13 +284,6 @@
         "company_name": "Ngân hàng Thương mại Cổ phần Quân đội",
         "total_shares": 9263249895,
         "close_price": 19250
-    },
-    {
-        "symbol": "MBS",
-        "company_name": "MBS",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 16200
     },
     {
         "symbol": "MCH",
@@ -389,13 +298,6 @@
         "market_cap": 61214400000000,
         "total_shares": 3744000000,
         "close_price": 16350
-    },
-    {
-        "symbol": "MSH",
-        "company_name": "MSH",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 35500
     },
     {
         "symbol": "MSN",
@@ -435,13 +337,6 @@
         "close_price": 22200
     },
     {
-        "symbol": "NTC",
-        "company_name": "NTC",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 129000
-    },
-    {
         "symbol": "NVL",
         "company_name": "Công ty Cổ phần Tập đoàn Đầu tư Địa ốc No Va",
         "total_shares": 2403805052,
@@ -453,13 +348,6 @@
         "market_cap": 32768858348200,
         "total_shares": 3062510126,
         "close_price": 10700
-    },
-    {
-        "symbol": "ORS",
-        "company_name": "ORS",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 14300
     },
     {
         "symbol": "PAN",
@@ -510,13 +398,6 @@
         "close_price": 17100
     },
     {
-        "symbol": "PVS",
-        "company_name": "PVS",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 29300
-    },
-    {
         "symbol": "PVT",
         "company_name": "Tổng Công ty Cổ phần Vận tải Dầu khí",
         "total_shares": 516918938,
@@ -533,13 +414,6 @@
         "company_name": "Tổng Công ty Cổ phần Bia - Rượu - Nước Giải khát Sài Gòn",
         "total_shares": 1282562372,
         "close_price": 42600
-    },
-    {
-        "symbol": "SBA",
-        "company_name": "SBA",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 23200
     },
     {
         "symbol": "SBT",
@@ -585,13 +459,6 @@
         "close_price": 70000
     },
     {
-        "symbol": "SZC",
-        "company_name": "SZC",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 20350
-    },
-    {
         "symbol": "TAL",
         "company_name": "Công Ty Cổ Phần Đầu Tư Bất Động Sản Taseco",
         "market_cap": 12070793006600,
@@ -605,13 +472,6 @@
         "close_price": 21650
     },
     {
-        "symbol": "TCD",
-        "company_name": "TCD",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 1100
-    },
-    {
         "symbol": "TCH",
         "company_name": "Công ty Cổ phần Đầu tư Dịch vụ Tài chính Hoàng Huy",
         "total_shares": 1003312808,
@@ -623,20 +483,6 @@
         "market_cap": 96550854867000,
         "total_shares": 3329339823,
         "close_price": 29000
-    },
-    {
-        "symbol": "TID",
-        "company_name": "TID",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 0
-    },
-    {
-        "symbol": "TLG",
-        "company_name": "TLG",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 54500
     },
     {
         "symbol": "TPB",
@@ -668,13 +514,6 @@
         "market_cap": 69760449519600,
         "total_shares": 2434919704,
         "close_price": 28650
-    },
-    {
-        "symbol": "VDP",
-        "company_name": "VDP",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 0
     },
     {
         "symbol": "VGC",
@@ -733,24 +572,10 @@
         "close_price": 57800
     },
     {
-        "symbol": "VOS",
-        "company_name": "VOS",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 10700
-    },
-    {
         "symbol": "VPB",
         "company_name": "Ngân hàng Thương mại Cổ phần Việt Nam Thịnh Vượng",
         "total_shares": 10000000000,
         "close_price": 22050
-    },
-    {
-        "symbol": "VPG",
-        "company_name": "VPG",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 960
     },
     {
         "symbol": "VPI",
@@ -784,13 +609,6 @@
         "market_cap": 4997844332700,
         "total_shares": 374370362,
         "close_price": 13350
-    },
-    {
-        "symbol": "VTO",
-        "company_name": "VTO",
-        "market_cap": 0,
-        "total_shares": 0,
-        "close_price": 10300
     },
     {
         "symbol": "VTP",
