@@ -1,0 +1,3633 @@
+{
+    "balance_sheet": [
+        {
+            "period": "2026-Q3",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6693061591601.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 770887916817.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2422839530665.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2816017976566.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 287356883953.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 395959283600.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2101353167892.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 139802149590.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1180060023279.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 201043501589.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 580447493434.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 8794414759493.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6394654426074.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5891491457926.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 503162968148.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2399760333419.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2399760333419.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 8794414759493.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6386663094638.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1025098592363.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2109647136178.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2546402166005.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 227048283388.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 478466916704.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1697567492997.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 132885245576.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1018815914672.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 91039924093.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 454826408656.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 8084230587635.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5766319988786.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5310542500527.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 455777488259.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2317910598849.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2317910598849.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 8084230587635.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5103418419770.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 291801367625.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1840364881332.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2146140505862.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 335966584323.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 489145080628.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1834886021973.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 239811695358.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1042653393739.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 66174874611.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 486246058265.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6938304441743.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5183474471739.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4695672474935.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 487801996804.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1754829970004.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1754829970004.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6938304441743.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5680154668779.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 349825537243.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2092526396344.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2643490851490.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 152682505246.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 441629378456.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1838520831046.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 234532329929.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1062460728659.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 41584995680.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 499942776778.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 7518675499825.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5750465769030.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5211678981607.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 538786787423.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1768209730795.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1768209730795.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 7518675499825.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4754545307802.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 590694897635.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1673838137221.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1873388305698.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 258531240641.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 358092726607.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1948080310363.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 369096130187.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1072198222346.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 57344524229.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 449441433601.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6702625618165.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4954535295281.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4451548457724.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 502986837557.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1748090322884.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1748090322884.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6702625618165.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4637233761982.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 389765934120.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1570680385974.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1983479623195.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 296503064717.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 396804753976.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1895202116151.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 374726246838.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1036602061617.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 58017308397.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 425856499299.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6532435878133.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4856365333882.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4411580141987.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 444785191895.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1676070544251.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1676070544251.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6532435878133.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5028152761766.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 566443457079.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1347236818992.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2104726044366.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 561336933973.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 448409507356.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1687535018582.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 359107127132.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 778727951984.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 66733373397.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 30000000000.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 452966566069.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6715687780348.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 5074415151594.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4899559094722.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 174856056872.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1641272628754.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1641272628754.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6715687780348.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_SHORT_TERM_ASSETS",
+            "name": "TÀI SẢN NGẮN HẠN",
+            "order": 1,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4728456491813.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_CASH_AND_PRECIOUS_METALS",
+            "name": "Tiền và các khoản tương đương tiền",
+            "order": 2,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 389553167519.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_SHORT_TERM_INVESTMENTS",
+            "name": "Đầu tư tài chính ngắn hạn",
+            "order": 3,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1430476324460.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_SHORT_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu ngắn hạn",
+            "order": 4,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 2157317142073.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_INVENTORIES",
+            "name": "Hàng tồn kho",
+            "order": 5,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 279316566082.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_OTHER_SHORT_TERM_ASSETS",
+            "name": "Tài sản ngắn hạn khác",
+            "order": 6,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 471793291679.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_LONG_TERM_ASSETS",
+            "name": "TÀI SẢN DÀI HẠN",
+            "order": 7,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1635100066310.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_LONG_TERM_RECEIVABLES",
+            "name": "Các khoản phải thu dài hạn",
+            "order": 8,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 346340082223.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_FIXED_ASSETS",
+            "name": "Tài sản cố định",
+            "order": 9,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 744915553414.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_INVESTMENT_PROPERTIES",
+            "name": "Bất động sản đầu tư",
+            "order": 10,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_CONSTRUCTION_IN_PROGRESS",
+            "name": "Tài sản dở dang dài hạn",
+            "order": 11,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 75029511026.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_LONG_TERM_INVESTMENTS",
+            "name": "Góp vốn, đầu tư dài hạn",
+            "order": 12,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 30000000000.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_OTHER_LONG_TERM_ASSETS",
+            "name": "Tài sản dài hạn khác",
+            "order": 13,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 438814919647.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_TOTAL_ASSETS",
+            "name": "TỔNG CỘNG TÀI SẢN",
+            "order": 14,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6363556558123.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_TOTAL_LIABILITIES",
+            "name": "TỔNG NỢ PHẢI TRẢ",
+            "order": 15,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4775100011952.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_SHORT_TERM_LIABILITIES",
+            "name": "NỢ NGẮN HẠN",
+            "order": 16,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 4676144433818.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_LONG_TERM_LIABILITIES",
+            "name": "NỢ DÀI HẠN",
+            "order": 17,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 98955578134.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_EQUITY",
+            "name": "VỐN CHỦ SỞ HỮU",
+            "order": 18,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1588456546171.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_OWNERS_EQUITY",
+            "name": "VỐN VÀ CÁC QUỸ",
+            "order": 19,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 1588456546171.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_FUNDING_SOURCES",
+            "name": "Nguồn kinh phí và quỹ khác",
+            "order": 20,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "BS_TOTAL_LIABILITIES_AND_EQUITY",
+            "name": "TỔNG CỘNG NGUỒN VỐN",
+            "order": 21,
+            "level": 1,
+            "off_balance": false,
+            "unit": "VNĐ",
+            "value": 6363556558123.0
+        }
+    ],
+    "income_statement": [
+        {
+            "period": "2026-Q3",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5773442008252.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5773442008252.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -5396468355332.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 376973652920.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 59269203510.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -45212980291.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -57940213900.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -198227459029.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 134862203210.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 926015799.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 135788219009.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -27222892298.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 108565326711.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 409752737.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 108975079448.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 417.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5585685569504.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5585685569504.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -5282946578537.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 302738990967.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 44881778611.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -33928715887.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -37145766013.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -182523194516.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 94023093162.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -6292182966.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 87730910196.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -18972286878.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 68758623318.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 157094470.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 68915717788.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 272.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 4758283873207.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 4758283873207.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -4501923416564.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 256360456643.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 34972141008.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -32081378200.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -41696535269.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -166579580692.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 50975103490.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 817590947.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 51792694437.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -12797683303.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 38995011134.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 38995011134.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 255.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5622808674878.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5622808674878.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -5258440346930.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 364368327948.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 32642432577.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -23996440721.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -48984958642.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -123647731578.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 200381629584.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -9345624667.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 191036004917.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -37799185442.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 153236819475.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 153236819475.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 1258.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 4928287581430.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 4928287581430.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -4697696674992.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 230590906438.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 26041441499.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -19447817444.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -27685932692.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -102830089666.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 106668508135.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 2372168518.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 109040676653.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -23704380513.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 85336296140.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 85336296140.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 577.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 4981309952823.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 4981309952823.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -4704397188509.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 276912764314.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 22665956058.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -16469000943.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -21980994126.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -136258784799.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 124869940504.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 938102216.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 125808042720.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -28826636034.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 96981406686.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 96981406686.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 601.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5041667082555.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5041667082555.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -4776983780075.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 264683302480.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 18293696932.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -18391016405.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -26903179214.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -148404886236.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 89277917557.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -596198498.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 88681719059.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -19341951864.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 69339767195.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 69339767195.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 426.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_REVENUE",
+            "name": "DOANH THU BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5685700453568.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_REVENUE_DEDUCTIONS",
+            "name": "Các khoản giảm trừ doanh thu",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -0.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_NET_REVENUE",
+            "name": "Doanh thu thuần về bán hàng và cung cấp dịch vụ",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 5685700453568.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_COST_OF_GOODS_SOLD",
+            "name": "Giá vốn hàng bán",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -5349748885973.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_GROSS_PROFIT",
+            "name": "LỢI NHUẬN GỘP VỀ BÁN HÀNG VÀ CUNG CẤP DỊCH VỤ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 335951567595.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_FINANCIAL_INCOME",
+            "name": "DOANH THU HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 19429672907.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_FINANCIAL_EXPENSES",
+            "name": "CHI PHÍ TÀI CHÍNH",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -16807966306.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_SHARE_OF_ASSOCIATES_AND_JOINT_VENTURES_RESULT",
+            "name": "Phần lãi hoặc lỗ trong công ty liên doanh, liên kết",
+            "order": 8,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_SELLING_EXPENSES",
+            "name": "CHI PHÍ BÁN HÀNG",
+            "order": 9,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -43428104462.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_GENERAL_AND_ADMINISTRATIVE_EXPENSES",
+            "name": "CHI PHÍ QUẢN LÝ DOANH NGHIỆP",
+            "order": 10,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -129256189221.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_OPERATING_PROFIT",
+            "name": "Lợi nhuận thuần từ hoạt động kinh doanh",
+            "order": 11,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 165888980513.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_OTHER_PROFIT",
+            "name": "Thu nhập khác",
+            "order": 12,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 468139880.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_SHARE_OF_PROFIT_IN_ASSOCIATES_AND_JOINT_VENTURES",
+            "name": "Phần lợi nhuận từ đầu tư vào công ty liên kết, liên doanh",
+            "order": 13,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_PROFIT_BEFORE_TAX",
+            "name": "TỔNG LỢI NHUẬN KẾ TOÁN TRƯỚC THUẾ",
+            "order": 14,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 166357120393.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_CORPORATE_INCOME_TAX_EXPENSES",
+            "name": "CHI PHÍ THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 15,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -35712607786.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_NET_PROFIT_AFTER_TAX",
+            "name": "LỢI NHUẬN SAU THUẾ THU NHẬP DOANH NGHIỆP",
+            "order": 16,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 130644512607.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_MINORITY_INTEREST",
+            "name": "Lợi ích của cổ đông không kiểm soát",
+            "order": 17,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_PROFIT_AFTER_TAX_FOR_SHAREHOLDERS_OF_PARENT_COMPANY",
+            "name": "Lợi nhuận sau thuế của cổ đông công ty mẹ",
+            "order": 18,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 130644512607.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_BASIC_EARNINGS_PER_SHARE",
+            "name": "Lãi cơ bản trên cổ phiếu",
+            "order": 19,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 818.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "IS_DILUTED_EARNINGS_PER_SHARE",
+            "name": "Lãi suy giảm trên cổ phiếu",
+            "order": 20,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 0.0
+        }
+    ],
+    "cash_flow": [
+        {
+            "period": "2026-Q3",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -98332350718.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -499710393160.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 346726539815.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -251316204063.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 1025098592363.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -2894471483.0
+        },
+        {
+            "period": "2026-Q3",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 770887916817.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 82457702168.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -230625864446.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 881658707996.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 733490545718.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 291801367625.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -193320980.0
+        },
+        {
+            "period": "2026-Q2",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 1025098592363.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -81221379884.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 201857362932.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -179159372078.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -58523389030.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 349825537243.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 499219412.0
+        },
+        {
+            "period": "2026-Q1",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 291801367625.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -56457421490.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -480936755336.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 295815171964.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -241579004862.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 590694897635.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 709644470.0
+        },
+        {
+            "period": "2025-Q4",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 349825537243.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 611629363629.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -227695341369.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -181949833983.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 201984188277.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 389765934120.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -1055224762.0
+        },
+        {
+            "period": "2025-Q3",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 590694897635.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 61389447930.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -224501762079.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -14951820498.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -178064134647.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 566443457079.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 1386611688.0
+        },
+        {
+            "period": "2025-Q2",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 389765934120.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 145163445989.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -140641211982.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 172316642440.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 176838876447.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 389553167519.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 51413113.0
+        },
+        {
+            "period": "2025-Q1",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 566443457079.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "CF_NET_CASH_FLOWS_FROM_OPERATING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG KINH DOANH",
+            "order": 1,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 571747965876.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "CF_NET_CASH_FLOWS_FROM_INVESTING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG ĐẦU TƯ",
+            "order": 2,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -29902163130.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "CF_NET_CASH_FLOWS_FROM_FINANCING_ACTIVITIES",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TỪ HOẠT ĐỘNG TÀI CHÍNH",
+            "order": 3,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": -503355644829.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "CF_NET_CASH_FLOWS_DURING_THE_PERIOD",
+            "name": "LƯU CHUYỂN TIỀN THUẦN TRONG KỲ",
+            "order": 4,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 38490157917.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_BEGINNING_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ",
+            "order": 5,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 350694528873.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "CF_EFFECT_OF_FOREIGN_EXCHANGE_DIFFERENCES",
+            "name": "Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ",
+            "order": 6,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 368480729.0
+        },
+        {
+            "period": "2024-Q4",
+            "id": "CF_CASH_AND_CASH_EQUIVALENTS_AT_END_OF_PERIOD",
+            "name": "TIỀN VÀ TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ",
+            "order": 7,
+            "level": 1,
+            "unit": "VNĐ",
+            "value": 389553167519.0
+        }
+    ],
+    "updated_at": "2026-11-07 13:06:42"
+}
