@@ -3,15 +3,13 @@ name: Update Realtime Prices
 on:
   schedule:
     # Chạy mỗi 10 phút, 9:00–15:00 giờ VN (T2–T6)
-    # GitHub Actions dùng UTC (VN = UTC+7) → 2:00–8:00 UTC
+    # Giờ UTC: 2:00–8:00
     - cron: '*/10 2-8 * * 1-5'
   workflow_dispatch:  # Cho phép chạy thủ công từ tab Actions
 
-# Bắt buộc để GITHUB_TOKEN có quyền push
 permissions:
   contents: write
 
-# Tránh 2 lần chạy chồng nhau nếu lần trước chưa xong
 concurrency:
   group: realtime-update
   cancel-in-progress: false
@@ -40,6 +38,8 @@ jobs:
           pip install "lotusmarket[fetchers]"
 
       - name: Run realtime update
+        env:
+          PYTHONUNBUFFERED: 1  # Ép Python in log ngay lập tức lên GitHub
         run: python update_realtime.py
 
       - name: Commit & push if changed
@@ -47,7 +47,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add data.json last_update.json realtime_meta.json
+          # Chỉ add những file tồn tại, tránh lỗi pathspec did not match
+          [ -f data.json ] && git add data.json
+          [ -f last_update.json ] && git add last_update.json
+          [ -f realtime_meta.json ] && git add realtime_meta.json
 
           if git diff --staged --quiet; then
             echo "ℹ️ Không có thay đổi — bỏ qua commit."
@@ -70,5 +73,5 @@ jobs:
             cat realtime_meta.json >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️ Không tìm thấy realtime_meta.json" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ Không tìm thấy realtime_meta.json (script có thể chưa chạy xong)." >> $GITHUB_STEP_SUMMARY
           fi
