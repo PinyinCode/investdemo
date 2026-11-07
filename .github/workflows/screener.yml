@@ -13,12 +13,19 @@ on:
 permissions:
   contents: write
 
+# CHỐNG KẸT: Tự động hủy tiến trình cũ nếu có tiến trình mới được kích hoạt
+concurrency:
+  group: "pages-render-ui"
+  cancel-in-progress: true
+
 jobs:
   render-and-simulate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Cần fetch toàn bộ lịch sử để rebase mượt mà
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -50,11 +57,16 @@ jobs:
           git add index.html symbol_sim_rates.json quarterly_mean_details.json
 
           # Kiểm tra xem có thay đổi hay không trước khi commit
-          git status
-
-          git commit -m "📊 Auto-calculate symbol rates & details, then render index.html via Python" || echo "No changes to commit"
-
-          # Kéo thay đổi mới nhất từ remote về để tránh lỗi conflict/reject
-          git pull --rebase origin main || echo "No rebase needed or handled"
-
-          git push
+          if git diff --staged --quiet; then
+            echo "✅ Không có thay đổi nào để commit."
+          else
+            git commit -m "📊 Auto-calculate symbol rates & details, then render index.html via Python"
+            
+            # QUAN TRỌNG: Kéo code mới nhất từ remote về và rebase trước khi push
+            # (Đề phòng trường hợp API Render vừa push data.json lên làm conflict)
+            echo "🔄 Đang pull --rebase để đồng bộ với remote..."
+            git pull --rebase origin main
+            
+            echo "🚀 Đang push lên Github..."
+            git push origin main
+          fi
