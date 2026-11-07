@@ -2198,6 +2198,41 @@ def generate_html():
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 currentSymbolHistory = await res.json();
+
+                // === LOGIC CHÈN NẾN HÔM NAY (ĐÃ SỬA) ===
+                if (item && item.close_price > 0 && item.updated_at) {
+                    if (!currentSymbolHistory.history_d1) currentSymbolHistory.history_d1 = [];
+                    
+                    const today = new Date();
+                    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                    const todayDmy = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+                    // Kiểm tra xem dữ liệu MongoDB có được cập nhật trong HÔM NAY không
+                    const isDataFromToday = item.updated_at.includes(todayDmy);
+
+                    if (isDataFromToday) {
+                        const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
+                        
+                        if (!lastBar || lastBar.time !== todayStr) {
+                            currentSymbolHistory.history_d1.push({
+                                time: todayStr,
+                                open: item.close_price,
+                                high: item.close_price,
+                                low: item.close_price,
+                                close: item.close_price,
+                                volume: 0
+                            });
+                        } else {
+                            lastBar.close = item.close_price;
+                            if (item.close_price > lastBar.high) lastBar.high = item.close_price;
+                            if (item.close_price < lastBar.low) lastBar.low = item.close_price;
+                        }
+                    } else {
+                        console.log(`[CHART] Dữ liệu MongoDB của ${symbol} từ hôm qua (${item.updated_at}). Không vẽ nến hôm nay.`);
+                    }
+                }
+                // ========================================
+
                 renderChartInstance(currentSymbolHistory);
             } catch (err) {
                 document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
