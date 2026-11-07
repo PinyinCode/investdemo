@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 
 # Danh sách các file cần dọn dẹp
 FILES_TO_CLEAN = [
@@ -7,28 +8,36 @@ FILES_TO_CLEAN = [
     "data.json",
     "symbol_sim_rates.json",
     "quarterly_mean_details.json",
-    "cheap_stocks.json" # Nếu file này có cấu trúc khác, sẽ xử lý riêng bên dưới
+    "cheap_stocks.json"
 ]
 
 SYMBOLS_FILE = "vn100_symbols.json"
+COMMIT_MESSAGE = "🧹 Auto-clean invalid symbols (TID, VDP...) from JSON files"
+
+def run_git_command(cmd):
+    """Chạy lệnh Git và in ra kết quả."""
+    try:
+        result = subprocess.run(cmd, shell=True, check=True, text=True, capture_output=True)
+        print(result.stdout)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"⚠️ Lỗi khi chạy lệnh Git: {cmd}")
+        print(e.stderr)
+        return False
 
 def load_vn100_symbols():
-    """Đọc danh sách mã hợp lệ từ vn100_symbols.json"""
     if not os.path.exists(SYMBOLS_FILE):
-        print(f"❌ Không tìm thấy file {SYMBOLS_FILE}. Dừng chương trình.")
+        print(f"❌ Không tìm thấy file {SYMBOLS_FILE}.")
         return None
-    
     try:
         with open(SYMBOLS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
-            
         valid_symbols = set()
         for item in data:
             if isinstance(item, str):
                 valid_symbols.add(item.strip().upper())
             elif isinstance(item, dict) and "symbol" in item:
                 valid_symbols.add(item["symbol"].strip().upper())
-                
         print(f"✅ Đã tải {len(valid_symbols)} mã hợp lệ từ {SYMBOLS_FILE}")
         return valid_symbols
     except Exception as e:
@@ -36,58 +45,41 @@ def load_vn100_symbols():
         return None
 
 def clean_file(filename, valid_symbols):
-    """Dọn dẹp một file JSON cụ thể."""
     if not os.path.exists(filename):
-        print(f"⏭️ Bỏ qua {filename} (không tồn tại).")
-        return
-
+        return False
     try:
         with open(filename, "r", encoding="utf-8") as f:
             data = json.load(f)
     except Exception as e:
         print(f"❌ Lỗi đọc file {filename}: {e}")
-        return
+        return False
 
-    original_count = 0
     removed_count = 0
+    original_count = 0
 
-    # TRƯỜNG HỢP 1: File có dạng LIST (ví dụ: screener_results.json)
     if isinstance(data, list):
         original_count = len(data)
         new_data = []
-        removed_symbols = []
         for item in data:
             sym = item.get("symbol", "").strip().upper() if isinstance(item, dict) else ""
             if sym in valid_symbols:
                 new_data.append(item)
             else:
                 removed_count += 1
-                removed_symbols.append(sym)
-        
         data = new_data
-        print(f"🧹 {filename}: Đã xoá {removed_count} mã lỗi {removed_symbols if removed_count < 10 else '(quá nhiều)'}")
 
-    # TRƯỜNG HỢP 2: File có dạng DICT (ví dụ: data.json)
     elif isinstance(data, dict):
         original_count = len(data)
-        
-        # Kiểm tra xem đây có phải là dict của các mã cổ phiếu không
-        # (Dựa vào việc key đầu tiên có phải là mã hợp lệ không)
         first_key = next(iter(data), "").upper()
         
         if first_key in valid_symbols or first_key.isalnum():
-            # data.json dạng: { "VCB": {...}, "TID": {...} }
-            removed_symbols = []
+            # data.json
             for sym in list(data.keys()):
                 if sym.strip().upper() not in valid_symbols:
                     del data[sym]
                     removed_count += 1
-                    removed_symbols.append(sym)
-            print(f"🧹 {filename}: Đã xoá {removed_count} mã lỗi {removed_symbols if removed_count < 10 else '(quá nhiều)'}")
-            
         else:
-            # cheap_stocks.json dạng: { "SECTOR_NAME": [ {...}, {...} ] }
-            removed_symbols = []
+            # cheap_stocks.json
             for sector, stocks in data.items():
                 if isinstance(stocks, list):
                     new_stocks = []
@@ -97,20 +89,20 @@ def clean_file(filename, valid_symbols):
                             new_stocks.append(stock)
                         else:
                             removed_count += 1
-                            removed_symbols.append(sym)
                     data[sector] = new_stocks
-            print(f"🧹 {filename}: Đã xoá {removed_count} mã lỗi khỏi các nhóm ngành")
 
-    # Ghi lại file nếu có thay đổi
     if removed_count > 0:
         try:
             with open(filename, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
-            print(f"💾 Đã lưu lại {filename} (Còn {original_count - removed_count} mã).")
+            print(f"🧹 {filename}: Đã xoá {removed_count} mã lỗi.")
+            return True
         except Exception as e:
             print(f"❌ Lỗi ghi file {filename}: {e}")
+            return False
     else:
-        print(f"✨ {filename}: Sạch, không có mã lỗi nào.")
+        print(f"✨ {filename}: Sạch.")
+        return False
 
 def main():
     print("🚀 Bắt đầu quá trình dọn dẹp dữ liệu...")
@@ -118,10 +110,27 @@ def main():
     if not valid_symbols:
         return
 
+    has_changes = False
     for filename in FILES_TO_CLEAN:
-        clean_file(filename, valid_symbols)
+        if clean_file(filename, valid_symbols):
+            has_changes = True
+            
+    if not has_changes:
+        print("\n✅ Không có file nào cần dọn dẹp. Không cần push Git.")
+        return
         
-    print("\n✅ HOÀN TẤT DỌN DẸP!")
+    print("\n📦 Đang tự động đẩy lên GitHub...")
+    run_git_command("git add .")
+    
+    # Thử commit, nếu không có gì thay đổi thì bỏ qua
+    commit_ok = run_git_command(f'git commit -m "{COMMIT_MESSAGE}"')
+    
+    if commit_ok:
+        run_git_command("git pull --rebase origin main")
+        run_git_command("git push origin main")
+        print("\n🎉 Đã push thành công lên GitHub!")
+    else:
+        print("\n⚠️ Không có thay đổi nào để commit (có thể file đã được dọn trước đó).")
 
 if __name__ == "__main__":
     main()
