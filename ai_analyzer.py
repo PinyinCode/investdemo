@@ -9,6 +9,9 @@ SCREENER_FILE = "screener_results.json"
 DATA_FILE = "data.json"
 CONFIG_FILE = "config.json"
 
+VN100_INFO_FILE = "vn100_full_info.json"
+VN100_SYMBOLS_FILE = "vn100_symbols.json"
+
 ALIBABA_API_KEY = os.getenv("ALIBABA_API_KEY", "").strip()
 INPUT_SYMBOLS = os.getenv("INPUT_SYMBOLS", "").strip()
 API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
@@ -16,7 +19,7 @@ API_URL = "https://ws-8lcqaxwxdv0h9xzy.ap-southeast-1.maas.aliyuncs.com/compatib
 RESUME_DAYS = 7
 
 # ============================================================
-# 🆕 CẤU HÌNH AI — CHỈ ĐỌC model_name VÀ temperature TỪ config.json
+# 🆕 CẤU HÌNH AI
 # ============================================================
 def load_config():
     if not os.path.exists(CONFIG_FILE):
@@ -43,7 +46,74 @@ MODEL_NAME = AI_CONFIG["model_name"]
 TEMPERATURE = AI_CONFIG["temperature"]
 
 
-SECTOR_MAPPING = {
+# ============================================================
+# HÀM TỰ ĐỘNG DỊCH NGÀNH TỪ VCI (TIẾNG ANH) SANG WEB (TIẾNG VIỆT)
+# ============================================================
+def translate_sector(sector_name):
+    mapping = {
+        "BANKS": "NGAN_HANG",
+        "FINANCIALS": "CHUNG_KHOAN",
+        "SECURITIES": "CHUNG_KHOAN",
+        "REAL ESTATE": "BAT_DONG_SAN",
+        "REAL_ESTATE": "BAT_DONG_SAN",
+        "TECHNOLOGY": "CONG_NGHE_BAN_LE",
+        "RETAIL": "CONG_NGHE_BAN_LE",
+        "UTILITIES": "DIEN_NUOC_HA_TANG",
+        "ENERGY": "DIEN_NUOC_HA_TANG",
+        "MATERIALS": "NGUYEN_VAT_LIEU_CHU_KY",
+        "INDUSTRIALS": "NGUYEN_VAT_LIEU_CHU_KY",
+        "CONSUMER STAPLES": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
+        "CONSUMER DISCRETIONARY": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
+        "HEALTHCARE": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
+    }
+    upper_name = str(sector_name).upper()
+    for eng, vn in mapping.items():
+        if eng in upper_name:
+            return vn
+    return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
+
+# ============================================================
+# TẢI DỮ LIỆU ĐỘNG TỪ FILE JSON
+# ============================================================
+def load_vn100_data():
+    symbols = []
+    sector_mapping = {}
+    
+    if os.path.exists(VN100_INFO_FILE):
+        try:
+            with open(VN100_INFO_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                for item in data:
+                    sym = item.get("symbol")
+                    if sym:
+                        symbols.append(sym)
+                        raw_sector = item.get("sector", "")
+                        vn_sector = translate_sector(raw_sector)
+                        
+                        if vn_sector not in sector_mapping:
+                            sector_mapping[vn_sector] = []
+                        sector_mapping[vn_sector].append(sym)
+            print(f"✅ Đã tải {len(symbols)} mã và phân ngành từ {VN100_INFO_FILE}")
+            return sorted(list(set(symbols))), sector_mapping
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc {VN100_INFO_FILE}: {e}")
+
+    if os.path.exists(VN100_SYMBOLS_FILE):
+        try:
+            with open(VN100_SYMBOLS_FILE, "r", encoding="utf-8") as f:
+                symbols = json.load(f)
+            print(f"⚠️ Không có file chi tiết ngành, dùng {VN100_SYMBOLS_FILE}")
+            return sorted(list(set(symbols))), {}
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc {VN100_SYMBOLS_FILE}: {e}")
+
+    return [], {}
+
+# Tải dữ liệu động khi khởi động
+VN100_SYMBOLS, DYNAMIC_SECTOR_MAPPING = load_vn100_data()
+
+# Bảng phân ngành dự phòng
+FALLBACK_SECTOR_MAPPING = {
     "NGAN_HANG": ["ACB","BID","CTG","TCB","MBB","STB","VPB","HDB","VIB","TPB","SHB","SSB","LPB","MSB","OCB","EIB","VCB"],
     "CHUNG_KHOAN": ["SSI","VCI","HCM","VIX","MBS","FTS","BSI","CTS","ORS"],
     "BAT_DONG_SAN": ["VHM","VIC","VRE","NVL","PDR","DIG","NLG","KDH","CEO","DXG","TCH","HDG","KBC","IDC","SZC","BCM","PHR","SJS","VPI"],
@@ -52,6 +122,9 @@ SECTOR_MAPPING = {
     "NGUYEN_VAT_LIEU_CHU_KY": ["HPG","HSG","NKG","DGC","DCM","DPM","GVR","PHR","DHC"],
     "SAN_XUAT_TIEU_DUNG_PHONG_THU": ["VNM","MSN","SAB","VHC","ANV","BVH","PLX","PVD","PVS","BSR","GMD","HAH","PVT","VJC","HVN","APH","ASM","DBC","KDC","MSH","PAN","SBT","DRC","CSM","BMP","DHG","CTD","VCG","HHV","GEX"],
 }
+
+# Gộp bảng động và bảng tĩnh (Ưu tiên bảng động)
+SECTOR_MAPPING = {**FALLBACK_SECTOR_MAPPING, **DYNAMIC_SECTOR_MAPPING}
 
 SECTOR_NAMES = {
     "NGAN_HANG": "Ngân hàng",
