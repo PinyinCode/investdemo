@@ -2,9 +2,10 @@ name: Update Realtime Prices
 
 on:
   schedule:
-    # Chạy mỗi 10 phút, 9:00–15:00 giờ VN (T2–T6)
-    # Giờ UTC: 2:00–8:00
-    - cron: '*/10 2-8 * * 1-5'
+    # Chạy mỗi 30 phút, từ 8:30 sáng đến 15:30 chiều (giờ VN)
+    # 8:30 VN = 1:30 UTC | 15:30 VN = 8:30 UTC
+    # Cú pháp: Phút 0 và 30, Giờ từ 1 đến 8, Thứ 2 đến Thứ 6
+    - cron: '0,30 1-8 * * 1-5'
   workflow_dispatch:  # Cho phép chạy thủ công từ tab Actions
 
 permissions:
@@ -39,7 +40,7 @@ jobs:
 
       - name: Run realtime update
         env:
-          PYTHONUNBUFFERED: 1  # Ép Python in log ngay lập tức lên GitHub
+          PYTHONUNBUFFERED: 1
         run: python update_realtime.py
 
       - name: Commit & push if changed
@@ -47,10 +48,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Chỉ add những file tồn tại, tránh lỗi pathspec did not match
           [ -f data.json ] && git add data.json
           [ -f last_update.json ] && git add last_update.json
-          [ -f realtime_meta.json ] && git add realtime_meta.json
 
           if git diff --staged --quiet; then
             echo "ℹ️ Không có thay đổi — bỏ qua commit."
@@ -58,8 +57,7 @@ jobs:
           fi
 
           git commit -m "chore: realtime update $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-
-          # Đồng bộ với remote trước khi push để tránh bị reject
+          
           git pull --rebase --autostash origin main || true
           git push origin HEAD:main
 
@@ -68,10 +66,7 @@ jobs:
         run: |
           echo "### 📊 Kết quả cập nhật realtime" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -f realtime_meta.json ]; then
-            echo '```json' >> $GITHUB_STEP_SUMMARY
-            cat realtime_meta.json >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-          else
-            echo "⚠️ Không tìm thấy realtime_meta.json (script có thể chưa chạy xong)." >> $GITHUB_STEP_SUMMARY
+          echo "**Thời gian chạy:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          if [ -f last_update.json ]; then
+            echo "**Mốc cập nhật dữ liệu (VN):** $(python -c 'import json; print(json.load(open("last_update.json")).get("last_update", "N/A"))')" >> $GITHUB_STEP_SUMMARY
           fi
