@@ -1087,7 +1087,7 @@ def generate_html():
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         
                         // ƯU TIÊN GIÁ TỪ MONGODB, NẾU KHÔNG CÓ MỚI DÙNG GIÁ CŨ
-                        close_price: liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : item.close_price),
+                        close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : item.close_price)),
                         updated_at: liveData.updated_at !== undefined ? liveData.updated_at : (extraData.updated_at || "Chưa rõ"), // Giờ của từng mã
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -2183,14 +2183,12 @@ def generate_html():
             document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
             updateChartWatchlistBtn(symbol);
             
-            // --- THÊM MỚI: LẤY GIỜ CẬP NHẬT RIÊNG CỦA MÃ NÀY ---
             const item = screenerResults.find(s => s.symbol === symbol);
             if (item && item.updated_at) {
                 document.getElementById('chart-last-update').innerText = item.updated_at;
             } else {
                 document.getElementById('chart-last-update').innerText = "Chưa rõ";
             }
-            // ---------------------------------------------------
 
             document.getElementById('chart-modal').classList.remove('hidden');
             document.getElementById('chart-loading').classList.remove('hidden');
@@ -2198,8 +2196,56 @@ def generate_html():
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error();
                 currentSymbolHistory = await res.json();
+
+                // Đảm bảo history_d1 là mảng
+                if (!currentSymbolHistory.history_d1) currentSymbolHistory.history_d1 = [];
+
+                // Làm sạch dữ liệu: Chỉ giữ nến hợp lệ
+                currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter(bar => {
+                    return bar.time && bar.open != null && bar.high != null && bar.low != null && bar.close != null;
+                });
+
+                // === CHÈN NẾN HÔM NAY TỪ MONGODB (LUÔN CHÈN NẾU CÓ GIÁ) ===
+                const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
+                
+                if (currentPrice > 0) {
+                    const now = new Date();
+                    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                    
+                    // Tìm xem hôm nay đã có nến chưa
+                    const existingTodayIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === todayStr);
+                    
+                    if (existingTodayIndex === -1) {
+                        // Chưa có -> Chèn mới
+                        currentSymbolHistory.history_d1.push({
+                            time: todayStr,
+                            open: currentPrice,
+                            high: currentPrice,
+                            low: currentPrice,
+                            close: currentPrice,
+                            volume: 0
+                        });
+                    } else {
+                        // Đã có -> Cập nhật giá
+                        currentSymbolHistory.history_d1[existingTodayIndex].close = currentPrice;
+                        if (currentPrice > currentSymbolHistory.history_d1[existingTodayIndex].high) 
+                            currentSymbolHistory.history_d1[existingTodayIndex].high = currentPrice;
+                        if (currentPrice < currentSymbolHistory.history_d1[existingTodayIndex].low) 
+                            currentSymbolHistory.history_d1[existingTodayIndex].low = currentPrice;
+                    }
+                }
+
+                // SẮP XẾP LẠI MẢNG THEO THỜI GIAN (Bắt buộc với lightweight-charts)
+                currentSymbolHistory.history_d1.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+                // Loại bỏ nến trùng lặp nếu có
+                currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter((bar, index, arr) => {
+                    return index === 0 || bar.time !== arr[index - 1].time;
+                });
+
                 renderChartInstance(currentSymbolHistory);
             } catch (err) {
+                console.error("Lỗi tải biểu đồ:", err);
                 document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
             } finally {
                 document.getElementById('chart-loading').classList.add('hidden');
@@ -2360,7 +2406,10 @@ def generate_html():
                     legendClose.innerText = formatNumber(bar.close);
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
-                    if (index > 0) changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
+                    // Kiểm tra thêm điều kiện giá cũ > 0 để tránh chia cho 0
+                    if (index > 0 && dataArr[index - 1].close > 0) {
+                        changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
+                    }
                     legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
                     legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
