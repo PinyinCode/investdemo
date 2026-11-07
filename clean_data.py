@@ -2,8 +2,12 @@ import json
 import os
 import subprocess
 
-# Danh sách các file cần dọn dẹp
+# File chứa danh sách mã CHUẨN (Sẽ dùng file này làm gốc để lọc)
+MASTER_SYMBOLS_FILE = "vn100_symbols.json"
+
+# Các file cần dọn dẹp (Bao gồm cả vn100_full_info.json)
 FILES_TO_CLEAN = [
+    "vn100_full_info.json",      # <-- Thêm file này vào danh sách cần dọn
     "screener_results.json",
     "data.json",
     "symbol_sim_rates.json",
@@ -11,41 +15,45 @@ FILES_TO_CLEAN = [
     "cheap_stocks.json"
 ]
 
-SYMBOLS_FILE = "vn100_symbols.json"
 COMMIT_MESSAGE = "🧹 Auto-clean invalid symbols (TID, VDP...) from JSON files"
 
 def run_git_command(cmd):
-    """Chạy lệnh Git và in ra kết quả."""
     try:
         result = subprocess.run(cmd, shell=True, check=True, text=True, capture_output=True)
         print(result.stdout)
         return True
     except subprocess.CalledProcessError as e:
-        print(f"⚠️ Lỗi khi chạy lệnh Git: {cmd}")
+        print(f"⚠️ Lỗi Git: {cmd}")
         print(e.stderr)
         return False
 
-def load_vn100_symbols():
-    if not os.path.exists(SYMBOLS_FILE):
-        print(f"❌ Không tìm thấy file {SYMBOLS_FILE}.")
+def get_master_symbols():
+    """Đọc danh sách mã chuẩn từ vn100_symbols.json."""
+    if not os.path.exists(MASTER_SYMBOLS_FILE):
+        print(f"❌ Không tìm thấy file gốc {MASTER_SYMBOLS_FILE}.")
         return None
+    
     try:
-        with open(SYMBOLS_FILE, "r", encoding="utf-8") as f:
+        with open(MASTER_SYMBOLS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
+            
         valid_symbols = set()
         for item in data:
             if isinstance(item, str):
                 valid_symbols.add(item.strip().upper())
             elif isinstance(item, dict) and "symbol" in item:
                 valid_symbols.add(item["symbol"].strip().upper())
-        print(f"✅ Đã tải {len(valid_symbols)} mã hợp lệ từ {SYMBOLS_FILE}")
+                
+        print(f"✅ Đã tải {len(valid_symbols)} mã chuẩn từ {MASTER_SYMBOLS_FILE}.")
         return valid_symbols
     except Exception as e:
-        print(f"❌ Lỗi đọc {SYMBOLS_FILE}: {e}")
+        print(f"❌ Lỗi đọc {MASTER_SYMBOLS_FILE}: {e}")
         return None
 
 def clean_file(filename, valid_symbols):
+    """Dọn dẹp một file, chỉ giữ lại các mã có trong valid_symbols."""
     if not os.path.exists(filename):
+        print(f"⏭️ Bỏ qua {filename} (không tồn tại).")
         return False
     try:
         with open(filename, "r", encoding="utf-8") as f:
@@ -55,31 +63,39 @@ def clean_file(filename, valid_symbols):
         return False
 
     removed_count = 0
-    original_count = 0
+    removed_names = []
 
+    # Dạng List (screener_results, vn100_full_info nếu là list...)
     if isinstance(data, list):
-        original_count = len(data)
         new_data = []
         for item in data:
-            sym = item.get("symbol", "").strip().upper() if isinstance(item, dict) else ""
+            sym = ""
+            if isinstance(item, dict):
+                sym = item.get("symbol", "").strip().upper()
+            elif isinstance(item, str):
+                sym = item.strip().upper()
+                
             if sym in valid_symbols:
                 new_data.append(item)
             else:
                 removed_count += 1
+                if len(removed_names) < 5: removed_names.append(sym)
         data = new_data
 
+    # Dạng Dict
     elif isinstance(data, dict):
-        original_count = len(data)
         first_key = next(iter(data), "").upper()
         
-        if first_key in valid_symbols or first_key.isalnum():
-            # data.json
+        # Kiểm tra xem đây là dict của các mã (data.json) hay dict của các nhóm ngành (cheap_stocks.json)
+        if first_key in valid_symbols or (first_key.isalnum() and len(first_key) <= 5):
+            # Dạng {"VCB": {...}, "TID": {...}}
             for sym in list(data.keys()):
                 if sym.strip().upper() not in valid_symbols:
                     del data[sym]
                     removed_count += 1
+                    if len(removed_names) < 5: removed_names.append(sym)
         else:
-            # cheap_stocks.json
+            # Dạng {"SECTOR": [ {...}, {...} ]} (cheap_stocks)
             for sector, stocks in data.items():
                 if isinstance(stocks, list):
                     new_stocks = []
@@ -89,27 +105,31 @@ def clean_file(filename, valid_symbols):
                             new_stocks.append(stock)
                         else:
                             removed_count += 1
+                            if len(removed_names) < 5: removed_names.append(sym)
                     data[sector] = new_stocks
 
     if removed_count > 0:
         try:
             with open(filename, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
-            print(f"🧹 {filename}: Đã xoá {removed_count} mã lỗi.")
+            print(f"🧹 {filename}: Đã xoá {removed_count} mã rác {removed_names if removed_count <= 5 else '...'}")
             return True
         except Exception as e:
             print(f"❌ Lỗi ghi file {filename}: {e}")
             return False
     else:
-        print(f"✨ {filename}: Sạch.")
+        print(f"✨ {filename}: Sạch, không có mã rác.")
         return False
 
 def main():
     print("🚀 Bắt đầu quá trình dọn dẹp dữ liệu...")
-    valid_symbols = load_vn100_symbols()
+    
+    # 1. Lấy danh sách mã chuẩn
+    valid_symbols = get_master_symbols()
     if not valid_symbols:
         return
 
+    # 2. Dọn dẹp từng file
     has_changes = False
     for filename in FILES_TO_CLEAN:
         if clean_file(filename, valid_symbols):
@@ -119,10 +139,10 @@ def main():
         print("\n✅ Không có file nào cần dọn dẹp. Không cần push Git.")
         return
         
+    # 3. Git add, commit, push
     print("\n📦 Đang tự động đẩy lên GitHub...")
     run_git_command("git add .")
     
-    # Thử commit, nếu không có gì thay đổi thì bỏ qua
     commit_ok = run_git_command(f'git commit -m "{COMMIT_MESSAGE}"')
     
     if commit_ok:
@@ -130,7 +150,7 @@ def main():
         run_git_command("git push origin main")
         print("\n🎉 Đã push thành công lên GitHub!")
     else:
-        print("\n⚠️ Không có thay đổi nào để commit (có thể file đã được dọn trước đó).")
+        print("\n⚠️ Không có thay đổi nào để commit.")
 
 if __name__ == "__main__":
     main()
