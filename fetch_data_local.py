@@ -14,150 +14,91 @@ HISTORY_DIR = "history"
 BCTC_DIR = "bctc_data"
 JS_LIB_FILE = "lightweight-charts.js"
 
-VN100_SYMBOLS = [
-    "ACB", "BCM", "BID", "BVH", "CTG", "FPT", "GAS", "GVR", "HDB", "HPG",
-    "MBB", "MSN", "MWG", "PLX", "POW", "SAB", "SHB", "SSB", "SSI", "STB",
-    "TCB", "TPB", "VCB", "VHM", "VIB", "VIC", "VJC", "VNM", "VPB", "VRE",
-    "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS", "NVL", "PDR",
-    "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC",
-    "PHR", "HSG", "NKG", "CTD", "VCG", "HHV", "PNJ", "FRT", "PVD", "PVS",
-    "BSR", "REE", "PC1", "NT2", "GMD", "HAH", "PVT", "HVN", "VHC", "ANV",
-    "APH", "ASM", "DBC", "DCM", "DPM", "GEX", "KDC", "LIG", "MSH", "PAN",
-    "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "DHC", "IMP", "SBA", "SJS",
-    "TID", "VPI", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG"
-]
-VN100_SYMBOLS = sorted(list(set(VN100_SYMBOLS)))
+VN100_INFO_FILE = "vn100_full_info.json"
+VN100_SYMBOLS_FILE = "vn100_symbols.json"
 
-SECTOR_MAPPING = {
-    "NGAN_HANG": [
-        "ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB",
-        "SHB", "SSB", "MSB", "OCB", "EIB", "VCB"
-    ],
-    "CHUNG_KHOAN": [
-        "SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"
-    ],
-    "BAT_DONG_SAN": [
-        "VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG",
-        "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR", "SJS", "VPI"
-    ],
-    "CONG_NGHE_BAN_LE": [
-        "FPT", "MWG", "PNJ", "FRT"
-    ],
-    "DIEN_NUOC_HA_TANG": [
-        "POW", "REE", "PC1", "NT2", "GAS"
-    ],
-    "NGUYEN_VAT_LIEU_CHU_KY": [
-        "HPG", "HSG", "NKG", "DCM", "DPM", "GVR", "DHC", "BSR"
-    ],
-    "SAN_XUAT_TIEU_DUNG_PHONG_THU": [
-        "SAB", "VNM", "MSN", "VHC", "ANV", "BVH", "PLX", "PVD", "PVS",
-        "GMD", "HAH", "PVT", "HVN", "APH", "ASM", "DBC", "KDC", "MSH",
-        "PAN", "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "IMP", "SBA",
-        "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG", "CTD", "VCG", "HHV", "GEX"
-    ]
+# Hàm tự động dịch tên ngành từ VCI (tiếng Anh) sang key của Web (tiếng Việt)
+def translate_sector(sector_name):
+    mapping = {
+        "BANKS": "NGAN_HANG",
+        "FINANCIALS": "CHUNG_KHOAN",
+        "SECURITIES": "CHUNG_KHOAN",
+        "REAL ESTATE": "BAT_DONG_SAN",
+        "REAL_ESTATE": "BAT_DONG_SAN",
+        "TECHNOLOGY": "CONG_NGHE_BAN_LE",
+        "RETAIL": "CONG_NGHE_BAN_LE",
+        "UTILITIES": "DIEN_NUOC_HA_TANG",
+        "ENERGY": "DIEN_NUOC_HA_TANG",
+        "MATERIALS": "NGUYEN_VAT_LIEU_CHU_KY",
+        "INDUSTRIALS": "NGUYEN_VAT_LIEU_CHU_KY",
+        "CONSUMER STAPLES": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
+        "CONSUMER DISCRETIONARY": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
+        "HEALTHCARE": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
+    }
+    upper_name = str(sector_name).upper()
+    for eng, vn in mapping.items():
+        if eng in upper_name:
+            return vn
+    return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
+
+def load_vn100_data():
+    """Tải danh sách mã, tên công ty và phân ngành động từ file JSON"""
+    symbols = []
+    company_names = {}
+    sector_mapping = {}
+    
+    if os.path.exists(VN100_INFO_FILE):
+        try:
+            with open(VN100_INFO_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                for item in data:
+                    sym = item.get("symbol")
+                    if sym:
+                        symbols.append(sym)
+                        company_names[sym] = item.get("company_name", sym)
+                        
+                        # Lấy ngành từ file JSON (nếu có) và tự động dịch
+                        raw_sector = item.get("sector", "")
+                        vn_sector = translate_sector(raw_sector)
+                        
+                        if vn_sector not in sector_mapping:
+                            sector_mapping[vn_sector] = []
+                        sector_mapping[vn_sector].append(sym)
+            print(f"✅ Đã tải {len(symbols)} mã và phân ngành tự động từ {VN100_INFO_FILE}")
+            return sorted(list(set(symbols))), company_names, sector_mapping
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc {VN100_INFO_FILE}: {e}")
+
+    # Fallback nếu chưa có file cào chi tiết
+    if os.path.exists(VN100_SYMBOLS_FILE):
+        try:
+            with open(VN100_SYMBOLS_FILE, "r", encoding="utf-8") as f:
+                symbols = json.load(f)
+            company_names = {sym: sym for sym in symbols}
+            print(f"⚠️ Không có file chi tiết, dùng {VN100_SYMBOLS_FILE} ({len(symbols)} mã)")
+            return sorted(list(set(symbols))), company_names, {}
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc {VN100_SYMBOLS_FILE}: {e}")
+
+    print("❌ Không tìm thấy file danh sách mã nào! Vui lòng chạy script cào danh sách trước.")
+    return [], {}, {}
+
+# Tải dữ liệu động khi khởi động
+VN100_SYMBOLS, COMPANY_NAMES, DYNAMIC_SECTOR_MAPPING = load_vn100_data()
+
+# Bảng phân ngành dự phòng (Chỉ dùng nếu file JSON không có thông tin ngành)
+FALLBACK_SECTOR_MAPPING = {
+    "NGAN_HANG": ["ACB", "BID", "CTG", "TCB", "MBB", "STB", "VPB", "HDB", "VIB", "TPB", "SHB", "SSB", "MSB", "OCB", "EIB", "VCB"],
+    "CHUNG_KHOAN": ["SSI", "VCI", "HCM", "VIX", "MBS", "FTS", "BSI", "CTS", "ORS"],
+    "BAT_DONG_SAN": ["VHM", "VIC", "VRE", "NVL", "PDR", "DIG", "NLG", "KDH", "CEO", "DXG", "TCH", "HDG", "KBC", "IDC", "SZC", "BCM", "PHR", "SJS", "VPI"],
+    "CONG_NGHE_BAN_LE": ["FPT", "MWG", "PNJ", "FRT"],
+    "DIEN_NUOC_HA_TANG": ["POW", "REE", "PC1", "NT2", "GAS"],
+    "NGUYEN_VAT_LIEU_CHU_KY": ["HPG", "HSG", "NKG", "DCM", "DPM", "GVR", "DHC", "BSR"],
+    "SAN_XUAT_TIEU_DUNG_PHONG_THU": ["SAB", "VNM", "MSN", "VHC", "ANV", "BVH", "PLX", "PVD", "PVS", "GMD", "HAH", "PVT", "HVN", "APH", "ASM", "DBC", "KDC", "MSH", "PAN", "SBT", "TCD", "TLG", "VDP", "VPG", "VTO", "IMP", "SBA", "DRC", "CSM", "BMP", "NTC", "DHG", "VOS", "HAG", "CTD", "VCG", "HHV", "GEX"]
 }
 
-COMPANY_NAMES = {
-    "ACB": "Ngân hàng TMCP Á Châu",
-    "BCM": "Tổng Công ty Đầu tư và Phát triển Công nghiệp - CTCP (Becamex IDC)",
-    "BID": "Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)",
-    "BVH": "Tập đoàn Bảo Việt",
-    "CTG": "Ngân hàng TMCP Công Thương Việt Nam (VietinBank)",
-    "FPT": "Công ty Cổ phần FPT",
-    "GAS": "Tổng Công ty Khí Việt Nam - CTCP (PV GAS)",
-    "GVR": "Tập đoàn Công nghiệp Cao su Việt Nam",
-    "HDB": "Ngân hàng TMCP Phát triển TP.HCM (HDBank)",
-    "HPG": "Công ty Cổ phần Tập đoàn Hòa Phát",
-    "MBB": "Ngân hàng TMCP Quân Đội (MB Bank)",
-    "MSN": "Công ty Cổ phần Tập đoàn Masan",
-    "MWG": "Công ty Cổ phần Đầu tư Thế Giới Di Động",
-    "PLX": "Tập đoàn Xăng dầu Việt Nam (Petrolimex)",
-    "POW": "Tổng Công ty Điện lực Dầu khí Việt Nam - CTCP (PV Power)",
-    "SAB": "Tổng Công ty Cổ phần Bia - Rượu - Nước giải khát Sài Gòn (Sabeco)",
-    "SHB": "Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)",
-    "SSB": "Ngân hàng TMCP Đông Nam Á (SeABank)",
-    "SSI": "Công ty Cổ phần Chứng khoán SSI",
-    "STB": "Ngân hàng TMCP Sài Gòn Thương Tín (Sacombank)",
-    "TCB": "Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)",
-    "TPB": "Ngân hàng TMCP Tiên Phong (TPBank)",
-    "VCB": "Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank)",
-    "VHM": "Công ty Cổ phần Vinhomes",
-    "VIB": "Ngân hàng TMCP Quốc tế Việt Nam (VIB)",
-    "VIC": "Tập đoàn Vingroup - Công ty Cổ phần",
-    "VJC": "Công ty Cổ phần Hàng không Vietjet",
-    "VNM": "Công ty Cổ phần Sữa Việt Nam (Vinamilk)",
-    "VPB": "Ngân hàng TMCP Việt Nam Thịnh Vượng (VPBank)",
-    "VRE": "Công ty Cổ phần Vincom Retail",
-    "VCI": "Công ty Cổ phần Chứng khoán Vietcap",
-    "HCM": "Công ty Cổ phần Chứng khoán TP.HCM (HSC)",
-    "VIX": "Công ty Cổ phần Chứng khoán VIX",
-    "MBS": "Công ty Cổ phần Chứng khoán MB (MBS)",
-    "FTS": "Công ty Cổ phần Chứng khoán FPT",
-    "BSI": "Công ty Cổ phần Chứng khoán BIDV (BSC)",
-    "CTS": "Công ty Cổ phần Chứng khoán VietinBank",
-    "ORS": "Công ty Cổ phần Chứng khoán Tiên Phong",
-    "NVL": "Công ty Cổ phần Tập đoàn Địa ốc No Va (Novaland)",
-    "PDR": "Công ty Cổ phần Phát triển Bất động sản Phát Đạt",
-    "DIG": "Tổng Công ty Cổ phần Đầu tư Phát triển Xây dựng (DIC Corp)",
-    "NLG": "Công ty Cổ phần Đầu tư Nam Long",
-    "KDH": "Công ty Cổ phần Đầu tư và Kinh doanh Nhà Khang Điền",
-    "CEO": "Công ty Cổ phần Tập đoàn C.E.O",
-    "DXG": "Công ty Cổ phần Tập đoàn Đất Xanh",
-    "TCH": "Công ty Cổ phần Đầu tư Dịch vụ Tài chính Hoàng Huy",
-    "HDG": "Công ty Cổ phần Tập đoàn Hà Đô",
-    "KBC": "Tổng Công ty Phát triển Đô thị Kinh Bắc - CTCP",
-    "IDC": "Tổng Công ty IDICO - CTCP",
-    "SZC": "Công ty Cổ phần Sonadezi Châu Đức",
-    "PHR": "Công ty Cổ phần Cao su Phước Hòa",
-    "HSG": "Công ty Cổ phần Tập đoàn Hoa Sen",
-    "NKG": "Công ty Cổ phần Thép Nam Kim",
-    "CTD": "Công ty Cổ phần Xây dựng Coteccons",
-    "VCG": "Tổng Công ty Cổ phần Xuất nhập khẩu và Xây dựng Việt Nam (Vinaconex)",
-    "HHV": "Công ty Cổ phần Đầu tư Hạ tầng Giao thông Đèo Cả",
-    "PNJ": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
-    "FRT": "Công ty Cổ phần Bán lẻ Kỹ thuật số FPT",
-    "PVD": "Tổng Công ty Cổ phần Khoan và Dịch vụ Khoan Dầu khí (PV Drilling)",
-    "PVS": "Tổng Công ty Cổ phần Dịch vụ Kỹ thuật Dầu khí Việt Nam (PTSC)",
-    "BSR": "Công ty Cổ phần Lọc hóa dầu Bình Sơn",
-    "REE": "Công ty Cổ phần Cơ Điện Lạnh (REE)",
-    "PC1": "Công ty Cổ phần Tập đoàn PC1",
-    "NT2": "Công ty Cổ phần Điện lực Dầu khí Nhơn Trạch 2",
-    "GMD": "Công ty Cổ phần Gemadept",
-    "HAH": "Công ty Cổ phần Vận tải và Xếp dỡ Hải An",
-    "PVT": "Tổng Công ty Cổ phần Vận tải Dầu khí (PVTrans)",
-    "HVN": "Tổng Công ty Hàng không Việt Nam - CTCP (Vietnam Airlines)",
-    "VHC": "Công ty Cổ phần Vĩnh Hoàn",
-    "ANV": "Công ty Cổ phần Nam Việt (Navico)",
-    "APH": "Công ty Cổ phần Tập đoàn An Phát Holdings",
-    "ASM": "Công ty Cổ phần Tập đoàn Sao Mai",
-    "DBC": "Công ty Cổ phần Tập đoàn Dabaco Việt Nam",
-    "DCM": "Công ty Cổ phần Phân bón Dầu khí Cà Mau",
-    "DPM": "Tổng Công ty Phân bón và Hóa chất Dầu khí - CTCP (PVFCCo)",
-    "GEX": "Công ty Cổ phần Tập đoàn Gelex",
-    "KDC": "Công ty Cổ phần Tập đoàn Kido",
-    "LIG": "Công ty Cổ phần Licogi 13",
-    "MSH": "Công ty Cổ phần May Sông Hồng",
-    "PAN": "Công ty Cổ phần Tập đoàn PAN",
-    "SBT": "Công ty Cổ phần Thành Thành Công - Biên Hòa (TTC AgriS)",
-    "TCD": "Công ty Cổ phần Tập đoàn Xây dựng và Phát triển Hạ tầng",
-    "TLG": "Công ty Cổ phần Tập đoàn Thiên Long",
-    "VDP": "Công ty Cổ phần Thuốc thú y Trung ương I (Vinavetco)",
-    "VPG": "Công ty Cổ phần Thép Việt - Ý",
-    "VTO": "Công ty Cổ phần Vận tải Xăng dầu Vitaco",
-    "DHC": "Công ty Cổ phần Đông Hải Bến Tre",
-    "IMP": "Công ty Cổ phần Dược phẩm Imexpharm",
-    "SBA": "Công ty Cổ phần Mía đường Sông Lam",
-    "SJS": "Công ty Cổ phần SJ Group",
-    "TID": "Công ty Cổ phần Tập đoàn Tin Việt Nam",
-    "VPI": "Công ty Cổ phần Đầu tư và Phát triển Bất động sản VPI",
-    "DRC": "Công ty Cổ phần Cao su Đà Nẵng",
-    "CSM": "Công ty Cổ phần Cao su Sài Gòn - Cà Mau",
-    "BMP": "Công ty Cổ phần Nhựa Bình Minh",
-    "NTC": "Công ty Cổ phần Khu Công nghiệp Nam Tân Uyên",
-    "DHG": "Công ty Cổ phần Dược Hậu Giang",
-    "VOS": "Công ty Cổ phần Vận tải Biển Việt Nam",
-    "HAG": "Công ty Cổ phần Hoàng Anh Gia Lai",
-}
+# Gộp bảng động và bảng tĩnh (Ưu tiên bảng động)
+SECTOR_MAPPING = {**FALLBACK_SECTOR_MAPPING, **DYNAMIC_SECTOR_MAPPING}
 
 VNDIRECT_RATIOS = {
     "pe": "PRICE_TO_EARNINGS",
@@ -194,9 +135,6 @@ def get_vndirect_ratio(symbol, ratio_code):
 
 
 def get_fallback_ratios_from_bctc(symbol):
-    """
-    Fallback đọc dữ liệu từ bctc_data/{symbol}.json nếu API trực tiếp bằng 0 hoặc không có
-    """
     filepath = os.path.join(BCTC_DIR, f"{symbol.upper()}.json")
     if not os.path.exists(filepath):
         return {}
@@ -207,7 +145,6 @@ def get_fallback_ratios_from_bctc(symbol):
         
         ratios_list = data.get("ratios", [])
         if ratios_list:
-            # Lấy quý mới nhất
             latest = ratios_list[0]
             return {
                 "pe": latest.get("PE") or latest.get("PRICE_TO_EARNINGS") or 0,
@@ -230,11 +167,7 @@ def get_company_overview(symbol, close_price=0):
 
     try:
         url = "https://api-finfo.vndirect.com.vn/v4/ratios"
-        params = {
-            "q": f"code:{symbol}~ratioCode:SHARE_OUTSTANDING",
-            "size": 1,
-            "sort": "reportDate:desc"
-        }
+        params = {"q": f"code:{symbol}~ratioCode:SHARE_OUTSTANDING", "size": 1, "sort": "reportDate:desc"}
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
         r = requests.get(url, params=params, headers=headers, timeout=10)
         if r.status_code == 200:
@@ -247,11 +180,7 @@ def get_company_overview(symbol, close_price=0):
     if total_shares == 0:
         try:
             url = "https://api-finfo.vndirect.com.vn/v4/ratios"
-            params = {
-                "q": f"code:{symbol}~ratioCode:MARKET_CAP",
-                "size": 1,
-                "sort": "reportDate:desc"
-            }
+            params = {"q": f"code:{symbol}~ratioCode:MARKET_CAP", "size": 1, "sort": "reportDate:desc"}
             headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
             r = requests.get(url, params=params, headers=headers, timeout=10)
             if r.status_code == 200:
@@ -544,8 +473,12 @@ def auto_git_push():
 
 
 def main():
+    if not VN100_SYMBOLS:
+        print("❌ Không có danh sách mã nào để cào. Vui lòng chạy script cào danh sách trước.")
+        return
+
     print("==================================================")
-    print("        BƯỚC 1: CHỌN PHẠM VI MÃ CỔ PHIẾU        ")
+    print(f"      BƯỚC 1: CHỌN PHẠM VI MÃ ({len(VN100_SYMBOLS)} mã)      ")
     print("==================================================")
     print("1. Cào TOÀN BỘ danh sách VN100 (Mặc định)")
     print("2. Cào RIÊNG TỪNG MÃ (Tùy chọn mã cụ thể)")
