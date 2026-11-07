@@ -428,13 +428,16 @@ def generate_html():
                     <div id="modal-cheap-badge-container"></div>
                 </div>
 
-                <div class="grid grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
+                <!-- CẬP NHẬT: THÊM VỐN HÓA VÀ SLCP VÀO BẢNG THÔNG SỐ -->
+                <div class="grid grid-cols-4 md:grid-cols-8 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/B</span><span id="modal-pb" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">EPS</span><span id="modal-eps" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">ROE</span><span id="modal-roe" class="text-sm font-bold text-blue-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">ROA</span><span id="modal-roa" class="text-sm font-bold text-indigo-400">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">Cổ tức</span><span id="modal-div" class="text-sm font-bold text-amber-400">--</span></div>
+                    <div><span class="text-[10px] text-slate-500 block">SL Cổ phiếu</span><span id="modal-shares" class="text-sm font-bold text-emerald-400">--</span></div>
+                    <div><span class="text-[10px] text-slate-500 block">Vốn hóa</span><span id="modal-mktcap" class="text-sm font-bold text-emerald-400">--</span></div>
                 </div>
 
                 <div id="modal-final-decision"></div>
@@ -1420,6 +1423,17 @@ def generate_html():
             document.getElementById('modal-roe').innerText = item.roe ? formatPercent(item.roe) : '—';
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
+
+            // --- HIỂN THỊ SỐ LƯỢNG CỔ PHIẾU VÀ VỐN HÓA ---
+            const shares = item.total_shares || 0;
+            if (shares > 0) {
+                document.getElementById('modal-shares').innerText = (shares / 1_000_000).toLocaleString('vi-VN', {maximumFractionDigits: 1}) + ' Tr';
+                const mktCap = (shares * (item.close_price || 0)) / 1_000_000_000;
+                document.getElementById('modal-mktcap').innerText = mktCap.toLocaleString('vi-VN', {maximumFractionDigits: 0}) + ' Tỷ';
+            } else {
+                document.getElementById('modal-shares').innerText = '—';
+                document.getElementById('modal-mktcap').innerText = '—';
+            }
 
             const isBankOrSec = (item.sector === "NGAN_HANG" || item.sector === "CHUNG_KHOAN");
             document.getElementById('modal-cfo').innerText = (item.cfo_latest !== undefined && item.cfo_latest !== null) ? item.cfo_latest + ' Tỷ' : '—';
