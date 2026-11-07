@@ -12,6 +12,7 @@ except ImportError:
 
 DATA_FILE = "data.json"
 LAST_UPDATE_FILE = "last_update.json"
+REALTIME_META_FILE = "realtime_meta.json"
 
 
 def get_symbols_from_data():
@@ -35,16 +36,14 @@ def fetch_realtime(symbol):
         volume_val = getattr(stock, "volume", None)
 
         if close_val is None:
-            print(f"⚠️ {symbol}: không có trường close")
-            return None
+            return None, "không có trường close"
 
         return {
             "close": float(close_val),
             "volume": int(volume_val) if volume_val is not None else None,
-        }
+        }, None
     except Exception as e:
-        print(f"⚠️ {symbol}: lỗi fetch — {e}")
-        return None
+        return None, str(e)
 
 
 def main():
@@ -52,62 +51,115 @@ def main():
     if not symbols:
         return
 
-    print(f"🔄 Cập nhật realtime cho {len(symbols)} mã...")
+    print("=" * 70)
+    print(f"🔄 CẬP NHẬT REALTIME — {len(symbols)} mã")
+    print("=" * 70)
 
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         stock_db = json.load(f)
 
-    updated = 0
-    failed = 0
     now_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    for i, symbol in enumerate(symbols):
-        print(f"[{i+1}/{len(symbols)}] {symbol}...", end=" ")
+    ok_list = []        # mã cập nhật thành công
+    fail_list = []      # mã thất bại (kèm lý do)
+    skip_list = []      # mã không có trong data.json
+    unchanged_list = [] # mã lấy được nhưng giá không đổi
 
-        realtime = fetch_realtime(symbol)
+    for i, symbol in enumerate(symbols, 1):
+        realtime, err = fetch_realtime(symbol)
+
+        # ---------- THẤT BẠI ----------
         if realtime is None:
-            print("❌ bỏ qua")
-            failed += 1
+            fail_list.append((symbol, err))
+            print(f"[{i:>3}/{len(symbols)}] ❌ {symbol:<6} — {err}")
+            time.sleep(0.15)
             continue
 
-        if symbol in stock_db:
-            old_close = stock_db[symbol].get("close", 0)
-            new_close = realtime["close"]
+        # ---------- KHÔNG CÓ TRONG data.json ----------
+        if symbol not in stock_db:
+            skip_list.append(symbol)
+            print(f"[{i:>3}/{len(symbols)}] ⚠️  {symbol:<6} — không có trong data.json")
+            time.sleep(0.15)
+            continue
 
-            # Tự động phát hiện đơn vị: nếu < 1000 thì là nghìn VND → *1000
-            if new_close < 1000:
-                new_close = new_close * 1000
+        # ---------- THÀNH CÔNG ----------
+        old_close = stock_db[symbol].get("close", 0)
+        new_close = realtime["close"]
 
-            stock_db[symbol]["close"] = int(new_close)
+        # Tự động phát hiện đơn vị: nếu < 1000 thì là nghìn VND → *1000
+        if new_close < 1000:
+            new_close = new_close * 1000
+        new_close_int = int(new_close)
 
-            if realtime["volume"] is not None:
-                stock_db[symbol]["volume"] = realtime["volume"]
+        stock_db[symbol]["close"] = new_close_int
+        if realtime["volume"] is not None:
+            stock_db[symbol]["volume"] = realtime["volume"]
+        stock_db[symbol]["realtime_updated"] = now_str
 
-            stock_db[symbol]["realtime_updated"] = now_str
+        diff = new_close_int - old_close
+        diff_pct = (diff / old_close * 100) if old_close else 0
 
-            diff = new_close - old_close
-            diff_pct = (diff / old_close * 100) if old_close else 0
-            print(f"✅ {old_close:,} → {int(new_close):,} ({diff_pct:+.1f}%)")
-            updated += 1
+        if diff == 0:
+            unchanged_list.append(symbol)
+            print(f"[{i:>3}/{len(symbols)}] ⚪ {symbol:<6} — {new_close_int:>10,} (không đổi)")
         else:
-            print("⚠️ không có trong data.json")
+            arrow = "📈" if diff > 0 else "📉"
+            print(f"[{i:>3}/{len(symbols)}] ✅ {symbol:<6} — {old_close:>10,} → {new_close_int:>10,} ({diff_pct:+.2f}%) {arrow}")
+            ok_list.append((symbol, old_close, new_close_int, diff_pct))
 
         time.sleep(0.15)
 
+    # ---------- GHI data.json ----------
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(stock_db, f, ensure_ascii=False, indent=4)
 
-    # Cập nhật mốc thời gian realtime riêng, không đè last_update của crawl
+    # ---------- GHI last_update.json (đúng định dạng bạn muốn) ----------
+    with open(LAST_UPDATE_FILE, "w", encoding="utf-8") as f:
+        json.dump({"last_update": now_str}, f, ensure_ascii=False, indent=4)
+
+    # ---------- GHI realtime_meta.json (log chi tiết) ----------
     realtime_meta = {
         "realtime_last_update": now_str,
-        "realtime_updated_count": updated,
-        "realtime_failed_count": failed,
+        "total_symbols": len(symbols),
+        "updated_count": len(ok_list),
+        "unchanged_count": len(unchanged_list),
+        "failed_count": len(fail_list),
+        "skipped_count": len(skip_list),
+        "updated_symbols": [s for s, _, _, _ in ok_list],
+        "unchanged_symbols": unchanged_list,
+        "failed_symbols": [{"symbol": s, "reason": r} for s, r in fail_list],
+        "skipped_symbols": skip_list,
     }
-    with open("realtime_meta.json", "w", encoding="utf-8") as f:
+    with open(REALTIME_META_FILE, "w", encoding="utf-8") as f:
         json.dump(realtime_meta, f, ensure_ascii=False, indent=4)
 
-    print(f"\n✅ Hoàn tất: {updated} mã cập nhật, {failed} mã thất bại.")
-    print(f"📁 Đã ghi đè {DATA_FILE} lúc {now_str}")
+    # ---------- TỔNG KẾT ----------
+    print("\n" + "=" * 70)
+    print("📊 TỔNG KẾT")
+    print("=" * 70)
+    print(f"✅ Cập nhật có thay đổi : {len(ok_list):>3} mã")
+    print(f"⚪ Không đổi giá        : {len(unchanged_list):>3} mã")
+    print(f"❌ Thất bại             : {len(fail_list):>3} mã")
+    print(f"⚠️  Bỏ qua (không có)   : {len(skip_list):>3} mã")
+    print(f"🕒 Mốc thời gian        : {now_str}")
+
+    if ok_list:
+        print("\n📈 DANH SÁCH MÃ ĐÃ CẬP NHẬT (có thay đổi giá):")
+        for sym, o, n, p in ok_list:
+            print(f"   • {sym:<6}  {o:>10,} → {n:>10,}  ({p:+.2f}%)")
+
+    if fail_list:
+        print("\n❌ DANH SÁCH MÃ THẤT BẠI:")
+        for sym, reason in fail_list:
+            print(f"   • {sym:<6}  — {reason}")
+
+    if skip_list:
+        print("\n⚠️  DANH SÁCH MÃ KHÔNG CÓ TRONG data.json:")
+        print(f"   {', '.join(skip_list)}")
+
+    print("=" * 70)
+    print(f"📁 Đã ghi đè: {DATA_FILE}, {LAST_UPDATE_FILE}, {REALTIME_META_FILE}")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
