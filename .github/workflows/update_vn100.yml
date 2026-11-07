@@ -1,4 +1,4 @@
-name: Update VN100 Symbols
+name: Update VN100 List
 
 on:
   schedule:
@@ -46,7 +46,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          [ -f symbols.json ] && git add symbols.json
+          if [ -f symbols.json ]; then
+            git add symbols.json
+          fi
 
           if git diff --staged --quiet; then
             echo "ℹ️ Không có thay đổi trong symbols.json — bỏ qua commit."
@@ -54,28 +56,5 @@ jobs:
           fi
 
           git commit -m "chore: update VN100 symbols list $(date -u +'%Y-%m-%d')"
-
           git pull --rebase --autostash origin main || true
           git push origin HEAD:main
-
-      - name: Summary
-        if: always()
-        run: |
-          echo "### 📊 Danh sách VN100 mới nhất" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -f symbols.json ]; then
-            echo "Tổng số mã: **$(python -c 'import json; print(len(json.load(open("symbols.json"))))')**" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "| Mã | Tên công ty | Vốn hóa (VND) | Số CP |" >> $GITHUB_STEP_SUMMARY
-            echo "|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
-            python -c "
-import json
-data = json.load(open('symbols.json'))
-for item in data[:20]:
-    print(f\"| {item['symbol']} | {item['company_name'][:40]} | {item['market_cap']:,} | {item['total_shares']:,} |\")
-" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "_(Chỉ hiển thị 20 mã đầu — xem đầy đủ trong symbols.json)_" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "⚠️ Không tìm thấy symbols.json" >> $GITHUB_STEP_SUMMARY
-          fi
