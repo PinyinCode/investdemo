@@ -268,7 +268,7 @@ def generate_html():
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: <span id="header-last-update">{last_update_str}</span></span></p>
+                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: <span id="header-last-update">Đang tải...</span></span></p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
@@ -565,8 +565,12 @@ def generate_html():
                 </div>
             </div>
 
+            <!-- FOOTER MODAL AI (PHÂN BIỆT 2 MỐC THỜI GIAN) -->
             <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center text-[10px] text-slate-500">
-                <span id="modal-time">AI cập nhật: --</span>
+                <div class="flex flex-col gap-0.5">
+                    <span id="modal-time" class="text-indigo-400"><i class="fa-solid fa-robot mr-1"></i> AI phân tích lúc: --</span>
+                    <span id="modal-price-time" class="text-emerald-500"><i class="fa-solid fa-clock mr-1"></i> Giá cập nhật lúc: --</span>
+                </div>
                 <button type="button" onclick="closeModal()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-bold shadow">Đóng</button>
             </div>
         </div>
@@ -631,7 +635,8 @@ def generate_html():
                 <div id="tv-chart-container" class="w-full h-full"></div>
             </div>
             <div class="bg-slate-950 px-3 py-2 border-t border-slate-800 flex justify-between items-center text-xs">
-                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white">{last_update_str}</strong></span>
+                <!-- HIỂN THỊ GIỜ CẬP NHẬT CỦA RIÊNG MÃ ĐÓ -->
+                <span class="text-slate-400"><i class="fa-regular fa-clock mr-1 text-emerald-400"></i> Giá cập nhật lần cuối: <strong class="text-white" id="chart-last-update">Đang tải...</strong></span>
                 <div class="flex gap-2">
                     <button type="button" id="btn-view-ai" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition font-semibold flex items-center gap-1.5">
                         <i class="fa-solid fa-robot"></i> Xem AI chi tiết
@@ -1028,6 +1033,19 @@ def generate_html():
                 if (ratesRes.ok) symbolSimRates = await ratesRes.json();
                 if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
+                // LẤY GIỜ CẬP NHẬT TOÀN CỤC TỪ SERVER
+                try {
+                    const timeRes = await fetch(`${PRICE_API_URL}/api/last-update?t=` + new Date().getTime());
+                    if (timeRes.ok) {
+                        const timeData = await timeRes.json();
+                        if (timeData.last_update && timeData.last_update !== "Chưa có dữ liệu") {
+                            document.getElementById('header-last-update').innerText = timeData.last_update;
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Không lấy được giờ cập nhật từ API:", e);
+                }
+
                 // 1. Lấy dữ liệu tĩnh (giá quá khứ, P/E, ROE...) từ data.json
                 let rawStockData = {};
                 try {
@@ -1070,6 +1088,7 @@ def generate_html():
                         
                         // ƯU TIÊN GIÁ TỪ MONGODB, NẾU KHÔNG CÓ MỚI DÙNG GIÁ CŨ
                         close_price: liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : item.close_price),
+                        updated_at: liveData.updated_at !== undefined ? liveData.updated_at : (extraData.updated_at || "Chưa rõ"), // Giờ của từng mã
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -1255,7 +1274,10 @@ def generate_html():
                                 if (data.updated_data && data.updated_data[sym] !== undefined) {
                                     const price = data.updated_data[sym];
                                     const item = screenerResults.find(s => s.symbol === sym);
-                                    if (item) item.close_price = price;
+                                    if (item) {
+                                        item.close_price = price;
+                                        item.updated_at = data.updated_at; // Cập nhật giờ riêng của mã
+                                    }
                                     addLog(`${sym}: ${formatNumber(price)} đ`, 'success');
                                     updatedCount++;
                                 } else {
@@ -1283,7 +1305,7 @@ def generate_html():
                 renderCards();
                 
                 if (lastUpdateTime) {
-                    document.getElementById('header-last-update').innerText = lastUpdateTime + " (Đã lưu DB)";
+                    document.getElementById('header-last-update').innerText = lastUpdateTime + " (Toàn bộ)";
                 }
                 
                 addLog(`Hoàn tất toàn bộ! Đã cập nhật ${updatedCount}/${symbols.length} mã.`, 'success');
@@ -1324,9 +1346,10 @@ def generate_html():
                     const data = await res.json();
                     if (data.updated_data && data.updated_data[symbol] !== undefined) {
                         const newPrice = data.updated_data[symbol];
+                        const newTime = data.updated_at;
                         
                         const item = screenerResults.find(s => s.symbol === symbol);
-                        if (item) item.close_price = newPrice;
+                        if (item) { item.close_price = newPrice; item.updated_at = newTime; }
                         
                         const card = btnElement.closest('.bg-slate-900');
                         if (card) {
@@ -1336,12 +1359,12 @@ def generate_html():
                                 priceEl.classList.add('text-white', 'bg-emerald-500');
                                 setTimeout(() => priceEl.classList.remove('text-white', 'bg-emerald-500'), 500);
                             }
+                            // Cập nhật giờ trên thẻ (không đụng tới Header)
+                            const timeEl = card.querySelector('.fa-clock').parentElement;
+                            if (timeEl) timeEl.innerHTML = `<i class="fa-regular fa-clock mr-0.5"></i>${newTime}`;
                         }
                         
                         addLog(`${symbol}: ${formatNumber(newPrice)} đ`, 'success');
-                        if (data.updated_at) {
-                            document.getElementById('header-last-update').innerText = data.updated_at + " (Đã lưu)";
-                        }
                     } else {
                         addLog(`${symbol}: Không lấy được giá`, 'error');
                     }
@@ -1524,9 +1547,12 @@ def generate_html():
                                     </button>
                                     <span class="text-[10px] px-2 py-1 rounded font-bold ${statusColor}">${displayRec}</span>
                                 </div>
-                                <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400 truncate">
+                                <div class="flex flex-wrap items-center gap-2 mt-1 text-[10px] text-slate-400">
                                     <span class="shrink-0"><i class="fa-solid fa-tag mr-1"></i>${SECTOR_NAMES[item.sector] || item.sector}</span>
-                                    ${item.company_name ? `<span class="text-slate-500 shrink-0">•</span> <span class="text-slate-300 font-medium truncate" title="${item.company_name}">${item.company_name}</span>` : ''}
+                                    ${item.company_name ? `<span class="text-slate-500 shrink-0">•</span> <span class="text-slate-300 font-medium truncate max-w-[150px]" title="${item.company_name}">${item.company_name}</span>` : ''}
+                                    <span class="shrink-0 text-slate-500 italic" title="Thời gian cập nhật của riêng mã này">
+                                        <i class="fa-regular fa-clock mr-0.5"></i>${item.updated_at || 'Chưa rõ'}
+                                    </span>
                                 </div>
                             </div>
                             <div class="text-right flex flex-col items-end shrink-0 ml-2 gap-1">
@@ -1870,7 +1896,10 @@ def generate_html():
             document.getElementById('modal-bctc').innerText = item.bctc_evaluation || item.bctc || "Chưa có đánh giá chi tiết về sức khỏe BCTC.";
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá.";
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô.";
-            document.getElementById('modal-time').innerText = `Cập nhật lúc: ${item.ai_updated_at || 'Hệ thống tự động'}`;
+            
+            // CẬP NHẬT 2 MỐC THỜI GIAN KHÁC NHAU TRONG MODAL AI
+            document.getElementById('modal-time').innerText = `AI phân tích lúc: ${item.ai_updated_at || 'Chưa chạy AI'}`;
+            document.getElementById('modal-price-time').innerText = `Giá cập nhật lúc: ${item.updated_at || 'Chưa cập nhật'}`;
 
             let histRate = 15;
             if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
@@ -2106,6 +2135,16 @@ def generate_html():
             document.getElementById('symbol-dropdown').classList.add('hidden');
             document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
             updateChartWatchlistBtn(symbol);
+            
+            // --- THÊM MỚI: LẤY GIỜ CẬP NHẬT RIÊNG CỦA MÃ NÀY ---
+            const item = screenerResults.find(s => s.symbol === symbol);
+            if (item && item.updated_at) {
+                document.getElementById('chart-last-update').innerText = item.updated_at;
+            } else {
+                document.getElementById('chart-last-update').innerText = "Chưa rõ";
+            }
+            // ---------------------------------------------------
+
             document.getElementById('chart-modal').classList.remove('hidden');
             document.getElementById('chart-loading').classList.remove('hidden');
             try {
@@ -2314,7 +2353,8 @@ def generate_html():
     html_content = html_content.replace("{cheap_stocks_json_placeholder}", cheap_stocks_json)
     html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
     html_content = html_content.replace("{price_api_url}", PRICE_API_URL)
-    html_content = html_content.replace("{last_update_str}", last_update_str)
+    
+    # Đã xóa dòng thay thế {last_update_str} vì giờ đã chuyển sang gọi API
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
