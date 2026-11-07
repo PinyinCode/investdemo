@@ -1,0 +1,884 @@
+[
+    {
+        "symbol": "ACB",
+        "company_name": "Ngân hàng Thương mại Cổ phần Á Châu",
+        "market_cap": 118119986824950,
+        "total_shares": 5804421957,
+        "close_price": 20350
+    },
+    {
+        "symbol": "ANV",
+        "company_name": "ANV",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 17350
+    },
+    {
+        "symbol": "APH",
+        "company_name": "APH",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 7150
+    },
+    {
+        "symbol": "ASM",
+        "company_name": "ASM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 4470
+    },
+    {
+        "symbol": "BAF",
+        "company_name": "Công ty Cổ phần Nông nghiệp BAF Việt Nam",
+        "market_cap": 12525655085400,
+        "total_shares": 364824906,
+        "close_price": 30900
+    },
+    {
+        "symbol": "BCM",
+        "company_name": "BCM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 38050
+    },
+    {
+        "symbol": "BID",
+        "company_name": "BID",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 31950
+    },
+    {
+        "symbol": "BMP",
+        "company_name": "BMP",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 136400
+    },
+    {
+        "symbol": "BSI",
+        "company_name": "BSI",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 29100
+    },
+    {
+        "symbol": "BSR",
+        "company_name": "BSR",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 26250
+    },
+    {
+        "symbol": "BVH",
+        "company_name": "BVH",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 63500
+    },
+    {
+        "symbol": "BWE",
+        "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
+        "market_cap": 10782787200900,
+        "total_shares": 219928644,
+        "close_price": 42900
+    },
+    {
+        "symbol": "CEO",
+        "company_name": "CEO",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 12300
+    },
+    {
+        "symbol": "CII",
+        "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh",
+        "market_cap": 9273397015800,
+        "total_shares": 671985291,
+        "close_price": 13800
+    },
+    {
+        "symbol": "CMG",
+        "company_name": "Công ty Cổ phần Tập đoàn Công nghệ CMC",
+        "market_cap": 4098897580800,
+        "total_shares": 232954608,
+        "close_price": 17600
+    },
+    {
+        "symbol": "CSM",
+        "company_name": "CSM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 11550
+    },
+    {
+        "symbol": "CTD",
+        "company_name": "CTD",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 68300
+    },
+    {
+        "symbol": "CTG",
+        "company_name": "CTG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 31850
+    },
+    {
+        "symbol": "CTR",
+        "company_name": "Tổng Công ty Cổ phần Công trình Viettel",
+        "market_cap": 8365552504900,
+        "total_shares": 128109533,
+        "close_price": 65300
+    },
+    {
+        "symbol": "CTS",
+        "company_name": "CTS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 23350
+    },
+    {
+        "symbol": "DBC",
+        "company_name": "DBC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 15600
+    },
+    {
+        "symbol": "DCM",
+        "company_name": "DCM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 32100
+    },
+    {
+        "symbol": "DGW",
+        "company_name": "Công ty Cổ phần Thế Giới Số",
+        "market_cap": 8599398500000,
+        "total_shares": 223520169,
+        "close_price": 38500
+    },
+    {
+        "symbol": "DHC",
+        "company_name": "DHC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 36450
+    },
+    {
+        "symbol": "DHG",
+        "company_name": "DHG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 83500
+    },
+    {
+        "symbol": "DIG",
+        "company_name": "DIG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 10400
+    },
+    {
+        "symbol": "DPM",
+        "company_name": "DPM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 19650
+    },
+    {
+        "symbol": "DRC",
+        "company_name": "DRC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 8910
+    },
+    {
+        "symbol": "DSE",
+        "company_name": "Công ty Cổ phần Chứng khoán DNSE",
+        "market_cap": 8607821100600,
+        "total_shares": 428249806,
+        "close_price": 20100
+    },
+    {
+        "symbol": "DXG",
+        "company_name": "DXG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 11000
+    },
+    {
+        "symbol": "EIB",
+        "company_name": "Ngân hàng Thương mại Cổ phần Xuất nhập khẩu Việt Nam",
+        "market_cap": 30176073833400,
+        "total_shares": 1868810607,
+        "close_price": 16200
+    },
+    {
+        "symbol": "EVF",
+        "company_name": "Công ty Tài chính Tổng hợp Cổ phần Điện Lực",
+        "market_cap": 8898619883400,
+        "total_shares": 760565802,
+        "close_price": 11700
+    },
+    {
+        "symbol": "FPT",
+        "company_name": "FPT",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 50800
+    },
+    {
+        "symbol": "FRT",
+        "company_name": "FRT",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 142000
+    },
+    {
+        "symbol": "FTS",
+        "company_name": "FTS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 19600
+    },
+    {
+        "symbol": "GAS",
+        "company_name": "GAS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 74100
+    },
+    {
+        "symbol": "GEE",
+        "company_name": "Công ty Cổ phần Công nghiệp Gelex",
+        "market_cap": 42016748241600,
+        "total_shares": 640499211,
+        "close_price": 65600
+    },
+    {
+        "symbol": "GEX",
+        "company_name": "GEX",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 22450
+    },
+    {
+        "symbol": "GMD",
+        "company_name": "GMD",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 52800
+    },
+    {
+        "symbol": "GVR",
+        "company_name": "GVR",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 29300
+    },
+    {
+        "symbol": "HAG",
+        "company_name": "HAG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 13600
+    },
+    {
+        "symbol": "HAH",
+        "company_name": "HAH",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 47900
+    },
+    {
+        "symbol": "HCM",
+        "company_name": "HCM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 23550
+    },
+    {
+        "symbol": "HDB",
+        "company_name": "HDB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 22500
+    },
+    {
+        "symbol": "HDG",
+        "company_name": "HDG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 16100
+    },
+    {
+        "symbol": "HHV",
+        "company_name": "HHV",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 9560
+    },
+    {
+        "symbol": "HPG",
+        "company_name": "HPG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 21200
+    },
+    {
+        "symbol": "HSG",
+        "company_name": "HSG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 10900
+    },
+    {
+        "symbol": "HT1",
+        "company_name": "Công ty Cổ phần Xi măng VICEM Hà Tiên",
+        "market_cap": 4865271365250,
+        "total_shares": 381589911,
+        "close_price": 12750
+    },
+    {
+        "symbol": "HVN",
+        "company_name": "HVN",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 21850
+    },
+    {
+        "symbol": "IDC",
+        "company_name": "IDC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 34900
+    },
+    {
+        "symbol": "IMP",
+        "company_name": "IMP",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 35000
+    },
+    {
+        "symbol": "KBC",
+        "company_name": "KBC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 26950
+    },
+    {
+        "symbol": "KDC",
+        "company_name": "KDC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 50200
+    },
+    {
+        "symbol": "KDH",
+        "company_name": "KDH",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 15100
+    },
+    {
+        "symbol": "KOS",
+        "company_name": "Công ty Cổ phần KOSY",
+        "market_cap": 796651312800,
+        "total_shares": 216481335,
+        "close_price": 3680
+    },
+    {
+        "symbol": "LIG",
+        "company_name": "LIG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 3100
+    },
+    {
+        "symbol": "LPB",
+        "company_name": "Ngân hàng Thương mại Cổ phần Lộc Phát Việt Nam",
+        "market_cap": 106048514550000,
+        "total_shares": 2987282100,
+        "close_price": 35500
+    },
+    {
+        "symbol": "MBB",
+        "company_name": "MBB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 19250
+    },
+    {
+        "symbol": "MBS",
+        "company_name": "MBS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 16200
+    },
+    {
+        "symbol": "MCH",
+        "company_name": "Công ty Cổ phần Hàng Tiêu Dùng MaSan",
+        "market_cap": 169701162380200,
+        "total_shares": 1307404949,
+        "close_price": 129800
+    },
+    {
+        "symbol": "MSB",
+        "company_name": "Ngân hàng Thương mại Cổ phần Hàng Hải Việt Nam",
+        "market_cap": 61214400000000,
+        "total_shares": 3744000000,
+        "close_price": 16350
+    },
+    {
+        "symbol": "MSH",
+        "company_name": "MSH",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 35500
+    },
+    {
+        "symbol": "MSN",
+        "company_name": "MSN",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 73000
+    },
+    {
+        "symbol": "MWG",
+        "company_name": "MWG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 73700
+    },
+    {
+        "symbol": "NAB",
+        "company_name": "Ngân hàng Thương mại Cổ phần Nam Á",
+        "market_cap": 27201160753200,
+        "total_shares": 2058822282,
+        "close_price": 12600
+    },
+    {
+        "symbol": "NKG",
+        "company_name": "NKG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 12150
+    },
+    {
+        "symbol": "NLG",
+        "company_name": "NLG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 22950
+    },
+    {
+        "symbol": "NT2",
+        "company_name": "NT2",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 22200
+    },
+    {
+        "symbol": "NTC",
+        "company_name": "NTC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 129000
+    },
+    {
+        "symbol": "NVL",
+        "company_name": "NVL",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 10300
+    },
+    {
+        "symbol": "OCB",
+        "company_name": "Ngân hàng Thương mại Cổ phần Phương Đông",
+        "market_cap": 32768858348200,
+        "total_shares": 3062510126,
+        "close_price": 10700
+    },
+    {
+        "symbol": "ORS",
+        "company_name": "ORS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 14300
+    },
+    {
+        "symbol": "PAN",
+        "company_name": "PAN",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 16900
+    },
+    {
+        "symbol": "PC1",
+        "company_name": "PC1",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 16450
+    },
+    {
+        "symbol": "PDR",
+        "company_name": "PDR",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 11750
+    },
+    {
+        "symbol": "PHR",
+        "company_name": "PHR",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 29700
+    },
+    {
+        "symbol": "PLX",
+        "company_name": "PLX",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 33350
+    },
+    {
+        "symbol": "PNJ",
+        "company_name": "PNJ",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 15050
+    },
+    {
+        "symbol": "POW",
+        "company_name": "POW",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 12350
+    },
+    {
+        "symbol": "PVD",
+        "company_name": "PVD",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 17100
+    },
+    {
+        "symbol": "PVS",
+        "company_name": "PVS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 29300
+    },
+    {
+        "symbol": "PVT",
+        "company_name": "PVT",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 20550
+    },
+    {
+        "symbol": "REE",
+        "company_name": "REE",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 47100
+    },
+    {
+        "symbol": "SAB",
+        "company_name": "SAB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 42600
+    },
+    {
+        "symbol": "SBA",
+        "company_name": "SBA",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 23200
+    },
+    {
+        "symbol": "SBT",
+        "company_name": "SBT",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 21050
+    },
+    {
+        "symbol": "SHB",
+        "company_name": "SHB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 10750
+    },
+    {
+        "symbol": "SIP",
+        "company_name": "Công ty Cổ phần Đầu tư Sài Gòn VRG",
+        "market_cap": 12129858444300,
+        "total_shares": 242112943,
+        "close_price": 50100
+    },
+    {
+        "symbol": "SJS",
+        "company_name": "SJS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 54200
+    },
+    {
+        "symbol": "SSB",
+        "company_name": "SSB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 14800
+    },
+    {
+        "symbol": "SSI",
+        "company_name": "SSI",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 20400
+    },
+    {
+        "symbol": "STB",
+        "company_name": "STB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 70000
+    },
+    {
+        "symbol": "SZC",
+        "company_name": "SZC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 20350
+    },
+    {
+        "symbol": "TAL",
+        "company_name": "Công Ty Cổ Phần Đầu Tư Bất Động Sản Taseco",
+        "market_cap": 12070793006600,
+        "total_shares": 503999708,
+        "close_price": 23950
+    },
+    {
+        "symbol": "TCB",
+        "company_name": "TCB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 21650
+    },
+    {
+        "symbol": "TCD",
+        "company_name": "TCD",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 1100
+    },
+    {
+        "symbol": "TCH",
+        "company_name": "TCH",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 13500
+    },
+    {
+        "symbol": "TCX",
+        "company_name": "Công ty Cổ phần Chứng khoán Kỹ Thương",
+        "market_cap": 96550854867000,
+        "total_shares": 3329339823,
+        "close_price": 29000
+    },
+    {
+        "symbol": "TID",
+        "company_name": "TID",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 0
+    },
+    {
+        "symbol": "TLG",
+        "company_name": "TLG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 54500
+    },
+    {
+        "symbol": "TPB",
+        "company_name": "TPB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 12700
+    },
+    {
+        "symbol": "VCB",
+        "company_name": "VCB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 53600
+    },
+    {
+        "symbol": "VCG",
+        "company_name": "VCG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 15450
+    },
+    {
+        "symbol": "VCI",
+        "company_name": "VCI",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 20200
+    },
+    {
+        "symbol": "VCK",
+        "company_name": "Công ty Cổ phần Chứng Khoán VPS",
+        "market_cap": 69760449519600,
+        "total_shares": 2434919704,
+        "close_price": 28650
+    },
+    {
+        "symbol": "VDP",
+        "company_name": "VDP",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 0
+    },
+    {
+        "symbol": "VGC",
+        "company_name": "Tổng Công ty Viglacera - Công ty Cổ phần",
+        "market_cap": 17889165000000,
+        "total_shares": 448350000,
+        "close_price": 39900
+    },
+    {
+        "symbol": "VHC",
+        "company_name": "VHC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 49050
+    },
+    {
+        "symbol": "VHM",
+        "company_name": "VHM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 62100
+    },
+    {
+        "symbol": "VIB",
+        "company_name": "VIB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 14000
+    },
+    {
+        "symbol": "VIC",
+        "company_name": "VIC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 234500
+    },
+    {
+        "symbol": "VIX",
+        "company_name": "VIX",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 13350
+    },
+    {
+        "symbol": "VJC",
+        "company_name": "VJC",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 134700
+    },
+    {
+        "symbol": "VND",
+        "company_name": "Công ty Cổ phần Chứng khoán VNDIRECT",
+        "market_cap": 22758383624600,
+        "total_shares": 1522299908,
+        "close_price": 14950
+    },
+    {
+        "symbol": "VNM",
+        "company_name": "VNM",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 57800
+    },
+    {
+        "symbol": "VOS",
+        "company_name": "VOS",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 10700
+    },
+    {
+        "symbol": "VPB",
+        "company_name": "VPB",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 22050
+    },
+    {
+        "symbol": "VPG",
+        "company_name": "VPG",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 960
+    },
+    {
+        "symbol": "VPI",
+        "company_name": "VPI",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 61000
+    },
+    {
+        "symbol": "VPL",
+        "company_name": "Công ty Cổ phần Vinpearl",
+        "market_cap": 166597605023300,
+        "total_shares": 1793300377,
+        "close_price": 92900
+    },
+    {
+        "symbol": "VPX",
+        "company_name": "Công ty Cổ phần Chứng khoán VPBank",
+        "market_cap": 43875000000000,
+        "total_shares": 1875000000,
+        "close_price": 23400
+    },
+    {
+        "symbol": "VRE",
+        "company_name": "VRE",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 23750
+    },
+    {
+        "symbol": "VSC",
+        "company_name": "Công ty Cổ phần Container Việt Nam",
+        "market_cap": 4997844332700,
+        "total_shares": 374370362,
+        "close_price": 13350
+    },
+    {
+        "symbol": "VTO",
+        "company_name": "VTO",
+        "market_cap": 0,
+        "total_shares": 0,
+        "close_price": 10300
+    },
+    {
+        "symbol": "VTP",
+        "company_name": "Tổng Công ty Cổ phần Bưu chính Viettel",
+        "market_cap": 9286717866000,
+        "total_shares": 201885171,
+        "close_price": 46000
+    }
+]
