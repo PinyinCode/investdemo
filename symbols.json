@@ -1,0 +1,596 @@
+[
+    {
+        "symbol": "ACB",
+        "company_name": "ACB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "ANV",
+        "company_name": "ANV",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "APH",
+        "company_name": "APH",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "ASM",
+        "company_name": "ASM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "BCM",
+        "company_name": "BCM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "BID",
+        "company_name": "BID",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "BMP",
+        "company_name": "BMP",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "BSI",
+        "company_name": "BSI",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "BSR",
+        "company_name": "BSR",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "BVH",
+        "company_name": "BVH",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "CEO",
+        "company_name": "CEO",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "CSM",
+        "company_name": "CSM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "CTD",
+        "company_name": "CTD",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "CTG",
+        "company_name": "CTG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "CTS",
+        "company_name": "CTS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DBC",
+        "company_name": "DBC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DCM",
+        "company_name": "DCM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DHC",
+        "company_name": "DHC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DHG",
+        "company_name": "DHG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DIG",
+        "company_name": "DIG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DPM",
+        "company_name": "DPM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DRC",
+        "company_name": "DRC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "DXG",
+        "company_name": "DXG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "FPT",
+        "company_name": "FPT",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "FRT",
+        "company_name": "FRT",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "FTS",
+        "company_name": "FTS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "GAS",
+        "company_name": "GAS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "GEX",
+        "company_name": "GEX",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "GMD",
+        "company_name": "GMD",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "GVR",
+        "company_name": "GVR",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HAG",
+        "company_name": "HAG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HAH",
+        "company_name": "HAH",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HCM",
+        "company_name": "HCM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HDB",
+        "company_name": "HDB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HDG",
+        "company_name": "HDG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HHV",
+        "company_name": "HHV",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HPG",
+        "company_name": "HPG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HSG",
+        "company_name": "HSG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "HVN",
+        "company_name": "HVN",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "IDC",
+        "company_name": "IDC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "IMP",
+        "company_name": "IMP",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "KBC",
+        "company_name": "KBC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "KDC",
+        "company_name": "KDC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "KDH",
+        "company_name": "KDH",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "LIG",
+        "company_name": "LIG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "MBB",
+        "company_name": "MBB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "MBS",
+        "company_name": "MBS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "MSH",
+        "company_name": "MSH",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "MSN",
+        "company_name": "MSN",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "MWG",
+        "company_name": "MWG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "NKG",
+        "company_name": "NKG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "NLG",
+        "company_name": "NLG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "NT2",
+        "company_name": "NT2",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "NTC",
+        "company_name": "NTC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "NVL",
+        "company_name": "NVL",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "ORS",
+        "company_name": "ORS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PAN",
+        "company_name": "PAN",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PC1",
+        "company_name": "PC1",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PDR",
+        "company_name": "PDR",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PHR",
+        "company_name": "PHR",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PLX",
+        "company_name": "PLX",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PNJ",
+        "company_name": "PNJ",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "POW",
+        "company_name": "POW",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PVD",
+        "company_name": "PVD",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PVS",
+        "company_name": "PVS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "PVT",
+        "company_name": "PVT",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "REE",
+        "company_name": "REE",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SAB",
+        "company_name": "SAB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SBA",
+        "company_name": "SBA",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SBT",
+        "company_name": "SBT",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SHB",
+        "company_name": "SHB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SJS",
+        "company_name": "SJS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SSB",
+        "company_name": "SSB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SSI",
+        "company_name": "SSI",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "STB",
+        "company_name": "STB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "SZC",
+        "company_name": "SZC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "TCB",
+        "company_name": "TCB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "TCD",
+        "company_name": "TCD",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "TCH",
+        "company_name": "TCH",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "TID",
+        "company_name": "TID",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "TLG",
+        "company_name": "TLG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "TPB",
+        "company_name": "TPB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VCB",
+        "company_name": "VCB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VCG",
+        "company_name": "VCG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VCI",
+        "company_name": "VCI",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VDP",
+        "company_name": "VDP",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VHC",
+        "company_name": "VHC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VHM",
+        "company_name": "VHM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VIB",
+        "company_name": "VIB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VIC",
+        "company_name": "VIC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VIX",
+        "company_name": "VIX",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VJC",
+        "company_name": "VJC",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VNM",
+        "company_name": "VNM",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VOS",
+        "company_name": "VOS",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VPB",
+        "company_name": "VPB",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VPG",
+        "company_name": "VPG",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VPI",
+        "company_name": "VPI",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VRE",
+        "company_name": "VRE",
+        "market_cap": 0,
+        "total_shares": 0
+    },
+    {
+        "symbol": "VTO",
+        "company_name": "VTO",
+        "market_cap": 0,
+        "total_shares": 0
+    }
+]
