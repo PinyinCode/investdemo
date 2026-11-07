@@ -9,7 +9,6 @@ from vnstock import Company
 
 OUTPUT_FILE = "vn100_full_info.json"
 SYMBOLS_FILE = "vn100_symbols.json"
-PROGRESS_FILE = "crawl_progress.json" # File lưu tiến độ cào
 
 def get_old_data():
     old_data = {}
@@ -32,11 +31,10 @@ def fetch_company_overview(symbol):
             company_name = str(row.get('organ_name', symbol))
             close_price = float(row.get('current_price', 0) or 0)
             total_shares = int(float(row.get('issue_share', 0) or 0))
-            market_cap = int(float(row.get('market_cap', 0) or 0))
-            return company_name, close_price, total_shares, market_cap
+            return company_name, close_price, total_shares
     except Exception:
         pass
-    return symbol, 0, 0, 0
+    return symbol, 0, 0
 
 def get_company_info_with_timeout(symbol, timeout=10):
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
@@ -44,14 +42,13 @@ def get_company_info_with_timeout(symbol, timeout=10):
         try:
             return future.result(timeout=timeout)
         except concurrent.futures.TimeoutError:
-            return symbol, 0, 0, 0
+            return symbol, 0, 0
         except Exception:
-            return symbol, 0, 0, 0
+            return symbol, 0, 0
 
 def auto_git_push():
-    """Tự động đẩy file lên GitHub"""
     try:
-        print(f"\n📤 Đang tự động đồng bộ file lên GitHub...")
+        print(f"\n📤 Đang tự động đồng bộ file {OUTPUT_FILE} lên GitHub...")
         
         subprocess.run(["git", "fetch", "origin", "main"], check=True)
         pull_result = subprocess.run(
@@ -68,7 +65,7 @@ def auto_git_push():
             print("ℹ️ Không có dữ liệu mới để đẩy lên.")
             return
 
-        commit_msg = f"Auto update VN100 full info - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_msg = f"Auto update company info (name & shares) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         subprocess.run(["git", "push", "origin", "main"], check=True)
         print("🚀 Đẩy dữ liệu lên GitHub thành công!")
@@ -77,66 +74,90 @@ def auto_git_push():
         print(f"⚠️ Lỗi Git push: {e}")
 
 def main():
-    # 1. Đọc danh sách VN100
+    print("==================================================")
+    print("      CÀO THÔNG TIN DOANH NGHIỆP VN100 (TÊN, SLCP)  ")
+    print("==================================================")
+    
     if not os.path.exists(SYMBOLS_FILE):
-        print(f"❌ Không tìm thấy {SYMBOLS_FILE}. Hãy chạy script lấy danh sách trước.")
+        print(f"❌ Không tìm thấy {SYMBOLS_FILE}.")
         return
         
     with open(SYMBOLS_FILE, "r", encoding="utf-8") as f:
         all_symbols = json.load(f)
 
-    # 2. Đọc tiến độ cào (Để chạy tiếp nếu bị ngắt)
     old_data = get_old_data()
     
-    # Lấy danh sách các mã đã cào thành công (có giá > 0)
-    crawled_symbols = [sym for sym, data in old_data.items() if data.get("close_price", 0) > 0]
+    # 1. Kiểm tra xem đã có dữ liệu cũ chưa
+    crawled_symbols = [sym for sym, data in old_data.items() if data.get("total_shares", 0) > 0]
     
-    # Lọc ra các mã chưa cào
-    symbols_to_crawl = [s for s in all_symbols if s not in crawled_symbols]
+    print(f"📊 Trạng thái hiện tại: Đã cào được {len(crawled_symbols)}/{len(all_symbols)} mã.")
+    print("1. Cào TIẾP (Chỉ lấy những mã chưa có trong file)")
+    print("2. Cào LẠI TỪ ĐẦU (Xóa file cũ, cào lại 100 mã)")
     
+    choice = input("Nhập lựa chọn của bạn (1/2, mặc định 1): ").strip()
+    
+    if choice == '2':
+        if os.path.exists(OUTPUT_FILE):
+            os.remove(OUTPUT_FILE)
+            old_data = {} # Reset lại dữ liệu trong bộ nhớ
+        symbols_to_crawl = all_symbols
+        print("🔄 Đã xóa dữ liệu cũ. Sẽ cào lại từ đầu.")
+    else:
+        symbols_to_crawl = [s for s in all_symbols if s not in crawled_symbols]
+        print(f"⏩ Sẽ cào tiếp {len(symbols_to_crawl)} mã còn lại.")
+
     if not symbols_to_crawl:
-        print("🎉 Tất cả các mã đã được cào xong từ trước!")
+        print("🎉 Tất cả các mã đã được cào xong!")
         return
         
-    print(f"🚀 Cần cào {len(symbols_to_crawl)} mã (đã bỏ qua {len(crawled_symbols)} mã đã có).")
+    print(f"\n🚀 Bắt đầu xử lý {len(symbols_to_crawl)} mã...\n")
     
-    count = 0
-    for sym in symbols_to_crawl:
-        count += 1
-        print(f"[{count}/{len(symbols_to_crawl)}] Đang lấy {sym:<6} ...", end="", flush=True)
+    count_success = 0
+    count_fail_consecutive = 0
+    
+    for i, sym in enumerate(symbols_to_crawl, 1):
+        print(f"[{i}/{len(symbols_to_crawl)}] Đang lấy {sym:<6} ...", end="", flush=True)
         
-        company_name, close_price, total_shares, market_cap = get_company_info_with_timeout(sym, timeout=10)
+        company_name, close_price, total_shares = get_company_info_with_timeout(sym, timeout=10)
 
-        if close_price == 0:
+        if total_shares == 0:
             print(f" ❌ Bị lỗi/khóa IP")
-            # Nếu lỗi, nghỉ 15s để hồi IP rồi thử lại ở lần chạy sau
+            count_fail_consecutive += 1
+            
+            # Nếu bị lỗi 3 lần liên tiếp => Dừng hẳn để đổi IP
+            if count_fail_consecutive >= 3:
+                print("\n🚨 BỊ KHÓA IP! Đã lỗi 3 lần liên tiếp. Dừng script để bảo vệ dữ liệu.")
+                print("👉 Hãy tắt/bật lại Modem mạng (hoặc dùng 4G), sau đó chạy lại script để cào tiếp.")
+                break
+                
             time.sleep(15)
             continue
 
-        # Cập nhật dữ liệu
+        # Cào thành công
+        count_fail_consecutive = 0
+        count_success += 1
+
         old_data[sym] = {
             "symbol": sym,
             "company_name": company_name,
-            "market_cap": market_cap,
             "total_shares": total_shares,
             "close_price": int(close_price)
         }
 
-        # Lưu file sau MỖI mã (để không mất dữ liệu nếu có sự cố)
         result = sorted(list(old_data.values()), key=lambda x: x["symbol"])
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             json.dump(result, f, ensure_ascii=False, indent=4)
 
-        cap_billion = market_cap / 1_000_000_000
-        print(f" ✅ {company_name[:20]}... | Vốn hóa: {cap_billion:,.0f} tỷ")
+        shares_million = total_shares / 1_000_000
+        print(f" ✅ {company_name[:20]}... | SLCP: {shares_million:,.1f} tr")
 
-        # --- NGHỈ NGƠI ĐỂ TRÁNH BỊ KHÓA IP ---
-        # Nghỉ 3 giây mỗi mã
-        time.sleep(3)
+        time.sleep(3) 
 
-    # Cào xong tất cả thì Git Push 1 lần duy nhất
-    if count > 0:
+    # Chỉ Git Push nếu có dữ liệu mới
+    if count_success > 0:
         auto_git_push()
+    else:
+        print("\n⚠️ Không có mã mới nào được cào thành công nên không Git push.")
 
 if __name__ == "__main__":
     main()
