@@ -49,11 +49,12 @@ def translate_sector(sector_name):
     return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
 
 # ============================================================
-# TẢI DỮ LIỆU ĐỘNG TỪ FILE JSON
+# TẢI DỮ LIỆU ĐỘNG TỪ FILE JSON (CẬP NHẬT ĐÚNG TÊN TRƯỜNG)
 # ============================================================
 def load_vn100_data():
     symbols = []
     sector_mapping = {}
+    vn100_metadata = {} # Lưu trữ thông tin chi tiết: company_name, market_cap, total_shares
     
     if os.path.exists(VN100_INFO_FILE):
         try:
@@ -69,8 +70,20 @@ def load_vn100_data():
                         if vn_sector not in sector_mapping:
                             sector_mapping[vn_sector] = []
                         sector_mapping[vn_sector].append(sym)
-            print(f"✅ Đã tải {len(symbols)} mã và phân ngành từ {VN100_INFO_FILE}")
-            return sorted(list(set(symbols))), sector_mapping
+                        
+                        # Sử dụng đúng tên trường theo yêu cầu của bạn
+                        company_name = item.get("company_name") or item.get("name") or item.get("organName") or ""
+                        market_cap = float(item.get("market_cap") or item.get("capitalization") or item.get("marketCap") or 0.0)
+                        total_shares = int(item.get("total_shares") or item.get("shares") or item.get("outstanding_shares") or 0)
+                        
+                        vn100_metadata[sym] = {
+                            "company_name": company_name,
+                            "market_cap": market_cap,
+                            "total_shares": total_shares
+                        }
+                        
+            print(f"✅ Đã tải {len(symbols)} mã, phân ngành và metadata từ {VN100_INFO_FILE}")
+            return sorted(list(set(symbols))), sector_mapping, vn100_metadata
         except Exception as e:
             print(f"⚠️ Lỗi đọc {VN100_INFO_FILE}: {e}")
 
@@ -79,14 +92,14 @@ def load_vn100_data():
             with open(VN100_SYMBOLS_FILE, "r", encoding="utf-8") as f:
                 symbols = json.load(f)
             print(f"⚠️ Không có file chi tiết ngành, dùng {VN100_SYMBOLS_FILE}")
-            return sorted(list(set(symbols))), {}
+            return sorted(list(set(symbols))), {}, {}
         except Exception as e:
             print(f"⚠️ Lỗi đọc {VN100_SYMBOLS_FILE}: {e}")
 
-    return [], {}
+    return [], {}, {}
 
 # Tải dữ liệu động khi khởi động
-VN100_SYMBOLS, DYNAMIC_SECTOR_MAPPING = load_vn100_data()
+VN100_SYMBOLS, DYNAMIC_SECTOR_MAPPING, VN100_METADATA = load_vn100_data()
 
 # Bảng phân ngành dự phòng (Chỉ dùng nếu file JSON không có thông tin ngành)
 FALLBACK_SECTOR_MAPPING = {
@@ -103,7 +116,7 @@ FALLBACK_SECTOR_MAPPING = {
 SECTOR_MAPPING = {**FALLBACK_SECTOR_MAPPING, **DYNAMIC_SECTOR_MAPPING}
 
 # ============================================================
-# PHÂN NHÓM CON (SUB-SECTOR) - Vẫn cần tĩnh vì VCI không chia nhỏ
+# PHÂN NHÓM CON (SUB-SECTOR)
 # ============================================================
 SUB_SECTOR_MAPPING = {
     "INSURANCE": ["BVH"],
@@ -617,7 +630,7 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
 
 
 # ============================================================
-# BƯỚC 5: GHI CÁC TRƯỜNG MỚI VÀO data.json
+# BƯỚC 5: GHI CÁC TRƯỜNG MỚI VÀO data.json (CẬP NHẬT ĐÚNG TÊN TRƯỜNG)
 # ============================================================
 def update_data_json_with_valuation(normalized_db, sector_medians):
     with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -641,6 +654,7 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
         median, _ = get_median_for_symbol(symbol, sector_medians)
         fv = compute_fair_value_zone(symbol, nd, median, config, group_label)
 
+        # Cập nhật thông tin ngành và định giá
         raw["sector"] = sector
         raw["sub_sector"] = group_label
         raw["bvps"] = round(nd["bvps"], 0)
@@ -653,6 +667,16 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
         raw["discount_to_fair_pct"] = fv["discount_to_fair_pct"]
         raw["valuation_verdict"] = fv["verdict"]
         raw["valuation_calculated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # CẬP NHẬT ĐÚNG TÊN TRƯỜNG THEO YÊU CẦU: company_name, market_cap, total_shares
+        if symbol in VN100_METADATA:
+            meta = VN100_METADATA[symbol]
+            if meta.get("company_name"):
+                raw["company_name"] = meta["company_name"]
+            if meta.get("market_cap", 0.0) != 0.0:
+                raw["market_cap"] = meta["market_cap"]
+            if meta.get("total_shares", 0) != 0:
+                raw["total_shares"] = meta["total_shares"]
 
         fund_s = raw.get("fundamental_score", 0) or 0
         tech_s = raw.get("technical_score", 0) or 0
@@ -713,6 +737,11 @@ def main():
         median, _ = get_median_for_symbol(symbol, sector_medians)
         res = evaluate_stock(symbol, nd, median, group_label, config)
         if res:
+            # Bổ sung thêm thông tin vào file kết quả screener_results (nếu cần)
+            if symbol in VN100_METADATA:
+                res["company_name"] = VN100_METADATA[symbol].get("company_name", "")
+                res["market_cap"] = VN100_METADATA[symbol].get("market_cap", 0.0)
+                res["total_shares"] = VN100_METADATA[symbol].get("total_shares", 0)
             results.append(res)
 
     if not results:
@@ -765,7 +794,7 @@ def main():
 
     print("\n💾 Đang ghi các trường vào data.json (không đụng trường AI)...")
     n_updated = update_data_json_with_valuation(normalized_db, sector_medians)
-    print(f"   ✅ Đã cập nhật {n_updated} mã với 15 trường định giá + quyết định.")
+    print(f"   ✅ Đã cập nhật {n_updated} mã với các trường company_name, market_cap, total_shares và bộ chỉ số định giá.")
     print("   🔒 Trường AI được giữ nguyên.")
 
 
