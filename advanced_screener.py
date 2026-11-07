@@ -11,6 +11,9 @@ BCTC_DIR = "bctc_data"
 OUTPUT_JSON = "screener_results.json"
 OUTPUT_CSV = "screener_summary.csv"
 
+VN100_INFO_FILE = "vn100_full_info.json"
+VN100_SYMBOLS_FILE = "vn100_symbols.json"
+
 # Các trường AI KHÔNG BAO GIỜ ĐƯỢC GHI ĐÈ
 AI_FIELDS = {
     "bctc", "catalyst", "risks", "outlook", "macro_view",
@@ -20,9 +23,73 @@ AI_FIELDS = {
 }
 
 # ============================================================
-# PHÂN NHÓM NGÀNH CHÍNH (7 ngành)
+# HÀM TỰ ĐỘNG DỊCH NGÀNH TỪ VCI (TIẾNG ANH) SANG WEB (TIẾNG VIỆT)
 # ============================================================
-SECTOR_MAPPING = {
+def translate_sector(sector_name):
+    mapping = {
+        "BANKS": "NGAN_HANG",
+        "FINANCIALS": "CHUNG_KHOAN",
+        "SECURITIES": "CHUNG_KHOAN",
+        "REAL ESTATE": "BAT_DONG_SAN",
+        "REAL_ESTATE": "BAT_DONG_SAN",
+        "TECHNOLOGY": "CONG_NGHE_BAN_LE",
+        "RETAIL": "CONG_NGHE_BAN_LE",
+        "UTILITIES": "DIEN_NUOC_HA_TANG",
+        "ENERGY": "DIEN_NUOC_HA_TANG",
+        "MATERIALS": "NGUYEN_VAT_LIEU_CHU_KY",
+        "INDUSTRIALS": "NGUYEN_VAT_LIEU_CHU_KY",
+        "CONSUMER STAPLES": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
+        "CONSUMER DISCRETIONARY": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
+        "HEALTHCARE": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
+    }
+    upper_name = str(sector_name).upper()
+    for eng, vn in mapping.items():
+        if eng in upper_name:
+            return vn
+    return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
+
+# ============================================================
+# TẢI DỮ LIỆU ĐỘNG TỪ FILE JSON
+# ============================================================
+def load_vn100_data():
+    symbols = []
+    sector_mapping = {}
+    
+    if os.path.exists(VN100_INFO_FILE):
+        try:
+            with open(VN100_INFO_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                for item in data:
+                    sym = item.get("symbol")
+                    if sym:
+                        symbols.append(sym)
+                        raw_sector = item.get("sector", "")
+                        vn_sector = translate_sector(raw_sector)
+                        
+                        if vn_sector not in sector_mapping:
+                            sector_mapping[vn_sector] = []
+                        sector_mapping[vn_sector].append(sym)
+            print(f"✅ Đã tải {len(symbols)} mã và phân ngành từ {VN100_INFO_FILE}")
+            return sorted(list(set(symbols))), sector_mapping
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc {VN100_INFO_FILE}: {e}")
+
+    if os.path.exists(VN100_SYMBOLS_FILE):
+        try:
+            with open(VN100_SYMBOLS_FILE, "r", encoding="utf-8") as f:
+                symbols = json.load(f)
+            print(f"⚠️ Không có file chi tiết ngành, dùng {VN100_SYMBOLS_FILE}")
+            return sorted(list(set(symbols))), {}
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc {VN100_SYMBOLS_FILE}: {e}")
+
+    return [], {}
+
+# Tải dữ liệu động khi khởi động
+VN100_SYMBOLS, DYNAMIC_SECTOR_MAPPING = load_vn100_data()
+
+# Bảng phân ngành dự phòng (Chỉ dùng nếu file JSON không có thông tin ngành)
+FALLBACK_SECTOR_MAPPING = {
     "NGAN_HANG": ["ACB","BID","CTG","TCB","MBB","STB","VPB","HDB","VIB","TPB","SHB","SSB","LPB","MSB","OCB","EIB","VCB"],
     "CHUNG_KHOAN": ["SSI","VCI","HCM","VIX","MBS","FTS","BSI","CTS","ORS"],
     "BAT_DONG_SAN": ["VHM","VIC","VRE","NVL","PDR","DIG","NLG","KDH","CEO","DXG","TCH","HDG","KBC","IDC","SZC","BCM","PHR","SJS","VPI"],
@@ -32,8 +99,11 @@ SECTOR_MAPPING = {
     "SAN_XUAT_TIEU_DUNG_PHONG_THU": ["VNM","MSN","SAB","VHC","ANV","BVH","PLX","PVD","PVS","BSR","GMD","HAH","PVT","HVN","APH","ASM","DBC","KDC","MSH","PAN","SBT","DRC","CSM","BMP","DHG","CTD","VCG","HHV","GEX"],
 }
 
+# Gộp bảng động và bảng tĩnh (Ưu tiên bảng động)
+SECTOR_MAPPING = {**FALLBACK_SECTOR_MAPPING, **DYNAMIC_SECTOR_MAPPING}
+
 # ============================================================
-# PHÂN NHÓM CON (SUB-SECTOR)
+# PHÂN NHÓM CON (SUB-SECTOR) - Vẫn cần tĩnh vì VCI không chia nhỏ
 # ============================================================
 SUB_SECTOR_MAPPING = {
     "INSURANCE": ["BVH"],
@@ -292,56 +362,33 @@ def compute_final_decision(fund_score, tech_score, val_score, total_score,
                            fair_high=0.0, fair_low=0.0):
     is_bank_or_sec = roe > 0 and debt_to_equity > 3.0
 
-    # ============================================================
-    # RULE 0: KIỂM TRA CÁC TRƯỜNG HỢP ĐẶC BIỆT
-    # ============================================================
     if fund_score < 20:
         return ("❌ TRÁNH", "rose", f"PTCB chỉ {fund_score}/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.")
 
     if not is_bank_or_sec and cfo < 0 and npat > 0 and fund_score < 25:
         return ("⚠️ CẢNH BÁO LỢI NHUẬN ẢO", "amber", f"CFO âm ({cfo:,.0f} tỷ) trong khi LNST dương ({npat:,.0f} tỷ) — lợi nhuận không có tiền mặt thật.")
 
-    # Nếu giá quá đắt so với Fair Value (vượt xa fair_high > 20%)
     if close_price > 0 and fair_high > 0 and close_price > fair_high * 1.2:
         return ("❌ TRÁNH", "rose", f"Giá {close_price:,.0f} đã vượt xa fair_high {fair_high:,.0f} quá nhiều. Định giá quá đắt so với giá trị thực.")
 
-    # Nếu doanh nghiệp cơ bản tốt nhưng giá đang cao hơn fair_high -> Chờ
     if close_price > 0 and fair_high > 0 and close_price > fair_high:
         return ("⚠️ CHỜ VỀ VÙNG MUA", "amber", f"Giá {close_price:,.0f} cao hơn fair_high {fair_high:,.0f}. Doanh nghiệp tốt (PTCB {fund_score}/50) nhưng định giá đã đắt, chờ điều chỉnh.")
 
-    # ============================================================
-    # RULE 1: MUA MẠNH
-    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 40 and tech_score >= 15 and val_score >= 24 and total_score >= 75 and discount_to_fair_pct >= 5):
         return ("🎯 MUA MẠNH", "emerald", f"ĐỦ 4 YẾU TỐ: Vùng mua (CK {discount_to_fair_pct:.1f}%) + PTCB {fund_score}/50 + PTKT {tech_score}/20 + Định giá {val_score}/30 + Tổng {total_score}đ. Setup lý tưởng.")
 
-    # ============================================================
-    # RULE 2: MUA TÍCH SẢN
-    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and tech_score >= 10 and val_score >= 18 and total_score >= 60):
         return ("✅ MUA TÍCH SẢN", "emerald", f"ĐỦ 4 YẾU TỐ: Vùng mua (CK {discount_to_fair_pct:.1f}%) + PTCB {fund_score}/50 + PTKT {tech_score}/20 + Định giá {val_score}/30 + Tổng {total_score}đ. Có thể giải ngân từng phần.")
 
-    # ============================================================
-    # RULE 3: CHỜ VỀ VÙNG MUA
-    # ============================================================
     if (fund_score >= 30 and val_score >= 18 and verdict in ("HỢP LÝ - CHỜ ĐIỀU CHỈNH", "HƠI ĐẮT - KHÔNG MUA")):
         return ("⚠️ CHỜ VỀ VÙNG MUA", "amber", f"Doanh nghiệp tốt (PTCB {fund_score}/50, Định giá {val_score}/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.")
 
-    # ============================================================
-    # RULE 4: CHỜ XÁC NHẬN KỸ THUẬT
-    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and val_score >= 18 and tech_score < 10):
         return ("⏳ CHỜ XÁC NHẬN KỸ THUẬT", "amber", f"Đã đủ 3/4 yếu tố (Vùng mua + PTCB {fund_score}/50 + Định giá {val_score}/30) nhưng PTKT yếu ({tech_score}/20). Chờ tín hiệu đảo chiều trước khi mua.")
 
-    # ============================================================
-    # RULE 5: CHỜ ĐỊNH GIÁ TỐT HƠN
-    # ============================================================
     if (verdict == "RẺ - TRONG VÙNG MUA" and fund_score >= 30 and val_score < 18):
         return ("⏳ CHỜ ĐỊNH GIÁ TỐT HƠN", "amber", f"Giá trong vùng mua + PTCB {fund_score}/50 tốt, nhưng điểm định giá chỉ {val_score}/30 (P/E, P/B chưa thực sự rẻ so với ngành).")
 
-    # ============================================================
-    # RULE 6: THEO DÕI
-    # ============================================================
     missing = []
     if verdict != "RẺ - TRONG VÙNG MUA": missing.append(f"giá chưa vào vùng mua ({verdict})")
     if fund_score < 30: missing.append(f"PTCB {fund_score}/50 < 30")
@@ -563,7 +610,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "discount_to_fair_pct": fv["discount_to_fair_pct"],
         "valuation_verdict": fv["verdict"],
 
-        # 🆕 Quyết định cuối cùng
         "final_decision": final_decision,
         "final_decision_color": final_color,
         "final_decision_reason": final_reason,
@@ -608,7 +654,6 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
         raw["valuation_verdict"] = fv["verdict"]
         raw["valuation_calculated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # 🆕 Quyết định cuối cùng
         fund_s = raw.get("fundamental_score", 0) or 0
         tech_s = raw.get("technical_score", 0) or 0
         val_s = raw.get("valuation_score", 0) or 0
@@ -682,7 +727,6 @@ def main():
     pd.DataFrame(results).to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
     print(f"\n✅ Đã tạo: {OUTPUT_JSON}, {OUTPUT_CSV}")
 
-    # ============ BÁO CÁO ============
     print("\n💰 TOP 10 MÃ ĐANG TRONG VÙNG MUA (giá <= fair_low):")
     cheap = [r for r in results if r["valuation_verdict"] == "RẺ - TRONG VÙNG MUA"]
     cheap.sort(key=lambda x: x["discount_to_fair_pct"], reverse=True)
@@ -719,7 +763,6 @@ def main():
         else:
             print("   (Không có mã nào)")
 
-    # ============ GHI VÀO data.json ============
     print("\n💾 Đang ghi các trường vào data.json (không đụng trường AI)...")
     n_updated = update_data_json_with_valuation(normalized_db, sector_medians)
     print(f"   ✅ Đã cập nhật {n_updated} mã với 15 trường định giá + quyết định.")
