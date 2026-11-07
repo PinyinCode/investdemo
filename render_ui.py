@@ -126,6 +126,9 @@ def generate_html():
             color: #fef3c7;
             font-weight: 700;
         }
+        #log-content::-webkit-scrollbar { width: 4px; }
+        #log-content::-webkit-scrollbar-track { background: #0f172a; }
+        #log-content::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans pb-10">
@@ -269,8 +272,7 @@ def generate_html():
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <!-- NÚT LÀM MỚI GIÁ -->
-                <button type="button" onclick="refreshPrices()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-600/20" title="Lấy giá realtime và lưu vào MongoDB">
+                <button type="button" onclick="refreshPrices()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-600/20" title="Cập nhật toàn bộ giá realtime">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới giá</span>
                 </button>
                 <button type="button" id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
@@ -637,6 +639,25 @@ def generate_html():
                     <button type="button" onclick="closeChartModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition font-semibold">Đóng</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- KHUNG LOG NỔI -->
+    <div id="log-console" class="fixed bottom-4 right-4 w-80 md:w-96 bg-slate-900/95 backdrop-blur border border-slate-700 rounded-xl shadow-2xl z-[9999] overflow-hidden flex flex-col transition-all duration-300 transform translate-y-full opacity-0 hidden">
+        <div class="bg-slate-950 px-3 py-2 border-b border-slate-800 flex justify-between items-center cursor-pointer" onclick="toggleLogConsole()">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-terminal text-emerald-400"></i> Tiến trình cập nhật</span>
+            <div class="flex items-center gap-2">
+                <span id="log-status-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">Chờ</span>
+                <button type="button" onclick="clearLog(event)" class="text-slate-500 hover:text-white transition" title="Xóa log"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+                <button type="button" class="text-slate-500 hover:text-white transition" title="Thu nhỏ / Mở rộng"><i class="fa-solid fa-chevron-down text-[10px]" id="log-chevron"></i></button>
+            </div>
+        </div>
+        <!-- THANH TIẾN TRÌNH MỚI -->
+        <div class="w-full bg-slate-800 h-1">
+            <div id="log-progress-bar" class="bg-emerald-500 h-1 transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <div id="log-content" class="p-2 overflow-y-auto text-[11px] font-mono leading-relaxed space-y-1 h-48 text-slate-300">
+            <!-- Log sẽ chèn vào đây -->
         </div>
     </div>
 
@@ -1083,16 +1104,134 @@ def generate_html():
             }
         }
 
-        // HÀM MỚI: Gọi API đồng bộ giá VÀ ghi đè vào MongoDB
-        async function refreshPrices() {
-            const icon = document.getElementById('refresh-icon');
-            if (icon) icon.classList.add('spinner');
-            
-            try {
-                const symbols = screenerResults.map(item => item.symbol);
-                if (symbols.length === 0) return;
+        // ================== LOG CONSOLE HELPER ==================
+        let isLogMinimized = false;
+        let logTimeout = null;
 
-                // Chia nhỏ lô 20 mã để gọi API
+        function toggleLogConsole() {
+            const contentEl = document.getElementById('log-content');
+            const chevron = document.getElementById('log-chevron');
+            
+            isLogMinimized = !isLogMinimized;
+            if (isLogMinimized) {
+                contentEl.classList.add('hidden');
+                chevron.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            } else {
+                contentEl.classList.remove('hidden');
+                chevron.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                contentEl.scrollTop = contentEl.scrollHeight;
+            }
+        }
+
+        function showLogConsole() {
+            const consoleEl = document.getElementById('log-console');
+            consoleEl.classList.remove('hidden');
+            setTimeout(() => {
+                consoleEl.classList.remove('translate-y-full', 'opacity-0');
+            }, 10);
+            
+            if (logTimeout) clearTimeout(logTimeout);
+            logTimeout = setTimeout(() => {
+                consoleEl.classList.add('translate-y-full', 'opacity-0');
+                setTimeout(() => consoleEl.classList.add('hidden'), 300);
+            }, 15000);
+        }
+
+        function addLog(message, type = 'info') {
+            const contentEl = document.getElementById('log-content');
+            const badge = document.getElementById('log-status-badge');
+            const consoleEl = document.getElementById('log-console');
+            
+            if (logTimeout) clearTimeout(logTimeout);
+            logTimeout = setTimeout(() => {
+                consoleEl.classList.add('translate-y-full', 'opacity-0');
+                setTimeout(() => consoleEl.classList.add('hidden'), 300);
+            }, 15000);
+
+            let colorClass = "text-slate-300";
+            let icon = "";
+            if (type === 'success') { colorClass = "text-emerald-400"; icon = "✅ "; }
+            else if (type === 'error') { colorClass = "text-rose-400"; icon = "❌ "; }
+            else if (type === 'warning') { colorClass = "text-amber-400"; icon = "⚠️ "; }
+            else if (type === 'processing') { colorClass = "text-indigo-400"; icon = "⏳ "; }
+
+            if (type === 'processing') {
+                badge.className = "text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 animate-pulse";
+                badge.innerText = "Đang chạy...";
+            } else if (type === 'success') {
+                badge.className = "text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                badge.innerText = "Hoàn tất";
+            } else if (type === 'error') {
+                badge.className = "text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30";
+                badge.innerText = "Có lỗi";
+            }
+
+            const time = new Date().toLocaleTimeString('vi-VN');
+            const div = document.createElement('div');
+            div.className = `flex gap-1.5 ${colorClass}`;
+            div.innerHTML = `<span class="text-slate-500 shrink-0">[${time}]</span> <span class="break-all">${icon}${message}</span>`;
+            contentEl.appendChild(div);
+
+            contentEl.scrollTop = contentEl.scrollHeight;
+
+            if (contentEl.children.length > 100) {
+                contentEl.removeChild(contentEl.firstChild);
+            }
+        }
+
+        function clearLog(e) {
+            if(e) e.stopPropagation();
+            document.getElementById('log-content').innerHTML = '';
+            document.getElementById('log-status-badge').className = "text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400";
+            document.getElementById('log-status-badge').innerText = "Chờ";
+            updateProgress(0, 1);
+        }
+
+        function updateProgress(current, total) {
+            const bar = document.getElementById('log-progress-bar');
+            if (!bar) return;
+            if (total === 0) { bar.style.width = '0%'; return; }
+            const percent = Math.min(100, Math.round((current / total) * 100));
+            bar.style.width = `${percent}%`;
+            
+            if (percent === 100) {
+                bar.className = "bg-emerald-500 h-1 transition-all duration-300";
+            } else {
+                bar.className = "bg-indigo-500 h-1 transition-all duration-300 animate-pulse";
+            }
+        }
+
+        let isRefreshingAll = false;
+
+        async function refreshPrices() {
+            if (isRefreshingAll) {
+                addLog(`Hệ thống đang cập nhật toàn bộ, vui lòng đợi!`, 'warning');
+                return; 
+            }
+            isRefreshingAll = true;
+
+            const icon = document.getElementById('refresh-icon');
+            const headerBtn = icon ? icon.closest('button') : null;
+            if (icon) icon.classList.add('spinner');
+            if (headerBtn) headerBtn.disabled = true;
+            
+            showLogConsole();
+            document.getElementById('log-content').innerHTML = '';
+            updateProgress(0, 1);
+            
+            const symbols = screenerResults.map(item => item.symbol);
+            if (symbols.length === 0) {
+                addLog(`Danh sách trống, không có gì để cập nhật.`, 'warning');
+                isRefreshingAll = false;
+                if (icon) icon.classList.remove('spinner');
+                if (headerBtn) headerBtn.disabled = false;
+                return;
+            }
+
+            addLog(`Bắt đầu lấy giá cho ${symbols.length} mã...`, 'processing');
+            updateProgress(0, symbols.length);
+
+            try {
                 const chunkSize = 20;
                 const chunks = [];
                 for (let i = 0; i < symbols.length; i += chunkSize) {
@@ -1100,38 +1239,121 @@ def generate_html():
                 }
 
                 let updatedCount = 0;
+                let processedCount = 0;
                 let lastUpdateTime = "";
 
-                // Gọi song song tất cả các chunk
                 await Promise.all(chunks.map(async (chunk) => {
                     const symQuery = chunk.join(',');
-                    // GỌI /api/sync ĐỂ BACKEND GHI ĐÈ VÀO MONGODB
-                    const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symQuery}`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        lastUpdateTime = data.updated_at;
-                        if (data.updated_data) {
-                            for (const [sym, price] of Object.entries(data.updated_data)) {
-                                const item = screenerResults.find(s => s.symbol === sym);
-                                if (item) item.close_price = price;
-                                updatedCount++;
-                            }
+                    try {
+                        const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symQuery}`);
+                        
+                        if (res.ok) {
+                            const data = await res.json();
+                            lastUpdateTime = data.updated_at;
+                            
+                            chunk.forEach(sym => {
+                                if (data.updated_data && data.updated_data[sym] !== undefined) {
+                                    const price = data.updated_data[sym];
+                                    const item = screenerResults.find(s => s.symbol === sym);
+                                    if (item) item.close_price = price;
+                                    addLog(`${sym}: ${formatNumber(price)} đ`, 'success');
+                                    updatedCount++;
+                                } else {
+                                    addLog(`${sym}: Không lấy được giá`, 'error');
+                                }
+                                processedCount++;
+                                updateProgress(processedCount, symbols.length);
+                            });
+                        } else {
+                            chunk.forEach(sym => {
+                                addLog(`${sym}: Lỗi server API (${res.status})`, 'error');
+                                processedCount++;
+                                updateProgress(processedCount, symbols.length);
+                            });
                         }
+                    } catch (err) {
+                        chunk.forEach(sym => {
+                            addLog(`${sym}: Lỗi kết nối mạng`, 'error');
+                            processedCount++;
+                            updateProgress(processedCount, symbols.length);
+                        });
                     }
                 }));
 
-                // Vẽ lại giao diện với giá mới
                 renderCards();
                 
                 if (lastUpdateTime) {
                     document.getElementById('header-last-update').innerText = lastUpdateTime + " (Đã lưu DB)";
                 }
-                alert(`✅ Đã cập nhật và ghi đè ${updatedCount} mã vào MongoDB!`);
+                
+                addLog(`Hoàn tất toàn bộ! Đã cập nhật ${updatedCount}/${symbols.length} mã.`, 'success');
+                updateProgress(symbols.length, symbols.length);
 
             } catch (err) {
                 console.error(err);
-                alert("❌ Không thể kết nối tới máy chủ API.");
+                addLog(`Lỗi nghiêm trọng khi gọi API.`, 'error');
             } finally {
+                isRefreshingAll = false;
+                if (icon) icon.classList.remove('spinner');
+                if (headerBtn) headerBtn.disabled = false;
+            }
+        }
+
+        let isRefreshingSingle = false;
+
+        async function refreshSinglePrice(symbol, btnElement) {
+            if (isRefreshingSingle) {
+                addLog(`Đang có tiến trình khác, đợi xíu nhé!`, 'warning');
+                return;
+            }
+            if (btnElement.disabled) return;
+
+            isRefreshingSingle = true;
+            btnElement.disabled = true;
+            const icon = btnElement.querySelector('i');
+            if (icon) icon.classList.add('spinner');
+
+            showLogConsole();
+            document.getElementById('log-content').innerHTML = '';
+            updateProgress(0, 1);
+            addLog(`Bắt đầu lấy giá cho ${symbol}...`, 'processing');
+
+            try {
+                const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symbol}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.updated_data && data.updated_data[symbol] !== undefined) {
+                        const newPrice = data.updated_data[symbol];
+                        
+                        const item = screenerResults.find(s => s.symbol === symbol);
+                        if (item) item.close_price = newPrice;
+                        
+                        const card = btnElement.closest('.bg-slate-900');
+                        if (card) {
+                            const priceEl = card.querySelector('.text-emerald-400.leading-tight');
+                            if (priceEl) {
+                                priceEl.innerText = formatNumber(newPrice);
+                                priceEl.classList.add('text-white', 'bg-emerald-500');
+                                setTimeout(() => priceEl.classList.remove('text-white', 'bg-emerald-500'), 500);
+                            }
+                        }
+                        
+                        addLog(`${symbol}: ${formatNumber(newPrice)} đ`, 'success');
+                        if (data.updated_at) {
+                            document.getElementById('header-last-update').innerText = data.updated_at + " (Đã lưu)";
+                        }
+                    } else {
+                        addLog(`${symbol}: Không lấy được giá`, 'error');
+                    }
+                } else {
+                    addLog(`${symbol}: Lỗi server (${res.status})`, 'error');
+                }
+            } catch (err) {
+                addLog(`${symbol}: Lỗi kết nối mạng`, 'error');
+            } finally {
+                updateProgress(1, 1);
+                isRefreshingSingle = false;
+                btnElement.disabled = false;
                 if (icon) icon.classList.remove('spinner');
             }
         }
@@ -1252,6 +1474,12 @@ def generate_html():
                     <i class="fa-${isWatched ? 'solid' : 'regular'} fa-bookmark ${isWatched ? 'text-amber-400' : 'text-slate-400'}"></i>
                 </button>`;
 
+                const refreshBtnHtml = `<button type="button" onclick="event.stopPropagation(); refreshSinglePrice('${item.symbol}', this)" 
+                    class="px-1.5 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400 text-xs transition"
+                    title="Cập nhật giá realtime cho mã này">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>`;
+
                 let scoreHtml = "";
                 if (rankingMode !== "NONE") {
                     const isFundActive  = rankingMode === "FUNDAMENTAL";
@@ -1290,6 +1518,7 @@ def generate_html():
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <span class="text-xl font-black text-white">${item.symbol}</span>
                                     ${watchBtnHtml}
+                                    ${refreshBtnHtml}
                                     <button type="button" onclick="event.stopPropagation(); openModal('${item.symbol}')" class="text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 px-2 py-1 rounded-md border border-indigo-500/20 text-xs transition flex items-center gap-1" title="Xem chi tiết">
                                         <i class="fa-solid fa-robot"></i> <span class="hidden sm:inline">Quant [AI]</span>
                                     </button>
