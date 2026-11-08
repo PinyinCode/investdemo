@@ -7,7 +7,7 @@ on:
       - 'history/**'                   # Kích hoạt khi Server chốt sổ nến
       - 'symbol_sim_rates.json'        # Kích hoạt khi simulator.py tính xong tỷ suất
       - 'quarterly_mean_details.json'  # Kích hoạt khi simulator.py tính xong chi tiết quý
-  workflow_dispatch:                   # Chạy thủ công
+  workflow_dispatch:                   # Vẫn giữ lại tùy chọn chạy thủ công
 
 jobs:
   screener:
@@ -37,7 +37,6 @@ jobs:
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "action@github.com"
           
-          # Chỉ add các file kết quả của Screener (KHÔNG add symbol_sim_rates.json hay quarterly_mean_details.json)
           git add screener_results.json screener_summary.csv data.json
           
           # Kiểm tra xem có thay đổi hay không, nếu không thì bỏ qua
