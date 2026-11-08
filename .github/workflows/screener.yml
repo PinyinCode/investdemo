@@ -7,13 +7,13 @@ on:
       - 'render_ui.py'
       - 'simulator.py'
       - 'screener_results.json'
-      - 'last_update.json'             # Kích hoạt khi cào dữ liệu thủ công
-      - 'history/**'                   # Kích hoạt khi Server chốt sổ nến
+      - 'last_update.json'             
+      - 'history/**'                   
 
 permissions:
   contents: write
 
-# CHỐNG XUNG ĐỘT: Xếp hàng chờ, không chạy song song với workflow khác
+# Xếp hàng chờ, không chạy song song
 concurrency:
   group: "main-branch-queue"
   cancel-in-progress: false
@@ -25,7 +25,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch toàn bộ lịch sử để rebase mượt mà
+          fetch-depth: 0 
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -39,7 +39,6 @@ jobs:
 
       - name: Run Python Scripts
         env:
-          # 🔐 Firebase config được inject từ GitHub Secret (JSON string)
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: |
           echo "🔄 Đang chạy script tính toán lãi suất (simulator.py)..."
@@ -53,16 +52,14 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Đảm bảo add đầy đủ index.html và toàn bộ file JSON do simulator.py sinh ra
           git add index.html symbol_sim_rates.json quarterly_mean_details.json
 
-          # Kiểm tra xem có thay đổi hay không trước khi commit
+          # Nếu không có thay đổi thì bỏ qua
           if git diff --staged --quiet; then
             echo "✅ Không có thay đổi nào để commit."
           else
             git commit -m "📊 Auto-calculate symbol rates & details, then render index.html via Python"
             
-            # QUAN TRỌNG: Kéo code mới nhất từ remote về và rebase trước khi push
             echo "🔄 Đang pull --rebase để đồng bộ với remote..."
             git pull --rebase origin main || echo "No rebase needed"
             
