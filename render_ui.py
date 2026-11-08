@@ -359,6 +359,13 @@ def generate_html():
                     <input type="checkbox" id="watchlist-filter" onchange="renderCards()" class="w-4 h-4 rounded bg-slate-950 border-amber-500 text-amber-600 focus:ring-amber-500 focus:ring-offset-slate-900 cursor-pointer">
                     <span><i class="fa-solid fa-bookmark mr-1 text-amber-400"></i> Chỉ xem mã đang theo dõi <span id="watchlist-count-badge" class="hidden ml-1 bg-amber-500 text-black text-[9px] font-black px-1.5 py-0.5 rounded-full">0</span></span>
                 </label>
+                
+                <!-- Ô TICK CHỈ XEM MÃ ĐỘT BIẾN -->
+                <label class="flex items-center gap-2 cursor-pointer select-none text-emerald-300 font-bold hover:text-emerald-200 transition ml-0 md:ml-4">
+                    <input type="checkbox" id="shock-filter" onchange="renderCards()" class="w-4 h-4 rounded bg-slate-950 border-emerald-500 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer">
+                    <span><i class="fa-solid fa-bolt mr-1 text-emerald-400"></i> Chỉ xem mã đột biến (Dòng tiền lớn)</span>
+                </label>
+
                 <span id="active-filter-status" class="text-[10px] text-slate-400 hidden md:inline ml-auto">Hiển thị toàn bộ danh sách</span>
             </div>
         </div>
@@ -992,6 +999,11 @@ def generate_html():
                 inputEl.focus();
                 if (elementId === 'search-input') {
                     document.getElementById('search-suggestions').classList.add('hidden');
+                    // RESET LẠI 2 Ô SELECT VÀ Ô TICK VỀ MẶC ĐỊNH
+                    document.getElementById('sector-filter').value = "ALL";
+                    document.getElementById('ranking-filter').value = "FINAL_BUY_ONLY";
+                    document.getElementById('shock-filter').checked = false;
+                    
                     renderCards();
                 } else if (elementId === 'modal-symbol-input') {
                     document.getElementById('modal-search-suggestions').classList.add('hidden');
@@ -1098,6 +1110,10 @@ def generate_html():
                         price_change_available: liveData.price_change_available !== undefined ? liveData.price_change_available : (item.price_change_available || false),
                         price_arrow: liveData.price_arrow !== undefined ? liveData.price_arrow : (item.price_arrow || "—"),
                         price_color: liveData.price_color !== undefined ? liveData.price_color : (item.price_color || "slate"),
+                        
+                        // THÔNG SỐ BIÊN ĐỘ VÀ VOLUME
+                        volume_percent: liveData.volume_percent !== undefined ? liveData.volume_percent : (item.volume_percent || 0),
+                        amplitude_percent: liveData.amplitude_percent !== undefined ? liveData.amplitude_percent : (item.amplitude_percent || 0),
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -1434,13 +1450,21 @@ def generate_html():
             const searchTerm = document.getElementById('search-input').value.toUpperCase();
             const selectedSector = document.getElementById('sector-filter').value;
             const isWatchlistOnly = document.getElementById('watchlist-filter').checked;
+            const isShockOnly = document.getElementById('shock-filter').checked;
             const rankingMode = document.getElementById('ranking-filter').value;
 
             let filtered = screenerResults.filter(item => {
                 let matchSearch = item.symbol.includes(searchTerm) || (item.company_name && item.company_name.toUpperCase().includes(searchTerm));
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
                 let matchWatchlist = !isWatchlistOnly || userWatchlist.has(item.symbol);
-                return matchSearch && matchSector && matchWatchlist;
+                
+                // Lọc mã đột biến (Giá ±3% VÀ KL >= 120%)
+                const pct = item.price_change_percent || 0;
+                const vol = item.volume_percent || 0;
+                const isShock = ((pct >= 3.0) || (pct <= -3.0)) && (vol >= 120.0);
+                let matchShock = !isShockOnly || isShock;
+
+                return matchSearch && matchSector && matchWatchlist && matchShock;
             });
 
             if (rankingMode === "FINAL_BUY_ONLY") {
@@ -1536,6 +1560,22 @@ def generate_html():
                     cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
                 }
 
+                // TẠO NHÃN ĐỘT BIẾN KL VÀ BIÊN ĐỘ (GIỐNG ĐIỀU KIỆN TELEGRAM)
+                let shockBadgeHtml = "";
+                const pctChange = item.price_change_percent || 0;
+                const isPriceShock = (pctChange >= 3.0) || (pctChange <= -3.0);
+                const isVolumeShock = (item.volume_percent || 0) >= 120.0;
+
+                if (isPriceShock && isVolumeShock) {
+                    const isUp = pctChange > 0;
+                    const colorClass = isUp ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" : "bg-rose-500/20 text-rose-300 border-rose-500/40";
+                    const iconClass = isUp ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
+                    
+                    shockBadgeHtml = `<span class="${colorClass} border text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Dòng tiền ${isUp ? 'MUA VÀO' : 'BÁN RÒNG'}">
+                        <i class="fa-solid ${iconClass}"></i> Vol: ${item.volume_percent.toFixed(0)}%
+                    </span>`;
+                }
+
                 const isWatched = userWatchlist.has(item.symbol);
                 const watchBtnHtml = `<button type="button" data-watch-btn="${item.symbol}" onclick="toggleWatchlist('${item.symbol}', event)" 
                     class="px-1.5 py-0.5 rounded-md ${isWatched ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300' : 'bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-400'} text-xs transition"
@@ -1610,6 +1650,7 @@ def generate_html():
                                     <span class="shrink-0 text-slate-500 italic" title="Thời gian cập nhật của riêng mã này">
                                         <i class="fa-regular fa-clock mr-0.5"></i>${item.updated_at || 'Chưa rõ'}
                                     </span>
+                                    ${shockBadgeHtml}
                                 </div>
                             </div>
                             <div class="text-right flex flex-col items-end shrink-0 ml-2 gap-1">
@@ -1655,6 +1696,12 @@ def generate_html():
             const suggestBox = document.getElementById('search-suggestions');
             if (!term) {
                 suggestBox.classList.add('hidden');
+                
+                // NẾU XÓA HẾT CHỮ THÌ RESET VỀ MẶC ĐỊNH
+                document.getElementById('sector-filter').value = "ALL";
+                document.getElementById('ranking-filter').value = "FINAL_BUY_ONLY";
+                document.getElementById('shock-filter').checked = false;
+                
                 renderCards();
                 return;
             }
@@ -1691,6 +1738,21 @@ def generate_html():
         function selectSuggestion(symbol) {
             document.getElementById('search-input').value = symbol;
             document.getElementById('search-suggestions').classList.add('hidden');
+            
+            // TỰ ĐỘNG CHỌN NGÀNH VÀ CHẾ ĐỘ XEM THEO MÃ
+            const item = screenerResults.find(s => s.symbol === symbol);
+            if (item) {
+                // 1. Tự động chọn ngành
+                const sectorSelect = document.getElementById('sector-filter');
+                sectorSelect.value = item.sector || "ALL";
+                
+                // 2. Tự động chọn chế độ xem (nếu đang ở chế độ mặc định thì đổi sang Toàn thị trường)
+                const rankingSelect = document.getElementById('ranking-filter');
+                if (rankingSelect.value === 'FINAL_BUY_ONLY' && !item.final_decision.includes("MUA")) {
+                    rankingSelect.value = 'FINAL_DECISION_SORT';
+                }
+            }
+            
             renderCards();
         }
 
