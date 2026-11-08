@@ -77,29 +77,58 @@ def get_vn100_symbols():
     return []
 
 def auto_git_push_symbols():
-    """Tự động đẩy file symbols lên GitHub"""
+    """Tự động đẩy file symbols lên GitHub an toàn"""
     try:
         print(f"\n📤 Đang tự động đồng bộ file {SYMBOLS_FILE} lên GitHub...")
-        subprocess.run(["git", "fetch", "origin", "main"], check=True)
+        
+        if not os.path.exists(SYMBOLS_FILE):
+            print(f"❌ Không tìm thấy file {SYMBOLS_FILE} để đẩy lên.")
+            return
+
+        # Dọn dẹp file rác nếu có (FETCH_HEAD, python...)
+        for junk_file in ["FETCH_HEAD", "python"]:
+            if os.path.exists(junk_file):
+                try:
+                    os.remove(junk_file)
+                except Exception:
+                    pass
+
+        # Fetch và Pull an toàn
+        subprocess.run(["git", "fetch", "origin", "main"], check=True, capture_output=True)
         pull_result = subprocess.run(
             ["git", "pull", "origin", "main", "--rebase", "--autostash"], 
             capture_output=True, text=True
         )
         if pull_result.returncode != 0:
+            print(f"⚠️ Lỗi pull: {pull_result.stderr}")
             subprocess.run(["git", "rebase", "--abort"], check=False)
 
+        # Chỉ add file symbols
         subprocess.run(["git", "add", SYMBOLS_FILE], check=True)
-        status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+
+        # Kiểm tra xem file có thực sự thay đổi không
+        status_result = subprocess.run(
+            ["git", "status", "--porcelain", SYMBOLS_FILE], 
+            capture_output=True, text=True
+        )
+        
         if not status_result.stdout.strip():
-            print("ℹ️ Không có thay đổi nào để đẩy lên.")
+            print("ℹ️ File không có thay đổi nào mới để đẩy lên.")
             return
 
+        # Commit và Push
         commit_msg = f"Auto update {SYMBOLS_FILE} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        subprocess.run(["git", "push", "origin", "main"], check=True)
+        subprocess.run(["git", "commit", "-m", commit_msg], check=True, capture_output=True)
+        subprocess.run(["git", "push", "origin", "main"], check=True, capture_output=True)
         print("🚀 Đẩy danh sách lên GitHub thành công!")
+        
+    except subprocess.CalledProcessError as e:
+        # Bỏ qua lỗi "nothing to commit" (vì không có gì thay đổi)
+        error_msg = str(e.output) if e.output else str(e)
+        if "nothing to commit" not in error_msg and "nothing added" not in error_msg:
+            print(f"⚠️ Lỗi Git: {error_msg}")
     except Exception as e:
-        print(f"⚠️ Lỗi Git push: {e}")
+        print(f"⚠️ Lỗi không xác định: {e}")
 
 if __name__ == "__main__":
     syms = get_vn100_symbols()
