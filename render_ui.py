@@ -2185,69 +2185,33 @@ def generate_html():
 
             document.getElementById('chart-modal').classList.remove('hidden');
             document.getElementById('chart-loading').classList.remove('hidden');
+            
             try {
+                // 1. Chỉ tải file history (đã có sẵn dữ liệu chuẩn)
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
                 if (!currentSymbolHistory.history_d1) currentSymbolHistory.history_d1 = [];
 
-                // 1. Làm sạch dữ liệu lịch sử
-                currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter(bar => {
-                    return bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0;
-                });
-
-                // 2. XỬ LÝ NẾN CẬP NHẬT
+                // 2. Cập nhật giá close mới nhất vào nến cuối cùng (nếu có)
                 const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
                 
-                // Lấy trading_date từ MongoDB. Nếu không có, fallback về ngày hôm nay
-                const tradingDate = item.trading_date || new Date().toISOString().split('T')[0];
-                
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
-                    // Tìm xem trong file history đã có nến của trading_date chưa
-                    const existingTodayIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === tradingDate);
-                    
-                    if (existingTodayIndex !== -1) {
-                        // Đã có nến -> Chỉ cập nhật giá close
-                        currentSymbolHistory.history_d1[existingTodayIndex].close = currentPrice;
-                    } else {
-                        // CHƯA CÓ TRONG HISTORY
-                        const hasValidOHLC = item.open > 0 && item.high > 0 && item.low > 0;
-                        
-                        if (hasValidOHLC) {
-                            // Vẽ nến thật
-                            const liveOpen = item.open;
-                            const liveHigh = item.high;
-                            const liveLow = item.low;
-                            
-                            // Chặn Volume rác
-                            let liveVolume = item.volume;
-                            if (!liveVolume || liveVolume < 1000) {
-                                liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
-                            }
-
-                            currentSymbolHistory.history_d1.push({
-                                time: tradingDate, // DÙNG NGÀY GIAO DỊCH
-                                open: liveOpen, 
-                                high: liveHigh,
-                                low: liveLow,
-                                close: currentPrice,
-                                volume: liveVolume 
-                            });
-                        } else {
-                            // Ngày nghỉ -> Chỉ update nến cuối
-                            const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
-                            lastBar.close = currentPrice;
-                            if (currentPrice > lastBar.high) lastBar.high = currentPrice;
-                            if (currentPrice < lastBar.low) lastBar.low = currentPrice;
-                        }
-                    }
+                    const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
+                    // Chỉ cập nhật giá đóng cửa mới nhất
+                    // Không thêm nến mới, không đụng đến Volume hay Open/High/Low
+                    lastBar.close = currentPrice;
+                    if (currentPrice > lastBar.high) lastBar.high = currentPrice;
+                    if (currentPrice < lastBar.low) lastBar.low = currentPrice;
                 }
 
-                // 3. Sắp xếp lại mảng
+                // 3. Sắp xếp lại mảng (để chắc chắn)
                 currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
 
+                // 4. Vẽ biểu đồ
                 renderChartInstance(currentSymbolHistory);
+                
             } catch (err) {
                 console.error("Lỗi tải biểu đồ:", err);
                 document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
@@ -2255,7 +2219,6 @@ def generate_html():
                 document.getElementById('chart-loading').classList.add('hidden');
             }
         }
-
         function calculateMA(data, period) {
             let result = [];
             for (let i = 0; i < data.length; i++) {
