@@ -1088,7 +1088,11 @@ def generate_html():
                         
                         // ƯU TIÊN GIÁ TỪ MONGODB, NẾU KHÔNG CÓ MỚI DÙNG GIÁ CŨ
                         close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : item.close_price)),
-                        updated_at: liveData.updated_at !== undefined ? liveData.updated_at : (extraData.updated_at || "Chưa rõ"), // Giờ của từng mã
+                        updated_at: liveData.updated_at !== undefined ? liveData.updated_at : (extraData.updated_at || "Chưa rõ"),
+                        open: liveData.open !== undefined ? liveData.open : null,
+                        high: liveData.high !== undefined ? liveData.high : null,
+                        low: liveData.low !== undefined ? liveData.low : null,
+                        volume: liveData.volume !== undefined ? liveData.volume : null,
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -2205,7 +2209,7 @@ def generate_html():
                     return bar.time && bar.open != null && bar.high != null && bar.low != null && bar.close != null;
                 });
 
-                // === CHÈN NẾN HÔM NAY TỪ MONGODB (LUÔN CHÈN NẾU CÓ GIÁ) ===
+                // === SỬA LỖI: LẤY ĐẦY ĐỦ OHLC + VOLUME TỪ MONGODB ===
                 const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
                 
                 if (currentPrice > 0) {
@@ -2215,28 +2219,39 @@ def generate_html():
                     // Tìm xem hôm nay đã có nến chưa
                     const existingTodayIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === todayStr);
                     
+                    // Lấy dữ liệu thật từ API (nếu Server đã cập nhật code lấy OHLC)
+                    const liveOpen = item.open || (currentSymbolHistory.history_d1.length > 0 ? currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].close : currentPrice);
+                    const liveHigh = item.high || Math.max(liveOpen, currentPrice);
+                    const liveLow = item.low || Math.min(liveOpen, currentPrice);
+                    const liveVolume = item.volume || 1000; // Fix lỗi sập trục tung do volume = 0
+
                     if (existingTodayIndex === -1) {
-                        // Chưa có -> Chèn mới
+                        // Nếu chưa có nến hôm nay -> Chèn mới
                         currentSymbolHistory.history_d1.push({
                             time: todayStr,
-                            open: currentPrice,
-                            high: currentPrice,
-                            low: currentPrice,
+                            open: liveOpen, 
+                            high: liveHigh,
+                            low: liveLow,
                             close: currentPrice,
-                            volume: 0
+                            volume: liveVolume 
                         });
                     } else {
-                        // Đã có -> Cập nhật giá
-                        currentSymbolHistory.history_d1[existingTodayIndex].close = currentPrice;
-                        if (currentPrice > currentSymbolHistory.history_d1[existingTodayIndex].high) 
-                            currentSymbolHistory.history_d1[existingTodayIndex].high = currentPrice;
-                        if (currentPrice < currentSymbolHistory.history_d1[existingTodayIndex].low) 
-                            currentSymbolHistory.history_d1[existingTodayIndex].low = currentPrice;
+                        // Nếu đã có nến hôm nay -> Cập nhật lại đúng giá trị
+                        const todayBar = currentSymbolHistory.history_d1[existingTodayIndex];
+                        todayBar.close = currentPrice;
+                        todayBar.open = liveOpen; // Lấy giá mở cửa thực tế
+                        todayBar.high = Math.max(todayBar.high, liveHigh, currentPrice);
+                        todayBar.low = Math.min(todayBar.low, liveLow, currentPrice);
+                        todayBar.volume = liveVolume;
                     }
                 }
 
-                // SẮP XẾP LẠI MẢNG THEO THỜI GIAN (Bắt buộc với lightweight-charts)
-                currentSymbolHistory.history_d1.sort((a, b) => new Date(a.time) - new Date(b.time));
+                // Sắp xếp lại mảng theo thời gian chuẩn String (YYYY-MM-DD) - Tránh lỗi múi giờ
+                currentSymbolHistory.history_d1.sort((a, b) => {
+                    if (a.time < b.time) return -1;
+                    if (a.time > b.time) return 1;
+                    return 0;
+                });
 
                 // Loại bỏ nến trùng lặp nếu có
                 currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter((bar, index, arr) => {
