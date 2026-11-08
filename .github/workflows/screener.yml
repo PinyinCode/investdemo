@@ -7,6 +7,8 @@ on:
       - 'render_ui.py'
       - 'simulator.py'
       - 'screener_results.json'
+      - 'last_update.json'             # Kích hoạt khi cào dữ liệu thủ công
+      - 'history/**'                   # Kích hoạt khi Server chốt sổ nến
       
     
 
