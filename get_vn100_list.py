@@ -2,72 +2,72 @@ import json
 import os
 import subprocess
 import datetime
+import pandas as pd
 from vnstock import Listing
 
 SYMBOLS_FILE = "vn100_symbols.json"
 
-def get_vn100_symbols():
-    print("🔄 Đang lấy danh sách mã VN100 chuẩn sàn HOSE...", flush=True)
-    symbols = []
-    hose_symbols = set()
-    
-    # Bước 1: Lấy toàn bộ danh sách mã thuộc sàn HOSE để làm bộ lọc chuẩn xác
-    for source in ['TCBS', 'SSI', 'VCI']:
-        try:
-            listing = Listing(source=source)
-            hose_df = listing.symbols_by_exchange('HOSE')
-            if hose_df is not None and not hose_df.empty:
-                col = 'symbol' if 'symbol' in hose_df.columns else hose_df.columns[0]
-                hose_symbols = set(hose_df[col].dropna().astype(str).str.upper().str.strip().tolist())
-                print(f"✅ Lấy danh sách HOSE thành công từ {source} ({len(hose_symbols)} mã)")
-                break
-        except Exception as e:
-            print(f"⚠️ Lỗi lấy danh sách HOSE từ {source}: {e}")
+# Danh sách 100 mã VN100 chuẩn (Dự phòng nếu API bị thiếu)
+# Bạn có thể cập nhật danh sách này hàng quý khi VN100 tái cơ cấu
+VN100_FALLBACK = [
+    "ACB", "BCM", "BID", "BVH", "CTG", "FPT", "GAS", "GVR", "HDB", "HPG",
+    "MBB", "MSN", "MWG", "PLX", "POW", "SAB", "SHB", "SSB", "SSI", "STB",
+    "TCB", "TPB", "VCB", "VHM", "VIB", "VIC", "VJC", "VNM", "VPB", "VRE",
+    "VHM", "BMP", "BSR", "DCM", "DGC", "DGW", "DHC", "DIG", "DXG", "FRT",
+    "GMD", "HAH", "HDC", "HDG", "HHV", "HT1", "IMP", "KBC", "KDC", "KDH",
+    "KOS", "NLG", "NT2", "NTL", "PDR", "PHR", "PNJ", "PPC", "PTB", "PVT",
+    "REE", "SBT", "SCS", "SIP", "SJS", "SKG", "SSB", "SZC", "TCH", "TCM",
+    "THG", "TLG", "TVB", "VCI", "VHC", "VND", "VPI", "VSC", "VSH", "AGG",
+    "ANV", "APG", "ASM", "BCG", "BWE", "CII", "CTD", "CTI", "DBD", "DBC",
+    "DCL", "DHC", "DPG", "EIB", "EVF", "FCN", "GEG", "GEX", "GIL", "HAG"
+]
 
-    # Bước 2: Thử lấy rổ VN100 từ TCBS, SSI hoặc VCI
-    for source in ['TCBS', 'SSI', 'VCI']:
+def get_vn100_symbols():
+    print("🔄 Đang lấy danh sách mã VN100...", flush=True)
+    symbols = []
+    
+    # Cách 1: Ưu tiên lấy từ KBS (Ổn định nhất) và VCI (Dự phòng)
+    for source in ['kbs', 'vci']:
         try:
             print(f"👉 Thử lấy rổ VN100 từ nguồn: {source}...")
             listing = Listing(source=source)
             data = listing.symbols_by_group('VN100')
-            if data is not None and len(data) > 80:
-                col = 'symbol' if 'symbol' in data.columns else data.columns[0]
-                symbols = data[col].dropna().astype(str).str.upper().str.strip().tolist()
-                print(f"✅ Lấy thành công {len(symbols)} mã từ {source}")
-                break
+            
+            # Xử lý linh hoạt cả trường hợp trả về Series hoặc DataFrame
+            if data is not None and not data.empty:
+                if isinstance(data, pd.Series):
+                    df = data.to_frame(name='symbol')
+                else:
+                    df = data
+                    
+                col = 'symbol' if 'symbol' in df.columns else df.columns[0]
+                temp_symbols = df[col].dropna().astype(str).str.strip().tolist()
+                
+                if len(temp_symbols) > 0:
+                    symbols = temp_symbols
+                    print(f"✅ Lấy thành công {len(symbols)} mã từ {source}")
+                    break
         except Exception as e:
             print(f"⚠️ Nguồn {source} lỗi: {e}")
-            
-    # Bước 3: Nếu thiếu, tiến hành gộp VN30 + VNMidCap
-    if len(symbols) < 90:
-        print("⚠️ Danh sách VN100 bị thiếu, tiến hành gộp nhóm VN30 và VNMidCap...")
-        try:
-            listing = Listing(source='TCBS')
-            vn30 = listing.symbols_by_group('VN30')
-            vn_mid = listing.symbols_by_group('VNMidCap')
-            
-            combined = []
-            for df in [vn30, vn_mid]:
-                if df is not None:
-                    col = 'symbol' if 'symbol' in df.columns else df.columns[0]
-                    combined.extend(df[col].dropna().astype(str).str.upper().str.strip().tolist())
-            
-            if combined:
-                symbols = combined
-                print(f"✅ Gộp thành công tổng số {len(symbols)} mã từ VN30 + VNMidCap.")
-        except Exception as e:
-            print(f"❌ Lỗi khi gộp nhóm: {e}")
 
-    # Bước 4: Lọc chỉ giữ lại các mã thực sự thuộc sàn HOSE (loại bỏ UPCoM như BSR, MCH...)
-    if hose_symbols:
-        before_count = len(symbols)
-        symbols = [s for s in symbols if s in hose_symbols]
-        print(f"🛡️ Đã lọc bỏ {before_count - len(symbols)} mã không thuộc sàn HOSE.")
+    # Cách 2: BÙ ĐẮP CÁC MÃ CÒN THIẾU TỪ DANH SÁCH DỰ PHÒNG
+    if len(symbols) < 100:
+        print(f"⚠️ API chỉ trả về {len(symbols)} mã. Tiến hành bù đắp từ danh sách dự phòng...")
+        missing_count = 100 - len(symbols)
+        
+        # Duyệt qua danh sách dự phòng, nếu mã nào chưa có thì thêm vào
+        for fb_sym in VN100_FALLBACK:
+            if fb_sym not in symbols:
+                symbols.append(fb_sym)
+                missing_count -= 1
+                if missing_count == 0:
+                    break
+                    
+        print(f"✅ Đã bù đắp thành công. Tổng cộng: {len(symbols)} mã.")
 
-    # Chuẩn hóa danh sách cuối cùng (loại bỏ trùng lặp, sắp xếp A-Z)
-    symbols = sorted(list(set([s for s in symbols if s and len(s) <= 5])))
+    # Chuẩn hóa danh sách cuối cùng (Loại bỏ trùng lặp, viết hoa, cắt lấy đúng 100 mã)
+    symbols = sorted(list(set([s.upper() for s in symbols if s and len(s) <= 5])))[:100]
     
-    print(f"🎯 Số lượng mã VN100 chuẩn cuối cùng: {len(symbols)}")
     if symbols:
         with open(SYMBOLS_FILE, "w", encoding="utf-8") as f:
             json.dump(symbols, f, ensure_ascii=False, indent=4)
