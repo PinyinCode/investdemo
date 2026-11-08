@@ -49,12 +49,12 @@ def translate_sector(sector_name):
     return "SAN_XUAT_TIEU_DUNG_PHONG_THU"
 
 # ============================================================
-# TẢI DỮ LIỆU ĐỘNG TỪ FILE JSON (CẬP NHẬT ĐÚNG TÊN TRƯỜNG)
+# TẢI DỮ LIỆU ĐỘNG TỪ FILE JSON
 # ============================================================
 def load_vn100_data():
     symbols = []
     sector_mapping = {}
-    vn100_metadata = {} # Lưu trữ thông tin chi tiết: company_name, market_cap, total_shares
+    vn100_metadata = {}
     
     if os.path.exists(VN100_INFO_FILE):
         try:
@@ -71,7 +71,6 @@ def load_vn100_data():
                             sector_mapping[vn_sector] = []
                         sector_mapping[vn_sector].append(sym)
                         
-                        # Sử dụng đúng tên trường theo yêu cầu của bạn
                         company_name = item.get("company_name") or item.get("name") or item.get("organName") or ""
                         market_cap = float(item.get("market_cap") or item.get("capitalization") or item.get("marketCap") or 0.0)
                         total_shares = int(item.get("total_shares") or item.get("shares") or item.get("outstanding_shares") or 0)
@@ -98,10 +97,8 @@ def load_vn100_data():
 
     return [], {}, {}
 
-# Tải dữ liệu động khi khởi động
 VN100_SYMBOLS, DYNAMIC_SECTOR_MAPPING, VN100_METADATA = load_vn100_data()
 
-# Bảng phân ngành dự phòng (Chỉ dùng nếu file JSON không có thông tin ngành)
 FALLBACK_SECTOR_MAPPING = {
     "NGAN_HANG": ["ACB","BID","CTG","TCB","MBB","STB","VPB","HDB","VIB","TPB","SHB","SSB","LPB","MSB","OCB","EIB","VCB"],
     "CHUNG_KHOAN": ["SSI","VCI","HCM","VIX","MBS","FTS","BSI","CTS","ORS"],
@@ -112,12 +109,8 @@ FALLBACK_SECTOR_MAPPING = {
     "SAN_XUAT_TIEU_DUNG_PHONG_THU": ["VNM","MSN","SAB","VHC","ANV","BVH","PLX","PVD","PVS","BSR","GMD","HAH","PVT","HVN","APH","ASM","DBC","KDC","MSH","PAN","SBT","DRC","CSM","BMP","DHG","CTD","VCG","HHV","GEX"],
 }
 
-# Gộp bảng động và bảng tĩnh (Ưu tiên bảng động)
 SECTOR_MAPPING = {**FALLBACK_SECTOR_MAPPING, **DYNAMIC_SECTOR_MAPPING}
 
-# ============================================================
-# PHÂN NHÓM CON (SUB-SECTOR)
-# ============================================================
 SUB_SECTOR_MAPPING = {
     "INSURANCE": ["BVH"],
     "PETROLEUM": ["PLX", "PVD", "PVS", "BSR"],
@@ -169,9 +162,8 @@ def load_bctc_supplement(symbol):
             pass
     return {}
 
-
 # ============================================================
-# BƯỚC 1: CHUẨN HÓA DỮ LIỆU
+# BƯỚC 1: CHUẨN HÓA DỮ LIỆU (Đã thêm tính biến động)
 # ============================================================
 def normalize_stock_data(symbol, data):
     close_price = float(data.get("close", data.get("close_price", 0)) or 0)
@@ -209,6 +201,36 @@ def normalize_stock_data(symbol, data):
         profit_growth_yoy = float(latest.get("profit_growth_yoy", 0) or 0)
         credit_growth_yoy = float(latest.get("credit_growth_yoy", 0) or 0)
 
+    # ============ TÍNH BIẾN ĐỘNG ============
+    prev_close = 0.0
+    avg_volume_20 = 0.0
+    history_path = f"history/{symbol.upper()}.json"
+    
+    if os.path.exists(history_path):
+        try:
+            with open(history_path, "r", encoding="utf-8") as f:
+                hist_data = json.load(f)
+                d1_bars = hist_data.get("history_d1", [])
+                
+                if len(d1_bars) >= 2:
+                    prev_close = float(d1_bars[-2].get("close", 0) or 0)
+                    
+                recent_volumes = [b.get("volume", 0) for b in d1_bars[-20:]]
+                if recent_volumes:
+                    avg_volume_20 = sum(recent_volumes) / len(recent_volumes)
+        except Exception:
+            pass
+
+    price_change_percent = ((close_price - prev_close) / prev_close * 100) if prev_close > 0 else 0.0
+    
+    open_p = float(data.get("open", 0) or 0)
+    high_p = float(data.get("high", 0) or 0)
+    low_p = float(data.get("low", 0) or 0)
+    amplitude_percent = ((high_p - low_p) / open_p * 100) if open_p > 0 else 0.0
+    
+    current_volume = float(data.get("volume", 0) or 0)
+    volume_percent = (current_volume / avg_volume_20 * 100) if avg_volume_20 > 0 else 0.0
+
     return {
         "close_price": close_price,
         "pe": pe, "pb": pb, "ps": ps,
@@ -221,8 +243,10 @@ def normalize_stock_data(symbol, data):
         "gross_margin": gross_margin,
         "profit_growth_yoy": profit_growth_yoy,
         "credit_growth_yoy": credit_growth_yoy,
+        "price_change_percent": round(price_change_percent, 2),
+        "amplitude_percent": round(amplitude_percent, 2),
+        "volume_percent": round(volume_percent, 2),
     }
-
 
 # ============================================================
 # BƯỚC 2: MEDIAN NGÀNH
@@ -262,7 +286,6 @@ def get_median_for_symbol(symbol, sector_medians):
     if sector in sector_medians:
         return sector_medians[sector], sector
     return {"pe": 12.0, "pb": 2.0, "ps": 1.5, "roe": 12.0, "n": 0}, sector
-
 
 # ============================================================
 # BƯỚC 3: TÍNH VÙNG MUA
@@ -365,9 +388,8 @@ def compute_fair_value_zone(symbol, nd, sector_median, config, group_label):
         "verdict": verdict,
     }
 
-
 # ============================================================
-# 🎯 BƯỚC 3.5: QUYẾT ĐỊNH CUỐI CÙNG — CẦN ĐỦ 4 YẾU TỐ
+# BƯỚC 3.5: QUYẾT ĐỊNH CUỐI CÙNG
 # ============================================================
 def compute_final_decision(fund_score, tech_score, val_score, total_score,
                            verdict, cfo, npat, roe, debt_to_equity,
@@ -410,7 +432,6 @@ def compute_final_decision(fund_score, tech_score, val_score, total_score,
 
     return ("👀 THEO DÕI", "slate", f"Chưa đủ điều kiện: {', '.join(missing) if missing else 'cần thêm thời gian'}.")
 
-
 # ============================================================
 # BƯỚC 4: ĐÁNH GIÁ TỪNG MÃ
 # ============================================================
@@ -428,7 +449,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
     profit_growth_yoy = nd["profit_growth_yoy"]
     credit_growth_yoy = nd["credit_growth_yoy"]
 
-    # ============ 1. ĐIỂM CƠ BẢN (50đ) ============
     fundamental_score = 0
     fund_notes = []
 
@@ -520,7 +540,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
 
     fundamental_score = int(np.clip(fundamental_score, 0, 50))
 
-    # ============ 2. ĐIỂM ĐỊNH GIÁ (30đ) ============
     valuation_score = 0
     if sector == "BAT_DONG_SAN":
         if (0 < pb < 1.5) or (0 < ps < 2.0): valuation_score = 30
@@ -544,7 +563,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         else: valuation_score = 8
     valuation_score = int(np.clip(valuation_score, 0, 30))
 
-    # ============ 3. ĐIỂM KỸ THUẬT (20đ) ============
     technical_score_raw = 50
     technical_status = "Tích lũy sideway"
     pattern = "Tích lũy"
@@ -573,7 +591,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
     elif total_score >= 60:
         potential_zone = "VÙNG MUA AN TOÀN (B)"
 
-    # ============ 🎯 TÍNH VÙNG MUA & QUYẾT ĐỊNH CUỐI CÙNG ============
     fv = compute_fair_value_zone(symbol, nd, sector_median, config, group_label)
 
     final_decision, final_color, final_reason = compute_final_decision(
@@ -614,6 +631,11 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "volume_analysis": volume_analysis,
         "fundamental_notes": " | ".join(fund_notes),
 
+        # BIẾN ĐỘNG
+        "price_change_percent": nd.get("price_change_percent", 0.0),
+        "amplitude_percent": nd.get("amplitude_percent", 0.0),
+        "volume_percent": nd.get("volume_percent", 0.0),
+
         "fair_value_high": fv["fair_high"],
         "fair_value_low": fv["fair_low"],
         "graham_number": fv["graham"],
@@ -628,9 +650,8 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "final_decision_reason": final_reason,
     }
 
-
 # ============================================================
-# BƯỚC 5: GHI CÁC TRƯỜNG MỚI VÀO data.json (CẬP NHẬT ĐÚNG TÊN TRƯỜNG)
+# BƯỚC 5: GHI CÁC TRƯỜNG MỚI VÀO data.json
 # ============================================================
 def update_data_json_with_valuation(normalized_db, sector_medians):
     with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -654,7 +675,6 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
         median, _ = get_median_for_symbol(symbol, sector_medians)
         fv = compute_fair_value_zone(symbol, nd, median, config, group_label)
 
-        # Cập nhật thông tin ngành và định giá
         raw["sector"] = sector
         raw["sub_sector"] = group_label
         raw["bvps"] = round(nd["bvps"], 0)
@@ -668,7 +688,6 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
         raw["valuation_verdict"] = fv["verdict"]
         raw["valuation_calculated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # CẬP NHẬT ĐÚNG TÊN TRƯỜNG THEO YÊU CẦU: company_name, market_cap, total_shares
         if symbol in VN100_METADATA:
             meta = VN100_METADATA[symbol]
             if meta.get("company_name"):
@@ -706,7 +725,6 @@ def update_data_json_with_valuation(normalized_db, sector_medians):
 
     return updated
 
-
 # ============================================================
 # MAIN
 # ============================================================
@@ -737,7 +755,6 @@ def main():
         median, _ = get_median_for_symbol(symbol, sector_medians)
         res = evaluate_stock(symbol, nd, median, group_label, config)
         if res:
-            # Bổ sung thêm thông tin vào file kết quả screener_results (nếu cần)
             if symbol in VN100_METADATA:
                 res["company_name"] = VN100_METADATA[symbol].get("company_name", "")
                 res["market_cap"] = VN100_METADATA[symbol].get("market_cap", 0.0)
