@@ -15378,5 +15378,28 @@
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
+    },
+    "NDN": {
+        "symbol": "NDN",
+        "company_name": "NDN",
+        "market_cap": 0.0,
+        "total_shares": 0,
+        "close": 7700,
+        "volume": 66400,
+        "pe": 13.14,
+        "pb": 0.46,
+        "ps": 0,
+        "eps": 586,
+        "roe": 3.4,
+        "roa": 3.2,
+        "dividend_yield": 0.0,
+        "cfo_latest": 0,
+        "debt_to_equity": 0,
+        "gross_margin": 0,
+        "net_profit_ttm": 0,
+        "recommendation": "ĐANG GOM HÀNG",
+        "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
+        "updated_at": "08/11/2026 17:19:46",
+        "bctc_history": []
     }
 }
