@@ -3,24 +3,41 @@ import json
 import requests
 from datetime import datetime
 
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
 
 def send_telegram(message: str):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        print("Thiếu cấu hình Telegram!")
+        print("❌ LỖI: Thiếu cấu hình TELEGRAM_BOT_TOKEN hoặc TELEGRAM_CHAT_ID!")
         return
+        
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "HTML", "disable_web_page_preview": True}
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID, 
+        "text": message, 
+        "parse_mode": "HTML", 
+        "disable_web_page_preview": True
+    }
+    
     try:
-        requests.post(url, json=payload, timeout=10)
-        print("✅ Đã gửi báo cáo sáng Telegram!")
+        res = requests.post(url, json=payload, timeout=10)
+        
+        # --- IN LOG ĐỂ DEBUG ---
+        print(f"📡 Telegram HTTP Status: {res.status_code}")
+        print(f"📡 Telegram Response: {res.text}")
+        
+        if res.status_code == 200 and res.json().get("ok"):
+            print("✅ Telegram xác nhận ĐÃ GỬI thành công!")
+        else:
+            print("❌ Telegram TỪ CHỐI gửi tin nhắn. Hãy xem Response ở trên.")
+            
     except Exception as e:
-        print(f"Lỗi gửi Telegram: {e}")
+        print(f"❌ Lỗi kết nối mạng khi gửi Telegram: {e}")
 
 def generate_morning_report():
+    print("🔄 Đang tạo báo cáo sáng...")
     if not os.path.exists("screener_results.json"):
-        send_telegram("⚠️ Không tìm thấy file screener_results.json!")
+        send_telegram("⚠️ Không tìm thấy file screener_results.json để làm báo cáo!")
         return
 
     with open("screener_results.json", "r", encoding="utf-8") as f:
