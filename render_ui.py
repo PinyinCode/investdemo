@@ -1093,6 +1093,7 @@ def generate_html():
                         high: liveData.high !== undefined ? liveData.high : null,
                         low: liveData.low !== undefined ? liveData.low : null,
                         volume: liveData.volume !== undefined ? liveData.volume : null,
+                        trading_date: liveData.trading_date !== undefined ? liveData.trading_date : null, // <-- CỰC KỲ QUAN TRỌNG: LẤY NGÀY GIAO DỊCH THỰC TẾ
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -2321,7 +2322,9 @@ def generate_html():
             volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
                 priceFormat: { type: 'volume' }, priceScaleId: 'volumeScale'
             }, 0);
-            chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.75, bottom: 0 } });
+            
+            // SỬA LỖI LẬT TRỤC TUNG: Chỉnh lại scaleMargins cho Volume
+            chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.8, bottom: 0.05 } });
 
             let chartData = [];
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
@@ -2409,7 +2412,6 @@ def generate_html():
                     legendClose.innerText = formatNumber(bar.close);
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
-                    // Kiểm tra thêm điều kiện giá cũ > 0 để tránh chia cho 0
                     if (index > 0 && dataArr[index - 1].close > 0) {
                         changePct = ((bar.close - dataArr[index - 1].close) / dataArr[index - 1].close) * 100;
                     }
