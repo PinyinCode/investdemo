@@ -657,13 +657,10 @@ def generate_html():
                 <button type="button" class="text-slate-500 hover:text-white transition" title="Thu nhỏ / Mở rộng"><i class="fa-solid fa-chevron-down text-[10px]" id="log-chevron"></i></button>
             </div>
         </div>
-        <!-- THANH TIẾN TRÌNH MỚI -->
         <div class="w-full bg-slate-800 h-1">
             <div id="log-progress-bar" class="bg-emerald-500 h-1 transition-all duration-300" style="width: 0%;"></div>
         </div>
-        <div id="log-content" class="p-2 overflow-y-auto text-[11px] font-mono leading-relaxed space-y-1 h-48 text-slate-300">
-            <!-- Log sẽ chèn vào đây -->
-        </div>
+        <div id="log-content" class="p-2 overflow-y-auto text-[11px] font-mono leading-relaxed space-y-1 h-48 text-slate-300"></div>
     </div>
 
     <!-- SCRIPT -->
@@ -1093,7 +1090,7 @@ def generate_html():
                         high: liveData.high !== undefined ? liveData.high : null,
                         low: liveData.low !== undefined ? liveData.low : null,
                         volume: liveData.volume !== undefined ? liveData.volume : null,
-                        trading_date: liveData.trading_date !== undefined ? liveData.trading_date : null, // <-- CỰC KỲ QUAN TRỌNG: LẤY NGÀY GIAO DỊCH THỰC TẾ
+                        trading_date: liveData.trading_date !== undefined ? liveData.trading_date : null,
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -1287,7 +1284,8 @@ def generate_html():
                         
                         if (res.ok) {
                             const data = await res.json();
-                            lastUpdateTime = data.updated_at;
+                            // LÀM SẠCH CHUỖI THỜI GIAN
+                            lastUpdateTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
                             
                             chunk.forEach(sym => {
                                 if (data.updated_data && data.updated_data[sym] !== undefined) {
@@ -1295,7 +1293,7 @@ def generate_html():
                                     const item = screenerResults.find(s => s.symbol === sym);
                                     if (item) {
                                         item.close_price = price;
-                                        item.updated_at = data.updated_at; 
+                                        item.updated_at = lastUpdateTime; 
                                     }
                                     addLog(`${sym}: ${formatNumber(price)} đ`, 'success');
                                     updatedCount++;
@@ -1380,7 +1378,8 @@ def generate_html():
                     const data = await res.json();
                     if (data.updated_data && data.updated_data[symbol] !== undefined) {
                         const newPrice = data.updated_data[symbol];
-                        const newTime = data.updated_at;
+                        // LÀM SẠCH CHUỖI THỜI GIAN
+                        const newTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
                         
                         const item = screenerResults.find(s => s.symbol === symbol);
                         if (item) { item.close_price = newPrice; item.updated_at = newTime; }
@@ -2178,7 +2177,9 @@ def generate_html():
             
             const item = screenerResults.find(s => s.symbol === symbol);
             if (item && item.updated_at) {
-                document.getElementById('chart-last-update').innerText = item.updated_at;
+                // Cắt bỏ phần ngoặc đơn (nếu có)
+                const cleanTime = item.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
+                document.getElementById('chart-last-update').innerText = cleanTime;
             } else {
                 document.getElementById('chart-last-update').innerText = "Chưa rõ";
             }
@@ -2187,37 +2188,33 @@ def generate_html():
             document.getElementById('chart-loading').classList.remove('hidden');
             
             try {
-                // 1. Tải dữ liệu lịch sử từ file JSON
+                // 1. Tải dữ liệu lịch sử
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
                 if (!currentSymbolHistory.history_d1) currentSymbolHistory.history_d1 = [];
 
-                // 2. Lọc bỏ các nến rác (Giá <= 0)
+                // 2. Làm sạch dữ liệu: Lọc bỏ các nến rác (Giá <= 0)
                 currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter(bar => {
                     return bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0;
                 });
 
-                // 3. Xử lý nến mới nhất (Từ MongoDB)
+                // 3. Cập nhật giá mới nhất vào nến cuối cùng
                 const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
                 const tradingDate = item && item.trading_date ? item.trading_date : null;
 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
-                    // Kiểm tra xem ngày giao dịch này đã có trong file history chưa
                     const existingBar = tradingDate ? currentSymbolHistory.history_d1.find(b => b.time === tradingDate) : null;
 
                     if (!existingBar) {
-                        // TRƯỜNG HỢP 1: CHƯA CÓ TRONG HISTORY (Đang trong phiên hôm nay)
-                        // -> Lấy dữ liệu realtime từ MongoDB để vẽ nến mới
+                        // CHƯA CÓ TRONG HISTORY (Đang trong phiên hôm nay)
                         const hasValidOHLC = item.open > 0 && item.high > 0 && item.low > 0;
-                        
                         if (hasValidOHLC) {
                             let liveVolume = item.volume;
                             if (!liveVolume || liveVolume < 1000) {
                                 liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
                             }
-
                             currentSymbolHistory.history_d1.push({
                                 time: tradingDate || new Date().toISOString().split('T')[0],
                                 open: item.open,
@@ -2228,11 +2225,10 @@ def generate_html():
                             });
                         }
                     } 
-                    // TRƯỜNG HỢP 2: ĐÃ CÓ TRONG HISTORY (Đã chốt sổ)
-                    // -> BỎ QUA, KHÔNG LÀM GÌ CẢ. Giữ nguyên dữ liệu chuẩn trong file history.
+                    // ĐÃ CÓ TRONG HISTORY -> BỎ QUA, GIỮ NGUYÊN DỮ LIỆU CHUẨN
                 }
 
-                // 4. Sắp xếp lại mảng theo thời gian
+                // 4. Sắp xếp lại mảng
                 currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
 
                 // 5. Vẽ biểu đồ
@@ -2245,6 +2241,7 @@ def generate_html():
                 document.getElementById('chart-loading').classList.add('hidden');
             }
         }
+
         function calculateMA(data, period) {
             let result = [];
             for (let i = 0; i < data.length; i++) {
@@ -2312,7 +2309,7 @@ def generate_html():
                 priceFormat: { type: 'volume' }, priceScaleId: 'volumeScale'
             }, 0);
             
-            // SỬA LỖI LẬT TRỤC TUNG: Chỉnh lại scaleMargins cho Volume
+            // BẢO VỆ TRỤC TUNG: Không cho Volume tràn xuống phần giá âm
             chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.8, bottom: 0.05 } });
 
             let chartData = [];
