@@ -708,8 +708,11 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "fundamental_notes": " | ".join(fund_notes),
 
         "price_change_percent": nd.get("price_change_percent", 0.0),
+        "price_change_available": nd.get("price_change_available", False),
         "amplitude_percent": nd.get("amplitude_percent", 0.0),
+        "amplitude_available": nd.get("amplitude_available", False),
         "volume_percent": nd.get("volume_percent", 0.0),
+        "volume_available": nd.get("volume_available", False),
 
         "fair_value_high": fv["fair_high"],
         "fair_value_low": fv["fair_low"],
