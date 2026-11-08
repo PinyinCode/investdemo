@@ -3,16 +3,16 @@ name: 2. Run Quant Screener
 on:
   push:
     paths:
-      - 'last_update.json'             # Kích hoạt khi cào dữ liệu thủ công
-      - 'history/**'                   # Kích hoạt khi Server chốt sổ nến
-      - 'symbol_sim_rates.json'        # Kích hoạt khi simulator.py tính xong tỷ suất
-      - 'quarterly_mean_details.json'  # Kích hoạt khi simulator.py tính xong chi tiết quý
-  workflow_dispatch:                   # Chạy thủ công
+      - 'last_update.json'             
+      - 'history/**'                   
+      - 'symbol_sim_rates.json'        
+      - 'quarterly_mean_details.json'  
+  workflow_dispatch:                   
 
 permissions:
   contents: write
 
-# CHỐNG XUNG ĐỘT: Xếp hàng chờ, không chạy song song với workflow khác
+# Xếp hàng chờ, không chạy song song
 concurrency:
   group: "main-branch-queue"
   cancel-in-progress: false
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1 # Chỉ cần commit mới nhất
+          fetch-depth: 1
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -46,12 +46,11 @@ jobs:
           
           git add screener_results.json screener_summary.csv data.json
           
-          # Kiểm tra xem có thay đổi hay không, nếu không thì bỏ qua
+          # Nếu không có thay đổi thì bỏ qua
           git diff --quiet && git diff --staged --quiet && echo "No changes to commit" && exit 0
           
           git commit -m "📊 [Screener] Cập nhật kết quả định lượng mới [$(date +'%Y-%m-%d')]"
           
-          # Kéo các thay đổi mới nhất từ remote về (rebase) để tránh lỗi xung đột/từ chối đẩy
           git pull --rebase origin main || echo "No rebase needed or handled"
           
           git push origin main
