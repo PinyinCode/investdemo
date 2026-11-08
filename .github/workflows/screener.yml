@@ -1,4 +1,4 @@
-name: Render UI & Calculate Rates Automatically
+name: 2. Render UI & Calculate Rates Automatically
 
 on:
   workflow_dispatch:
