@@ -2187,29 +2187,55 @@ def generate_html():
             document.getElementById('chart-loading').classList.remove('hidden');
             
             try {
-                // 1. Chỉ tải file history (đã có sẵn dữ liệu chuẩn)
+                // 1. Tải dữ liệu lịch sử từ file JSON
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
                 if (!currentSymbolHistory.history_d1) currentSymbolHistory.history_d1 = [];
 
-                // 2. Cập nhật giá close mới nhất vào nến cuối cùng (nếu có)
+                // 2. Lọc bỏ các nến rác (Giá <= 0)
+                currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter(bar => {
+                    return bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0;
+                });
+
+                // 3. Xử lý nến mới nhất (Từ MongoDB)
                 const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
-                
+                const tradingDate = item && item.trading_date ? item.trading_date : null;
+
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
-                    const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
-                    // Chỉ cập nhật giá đóng cửa mới nhất
-                    // Không thêm nến mới, không đụng đến Volume hay Open/High/Low
-                    lastBar.close = currentPrice;
-                    if (currentPrice > lastBar.high) lastBar.high = currentPrice;
-                    if (currentPrice < lastBar.low) lastBar.low = currentPrice;
+                    // Kiểm tra xem ngày giao dịch này đã có trong file history chưa
+                    const existingBar = tradingDate ? currentSymbolHistory.history_d1.find(b => b.time === tradingDate) : null;
+
+                    if (!existingBar) {
+                        // TRƯỜNG HỢP 1: CHƯA CÓ TRONG HISTORY (Đang trong phiên hôm nay)
+                        // -> Lấy dữ liệu realtime từ MongoDB để vẽ nến mới
+                        const hasValidOHLC = item.open > 0 && item.high > 0 && item.low > 0;
+                        
+                        if (hasValidOHLC) {
+                            let liveVolume = item.volume;
+                            if (!liveVolume || liveVolume < 1000) {
+                                liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
+                            }
+
+                            currentSymbolHistory.history_d1.push({
+                                time: tradingDate || new Date().toISOString().split('T')[0],
+                                open: item.open,
+                                high: item.high,
+                                low: item.low,
+                                close: currentPrice,
+                                volume: liveVolume
+                            });
+                        }
+                    } 
+                    // TRƯỜNG HỢP 2: ĐÃ CÓ TRONG HISTORY (Đã chốt sổ)
+                    // -> BỎ QUA, KHÔNG LÀM GÌ CẢ. Giữ nguyên dữ liệu chuẩn trong file history.
                 }
 
-                // 3. Sắp xếp lại mảng (để chắc chắn)
+                // 4. Sắp xếp lại mảng theo thời gian
                 currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
 
-                // 4. Vẽ biểu đồ
+                // 5. Vẽ biểu đồ
                 renderChartInstance(currentSymbolHistory);
                 
             } catch (err) {
