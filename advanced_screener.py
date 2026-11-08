@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import json
 import os
 import shutil
@@ -23,23 +23,22 @@ AI_FIELDS = {
 }
 
 # ============================================================
-# HÀM TỰ ĐỘNG DỊCH NGÀNH TỪ VCI (TIẾNG ANH) SANG WEB (TIẾNG VIỆT)
+# HÀM LẤY GIỜ VIỆT NAM (UTC+7)
+# ============================================================
+def get_vn_now():
+    return datetime.now(timezone.utc) + timedelta(hours=7)
+
+# ============================================================
+# HÀM TỰ ĐỘNG DỊCH NGÀNH
 # ============================================================
 def translate_sector(sector_name):
     mapping = {
-        "BANKS": "NGAN_HANG",
-        "FINANCIALS": "CHUNG_KHOAN",
-        "SECURITIES": "CHUNG_KHOAN",
-        "REAL ESTATE": "BAT_DONG_SAN",
-        "REAL_ESTATE": "BAT_DONG_SAN",
-        "TECHNOLOGY": "CONG_NGHE_BAN_LE",
-        "RETAIL": "CONG_NGHE_BAN_LE",
-        "UTILITIES": "DIEN_NUOC_HA_TANG",
-        "ENERGY": "DIEN_NUOC_HA_TANG",
-        "MATERIALS": "NGUYEN_VAT_LIEU_CHU_KY",
-        "INDUSTRIALS": "NGUYEN_VAT_LIEU_CHU_KY",
-        "CONSUMER STAPLES": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "CONSUMER DISCRETIONARY": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
+        "BANKS": "NGAN_HANG", "FINANCIALS": "CHUNG_KHOAN", "SECURITIES": "CHUNG_KHOAN",
+        "REAL ESTATE": "BAT_DONG_SAN", "REAL_ESTATE": "BAT_DONG_SAN",
+        "TECHNOLOGY": "CONG_NGHE_BAN_LE", "RETAIL": "CONG_NGHE_BAN_LE",
+        "UTILITIES": "DIEN_NUOC_HA_TANG", "ENERGY": "DIEN_NUOC_HA_TANG",
+        "MATERIALS": "NGUYEN_VAT_LIEU_CHU_KY", "INDUSTRIALS": "NGUYEN_VAT_LIEU_CHU_KY",
+        "CONSUMER STAPLES": "SAN_XUAT_TIEU_DUNG_PHONG_THU", "CONSUMER DISCRETIONARY": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "HEALTHCARE": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     }
     upper_name = str(sector_name).upper()
@@ -128,7 +127,6 @@ SUB_SECTOR_CONFIG = {
     "DIEN_NUOC_HA_TANG":            {"cap_pe": 15, "cap_pb": 2.0, "mos": 0.15, "primary_metric": "PE"},
     "NGUYEN_VAT_LIEU_CHU_KY":       {"cap_pe": 12, "cap_pb": 2.0, "mos": 0.30, "primary_metric": "PB"},
     "SAN_XUAT_TIEU_DUNG_PHONG_THU": {"cap_pe": 18, "cap_pb": 2.5, "mos": 0.25, "primary_metric": "PE"},
-
     "INSURANCE":    {"cap_pe": 16, "cap_pb": 2.0, "mos": 0.25, "primary_metric": "PB"},
     "PETROLEUM":    {"cap_pe": 12, "cap_pb": 1.5, "mos": 0.30, "primary_metric": "PE"},
     "MARITIME":     {"cap_pe": 10, "cap_pb": 1.5, "mos": 0.30, "primary_metric": "PB"},
@@ -163,7 +161,7 @@ def load_bctc_supplement(symbol):
     return {}
 
 # ============================================================
-# BƯỚC 1: CHUẨN HÓA DỮ LIỆU (Đã thêm tính biến động)
+# BƯỚC 1: CHUẨN HÓA DỮ LIỆU (PHÂN BIỆT 3 KỊCH BẢN)
 # ============================================================
 def normalize_stock_data(symbol, data):
     close_price = float(data.get("close", data.get("close_price", 0)) or 0)
@@ -201,35 +199,76 @@ def normalize_stock_data(symbol, data):
         profit_growth_yoy = float(latest.get("profit_growth_yoy", 0) or 0)
         credit_growth_yoy = float(latest.get("credit_growth_yoy", 0) or 0)
 
-    # ============ TÍNH BIẾN ĐỘNG ============
+    # ============ TÍNH BIẾN ĐỘNG (XỬ LÝ ĐÚNG 3 KỊCH BẢN) ============
     prev_close = 0.0
     avg_volume_20 = 0.0
     history_path = f"history/{symbol.upper()}.json"
     
+    now_vn = get_vn_now()
+    today_str = now_vn.strftime("%Y-%m-%d")
+    current_hour = now_vn.hour
+    is_weekday = now_vn.weekday() < 5
+    is_trading_hours = is_weekday and (9 <= current_hour < 15)
+
     if os.path.exists(history_path):
         try:
             with open(history_path, "r", encoding="utf-8") as f:
                 hist_data = json.load(f)
                 d1_bars = hist_data.get("history_d1", [])
-                
-                if len(d1_bars) >= 2:
-                    prev_close = float(d1_bars[-2].get("close", 0) or 0)
-                    
-                recent_volumes = [b.get("volume", 0) for b in d1_bars[-20:]]
-                if recent_volumes:
-                    avg_volume_20 = sum(recent_volumes) / len(recent_volumes)
-        except Exception:
-            pass
 
-    price_change_percent = ((close_price - prev_close) / prev_close * 100) if prev_close > 0 else 0.0
-    
+                if len(d1_bars) >= 2:
+                    last_bar = d1_bars[-1]
+                    last_date = last_bar.get("time", "")
+                    is_nen_cuoi_la_hom_nay = (last_date == today_str)
+
+                    # PHÂN LOẠI 3 KỊCH BẢN
+                    if is_trading_hours and not is_nen_cuoi_la_hom_nay:
+                        # KỊCH BẢN 1: TRONG PHIÊN (T2-T6, 9h-15h)
+                        # close_price lấy từ MongoDB, prev_close là nến cuối history
+                        prev_close = float(last_bar.get("close", 0) or 0)
+                        print(f"[REALTIME] {symbol}: So sánh MongoDB ({close_price:,.0f}) vs History ({prev_close:,.0f})")
+                    else:
+                        # KỊCH BẢN 2 & 3: NGOÀI PHIÊN hoặc NGÀY NGHỈ
+                        # prev_close = history[-2]
+                        prev_close = float(d1_bars[-2].get("close", 0) or 0)
+
+                    recent_volumes = [b.get("volume", 0) for b in d1_bars[-20:]]
+                    if recent_volumes:
+                        avg_volume_20 = sum(recent_volumes) / len(recent_volumes)
+        except Exception as e:
+            print(f"⚠️ Lỗi đọc history {symbol}: {e}")
+
+    # BẢO VỆ 1: Nếu prev_close < 100đ (lỗi đơn vị) -> coi như = 0
+    if prev_close < 100:
+        prev_close = 0
+
+    # BẢO VỆ 2: Nếu close_price < 100đ (lỗi đơn vị) -> coi như = 0
+    safe_close = close_price if close_price >= 100 else 0
+
+    # Tính % thay đổi, chặn biên độ ±30%
+    price_change_percent = 0.0
+    if prev_close > 0 and safe_close > 0:
+        raw_pct = (safe_close - prev_close) / prev_close * 100
+        if -30.0 <= raw_pct <= 30.0:
+            price_change_percent = round(raw_pct, 2)
+
+    # Biên độ phiên
     open_p = float(data.get("open", 0) or 0)
     high_p = float(data.get("high", 0) or 0)
     low_p = float(data.get("low", 0) or 0)
-    amplitude_percent = ((high_p - low_p) / open_p * 100) if open_p > 0 else 0.0
-    
+    amplitude_percent = 0.0
+    if open_p >= 100:
+        raw_amp = (high_p - low_p) / open_p * 100
+        if 0 <= raw_amp <= 30.0:
+            amplitude_percent = round(raw_amp, 2)
+
+    # Volume đột biến (chặn trên 1000%)
     current_volume = float(data.get("volume", 0) or 0)
-    volume_percent = (current_volume / avg_volume_20 * 100) if avg_volume_20 > 0 else 0.0
+    volume_percent = 0.0
+    if avg_volume_20 > 0:
+        raw_vol = current_volume / avg_volume_20 * 100
+        if 0 <= raw_vol <= 1000.0:
+            volume_percent = round(raw_vol, 2)
 
     return {
         "close_price": close_price,
@@ -243,9 +282,9 @@ def normalize_stock_data(symbol, data):
         "gross_margin": gross_margin,
         "profit_growth_yoy": profit_growth_yoy,
         "credit_growth_yoy": credit_growth_yoy,
-        "price_change_percent": round(price_change_percent, 2),
-        "amplitude_percent": round(amplitude_percent, 2),
-        "volume_percent": round(volume_percent, 2),
+        "price_change_percent": price_change_percent,
+        "amplitude_percent": amplitude_percent,
+        "volume_percent": volume_percent,
     }
 
 # ============================================================
@@ -631,7 +670,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "volume_analysis": volume_analysis,
         "fundamental_notes": " | ".join(fund_notes),
 
-        # BIẾN ĐỘNG
         "price_change_percent": nd.get("price_change_percent", 0.0),
         "amplitude_percent": nd.get("amplitude_percent", 0.0),
         "volume_percent": nd.get("volume_percent", 0.0),
