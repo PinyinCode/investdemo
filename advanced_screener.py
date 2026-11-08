@@ -161,7 +161,8 @@ def load_bctc_supplement(symbol):
     return {}
 
 # ============================================================
-# BƯỚC 1: CHUẨN HÓA DỮ LIỆU (PHÂN BIỆT 3 KỊCH BẢN)
+# BƯỚC 1: CHUẨN HÓA DỮ LIỆU
+# (Đã lược bỏ phần tính % giá, biên độ, volume vì Server API đã làm)
 # ============================================================
 def normalize_stock_data(symbol, data):
     close_price = float(data.get("close", data.get("close_price", 0)) or 0)
@@ -199,120 +200,6 @@ def normalize_stock_data(symbol, data):
         profit_growth_yoy = float(latest.get("profit_growth_yoy", 0) or 0)
         credit_growth_yoy = float(latest.get("credit_growth_yoy", 0) or 0)
 
-    # ============ TÍNH BIẾN ĐỘNG (XỬ LÝ ĐÚNG 3 KỊCH BẢN + NGÀY NGHỈ) ============
-    prev_close = 0.0
-    avg_volume_20 = 0.0
-    history_path = f"history/{symbol.upper()}.json"
-
-    now_vn = get_vn_now()
-    today_str = now_vn.strftime("%Y-%m-%d")
-    current_hour = now_vn.hour
-    is_weekday = now_vn.weekday() < 5
-    is_trading_hours = is_weekday and (9 <= current_hour < 15)
-
-    # Các giá trị OHLCV "chuẩn" để tính % (tách khỏi close_price hiển thị)
-    calc_close = 0.0
-    calc_prev_close = 0.0
-    calc_open = 0.0
-    calc_high = 0.0
-    calc_low = 0.0
-    calc_volume = 0.0
-
-    if os.path.exists(history_path):
-        try:
-            with open(history_path, "r", encoding="utf-8") as f:
-                hist_data = json.load(f)
-                d1_bars = hist_data.get("history_d1", [])
-
-                if len(d1_bars) >= 2:
-                    last_bar = d1_bars[-1]
-                    prev_bar = d1_bars[-2]
-                    last_date = last_bar.get("time", "")
-                    is_nen_cuoi_la_hom_nay = (last_date == today_str)
-
-                    hist_last_close = float(last_bar.get("close", 0) or 0)
-                    hist_prev_close = float(prev_bar.get("close", 0) or 0)
-                    hist_last_open = float(last_bar.get("open", 0) or 0)
-                    hist_last_high = float(last_bar.get("high", 0) or 0)
-                    hist_last_low = float(last_bar.get("low", 0) or 0)
-                    hist_last_volume = float(last_bar.get("volume", 0) or 0)
-
-                    # Bảo vệ đơn vị: giá < 100đ coi như lỗi
-                    # Tự động chuẩn hóa đơn vị: Nếu giá < 100 (nghìn đồng) -> Nhân 1000
-                    if 0 < hist_last_close < 100: hist_last_close *= 1000
-                    if 0 < hist_prev_close < 100: hist_prev_close *= 1000
-                    if 0 < hist_last_open < 100: hist_last_open *= 1000
-                    if 0 < hist_last_high < 100: hist_last_high *= 1000
-                    if 0 < hist_last_low < 100: hist_last_low *= 1000
-                    
-                    # Nếu sau khi nhân vẫn < 100 (tức là giá 0) thì gán = 0
-                    if hist_last_close < 100: hist_last_close = 0
-                    if hist_prev_close < 100: hist_prev_close = 0
-
-                    safe_close_live = close_price if close_price >= 100 else 0
-
-                    # ============ CHỌN NGUỒN GIÁ THEO KỊCH BẢN ============
-                    if is_trading_hours and not is_nen_cuoi_la_hom_nay:
-                        # KỊCH BẢN 1: TRONG PHIÊN — dùng giá live vs nến cuối history
-                        calc_close = safe_close_live if safe_close_live > 0 else hist_last_close
-                        calc_prev_close = hist_last_close
-                        calc_open = float(data.get("open", 0) or 0) or hist_last_open
-                        calc_high = float(data.get("high", 0) or 0) or hist_last_high
-                        calc_low = float(data.get("low", 0) or 0) or hist_last_low
-                        calc_volume = float(data.get("volume", 0) or 0) or hist_last_volume
-
-                    elif is_nen_cuoi_la_hom_nay:
-                        # KỊCH BẢN 2: HÔM NAY ĐÃ CÓ NẾN TRONG HISTORY (sau chốt sổ)
-                        calc_close = hist_last_close
-                        calc_prev_close = hist_prev_close
-                        calc_open = hist_last_open
-                        calc_high = hist_last_high
-                        calc_low = hist_last_low
-                        calc_volume = hist_last_volume
-
-                    else:
-                        # KỊCH BẢN 3: NGOÀI PHIÊN / NGÀY NGHỈ — LUÔN DÙNG HISTORY[-1] vs [-2]
-                        # (kể cả T7/CN/lễ, hoặc T2-T6 sau 15h mà history chưa có nến hôm nay)
-                        calc_close = hist_last_close
-                        calc_prev_close = hist_prev_close
-                        calc_open = hist_last_open
-                        calc_high = hist_last_high
-                        calc_low = hist_last_low
-                        calc_volume = hist_last_volume
-
-                    recent_volumes = [b.get("volume", 0) for b in d1_bars[-20:]]
-                    if recent_volumes:
-                        avg_volume_20 = sum(recent_volumes) / len(recent_volumes)
-        except Exception as e:
-            print(f"⚠️ Lỗi đọc history {symbol}: {e}")
-
-    # ============ TÍNH % THAY ĐỔI ============
-    price_change_percent = 0.0
-    price_change_available = False
-    if calc_prev_close > 0 and calc_close > 0:
-        raw_pct = (calc_close - calc_prev_close) / calc_prev_close * 100
-        if -30.0 <= raw_pct <= 30.0:
-            price_change_percent = round(raw_pct, 2)
-            price_change_available = True
-
-    # ============ TÍNH BIÊN ĐỘ ============
-    amplitude_percent = 0.0
-    amplitude_available = False
-    if calc_open > 0 and calc_high > 0 and calc_low > 0:
-        raw_amp = (calc_high - calc_low) / calc_open * 100
-        if 0 <= raw_amp <= 30.0:
-            amplitude_percent = round(raw_amp, 2)
-            amplitude_available = True
-
-    # ============ TÍNH VOLUME % ============
-    volume_percent = 0.0
-    volume_available = False
-    if avg_volume_20 > 0 and calc_volume > 0:
-        raw_vol = calc_volume / avg_volume_20 * 100
-        if 0 <= raw_vol <= 1000.0:
-            volume_percent = round(raw_vol, 2)
-            volume_available = True
-
     return {
         "close_price": close_price,
         "pe": pe, "pb": pb, "ps": ps,
@@ -325,13 +212,8 @@ def normalize_stock_data(symbol, data):
         "gross_margin": gross_margin,
         "profit_growth_yoy": profit_growth_yoy,
         "credit_growth_yoy": credit_growth_yoy,
-        "price_change_percent": price_change_percent,
-        "price_change_available": price_change_available,
-        "amplitude_percent": amplitude_percent,
-        "amplitude_available": amplitude_available,
-        "volume_percent": volume_percent,
-        "volume_available": volume_available,
     }
+
 # ============================================================
 # BƯỚC 2: MEDIAN NGÀNH
 # ============================================================
@@ -518,6 +400,7 @@ def compute_final_decision(fund_score, tech_score, val_score, total_score,
 
 # ============================================================
 # BƯỚC 4: ĐÁNH GIÁ TỪNG MÃ
+# (Đã lược bỏ các trường % giá, biên độ, volume)
 # ============================================================
 def evaluate_stock(symbol, nd, sector_median, group_label, config):
     sector = get_sector(symbol)
@@ -714,13 +597,6 @@ def evaluate_stock(symbol, nd, sector_median, group_label, config):
         "technical_status": technical_status,
         "volume_analysis": volume_analysis,
         "fundamental_notes": " | ".join(fund_notes),
-
-        "price_change_percent": nd.get("price_change_percent", 0.0),
-        "price_change_available": nd.get("price_change_available", False),
-        "amplitude_percent": nd.get("amplitude_percent", 0.0),
-        "amplitude_available": nd.get("amplitude_available", False),
-        "volume_percent": nd.get("volume_percent", 0.0),
-        "volume_available": nd.get("volume_available", False),
 
         "fair_value_high": fv["fair_high"],
         "fair_value_low": fv["fair_low"],
