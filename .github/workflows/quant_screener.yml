@@ -1,4 +1,4 @@
-name: 1. Run Quant Screener
+name: 2. Run Quant Screener
 
 on:
   push:
