@@ -1083,7 +1083,7 @@ def generate_html():
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         
-                        // ƯU TIÊN GIÁ TỪ MONGODB, NẾU KHÔNG CÓ MỚI DÙNG GIÁ CŨ
+                        // ƯU TIÊN GIÁ VÀ % TỪ MONGODB
                         close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : item.close_price)),
                         updated_at: liveData.updated_at !== undefined ? liveData.updated_at : (extraData.updated_at || "Chưa rõ"),
                         open: liveData.open !== undefined ? liveData.open : null,
@@ -1093,7 +1093,7 @@ def generate_html():
                         trading_date: liveData.trading_date !== undefined ? liveData.trading_date : null,
                         is_locked: liveData.is_locked !== undefined ? liveData.is_locked : false,
                         
-                        // NHẬN DỮ LIỆU % VÀ MŨI TÊN TỪ SERVER
+                        // LẤY DỮ LIỆU % VÀ MŨI TÊN TỪ SERVER
                         price_change_percent: liveData.price_change_percent !== undefined ? liveData.price_change_percent : (item.price_change_percent || 0),
                         price_change_available: liveData.price_change_available !== undefined ? liveData.price_change_available : (item.price_change_available || false),
                         price_arrow: liveData.price_arrow !== undefined ? liveData.price_arrow : (item.price_arrow || "—"),
@@ -1613,8 +1613,13 @@ def generate_html():
                                 </div>
                             </div>
                             <div class="text-right flex flex-col items-end shrink-0 ml-2 gap-1">
-                                <span class="block text-lg font-bold text-emerald-400 leading-tight">${formatNumber(item.close_price)}</span>
-                                ${priceChangeHtml}
+                                <!-- HIỂN THỊ GIÁ VÀ PHẦN TRĂM KÈM MŨI TÊN -->
+                                <div class="flex flex-col items-end leading-tight">
+                                    <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
+                                    
+                                    ${priceChangeHtml}
+                                </div>
+                                
                                 ${verdictBadgeHtml}
                                 ${cheapBadgeHtml}
                             </div>
