@@ -238,6 +238,14 @@ def normalize_stock_data(symbol, data):
                     hist_last_volume = float(last_bar.get("volume", 0) or 0)
 
                     # Bảo vệ đơn vị: giá < 100đ coi như lỗi
+                    # Tự động chuẩn hóa đơn vị: Nếu giá < 100 (nghìn đồng) -> Nhân 1000
+                    if 0 < hist_last_close < 100: hist_last_close *= 1000
+                    if 0 < hist_prev_close < 100: hist_prev_close *= 1000
+                    if 0 < hist_last_open < 100: hist_last_open *= 1000
+                    if 0 < hist_last_high < 100: hist_last_high *= 1000
+                    if 0 < hist_last_low < 100: hist_last_low *= 1000
+                    
+                    # Nếu sau khi nhân vẫn < 100 (tức là giá 0) thì gán = 0
                     if hist_last_close < 100: hist_last_close = 0
                     if hist_prev_close < 100: hist_prev_close = 0
 
