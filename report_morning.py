@@ -38,7 +38,7 @@ def generate_morning_report():
     strong_text = ""
     if buy_strong:
         for r in buy_strong:
-            strong_text += f"🔹 <b>{r['symbol']}</b>: {r['close_price']:,.0f}đ | {r['total_score']}đ\n"
+            strong_text += f"🔹 <b>{r['symbol']}</b>: {r.get('close_price', 0):,.0f}đ | {r.get('total_score', 0)}đ\n"
     else:
         strong_text = "Không có mã nào.\n"
 
@@ -47,7 +47,7 @@ def generate_morning_report():
     dca_text = ""
     if buy_dca:
         for r in buy_dca:
-            dca_text += f"🔸 <b>{r['symbol']}</b>: {r['close_price']:,.0f}đ | {r['total_score']}đ\n"
+            dca_text += f"🔸 <b>{r['symbol']}</b>: {r.get('close_price', 0):,.0f}đ | {r.get('total_score', 0)}đ\n"
     else:
         dca_text = "Không có mã nào.\n"
 
@@ -73,9 +73,9 @@ def generate_morning_report():
     
     movers_text = ""
     for r in top_gainers:
-        movers_text += f"🔺 <b>{r['symbol']}</b>: +{r['price_change_percent']:.1f}% ({r['close_price']:,.0f}đ)\n"
+        movers_text += f"🔺 <b>{r['symbol']}</b>: +{r.get('price_change_percent', 0):.1f}% ({r.get('close_price', 0):,.0f}đ)\n"
     for r in top_losers:
-        movers_text += f"🔻 <b>{r['symbol']}</b>: {r['price_change_percent']:.1f}% ({r['close_price']:,.0f}đ)\n"
+        movers_text += f"🔻 <b>{r['symbol']}</b>: {r.get('price_change_percent', 0):.1f}% ({r.get('close_price', 0):,.0f}đ)\n"
     if not movers_text:
         movers_text = "Không có dữ liệu.\n"
 
@@ -83,8 +83,8 @@ def generate_morning_report():
     top_volume = sorted(results, key=lambda x: x.get("volume_percent", 0), reverse=True)[:3]
     volume_text = ""
     for r in top_volume:
-        volume_text += f"💥 <b>{r['symbol']}</b>: {r['volume_percent']:.0f}% so với TB ({r['close_price']:,.0f}đ)\n"
-    if not volume_text:
+        volume_text += f"💥 <b>{r['symbol']}</b>: {r.get('volume_percent', 0):.0f}% so với TB ({r.get('close_price', 0):,.0f}đ)\n"
+    if not volume_text or top_volume[0].get("volume_percent", 0) == 0:
         volume_text = "Không có dữ liệu.\n"
 
     # Thống kê nhanh
