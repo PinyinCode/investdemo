@@ -3,600 +3,700 @@
         "symbol": "ACB",
         "company_name": "Ngân hàng Thương mại Cổ phần Á Châu",
         "total_shares": 5804421957,
-        "close_price": 20350
+        "close_price": 20350,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "ANV",
         "company_name": "Công ty Cổ phần Nam Việt",
         "total_shares": 266667500,
-        "close_price": 17350
+        "close_price": 17350,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "BAF",
         "company_name": "Công ty Cổ phần Nông nghiệp BAF Việt Nam",
         "total_shares": 364824906,
-        "close_price": 30900
+        "close_price": 30900,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "BCM",
         "company_name": "Tập đoàn Đầu tư và Phát triển Công nghiệp Becamex - CTCP",
         "total_shares": 1035000000,
-        "close_price": 38050
+        "close_price": 38050,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "BID",
         "company_name": "Ngân hàng Thương mại Cổ phần Đầu tư và Phát triển Việt Nam",
         "total_shares": 7778229473,
-        "close_price": 31950
+        "close_price": 31950,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "BMP",
         "company_name": "Công ty Cổ phần Nhựa Bình Minh",
         "total_shares": 81860938,
-        "close_price": 136400
+        "close_price": 136400,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "BSI",
         "company_name": "Công ty Cổ phần Chứng khoán BIDV",
         "total_shares": 269901549,
-        "close_price": 29100
+        "close_price": 29100,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "BSR",
         "company_name": "Công ty Cổ phần - Tổng Công ty Lọc Hoá dầu Việt Nam",
         "total_shares": 5007299686,
-        "close_price": 26250
+        "close_price": 26250,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "BVH",
         "company_name": "Tập đoàn Bảo Việt",
         "total_shares": 742322764,
-        "close_price": 63500
+        "close_price": 63500,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "BWE",
         "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
         "total_shares": 219928644,
-        "close_price": 42900
+        "close_price": 42900,
+        "sector": "DIEN_NUOC_HA_TANG"
     },
     {
         "symbol": "CII",
         "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh",
         "total_shares": 671985291,
-        "close_price": 13800
+        "close_price": 13800,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "CMG",
         "company_name": "Công ty Cổ phần Tập đoàn Công nghệ CMC",
         "total_shares": 232954608,
-        "close_price": 17600
+        "close_price": 17600,
+        "sector": "CONG_NGHE_BAN_LE"
     },
     {
         "symbol": "CTD",
         "company_name": "Công ty Cổ phần Xây dựng Coteccons",
         "total_shares": 114026467,
-        "close_price": 68300
+        "close_price": 68300,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "CTG",
         "company_name": "Ngân hàng Thương mại Cổ phần Công thương Việt Nam",
         "total_shares": 7766944637,
-        "close_price": 31850
+        "close_price": 31850,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "CTR",
         "company_name": "Tổng Công ty Cổ phần Công trình Viettel",
         "total_shares": 128109533,
-        "close_price": 65300
+        "close_price": 65300,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "CTS",
         "company_name": "Công ty Cổ phần Chứng khoán Vietinbank",
         "total_shares": 272244939,
-        "close_price": 23350
+        "close_price": 23350,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "DBC",
         "company_name": "Công ty Cổ phần Tập đoàn Dabaco Việt Nam",
         "total_shares": 431046499,
-        "close_price": 15600
+        "close_price": 15600,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "DCM",
         "company_name": "Công ty Cổ phần - Tổng Công ty Phân bón Dầu Khí Cà Mau",
         "total_shares": 529400000,
-        "close_price": 32100
+        "close_price": 32100,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "DGW",
         "company_name": "Công ty Cổ phần Thế Giới Số",
         "total_shares": 223520169,
-        "close_price": 38500
+        "close_price": 38500,
+        "sector": "CONG_NGHE_BAN_LE"
     },
     {
         "symbol": "DIG",
         "company_name": "Tổng Công ty Cổ phần Đầu tư Phát triển Xây dựng",
         "total_shares": 844192763,
-        "close_price": 10400
+        "close_price": 10400,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "DPM",
         "company_name": "Tổng Công ty Phân bón và Hóa chất Dầu khí - Công ty Cổ phần",
         "total_shares": 679990761,
-        "close_price": 19650
+        "close_price": 19650,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "DSE",
         "company_name": "Công ty Cổ phần Chứng khoán DNSE",
         "total_shares": 428249806,
-        "close_price": 20100
+        "close_price": 20100,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "DXG",
         "company_name": "Công ty Cổ phần Bluemarq Group",
         "total_shares": 1269852451,
-        "close_price": 11000
+        "close_price": 11000,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "EIB",
         "company_name": "Ngân hàng Thương mại Cổ phần Xuất nhập khẩu Việt Nam",
         "total_shares": 1868810607,
-        "close_price": 16200
+        "close_price": 16200,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "EVF",
         "company_name": "Công ty Tài chính Tổng hợp Cổ phần Điện Lực",
         "total_shares": 760565802,
-        "close_price": 11700
+        "close_price": 11700,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "FPT",
         "company_name": "Công ty Cổ phần FPT",
         "total_shares": 1885727648,
-        "close_price": 50800
+        "close_price": 50800,
+        "sector": "CONG_NGHE_BAN_LE"
     },
     {
         "symbol": "FRT",
         "company_name": "Công ty Cổ phần Bán lẻ Kỹ thuật số FPT",
         "total_shares": 178815054,
-        "close_price": 142000
+        "close_price": 142000,
+        "sector": "CONG_NGHE_BAN_LE"
     },
     {
         "symbol": "FTS",
         "company_name": "Công ty Cổ phần Chứng khoán FPT",
         "total_shares": 381145750,
-        "close_price": 19600
+        "close_price": 19600,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "GAS",
         "company_name": "Tổng Công ty Khí Việt Nam - Công ty Cổ phần",
         "total_shares": 2412949756,
-        "close_price": 74100
+        "close_price": 74100,
+        "sector": "DIEN_NUOC_HA_TANG"
     },
     {
         "symbol": "GEE",
         "company_name": "Công ty Cổ phần Công nghiệp Gelex",
         "total_shares": 640499211,
-        "close_price": 65600
+        "close_price": 65600,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "GEX",
         "company_name": "Công ty Cổ phần Tập đoàn Gelex",
         "total_shares": 1308471358,
-        "close_price": 22450
+        "close_price": 22450,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "GMD",
         "company_name": "Công ty Cổ phần Tập đoàn Gemadept",
         "total_shares": 649337392,
-        "close_price": 52800
+        "close_price": 52800,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "GVR",
         "company_name": "Tập đoàn Công nghiệp Cao su Việt Nam - Công ty Cổ phần",
         "total_shares": 4000000000,
-        "close_price": 29300
+        "close_price": 29300,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "HAG",
         "company_name": "Công ty Cổ phần Hoàng Anh Gia Lai",
         "total_shares": 1267467947,
-        "close_price": 13600
+        "close_price": 13600,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "HCM",
         "company_name": "Công ty Cổ phần Chứng khoán Thành phố Hồ Chí Minh",
         "total_shares": 1372786256,
-        "close_price": 23550
+        "close_price": 23550,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "HDB",
         "company_name": "Ngân hàng Thương mại Cổ phần Phát Triển Thành phố Hồ Chí Minh",
         "total_shares": 6506859219,
-        "close_price": 22500
+        "close_price": 22500,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "HDG",
         "company_name": "Công ty Cổ phần Tập đoàn Hà Đô",
         "total_shares": 406957333,
-        "close_price": 16100
+        "close_price": 16100,
+        "sector": "DIEN_NUOC_HA_TANG"
     },
     {
         "symbol": "HHV",
         "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Giao thông Đèo Cả",
         "total_shares": 574511888,
-        "close_price": 9560
+        "close_price": 9560,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "HPG",
         "company_name": "Công ty Cổ phần Tập đoàn Hòa Phát",
         "total_shares": 8442964520,
-        "close_price": 21200
+        "close_price": 21200,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "HSG",
         "company_name": "Công ty Cổ phần Tập đoàn Hoa Sen",
         "total_shares": 807262704,
-        "close_price": 10900
+        "close_price": 10900,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "HT1",
         "company_name": "Công ty Cổ phần Xi măng VICEM Hà Tiên",
         "total_shares": 381589911,
-        "close_price": 12750
+        "close_price": 12750,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "KBC",
         "company_name": "Tổng Công ty Phát triển Đô thị Kinh Bắc - CTCP",
         "total_shares": 941754759,
-        "close_price": 26950
+        "close_price": 26950,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "KDC",
         "company_name": "Công ty Cổ phần Tập đoàn KIDO",
         "total_shares": 289806316,
-        "close_price": 50200
+        "close_price": 50200,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "KDH",
         "company_name": "Công ty Cổ phần Đầu tư và Kinh doanh nhà Khang Điền",
         "total_shares": 1245297704,
-        "close_price": 15100
+        "close_price": 15100,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "KOS",
         "company_name": "Công ty Cổ phần KOSY",
         "total_shares": 216481335,
-        "close_price": 3680
+        "close_price": 3680,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "LPB",
         "company_name": "Ngân hàng Thương mại Cổ phần Lộc Phát Việt Nam",
         "total_shares": 2987282100,
-        "close_price": 35500
+        "close_price": 35500,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "MBB",
         "company_name": "Ngân hàng Thương mại Cổ phần Quân đội",
         "total_shares": 9263249895,
-        "close_price": 19250
+        "close_price": 19250,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "MCH",
         "company_name": "Công ty Cổ phần Hàng Tiêu Dùng MaSan",
         "total_shares": 1307404949,
-        "close_price": 129800
+        "close_price": 129800,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "MSB",
         "company_name": "Ngân hàng Thương mại Cổ phần Hàng Hải Việt Nam",
         "total_shares": 3744000000,
-        "close_price": 16350
+        "close_price": 16350,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "MSN",
         "company_name": "Công ty Cổ phần Tập đoàn Masan",
         "total_shares": 1460374611,
-        "close_price": 73000
+        "close_price": 73000,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "MWG",
         "company_name": "Công ty Cổ phần Đầu tư Thế Giới Di Động",
         "total_shares": 1477035294,
-        "close_price": 73700
+        "close_price": 73700,
+        "sector": "CONG_NGHE_BAN_LE"
     },
     {
         "symbol": "NAB",
         "company_name": "Ngân hàng Thương mại Cổ phần Nam Á",
         "total_shares": 2058822282,
-        "close_price": 12600
+        "close_price": 12600,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "NKG",
         "company_name": "Công ty Cổ phần Thép Nam Kim",
         "total_shares": 492323961,
-        "close_price": 12150
+        "close_price": 12150,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "NLG",
         "company_name": "Công ty Cổ phần Đầu tư Nam Long",
         "total_shares": 485097383,
-        "close_price": 22950
+        "close_price": 22950,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "NT2",
         "company_name": "Công ty Cổ phần Điện lực Dầu khí Nhơn Trạch 2",
         "total_shares": 287876029,
-        "close_price": 22200
+        "close_price": 22200,
+        "sector": "DIEN_NUOC_HA_TANG"
     },
     {
         "symbol": "NVL",
         "company_name": "Công ty Cổ phần Tập đoàn Đầu tư Địa ốc No Va",
         "total_shares": 2403805052,
-        "close_price": 10300
+        "close_price": 10300,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "OCB",
         "company_name": "Ngân hàng Thương mại Cổ phần Phương Đông",
         "total_shares": 3062510126,
-        "close_price": 10700
+        "close_price": 10700,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "PAN",
         "company_name": "Công ty Cổ phần Tập đoàn PAN",
         "total_shares": 258072996,
-        "close_price": 16900
+        "close_price": 16900,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "PC1",
         "company_name": "Công ty Cổ phần Tập đoàn PC1",
         "total_shares": 411285343,
-        "close_price": 16450
+        "close_price": 16450,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "PDR",
         "company_name": "Công ty Cổ phần Phát triển Bất động sản Phát Đạt",
         "total_shares": 997809379,
-        "close_price": 11750
+        "close_price": 11750,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "PHR",
         "company_name": "Công ty Cổ phần Cao su Phước Hòa",
         "total_shares": 243897799,
-        "close_price": 29700
+        "close_price": 29700,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "PLX",
         "company_name": "Tập đoàn Xăng dầu Việt Nam",
         "total_shares": 1293878081,
-        "close_price": 33350
+        "close_price": 33350,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "PNJ",
         "company_name": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
         "total_shares": 511891518,
-        "close_price": 15050
+        "close_price": 15050,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "POW",
         "company_name": "Tổng Công ty Điện lực Dầu khí Việt Nam - CTCP",
         "total_shares": 3067845688,
-        "close_price": 12350
+        "close_price": 12350,
+        "sector": "DIEN_NUOC_HA_TANG"
     },
     {
         "symbol": "PVD",
         "company_name": "Tổng Công ty Cổ phần Khoan và Dịch vụ khoan Dầu khí",
         "total_shares": 928158191,
-        "close_price": 17100
+        "close_price": 17100,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "PVT",
         "company_name": "Tổng Công ty Cổ phần Vận tải Dầu khí",
         "total_shares": 516918938,
-        "close_price": 20550
+        "close_price": 20550,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "REE",
         "company_name": "Công ty Cổ phần Cơ điện Lạnh",
         "total_shares": 623399036,
-        "close_price": 47100
+        "close_price": 47100,
+        "sector": "DIEN_NUOC_HA_TANG"
     },
     {
         "symbol": "SAB",
         "company_name": "Tổng Công ty Cổ phần Bia - Rượu - Nước Giải khát Sài Gòn",
         "total_shares": 1282562372,
-        "close_price": 42600
+        "close_price": 42600,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "SBT",
         "company_name": "Công ty Cổ phần Thành Thành Công - Biên Hòa",
         "total_shares": 934634155,
-        "close_price": 21050
+        "close_price": 21050,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "SHB",
         "company_name": "Ngân hàng Thương mại Cổ phần Sài Gòn – Hà Nội",
         "total_shares": 4594200024,
-        "close_price": 10750
+        "close_price": 10750,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "SIP",
         "company_name": "Công ty Cổ phần Đầu tư Sài Gòn VRG",
         "total_shares": 242112943,
-        "close_price": 50100
+        "close_price": 50100,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "SJS",
         "company_name": "Công ty Cổ phần SJ Group",
         "total_shares": 297474828,
-        "close_price": 54200
+        "close_price": 54200,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "SSB",
         "company_name": "Ngân hàng Thương mại Cổ phần Đông Nam Á",
         "total_shares": 3428800000,
-        "close_price": 14800
+        "close_price": 14800,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "SSI",
         "company_name": "Công ty Cổ phần Chứng khoán SSI",
         "total_shares": 3003293801,
-        "close_price": 20400
+        "close_price": 20400,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "STB",
         "company_name": "Ngân hàng Thương mại Cổ phần Sài Gòn Tài Lộc",
         "total_shares": 1885215716,
-        "close_price": 70000
+        "close_price": 70000,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "TAL",
         "company_name": "Công Ty Cổ Phần Đầu Tư Bất Động Sản Taseco",
         "total_shares": 503999708,
-        "close_price": 23950
+        "close_price": 23950,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "TCB",
         "company_name": "Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam",
         "total_shares": 7086240414,
-        "close_price": 21650
+        "close_price": 21650,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "TCH",
         "company_name": "Công ty Cổ phần Đầu tư Dịch vụ Tài chính Hoàng Huy",
         "total_shares": 1003312808,
-        "close_price": 13500
+        "close_price": 13500,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "TCX",
         "company_name": "Công ty Cổ phần Chứng khoán Kỹ Thương",
         "total_shares": 3329339823,
-        "close_price": 29000
+        "close_price": 29000,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "TPB",
         "company_name": "Ngân hàng Thương mại Cổ phần Tiên Phong",
         "total_shares": 3190134896,
-        "close_price": 12700
+        "close_price": 12700,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "VCB",
         "company_name": "Ngân hàng Thương mại Cổ phần Ngoại thương Việt Nam",
         "total_shares": 8355675094,
-        "close_price": 53600
+        "close_price": 53600,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "VCG",
         "company_name": "Tổng Công ty Cổ phần Xuất nhập khẩu và Xây dựng Việt Nam",
         "total_shares": 698176245,
-        "close_price": 15450
+        "close_price": 15450,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "VCI",
         "company_name": "Công ty Cổ phần Chứng khoán Vietcap",
         "total_shares": 1152231925,
-        "close_price": 20200
+        "close_price": 20200,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VCK",
         "company_name": "Công ty Cổ phần Chứng Khoán VPS",
         "total_shares": 2434919704,
-        "close_price": 28650
+        "close_price": 28650,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VGC",
         "company_name": "Tổng Công ty Viglacera - Công ty Cổ phần",
         "total_shares": 448350000,
-        "close_price": 39900
+        "close_price": 39900,
+        "sector": "NGUYEN_VAT_LIEU_CHU_KY"
     },
     {
         "symbol": "VHC",
         "company_name": "Công ty Cổ phần Vĩnh Hoàn",
         "total_shares": 209453159,
-        "close_price": 49050
+        "close_price": 49050,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VHM",
         "company_name": "Công ty Cổ phần Vinhomes",
         "total_shares": 8214824008,
-        "close_price": 62100
+        "close_price": 62100,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "VIB",
         "company_name": "Ngân hàng Thương mại Cổ phần Quốc tế Việt Nam",
         "total_shares": 3735386252,
-        "close_price": 14000
+        "close_price": 14000,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "VIC",
         "company_name": "Tập đoàn Vingroup - Công ty CP",
         "total_shares": 7762186429,
-        "close_price": 234500
+        "close_price": 234500,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "VIX",
         "company_name": "Công ty Cổ phần Chứng khoán VIX",
         "total_shares": 2572788533,
-        "close_price": 13350
+        "close_price": 13350,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VJC",
         "company_name": "Công ty Cổ phần Hàng không Vietjet",
         "total_shares": 769092961,
-        "close_price": 134700
+        "close_price": 134700,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VND",
         "company_name": "Công ty Cổ phần Chứng khoán VNDIRECT",
         "total_shares": 1522299908,
-        "close_price": 14950
+        "close_price": 14950,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VNM",
         "company_name": "Công ty Cổ phần Sữa Việt Nam",
         "total_shares": 2089955445,
-        "close_price": 57800
+        "close_price": 57800,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VPB",
         "company_name": "Ngân hàng Thương mại Cổ phần Việt Nam Thịnh Vượng",
         "total_shares": 10000000000,
-        "close_price": 22050
+        "close_price": 22050,
+        "sector": "NGAN_HANG"
     },
     {
         "symbol": "VPI",
         "company_name": "Công ty Cổ phần Phát triển Bất động sản Văn Phú",
         "total_shares": 352054374,
-        "close_price": 61000
+        "close_price": 61000,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "VPL",
         "company_name": "Công ty Cổ phần Vinpearl",
         "total_shares": 1793300377,
-        "close_price": 92900
+        "close_price": 92900,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VPX",
         "company_name": "Công ty Cổ phần Chứng khoán VPBank",
         "total_shares": 1875000000,
-        "close_price": 23400
+        "close_price": 23400,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VRE",
         "company_name": "Công ty Cổ phần Vincom Retail",
         "total_shares": 2328818410,
-        "close_price": 23750
+        "close_price": 23750,
+        "sector": "BAT_DONG_SAN"
     },
     {
         "symbol": "VSC",
         "company_name": "Công ty Cổ phần Container Việt Nam",
         "total_shares": 374370362,
-        "close_price": 13350
+        "close_price": 13350,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     },
     {
         "symbol": "VTP",
         "company_name": "Tổng Công ty Cổ phần Bưu chính Viettel",
         "total_shares": 201885171,
-        "close_price": 46000
+        "close_price": 46000,
+        "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU"
     }
 ]
