@@ -1091,6 +1091,7 @@ def generate_html():
                         low: liveData.low !== undefined ? liveData.low : null,
                         volume: liveData.volume !== undefined ? liveData.volume : null,
                         trading_date: liveData.trading_date !== undefined ? liveData.trading_date : null,
+                        is_locked: liveData.is_locked !== undefined ? liveData.is_locked : false,
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
