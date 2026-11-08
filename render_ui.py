@@ -1099,7 +1099,6 @@ def generate_html():
                         // ƯU TIÊN API TRƯỚC, NẾU API KHÔNG CÓ MỚI FALLBACK VỀ JSON CŨ
                         // =========================================================
                         
-                        // 1. Giá đóng cửa: Ưu tiên liveData, nếu không có thì lấy từ data.json/screener
                         close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : (item.close_price || 0))),
                         updated_at: liveData.updated_at || extraData.updated_at || "Chưa rõ",
                         open: liveData.open !== undefined ? liveData.open : null,
@@ -1109,13 +1108,11 @@ def generate_html():
                         trading_date: liveData.trading_date || null,
                         is_locked: liveData.is_locked || false,
                         
-                        // 2. % Giá và Mũi tên
                         price_change_percent: liveData.price_change_percent !== undefined && liveData.price_change_available ? liveData.price_change_percent : (item.price_change_percent || 0),
                         price_change_available: liveData.price_change_available !== undefined ? liveData.price_change_available : (item.price_change_available || false),
                         price_arrow: liveData.price_arrow && liveData.price_change_available ? liveData.price_arrow : (item.price_arrow || "—"),
                         price_color: liveData.price_color && liveData.price_change_available ? liveData.price_color : (item.price_color || "slate"),
                         
-                        // 3. Volume % và Biên độ %
                         volume_percent: liveData.volume_percent !== undefined ? liveData.volume_percent : (item.volume_percent || 0),
                         amplitude_percent: liveData.amplitude_percent !== undefined ? liveData.amplitude_percent : (item.amplitude_percent || 0),
 
@@ -1575,8 +1572,9 @@ def generate_html():
                     const colorClass = isUp ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" : "bg-rose-500/20 text-rose-300 border-rose-500/40";
                     const iconClass = isUp ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
                     
+                    // SỬ DỤNG Math.round THAY VÌ formatNumber ĐỂ TRÁNH LỖI NHÂN 1000
                     shockBadgeHtml = `<span class="${colorClass} border text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Dòng tiền ${isUp ? 'MUA VÀO' : 'BÁN RÒNG'}">
-                        <i class="fa-solid ${iconClass}"></i> Vol: ${item.volume_percent.toFixed(0)}%
+                        <i class="fa-solid ${iconClass}"></i> Vol: ${Math.round(item.volume_percent)}%
                     </span>`;
                 }
 
