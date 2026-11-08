@@ -1,0 +1,52 @@
+name: 4. Daily Telegram Reports (6h & 19h)
+
+on:
+  schedule:
+    # 6h sáng VN = 23h UTC ngày hôm trước
+    - cron: '0 23 * * *'
+    # 19h tối VN = 12h UTC
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Cho phép chạy thủ công để test
+
+jobs:
+  morning-report:
+    if: github.event.schedule == '0 23 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send Morning Report (6h)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python report_morning.py
+
+  evening-report:
+    if: github.event.schedule == '0 12 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send Evening Report (19h)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python report_evening.py
