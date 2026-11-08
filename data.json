@@ -4351,7 +4351,7 @@
         "symbol": "DIG",
         "company_name": "Tổng Công ty Cổ phần Đầu tư Phát triển Xây dựng",
         "market_cap": 0.0,
-        "total_shares": 844192763,
+        "total_shares": 0,
         "close": 10400,
         "volume": 14547400,
         "pe": 13.89,
@@ -4366,7 +4366,7 @@
         "net_profit_ttm": 600.68,
         "recommendation": "ĐANG GOM HÀNG",
         "price_zone": "Dòng tiền duy trì ổn định trên MA20.",
-        "updated_at": "08/11/2026 14:57:08",
+        "updated_at": "08/11/2026 18:14:03",
         "bctc_history": [
             {
                 "period": "2026-Q3",
