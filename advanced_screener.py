@@ -199,10 +199,16 @@ def normalize_stock_data(symbol, data):
         profit_growth_yoy = float(latest.get("profit_growth_yoy", 0) or 0)
         credit_growth_yoy = float(latest.get("credit_growth_yoy", 0) or 0)
 
-    # ============ TÍNH BIẾN ĐỘNG (SIÊU AN TOÀN) ============
+    # ============ TÍNH BIẾN ĐỘNG (XỬ LÝ ĐÚNG 3 KỊCH BẢN) ============
     prev_close = 0.0
     avg_volume_20 = 0.0
     history_path = f"history/{symbol.upper()}.json"
+    
+    now_vn = get_vn_now()
+    today_str = now_vn.strftime("%Y-%m-%d")
+    current_hour = now_vn.hour
+    is_weekday = now_vn.weekday() < 5
+    is_trading_hours = is_weekday and (9 <= current_hour < 15)
 
     if os.path.exists(history_path):
         try:
@@ -211,31 +217,42 @@ def normalize_stock_data(symbol, data):
                 d1_bars = hist_data.get("history_d1", [])
 
                 if len(d1_bars) >= 2:
-                    # LUÔN LẤY PHẦN TỬ ÁP CHÓT LÀM GIÁ THAM CHIẾU
-                    # Lý do: Dù trong phiên, ngoài phiên, hay ngày nghỉ, 
-                    # close_price hiện tại đã là giá của phiên mới nhất.
-                    # -> prev_close phải là giá của phiên TRƯỚC ĐÓ (tức là -2).
-                    prev_close = float(d1_bars[-2].get("close", 0) or 0)
+                    last_bar = d1_bars[-1]
+                    last_date = last_bar.get("time", "")
+                    is_nen_cuoi_la_hom_nay = (last_date == today_str)
 
-                    # Tính volume trung bình 20 phiên
+                    # PHÂN LOẠI 3 KỊCH BẢN
+                    if is_trading_hours and not is_nen_cuoi_la_hom_nay:
+                        # KỊCH BẢN 1: TRONG PHIÊN (T2-T6, 9h-15h)
+                        # close_price lấy từ MongoDB, prev_close là nến cuối history
+                        prev_close = float(last_bar.get("close", 0) or 0)
+                        print(f"[REALTIME] {symbol}: So sánh MongoDB ({close_price:,.0f}) vs History ({prev_close:,.0f})")
+                    else:
+                        # KỊCH BẢN 2 & 3: NGOÀI PHIÊN hoặc NGÀY NGHỈ
+                        # prev_close = history[-2]
+                        prev_close = float(d1_bars[-2].get("close", 0) or 0)
+
                     recent_volumes = [b.get("volume", 0) for b in d1_bars[-20:]]
                     if recent_volumes:
                         avg_volume_20 = sum(recent_volumes) / len(recent_volumes)
         except Exception as e:
             print(f"⚠️ Lỗi đọc history {symbol}: {e}")
 
-    # BẢO VỆ: Nếu prev_close < 100đ (lỗi đơn vị) -> coi như = 0
+    # BẢO VỆ 1: Nếu prev_close < 100đ (lỗi đơn vị) -> coi như = 0
     if prev_close < 100:
         prev_close = 0
 
+    # BẢO VỆ 2: Nếu close_price < 100đ (lỗi đơn vị) -> coi như = 0
     safe_close = close_price if close_price >= 100 else 0
 
+    # Tính % thay đổi, chặn biên độ ±30%
     price_change_percent = 0.0
     if prev_close > 0 and safe_close > 0:
         raw_pct = (safe_close - prev_close) / prev_close * 100
         if -30.0 <= raw_pct <= 30.0:
             price_change_percent = round(raw_pct, 2)
 
+    # Biên độ phiên
     open_p = float(data.get("open", 0) or 0)
     high_p = float(data.get("high", 0) or 0)
     low_p = float(data.get("low", 0) or 0)
@@ -245,6 +262,7 @@ def normalize_stock_data(symbol, data):
         if 0 <= raw_amp <= 30.0:
             amplitude_percent = round(raw_amp, 2)
 
+    # Volume đột biến (chặn trên 1000%)
     current_volume = float(data.get("volume", 0) or 0)
     volume_percent = 0.0
     if avg_volume_20 > 0:
