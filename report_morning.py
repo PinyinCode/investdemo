@@ -60,13 +60,32 @@ def generate_morning_report():
                 sector_buy[sector] = []
             sector_buy[sector].append(r['symbol'])
     
-    # Sắp xếp ngành theo số lượng mã giảm dần
     sorted_sectors = sorted(sector_buy.items(), key=lambda x: len(x[1]), reverse=True)[:3]
     sector_text = ""
     for sector, syms in sorted_sectors:
         sector_text += f"🔹 <b>{sector}</b> ({len(syms)} mã): {', '.join(syms)}\n"
     if not sector_text:
         sector_text = "Không có nhóm ngành nào phát tín hiệu MUA.\n"
+
+    # 4. Mã biến động mạnh (Tăng/Giảm giá)
+    top_gainers = sorted([r for r in results if r.get("price_change_percent", 0) > 0], key=lambda x: x.get("price_change_percent", 0), reverse=True)[:3]
+    top_losers = sorted([r for r in results if r.get("price_change_percent", 0) < 0], key=lambda x: x.get("price_change_percent", 0))[:3]
+    
+    movers_text = ""
+    for r in top_gainers:
+        movers_text += f"🔺 <b>{r['symbol']}</b>: +{r['price_change_percent']:.1f}% ({r['close_price']:,.0f}đ)\n"
+    for r in top_losers:
+        movers_text += f"🔻 <b>{r['symbol']}</b>: {r['price_change_percent']:.1f}% ({r['close_price']:,.0f}đ)\n"
+    if not movers_text:
+        movers_text = "Không có dữ liệu.\n"
+
+    # 5. Mã đột biến khối lượng
+    top_volume = sorted(results, key=lambda x: x.get("volume_percent", 0), reverse=True)[:3]
+    volume_text = ""
+    for r in top_volume:
+        volume_text += f"💥 <b>{r['symbol']}</b>: {r['volume_percent']:.0f}% so với TB ({r['close_price']:,.0f}đ)\n"
+    if not volume_text:
+        volume_text = "Không có dữ liệu.\n"
 
     # Thống kê nhanh
     in_buy_zone = sum(1 for r in results if r.get("valuation_verdict") == "RẺ - TRONG VÙNG MUA")
@@ -81,6 +100,11 @@ def generate_morning_report():
 {dca_text}
 🏭 <b>NGÀNH CÓ TÍN HIỆU MUA NHIỀU NHẤT:</b>
 {sector_text}
+🚀 <b>BIẾN ĐỘNG MẠNH NHẤT PHIÊN QUA:</b>
+{movers_text}
+💥 <b>ĐỘT BIẾN KHỐI LƯỢNG:</b>
+{volume_text}
+
 📈 <b>THỐNG KÊ RỔ VN100:</b>
 - Trong vùng mua (Giá ≤ Fair Value): <b>{in_buy_zone} mã</b>
 - Cảnh báo TRÁNH: <b>{avoid_count} mã</b>
