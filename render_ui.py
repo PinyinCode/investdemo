@@ -1092,6 +1092,12 @@ def generate_html():
                         volume: liveData.volume !== undefined ? liveData.volume : null,
                         trading_date: liveData.trading_date !== undefined ? liveData.trading_date : null,
                         is_locked: liveData.is_locked !== undefined ? liveData.is_locked : false,
+                        
+                        // NHẬN DỮ LIỆU % VÀ MŨI TÊN TỪ SERVER
+                        price_change_percent: liveData.price_change_percent !== undefined ? liveData.price_change_percent : (item.price_change_percent || 0),
+                        price_change_available: liveData.price_change_available !== undefined ? liveData.price_change_available : (item.price_change_available || false),
+                        price_arrow: liveData.price_arrow !== undefined ? liveData.price_arrow : (item.price_arrow || "—"),
+                        price_color: liveData.price_color !== undefined ? liveData.price_color : (item.price_color || "slate"),
 
                         bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                         bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
@@ -1572,6 +1578,17 @@ def generate_html():
                 card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
                 card.onclick = () => openChartModal(item.symbol);
 
+                // TẠO HTML HIỂN THỊ % VÀ MŨI TÊN
+                let priceChangeHtml = '';
+                if (item.price_change_available) {
+                    const pct = item.price_change_percent || 0;
+                    const color = item.price_color === 'emerald' ? 'text-emerald-400' : (item.price_color === 'rose' ? 'text-rose-400' : 'text-slate-400');
+                    const arrow = item.price_arrow || '—';
+                    priceChangeHtml = `<span class="text-[11px] font-bold ${color} flex items-center gap-0.5 mt-0.5">${arrow} ${Math.abs(pct).toFixed(2)}%</span>`;
+                } else {
+                    priceChangeHtml = `<span class="text-[11px] font-bold text-slate-500 mt-0.5">—</span>`;
+                }
+
                 card.innerHTML = `
                     ${topBadge}
                     <div>
@@ -1597,6 +1614,7 @@ def generate_html():
                             </div>
                             <div class="text-right flex flex-col items-end shrink-0 ml-2 gap-1">
                                 <span class="block text-lg font-bold text-emerald-400 leading-tight">${formatNumber(item.close_price)}</span>
+                                ${priceChangeHtml}
                                 ${verdictBadgeHtml}
                                 ${cheapBadgeHtml}
                             </div>
