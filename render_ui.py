@@ -2196,37 +2196,37 @@ def generate_html():
                     return bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0;
                 });
 
-                // 2. VẼ NẾN HÔM NAY TỪ MONGODB
+                // 2. XỬ LÝ NẾN CẬP NHẬT
                 const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
-                const todayStr = new Date().toISOString().split('T')[0];
+                
+                // Lấy trading_date từ MongoDB. Nếu không có, fallback về ngày hôm nay
+                const tradingDate = item.trading_date || new Date().toISOString().split('T')[0];
                 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
-                    // Kiểm tra xem hôm nay có nằm trong file history chưa
-                    const existingTodayIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === todayStr);
+                    // Tìm xem trong file history đã có nến của trading_date chưa
+                    const existingTodayIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === tradingDate);
                     
                     if (existingTodayIndex !== -1) {
-                        // Đã có nến hôm nay trong history (sau khi đóng cửa, file history đã được cập nhật)
-                        // -> Cập nhật giá close mới nhất
+                        // Đã có nến -> Chỉ cập nhật giá close
                         currentSymbolHistory.history_d1[existingTodayIndex].close = currentPrice;
                     } else {
-                        // CHƯA CÓ TRONG HISTORY -> Vẽ nến hôm nay từ dữ liệu MongoDB
-                        // Lấy đầy đủ OHLC + Volume từ item (đã lấy từ API /api/data)
-                        // NẾU item.open/high/low BẰNG 0 (Do T7/CN/Lễ) -> KHÔNG VẼ NẾN MỚI, CHỈ UPDATE CLOSE
-                        
+                        // CHƯA CÓ TRONG HISTORY
                         const hasValidOHLC = item.open > 0 && item.high > 0 && item.low > 0;
                         
                         if (hasValidOHLC) {
-                            // Có đủ dữ liệu giao dịch -> Vẽ nến realtime
+                            // Vẽ nến thật
                             const liveOpen = item.open;
                             const liveHigh = item.high;
                             const liveLow = item.low;
+                            
+                            // Chặn Volume rác
                             let liveVolume = item.volume;
                             if (!liveVolume || liveVolume < 1000) {
                                 liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
                             }
 
                             currentSymbolHistory.history_d1.push({
-                                time: todayStr,
+                                time: tradingDate, // DÙNG NGÀY GIAO DỊCH
                                 open: liveOpen, 
                                 high: liveHigh,
                                 low: liveLow,
@@ -2234,7 +2234,7 @@ def generate_html():
                                 volume: liveVolume 
                             });
                         } else {
-                            // Ngày nghỉ / Lễ -> Không vẽ nến, chỉ cập nhật giá vào nến cuối
+                            // Ngày nghỉ -> Chỉ update nến cuối
                             const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
                             lastBar.close = currentPrice;
                             if (currentPrice > lastBar.high) lastBar.high = currentPrice;
