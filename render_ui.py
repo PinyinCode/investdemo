@@ -1149,16 +1149,13 @@ def generate_html():
         function showLogConsole() {
             if (isLogVisible) return;
             isLogVisible = true;
-            isLogMinimized = false; // Reset trạng thái thu nhỏ
+            isLogMinimized = false; 
             
             const consoleEl = document.getElementById('log-console');
             const contentEl = document.getElementById('log-content');
             const chevron = document.getElementById('log-chevron');
             
-            // Hiển thị console và xóa trạng thái ẩn
             consoleEl.classList.remove('hidden', 'translate-y-full', 'opacity-0');
-            
-            // Đảm bảo nội dung đang mở
             contentEl.classList.remove('hidden');
             if (chevron) chevron.classList.replace('fa-chevron-up', 'fa-chevron-down');
         }
@@ -1181,7 +1178,6 @@ def generate_html():
             else if (type === 'warning') { colorClass = "text-amber-400"; icon = "⚠️ "; }
             else if (type === 'processing') { colorClass = "text-indigo-400"; icon = "⏳ "; }
 
-            // Cập nhật Badge trạng thái
             if (type === 'processing') {
                 badge.className = "text-[9px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 animate-pulse";
                 badge.innerText = "Đang chạy...";
@@ -1202,12 +1198,10 @@ def generate_html():
             div.innerHTML = `<span class="text-slate-500 shrink-0">[${time}]</span> <span class="break-all">${icon}${message}</span>`;
             contentEl.appendChild(div);
 
-            // Tự động cuộn xuống dòng mới nhất (chỉ khi không bị thu nhỏ)
             if (!isLogMinimized) {
                 contentEl.scrollTop = contentEl.scrollHeight;
             }
 
-            // Giới hạn 100 dòng để không bị lag
             if (contentEl.children.length > 100) {
                 contentEl.removeChild(contentEl.firstChild);
             }
@@ -1249,13 +1243,12 @@ def generate_html():
             if (icon) icon.classList.add('spinner');
             if (headerBtn) headerBtn.disabled = true;
             
-            // KHÓA TẤT CẢ CÁC NÚT CẬP NHẬT RIÊNG LẺ TRÊN CÁC THẺ
             document.querySelectorAll('[data-refresh-single]').forEach(btn => {
                 btn.disabled = true;
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
             });
 
-            showLogConsole(); // Hiện khung log
+            showLogConsole(); 
             document.getElementById('log-content').innerHTML = '';
             updateProgress(0, 1);
             
@@ -1301,7 +1294,7 @@ def generate_html():
                                     const item = screenerResults.find(s => s.symbol === sym);
                                     if (item) {
                                         item.close_price = price;
-                                        item.updated_at = data.updated_at; // Cập nhật giờ riêng của mã
+                                        item.updated_at = data.updated_at; 
                                     }
                                     addLog(`${sym}: ${formatNumber(price)} đ`, 'success');
                                     updatedCount++;
@@ -1344,13 +1337,11 @@ def generate_html():
                 if (icon) icon.classList.remove('spinner');
                 if (headerBtn) headerBtn.disabled = false;
                 
-                // MỞ KHÓA LẠI CÁC NÚT CẬP NHẬT RIÊNG LẺ
                 document.querySelectorAll('[data-refresh-single]').forEach(btn => {
                     btn.disabled = false;
                     btn.classList.remove('opacity-50', 'cursor-not-allowed');
                 });
 
-                // TỰ ĐỘNG ẨN KHUNG LOG SAU KHI XONG (Sau 3 giây để người dùng kịp đọc)
                 setTimeout(() => {
                     if (!isLogMinimized) hideLogConsole();
                 }, 3000);
@@ -1371,7 +1362,6 @@ def generate_html():
             const icon = btnElement.querySelector('i');
             if (icon) icon.classList.add('spinner');
 
-            // KHÓA NÚT CẬP NHẬT TẤT CẢ Ở HEADER
             const headerBtn = document.getElementById('refresh-icon')?.closest('button');
             if (headerBtn) {
                 headerBtn.disabled = true;
@@ -1402,7 +1392,6 @@ def generate_html():
                                 priceEl.classList.add('text-white', 'bg-emerald-500');
                                 setTimeout(() => priceEl.classList.remove('text-white', 'bg-emerald-500'), 500);
                             }
-                            // Cập nhật giờ trên thẻ (không đụng tới Header)
                             const timeEl = card.querySelector('.fa-clock').parentElement;
                             if (timeEl) timeEl.innerHTML = `<i class="fa-regular fa-clock mr-0.5"></i>${newTime}`;
                         }
@@ -1422,7 +1411,6 @@ def generate_html():
                 btnElement.disabled = false;
                 if (icon) icon.classList.remove('spinner');
                 
-                // MỞ KHÓA NÚT CẬP NHẬT TẤT CẢ Ở HEADER
                 if (headerBtn) {
                     headerBtn.disabled = false;
                     headerBtn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -2198,65 +2186,65 @@ def generate_html():
             document.getElementById('chart-loading').classList.remove('hidden');
             try {
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
-                if (!res.ok) throw new Error();
+                if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
-                // Đảm bảo history_d1 là mảng
                 if (!currentSymbolHistory.history_d1) currentSymbolHistory.history_d1 = [];
 
-                // Làm sạch dữ liệu: Chỉ giữ nến hợp lệ
+                // 1. Làm sạch dữ liệu lịch sử
                 currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter(bar => {
-                    return bar.time && bar.open != null && bar.high != null && bar.low != null && bar.close != null;
+                    return bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0;
                 });
 
-                // === SỬA LỖI: LẤY ĐẦY ĐỦ OHLC + VOLUME TỪ MONGODB ===
+                // 2. VẼ NẾN HÔM NAY TỪ MONGODB
                 const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
+                const todayStr = new Date().toISOString().split('T')[0];
                 
-                if (currentPrice > 0) {
-                    const now = new Date();
-                    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-                    
-                    // Tìm xem hôm nay đã có nến chưa
+                if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
+                    // Kiểm tra xem hôm nay có nằm trong file history chưa
                     const existingTodayIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === todayStr);
                     
-                    // Lấy dữ liệu thật từ API (nếu Server đã cập nhật code lấy OHLC)
-                    const liveOpen = item.open || (currentSymbolHistory.history_d1.length > 0 ? currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].close : currentPrice);
-                    const liveHigh = item.high || Math.max(liveOpen, currentPrice);
-                    const liveLow = item.low || Math.min(liveOpen, currentPrice);
-                    const liveVolume = item.volume || 1000; // Fix lỗi sập trục tung do volume = 0
-
-                    if (existingTodayIndex === -1) {
-                        // Nếu chưa có nến hôm nay -> Chèn mới
-                        currentSymbolHistory.history_d1.push({
-                            time: todayStr,
-                            open: liveOpen, 
-                            high: liveHigh,
-                            low: liveLow,
-                            close: currentPrice,
-                            volume: liveVolume 
-                        });
+                    if (existingTodayIndex !== -1) {
+                        // Đã có nến hôm nay trong history (sau khi đóng cửa, file history đã được cập nhật)
+                        // -> Cập nhật giá close mới nhất
+                        currentSymbolHistory.history_d1[existingTodayIndex].close = currentPrice;
                     } else {
-                        // Nếu đã có nến hôm nay -> Cập nhật lại đúng giá trị
-                        const todayBar = currentSymbolHistory.history_d1[existingTodayIndex];
-                        todayBar.close = currentPrice;
-                        todayBar.open = liveOpen; // Lấy giá mở cửa thực tế
-                        todayBar.high = Math.max(todayBar.high, liveHigh, currentPrice);
-                        todayBar.low = Math.min(todayBar.low, liveLow, currentPrice);
-                        todayBar.volume = liveVolume;
+                        // CHƯA CÓ TRONG HISTORY -> Vẽ nến hôm nay từ dữ liệu MongoDB
+                        // Lấy đầy đủ OHLC + Volume từ item (đã lấy từ API /api/data)
+                        // NẾU item.open/high/low BẰNG 0 (Do T7/CN/Lễ) -> KHÔNG VẼ NẾN MỚI, CHỈ UPDATE CLOSE
+                        
+                        const hasValidOHLC = item.open > 0 && item.high > 0 && item.low > 0;
+                        
+                        if (hasValidOHLC) {
+                            // Có đủ dữ liệu giao dịch -> Vẽ nến realtime
+                            const liveOpen = item.open;
+                            const liveHigh = item.high;
+                            const liveLow = item.low;
+                            let liveVolume = item.volume;
+                            if (!liveVolume || liveVolume < 1000) {
+                                liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
+                            }
+
+                            currentSymbolHistory.history_d1.push({
+                                time: todayStr,
+                                open: liveOpen, 
+                                high: liveHigh,
+                                low: liveLow,
+                                close: currentPrice,
+                                volume: liveVolume 
+                            });
+                        } else {
+                            // Ngày nghỉ / Lễ -> Không vẽ nến, chỉ cập nhật giá vào nến cuối
+                            const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
+                            lastBar.close = currentPrice;
+                            if (currentPrice > lastBar.high) lastBar.high = currentPrice;
+                            if (currentPrice < lastBar.low) lastBar.low = currentPrice;
+                        }
                     }
                 }
 
-                // Sắp xếp lại mảng theo thời gian chuẩn String (YYYY-MM-DD) - Tránh lỗi múi giờ
-                currentSymbolHistory.history_d1.sort((a, b) => {
-                    if (a.time < b.time) return -1;
-                    if (a.time > b.time) return 1;
-                    return 0;
-                });
-
-                // Loại bỏ nến trùng lặp nếu có
-                currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter((bar, index, arr) => {
-                    return index === 0 || bar.time !== arr[index - 1].time;
-                });
+                // 3. Sắp xếp lại mảng
+                currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
 
                 renderChartInstance(currentSymbolHistory);
             } catch (err) {
@@ -2465,8 +2453,6 @@ def generate_html():
     html_content = html_content.replace("{cheap_symbols_json_placeholder}", cheap_symbols_json)
     html_content = html_content.replace("{price_api_url}", PRICE_API_URL)
     
-    # Không còn dùng {last_update_str} ghi cứng nữa
-
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
