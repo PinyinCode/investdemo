@@ -8,7 +8,7 @@ on:
       - 'simulator.py'
       - 'screener_results.json'
       - 'last_update.json'
-      - 'history/**'
+    
 
 permissions:
   contents: write
