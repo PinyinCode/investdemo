@@ -6849,7 +6849,7 @@
         "symbol": "MWG",
         "company_name": "Công ty Cổ phần Đầu tư Thế Giới Di Động",
         "market_cap": 0.0,
-        "total_shares": 1477035294,
+        "total_shares": 0,
         "close": 73700,
         "volume": 2797100,
         "pe": 9.73,
@@ -6864,7 +6864,7 @@
         "net_profit_ttm": 11717.18,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "08/11/2026 15:00:28",
+        "updated_at": "08/11/2026 17:10:36",
         "bctc_history": [
             {
                 "period": "2026-Q3",
