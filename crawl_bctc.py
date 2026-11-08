@@ -3,10 +3,9 @@ import json
 import time
 import subprocess
 import datetime
-from vnstock import Fundamental
 
 OUTPUT_DIR = "bctc_data"
-SYMBOLS_FILE = "vn100_symbols.json" # File chứa danh sách mã đã cào
+SYMBOLS_FILE = "vn100_symbols.json"
 
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
@@ -18,7 +17,6 @@ def get_symbols_from_json():
             with open(SYMBOLS_FILE, "r", encoding="utf-8") as f:
                 symbols = json.load(f)
                 if isinstance(symbols, list) and len(symbols) > 0:
-                    # Đảm bảo tất cả đều là chữ HOA và không trùng lặp
                     return sorted(list(set([str(s).upper() for s in symbols])))
         except Exception as e:
             print(f"⚠️ Lỗi đọc file {SYMBOLS_FILE}: {e}")
@@ -43,9 +41,27 @@ def fetch_financial_reports(symbol):
         if os.path.exists(file_path):
             os.remove(file_path)
 
-        fun = Fundamental()
-        stock_obj = fun.equity(symbol)
+        stock_obj = None
         
+        # 1. THỬ DÙNG CÚ PHÁP MỚI (vnstock >= 3.4.0)
+        try:
+            from vnstock import Finance
+            stock_obj = Finance(symbol=symbol, source='VCI')
+        except (ImportError, TypeError):
+            # 2. FALLBACK VỀ CÚ PHÁP CŨ (vnstock < 3.4.0)
+            try:
+                from vnstock import Fundamental
+                fun = Fundamental()
+                stock_obj = fun.equity(symbol)
+            except Exception as e:
+                print(f"❌ Không thể khởi tạo vnstock cho {symbol}: {e}")
+                return False
+
+        if not stock_obj:
+            print(f"❌ Không khởi tạo được đối tượng cho mã: {symbol}")
+            return False
+
+        # Lấy dữ liệu BCTC
         df_balance = stock_obj.balance_sheet(period='quarter')
         df_income = stock_obj.income_statement(period='quarter')
         
@@ -55,7 +71,7 @@ def fetch_financial_reports(symbol):
         except Exception as e:
             print(f"⚠️ Không lấy được bảng Cash Flow cho {symbol}: {e}")
             
-        # BỔ SUNG: Cào thêm bảng Chỉ số tài chính & Định giá (P/E, P/B, P/S, ROE, ROA, Biên gộp...)
+        # Cào thêm bảng Chỉ số tài chính & Định giá
         df_ratio = None
         try:
             df_ratio = stock_obj.ratio(period='quarter')
@@ -78,8 +94,9 @@ def fetch_financial_reports(symbol):
 
         reports['updated_at'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
+        # Sử dụng default=str để tránh lỗi định dạng ngày tháng/số thực
         with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(reports, f, ensure_ascii=False, indent=4)
+            json.dump(reports, f, ensure_ascii=False, indent=4, default=str)
         
         print(f"✅ Đã tải và làm mới BCTC đầy đủ (kèm Cash Flow & Ratios) cho mã: {symbol}")
         return True
@@ -92,7 +109,15 @@ def auto_git_push_bctc():
     try:
         print("\n📤 Đang tự động đồng bộ thư mục 'bctc_data' lên GitHub...")
         
-        subprocess.run(["git", "fetch", "origin", "main"], check=True)
+        # Dọn dẹp file rác (nếu có)
+        for junk_file in ["FETCH_HEAD", "python"]:
+            if os.path.exists(junk_file):
+                try:
+                    os.remove(junk_file)
+                except Exception:
+                    pass
+
+        subprocess.run(["git", "fetch", "origin", "main"], check=True, capture_output=True)
         pull_result = subprocess.run(
             ["git", "pull", "origin", "main", "--rebase", "--autostash"], 
             capture_output=True, text=True
@@ -103,25 +128,28 @@ def auto_git_push_bctc():
 
         subprocess.run(["git", "add", "bctc_data/"], check=True)
         
-        status_result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+        status_result = subprocess.run(["git", "status", "--porcelain", "bctc_data/"], capture_output=True, text=True)
         if not status_result.stdout.strip():
             print("ℹ️ Không có dữ liệu BCTC mới nào thay đổi để đẩy lên.")
             return
 
         commit_msg = f"Auto update full BCTC data (with Cash Flow & Ratios) - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        subprocess.run(["git", "push", "origin", "main"], check=True)
+        subprocess.run(["git", "commit", "-m", commit_msg], check=True, capture_output=True)
+        subprocess.run(["git", "push", "origin", "main"], check=True, capture_output=True)
         print("🚀 Đẩy dữ liệu BCTC lên GitHub thành công!")
         
+    except subprocess.CalledProcessError as e:
+        error_msg = str(e.output) if e.output else str(e)
+        if "nothing to commit" not in error_msg and "nothing added" not in error_msg:
+            print(f"⚠️ Lỗi Git push BCTC: {error_msg}")
     except Exception as e:
-        print(f"⚠️ Lỗi Git push BCTC: {e}")
+        print(f"⚠️ Lỗi không xác định khi push: {e}")
 
 def main():
     print("==================================================")
     print("   CÀO ĐẦY ĐỦ BÁO CÁO TÀI CHÍNH & CHỈ SỐ TÀI CHÍNH")
     print("==================================================")
     
-    # Lấy danh sách mã từ file JSON
     vn100_symbols = get_symbols_from_json()
     if not vn100_symbols:
         print("❌ Không tìm thấy danh sách mã nào. Vui lòng chạy script lấy danh sách VN100 trước.")
