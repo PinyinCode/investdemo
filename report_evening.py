@@ -3,24 +3,41 @@ import json
 import requests
 from datetime import datetime
 
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
 
 def send_telegram(message: str):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        print("Thiếu cấu hình Telegram!")
+        print("❌ LỖI: Thiếu cấu hình TELEGRAM_BOT_TOKEN hoặc TELEGRAM_CHAT_ID!")
         return
+        
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "HTML", "disable_web_page_preview": True}
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID, 
+        "text": message, 
+        "parse_mode": "HTML", 
+        "disable_web_page_preview": True
+    }
+    
     try:
-        requests.post(url, json=payload, timeout=10)
-        print("✅ Đã gửi báo cáo tối Telegram!")
+        res = requests.post(url, json=payload, timeout=10)
+        
+        # --- IN LOG ĐỂ DEBUG ---
+        print(f"📡 Telegram HTTP Status: {res.status_code}")
+        print(f"📡 Telegram Response: {res.text}")
+        
+        if res.status_code == 200 and res.json().get("ok"):
+            print("✅ Telegram xác nhận ĐÃ GỬI thành công!")
+        else:
+            print("❌ Telegram TỪ CHỐI gửi tin nhắn. Hãy xem Response ở trên.")
+            
     except Exception as e:
-        print(f"Lỗi gửi Telegram: {e}")
+        print(f"❌ Lỗi kết nối mạng khi gửi Telegram: {e}")
 
 def generate_evening_report():
+    print("🔄 Đang tạo báo cáo tối...")
     if not os.path.exists("screener_results.json"):
-        send_telegram("⚠️ Không tìm thấy file screener_results.json!")
+        send_telegram("⚠️ Không tìm thấy file screener_results.json để làm báo cáo!")
         return
 
     with open("screener_results.json", "r", encoding="utf-8") as f:
@@ -30,16 +47,16 @@ def generate_evening_report():
         send_telegram("⚠️ File screener_results.json rỗng!")
         return
 
-    # Top 3 mã tăng trưởng tốt nhất (dựa vào profit_growth_yoy)
+    # Top 3 mã tăng trưởng tốt nhất
     top_growth = sorted([r for r in results if r.get("profit_growth_yoy", 0) > 0], 
                         key=lambda x: x.get("profit_growth_yoy", 0), reverse=True)[:3]
     growth_text = ""
     for i, r in enumerate(top_growth):
         growth_text += f"{i+1}. <b>{r['symbol']}</b>: LN tăng {r['profit_growth_yoy']:.1f}% (Giá: {r['close_price']:,.0f}đ)\n"
     if not growth_text:
-        growth_text = "Không có dữ liệu.\n"
+        growth_text = "Không có dữ liệu tăng trưởng nổi bật.\n"
 
-    # Thống kê nhóm ngành có nhiều tín hiệu MUA
+    # Thống kê nhóm ngành
     sector_buy = {}
     for r in results:
         if "MUA" in r.get("final_decision", ""):
