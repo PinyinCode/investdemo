@@ -7,7 +7,7 @@ on:
       - 'render_ui.py'
       - 'simulator.py'
       - 'screener_results.json'
-      - 'last_update.json'
+      
     
 
 permissions:
