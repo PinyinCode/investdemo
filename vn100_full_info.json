@@ -2,7 +2,6 @@
     {
         "symbol": "ACB",
         "company_name": "Ngân hàng Thương mại Cổ phần Á Châu",
-        "market_cap": 118119986824950,
         "total_shares": 5804421957,
         "close_price": 20350
     },
@@ -243,7 +242,6 @@
     {
         "symbol": "HT1",
         "company_name": "Công ty Cổ phần Xi măng VICEM Hà Tiên",
-        "market_cap": 4865271365250,
         "total_shares": 381589911,
         "close_price": 12750
     },
@@ -268,14 +266,12 @@
     {
         "symbol": "KOS",
         "company_name": "Công ty Cổ phần KOSY",
-        "market_cap": 796651312800,
         "total_shares": 216481335,
         "close_price": 3680
     },
     {
         "symbol": "LPB",
         "company_name": "Ngân hàng Thương mại Cổ phần Lộc Phát Việt Nam",
-        "market_cap": 106048514550000,
         "total_shares": 2987282100,
         "close_price": 35500
     },
@@ -288,14 +284,12 @@
     {
         "symbol": "MCH",
         "company_name": "Công ty Cổ phần Hàng Tiêu Dùng MaSan",
-        "market_cap": 169701162380200,
         "total_shares": 1307404949,
         "close_price": 129800
     },
     {
         "symbol": "MSB",
         "company_name": "Ngân hàng Thương mại Cổ phần Hàng Hải Việt Nam",
-        "market_cap": 61214400000000,
         "total_shares": 3744000000,
         "close_price": 16350
     },
@@ -314,7 +308,6 @@
     {
         "symbol": "NAB",
         "company_name": "Ngân hàng Thương mại Cổ phần Nam Á",
-        "market_cap": 27201160753200,
         "total_shares": 2058822282,
         "close_price": 12600
     },
@@ -345,7 +338,6 @@
     {
         "symbol": "OCB",
         "company_name": "Ngân hàng Thương mại Cổ phần Phương Đông",
-        "market_cap": 32768858348200,
         "total_shares": 3062510126,
         "close_price": 10700
     },
@@ -430,7 +422,6 @@
     {
         "symbol": "SIP",
         "company_name": "Công ty Cổ phần Đầu tư Sài Gòn VRG",
-        "market_cap": 12129858444300,
         "total_shares": 242112943,
         "close_price": 50100
     },
@@ -461,7 +452,6 @@
     {
         "symbol": "TAL",
         "company_name": "Công Ty Cổ Phần Đầu Tư Bất Động Sản Taseco",
-        "market_cap": 12070793006600,
         "total_shares": 503999708,
         "close_price": 23950
     },
@@ -480,7 +470,6 @@
     {
         "symbol": "TCX",
         "company_name": "Công ty Cổ phần Chứng khoán Kỹ Thương",
-        "market_cap": 96550854867000,
         "total_shares": 3329339823,
         "close_price": 29000
     },
@@ -511,14 +500,12 @@
     {
         "symbol": "VCK",
         "company_name": "Công ty Cổ phần Chứng Khoán VPS",
-        "market_cap": 69760449519600,
         "total_shares": 2434919704,
         "close_price": 28650
     },
     {
         "symbol": "VGC",
         "company_name": "Tổng Công ty Viglacera - Công ty Cổ phần",
-        "market_cap": 17889165000000,
         "total_shares": 448350000,
         "close_price": 39900
     },
@@ -561,7 +548,6 @@
     {
         "symbol": "VND",
         "company_name": "Công ty Cổ phần Chứng khoán VNDIRECT",
-        "market_cap": 22758383624600,
         "total_shares": 1522299908,
         "close_price": 14950
     },
@@ -586,14 +572,12 @@
     {
         "symbol": "VPL",
         "company_name": "Công ty Cổ phần Vinpearl",
-        "market_cap": 166597605023300,
         "total_shares": 1793300377,
         "close_price": 92900
     },
     {
         "symbol": "VPX",
         "company_name": "Công ty Cổ phần Chứng khoán VPBank",
-        "market_cap": 43875000000000,
         "total_shares": 1875000000,
         "close_price": 23400
     },
@@ -606,14 +590,12 @@
     {
         "symbol": "VSC",
         "company_name": "Công ty Cổ phần Container Việt Nam",
-        "market_cap": 4997844332700,
         "total_shares": 374370362,
         "close_price": 13350
     },
     {
         "symbol": "VTP",
         "company_name": "Tổng Công ty Cổ phần Bưu chính Viettel",
-        "market_cap": 9286717866000,
         "total_shares": 201885171,
         "close_price": 46000
     }
