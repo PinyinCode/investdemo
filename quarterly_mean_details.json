@@ -247,7 +247,7 @@
     "GAS": {
         "annual_rate_percent": 3.12,
         "start_quarter": "2021Q4",
-        "start_price_mean": 67.03,
+        "start_price_mean": 67.02,
         "end_quarter": "2026Q4",
         "end_price_mean": 77.89
     },
@@ -562,7 +562,7 @@
     "PVD": {
         "annual_rate_percent": 7.34,
         "start_quarter": "2021Q4",
-        "start_price_mean": 12.76,
+        "start_price_mean": 12.77,
         "end_quarter": "2026Q4",
         "end_price_mean": 18.05
     },
