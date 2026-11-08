@@ -4038,7 +4038,7 @@
         "symbol": "NVL",
         "company_name": "Công ty Cổ phần Tập đoàn Đầu tư Địa ốc No Va",
         "market_cap": 0.0,
-        "total_shares": 2403805052,
+        "total_shares": 0,
         "close": 10300,
         "volume": 28592400,
         "pe": 7.83,
@@ -4053,7 +4053,7 @@
         "net_profit_ttm": 6554.78,
         "recommendation": "ĐANG TÍCH LŨY NỀN",
         "price_zone": "Đang siết nền tích lũy biên độ hẹp.",
-        "updated_at": "08/11/2026 15:01:00",
+        "updated_at": "08/11/2026 18:43:49",
         "bctc_history": [
             {
                 "period": "2026-Q3",
