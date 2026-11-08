@@ -1095,23 +1095,27 @@ def generate_html():
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         
-                        // ƯU TIÊN GIÁ VÀ % TỪ MONGODB
-                        close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : item.close_price)),
-                        updated_at: liveData.updated_at !== undefined ? liveData.updated_at : (extraData.updated_at || "Chưa rõ"),
+                        // =========================================================
+                        // ƯU TIÊN API TRƯỚC, NẾU API KHÔNG CÓ MỚI FALLBACK VỀ JSON CŨ
+                        // =========================================================
+                        
+                        // 1. Giá đóng cửa: Ưu tiên liveData, nếu không có thì lấy từ data.json/screener
+                        close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : (item.close_price || 0))),
+                        updated_at: liveData.updated_at || extraData.updated_at || "Chưa rõ",
                         open: liveData.open !== undefined ? liveData.open : null,
                         high: liveData.high !== undefined ? liveData.high : null,
                         low: liveData.low !== undefined ? liveData.low : null,
                         volume: liveData.volume !== undefined ? liveData.volume : null,
-                        trading_date: liveData.trading_date !== undefined ? liveData.trading_date : null,
-                        is_locked: liveData.is_locked !== undefined ? liveData.is_locked : false,
+                        trading_date: liveData.trading_date || null,
+                        is_locked: liveData.is_locked || false,
                         
-                        // LẤY DỮ LIỆU % VÀ MŨI TÊN TỪ SERVER
-                        price_change_percent: liveData.price_change_percent !== undefined ? liveData.price_change_percent : (item.price_change_percent || 0),
+                        // 2. % Giá và Mũi tên
+                        price_change_percent: liveData.price_change_percent !== undefined && liveData.price_change_available ? liveData.price_change_percent : (item.price_change_percent || 0),
                         price_change_available: liveData.price_change_available !== undefined ? liveData.price_change_available : (item.price_change_available || false),
-                        price_arrow: liveData.price_arrow !== undefined ? liveData.price_arrow : (item.price_arrow || "—"),
-                        price_color: liveData.price_color !== undefined ? liveData.price_color : (item.price_color || "slate"),
+                        price_arrow: liveData.price_arrow && liveData.price_change_available ? liveData.price_arrow : (item.price_arrow || "—"),
+                        price_color: liveData.price_color && liveData.price_change_available ? liveData.price_color : (item.price_color || "slate"),
                         
-                        // THÔNG SỐ BIÊN ĐỘ VÀ VOLUME
+                        // 3. Volume % và Biên độ %
                         volume_percent: liveData.volume_percent !== undefined ? liveData.volume_percent : (item.volume_percent || 0),
                         amplitude_percent: liveData.amplitude_percent !== undefined ? liveData.amplitude_percent : (item.amplitude_percent || 0),
 
