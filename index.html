@@ -68,45 +68,63 @@
 /* ===== AUTH LITE ===== */
 
     <style>
-        #authOverlay { position:fixed; inset:0; z-index:9999; background:rgba(15,23,42,.95); backdrop-filter:blur(5px); display:none; align-items:center; justify-content:center; padding:1rem; font-family: system-ui, -apple-system, sans-serif; }
-        #authOverlay.show { display:flex; }
-        .auth-box { background:#1e293b; border:1px solid #334155; border-radius:16px; width:100%; max-width:400px; padding:2rem; box-shadow:0 25px 50px -12px rgba(0,0,0,.5); text-align:center; color:#f1f5f9; position:relative; animation: slideUp .3s ease; }
+        /* Khung nền đen mờ che toàn bộ màn hình */
+        #authOverlay { 
+            position: fixed; inset: 0; z-index: 9999; 
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(8px); 
+            display: none; align-items: center; justify-content: center; 
+            padding: 1rem; font-family: system-ui, -apple-system, sans-serif; 
+        }
+        #authOverlay.show { display: flex; }
+        
+        /* Hộp đăng nhập */
+        .auth-box { 
+            background: #1e293b; border: 1px solid #334155; 
+            border-radius: 16px; width: 100%; max-width: 400px; 
+            padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,.8); 
+            text-align: center; color: #f1f5f9; position: relative; 
+            animation: slideUp .3s ease; 
+        }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .auth-title { font-size:1.25rem; font-weight:800; margin-bottom:0.5rem; color:#fff; }
-        .auth-sub { font-size:0.85rem; color:#94a3b8; margin-bottom:1.5rem; line-height: 1.5; }
-        .btn-google { display:flex; align-items:center; justify-content:center; gap:0.75rem; width:100%; padding:0.75rem; border-radius:8px; border:1px solid #475569; background:#0f172a; color:#fff; font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.2s; margin-bottom:1rem; }
-        .btn-google:hover { background:#1e293b; border-color:#64748b; }
-        .auth-divider { display:flex; align-items:center; gap:0.5rem; margin:1rem 0; color:#64748b; font-size:0.75rem; font-weight:600; }
-        .auth-divider::before, .auth-divider::after { content:''; flex:1; height:1px; background:#334155; }
-        .auth-input { width:100%; padding:0.75rem; border-radius:8px; border:1px solid #475569; background:#0f172a; color:#fff; font-size:0.9rem; outline:none; margin-bottom:0.75rem; transition:0.2s; box-sizing:border-box; font-family:inherit; }
-        .auth-input:focus { border-color:#10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
-        .auth-btn { width:100%; padding:0.75rem; border-radius:8px; background:#10b981; color:#fff; font-weight:700; font-size:0.9rem; border:none; cursor:pointer; transition:0.2s; display:flex; align-items:center; justify-content:center; gap:0.5rem; font-family:inherit; }
-        .auth-btn:hover { background:#059669; }
-        .auth-btn:disabled { opacity:0.5; cursor:not-allowed; }
-        .auth-btn.outline { background:transparent; border:1px solid #475569; color:#cbd5e1; }
-        .auth-btn.outline:hover { background:#334155; color:#fff; }
-        .auth-link { color:#38bdf8; font-size:0.8rem; cursor:pointer; background:none; border:none; padding:0; margin-top:0.5rem; text-decoration:none; font-family:inherit; }
-        .auth-link:hover { color:#7dd3fc; text-decoration:underline; }
-        .auth-msg { padding:0.75rem; border-radius:8px; font-size:0.8rem; margin-top:1rem; display:none; text-align:left; line-height: 1.4; }
-        .auth-msg.show { display:block; }
-        .auth-msg.error { background:rgba(244,63,94,.15); color:#fda4af; border:1px solid rgba(244,63,94,.3); }
-        .auth-msg.success { background:rgba(16,185,129,.15); color:#6ee7b7; border:1px solid rgba(16,185,129,.3); }
-        .auth-close { position:absolute; top:1rem; right:1rem; background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer; transition: 0.2s; }
-        .auth-close:hover { color:#fff; transform: scale(1.1); }
-        #setPwdModal { display:none; position:fixed; inset:0; z-index:10000; background:rgba(15,23,42,.95); backdrop-filter:blur(5px); align-items:center; justify-content:center; padding:1rem; }
-        #renewalModal { position:fixed; inset:0; z-index:10001; background:rgba(15,23,42,.95); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:1rem; font-family: system-ui, -apple-system, sans-serif; }
-        #renewalModal.show { display:flex; }
-        .renewal-box { background:#1e293b; border:1px solid #334155; border-radius:20px; width:100%; max-width:450px; padding:2rem; text-align:center; position:relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7); animation: slideUp .3s ease; max-height: 95vh; overflow-y: auto; }
-        .renewal-icon { width:64px; height:64px; border-radius:50%; background:rgba(244,63,94,0.15); color:#f43f5e; display:flex; align-items:center; justify-content:center; font-size:1.75rem; margin:0 auto 1rem; border:2px solid rgba(244,63,94,0.3); }
-        .package-item { border:1px solid #475569; border-radius:8px; padding:12px; margin-bottom:8px; cursor:pointer; text-align:left; transition:0.2s; display:flex; justify-content:space-between; align-items:center; background: #0f172a; }
+        
+        .auth-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff; }
+        .auth-sub { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.5rem; line-height: 1.5; }
+        .btn-google { display: flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.2s; margin-bottom: 1rem; }
+        .btn-google:hover { background: #1e293b; border-color: #64748b; }
+        .auth-divider { display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; color: #64748b; font-size: 0.75rem; font-weight: 600; }
+        .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: #334155; }
+        .auth-input { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-size: 0.9rem; outline: none; margin-bottom: 0.75rem; transition: 0.2s; box-sizing: border-box; font-family: inherit; }
+        .auth-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .auth-btn { width: 100%; padding: 0.75rem; border-radius: 8px; background: #10b981; color: #fff; font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: inherit; }
+        .auth-btn:hover { background: #059669; }
+        .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .auth-btn.outline { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
+        .auth-btn.outline:hover { background: #334155; color: #fff; }
+        .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.5rem; text-decoration: none; font-family: inherit; }
+        .auth-link:hover { color: #7dd3fc; text-decoration: underline; }
+        .auth-msg { padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; margin-top: 1rem; display: none; text-align: left; line-height: 1.4; }
+        .auth-msg.show { display: block; }
+        .auth-msg.error { background: rgba(244,63,94,.15); color: #fda4af; border: 1px solid rgba(244,63,94,.3); }
+        .auth-msg.success { background: rgba(16,185,129,.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
+        .auth-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #94a3b8; font-size: 1.25rem; cursor: pointer; transition: 0.2s; }
+        .auth-close:hover { color: #fff; transform: scale(1.1); }
+        
+        /* Các modal phụ */
+        #setPwdModal { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
+        #renewalModal { position: fixed; inset: 0; z-index: 10001; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
+        #renewalModal.show { display: flex; }
+        .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); animation: slideUp .3s ease; max-height: 95vh; overflow-y: auto; }
+        .renewal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(244,63,94,0.15); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; border: 2px solid rgba(244,63,94,0.3); }
+        .package-item { border: 1px solid #475569; border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; text-align: left; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; background: #0f172a; }
         .package-item:hover { border-color: #64748b; }
         .package-item.active { border-color: #10b981; background: rgba(16,185,129,0.1); }
-        .bank-info { background:#0f172a; border:1px dashed #334155; border-radius:12px; padding:1rem; margin:1rem 0; text-align:left; font-size:0.85rem; }
-        .bank-row { display:flex; justify-content:space-between; margin-bottom:0.5rem; align-items: center; }
-        .bank-row:last-child { margin-bottom:0; }
-        .bank-row span:first-child { color:#94a3b8; }
-        .bank-row span:last-child { font-weight:700; color:#fff; }
-        .code-highlight { color:#10b981 !important; font-family:monospace; font-size:1.1rem; letter-spacing:1px; background: rgba(16,185,129,0.1); padding: 2px 8px; border-radius: 4px; }
+        .bank-info { background: #0f172a; border: 1px dashed #334155; border-radius: 12px; padding: 1rem; margin: 1rem 0; text-align: left; font-size: 0.85rem; }
+        .bank-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; align-items: center; }
+        .bank-row:last-child { margin-bottom: 0; }
+        .bank-row span:first-child { color: #94a3b8; }
+        .bank-row span:last-child { font-weight: 700; color: #fff; }
+        .code-highlight { color: #10b981 !important; font-family: monospace; font-size: 1.1rem; letter-spacing: 1px; background: rgba(16,185,129,0.1); padding: 2px 8px; border-radius: 4px; }
     </style>
     
     </style>
@@ -119,11 +137,14 @@
             <button class="auth-close" onclick="document.getElementById('authOverlay').classList.remove('show')">✕</button>
             <div class="auth-title">Đăng nhập hệ thống</div>
             <div class="auth-sub">Sử dụng tài khoản để truy cập Pro Quant Screener</div>
+            
             <button class="btn-google" id="btnGoogleLogin">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20">
                 Đăng nhập bằng Google
             </button>
+            
             <div class="auth-divider">HOẶC</div>
+            
             <form id="emailLoginForm">
                 <input type="text" id="loginEmail" class="auth-input" placeholder="Email (VD: abc@gmail.com)" autocomplete="email">
                 <input type="password" id="loginPassword" class="auth-input" placeholder="Mật khẩu" autocomplete="current-password">
@@ -138,6 +159,7 @@
             </form>
         </div>
     </div>
+    
     <div id="setPwdModal">
         <div class="auth-box">
             <div class="auth-title">Tạo mật khẩu dự phòng</div>
@@ -149,6 +171,7 @@
             <button class="auth-link" id="btnSkipPwd" style="margin-top:1rem; display:block; width:100%;">Để sau</button>
         </div>
     </div>
+    
     <div id="renewalModal">
         <div class="renewal-box">
             <button class="auth-close" onclick="auth.signOut()" title="Đăng xuất">✕</button>
