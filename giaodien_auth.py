@@ -45,8 +45,6 @@ def build_auth_lite_css():
         .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .auth-btn.outline { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
         .auth-btn.outline:hover { background: #334155; color: #fff; }
-        .auth-btn.danger { background: #ef4444; color: #fff; }
-        .auth-btn.danger:hover { background: #dc2626; }
         
         .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.5rem; text-decoration: none; font-family: inherit; }
         .auth-link:hover { color: #7dd3fc; text-decoration: underline; }
@@ -198,9 +196,12 @@ def build_auth_lite_js(config):
                 var userEmailSpan = document.getElementById('authUserEmail');
                 
                 if (user) {{
-                    // ĐÃ ĐĂNG NHẬP: Mở khóa trang, ẩn khung đăng nhập, hiện thanh user bar
+                    // ĐÃ ĐĂNG NHẬP: Mở khóa trang, ẩn hoàn toàn modal đăng nhập bằng style.display = 'none'
                     document.body.classList.remove('auth-active');
-                    if (authOverlay) authOverlay.classList.remove('show');
+                    if (authOverlay) {{
+                        authOverlay.classList.remove('show');
+                        authOverlay.style.display = 'none'; // Ép ẩn dứt điểm modal
+                    }}
                     if (userBar) userBar.classList.add('show');
                     if (userEmailSpan) userEmailSpan.innerText = user.email;
                     
@@ -209,9 +210,12 @@ def build_auth_lite_js(config):
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn('onAuthReady error:', e); }}
                     }}
                 }} else {{
-                    // CHƯA ĐĂNG NHẬP: Khóa trang, hiện khung đăng nhập, ẩn thanh user bar
+                    // CHƯA ĐĂNG NHẬP: Khóa trang, hiện khung đăng nhập
                     document.body.classList.add('auth-active');
-                    if (authOverlay) authOverlay.classList.add('show');
+                    if (authOverlay) {{
+                        authOverlay.classList.add('show');
+                        authOverlay.style.display = 'flex'; // Hiển thị lại khi chưa đăng nhập
+                    }}
                     if (userBar) userBar.classList.remove('show');
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
@@ -313,7 +317,10 @@ def build_auth_lite_js(config):
                                 document.body.classList.remove('auth-active');
                                 document.getElementById('renewalModal').classList.add('show');
                                 var authOverlay = document.getElementById('authOverlay');
-                                if (authOverlay) authOverlay.classList.remove('show');
+                                if (authOverlay) {{
+                                    authOverlay.classList.remove('show');
+                                    authOverlay.style.display = 'none';
+                                }}
                             }} else {{
                                 var renewal = document.getElementById('renewalModal');
                                 if (renewal) renewal.classList.remove('show');
