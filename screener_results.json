@@ -3,7 +3,7 @@
         "symbol": "VNM",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 57800.0,
+        "close_price": 56900.0,
         "pe": 10.6,
         "pb": 3.5,
         "ps": 0.0,
@@ -42,7 +42,13 @@
         "final_decision_reason": "Giá 57,800 đã vượt xa fair_high 45,017 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Sữa Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 2089955445
+        "total_shares": 2089955445,
+        "price_change_percent": -1.56,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 12.47,
+        "amplitude_percent": 1.9
     },
     {
         "symbol": "GMD",
@@ -93,7 +99,7 @@
         "symbol": "DCM",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 32100.0,
+        "close_price": 30900.0,
         "pe": 6.26,
         "pb": 1.43,
         "ps": 0.0,
@@ -132,7 +138,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 11.0%) + PTCB 45/50 + PTKT 12/20 + Định giá 30/30 + Tổng 87đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần - Tổng Công ty Phân bón Dầu Khí Cà Mau",
         "market_cap": 0.0,
-        "total_shares": 529400000
+        "total_shares": 529400000,
+        "price_change_percent": -3.74,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 15.79,
+        "amplitude_percent": 4.67
     },
     {
         "symbol": "PHR",
@@ -2467,7 +2479,7 @@
         "symbol": "PDR",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 11750.0,
+        "close_price": 11600.0,
         "pe": 21.84,
         "pb": 0.93,
         "ps": 0.0,
@@ -2507,7 +2519,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Phát triển Bất động sản Phát Đạt",
         "market_cap": 0.0,
-        "total_shares": 997809379
+        "total_shares": 997809379,
+        "price_change_percent": -1.28,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 9.38,
+        "amplitude_percent": 3.83
     },
     {
         "symbol": "SSB",
