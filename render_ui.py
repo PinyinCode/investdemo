@@ -2429,38 +2429,43 @@ def generate_html():
             else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
 
             // =========================================================
-            // XỬ LÝ VOLUME "MINH HỌA" CHO NẾN HÔM NAY
+            // XỬ LÝ VOLUME "MINH HỌA" CHO NẾN HÔM NAY (SỬA LỖI TRADINGDATE)
             // =========================================================
-            let maxVol = 0;
-            const recentBars = chartData.slice(-20);
-            recentBars.forEach(bar => {
-                if (bar.volume > maxVol) maxVol = bar.volume;
-            });
+            if (chartData.length > 0) {
+                // Lấy thời gian của nến cuối cùng trong mảng (chính là nến hôm nay)
+                const lastBarTime = chartData[chartData.length - 1].time;
+                
+                let maxVol = 0;
+                const recentBars = chartData.slice(-20);
+                recentBars.forEach(bar => {
+                    if (bar.volume > maxVol) maxVol = bar.volume;
+                });
 
-            // Tính KL trung bình 20 phiên (không tính nến hôm nay)
-            let sumVol = 0;
-            let countVol = 0;
-            recentBars.forEach(bar => {
-                if (bar.volume > 0) {
-                    sumVol += bar.volume;
-                    countVol++;
-                }
-            });
-            const avgVol20 = countVol > 0 ? (sumVol / countVol) : 0;
-
-            // Duyệt qua chartData một lần nữa để gán Volume "minh họa" cho nến hôm nay
-            chartData = chartData.map(bar => {
-                let b = { ...bar };
-                // Chỉ áp dụng cho nến cuối cùng (hôm nay)
-                if (b.time === tradingDate) {
-                    // Nếu KL hôm nay quá nhỏ (chưa bằng 10% trung bình)
-                    if (avgVol20 > 0 && b.volume < (avgVol20 * 0.1)) {
-                        // Gán cho nó một mức Volume minh họa (bằng 5% của KL lớn nhất trong 20 phiên)
-                        b.volume = maxVol * 0.05;
+                // Tính KL trung bình 20 phiên (không tính nến hôm nay)
+                let sumVol = 0;
+                let countVol = 0;
+                recentBars.forEach(bar => {
+                    if (bar.volume > 0) {
+                        sumVol += bar.volume;
+                        countVol++;
                     }
-                }
-                return b;
-            });
+                });
+                const avgVol20 = countVol > 0 ? (sumVol / countVol) : 0;
+
+                // Duyệt qua chartData để gán Volume "minh họa" cho nến hôm nay
+                chartData = chartData.map(bar => {
+                    let b = { ...bar };
+                    // So sánh với thời gian của nến cuối cùng
+                    if (b.time === lastBarTime) {
+                        // Nếu KL hôm nay quá nhỏ (chưa bằng 10% trung bình)
+                        if (avgVol20 > 0 && b.volume < (avgVol20 * 0.1)) {
+                            // Gán cho nó một mức Volume minh họa (bằng 5% của KL lớn nhất trong 20 phiên)
+                            b.volume = maxVol * 0.05;
+                        }
+                    }
+                    return b;
+                });
+            }
 
             if (chartData && chartData.length > 0) {
                 candleSeriesInstance.setData(chartData);
@@ -2566,7 +2571,6 @@ def generate_html():
                 }, 50);
             }
         }
-
         function closeChartModal() {
             document.getElementById('chart-modal').classList.add('hidden');
             if (chartInstance) { chartInstance.remove(); chartInstance = null; }
