@@ -48,7 +48,7 @@
         "annual_rate_percent": -7.62
     },
     "CTD": {
-        "annual_rate_percent": 3.05
+        "annual_rate_percent": 3.06
     },
     "CTG": {
         "annual_rate_percent": 9.15
@@ -60,7 +60,7 @@
         "annual_rate_percent": 5.28
     },
     "DBC": {
-        "annual_rate_percent": -7.5
+        "annual_rate_percent": -7.53
     },
     "DCM": {
         "annual_rate_percent": 4.35
@@ -321,7 +321,7 @@
         "annual_rate_percent": 12.3
     },
     "VGC": {
-        "annual_rate_percent": 1.35
+        "annual_rate_percent": 1.22
     },
     "VHC": {
         "annual_rate_percent": 2.05
@@ -339,7 +339,7 @@
         "annual_rate_percent": 0.69
     },
     "VJC": {
-        "annual_rate_percent": 6.26
+        "annual_rate_percent": 6.32
     },
     "VND": {
         "annual_rate_percent": -11.53
