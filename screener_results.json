@@ -48,7 +48,7 @@
         "symbol": "GMD",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "MARITIME",
-        "close_price": 52800.0,
+        "close_price": 52700.0,
         "pe": 12.72,
         "pb": 2.42,
         "ps": 0.0,
@@ -87,13 +87,19 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 45/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần Tập đoàn Gemadept",
         "market_cap": 0.0,
-        "total_shares": 649337392
+        "total_shares": 649337392,
+        "price_change_percent": -0.19,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 47.5,
+        "amplitude_percent": 2.47
     },
     {
         "symbol": "DCM",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 32100.0,
+        "close_price": 30900.0,
         "pe": 6.26,
         "pb": 1.43,
         "ps": 0.0,
@@ -132,7 +138,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 11.0%) + PTCB 45/50 + PTKT 12/20 + Định giá 30/30 + Tổng 87đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần - Tổng Công ty Phân bón Dầu Khí Cà Mau",
         "market_cap": 0.0,
-        "total_shares": 529400000
+        "total_shares": 529400000,
+        "price_change_percent": -3.74,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 15.79,
+        "amplitude_percent": 4.67
     },
     {
         "symbol": "PHR",
@@ -630,7 +642,7 @@
         "symbol": "FRT",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 142000.0,
+        "close_price": 142800.0,
         "pe": 18.69,
         "pb": 4.85,
         "ps": 0.0,
@@ -669,7 +681,13 @@
         "final_decision_reason": "Giá 142,000 đã vượt xa fair_high 70,737 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Bán lẻ Kỹ thuật số FPT",
         "market_cap": 0.0,
-        "total_shares": 178815054
+        "total_shares": 178815054,
+        "price_change_percent": 0.56,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 32.18,
+        "amplitude_percent": 1.9
     },
     {
         "symbol": "MSN",
@@ -809,7 +827,7 @@
         "symbol": "GAS",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 74100.0,
+        "close_price": 73000.0,
         "pe": 12.13,
         "pb": 2.44,
         "ps": 0.0,
@@ -848,7 +866,13 @@
         "final_decision_reason": "Giá 74,100 đã vượt xa fair_high 55,325 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Tổng Công ty Khí Việt Nam - Công ty Cổ phần",
         "market_cap": 0.0,
-        "total_shares": 2412949756
+        "total_shares": 2412949756,
+        "price_change_percent": -1.48,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 79.04,
+        "amplitude_percent": 3.1
     },
     {
         "symbol": "PVT",
@@ -1076,7 +1100,7 @@
         "symbol": "BWE",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 42900.0,
+        "close_price": 42800.0,
         "pe": 8.76,
         "pb": 1.41,
         "ps": 0.0,
@@ -1115,7 +1139,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 30/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
         "market_cap": 0.0,
-        "total_shares": 219928644
+        "total_shares": 219928644,
+        "price_change_percent": -0.23,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 69.38,
+        "amplitude_percent": 2.91
     },
     {
         "symbol": "CTR",
@@ -3051,7 +3081,7 @@
         "symbol": "VCK",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 28650.0,
+        "close_price": 28100.0,
         "pe": 16.42,
         "pb": 2.17,
         "ps": 0.0,
@@ -3090,7 +3120,13 @@
         "final_decision_reason": "Giá 28,650 đã vượt xa fair_high 22,761 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Chứng Khoán VPS",
         "market_cap": 0.0,
-        "total_shares": 2434919704
+        "total_shares": 2434919704,
+        "price_change_percent": -1.92,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 11.53,
+        "amplitude_percent": 2.45
     },
     {
         "symbol": "VHC",
@@ -3276,7 +3312,7 @@
         "symbol": "SIP",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 50100.0,
+        "close_price": 49700.0,
         "pe": 8.67,
         "pb": 2.34,
         "ps": 0.0,
@@ -3315,7 +3351,13 @@
         "final_decision_reason": "PTCB chỉ 3/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Đầu tư Sài Gòn VRG",
         "market_cap": 0.0,
-        "total_shares": 242112943
+        "total_shares": 242112943,
+        "price_change_percent": -0.8,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 108.38,
+        "amplitude_percent": 2.36
     },
     {
         "symbol": "VTP",
@@ -3366,7 +3408,7 @@
         "symbol": "SSI",
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
-        "close_price": 20400.0,
+        "close_price": 19900.0,
         "pe": 13.75,
         "pb": 1.57,
         "ps": 0.0,
@@ -3404,7 +3446,13 @@
         "final_decision_reason": "PTCB chỉ 16/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán SSI",
         "market_cap": 0.0,
-        "total_shares": 3003293801
+        "total_shares": 3003293801,
+        "price_change_percent": -2.45,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 10.59,
+        "amplitude_percent": 3.18
     },
     {
         "symbol": "EIB",
