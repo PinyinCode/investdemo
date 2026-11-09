@@ -2265,7 +2265,6 @@ def generate_html():
             
             const item = screenerResults.find(s => s.symbol === symbol);
             if (item && item.updated_at) {
-                // Cắt bỏ phần ngoặc đơn (nếu có)
                 const cleanTime = item.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
                 document.getElementById('chart-last-update').innerText = cleanTime;
             } else {
@@ -2281,12 +2280,34 @@ def generate_html():
                 if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
-                if (!currentSymbolHistory.history_d1) currentSymbolHistory.history_d1 = [];
+                // 2. CHUẨN HÓA ĐƠN VỊ: Nhân 1000 cho toàn bộ dữ liệu lịch sử (D1, W1, MN)
+                // Đồng thời lọc bỏ các nến rác (Giá <= 0)
+                if (currentSymbolHistory.history_d1) {
+                    currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
+                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
+                        .map(bar => ({
+                            time: bar.time,
+                            open: bar.open * 1000,
+                            high: bar.high * 1000,
+                            low: bar.low * 1000,
+                            close: bar.close * 1000,
+                            volume: bar.volume
+                        }));
+                } else {
+                    currentSymbolHistory.history_d1 = [];
+                }
 
-                // 2. Làm sạch dữ liệu: Lọc bỏ các nến rác (Giá <= 0)
-                currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter(bar => {
-                    return bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0;
-                });
+                if (currentSymbolHistory.history_w1) {
+                    currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1.map(bar => ({
+                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
+                    }));
+                }
+                
+                if (currentSymbolHistory.history_mn) {
+                    currentSymbolHistory.history_mn = currentSymbolHistory.history_mn.map(bar => ({
+                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
+                    }));
+                }
 
                 // 3. Cập nhật giá mới nhất vào nến cuối cùng
                 let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
@@ -2298,15 +2319,26 @@ def generate_html():
                 let itemLow = item.low || 0;
                 let itemVolume = item.volume || 0;
                 
+                // (Vẫn giữ logic nhân 1000 cho nến live API phòng trường hợp API trả về nghìn đồng)
                 if (currentPrice > 0 && currentPrice < 100) currentPrice *= 1000;
                 if (itemOpen > 0 && itemOpen < 100) itemOpen *= 1000;
                 if (itemHigh > 0 && itemHigh < 100) itemHigh *= 1000;
                 if (itemLow > 0 && itemLow < 100) itemLow *= 1000;
 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
-                    const existingBar = tradingDate ? currentSymbolHistory.history_d1.find(b => b.time === tradingDate) : null;
+                    const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
+                    // Fallback nếu API không trả tradingDate thì dùng ngày của nến cuối
+                    const effectiveDate = tradingDate || lastBar.time;
 
-                    if (!existingBar) {
+                    const existingBar = currentSymbolHistory.history_d1.find(b => b.time === effectiveDate);
+
+                    if (existingBar) {
+                        // Nếu trùng ngày -> Ghi đè nến cuối thay vì push thêm (tránh lỗi duplicate time)
+                        existingBar.close = currentPrice;
+                        if (itemHigh > 0) existingBar.high = Math.max(existingBar.high, itemHigh);
+                        if (itemLow > 0)  existingBar.low  = Math.min(existingBar.low, itemLow);
+                        if (itemVolume > 0) existingBar.volume = itemVolume;
+                    } else {
                         // TÍNH KL TRUNG BÌNH 20 PHIÊN TỪ HISTORY
                         const recentBars = currentSymbolHistory.history_d1.slice(-20);
                         let sumVol = 0;
@@ -2314,7 +2346,6 @@ def generate_html():
                         const avgVol20 = recentBars.length > 0 ? (sumVol / recentBars.length) : 0;
 
                         // KIỂM TRA ĐIỀU KIỆN: KL HÔM NAY CÓ ĐỦ LỚN ĐỂ VẼ KHÔNG?
-                        // (Ít nhất bằng 20% KL trung bình 20 phiên)
                         const isVolumeEnough = avgVol20 > 0 ? (itemVolume >= avgVol20 * 0.2) : true;
 
                         if (isVolumeEnough) {
@@ -2322,10 +2353,10 @@ def generate_html():
                             if (hasValidOHLC) {
                                 let liveVolume = itemVolume;
                                 if (!liveVolume || liveVolume < 1000) {
-                                    liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
+                                    liveVolume = lastBar.volume; 
                                 }
                                 currentSymbolHistory.history_d1.push({
-                                    time: tradingDate || new Date().toISOString().split('T')[0],
+                                    time: effectiveDate,
                                     open: itemOpen,
                                     high: itemHigh,
                                     low: itemLow,
@@ -2336,7 +2367,7 @@ def generate_html():
                         } else {
                             console.log(`[CHART] Bỏ qua nến hôm nay vì KL quá nhỏ (${itemVolume} < 20% TB ${avgVol20})`);
                         }
-                    } 
+                    }
                 }
 
                 // 4. Sắp xếp lại mảng
@@ -2352,7 +2383,6 @@ def generate_html():
                 document.getElementById('chart-loading').classList.add('hidden');
             }
         }
-
         function calculateMA(data, period) {
             let result = [];
             for (let i = 0; i < data.length; i++) {
