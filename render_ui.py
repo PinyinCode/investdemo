@@ -7,7 +7,6 @@ OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
 CHEAP_STOCKS_FILE = "cheap_stocks.json"
 
-# LINK API RENDER CỦA BẠN
 PRICE_API_URL = "https://quant-price-api.onrender.com"
 
 def get_firebase_config():
@@ -982,14 +981,13 @@ def generate_html():
             "slate":   { bg: "bg-slate-700/40",   border: "border-slate-600/50",   text: "text-slate-300",   icon: "fa-eye" },
         };
 
-        // CHỈ DÙNG CHO GIÁ CỔ PHIẾU: Nhân 1000 (Vì API trả 20.9 -> 20.900)
+        // ĐÃ CÓ SẴN VNĐ TỪ JSON (VD 32100): Chỉ cần format dấu chấm
         function formatPrice(num) {
             if (num === undefined || num === null || num === 0) return '—';
-            let val = num * 1000;
-            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
         
-        // DÙNG CHO CHỈ SỐ (FAIR VALUE, EPS) & VOLUME: Không nhân 1000
+        // DÙNG CHUNG CHO MỌI THỨ (Volume, EPS, etc.): Không nhân 1000
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
             return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -1049,7 +1047,6 @@ def generate_html():
                 if (ratesRes.ok) symbolSimRates = await ratesRes.json();
                 if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
-                // LẤY GIỜ CẬP NHẬT TOÀN CỤC TỪ SERVER
                 try {
                     const timeRes = await fetch(`${PRICE_API_URL}/api/last-update?t=` + new Date().getTime());
                     if (timeRes.ok) {
@@ -1862,8 +1859,8 @@ def generate_html():
             if (shares > 0) {
                 document.getElementById('modal-shares').innerText = (shares / 1_000_000).toLocaleString('vi-VN', {maximumFractionDigits: 1}) + ' Tr';
                 
-                // ĐÃ SỬA: Nhân 1000 cho giá để tính đúng vốn hóa
-                const mktCap = (shares * (item.close_price || 0) * 1000) / 1_000_000_000;
+                // ĐÃ SỬA: Vốn hóa nhân 1000 vì giá đang là VNĐ sẵn trong JSON
+                const mktCap = (shares * (item.close_price || 0)) / 1_000_000_000;
                 
                 document.getElementById('modal-mktcap').innerText = mktCap.toLocaleString('vi-VN', {maximumFractionDigits: 0}) + ' Tỷ';
             } else {
@@ -2019,7 +2016,6 @@ def generate_html():
             }
             const details = quarterlyMeanDetails[symbol];
             if (details) {
-                // ĐÃ SỬA: Dùng formatNumber thay vì formatPrice cho dữ liệu Quý
                 document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatNumber(details.start_price_mean)} đ`;
                 document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatNumber(details.end_price_mean)} đ`;
             } else {
@@ -2532,7 +2528,7 @@ def generate_html():
                 if (latestBar) updateLegend(latestBar, chartData);
                 function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
-                    legendClose.innerText = formatNumber(bar.close); // bar.close đã nhân 1000 sẵn, dùng formatNumber để chỉ format dấu chấm
+                    legendClose.innerText = formatNumber(bar.close);
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
                     if (index > 0 && dataArr[index - 1].close > 0) {
@@ -2541,7 +2537,7 @@ def generate_html():
                     legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
                     legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-                    legendVol.innerText = formatNumber(bar.volume); // Volume không nhân 1000
+                    legendVol.innerText = formatNumber(bar.volume); 
                 }
                 chartInstance.subscribeCrosshairMove(param => {
                     if (!param.point || !param.time) { if (latestBar) updateLegend(latestBar, chartData); }
