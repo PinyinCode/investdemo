@@ -78,7 +78,7 @@
         "annual_rate_percent": -28.71
     },
     "DPM": {
-        "annual_rate_percent": 2.54
+        "annual_rate_percent": 2.49
     },
     "DRC": {
         "annual_rate_percent": -14.47
@@ -102,7 +102,7 @@
         "annual_rate_percent": 37.16
     },
     "FTS": {
-        "annual_rate_percent": -6.6
+        "annual_rate_percent": -6.54
     },
     "GAS": {
         "annual_rate_percent": 3.18
@@ -111,7 +111,7 @@
         "annual_rate_percent": 38.81
     },
     "GEX": {
-        "annual_rate_percent": -1.63
+        "annual_rate_percent": -1.76
     },
     "GMD": {
         "annual_rate_percent": 17.33
@@ -270,7 +270,7 @@
         "annual_rate_percent": 12.98
     },
     "SSB": {
-        "annual_rate_percent": -2.98
+        "annual_rate_percent": -3.06
     },
     "SSI": {
         "annual_rate_percent": -4.33
