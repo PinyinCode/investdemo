@@ -2510,18 +2510,28 @@ def generate_html():
                         }
                     }
                     if (activeIndicators.QLINES) {
+                        // Kiểm tra: Nếu nhỏ hơn 1000 (VD: 30.9) thì nhân 1000. Nếu đã lớn hơn 1000 (VD: 30900) thì giữ nguyên.
+                        let startPrice = details.start_price_mean;
+                        if (startPrice > 0 && startPrice < 1000) {
+                            startPrice = startPrice * 1000;
+                        }
+
+                        let endPrice = details.end_price_mean;
+                        if (endPrice > 0 && endPrice < 1000) {
+                            endPrice = endPrice * 1000;
+                        }
+
                         candleSeriesInstance.createPriceLine({
-                            price: details.start_price_mean, color: '#f97316', lineWidth: 2,
+                            price: startPrice, color: '#f97316', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true,
-                            title: `Q.Đầu 5Y (${details.start_quarter}): ${formatNumber(details.start_price_mean)}`
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${formatNumber(startPrice)}`
                         });
                         candleSeriesInstance.createPriceLine({
-                            price: details.end_price_mean, color: '#10b981', lineWidth: 2,
+                            price: endPrice, color: '#10b981', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true,
-                            title: `Q.Cuối (${details.end_quarter}): ${formatNumber(details.end_price_mean)}`
+                            title: `Q.Cuối (${details.end_quarter}): ${formatNumber(endPrice)}`
                         });
                     }
-                }
                 if (activeIndicators.MA20) chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
                 if (activeIndicators.MA50) chartInstance.addSeries(LC.LineSeries, { color: '#eab308', lineWidth: 1 }, 0).setData(calculateMA(chartData, 50));
                 if (activeIndicators.VOLMA) chartInstance.addSeries(LC.LineSeries, { color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }, 0).setData(calculateVolumeMA(chartData, 20));
