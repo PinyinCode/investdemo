@@ -1,71 +1,41 @@
 import json
 
-
 def build_auth_lite_css():
     return r"""
     <style>
-        /* =========================================
-           1. MÀN HÌNH ĐĂNG NHẬP
-           ========================================= */
         #authOverlay { position:fixed; inset:0; z-index:9999; background:rgba(15,23,42,.95); backdrop-filter:blur(5px); display:none; align-items:center; justify-content:center; padding:1rem; font-family: system-ui, -apple-system, sans-serif; }
         #authOverlay.show { display:flex; }
         .auth-box { background:#1e293b; border:1px solid #334155; border-radius:16px; width:100%; max-width:400px; padding:2rem; box-shadow:0 25px 50px -12px rgba(0,0,0,.5); text-align:center; color:#f1f5f9; position:relative; animation: slideUp .3s ease; }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
         .auth-title { font-size:1.25rem; font-weight:800; margin-bottom:0.5rem; color:#fff; }
         .auth-sub { font-size:0.85rem; color:#94a3b8; margin-bottom:1.5rem; line-height: 1.5; }
-        
-        /* Nút Google */
         .btn-google { display:flex; align-items:center; justify-content:center; gap:0.75rem; width:100%; padding:0.75rem; border-radius:8px; border:1px solid #475569; background:#0f172a; color:#fff; font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.2s; margin-bottom:1rem; }
         .btn-google:hover { background:#1e293b; border-color:#64748b; }
-        
-        /* Dấu phân cách */
         .auth-divider { display:flex; align-items:center; gap:0.5rem; margin:1rem 0; color:#64748b; font-size:0.75rem; font-weight:600; }
         .auth-divider::before, .auth-divider::after { content:''; flex:1; height:1px; background:#334155; }
-        
-        /* Form Input */
         .auth-input { width:100%; padding:0.75rem; border-radius:8px; border:1px solid #475569; background:#0f172a; color:#fff; font-size:0.9rem; outline:none; margin-bottom:0.75rem; transition:0.2s; box-sizing:border-box; font-family:inherit; }
         .auth-input:focus { border-color:#10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
-        
-        /* Nút Submit */
         .auth-btn { width:100%; padding:0.75rem; border-radius:8px; background:#10b981; color:#fff; font-weight:700; font-size:0.9rem; border:none; cursor:pointer; transition:0.2s; display:flex; align-items:center; justify-content:center; gap:0.5rem; font-family:inherit; }
         .auth-btn:hover { background:#059669; }
         .auth-btn:disabled { opacity:0.5; cursor:not-allowed; }
-        
         .auth-btn.outline { background:transparent; border:1px solid #475569; color:#cbd5e1; }
         .auth-btn.outline:hover { background:#334155; color:#fff; }
-        
-        .auth-link { color:#38bdf8; font-size:0.8rem; cursor:pointer; background:none; border:none; padding:0; margin-top:0.5rem; text-decoration:underline; font-family:inherit; }
-        .auth-link:hover { color:#7dd3fc; }
-        
-        /* Thông báo lỗi/thành công */
+        .auth-link { color:#38bdf8; font-size:0.8rem; cursor:pointer; background:none; border:none; padding:0; margin-top:0.5rem; text-decoration:none; font-family:inherit; }
+        .auth-link:hover { color:#7dd3fc; text-decoration:underline; }
         .auth-msg { padding:0.75rem; border-radius:8px; font-size:0.8rem; margin-top:1rem; display:none; text-align:left; line-height: 1.4; }
         .auth-msg.show { display:block; }
         .auth-msg.error { background:rgba(244,63,94,.15); color:#fda4af; border:1px solid rgba(244,63,94,.3); }
         .auth-msg.success { background:rgba(16,185,129,.15); color:#6ee7b7; border:1px solid rgba(16,185,129,.3); }
-        
         .auth-close { position:absolute; top:1rem; right:1rem; background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer; transition: 0.2s; }
         .auth-close:hover { color:#fff; transform: scale(1.1); }
-
-        /* =========================================
-           2. MODAL ĐẶT MẬT KHẨU LẦN ĐẦU
-           ========================================= */
         #setPwdModal { display:none; position:fixed; inset:0; z-index:10000; background:rgba(15,23,42,.95); backdrop-filter:blur(5px); align-items:center; justify-content:center; padding:1rem; }
-
-        /* =========================================
-           3. MODAL GIA HẠN TÀI KHOẢN
-           ========================================= */
         #renewalModal { position:fixed; inset:0; z-index:10001; background:rgba(15,23,42,.95); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:1rem; font-family: system-ui, -apple-system, sans-serif; }
         #renewalModal.show { display:flex; }
         .renewal-box { background:#1e293b; border:1px solid #334155; border-radius:20px; width:100%; max-width:450px; padding:2rem; text-align:center; position:relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7); animation: slideUp .3s ease; max-height: 95vh; overflow-y: auto; }
         .renewal-icon { width:64px; height:64px; border-radius:50%; background:rgba(244,63,94,0.15); color:#f43f5e; display:flex; align-items:center; justify-content:center; font-size:1.75rem; margin:0 auto 1rem; border:2px solid rgba(244,63,94,0.3); }
-        
-        /* Thẻ chọn gói */
         .package-item { border:1px solid #475569; border-radius:8px; padding:12px; margin-bottom:8px; cursor:pointer; text-align:left; transition:0.2s; display:flex; justify-content:space-between; align-items:center; background: #0f172a; }
         .package-item:hover { border-color: #64748b; }
         .package-item.active { border-color: #10b981; background: rgba(16,185,129,0.1); }
-        
-        /* Thông tin ngân hàng */
         .bank-info { background:#0f172a; border:1px dashed #334155; border-radius:12px; padding:1rem; margin:1rem 0; text-align:left; font-size:0.85rem; }
         .bank-row { display:flex; justify-content:space-between; margin-bottom:0.5rem; align-items: center; }
         .bank-row:last-child { margin-bottom:0; }
@@ -75,52 +45,36 @@ def build_auth_lite_css():
     </style>
     """
 
-
 def build_auth_lite_html(config):
     bank = config.get("bank_config", {})
     packages = config.get("packages", [])
-
     packages_html = ""
     for p in packages:
-        save_badge = (
-            f'<span style="background:#10b981;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;">{p["save"]}</span>'
-            if p.get("save") else ""
-        )
+        save_badge = f'<span style="background:#10b981;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;">{p["save"]}</span>' if p.get("save") else ""
         packages_html += f"""
-        <div onclick="selectPackage('{p['id']}', {p['amount']}, '{p['label']}')" 
-             class="package-item" id="pkg_{p['id']}">
-            <div>
-                <div style="font-weight:bold; color:#fff; font-size:0.9rem;">{p['label']} {save_badge}</div>
-            </div>
+        <div onclick="selectPackage('{p['id']}', {p['amount']}, '{p['label']}')" class="package-item" id="pkg_{p['id']}">
+            <div><div style="font-weight:bold; color:#fff; font-size:0.9rem;">{p['label']} {save_badge}</div></div>
             <div style="color:#10b981; font-weight:bold;">{p['amount']:,}đ</div>
         </div>
         """
-
     return f"""
-    <!-- 1. MÀN HÌNH ĐĂNG NHẬP -->
     <div id="authOverlay">
         <div class="auth-box">
             <button class="auth-close" onclick="document.getElementById('authOverlay').classList.remove('show')">✕</button>
             <div class="auth-title">Đăng nhập hệ thống</div>
             <div class="auth-sub">Sử dụng tài khoản để truy cập Pro Quant Screener</div>
-            
             <button class="btn-google" id="btnGoogleLogin">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20">
                 Đăng nhập bằng Google
             </button>
-
             <div class="auth-divider">HOẶC</div>
-
             <form id="emailLoginForm">
                 <input type="text" id="loginEmail" class="auth-input" placeholder="Email (VD: abc@gmail.com)" autocomplete="email">
                 <input type="password" id="loginPassword" class="auth-input" placeholder="Mật khẩu" autocomplete="current-password">
-                
                 <div id="loginMsg" class="auth-msg"></div>
-                
                 <button type="submit" class="auth-btn" id="btnEmailLogin" style="margin-top:1rem;">
-                    <i class="fa-solid fa-sign-in-alt"></i> Đăng nhập
+                    <i class="fa-solid fa-sign-in-alt"></i> <span>Đăng nhập</span>
                 </button>
-                
                 <div style="display:flex; justify-content:space-between; margin-top:0.5rem;">
                     <button type="button" class="auth-link" onclick="forgotPassword()">Quên mật khẩu?</button>
                     <button type="button" class="auth-link" onclick="showRegisterForm()">Tạo tài khoản</button>
@@ -128,39 +82,27 @@ def build_auth_lite_html(config):
             </form>
         </div>
     </div>
-
-    <!-- 2. MODAL ĐẶT MẬT KHẨU LẦN ĐẦU -->
     <div id="setPwdModal">
         <div class="auth-box">
             <div class="auth-title">Tạo mật khẩu dự phòng</div>
             <div class="auth-sub">Bạn đang đăng nhập bằng Google. Hãy tạo mật khẩu để lần sau có thể đăng nhập bằng Email.</div>
-            
             <input type="password" id="newPwd1" class="auth-input" placeholder="Mật khẩu mới (tối thiểu 6 ký tự)">
             <input type="password" id="newPwd2" class="auth-input" placeholder="Nhập lại mật khẩu">
-            
             <div id="setPwdMsg" class="auth-msg"></div>
-            
             <button class="auth-btn" id="btnSavePwd" style="margin-top:1rem;">Lưu mật khẩu</button>
             <button class="auth-link" id="btnSkipPwd" style="margin-top:1rem; display:block; width:100%;">Để sau</button>
         </div>
     </div>
-
-    <!-- 3. MODAL GIA HẠN TÀI KHOẢN -->
     <div id="renewalModal">
         <div class="renewal-box">
-            <button class="auth-close" onclick="window.onAuthLogout && window.onAuthLogout()" title="Đăng xuất">✕</button>
+            <button class="auth-close" onclick="auth.signOut()" title="Đăng xuất">✕</button>
             <div class="renewal-icon"><i class="fa-solid fa-clock"></i></div>
             <h2 class="auth-title" style="color:#f43f5e;">Tài khoản đã hết hạn!</h2>
             <p class="auth-sub">Thời gian dùng thử đã kết thúc. Vui lòng chọn gói để tiếp tục sử dụng.</p>
-            
             <div style="text-align:left; margin-bottom:10px; font-weight:bold; color:#94a3b8; font-size:0.8rem;">CHỌN GÓI GIA HẠN:</div>
-            <div style="max-height:200px; overflow-y:auto; padding-right:5px;" id="packageList">
-                {packages_html}
-            </div>
-            
+            <div style="max-height:200px; overflow-y:auto; padding-right:5px;" id="packageList">{packages_html}</div>
             <div id="qrCodeWrap" style="display:none; margin-top:1rem;">
                 <img id="qrImage" src="" style="width:200px; height:200px; margin:0 auto 10px; border-radius:12px; border:2px solid #334155; background:#fff; padding: 5px;">
-                
                 <div class="bank-info">
                     <div class="bank-row"><span>Ngân hàng:</span> <span>{bank.get('bank_name', 'MB Bank')}</span></div>
                     <div class="bank-row"><span>Số TK:</span> <span>{bank.get('account_no', '0123456789')}</span></div>
@@ -168,31 +110,26 @@ def build_auth_lite_html(config):
                     <div class="bank-row"><span>Số tiền:</span> <span id="payAmount" class="code-highlight">0 VNĐ</span></div>
                     <div class="bank-row"><span>Nội dung:</span> <span id="payCode" class="code-highlight">---</span></div>
                 </div>
-                <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;">
-                    <i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung. Hệ thống sẽ tự động kích hoạt hoặc Admin sẽ duyệt thủ công.
-                </p>
+                <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung.</p>
             </div>
-
             <div style="display:flex; gap:10px; margin-top:1rem;">
-                <button class="auth-btn outline" onclick="window.onAuthLogout && window.onAuthLogout()">Đăng xuất</button>
+                <button class="auth-btn outline" onclick="auth.signOut()">Đăng xuất</button>
                 <button class="auth-btn" id="btnConfirmPay" style="display:none;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
             </div>
         </div>
     </div>
     """
 
-
 def build_auth_lite_js(config):
     trial_days = config.get("trial_days", 7)
     bank_config_js = json.dumps(config.get("bank_config", {}), ensure_ascii=False)
-
+    
     return f"""
     <script>
     (function() {{
         'use strict';
         var TRIAL_DAYS = {trial_days};
         var BANK_CONFIG = {bank_config_js};
-        
         var selectedPkgId = null;
         var selectedAmount = 0;
         
@@ -208,25 +145,28 @@ def build_auth_lite_js(config):
             var auth = window.auth;
             var db = window.db;
 
+            // Mặc định khóa trang (dù chưa có ai đăng nhập)
+            document.body.classList.add('auth-locked');
+
             auth.onAuthStateChanged(async function(user) {{
                 if (user) {{
+                    // Đã đăng nhập -> Mở khóa
+                    document.body.classList.remove('auth-locked');
                     document.getElementById('authOverlay').classList.remove('show');
+                    
                     await checkUserPermission(user);
-                    // Gọi hook của script chính (mã 1) để load watchlist + admin button
                     if (typeof window.onAuthReady === 'function') {{
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn('onAuthReady error:', e); }}
                     }}
                 }} else {{
+                    // Chưa đăng nhập -> Khóa lại và hiện form
+                    document.body.classList.add('auth-locked');
                     document.getElementById('authOverlay').classList.add('show');
                     document.getElementById('renewalModal').classList.remove('show');
-                    selectedPkgId = null;  // reset gói khi logout
-                    if (typeof window.onAuthLogout === 'function') {{
-                        // onAuthLogout trong mã 1 sẽ tự reload page — không gọi ở đây để tránh loop
-                    }}
+                    selectedPkgId = null;
                 }}
             }});
 
-            // 1. ĐĂNG NHẬP GOOGLE
             document.getElementById('btnGoogleLogin').addEventListener('click', async function() {{
                 var provider = new firebase.auth.GoogleAuthProvider();
                 try {{
@@ -235,13 +175,11 @@ def build_auth_lite_js(config):
                 }} catch(e) {{ showMsg('loginMsg', 'Lỗi Google: ' + e.message, 'error'); }}
             }});
 
-            // 2. ĐĂNG NHẬP EMAIL/PASSWORD
             var loginForm = document.getElementById('emailLoginForm');
             var emailInput = document.getElementById('loginEmail');
             
             emailInput.addEventListener('blur', function() {{
                 var v = this.value.trim().toLowerCase();
-                // Chỉ tự thêm @gmail.com khi không có @ VÀ không rỗng
                 if (v && v.indexOf('@') === -1) this.value = v + '@gmail.com';
             }});
 
@@ -250,19 +188,19 @@ def build_auth_lite_js(config):
                 var email = emailInput.value.trim();
                 var pwd = document.getElementById('loginPassword').value;
                 var btn = document.getElementById('btnEmailLogin');
+                var btnSpan = btn.querySelector('span');
                 
                 if (!email || !pwd) return showMsg('loginMsg', 'Vui lòng nhập đủ email và mật khẩu.', 'error');
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang vào...';
+                btn.disabled = true; btnSpan.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...';
                 
                 try {{
                     await auth.signInWithEmailAndPassword(email, pwd);
                 }} catch(e) {{
                     showMsg('loginMsg', 'Lỗi: ' + e.message, 'error');
-                    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-sign-in-alt"></i> Đăng nhập';
+                    btn.disabled = false; btnSpan.innerHTML = 'Đăng nhập';
                 }}
             }});
 
-            // 3. ĐẶT MẬT KHẨU LẦN ĐẦU (sau khi login Google)
             function checkAskPassword(user) {{
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
@@ -294,12 +232,10 @@ def build_auth_lite_js(config):
                 }}
             }});
 
-            // 4. KIỂM TRA HẠN SỬ DỤNG
             async function checkUserPermission(user) {{
                 var email = user.email.toLowerCase();
                 try {{
                     var doc = await db.collection('allowed_users').doc(email).get();
-                    
                     if (!doc.exists) {{
                         var expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + TRIAL_DAYS);
@@ -312,6 +248,7 @@ def build_auth_lite_js(config):
                         if (data.role !== 'admin' && data.expiresAt) {{
                             var exp = new Date(data.expiresAt);
                             if (new Date() > exp) {{
+                                document.body.classList.remove('auth-locked');
                                 document.getElementById('renewalModal').classList.add('show');
                                 document.getElementById('authOverlay').classList.remove('show');
                             }} else {{
@@ -322,37 +259,26 @@ def build_auth_lite_js(config):
                 }} catch(e) {{ console.warn('Lỗi check quyền:', e); }}
             }}
 
-            // 5. CHỌN GÓI VÀ HIỂN THỊ QR
             window.selectPackage = function(id, amount, label) {{
                 selectedPkgId = id;
                 selectedAmount = amount;
-                
-                document.querySelectorAll('.package-item').forEach(function(el) {{
-                    el.classList.remove('active');
-                }});
+                document.querySelectorAll('.package-item').forEach(function(el) {{ el.classList.remove('active'); }});
                 var el = document.getElementById('pkg_' + id);
                 if (el) el.classList.add('active');
-                
                 document.getElementById('qrCodeWrap').style.display = 'block';
                 document.getElementById('payAmount').innerText = amount.toLocaleString('vi-VN') + ' VNĐ';
-                
                 var code = 'NAP' + Math.floor(100000 + Math.random() * 900000);
                 document.getElementById('payCode').innerText = code;
-                
                 var qrUrl = `https://img.vietqr.io/image/${{BANK_CONFIG.bank_id}}-${{BANK_CONFIG.account_no}}-compact2.png?amount=${{amount}}&addInfo=${{code}}&accountName=${{encodeURIComponent(BANK_CONFIG.account_name)}}`;
                 document.getElementById('qrImage').src = qrUrl;
-                
                 document.getElementById('btnConfirmPay').style.display = 'flex';
             }};
 
-            // 6. GỬI YÊU CẦU GIA HẠN
             window.confirmPayment = async function() {{
                 if (!selectedPkgId) return;
                 if (!auth.currentUser) return alert('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại.');
-                
                 var btn = document.getElementById('btnConfirmPay');
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
-                
                 try {{
                     await db.collection('renewal_requests').add({{
                         email: auth.currentUser.email,
@@ -362,7 +288,7 @@ def build_auth_lite_js(config):
                         status: 'pending',
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     }});
-                    alert('Đã gửi yêu cầu! Vui lòng đợi Admin xác nhận (hoặc hệ thống tự động duyệt).');
+                    alert('Đã gửi yêu cầu! Vui lòng đợi Admin xác nhận.');
                     btn.innerText = 'Đã gửi thành công';
                     btn.style.background = '#059669';
                     selectedPkgId = null;
@@ -372,7 +298,6 @@ def build_auth_lite_js(config):
                 }}
             }};
 
-            // 7. CÁC HÀM HỖ TRỢ
             window.showRegisterForm = function() {{ alert('Vui lòng đăng nhập bằng Google để tạo tài khoản tự động!'); }};
             window.forgotPassword = async function() {{
                 var email = document.getElementById('loginEmail').value.trim();
