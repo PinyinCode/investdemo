@@ -420,11 +420,11 @@
         "end_price_mean": 15.28
     },
     "MCH": {
-        "annual_rate_percent": 22.05,
+        "annual_rate_percent": 22.01,
         "start_quarter": "2021Q4",
-        "start_price_mean": 52.39,
+        "start_price_mean": 52.32,
         "end_quarter": "2026Q4",
-        "end_price_mean": 138.95
+        "end_price_mean": 138.49
     },
     "MSB": {
         "annual_rate_percent": 7.65,
