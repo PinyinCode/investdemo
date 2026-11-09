@@ -77,11 +77,11 @@
         "end_price_mean": 70.54
     },
     "BWE": {
-        "annual_rate_percent": 3.65,
+        "annual_rate_percent": 3.67,
         "start_quarter": "2021Q4",
-        "start_price_mean": 35.14,
+        "start_price_mean": 35.15,
         "end_quarter": "2026Q4",
-        "end_price_mean": 41.89
+        "end_price_mean": 41.92
     },
     "CEO": {
         "annual_rate_percent": -16.79,
