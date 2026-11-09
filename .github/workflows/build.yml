@@ -41,5 +41,16 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Chỉ add file index.html và các file JSON dữ liệu (nếu có thay đổi)
           git add index.html
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-build: Cập nhật index.html" && git push)
+          git add quarterly_mean_details.json
+          git add symbol_sim_rates.json
+          
+          # Kiểm tra xem có gì thay đổi trong khu vực staging không
+          if git diff --staged --quiet; then
+            echo "Không có thay đổi nào để commit."
+          else
+            git commit -m "Auto-build: Cập nhật index.html và dữ liệu"
+            git push
+          fi
