@@ -91,6 +91,7 @@ def generate_html():
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
+    # ĐẶT BUILD_AUTH_LITE_HTML Ở ĐẦU TIÊN ĐỂ LUÔN ƯU TIÊN VỀ MẶT DOM
     body_parts = [
         build_auth_lite_html(auth_config),
         build_admin_modal_html(),
