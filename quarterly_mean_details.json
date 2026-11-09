@@ -266,11 +266,11 @@
         "end_price_mean": 22.71
     },
     "GMD": {
-        "annual_rate_percent": 17.3,
+        "annual_rate_percent": 17.33,
         "start_quarter": "2021Q4",
-        "start_price_mean": 24.45,
+        "start_price_mean": 24.42,
         "end_quarter": "2026Q4",
-        "end_price_mean": 53.39
+        "end_price_mean": 53.37
     },
     "GVR": {
         "annual_rate_percent": -2.47,
