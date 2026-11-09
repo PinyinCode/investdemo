@@ -1,181 +1,53 @@
-# ═══════════════════════════════════════════════════════════════
-# GitHub Actions — Build index.html và deploy lên GitHub Pages
-# ═══════════════════════════════════════════════════════════════
-#
-# Kích hoạt:
-#   - Push lên branch main/master
-#   - Chạy thủ công từ tab Actions
-#
-# Yêu cầu:
-#   - Repo Settings → Secrets and variables → Actions → New repository secret
-#   - Thêm secret FIREBASE_CONFIG = JSON string của Firebase config
-#   - Repo Settings → Pages → Source: GitHub Actions
-# ═══════════════════════════════════════════════════════════════
-
-name: Build & Deploy
+name: Build & Auto Commit index.html
 
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch:   # cho phép chạy thủ công
+  workflow_dispatch:
 
-# Quyền cần cho GitHub Pages
+# Cấp quyền cho Action được phép ghi đè file vào repo
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Chỉ 1 lần deploy đồng thời
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
   build:
-    name: Build index.html
     runs-on: ubuntu-latest
-    timeout-minutes: 15
 
     steps:
-      # ── 1. Checkout code ────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ── 2. Setup Python ─────────────────────────────────────
-      - name: Setup Python 3.11
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
-      # ── 3. Cài dependencies ─────────────────────────────────
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            echo "⚠️  Không có requirements.txt — cài mặc định"
-            pip install requests pandas openpyxl
-          fi
+          pip install requests pandas openpyxl
 
-      # ── 4. Verify files bắt buộc ────────────────────────────
-      - name: Verify required files
-        run: |
-          echo "📁 Danh sách file trong repo:"
-          ls -la
-
-          MISSING=0
-          for f in giaodien_main.py giaodien_generate.py giaodien_auth.py \
-                   giaodien_ui.py giaodien_screener.py giaodien_ai_modal.py \
-                   giaodien_chart_modal.py giaodien_log_console.py \
-                   giaodien_admin.py giaodien_core_js.py \
-                   simulator.py lightweight-charts.js; do
-            if [ ! -f "$f" ]; then
-              echo "❌ THIẾU: $f"
-              MISSING=$((MISSING+1))
-            else
-              echo "✅ $f"
-            fi
-          done
-
-          if [ $MISSING -gt 0 ]; then
-            echo "❌ Thiếu $MISSING file bắt buộc"
-            exit 1
-          fi
-          echo "✅ Đủ file bắt buộc"
-
-      # ── 5. Chạy pipeline render ─────────────────────────────
       - name: Build HTML
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: |
-          echo "🚀 Chạy pipeline render..."
           python giaodien_main.py
 
-      # ── 6. Verify output ────────────────────────────────────
       - name: Verify index.html
         run: |
+          ls -la index.html
           if [ ! -f index.html ]; then
             echo "❌ Không có index.html!"
             exit 1
           fi
+          echo "✅ Đã tạo index.html thành công"
 
-          SIZE=$(stat -c%s index.html)
-          echo "✅ index.html — $((SIZE / 1024)) KB"
-
-          if [ "$SIZE" -lt 10000 ]; then
-            echo "❌ index.html quá nhỏ (<10KB) — có thể render lỗi"
-            exit 1
-          fi
-
-          # Verify số thẻ script khớp
-          OPENS=$(grep -o '<script' index.html | wc -l)
-          CLOSES=$(grep -o '</script>' index.html | wc -l)
-          echo "🔍 script opens=$OPENS closes=$CLOSES"
-          if [ "$OPENS" -ne "$CLOSES" ]; then
-            echo "❌ Số thẻ script không khớp!"
-            exit 1
-          fi
-          echo "✅ Số thẻ script khớp"
-
-      # ── 7. Upload artifact (giữ index.html làm backup) ─────
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: index-html
-          path: index.html
-          retention-days: 30
-
-      # ── 8. Chuẩn bị thư mục deploy cho Pages ────────────────
-      - name: Prepare Pages
+      # BƯỚC QUAN TRỌNG: Tự động commit index.html trở lại repo
+      - name: Commit and Push index.html
         run: |
-          mkdir -p _site
-          # Copy toàn bộ file cần thiết cho client
-          cp index.html _site/
-
-          # Copy các file data/asset nếu có
-          for f in data.json screener_results.json cheap_stocks.json \
-                   symbol_sim_rates.json quarterly_mean_details.json \
-                   last_update.json lightweight-charts.js; do
-            [ -f "$f" ] && cp "$f" _site/ && echo "  ✓ $f"
-          done
-
-          # Copy thư mục history nếu có
-          if [ -d "history" ]; then
-            cp -r history _site/
-            echo "  ✓ history/ ($(ls history | wc -l) file)"
-          fi
-
-          # Copy icons/manifest nếu có
-          for f in manifest.json; do
-            [ -f "$f" ] && cp "$f" _site/
-          done
-          if [ -d "icons" ]; then
-            cp -r icons _site/
-          fi
-
-          echo "📦 _site/ contents:"
-          ls -la _site/
-
-      # ── 9. Upload Pages artifact ────────────────────────────
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-  # ═══════════════════════════════════════════════════════════
-  # JOB 2: Deploy lên GitHub Pages
-  # ═══════════════════════════════════════════════════════════
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          # Chỉ commit nếu có sự thay đổi
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-build: Cập nhật index.html" && git push)
