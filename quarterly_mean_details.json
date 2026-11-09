@@ -147,11 +147,11 @@
         "end_price_mean": 15.62
     },
     "DCM": {
-        "annual_rate_percent": 4.42,
+        "annual_rate_percent": 4.35,
         "start_quarter": "2021Q4",
-        "start_price_mean": 27.36,
+        "start_price_mean": 27.37,
         "end_quarter": "2026Q4",
-        "end_price_mean": 33.81
+        "end_price_mean": 33.71
     },
     "DGW": {
         "annual_rate_percent": -1.97,
