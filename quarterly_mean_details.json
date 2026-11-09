@@ -126,11 +126,11 @@
         "end_price_mean": 30.29
     },
     "CTR": {
-        "annual_rate_percent": 4.97,
+        "annual_rate_percent": 4.95,
         "start_quarter": "2021Q4",
-        "start_price_mean": 54.03,
+        "start_price_mean": 53.96,
         "end_quarter": "2026Q4",
-        "end_price_mean": 68.51
+        "end_price_mean": 68.35
     },
     "CTS": {
         "annual_rate_percent": 5.28,
