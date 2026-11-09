@@ -1076,7 +1076,7 @@
         "symbol": "BWE",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 42900.0,
+        "close_price": 42800.0,
         "pe": 8.76,
         "pb": 1.41,
         "ps": 0.0,
@@ -1115,7 +1115,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 30/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
         "market_cap": 0.0,
-        "total_shares": 219928644
+        "total_shares": 219928644,
+        "price_change_percent": -0.23,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 69.38,
+        "amplitude_percent": 2.91
     },
     {
         "symbol": "MCH",
@@ -1747,7 +1753,7 @@
         "symbol": "PC1",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 16450.0,
+        "close_price": 16500.0,
         "pe": 6.99,
         "pb": 1.12,
         "ps": 0.0,
@@ -1787,7 +1793,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 23/50 < 30.",
         "company_name": "Công ty Cổ phần Tập đoàn PC1",
         "market_cap": 0.0,
-        "total_shares": 411285343
+        "total_shares": 411285343,
+        "price_change_percent": 0.3,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 82.46,
+        "amplitude_percent": 1.52
     },
     {
         "symbol": "GVR",
@@ -1883,7 +1895,7 @@
         "symbol": "ANV",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "AGRI",
-        "close_price": 17350.0,
+        "close_price": 17450.0,
         "pe": 5.86,
         "pb": 1.14,
         "ps": 0.0,
@@ -1922,7 +1934,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 20/50 < 30.",
         "company_name": "Công ty Cổ phần Nam Việt",
         "market_cap": 0.0,
-        "total_shares": 266667500
+        "total_shares": 266667500,
+        "price_change_percent": 0.58,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 47.73,
+        "amplitude_percent": 2.59
     },
     {
         "symbol": "SJS",
@@ -3185,7 +3203,7 @@
         "symbol": "NKG",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 12150.0,
+        "close_price": 12250.0,
         "pe": 24.59,
         "pb": 0.77,
         "ps": 0.0,
@@ -3224,7 +3242,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HỢP LÝ - CHỜ ĐIỀU CHỈNH), PTCB 26/50 < 30, Định giá 8/30 < 18.",
         "company_name": "Công ty Cổ phần Thép Nam Kim",
         "market_cap": 0.0,
-        "total_shares": 492323961
+        "total_shares": 492323961,
+        "price_change_percent": 0.82,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 6.88,
+        "amplitude_percent": 3.64
     },
     {
         "symbol": "EVF",
