@@ -2429,41 +2429,23 @@ def generate_html():
             else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
 
             // =========================================================
-            // XỬ LÝ VOLUME "MINH HỌA" CHO NẾN HÔM NAY (SỬA LỖI TRADINGDATE)
+            // GHIM TRỤC VOLUME THEO NẾN LỚN NHẤT TRONG 20 PHIÊN
+            // (Không còn gán đè Volume ảo, chỉ ghim trục tung)
             // =========================================================
-            if (chartData.length > 0) {
-                // Lấy thời gian của nến cuối cùng trong mảng (chính là nến hôm nay)
-                const lastBarTime = chartData[chartData.length - 1].time;
-                
-                let maxVol = 0;
-                const recentBars = chartData.slice(-20);
-                recentBars.forEach(bar => {
-                    if (bar.volume > maxVol) maxVol = bar.volume;
-                });
-
-                // Tính KL trung bình 20 phiên (không tính nến hôm nay)
-                let sumVol = 0;
-                let countVol = 0;
-                recentBars.forEach(bar => {
-                    if (bar.volume > 0) {
-                        sumVol += bar.volume;
-                        countVol++;
-                    }
-                });
-                const avgVol20 = countVol > 0 ? (sumVol / countVol) : 0;
-
-                // Duyệt qua chartData để gán Volume "minh họa" cho nến hôm nay
-                chartData = chartData.map(bar => {
-                    let b = { ...bar };
-                    // So sánh với thời gian của nến cuối cùng
-                    if (b.time === lastBarTime) {
-                        // Nếu KL hôm nay quá nhỏ (chưa bằng 10% trung bình)
-                        if (avgVol20 > 0 && b.volume < (avgVol20 * 0.1)) {
-                            // Gán cho nó một mức Volume minh họa (bằng 5% của KL lớn nhất trong 20 phiên)
-                            b.volume = maxVol * 0.05;
+            let maxVol = 0;
+            const recentBars = chartData.slice(-20);
+            recentBars.forEach(bar => {
+                if (bar.volume > maxVol) maxVol = bar.volume;
+            });
+            
+            if (maxVol > 0) {
+                volumeSeriesInstance.applyOptions({
+                    autoscaleInfoProvider: () => ({
+                        priceRange: {
+                            minValue: 0,
+                            maxValue: maxVol * 1.2 // Cộng 20% để cột không chạm nóc
                         }
-                    }
-                    return b;
+                    })
                 });
             }
 
