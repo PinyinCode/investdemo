@@ -91,7 +91,6 @@ def generate_html():
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
-    # ĐẶT BUILD_AUTH_LITE_HTML Ở ĐẦU TIÊN ĐỂ LUÔN ƯU TIÊN VỀ MẶT DOM
     body_parts = [
         build_auth_lite_html(auth_config),
         build_admin_modal_html(),
@@ -126,9 +125,7 @@ def generate_html():
         f"const cheapSymbolsSet = new Set({cheap_symbols_clean});\n"
         f"if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);\n"
         f"window.auth = firebase.auth();\n"
-        f"window.db = firebase.firestore();\n"
-        f"// 🔴 ÉP KHÓA CỨNG NGAY LẬP TỨC KHI VỪA TẢI TRANG ĐỂ CHỐNG LỘ NỘI DUNG\n"
-        f"document.body.classList.add('auth-locked');",
+        f"window.db = firebase.firestore();",
 
         f"/* ══ UI BASE JS ══ */\n{ui_js}",
         f"/* ══ SCREENER JS ══ */\n{screener_js}",
