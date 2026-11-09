@@ -45,6 +45,8 @@ def build_auth_lite_css():
         .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .auth-btn.outline { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
         .auth-btn.outline:hover { background: #334155; color: #fff; }
+        .auth-btn.danger { background: #ef4444; color: #fff; }
+        .auth-btn.danger:hover { background: #dc2626; }
         
         .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.5rem; text-decoration: none; font-family: inherit; }
         .auth-link:hover { color: #7dd3fc; text-decoration: underline; }
@@ -54,6 +56,12 @@ def build_auth_lite_css():
         .auth-msg.error { background: rgba(244,63,94,.15); color: #fda4af; border: 1px solid rgba(244,63,94,.3); }
         .auth-msg.success { background: rgba(16,185,129,.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
         
+        /* Nút đăng xuất nhỏ gọn trên header */
+        .auth-user-bar { position: fixed; top: 10px; right: 10px; z-index: 99998; display: none; align-items: center; gap: 8px; background: rgba(30, 41, 59, 0.9); padding: 4px 10px; border-radius: 20px; border: 1px solid #334155; font-size: 0.75rem; color: #cbd5e1; backdrop-filter: blur(5px); }
+        .auth-user-bar.show { display: flex; }
+        .btn-logout-mini { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-logout-mini:hover { background: #dc2626; }
+
         /* Các modal phụ */
         #setPwdModal { display: none; position: fixed; inset: 0; z-index: 1000000; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
         #renewalModal { position: fixed; inset: 0; z-index: 1000001; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
@@ -85,6 +93,12 @@ def build_auth_lite_html(config):
         </div>
         """
     return f"""
+    <!-- THANH TRẠNG THÁI & NÚT ĐĂNG XUẤT NHỎ GỌN TRÊN GÓC PHẢI -->
+    <div id="authUserBar" class="auth-user-bar">
+        <span id="authUserEmail" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+        <button class="btn-logout-mini" onclick="auth.signOut()">Đăng xuất</button>
+    </div>
+
     <div id="authOverlay" class="show">
         <div class="auth-box">
             <div class="auth-title">Đăng nhập hệ thống</div>
@@ -164,7 +178,6 @@ def build_auth_lite_js(config):
         var selectedPkgId = null;
         var selectedAmount = 0;
         
-        // Hàm chờ Firebase tải xong
         function waitAuth(cb) {{
             var t = setInterval(function() {{
                 if (typeof firebase !== 'undefined' && typeof window.auth !== 'undefined' && typeof window.db !== 'undefined') {{
@@ -173,7 +186,6 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
-        // Khóa cuộn trang ngay lập tức khi vừa vào web
         document.body.classList.add('auth-active');
 
         waitAuth(function() {{
@@ -181,20 +193,28 @@ def build_auth_lite_js(config):
             var db = window.db;
 
             auth.onAuthStateChanged(async function(user) {{
+                var authOverlay = document.getElementById('authOverlay');
+                var userBar = document.getElementById('authUserBar');
+                var userEmailSpan = document.getElementById('authUserEmail');
+                
                 if (user) {{
-                    // NẾU ĐÃ ĐĂNG NHẬP: Mở khóa trang
+                    // ĐÃ ĐĂNG NHẬP: Mở khóa trang, ẩn khung đăng nhập, hiện thanh user bar
                     document.body.classList.remove('auth-active');
-                    document.getElementById('authOverlay').classList.remove('show');
+                    if (authOverlay) authOverlay.classList.remove('show');
+                    if (userBar) userBar.classList.add('show');
+                    if (userEmailSpan) userEmailSpan.innerText = user.email;
                     
                     await checkUserPermission(user);
                     if (typeof window.onAuthReady === 'function') {{
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn('onAuthReady error:', e); }}
                     }}
                 }} else {{
-                    // NẾU CHƯA ĐĂNG NHẬP: Khóa trang và hiện form
+                    // CHƯA ĐĂNG NHẬP: Khóa trang, hiện khung đăng nhập, ẩn thanh user bar
                     document.body.classList.add('auth-active');
-                    document.getElementById('authOverlay').classList.add('show');
-                    document.getElementById('renewalModal').classList.remove('show');
+                    if (authOverlay) authOverlay.classList.add('show');
+                    if (userBar) userBar.classList.remove('show');
+                    var renewal = document.getElementById('renewalModal');
+                    if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
                 }}
             }});
@@ -223,7 +243,6 @@ def build_auth_lite_js(config):
                 var btnSpan = btn.querySelector('span');
                 var msgBox = document.getElementById('loginMsg');
                 
-                // Reset thông báo cũ
                 msgBox.className = 'auth-msg';
                 msgBox.innerHTML = '';
 
@@ -234,11 +253,9 @@ def build_auth_lite_js(config):
                 
                 try {{
                     await auth.signInWithEmailAndPassword(email, pwd);
-                    // Đăng nhập thành công thì onAuthStateChanged sẽ tự xử lý
                 }} catch(e) {{
-                    // Hiển thị lỗi rõ ràng
                     var errMsg = e.message;
-                    if (e.code === 'auth/user-not-found') errMsg = 'Tài khoản này chưa tồn tại. Vui lòng đăng nhập bằng Google hoặc bấm "Tạo tài khoản".';
+                    if (e.code === 'auth/user-not-found') errMsg = 'Tài khoản chưa tồn tại. Vui lòng đăng nhập bằng Google hoặc bấm "Tạo tài khoản".';
                     if (e.code === 'auth/wrong-password') errMsg = 'Sai mật khẩu. Vui lòng kiểm tra lại.';
                     
                     showMsg('loginMsg', 'Lỗi: ' + errMsg, 'error');
@@ -288,7 +305,6 @@ def build_auth_lite_js(config):
                         await db.collection('allowed_users').doc(email).set({{
                             email: email, role: 'user', expiresAt: expireDate.toISOString()
                         }});
-                        alert('Chào mừng bạn! Bạn được dùng thử ' + TRIAL_DAYS + ' ngày.');
                     }} else {{
                         var data = doc.data();
                         if (data.role !== 'admin' && data.expiresAt) {{
@@ -296,9 +312,11 @@ def build_auth_lite_js(config):
                             if (new Date() > exp) {{
                                 document.body.classList.remove('auth-active');
                                 document.getElementById('renewalModal').classList.add('show');
-                                document.getElementById('authOverlay').classList.remove('show');
+                                var authOverlay = document.getElementById('authOverlay');
+                                if (authOverlay) authOverlay.classList.remove('show');
                             }} else {{
-                                document.getElementById('renewalModal').classList.remove('show');
+                                var renewal = document.getElementById('renewalModal');
+                                if (renewal) renewal.classList.remove('show');
                             }}
                         }}
                     }}
