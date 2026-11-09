@@ -228,10 +228,11 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
-        // HÀM ĐĂNG XUẤT AN TOÀN - KHÓA CỨNG MÀN HÌNH NGAY LẬP TỨC
+        // HÀM ĐĂNG XUẤT AN TOÀN - KHÓA CỨNG TRANG NGAY LẬP TỨC
         window.triggerSignOut = async function() {{
             var authOverlay = document.getElementById('authOverlay');
             if (authOverlay) authOverlay.classList.remove('hidden');
+            document.body.classList.add('auth-locked');
 
             var renewal = document.getElementById('renewalModal');
             if (renewal) renewal.classList.remove('show');
@@ -265,6 +266,7 @@ def build_auth_lite_js(config):
                 
                 if (user) {{
                     if (authOverlay) authOverlay.classList.add('hidden');
+                    document.body.classList.remove('auth-locked');
                     if (expireBadge) expireBadge.style.display = 'inline-flex';
                     
                     await checkUserPermission(user);
@@ -272,8 +274,8 @@ def build_auth_lite_js(config):
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn(e); }}
                     }}
                 }} else {{
-                    // Đã xử lý khóa cứng trong triggerSignOut, nhưng gọi lại đây để đồng bộ khi session hết hạn tự động
                     if (authOverlay) authOverlay.classList.remove('hidden');
+                    document.body.classList.add('auth-locked');
                     if (expireBadge) expireBadge.style.display = 'none';
                     if (adminModal) adminModal.classList.add('hidden');
                     
@@ -334,7 +336,7 @@ def build_auth_lite_js(config):
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
-                sessionStorage.setItem('asked_pwd_' + user.email, '1');
+                sessionStorage.getItem('asked_pwd_' + user.email, '1');
                 document.getElementById('setPwdModal').style.display = 'flex';
             }}
 
