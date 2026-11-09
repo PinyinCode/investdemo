@@ -13,7 +13,7 @@ def build_auth_lite_css():
             width: 100vw !important; 
             height: 100vh !important; 
             z-index: 99999999 !important; 
-            background: #0f172a !important; /* Nền tối đặc che hoàn toàn trang chính */
+            background: #0f172a !important; 
             display: flex !important; 
             align-items: center !important; 
             justify-content: center !important; 
@@ -30,7 +30,7 @@ def build_auth_lite_css():
             pointer-events: none !important;
         }
 
-        /* 2. HỘP ĐĂNG NHẬP NẰM CHÍNH GIỮA MANG PHONG CÁCH HIỆN ĐẠI */
+        /* 2. HỘP ĐĂNG NHẬP NẰM CHÍNH GIỮA */
         .auth-box { 
             background: linear-gradient(145deg, #1e293b, #0f172a); 
             border: 1px solid rgba(51, 65, 85, 0.8); 
@@ -54,7 +54,6 @@ def build_auth_lite_css():
         .auth-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff; letter-spacing: -0.025em; }
         .auth-sub { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.75rem; line-height: 1.5; }
         
-        /* 3. NÚT ĐĂNG NHẬP GOOGLE & FORM INPUT */
         .btn-google { 
             display: flex; align-items: center; justify-content: center; gap: 0.75rem; 
             width: 100%; padding: 0.85rem; border-radius: 12px; 
@@ -65,9 +64,8 @@ def build_auth_lite_css():
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
         .btn-google:hover { background: #1e293b; border-color: #64748b; transform: translateY(-1px); }
-        .btn-google:active { transform: translateY(0); }
         
-        .auth-divider { display: flex; align-items: center; gap: 0.75rem; margin: 1.25rem 0; color: #64748b; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; }
+        .auth-divider { display: flex; align-items: center; gap: 0.75rem; margin: 1.25rem 0; color: #64748b; font-size: 0.75rem; font-weight: 600; }
         .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: #334155; }
         
         .auth-input { 
@@ -90,18 +88,17 @@ def build_auth_lite_css():
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
         }
-        .auth-btn:hover { background: #059669; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35); }
-        .auth-btn:active { transform: translateY(0); }
+        .auth-btn:hover { background: #059669; transform: translateY(-1px); }
         
-        .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.75rem; text-decoration: none; transition: color 0.2s; }
+        .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.75rem; text-decoration: none; }
         .auth-link:hover { color: #7dd3fc; text-decoration: underline; }
         
         .auth-msg { padding: 0.85rem; border-radius: 10px; font-size: 0.8rem; margin-top: 1rem; display: none; text-align: left; }
-        .auth-msg.show { display: block; animation: fadeIn 0.2s ease; }
+        .auth-msg.show { display: block; }
         .auth-msg.error { background: rgba(244,63,94,.12); color: #fda4af; border: 1px solid rgba(244,63,94,.25); }
         .auth-msg.success { background: rgba(16,185,129,.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,.25); }
 
-        /* MODAL GIA HẠN TÀI KHOẢN */
+        /* MODAL GIA HẠN */
         #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
         #renewalModal.show { display: flex; }
         .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); max-height: 95vh; overflow-y: auto; }
@@ -115,7 +112,6 @@ def build_auth_lite_css():
         .bank-row span:first-child { color: #94a3b8; }
         .bank-row span:last-child { font-weight: 700; color: #fff; }
         .code-highlight { color: #10b981 !important; font-family: monospace; font-size: 1.1rem; letter-spacing: 1px; background: rgba(16,185,129,0.1); padding: 2px 8px; border-radius: 4px; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
     </style>
     """
 
@@ -132,6 +128,16 @@ def build_auth_lite_html(config):
         </div>
         """
     return f"""
+    <!-- HIỂN THỊ HẠN DÙNG KÈM NÚT GIA HẠN CHỦ ĐỘNG CHO USER -->
+    <div id="userExpireBadge" style="display:none; align-items: center; gap: 8px; font-size: 0.75rem;">
+        <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 10px; border-radius: 6px; font-weight: bold;">
+            <i class="fa-solid fa-clock"></i> <span id="expireDateText">Đang tải hạn dùng...</span>
+        </span>
+        <button onclick="openUserRenewalModal()" style="background: #10b981; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s;" title="Gia hạn tài khoản">
+            <i class="fa-solid fa-plus-circle"></i> Gia hạn
+        </button>
+    </div>
+
     <!-- MODAL ĐĂNG NHẬP PHỦ KÍN 100% -->
     <div id="authOverlay">
         <div class="auth-box">
@@ -173,13 +179,13 @@ def build_auth_lite_html(config):
         </div>
     </div>
     
-    <!-- MODAL GIA HẠN -->
+    <!-- MODAL GIA HẠN / NẠP TIỀN -->
     <div id="renewalModal">
         <div class="renewal-box">
-            <button class="auth-close" onclick="auth.signOut()" title="Đăng xuất" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
+            <button class="auth-close" onclick="closeRenewalModal()" title="Đóng" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
             <div class="renewal-icon"><i class="fa-solid fa-clock"></i></div>
-            <h2 class="auth-title" style="color:#f43f5e;">Tài khoản đã hết hạn!</h2>
-            <p class="auth-sub">Thời gian dùng thử đã kết thúc. Vui lòng chọn gói để tiếp tục sử dụng.</p>
+            <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
+            <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng hệ thống.</p>
             <div style="text-align:left; margin-bottom:10px; font-weight:bold; color:#94a3b8; font-size:0.8rem;">CHỌN GÓI GIA HẠN:</div>
             <div style="max-height:200px; overflow-y:auto; padding-right:5px;" id="packageList">{packages_html}</div>
             <div id="qrCodeWrap" style="display:none; margin-top:1rem;">
@@ -194,7 +200,7 @@ def build_auth_lite_html(config):
                 <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung.</p>
             </div>
             <div style="display:flex; gap:10px; margin-top:1rem;">
-                <button class="auth-btn outline" onclick="auth.signOut()">Đăng xuất</button>
+                <button class="auth-btn outline" onclick="closeRenewalModal()">Đóng</button>
                 <button class="auth-btn" id="btnConfirmPay" style="display:none;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
             </div>
         </div>
@@ -229,28 +235,23 @@ def build_auth_lite_js(config):
             auth.onAuthStateChanged(async function(user) {{
                 var authOverlay = document.getElementById('authOverlay');
                 var adminModal = document.getElementById('admin-modal');
+                var expireBadge = document.getElementById('userExpireBadge');
                 
                 if (user) {{
-                    // ĐÃ ĐĂNG NHẬP: Mở màn hình mượt mà
-                    if (authOverlay) {{
-                        authOverlay.classList.add('hidden');
-                    }}
+                    if (authOverlay) authOverlay.classList.add('hidden');
+                    if (expireBadge) expireBadge.style.display = 'inline-flex';
                     
                     await checkUserPermission(user);
                     if (typeof window.onAuthReady === 'function') {{
-                        try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn('onAuthReady error:', e); }}
+                        try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn(e); }}
                     }}
                 }} else {{
-                    // CHƯA ĐĂNG NHẬP / ĐÃ ĐĂNG XUẤT: Che đen toàn bộ ngay lập tức
-                    if (authOverlay) {{
-                        authOverlay.classList.remove('hidden');
-                    }}
-                    
-                    // Đóng cửa sổ admin & xóa dữ liệu tạm nếu có
+                    if (authOverlay) authOverlay.classList.remove('hidden');
+                    if (expireBadge) expireBadge.style.display = 'none';
                     if (adminModal) adminModal.classList.add('hidden');
+                    
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
-
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
@@ -306,7 +307,7 @@ def build_auth_lite_js(config):
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
-                sessionStorage.setItem('asked_pwd_' + user.email, '1');
+                sessionStorage.getItem('asked_pwd_' + user.email, '1');
                 document.getElementById('setPwdModal').style.display = 'flex';
             }}
 
@@ -343,11 +344,14 @@ def build_auth_lite_js(config):
                         await db.collection('allowed_users').doc(email).set({{
                             email: email, role: 'user', expiresAt: expireDate.toISOString()
                         }});
+                        updateExpireUI(expireDate);
                     }} else {{
                         var data = doc.data();
-                        if (data.role !== 'admin' && data.expiresAt) {{
+                        if (data.expiresAt) {{
                             var exp = new Date(data.expiresAt);
-                            if (new Date() > exp) {{
+                            updateExpireUI(exp);
+                            
+                            if (data.role !== 'admin' && new Date() > exp) {{
                                 document.getElementById('renewalModal').classList.add('show');
                                 var authOverlay = document.getElementById('authOverlay');
                                 if (authOverlay) authOverlay.classList.add('hidden');
@@ -359,6 +363,32 @@ def build_auth_lite_js(config):
                     }}
                 }} catch(e) {{ console.warn('Lỗi check quyền:', e); }}
             }}
+
+            function updateExpireUI(expDate) {{
+                var txt = document.getElementById('expireDateText');
+                if (txt) {{
+                    txt.innerText = 'Hạn dùng: ' + expDate.toLocaleDateString('vi-VN');
+                }}
+            }}
+
+            // Mở modal gia hạn chủ động bất cứ lúc nào
+            window.openUserRenewalModal = function() {{
+                var renewal = document.getElementById('renewalModal');
+                if (renewal) {{
+                    renewal.classList.add('show');
+                    selectedPkgId = null;
+                    document.querySelectorAll('.package-item').forEach(function(el) {{ el.classList.remove('active'); }});
+                    var qrWrap = document.getElementById('qrCodeWrap');
+                    if (qrWrap) qrWrap.style.display = 'none';
+                    var btnPay = document.getElementById('btnConfirmPay');
+                    if (btnPay) btnPay.style.display = 'none';
+                }}
+            }};
+
+            window.closeRenewalModal = function() {{
+                var renewal = document.getElementById('renewalModal');
+                if (renewal) renewal.classList.remove('show');
+            }};
 
             window.selectPackage = function(id, amount, label) {{
                 selectedPkgId = id;
