@@ -981,10 +981,14 @@ def generate_html():
             "slate":   { bg: "bg-slate-700/40",   border: "border-slate-600/50",   text: "text-slate-300",   icon: "fa-eye" },
         };
 
-        // ĐÃ CÓ SẴN VNĐ TỪ JSON (VD 32100): Chỉ cần format dấu chấm
+        // TỰ ĐỘNG NHẬN DIỆN: Nếu < 1000 thì nhân 1000 (VD 57.8 -> 57.800), nếu > 1000 giữ nguyên (VD 57800)
         function formatPrice(num) {
             if (num === undefined || num === null || num === 0) return '—';
-            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            let val = num;
+            if (val > 0 && val < 1000) {
+                val = val * 1000;
+            }
+            return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
         
         // DÙNG CHUNG CHO MỌI THỨ (Volume, EPS, etc.): Không nhân 1000
@@ -1081,6 +1085,12 @@ def generate_html():
                     const extraData = rawStockData[sym] || {};
                     const liveData = mongoPrices[sym] || {};
                     
+                    // Xác định close_price ưu tiên
+                    let finalClosePrice = item.close_price || 0;
+                    if (liveData.close_price !== undefined) finalClosePrice = liveData.close_price;
+                    else if (liveData.close !== undefined) finalClosePrice = liveData.close;
+                    else if (extraData.close !== undefined) finalClosePrice = extraData.close;
+
                     return {
                         ...item,
                         company_name: extraData.company_name !== undefined ? extraData.company_name : (item.company_name || extraData.organ_name || item.organ_name || ""),
@@ -1097,7 +1107,7 @@ def generate_html():
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                         
-                        close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : (item.close_price || 0))),
+                        close_price: finalClosePrice,
                         updated_at: liveData.updated_at || extraData.updated_at || "Chưa rõ",
                         open: liveData.open !== undefined ? liveData.open : null,
                         high: liveData.high !== undefined ? liveData.high : null,
@@ -1667,10 +1677,10 @@ def generate_html():
                         ${(item.fair_value_low > 0 && item.fair_value_high > 0) ? `
                         <div class="flex items-center justify-between text-[10px] bg-slate-950/40 px-2 py-1 rounded border border-slate-800/60 mb-1">
                             <span class="text-slate-400"><i class="fa-solid fa-crosshairs text-emerald-400 mr-1"></i>Mua ≤</span>
-                            <span class="font-bold text-emerald-300">${formatNumber(item.fair_value_low)}</span>
+                            <span class="font-bold text-emerald-300">${formatPrice(item.fair_value_low)}</span>
                             <span class="text-slate-500">|</span>
                             <span class="text-slate-400">Fair</span>
-                            <span class="font-bold text-indigo-300">${formatNumber(item.fair_value_high)}</span>
+                            <span class="font-bold text-indigo-300">${formatPrice(item.fair_value_high)}</span>
                         </div>` : ''}
                     </div>
                     ${scoreHtml}
@@ -1859,8 +1869,9 @@ def generate_html():
             if (shares > 0) {
                 document.getElementById('modal-shares').innerText = (shares / 1_000_000).toLocaleString('vi-VN', {maximumFractionDigits: 1}) + ' Tr';
                 
-                // ĐÃ SỬA: Vốn hóa nhân 1000 vì giá đang là VNĐ sẵn trong JSON
-                const mktCap = (shares * (item.close_price || 0)) / 1_000_000_000;
+                // Vốn hóa = Shares * (Giá đã được format về VNĐ)
+                const normalizedPrice = (item.close_price > 0 && item.close_price < 1000) ? item.close_price * 1000 : item.close_price;
+                const mktCap = (shares * normalizedPrice) / 1_000_000_000;
                 
                 document.getElementById('modal-mktcap').innerText = mktCap.toLocaleString('vi-VN', {maximumFractionDigits: 0}) + ' Tỷ';
             } else {
@@ -1959,11 +1970,11 @@ def generate_html():
                                 </div>
                                 <div class="bg-emerald-500/10 p-2 rounded border border-emerald-500/30">
                                     <span class="text-[10px] text-emerald-400 block">Vùng mua (fair_low)</span>
-                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatNumber(fairLow)}</span>
+                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatPrice(fairLow)}</span>
                                 </div>
                                 <div class="bg-indigo-500/10 p-2 rounded border border-indigo-500/30">
                                     <span class="text-[10px] text-indigo-400 block">Fair value (fair_high)</span>
-                                    <span class="text-sm font-bold text-indigo-300">${formatNumber(fairHigh)}</span>
+                                    <span class="text-sm font-bold text-indigo-300">${formatPrice(fairHigh)}</span>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/60">
@@ -2016,8 +2027,8 @@ def generate_html():
             }
             const details = quarterlyMeanDetails[symbol];
             if (details) {
-                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatNumber(details.start_price_mean)} đ`;
-                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatNumber(details.end_price_mean)} đ`;
+                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatPrice(details.start_price_mean)} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatPrice(details.end_price_mean)} đ`;
             } else {
                 document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
                 document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
@@ -2303,10 +2314,10 @@ def generate_html():
                 let itemLow = item.low || 0;
                 let itemVolume = item.volume || 0;
                 
-                if (currentPrice > 0) currentPrice *= 1000;
-                if (itemOpen > 0) itemOpen *= 1000;
-                if (itemHigh > 0) itemHigh *= 1000;
-                if (itemLow > 0) itemLow *= 1000;
+                if (currentPrice > 0 && currentPrice < 1000) currentPrice *= 1000;
+                if (itemOpen > 0 && itemOpen < 1000) itemOpen *= 1000;
+                if (itemHigh > 0 && itemHigh < 1000) itemHigh *= 1000;
+                if (itemLow > 0 && itemLow < 1000) itemLow *= 1000;
                 // Volume không nhân
 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
