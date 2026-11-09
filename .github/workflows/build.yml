@@ -1,12 +1,20 @@
-name: Build & Auto Commit index.html
+name: Build & Deploy to GitHub Pages
 
 on:
   push:
     branches: [ main, master ]
   workflow_dispatch:
 
+# Cấp quyền cho GitHub Pages
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Chỉ cho phép 1 luồng deploy chạy cùng lúc
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -30,27 +38,49 @@ jobs:
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: |
-          echo "Kiểm tra FIREBASE_CONFIG:"
+          echo "🚀 Bắt đầu build..."
           if [ -z "$FIREBASE_CONFIG" ]; then
             echo "❌ LỖI: Chưa cài đặt secret FIREBASE_CONFIG trên GitHub!"
             exit 1
           fi
           python giaodien_main.py
+          echo "✅ Build thành công!"
 
-      - name: Commit and Push index.html
+      - name: Prepare for Pages
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Tạo thư mục _site để chứa các file cần deploy
+          mkdir -p _site
           
-          # Chỉ add file index.html và các file JSON dữ liệu (nếu có thay đổi)
-          git add index.html
-          git add quarterly_mean_details.json
-          git add symbol_sim_rates.json
+          # Copy file HTML chính
+          cp index.html _site/
           
-          # Kiểm tra xem có gì thay đổi trong khu vực staging không
-          if git diff --staged --quiet; then
-            echo "Không có thay đổi nào để commit."
-          else
-            git commit -m "Auto-build: Cập nhật index.html và dữ liệu"
-            git push
+          # Copy các file dữ liệu JSON, JS, CSS nếu có
+          for f in data.json screener_results.json cheap_stocks.json \
+                   symbol_sim_rates.json quarterly_mean_details.json \
+                   last_update.json lightweight-charts.js vn100_full_info.json; do
+            [ -f "$f" ] && cp "$f" _site/
+          done
+          
+          # Copy thư mục history (chứa dữ liệu biểu đồ)
+          if [ -d "history" ]; then
+            cp -r history _site/
           fi
+          
+          echo "📁 Danh sách file chuẩn bị deploy:"
+          ls -la _site/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
