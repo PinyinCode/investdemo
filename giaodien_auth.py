@@ -3,51 +3,60 @@ import json
 def build_auth_lite_css():
     return r"""
     <style>
-        /* Khung nền đen mờ che toàn bộ màn hình */
+        /* 1. LỚP NỀN ĐEN CHE TOÀN BỘ TRANG WEB */
         #authOverlay { 
-            position: fixed; inset: 0; z-index: 9999; 
-            background: rgba(15, 23, 42, 0.85); 
-            backdrop-filter: blur(8px); 
+            position: fixed; inset: 0; z-index: 999999; 
+            background: rgba(15, 23, 42, 0.95); 
+            backdrop-filter: blur(10px); 
             display: none; align-items: center; justify-content: center; 
             padding: 1rem; font-family: system-ui, -apple-system, sans-serif; 
+            overflow-y: auto;
         }
         #authOverlay.show { display: flex; }
+
+        /* 2. KHÓA CUỘN TRANG WEB KHI MODAL ĐANG MỞ */
+        body.auth-active { overflow: hidden !important; }
         
-        /* Hộp đăng nhập */
+        /* 3. HỘP ĐĂNG NHẬP (CSS THUẦN) */
         .auth-box { 
             background: #1e293b; border: 1px solid #334155; 
             border-radius: 16px; width: 100%; max-width: 400px; 
             padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,.8); 
             text-align: center; color: #f1f5f9; position: relative; 
+            box-sizing: border-box; margin: auto;
             animation: slideUp .3s ease; 
         }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
         .auth-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff; }
         .auth-sub { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.5rem; line-height: 1.5; }
+        
         .btn-google { display: flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.2s; margin-bottom: 1rem; }
         .btn-google:hover { background: #1e293b; border-color: #64748b; }
+        
         .auth-divider { display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; color: #64748b; font-size: 0.75rem; font-weight: 600; }
         .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: #334155; }
-        .auth-input { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-size: 0.9rem; outline: none; margin-bottom: 0.75rem; transition: 0.2s; box-sizing: border-box; font-family: inherit; }
+        
+        .auth-input { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-size: 0.9rem; outline: none; margin-bottom: 0.75rem; transition: 0.2s; font-family: inherit; box-sizing: border-box; }
         .auth-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
-        .auth-btn { width: 100%; padding: 0.75rem; border-radius: 8px; background: #10b981; color: #fff; font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: inherit; }
+        
+        .auth-btn { width: 100%; padding: 0.75rem; border-radius: 8px; background: #10b981; color: #fff; font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: inherit; box-sizing: border-box; }
         .auth-btn:hover { background: #059669; }
         .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .auth-btn.outline { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
         .auth-btn.outline:hover { background: #334155; color: #fff; }
+        
         .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.5rem; text-decoration: none; font-family: inherit; }
         .auth-link:hover { color: #7dd3fc; text-decoration: underline; }
+        
         .auth-msg { padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; margin-top: 1rem; display: none; text-align: left; line-height: 1.4; }
         .auth-msg.show { display: block; }
         .auth-msg.error { background: rgba(244,63,94,.15); color: #fda4af; border: 1px solid rgba(244,63,94,.3); }
         .auth-msg.success { background: rgba(16,185,129,.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
-        .auth-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #94a3b8; font-size: 1.25rem; cursor: pointer; transition: 0.2s; }
-        .auth-close:hover { color: #fff; transform: scale(1.1); }
         
         /* Các modal phụ */
-        #setPwdModal { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
-        #renewalModal { position: fixed; inset: 0; z-index: 10001; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
+        #setPwdModal { display: none; position: fixed; inset: 0; z-index: 1000000; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
+        #renewalModal { position: fixed; inset: 0; z-index: 1000001; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
         #renewalModal.show { display: flex; }
         .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); animation: slideUp .3s ease; max-height: 95vh; overflow-y: auto; }
         .renewal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(244,63,94,0.15); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; border: 2px solid rgba(244,63,94,0.3); }
@@ -76,9 +85,8 @@ def build_auth_lite_html(config):
         </div>
         """
     return f"""
-    <div id="authOverlay">
+    <div id="authOverlay" class="show">
         <div class="auth-box">
-            <button class="auth-close" onclick="document.getElementById('authOverlay').classList.remove('show')">✕</button>
             <div class="auth-title">Đăng nhập hệ thống</div>
             <div class="auth-sub">Sử dụng tài khoản để truy cập Pro Quant Screener</div>
             
@@ -118,7 +126,7 @@ def build_auth_lite_html(config):
     
     <div id="renewalModal">
         <div class="renewal-box">
-            <button class="auth-close" onclick="auth.signOut()" title="Đăng xuất">✕</button>
+            <button class="auth-close" onclick="auth.signOut()" title="Đăng xuất" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
             <div class="renewal-icon"><i class="fa-solid fa-clock"></i></div>
             <h2 class="auth-title" style="color:#f43f5e;">Tài khoản đã hết hạn!</h2>
             <p class="auth-sub">Thời gian dùng thử đã kết thúc. Vui lòng chọn gói để tiếp tục sử dụng.</p>
@@ -156,6 +164,7 @@ def build_auth_lite_js(config):
         var selectedPkgId = null;
         var selectedAmount = 0;
         
+        // Hàm chờ Firebase tải xong
         function waitAuth(cb) {{
             var t = setInterval(function() {{
                 if (typeof firebase !== 'undefined' && typeof window.auth !== 'undefined' && typeof window.db !== 'undefined') {{
@@ -164,17 +173,17 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
+        // Khóa cuộn trang ngay lập tức khi vừa vào web
+        document.body.classList.add('auth-active');
+
         waitAuth(function() {{
             var auth = window.auth;
             var db = window.db;
 
-            // Mặc định khóa trang (dù chưa có ai đăng nhập)
-            document.body.classList.add('auth-locked');
-
             auth.onAuthStateChanged(async function(user) {{
                 if (user) {{
-                    // Đã đăng nhập -> Mở khóa
-                    document.body.classList.remove('auth-locked');
+                    // NẾU ĐÃ ĐĂNG NHẬP: Mở khóa trang
+                    document.body.classList.remove('auth-active');
                     document.getElementById('authOverlay').classList.remove('show');
                     
                     await checkUserPermission(user);
@@ -182,8 +191,8 @@ def build_auth_lite_js(config):
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn('onAuthReady error:', e); }}
                     }}
                 }} else {{
-                    // Chưa đăng nhập -> Khóa lại và hiện form
-                    document.body.classList.add('auth-locked');
+                    // NẾU CHƯA ĐĂNG NHẬP: Khóa trang và hiện form
+                    document.body.classList.add('auth-active');
                     document.getElementById('authOverlay').classList.add('show');
                     document.getElementById('renewalModal').classList.remove('show');
                     selectedPkgId = null;
@@ -212,15 +221,29 @@ def build_auth_lite_js(config):
                 var pwd = document.getElementById('loginPassword').value;
                 var btn = document.getElementById('btnEmailLogin');
                 var btnSpan = btn.querySelector('span');
+                var msgBox = document.getElementById('loginMsg');
                 
+                // Reset thông báo cũ
+                msgBox.className = 'auth-msg';
+                msgBox.innerHTML = '';
+
                 if (!email || !pwd) return showMsg('loginMsg', 'Vui lòng nhập đủ email và mật khẩu.', 'error');
-                btn.disabled = true; btnSpan.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...';
+                
+                btn.disabled = true; 
+                btnSpan.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang kết nối...';
                 
                 try {{
                     await auth.signInWithEmailAndPassword(email, pwd);
+                    // Đăng nhập thành công thì onAuthStateChanged sẽ tự xử lý
                 }} catch(e) {{
-                    showMsg('loginMsg', 'Lỗi: ' + e.message, 'error');
-                    btn.disabled = false; btnSpan.innerHTML = 'Đăng nhập';
+                    // Hiển thị lỗi rõ ràng
+                    var errMsg = e.message;
+                    if (e.code === 'auth/user-not-found') errMsg = 'Tài khoản này chưa tồn tại. Vui lòng đăng nhập bằng Google hoặc bấm "Tạo tài khoản".';
+                    if (e.code === 'auth/wrong-password') errMsg = 'Sai mật khẩu. Vui lòng kiểm tra lại.';
+                    
+                    showMsg('loginMsg', 'Lỗi: ' + errMsg, 'error');
+                    btn.disabled = false; 
+                    btnSpan.innerHTML = 'Đăng nhập';
                 }}
             }});
 
@@ -271,7 +294,7 @@ def build_auth_lite_js(config):
                         if (data.role !== 'admin' && data.expiresAt) {{
                             var exp = new Date(data.expiresAt);
                             if (new Date() > exp) {{
-                                document.body.classList.remove('auth-locked');
+                                document.body.classList.remove('auth-active');
                                 document.getElementById('renewalModal').classList.add('show');
                                 document.getElementById('authOverlay').classList.remove('show');
                             }} else {{
