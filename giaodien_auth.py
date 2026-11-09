@@ -54,11 +54,20 @@ def build_auth_lite_css():
         .auth-msg.error { background: rgba(244,63,94,.15); color: #fda4af; border: 1px solid rgba(244,63,94,.3); }
         .auth-msg.success { background: rgba(16,185,129,.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
         
-        /* Nút đăng xuất nhỏ gọn trên header */
-        .auth-user-bar { position: fixed; top: 10px; right: 10px; z-index: 99998; display: none; align-items: center; gap: 8px; background: rgba(30, 41, 59, 0.9); padding: 4px 10px; border-radius: 20px; border: 1px solid #334155; font-size: 0.75rem; color: #cbd5e1; backdrop-filter: blur(5px); }
-        .auth-user-bar.show { display: flex; }
-        .btn-logout-mini { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn-logout-mini:hover { background: #dc2626; }
+        /* 4. NÚT CÀI ĐẶT TÀI KHOẢN & POPUP MENU ĐĂNG XUẤT */
+        .auth-user-container { position: fixed; top: 10px; right: 10px; z-index: 99998; display: none; font-family: system-ui, -apple-system, sans-serif; }
+        .auth-user-container.show { display: block; }
+        
+        .btn-account-settings { background: rgba(30, 41, 59, 0.9); border: 1px solid #334155; color: #cbd5e1; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(5px); transition: 0.2s; font-size: 0.9rem; }
+        .btn-account-settings:hover { background: #334155; color: #fff; border-color: #475569; }
+
+        .account-dropdown-menu { position: absolute; right: 0; top: 45px; background: #1e293b; border: 1px solid #334155; border-radius: 12px; width: 220px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.7); display: none; padding: 0.5rem; text-align: left; animation: slideDown 0.2s ease; }
+        .account-dropdown-menu.show { display: block; }
+        @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .account-email-info { padding: 8px 10px; font-size: 0.75rem; color: #94a3b8; border-bottom: 1px solid #334155; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .btn-logout-action { width: 100%; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; text-align: left; }
+        .btn-logout-action:hover { background: #ef4444; color: #fff; }
 
         /* Các modal phụ */
         #setPwdModal { display: none; position: fixed; inset: 0; z-index: 1000000; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
@@ -91,10 +100,17 @@ def build_auth_lite_html(config):
         </div>
         """
     return f"""
-    <!-- THANH TRẠNG THÁI & NÚT ĐĂNG XUẤT NHỎ GỌN TRÊN GÓC PHẢI -->
-    <div id="authUserBar" class="auth-user-bar">
-        <span id="authUserEmail" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
-        <button class="btn-logout-mini" onclick="auth.signOut()">Đăng xuất</button>
+    <!-- NÚT CÀI ĐẶT TÀI KHOẢN VÀ MENU ĐĂNG XUẤT ẨN/HIỆN -->
+    <div id="authUserContainer" class="auth-user-container">
+        <button class="btn-account-settings" id="btnAccountSettings" title="Cài đặt tài khoản">
+            <i class="fa-solid fa-user-gear"></i>
+        </button>
+        <div id="accountDropdownMenu" class="account-dropdown-menu">
+            <div id="authUserEmail" class="account-email-info"></div>
+            <button class="btn-logout-action" onclick="auth.signOut()">
+                <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+            </button>
+        </div>
     </div>
 
     <div id="authOverlay" class="show">
@@ -184,25 +200,39 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
+        // Mặc định ban đầu khóa cuộn trang
         document.body.classList.add('auth-active');
 
         waitAuth(function() {{
             var auth = window.auth;
             var db = window.db;
 
+            // Xử lý sự kiện bấm nút cài đặt tài khoản để bật/tắt menu dropdown chứa nút đăng xuất
+            var btnSettings = document.getElementById('btnAccountSettings');
+            var dropdownMenu = document.getElementById('accountDropdownMenu');
+            if (btnSettings && dropdownMenu) {{
+                btnSettings.addEventListener('click', function(e) {{
+                    e.stopPropagation();
+                    dropdownMenu.classList.toggle('show');
+                }});
+                document.addEventListener('click', function() {{
+                    dropdownMenu.classList.remove('show');
+                }});
+            }}
+
             auth.onAuthStateChanged(async function(user) {{
                 var authOverlay = document.getElementById('authOverlay');
-                var userBar = document.getElementById('authUserBar');
+                var userContainer = document.getElementById('authUserContainer');
                 var userEmailSpan = document.getElementById('authUserEmail');
                 
                 if (user) {{
-                    // ĐÃ ĐĂNG NHẬP: Mở khóa trang, ẩn hoàn toàn modal đăng nhập bằng style.display = 'none'
+                    // ĐÃ ĐĂNG NHẬP: Mở khóa trang, ẩn hoàn toàn modal đăng nhập, hiện nút cài đặt tài khoản góc phải
                     document.body.classList.remove('auth-active');
                     if (authOverlay) {{
                         authOverlay.classList.remove('show');
-                        authOverlay.style.display = 'none'; // Ép ẩn dứt điểm modal
+                        authOverlay.style.display = 'none';
                     }}
-                    if (userBar) userBar.classList.add('show');
+                    if (userContainer) userContainer.classList.add('show');
                     if (userEmailSpan) userEmailSpan.innerText = user.email;
                     
                     await checkUserPermission(user);
@@ -210,13 +240,16 @@ def build_auth_lite_js(config):
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn('onAuthReady error:', e); }}
                     }}
                 }} else {{
-                    // CHƯA ĐĂNG NHẬP: Khóa trang, hiện khung đăng nhập
+                    // CHƯA ĐĂNG NHẬP / ĐÃ ĐĂNG XUẤT: Khóa cuộn trang, chỉ hiện modal đăng nhập, ẩn menu tài khoản
                     document.body.classList.add('auth-active');
                     if (authOverlay) {{
                         authOverlay.classList.add('show');
-                        authOverlay.style.display = 'flex'; // Hiển thị lại khi chưa đăng nhập
+                        authOverlay.style.display = 'flex';
                     }}
-                    if (userBar) userBar.classList.remove('show');
+                    if (userContainer) {{
+                        userContainer.classList.remove('show');
+                        if (dropdownMenu) dropdownMenu.classList.remove('show');
+                    }}
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
@@ -272,7 +305,7 @@ def build_auth_lite_js(config):
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
-                sessionStorage.setItem('asked_pwd_' + user.email, '1');
+                sessionStorage.getItem('asked_pwd_' + user.email, '1');
                 document.getElementById('setPwdModal').style.display = 'flex';
             }}
 
