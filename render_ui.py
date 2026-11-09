@@ -2289,31 +2289,54 @@ def generate_html():
                 });
 
                 // 3. Cập nhật giá mới nhất vào nến cuối cùng
-                const currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
+                let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
                 const tradingDate = item && item.trading_date ? item.trading_date : null;
+
+                // CHUẨN HÓA ĐƠN VỊ CHO NẾN HIỆN TẠI LẤY TỪ API
+                let itemOpen = item.open || 0;
+                let itemHigh = item.high || 0;
+                let itemLow = item.low || 0;
+                let itemVolume = item.volume || 0;
+                
+                if (currentPrice > 0 && currentPrice < 100) currentPrice *= 1000;
+                if (itemOpen > 0 && itemOpen < 100) itemOpen *= 1000;
+                if (itemHigh > 0 && itemHigh < 100) itemHigh *= 1000;
+                if (itemLow > 0 && itemLow < 100) itemLow *= 1000;
 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
                     const existingBar = tradingDate ? currentSymbolHistory.history_d1.find(b => b.time === tradingDate) : null;
 
                     if (!existingBar) {
-                        // CHƯA CÓ TRONG HISTORY (Đang trong phiên hôm nay)
-                        const hasValidOHLC = item.open > 0 && item.high > 0 && item.low > 0;
-                        if (hasValidOHLC) {
-                            let liveVolume = item.volume;
-                            if (!liveVolume || liveVolume < 1000) {
-                                liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
+                        // TÍNH KL TRUNG BÌNH 20 PHIÊN TỪ HISTORY
+                        const recentBars = currentSymbolHistory.history_d1.slice(-20);
+                        let sumVol = 0;
+                        recentBars.forEach(b => { sumVol += (b.volume || 0); });
+                        const avgVol20 = recentBars.length > 0 ? (sumVol / recentBars.length) : 0;
+
+                        // KIỂM TRA ĐIỀU KIỆN: KL HÔM NAY CÓ ĐỦ LỚN ĐỂ VẼ KHÔNG?
+                        // (Ít nhất bằng 20% KL trung bình 20 phiên)
+                        const isVolumeEnough = avgVol20 > 0 ? (itemVolume >= avgVol20 * 0.2) : true;
+
+                        if (isVolumeEnough) {
+                            const hasValidOHLC = itemOpen > 0 && itemHigh > 0 && itemLow > 0;
+                            if (hasValidOHLC) {
+                                let liveVolume = itemVolume;
+                                if (!liveVolume || liveVolume < 1000) {
+                                    liveVolume = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1].volume; 
+                                }
+                                currentSymbolHistory.history_d1.push({
+                                    time: tradingDate || new Date().toISOString().split('T')[0],
+                                    open: itemOpen,
+                                    high: itemHigh,
+                                    low: itemLow,
+                                    close: currentPrice,
+                                    volume: liveVolume
+                                });
                             }
-                            currentSymbolHistory.history_d1.push({
-                                time: tradingDate || new Date().toISOString().split('T')[0],
-                                open: item.open,
-                                high: item.high,
-                                low: item.low,
-                                close: currentPrice,
-                                volume: liveVolume
-                            });
+                        } else {
+                            console.log(`[CHART] Bỏ qua nến hôm nay vì KL quá nhỏ (${itemVolume} < 20% TB ${avgVol20})`);
                         }
                     } 
-                    // ĐÃ CÓ TRONG HISTORY -> BỎ QUA, GIỮ NGUYÊN DỮ LIỆU CHUẨN
                 }
 
                 // 4. Sắp xếp lại mảng
@@ -2404,6 +2427,40 @@ def generate_html():
             if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
             else if (currentInterval === 'W1') chartData = historyDataObj.history_w1 || [];
             else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
+
+            // =========================================================
+            // XỬ LÝ VOLUME "MINH HỌA" CHO NẾN HÔM NAY
+            // =========================================================
+            let maxVol = 0;
+            const recentBars = chartData.slice(-20);
+            recentBars.forEach(bar => {
+                if (bar.volume > maxVol) maxVol = bar.volume;
+            });
+
+            // Tính KL trung bình 20 phiên (không tính nến hôm nay)
+            let sumVol = 0;
+            let countVol = 0;
+            recentBars.forEach(bar => {
+                if (bar.volume > 0) {
+                    sumVol += bar.volume;
+                    countVol++;
+                }
+            });
+            const avgVol20 = countVol > 0 ? (sumVol / countVol) : 0;
+
+            // Duyệt qua chartData một lần nữa để gán Volume "minh họa" cho nến hôm nay
+            chartData = chartData.map(bar => {
+                let b = { ...bar };
+                // Chỉ áp dụng cho nến cuối cùng (hôm nay)
+                if (b.time === tradingDate) {
+                    // Nếu KL hôm nay quá nhỏ (chưa bằng 10% trung bình)
+                    if (avgVol20 > 0 && b.volume < (avgVol20 * 0.1)) {
+                        // Gán cho nó một mức Volume minh họa (bằng 5% của KL lớn nhất trong 20 phiên)
+                        b.volume = maxVol * 0.05;
+                    }
+                }
+                return b;
+            });
 
             if (chartData && chartData.length > 0) {
                 candleSeriesInstance.setData(chartData);
