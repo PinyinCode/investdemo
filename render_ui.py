@@ -982,14 +982,14 @@ def generate_html():
             "slate":   { bg: "bg-slate-700/40",   border: "border-slate-600/50",   text: "text-slate-300",   icon: "fa-eye" },
         };
 
-        // CHỈ DÙNG CHO GIÁ: Nhân 1000 để hiển thị đúng VNĐ (VD 11.9 -> 11.900)
+        // CHỈ DÙNG CHO GIÁ CỔ PHIẾU: Nhân 1000 (Vì API trả 20.9 -> 20.900)
         function formatPrice(num) {
             if (num === undefined || num === null || num === 0) return '—';
             let val = num * 1000;
             return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
         
-        // DÙNG CHO CÁC CHỈ SỐ KHÁC & VOLUME: Không nhân 1000
+        // DÙNG CHO CHỈ SỐ (FAIR VALUE, EPS) & VOLUME: Không nhân 1000
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
             return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -1569,7 +1569,6 @@ def generate_html():
                     const colorClass = isUp ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" : "bg-rose-500/20 text-rose-300 border-rose-500/40";
                     const iconClass = isUp ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
                     
-                    // SỬ DỤNG Math.round THAY VÌ formatNumber ĐỂ TRÁNH LỖI NHÂN 1000
                     shockBadgeHtml = `<span class="${colorClass} border text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Dòng tiền ${isUp ? 'MUA VÀO' : 'BÁN RÒNG'}">
                         <i class="fa-solid ${iconClass}"></i> Vol: ${Math.round(item.volume_percent)}%
                     </span>`;
@@ -1671,10 +1670,10 @@ def generate_html():
                         ${(item.fair_value_low > 0 && item.fair_value_high > 0) ? `
                         <div class="flex items-center justify-between text-[10px] bg-slate-950/40 px-2 py-1 rounded border border-slate-800/60 mb-1">
                             <span class="text-slate-400"><i class="fa-solid fa-crosshairs text-emerald-400 mr-1"></i>Mua ≤</span>
-                            <span class="font-bold text-emerald-300">${formatPrice(item.fair_value_low)}</span>
+                            <span class="font-bold text-emerald-300">${formatNumber(item.fair_value_low)}</span>
                             <span class="text-slate-500">|</span>
                             <span class="text-slate-400">Fair</span>
-                            <span class="font-bold text-indigo-300">${formatPrice(item.fair_value_high)}</span>
+                            <span class="font-bold text-indigo-300">${formatNumber(item.fair_value_high)}</span>
                         </div>` : ''}
                     </div>
                     ${scoreHtml}
@@ -1862,7 +1861,10 @@ def generate_html():
             const shares = item.total_shares || 0;
             if (shares > 0) {
                 document.getElementById('modal-shares').innerText = (shares / 1_000_000).toLocaleString('vi-VN', {maximumFractionDigits: 1}) + ' Tr';
-                const mktCap = (shares * (item.close_price || 0)) / 1_000_000_000;
+                
+                // ĐÃ SỬA: Nhân 1000 cho giá để tính đúng vốn hóa
+                const mktCap = (shares * (item.close_price || 0) * 1000) / 1_000_000_000;
+                
                 document.getElementById('modal-mktcap').innerText = mktCap.toLocaleString('vi-VN', {maximumFractionDigits: 0}) + ' Tỷ';
             } else {
                 document.getElementById('modal-shares').innerText = '—';
@@ -1960,11 +1962,11 @@ def generate_html():
                                 </div>
                                 <div class="bg-emerald-500/10 p-2 rounded border border-emerald-500/30">
                                     <span class="text-[10px] text-emerald-400 block">Vùng mua (fair_low)</span>
-                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatPrice(fairLow)}</span>
+                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatNumber(fairLow)}</span>
                                 </div>
                                 <div class="bg-indigo-500/10 p-2 rounded border border-indigo-500/30">
                                     <span class="text-[10px] text-indigo-400 block">Fair value (fair_high)</span>
-                                    <span class="text-sm font-bold text-indigo-300">${formatPrice(fairHigh)}</span>
+                                    <span class="text-sm font-bold text-indigo-300">${formatNumber(fairHigh)}</span>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/60">
@@ -2017,8 +2019,9 @@ def generate_html():
             }
             const details = quarterlyMeanDetails[symbol];
             if (details) {
-                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatPrice(details.start_price_mean)} đ`;
-                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatPrice(details.end_price_mean)} đ`;
+                // ĐÃ SỬA: Dùng formatNumber thay vì formatPrice cho dữ liệu Quý
+                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatNumber(details.start_price_mean)} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatNumber(details.end_price_mean)} đ`;
             } else {
                 document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
                 document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
@@ -2259,7 +2262,7 @@ def generate_html():
                 if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
-                // CHỈ NHÂN 1000 CHO HISTORY KHI ĐỌC FILE
+                // CHỈ NHÂN 1000 CHO HISTORY KHI ĐỌC FILE (Volume giữ nguyên)
                 if (currentSymbolHistory.history_d1) {
                     currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
                         .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
@@ -2269,7 +2272,7 @@ def generate_html():
                             high: bar.high * 1000,
                             low: bar.low * 1000,
                             close: bar.close * 1000,
-                            volume: bar.volume // Volume KHÔNG NHÂN
+                            volume: bar.volume 
                         }));
                 } else {
                     currentSymbolHistory.history_d1 = [];
@@ -2281,7 +2284,7 @@ def generate_html():
                         .map(bar => ({
                             time: bar.time, 
                             open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, 
-                            volume: bar.volume // Volume KHÔNG NHÂN
+                            volume: bar.volume 
                         }));
                 }
                 
@@ -2291,11 +2294,11 @@ def generate_html():
                         .map(bar => ({
                             time: bar.time, 
                             open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, 
-                            volume: bar.volume // Volume KHÔNG NHÂN
+                            volume: bar.volume 
                         }));
                 }
 
-                // Nến Live API (Nhân 1000 cho Giá)
+                // Nến Live API: Giá nhân 1000, Volume giữ nguyên
                 let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
                 const tradingDate = item && item.trading_date ? item.trading_date : null;
 
@@ -2308,7 +2311,7 @@ def generate_html():
                 if (itemOpen > 0) itemOpen *= 1000;
                 if (itemHigh > 0) itemHigh *= 1000;
                 if (itemLow > 0) itemLow *= 1000;
-                // Volume KHÔNG NHÂN
+                // Volume không nhân
 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
                     const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
@@ -2342,7 +2345,7 @@ def generate_html():
                                     high: itemHigh,
                                     low: itemLow,
                                     close: currentPrice,
-                                    volume: liveVolume // KHÔNG NHÂN
+                                    volume: liveVolume 
                                 });
                             }
                         }
@@ -2501,14 +2504,14 @@ def generate_html():
                     }
                     if (activeIndicators.QLINES) {
                         candleSeriesInstance.createPriceLine({
-                            price: details.start_price_mean * 1000, color: '#f97316', lineWidth: 2,
+                            price: details.start_price_mean, color: '#f97316', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true,
-                            title: `Q.Đầu 5Y (${details.start_quarter}): ${formatPrice(details.start_price_mean)}`
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${formatNumber(details.start_price_mean)}`
                         });
                         candleSeriesInstance.createPriceLine({
-                            price: details.end_price_mean * 1000, color: '#10b981', lineWidth: 2,
+                            price: details.end_price_mean, color: '#10b981', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true,
-                            title: `Q.Cuối (${details.end_quarter}): ${formatPrice(details.end_price_mean)}`
+                            title: `Q.Cuối (${details.end_quarter}): ${formatNumber(details.end_price_mean)}`
                         });
                     }
                 }
@@ -2529,7 +2532,7 @@ def generate_html():
                 if (latestBar) updateLegend(latestBar, chartData);
                 function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
-                    legendClose.innerText = formatPrice(bar.close / 1000); // bar.close đã *1000 rồi, giờ chia lại để formatPrice tự nhân
+                    legendClose.innerText = formatNumber(bar.close); // bar.close đã nhân 1000 sẵn, dùng formatNumber để chỉ format dấu chấm
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
                     if (index > 0 && dataArr[index - 1].close > 0) {
