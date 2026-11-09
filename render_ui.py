@@ -437,7 +437,7 @@ def generate_html():
                     <div id="modal-cheap-badge-container"></div>
                 </div>
 
-                <!-- CẬP NHẬT: THÊM VỐN HÓA VÀ SLCP VÀO BẢNG THÔNG SỐ -->
+                <!-- BẢNG THÔNG SỐ -->
                 <div class="grid grid-cols-4 md:grid-cols-8 gap-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800 text-center">
                     <div><span class="text-[10px] text-slate-500 block">P/E</span><span id="modal-pe" class="text-sm font-bold text-slate-200">--</span></div>
                     <div><span class="text-[10px] text-slate-500 block">P/B</span><span id="modal-pb" class="text-sm font-bold text-slate-200">--</span></div>
@@ -984,7 +984,8 @@ def generate_html():
 
         function formatNumber(num) {
             if (num === undefined || num === null || num === 0) return '—';
-            let val = (num < 1000 && num > 0) ? num * 1000 : num;
+            // CHỈ NHÂN 1000 ĐỂ HIỂN THỊ (VD: 11.9 -> 11.900)
+            let val = num * 1000;
             return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
         function formatPercent(num) {
@@ -999,7 +1000,6 @@ def generate_html():
                 inputEl.focus();
                 if (elementId === 'search-input') {
                     document.getElementById('search-suggestions').classList.add('hidden');
-                    // RESET LẠI 2 Ô SELECT VÀ Ô TICK VỀ MẶC ĐỊNH
                     document.getElementById('sector-filter').value = "ALL";
                     document.getElementById('ranking-filter').value = "FINAL_BUY_ONLY";
                     document.getElementById('shock-filter').checked = false;
@@ -1055,7 +1055,7 @@ def generate_html():
                     console.warn("Không lấy được giờ cập nhật từ API:", e);
                 }
 
-                // 1. Lấy dữ liệu tĩnh (giá quá khứ, P/E, ROE...) từ data.json
+                // 1. Lấy dữ liệu tĩnh từ data.json
                 let rawStockData = {};
                 try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
@@ -1572,7 +1572,6 @@ def generate_html():
                     const colorClass = isUp ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" : "bg-rose-500/20 text-rose-300 border-rose-500/40";
                     const iconClass = isUp ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
                     
-                    // SỬ DỤNG Math.round THAY VÌ formatNumber ĐỂ TRÁNH LỖI NHÂN 1000
                     shockBadgeHtml = `<span class="${colorClass} border text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Dòng tiền ${isUp ? 'MUA VÀO' : 'BÁN RÒNG'}">
                         <i class="fa-solid ${iconClass}"></i> Vol: ${Math.round(item.volume_percent)}%
                     </span>`;
@@ -2037,8 +2036,8 @@ def generate_html():
             }
             const details = quarterlyMeanDetails[symbol];
             if (details) {
-                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${details.start_price_mean.toLocaleString('vi-VN')} đ`;
-                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${details.end_price_mean.toLocaleString('vi-VN')} đ`;
+                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatNumber(details.start_price_mean)} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatNumber(details.end_price_mean)} đ`;
             } else {
                 document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
                 document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
@@ -2280,60 +2279,43 @@ def generate_html():
                 if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
-                // 2. CHUẨN HÓA ĐƠN VỊ: Nhân 1000 cho toàn bộ dữ liệu lịch sử (D1, W1, MN)
-                // Đồng thời lọc bỏ các nến rác (Giá <= 0)
+                // 2. LÀM SẠCH DỮ LIỆU (Lọc nến rác, KHÔNG nhân 1000 vì dữ liệu đã đồng bộ Nghìn đồng)
                 if (currentSymbolHistory.history_d1) {
                     currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
-                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
-                        .map(bar => ({
-                            time: bar.time,
-                            open: bar.open * 1000,
-                            high: bar.high * 1000,
-                            low: bar.low * 1000,
-                            close: bar.close * 1000,
-                            volume: bar.volume
-                        }));
+                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0);
                 } else {
                     currentSymbolHistory.history_d1 = [];
                 }
 
                 if (currentSymbolHistory.history_w1) {
-                    currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1.map(bar => ({
-                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
-                    }));
+                    currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1
+                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0);
                 }
                 
                 if (currentSymbolHistory.history_mn) {
-                    currentSymbolHistory.history_mn = currentSymbolHistory.history_mn.map(bar => ({
-                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
-                    }));
+                    currentSymbolHistory.history_mn = currentSymbolHistory.history_mn
+                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0);
                 }
 
-                // 3. Cập nhật giá mới nhất vào nến cuối cùng
+                // 3. Cập nhật giá mới nhất vào nến cuối cùng (Không nhân 1000)
                 let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
                 const tradingDate = item && item.trading_date ? item.trading_date : null;
 
-                // CHUẨN HÓA ĐƠN VỊ CHO NẾN HIỆN TẠI LẤY TỪ API
                 let itemOpen = item.open || 0;
                 let itemHigh = item.high || 0;
                 let itemLow = item.low || 0;
                 let itemVolume = item.volume || 0;
                 
-                // (Vẫn giữ logic nhân 1000 cho nến live API phòng trường hợp API trả về nghìn đồng)
-                if (currentPrice > 0 && currentPrice < 100) currentPrice *= 1000;
-                if (itemOpen > 0 && itemOpen < 100) itemOpen *= 1000;
-                if (itemHigh > 0 && itemHigh < 100) itemHigh *= 1000;
-                if (itemLow > 0 && itemLow < 100) itemLow *= 1000;
+                // BỎ HOÀN TOÀN LOGIC NHÂN 1000 CHO NẾN LIVE
 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
                     const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
-                    // Fallback nếu API không trả tradingDate thì dùng ngày của nến cuối
                     const effectiveDate = tradingDate || lastBar.time;
 
                     const existingBar = currentSymbolHistory.history_d1.find(b => b.time === effectiveDate);
 
                     if (existingBar) {
-                        // Nếu trùng ngày -> Ghi đè nến cuối thay vì push thêm (tránh lỗi duplicate time)
+                        // Ghi đè nến cuối nếu trùng ngày
                         existingBar.close = currentPrice;
                         if (itemHigh > 0) existingBar.high = Math.max(existingBar.high, itemHigh);
                         if (itemLow > 0)  existingBar.low  = Math.min(existingBar.low, itemLow);
@@ -2345,7 +2327,6 @@ def generate_html():
                         recentBars.forEach(b => { sumVol += (b.volume || 0); });
                         const avgVol20 = recentBars.length > 0 ? (sumVol / recentBars.length) : 0;
 
-                        // KIỂM TRA ĐIỀU KIỆN: KL HÔM NAY CÓ ĐỦ LỚN ĐỂ VẼ KHÔNG?
                         const isVolumeEnough = avgVol20 > 0 ? (itemVolume >= avgVol20 * 0.2) : true;
 
                         if (isVolumeEnough) {
@@ -2364,8 +2345,6 @@ def generate_html():
                                     volume: liveVolume
                                 });
                             }
-                        } else {
-                            console.log(`[CHART] Bỏ qua nến hôm nay vì KL quá nhỏ (${itemVolume} < 20% TB ${avgVol20})`);
                         }
                     }
                 }
@@ -2453,14 +2432,25 @@ def generate_html():
             // BẢO VỆ TRỤC TUNG: Không cho Volume tràn xuống phần giá âm
             chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.8, bottom: 0.05 } });
 
-            let chartData = [];
-            if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
-            else if (currentInterval === 'W1') chartData = historyDataObj.history_w1 || [];
-            else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
+            let rawChartData = [];
+            if (currentInterval === 'D1') rawChartData = historyDataObj.history_d1 || [];
+            else if (currentInterval === 'W1') rawChartData = historyDataObj.history_w1 || [];
+            else if (currentInterval === 'MN') rawChartData = historyDataObj.history_mn || [];
+
+            // =========================================================
+            // KHI VẼ NẾN: NHÂN 1000 ĐỂ HIỂN THỊ ĐÚNG ĐƠN VỊ VNĐ TRÊN ĐỒ THỊ
+            // =========================================================
+            const chartData = rawChartData.map(bar => ({
+                time: bar.time,
+                open: bar.open * 1000,
+                high: bar.high * 1000,
+                low: bar.low * 1000,
+                close: bar.close * 1000,
+                volume: bar.volume
+            }));
 
             // =========================================================
             // GHIM TRỤC VOLUME THEO NẾN LỚN NHẤT TRONG 20 PHIÊN
-            // (Không còn gán đè Volume ảo, chỉ ghim trục tung)
             // =========================================================
             let maxVol = 0;
             const recentBars = chartData.slice(-20);
@@ -2529,14 +2519,14 @@ def generate_html():
                     }
                     if (activeIndicators.QLINES) {
                         candleSeriesInstance.createPriceLine({
-                            price: details.start_price_mean, color: '#f97316', lineWidth: 2,
+                            price: details.start_price_mean * 1000, color: '#f97316', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true,
-                            title: `Q.Đầu 5Y (${details.start_quarter}): ${details.start_price_mean}`
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${formatNumber(details.start_price_mean)}`
                         });
                         candleSeriesInstance.createPriceLine({
-                            price: details.end_price_mean, color: '#10b981', lineWidth: 2,
+                            price: details.end_price_mean * 1000, color: '#10b981', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true,
-                            title: `Q.Cuối (${details.end_quarter}): ${details.end_price_mean}`
+                            title: `Q.Cuối (${details.end_quarter}): ${formatNumber(details.end_price_mean)}`
                         });
                     }
                 }
@@ -2557,7 +2547,7 @@ def generate_html():
                 if (latestBar) updateLegend(latestBar, chartData);
                 function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
-                    legendClose.innerText = formatNumber(bar.close);
+                    legendClose.innerText = formatNumber(bar.close / 1000); // Chia lại 1000 để formatNumber tự nhân lên hiển thị chuẩn
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
                     if (index > 0 && dataArr[index - 1].close > 0) {
