@@ -1,0 +1,30 @@
+name: Fix Prev Close Data (From History)
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  fix-prev-close:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pymongo requests
+
+    - name: Run fix script
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_USERNAME: ${{ github.repository_owner }}
+        GITHUB_REPO: ${{ github.event.repository.name }}
+      run: python fix_prev_close.py
