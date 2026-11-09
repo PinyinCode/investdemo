@@ -6,7 +6,7 @@ import json
 def build_auth_lite_css():
     return r"""
     <style>
-        /* 1. NỀN ĐEN ĐẶC PHỦ KÍN 100% MÀN HÌNH - KHÔNG CHO XEM HAY THAO TÁC NỘI DUNG PHÍA SAU */
+        /* 1. NỀN ĐEN ĐẶC PHỦ KÍN 100% MÀN HÌNH - CĂN GIỮA TUYỆT ĐỐI TRÊN MỌI THIẾT BỊ */
         #authOverlay { 
             position: fixed !important; 
             inset: 0 !important; 
@@ -19,7 +19,7 @@ def build_auth_lite_css():
             justify-content: center !important; 
             padding: 1rem !important; 
             box-sizing: border-box !important;
-            overflow: hidden !important;
+            overflow-y: auto !important;
             opacity: 1;
             visibility: visible;
             transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -30,7 +30,7 @@ def build_auth_lite_css():
             pointer-events: none !important;
         }
 
-        /* 2. HỘP ĐĂNG NHẬP NẰM CHÍNH GIỮA */
+        /* 2. HỘP ĐĂNG NHẬP LUÔN NẰM CHÍNH GIỮA CẢ PC VÀ MOBILE */
         .auth-box { 
             background: linear-gradient(145deg, #1e293b, #0f172a); 
             border: 1px solid rgba(51, 65, 85, 0.8); 
@@ -42,7 +42,7 @@ def build_auth_lite_css():
             text-align: center; 
             color: #f1f5f9; 
             box-sizing: border-box;
-            margin: auto;
+            margin: auto !important; /* Đảm bảo căn giữa tuyệt đối trong flex container */
             transform: scale(1);
             transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -99,9 +99,9 @@ def build_auth_lite_css():
         .auth-msg.success { background: rgba(16,185,129,.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,.25); }
 
         /* MODAL GIA HẠN */
-        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
+        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; overflow-y: auto; }
         #renewalModal.show { display: flex; }
-        .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); max-height: 95vh; overflow-y: auto; }
+        .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); margin: auto; max-height: 95vh; overflow-y: auto; }
         .renewal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(244,63,94,0.15); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; border: 2px solid rgba(244,63,94,0.3); }
         .package-item { border: 1px solid #475569; border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; text-align: left; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; background: #0f172a; }
         .package-item:hover { border-color: #64748b; }
