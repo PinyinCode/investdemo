@@ -1,0 +1,28 @@
+{
+    "trial_days": 7,
+    "bank_config": {
+        "bank_id": "MB",
+        "bank_name": "MB Bank",
+        "account_no": "0123456789",
+        "account_name": "NGUYEN VAN A"
+    },
+    "packages": [
+        {
+            "id": "1m",
+            "label": "Gói 1 Tháng",
+            "amount": 50000
+        },
+        {
+            "id": "6m",
+            "label": "Gói 6 Tháng",
+            "amount": 250000,
+            "save": "Tiết kiệm 50k"
+        },
+        {
+            "id": "forever",
+            "label": "Vĩnh Viễn (VIP)",
+            "amount": 1000000,
+            "save": "Dùng mãi mãi"
+        }
+    ]
+}
