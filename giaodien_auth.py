@@ -182,7 +182,7 @@ def build_auth_lite_html(config):
     <!-- MODAL GIA HẠN / NẠP TIỀN -->
     <div id="renewalModal">
         <div class="renewal-box">
-            <button class="auth-close" onclick="closeRenewalModal()" title="Đóng" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
+            <button class="auth-close" onclick="triggerSignOut()" title="Đăng xuất" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
             <div class="renewal-icon"><i class="fa-solid fa-clock"></i></div>
             <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
             <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng hệ thống.</p>
@@ -200,7 +200,7 @@ def build_auth_lite_html(config):
                 <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung.</p>
             </div>
             <div style="display:flex; gap:10px; margin-top:1rem;">
-                <button class="auth-btn outline" onclick="closeRenewalModal()">Đóng</button>
+                <button class="auth-btn outline" onclick="triggerSignOut()">Đăng xuất</button>
                 <button class="auth-btn" id="btnConfirmPay" style="display:none;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
             </div>
         </div>
@@ -228,6 +228,32 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
+        // HÀM ĐĂNG XUẤT AN TOÀN - KHÓA CỨNG MÀN HÌNH NGAY LẬP TỨC
+        window.triggerSignOut = async function() {{
+            var authOverlay = document.getElementById('authOverlay');
+            if (authOverlay) authOverlay.classList.remove('hidden');
+
+            var renewal = document.getElementById('renewalModal');
+            if (renewal) renewal.classList.remove('show');
+            
+            var adminModal = document.getElementById('admin-modal');
+            if (adminModal) adminModal.classList.add('hidden');
+
+            var expireBadge = document.getElementById('userExpireBadge');
+            if (expireBadge) expireBadge.style.display = 'none';
+
+            var adminList = document.getElementById('admin-users-list');
+            if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
+
+            try {{
+                if (window.auth) {{
+                    await window.auth.signOut();
+                }}
+            }} catch(e) {{
+                console.warn('SignOut error:', e);
+            }}
+        }};
+
         waitAuth(function() {{
             var auth = window.auth;
             var db = window.db;
@@ -246,6 +272,7 @@ def build_auth_lite_js(config):
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn(e); }}
                     }}
                 }} else {{
+                    // Đã xử lý khóa cứng trong triggerSignOut, nhưng gọi lại đây để đồng bộ khi session hết hạn tự động
                     if (authOverlay) authOverlay.classList.remove('hidden');
                     if (expireBadge) expireBadge.style.display = 'none';
                     if (adminModal) adminModal.classList.add('hidden');
@@ -307,7 +334,7 @@ def build_auth_lite_js(config):
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
-                sessionStorage.getItem('asked_pwd_' + user.email, '1');
+                sessionStorage.setItem('asked_pwd_' + user.email, '1');
                 document.getElementById('setPwdModal').style.display = 'flex';
             }}
 
@@ -371,7 +398,6 @@ def build_auth_lite_js(config):
                 }}
             }}
 
-            // Mở modal gia hạn chủ động bất cứ lúc nào
             window.openUserRenewalModal = function() {{
                 var renewal = document.getElementById('renewalModal');
                 if (renewal) {{
@@ -383,11 +409,6 @@ def build_auth_lite_js(config):
                     var btnPay = document.getElementById('btnConfirmPay');
                     if (btnPay) btnPay.style.display = 'none';
                 }}
-            }};
-
-            window.closeRenewalModal = function() {{
-                var renewal = document.getElementById('renewalModal');
-                if (renewal) renewal.classList.remove('show');
             }};
 
             window.selectPackage = function(id, amount, label) {{
