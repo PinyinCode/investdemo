@@ -588,9 +588,9 @@
         "end_price_mean": 45.83
     },
     "SAB": {
-        "annual_rate_percent": -5.99,
+        "annual_rate_percent": -5.94,
         "start_quarter": "2021Q4",
-        "start_price_mean": 57.85,
+        "start_price_mean": 57.7,
         "end_quarter": "2026Q4",
         "end_price_mean": 42.76
     },
@@ -602,11 +602,11 @@
         "end_price_mean": 23.66
     },
     "SBT": {
-        "annual_rate_percent": 4.05,
+        "annual_rate_percent": 4.03,
         "start_quarter": "2021Q4",
         "start_price_mean": 17.92,
         "end_quarter": "2026Q4",
-        "end_price_mean": 21.76
+        "end_price_mean": 21.74
     },
     "SHB": {
         "annual_rate_percent": -2.74,
