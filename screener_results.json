@@ -2377,7 +2377,13 @@
         "final_decision_reason": "PTCB chỉ 18/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Tập đoàn Bảo Việt",
         "market_cap": 0.0,
-        "total_shares": 742322764
+        "total_shares": 742322764,
+        "price_change_percent": 0.0,
+        "price_change_available": true,
+        "price_arrow": "—",
+        "price_color": "slate",
+        "volume_percent": 64.0,
+        "amplitude_percent": 1.74
     },
     {
         "symbol": "KDC",
@@ -2983,7 +2989,13 @@
         "final_decision_reason": "PTCB chỉ 13/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Tổng Công ty Cổ phần Đầu tư Phát triển Xây dựng",
         "market_cap": 0.0,
-        "total_shares": 844192763
+        "total_shares": 844192763,
+        "price_change_percent": 0.0,
+        "price_change_available": true,
+        "price_arrow": "—",
+        "price_color": "slate",
+        "volume_percent": 8.34,
+        "amplitude_percent": 3.33
     },
     {
         "symbol": "TCX",
@@ -3919,7 +3931,7 @@
         "symbol": "CTD",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "CONSTRUCTION",
-        "close_price": 68300.0,
+        "close_price": 70500.0,
         "pe": 9.56,
         "pb": 0.77,
         "ps": 0.0,
@@ -3958,7 +3970,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Xây dựng Coteccons",
         "market_cap": 0.0,
-        "total_shares": 114026467
+        "total_shares": 114026467,
+        "price_change_percent": 3.22,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 23.3,
+        "amplitude_percent": 3.52
     },
     {
         "symbol": "STB",
@@ -4263,7 +4281,7 @@
         "symbol": "NVL",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 10300.0,
+        "close_price": 10500.0,
         "pe": 7.83,
         "pb": 0.51,
         "ps": 0.0,
@@ -4302,7 +4320,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Tập đoàn Đầu tư Địa ốc No Va",
         "market_cap": 0.0,
-        "total_shares": 2403805052
+        "total_shares": 2403805052,
+        "price_change_percent": 1.94,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 11.36,
+        "amplitude_percent": 3.85
     },
     {
         "symbol": "VCI",
