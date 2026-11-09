@@ -1163,7 +1163,7 @@
         "symbol": "CTR",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 65300.0,
+        "close_price": 63900.0,
         "pe": 12.5,
         "pb": 3.71,
         "ps": 0.0,
@@ -1202,13 +1202,19 @@
         "final_decision_reason": "Giá 65,300 đã vượt xa fair_high 45,476 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Tổng Công ty Cổ phần Công trình Viettel",
         "market_cap": 0.0,
-        "total_shares": 128109533
+        "total_shares": 128109533,
+        "price_change_percent": -2.14,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 118.06,
+        "amplitude_percent": 1.99
     },
     {
         "symbol": "MCH",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 129800.0,
+        "close_price": 126000.0,
         "pe": 23.38,
         "pb": 9.37,
         "ps": 0.0,
@@ -1247,7 +1253,13 @@
         "final_decision_reason": "Giá 129,800 đã vượt xa fair_high 41,592 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Hàng Tiêu Dùng MaSan",
         "market_cap": 0.0,
-        "total_shares": 1307404949
+        "total_shares": 1307404949,
+        "price_change_percent": -2.93,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 53.68,
+        "amplitude_percent": 3.62
     },
     {
         "symbol": "ACB",
@@ -3386,7 +3398,7 @@
         "symbol": "EVF",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 11700.0,
+        "close_price": 11500.0,
         "pe": 8.96,
         "pb": 0.83,
         "ps": 0.0,
@@ -3426,7 +3438,13 @@
         "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Tài chính Tổng hợp Cổ phần Điện Lực",
         "market_cap": 0.0,
-        "total_shares": 760565802
+        "total_shares": 760565802,
+        "price_change_percent": -1.71,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 48.26,
+        "amplitude_percent": 2.99
     },
     {
         "symbol": "SIP",
@@ -3982,7 +4000,13 @@
         "final_decision_reason": "PTCB chỉ 18/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Vinpearl",
         "market_cap": 0.0,
-        "total_shares": 1793300377
+        "total_shares": 1793300377,
+        "price_change_percent": 0.0,
+        "price_change_available": true,
+        "price_arrow": "—",
+        "price_color": "slate",
+        "volume_percent": 61.14,
+        "amplitude_percent": 1.91
     },
     {
         "symbol": "BSI",
@@ -4696,7 +4720,7 @@
         "symbol": "KOS",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 3680.0,
+        "close_price": 3460.0,
         "pe": 47.71,
         "pb": 0.34,
         "ps": 0.0,
@@ -4736,6 +4760,12 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần KOSY",
         "market_cap": 0.0,
-        "total_shares": 216481335
+        "total_shares": 216481335,
+        "price_change_percent": -5.98,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 9.73,
+        "amplitude_percent": 6.93
     }
 ]
