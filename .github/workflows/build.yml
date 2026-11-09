@@ -11,13 +11,13 @@ permissions:
   pages: write
   id-token: write
 
-# Chỉ cho phép 1 luồng deploy chạy cùng lúc
+# Tự động hủy các luồng cũ đang chạy dở để nhường chỗ cho luồng mới nhất
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -69,18 +69,11 @@ jobs:
           echo "📁 Danh sách file chuẩn bị deploy:"
           ls -la _site/
 
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: '_site'
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
