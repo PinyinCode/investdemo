@@ -210,11 +210,11 @@
         "end_price_mean": 10.17
     },
     "EIB": {
-        "annual_rate_percent": -2.09,
+        "annual_rate_percent": -2.15,
         "start_quarter": "2021Q4",
-        "start_price_mean": 18.27,
+        "start_price_mean": 18.32,
         "end_quarter": "2026Q4",
-        "end_price_mean": 16.48
+        "end_price_mean": 16.47
     },
     "EVF": {
         "annual_rate_percent": -4.11,
@@ -490,9 +490,9 @@
         "end_price_mean": 127.05
     },
     "NVL": {
-        "annual_rate_percent": -33.51,
+        "annual_rate_percent": -33.55,
         "start_quarter": "2021Q4",
-        "start_price_mean": 77.94,
+        "start_price_mean": 78.05,
         "end_quarter": "2026Q4",
         "end_price_mean": 10.57
     },
