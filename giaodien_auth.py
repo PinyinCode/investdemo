@@ -6,12 +6,12 @@ import json
 def build_auth_lite_css():
     return r"""
     <style>
-        /* 1. NỀN ĐEN ĐẶC PHỦ KÍN 100% MÀN HÌNH - CĂN GIỮA TUYỆT ĐỐI TRÊN MỌI THIẾT BỊ */
+        /* 1. NỀN ĐEN ĐẶC PHỦ KÍN 100% MÀN HÌNH - LUÔN CHE NỀN VÀ CĂN GIỮA */
         #authOverlay { 
             position: fixed !important; 
             inset: 0 !important; 
             width: 100vw !important; 
-            height: 100vh !important; 
+            height: 100dvh !important; 
             z-index: 99999999 !important; 
             background: #0f172a !important; 
             display: flex !important; 
@@ -20,6 +20,7 @@ def build_auth_lite_css():
             padding: 1rem !important; 
             box-sizing: border-box !important;
             overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
             opacity: 1;
             visibility: visible;
             transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -30,7 +31,7 @@ def build_auth_lite_css():
             pointer-events: none !important;
         }
 
-        /* 2. HỘP ĐĂNG NHẬP LUÔN NẰM CHÍNH GIỮA CẢ PC VÀ MOBILE */
+        /* 2. HỘP ĐĂNG NHẬP LUÔN NẰM CHÍNH GIỮA TUYỆT ĐỐI */
         .auth-box { 
             background: linear-gradient(145deg, #1e293b, #0f172a); 
             border: 1px solid rgba(51, 65, 85, 0.8); 
@@ -42,7 +43,7 @@ def build_auth_lite_css():
             text-align: center; 
             color: #f1f5f9; 
             box-sizing: border-box;
-            margin: auto !important; /* Đảm bảo căn giữa tuyệt đối trong flex container */
+            margin: auto !important; 
             transform: scale(1);
             transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -99,7 +100,7 @@ def build_auth_lite_css():
         .auth-msg.success { background: rgba(16,185,129,.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,.25); }
 
         /* MODAL GIA HẠN */
-        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; overflow-y: auto; }
+        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; overflow-y: auto; -webkit-overflow-scrolling: touch; }
         #renewalModal.show { display: flex; }
         .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); margin: auto; max-height: 95vh; overflow-y: auto; }
         .renewal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(244,63,94,0.15); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; border: 2px solid rgba(244,63,94,0.3); }
@@ -228,11 +229,10 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
-        // HÀM ĐĂNG XUẤT AN TOÀN - KHÓA CỨNG TRANG NGAY LẬP TỨC
+        // HÀM ĐĂNG XUẤT AN TOÀN - HIỆN MODAL ĐĂNG NHẬP VÀ CHE MỜ NỀN
         window.triggerSignOut = async function() {{
             var authOverlay = document.getElementById('authOverlay');
             if (authOverlay) authOverlay.classList.remove('hidden');
-            document.body.classList.add('auth-locked');
 
             var renewal = document.getElementById('renewalModal');
             if (renewal) renewal.classList.remove('show');
@@ -266,7 +266,6 @@ def build_auth_lite_js(config):
                 
                 if (user) {{
                     if (authOverlay) authOverlay.classList.add('hidden');
-                    document.body.classList.remove('auth-locked');
                     if (expireBadge) expireBadge.style.display = 'inline-flex';
                     
                     await checkUserPermission(user);
@@ -275,7 +274,6 @@ def build_auth_lite_js(config):
                     }}
                 }} else {{
                     if (authOverlay) authOverlay.classList.remove('hidden');
-                    document.body.classList.add('auth-locked');
                     if (expireBadge) expireBadge.style.display = 'none';
                     if (adminModal) adminModal.classList.add('hidden');
                     
