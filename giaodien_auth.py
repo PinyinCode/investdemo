@@ -6,58 +6,105 @@ import json
 def build_auth_lite_css():
     return r"""
     <style>
-        /* 1. LỚP NỀN ĐEN CHE TOÀN BỘ KHI CHƯA ĐĂNG NHẬP */
+        /* 1. NỀN ĐEN ĐẶC PHỦ KÍN 100% MÀN HÌNH - KHÔNG CHO XEM HAY THAO TÁC NỘI DUNG PHÍA SAU */
         #authOverlay { 
-            position: fixed; inset: 0; z-index: 999999; 
-            background: rgba(15, 23, 42, 0.95); 
-            backdrop-filter: blur(10px); 
-            display: flex; align-items: center; justify-content: center; 
-            padding: 1rem; font-family: system-ui, -apple-system, sans-serif; 
-            overflow-y: auto;
+            position: fixed !important; 
+            inset: 0 !important; 
+            width: 100vw !important; 
+            height: 100vh !important; 
+            z-index: 99999999 !important; 
+            background: #0f172a !important; /* Nền tối đặc che hoàn toàn trang chính */
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            padding: 1rem !important; 
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
         }
-        #authOverlay.hidden { display: none !important; }
+        #authOverlay.hidden { 
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
 
-        /* 2. HỘP ĐĂNG NHẬP */
+        /* 2. HỘP ĐĂNG NHẬP NẰM CHÍNH GIỮA MANG PHONG CÁCH HIỆN ĐẠI */
         .auth-box { 
-            background: #1e293b; border: 1px solid #334155; 
-            border-radius: 16px; width: 100%; max-width: 400px; 
-            padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,.8); 
-            text-align: center; color: #f1f5f9; position: relative; 
-            box-sizing: border-box; margin: auto;
-            animation: slideUp .3s ease; 
+            background: linear-gradient(145deg, #1e293b, #0f172a); 
+            border: 1px solid rgba(51, 65, 85, 0.8); 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 400px; 
+            padding: 2.5rem 2rem; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05); 
+            text-align: center; 
+            color: #f1f5f9; 
+            box-sizing: border-box;
+            margin: auto;
+            transform: scale(1);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
-        .auth-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff; }
-        .auth-sub { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.5rem; line-height: 1.5; }
+        #authOverlay.hidden .auth-box {
+            transform: scale(0.95);
+        }
         
-        .btn-google { display: flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.2s; margin-bottom: 1rem; }
-        .btn-google:hover { background: #1e293b; border-color: #64748b; }
+        .auth-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff; letter-spacing: -0.025em; }
+        .auth-sub { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.75rem; line-height: 1.5; }
         
-        .auth-divider { display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; color: #64748b; font-size: 0.75rem; font-weight: 600; }
+        /* 3. NÚT ĐĂNG NHẬP GOOGLE & FORM INPUT */
+        .btn-google { 
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem; 
+            width: 100%; padding: 0.85rem; border-radius: 12px; 
+            border: 1px solid #475569; background: #0f172a; color: #fff; 
+            font-weight: 600; font-size: 0.9rem; cursor: pointer; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+            margin-bottom: 1rem; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .btn-google:hover { background: #1e293b; border-color: #64748b; transform: translateY(-1px); }
+        .btn-google:active { transform: translateY(0); }
+        
+        .auth-divider { display: flex; align-items: center; gap: 0.75rem; margin: 1.25rem 0; color: #64748b; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; }
         .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: #334155; }
         
-        .auth-input { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-size: 0.9rem; outline: none; margin-bottom: 0.75rem; transition: 0.2s; font-family: inherit; box-sizing: border-box; }
-        .auth-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .auth-input { 
+            width: 100%; padding: 0.85rem 1rem; border-radius: 12px; 
+            border: 1px solid #334155; background: rgba(15, 23, 42, 0.6); 
+            color: #fff; font-size: 0.9rem; outline: none; margin-bottom: 0.85rem; 
+            box-sizing: border-box; transition: all 0.2s ease; 
+        }
+        .auth-input:focus { 
+            border-color: #10b981; 
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.15); 
+        }
         
-        .auth-btn { width: 100%; padding: 0.75rem; border-radius: 8px; background: #10b981; color: #fff; font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: inherit; box-sizing: border-box; }
-        .auth-btn:hover { background: #059669; }
-        .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .auth-btn.outline { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
-        .auth-btn.outline:hover { background: #334155; color: #fff; }
+        .auth-btn { 
+            width: 100%; padding: 0.85rem; border-radius: 12px; 
+            background: #10b981; color: #fff; font-weight: 700; font-size: 0.9rem; 
+            border: none; cursor: pointer; display: flex; align-items: center; 
+            justify-content: center; gap: 0.5rem; box-sizing: border-box; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+        .auth-btn:hover { background: #059669; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35); }
+        .auth-btn:active { transform: translateY(0); }
         
-        .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.5rem; text-decoration: none; font-family: inherit; }
+        .auth-link { color: #38bdf8; font-size: 0.8rem; cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.75rem; text-decoration: none; transition: color 0.2s; }
         .auth-link:hover { color: #7dd3fc; text-decoration: underline; }
         
-        .auth-msg { padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; margin-top: 1rem; display: none; text-align: left; line-height: 1.4; }
-        .auth-msg.show { display: block; }
-        .auth-msg.error { background: rgba(244,63,94,.15); color: #fda4af; border: 1px solid rgba(244,63,94,.3); }
-        .auth-msg.success { background: rgba(16,185,129,.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
+        .auth-msg { padding: 0.85rem; border-radius: 10px; font-size: 0.8rem; margin-top: 1rem; display: none; text-align: left; }
+        .auth-msg.show { display: block; animation: fadeIn 0.2s ease; }
+        .auth-msg.error { background: rgba(244,63,94,.12); color: #fda4af; border: 1px solid rgba(244,63,94,.25); }
+        .auth-msg.success { background: rgba(16,185,129,.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,.25); }
 
-        /* Modal gia hạn */
-        #renewalModal { position: fixed; inset: 0; z-index: 1000001; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
+        /* MODAL GIA HẠN TÀI KHOẢN */
+        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
         #renewalModal.show { display: flex; }
-        .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); animation: slideUp .3s ease; max-height: 95vh; overflow-y: auto; }
+        .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); max-height: 95vh; overflow-y: auto; }
         .renewal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(244,63,94,0.15); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; border: 2px solid rgba(244,63,94,0.3); }
         .package-item { border: 1px solid #475569; border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; text-align: left; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; background: #0f172a; }
         .package-item:hover { border-color: #64748b; }
@@ -68,6 +115,7 @@ def build_auth_lite_css():
         .bank-row span:first-child { color: #94a3b8; }
         .bank-row span:last-child { font-weight: 700; color: #fff; }
         .code-highlight { color: #10b981 !important; font-family: monospace; font-size: 1.1rem; letter-spacing: 1px; background: rgba(16,185,129,0.1); padding: 2px 8px; border-radius: 4px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
     </style>
     """
 
@@ -84,7 +132,7 @@ def build_auth_lite_html(config):
         </div>
         """
     return f"""
-    <!-- MODAL ĐĂNG NHẬP -->
+    <!-- MODAL ĐĂNG NHẬP PHỦ KÍN 100% -->
     <div id="authOverlay">
         <div class="auth-box">
             <div class="auth-title">Đăng nhập hệ thống</div>
@@ -180,9 +228,10 @@ def build_auth_lite_js(config):
 
             auth.onAuthStateChanged(async function(user) {{
                 var authOverlay = document.getElementById('authOverlay');
+                var adminModal = document.getElementById('admin-modal');
                 
                 if (user) {{
-                    // ĐÃ ĐĂNG NHẬP: Ẩn modal đăng nhập, hiển thị nội dung trang web bình thường
+                    // ĐÃ ĐĂNG NHẬP: Mở màn hình mượt mà
                     if (authOverlay) {{
                         authOverlay.classList.add('hidden');
                     }}
@@ -192,10 +241,16 @@ def build_auth_lite_js(config):
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn('onAuthReady error:', e); }}
                     }}
                 }} else {{
-                    // CHƯA ĐĂNG NHẬP / ĐÃ ĐĂNG XUẤT: Hiện modal đăng nhập (ẩn nội dung trang web phía dưới)
+                    // CHƯA ĐĂNG NHẬP / ĐÃ ĐĂNG XUẤT: Che đen toàn bộ ngay lập tức
                     if (authOverlay) {{
                         authOverlay.classList.remove('hidden');
                     }}
+                    
+                    // Đóng cửa sổ admin & xóa dữ liệu tạm nếu có
+                    if (adminModal) adminModal.classList.add('hidden');
+                    var adminList = document.getElementById('admin-users-list');
+                    if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
+
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
