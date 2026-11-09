@@ -17,14 +17,14 @@ def build_admin_modal_html():
                 </button>
             </div>
             
-            <!-- TAB SWITCHER TRONG ADMIN -->
+            <!-- TAB SWITCHER -->
             <div class="flex border-b border-slate-800 bg-slate-950 px-5 gap-4">
                 <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition">Quản lý Người dùng</button>
                 <button onclick="switchAdminTab('renewals')" id="tabBtnRenewals" class="py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition">Duyệt Gia hạn (<span id="pendingCount">0</span>)</button>
             </div>
 
             <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <!-- TAB 1: USER LIST -->
+                <!-- TAB 1: USERS -->
                 <div id="adminTabUsers" class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
                         <thead>
@@ -40,7 +40,7 @@ def build_admin_modal_html():
                     </table>
                 </div>
 
-                <!-- TAB 2: RENEWAL REQUESTS -->
+                <!-- TAB 2: RENEWALS -->
                 <div id="adminTabRenewals" class="overflow-x-auto hidden">
                     <table class="w-full text-left text-xs">
                         <thead>
@@ -59,7 +59,7 @@ def build_admin_modal_html():
             </div>
 
             <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center">
-                <button type="button" onclick="auth.signOut()" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                <button type="button" onclick="triggerSignOut()" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
                     <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất tài khoản
                 </button>
                 <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
@@ -72,7 +72,7 @@ def build_admin_modal_html():
 def build_admin_js():
     return r"""
     // ══════════════════════════════════════════════════
-    // ADMIN PANEL & RENEWAL MANAGEMENT
+    // ADMIN PANEL & RENEWALS JS
     // ══════════════════════════════════════════════════
 
     function switchAdminTab(tab) {
@@ -167,7 +167,6 @@ def build_admin_js():
     async function approveRenewal(reqId, email, packageId) {
         if (!confirm(`Xác nhận duyệt gia hạn cho ${email} (${packageId})?`)) return;
         try {
-            // 1. Tính thêm ngày hạn (Ví dụ: gói 30 ngày hoặc 90 ngày tuỳ packageId)
             let daysToAdd = 30;
             if (packageId.includes('3th')) daysToAdd = 90;
             if (packageId.includes('1nam') || packageId.includes('year')) daysToAdd = 365;
@@ -178,14 +177,11 @@ def build_admin_js():
             let newExp = new Date();
             if (userDoc.exists && userDoc.data().expiresAt) {
                 let currentExp = new Date(userDoc.data().expiresAt);
-                if (currentExp > newExp) newExp = currentExp; // Nếu chưa hết hạn thì cộng dồn tiếp
+                if (currentExp > newExp) newExp = currentExp;
             }
             newExp.setDate(newExp.getDate() + daysToAdd);
 
-            // Cập nhật hạn user
             await userRef.set({ expiresAt: newExp.toISOString() }, { merge: true });
-
-            // Đổi trạng thái request thành approved
             await window.db.collection('renewal_requests').doc(reqId).update({ status: 'approved' });
 
             alert('✅ Đã duyệt gia hạn thành công!');
