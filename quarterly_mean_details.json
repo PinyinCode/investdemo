@@ -322,9 +322,9 @@
         "end_price_mean": 9.28
     },
     "HPG": {
-        "annual_rate_percent": -3.65,
+        "annual_rate_percent": -3.57,
         "start_quarter": "2021Q4",
-        "start_price_mean": 24.94,
+        "start_price_mean": 24.83,
         "end_quarter": "2026Q4",
         "end_price_mean": 20.79
     },
