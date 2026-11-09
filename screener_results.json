@@ -1032,7 +1032,7 @@
         "symbol": "SHB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 10750.0,
+        "close_price": 10700.0,
         "pe": 3.84,
         "pb": 0.66,
         "ps": 0.0,
@@ -1070,13 +1070,19 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 75.6%) + PTCB 32/50 + PTKT 12/20 + Định giá 30/30 + Tổng 74đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Sài Gòn – Hà Nội",
         "market_cap": 0.0,
-        "total_shares": 4594200024
+        "total_shares": 4594200024,
+        "price_change_percent": -0.47,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 5.67,
+        "amplitude_percent": 1.86
     },
     {
         "symbol": "BWE",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 42900.0,
+        "close_price": 42800.0,
         "pe": 8.76,
         "pb": 1.41,
         "ps": 0.0,
@@ -1115,13 +1121,19 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 30/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
         "market_cap": 0.0,
-        "total_shares": 219928644
+        "total_shares": 219928644,
+        "price_change_percent": -0.23,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 69.38,
+        "amplitude_percent": 2.91
     },
     {
         "symbol": "MCH",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 129800.0,
+        "close_price": 126000.0,
         "pe": 23.38,
         "pb": 9.37,
         "ps": 0.0,
@@ -1160,7 +1172,13 @@
         "final_decision_reason": "Giá 129,800 đã vượt xa fair_high 41,592 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Hàng Tiêu Dùng MaSan",
         "market_cap": 0.0,
-        "total_shares": 1307404949
+        "total_shares": 1307404949,
+        "price_change_percent": -2.93,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 53.68,
+        "amplitude_percent": 3.62
     },
     {
         "symbol": "ACB",
@@ -1741,13 +1759,19 @@
         "final_decision_reason": "Giá 53,600 đã vượt xa fair_high 42,078 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Ngân hàng Thương mại Cổ phần Ngoại thương Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 8355675094
+        "total_shares": 8355675094,
+        "price_change_percent": 0.0,
+        "price_change_available": true,
+        "price_arrow": "—",
+        "price_color": "slate",
+        "volume_percent": 6.87,
+        "amplitude_percent": 1.48
     },
     {
         "symbol": "PC1",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 16450.0,
+        "close_price": 16500.0,
         "pe": 6.99,
         "pb": 1.12,
         "ps": 0.0,
@@ -1787,7 +1811,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 23/50 < 30.",
         "company_name": "Công ty Cổ phần Tập đoàn PC1",
         "market_cap": 0.0,
-        "total_shares": 411285343
+        "total_shares": 411285343,
+        "price_change_percent": 0.3,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 82.46,
+        "amplitude_percent": 1.52
     },
     {
         "symbol": "GVR",
@@ -1883,7 +1913,7 @@
         "symbol": "ANV",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "AGRI",
-        "close_price": 17350.0,
+        "close_price": 17450.0,
         "pe": 5.86,
         "pb": 1.14,
         "ps": 0.0,
@@ -1922,7 +1952,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 20/50 < 30.",
         "company_name": "Công ty Cổ phần Nam Việt",
         "market_cap": 0.0,
-        "total_shares": 266667500
+        "total_shares": 266667500,
+        "price_change_percent": 0.58,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 47.73,
+        "amplitude_percent": 2.59
     },
     {
         "symbol": "SJS",
@@ -2557,7 +2593,7 @@
         "symbol": "PNJ",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 15050.0,
+        "close_price": 14200.0,
         "pe": 4.56,
         "pb": 0.58,
         "ps": 0.0,
@@ -2596,7 +2632,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
         "market_cap": 0.0,
-        "total_shares": 511891518
+        "total_shares": 511891518,
+        "price_change_percent": -5.65,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 12.41,
+        "amplitude_percent": 7.52
     },
     {
         "symbol": "DIG",
@@ -3185,7 +3227,7 @@
         "symbol": "NKG",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 12150.0,
+        "close_price": 12250.0,
         "pe": 24.59,
         "pb": 0.77,
         "ps": 0.0,
@@ -3224,7 +3266,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HỢP LÝ - CHỜ ĐIỀU CHỈNH), PTCB 26/50 < 30, Định giá 8/30 < 18.",
         "company_name": "Công ty Cổ phần Thép Nam Kim",
         "market_cap": 0.0,
-        "total_shares": 492323961
+        "total_shares": 492323961,
+        "price_change_percent": 0.82,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 6.88,
+        "amplitude_percent": 3.64
     },
     {
         "symbol": "EVF",
@@ -3986,7 +4034,13 @@
         "final_decision_reason": "PTCB chỉ 6/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Tập đoàn Hoa Sen",
         "market_cap": 0.0,
-        "total_shares": 807262704
+        "total_shares": 807262704,
+        "price_change_percent": 0.0,
+        "price_change_available": true,
+        "price_arrow": "—",
+        "price_color": "slate",
+        "volume_percent": 5.08,
+        "amplitude_percent": 2.29
     },
     {
         "symbol": "GEX",
@@ -4486,7 +4540,7 @@
         "symbol": "KOS",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 3680.0,
+        "close_price": 3460.0,
         "pe": 47.71,
         "pb": 0.34,
         "ps": 0.0,
@@ -4526,6 +4580,12 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần KOSY",
         "market_cap": 0.0,
-        "total_shares": 216481335
+        "total_shares": 216481335,
+        "price_change_percent": -5.98,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 9.73,
+        "amplitude_percent": 6.93
     }
 ]
