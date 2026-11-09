@@ -1,31 +1,9 @@
 # -*- coding: utf-8 -*-
-"""giaodien_core_js.py — Core JS logic chính.
-
-Gồm:
-    - State: screenerResults, symbolSimRates, quarterlyMeanDetails
-    - Dict style: SECTOR_NAMES, FINAL_DECISION_STYLE
-    - Auth hooks: window.onAuthReady, window.onAuthLogout
-    - Watchlist: loadUserWatchlist, toggleWatchlist, updateWatchlistButton/Badge
-    - loadData: fetch JSON + API, merge, gọi renderCards
-    - Modal AI: openModal, closeModal, switchAiTab, navigateModalSymbol,
-               handleModalSearchInput, calculateModalSimulation
-    - Chart: openChartModal, closeChartModal, renderChartInstance,
-             switchInterval, toggleIndicator, jumpToQuarter, toggleFullscreen,
-             navigateSymbol, toggleSymbolDropdown, filterDropdownSymbols
-    - Refresh: refreshPrices (toàn bộ), refreshSinglePrice (1 mã)
-"""
+"""giaodien_core_js.py — Core JS logic chính."""
 
 import json
 
-
 def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_groups):
-    """
-    Args:
-        price_api_url (str)     : URL API
-        firebase_config (dict)  : config Firebase
-        cheap_symbols (list)    : list symbol định giá rẻ (đã sort)
-        cheap_stocks_groups (dict) : toàn bộ cheap_stocks.json
-    """
     firebase_json = json.dumps(firebase_config, ensure_ascii=False)
     cheap_symbols_json = json.dumps(cheap_symbols, ensure_ascii=False)
     cheap_groups_json = json.dumps(cheap_stocks_groups, ensure_ascii=False)
@@ -34,7 +12,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     // ══════════════════════════════════════════════════
     // STATE
     // ══════════════════════════════════════════════════
-
     let screenerResults = [];
     let symbolSimRates = {};
     let quarterlyMeanDetails = {};
@@ -52,7 +29,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     // ══════════════════════════════════════════════════
     // DICT STYLE
     // ══════════════════════════════════════════════════
-
     const SECTOR_NAMES = {
         "NGAN_HANG": "Ngân hàng", "CHUNG_KHOAN": "Chứng khoán", "BAT_DONG_SAN": "Bất động sản",
         "CONG_NGHE_BAN_LE": "Công nghệ & Bán lẻ", "DIEN_NUOC_HA_TANG": "Điện, Nước & Hạ tầng",
@@ -68,9 +44,8 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     };
 
     // ══════════════════════════════════════════════════
-    // AUTH HOOKS (được auth_lite gọi)
+    // AUTH HOOKS
     // ══════════════════════════════════════════════════
-
     function parseDate(val) {
         if (!val) return null;
         if (typeof val.toDate === 'function') return val.toDate();
@@ -99,7 +74,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     // ══════════════════════════════════════════════════
     // WATCHLIST
     // ══════════════════════════════════════════════════
-
     async function loadUserWatchlist(uid) {
         try {
             const doc = await window.db.collection('watchlists').doc(uid).get();
@@ -122,7 +96,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             alert('Vui lòng đăng nhập để dùng tính năng theo dõi!');
             return;
         }
-
         const isAdding = !userWatchlist.has(symbol);
         if (isAdding) userWatchlist.add(symbol);
         else userWatchlist.delete(symbol);
@@ -150,13 +123,8 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         }
     }
 
-    function toggleWatchlistFromModal() {
-        if (currentSymbol) toggleWatchlist(currentSymbol, null);
-    }
-
-    function toggleWatchlistFromChart() {
-        if (currentSymbol) toggleWatchlist(currentSymbol, null);
-    }
+    function toggleWatchlistFromModal() { if (currentSymbol) toggleWatchlist(currentSymbol, null); }
+    function toggleWatchlistFromChart() { if (currentSymbol) toggleWatchlist(currentSymbol, null); }
 
     function updateWatchlistButton(symbol, isWatched) {
         const btn = document.querySelector(`[data-watch-btn="${symbol}"]`);
@@ -212,7 +180,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     // ══════════════════════════════════════════════════
     // LOAD DATA
     // ══════════════════════════════════════════════════
-
     async function loadData(showSpinner = false) {
         const icon = document.getElementById('refresh-icon');
         if (showSpinner && icon) icon.classList.add('spinner');
@@ -235,9 +202,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                         document.getElementById('header-last-update').innerText = timeData.last_update;
                     }
                 }
-            } catch (e) {
-                console.warn("Không lấy được giờ cập nhật từ API:", e);
-            }
+            } catch (e) { console.warn("Không lấy được giờ cập nhật:", e); }
 
             let rawStockData = {};
             try {
@@ -252,15 +217,12 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     const mongoJson = await mongoRes.json();
                     mongoPrices = mongoJson.data || {};
                 }
-            } catch (e) {
-                console.warn("Không lấy được giá từ MongoDB:", e);
-            }
+            } catch (e) { console.warn("Không lấy được giá từ MongoDB:", e); }
 
             screenerResults = screenerData.map(item => {
                 const sym = item.symbol;
                 const extraData = rawStockData[sym] || {};
                 const liveData = mongoPrices[sym] || {};
-
                 let finalClosePrice = item.close_price || 0;
                 if (liveData.close_price !== undefined) finalClosePrice = liveData.close_price;
                 else if (liveData.close !== undefined) finalClosePrice = liveData.close;
@@ -281,7 +243,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     debt_to_equity: extraData.debt_to_equity !== undefined ? extraData.debt_to_equity : (item.debt_to_equity || 0),
                     gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                     net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
-
                     close_price: finalClosePrice,
                     updated_at: liveData.updated_at || extraData.updated_at || "Chưa rõ",
                     open: liveData.open !== undefined ? liveData.open : null,
@@ -290,15 +251,12 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     volume: liveData.volume !== undefined ? liveData.volume : null,
                     trading_date: liveData.trading_date || null,
                     is_locked: liveData.is_locked || false,
-
                     price_change_percent: liveData.price_change_percent !== undefined && liveData.price_change_available ? liveData.price_change_percent : (item.price_change_percent || 0),
                     price_change_available: liveData.price_change_available !== undefined ? liveData.price_change_available : (item.price_change_available || false),
                     price_arrow: liveData.price_arrow && liveData.price_change_available ? liveData.price_arrow : (item.price_arrow || "—"),
                     price_color: liveData.price_color && liveData.price_change_available ? liveData.price_color : (item.price_color || "slate"),
-
                     volume_percent: liveData.volume_percent !== undefined ? liveData.volume_percent : (item.volume_percent || 0),
                     amplitude_percent: liveData.amplitude_percent !== undefined ? liveData.amplitude_percent : (item.amplitude_percent || 0),
-
                     bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                     bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
                     outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
@@ -307,7 +265,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
                     ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at,
                     ai_source: extraData.ai_source !== undefined ? extraData.ai_source : (item.ai_source || ""),
-
                     fair_value_low: extraData.fair_value_low !== undefined ? extraData.fair_value_low : (item.fair_value_low || 0),
                     fair_value_high: extraData.fair_value_high !== undefined ? extraData.fair_value_high : (item.fair_value_high || 0),
                     valuation_verdict: extraData.valuation_verdict !== undefined ? extraData.valuation_verdict : (item.valuation_verdict || ""),
@@ -315,7 +272,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     margin_of_safety_pct: extraData.margin_of_safety_pct !== undefined ? extraData.margin_of_safety_pct : (item.margin_of_safety_pct || 0),
                     fair_value_rationale: extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || ""),
                     sub_sector: extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || ""),
-
                     final_decision: item.final_decision !== undefined ? item.final_decision : (extraData.final_decision || ""),
                     final_decision_color: item.final_decision_color !== undefined ? item.final_decision_color : (extraData.final_decision_color || "slate"),
                     final_decision_reason: item.final_decision_reason !== undefined ? item.final_decision_reason : (extraData.final_decision_reason || ""),
@@ -331,11 +287,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (showSpinner && icon) icon.classList.remove('spinner');
         }
     }
-    
+
     // ══════════════════════════════════════════════════
     // MODAL AI
     // ══════════════════════════════════════════════════
-
     function switchAiTab(tabName) {
         currentActiveTab = tabName;
         ['eval', 'simulator'].forEach(t => {
@@ -412,7 +367,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             gmVal.innerText = (item.gross_margin !== undefined && item.gross_margin !== null) ? item.gross_margin + '%' : '—';
         }
 
-        // Final decision
         const finalEl = document.getElementById('modal-final-decision');
         if (finalEl) {
             const fd = item.final_decision || "";
@@ -447,7 +401,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             }
         }
 
-        // Fair zone
         const fairLow = item.fair_value_low || 0;
         const fairHigh = item.fair_value_high || 0;
         const verdict = item.valuation_verdict || "";
@@ -499,7 +452,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             }
         }
 
-        // AI rec
         document.getElementById('modal-ai-rec').innerText = item.ai_recommendation || item.technical_status || 'Tích lũy';
         let priceZoneText = item.ai_price_zone;
         if (typeof priceZoneText === 'object' && priceZoneText !== null) {
@@ -507,7 +459,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         }
         document.getElementById('modal-ai-price').innerText = priceZoneText || item.potential_zone || '—';
 
-        // AI source badge
         const aiSourceEl = document.getElementById('modal-ai-source');
         if (aiSourceEl) {
             const src = item.ai_source || "";
@@ -531,7 +482,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         document.getElementById('modal-time').innerText = `AI phân tích lúc: ${item.ai_updated_at || 'Chưa chạy AI'}`;
         document.getElementById('modal-price-time').innerText = `Giá cập nhật lúc: ${item.updated_at || 'Chưa cập nhật'}`;
 
-        // Simulator
         let histRate = 15;
         if (symbolSimRates[symbol] && symbolSimRates[symbol].annual_rate_percent !== undefined) {
             histRate = symbolSimRates[symbol].annual_rate_percent;
@@ -556,9 +506,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         document.getElementById('ai-modal').classList.remove('hidden');
     }
 
-    function closeModal() {
-        document.getElementById('ai-modal').classList.add('hidden');
-    }
+    function closeModal() { document.getElementById('ai-modal').classList.add('hidden'); }
 
     function navigateModalSymbol(direction) {
         const symbols = screenerResults.map(s => s.symbol).sort();
@@ -571,16 +519,11 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         }
     }
 
-    // Modal search suggestions
     let currentModalSuggestions = [];
-
     function handleModalSearchInput(val) {
         const term = val.trim().toUpperCase();
         const suggestBox = document.getElementById('modal-search-suggestions');
-        if (!term) {
-            suggestBox.classList.add('hidden');
-            return;
-        }
+        if (!term) { suggestBox.classList.add('hidden'); return; }
         currentModalSuggestions = screenerResults.filter(item => item.symbol.includes(term)).slice(0, 8);
         if (currentModalSuggestions.length === 0) {
             suggestBox.innerHTML = `<div class="px-2 py-1.5 text-xs text-slate-500">Không tìm thấy.</div>`;
@@ -588,9 +531,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         } else {
             let html = '';
             currentModalSuggestions.forEach(item => {
-                html += `<button type="button" onclick="selectModalSuggestion('${item.symbol}')" class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-bold transition flex justify-between items-center hover:bg-slate-800 text-slate-300">
-                    <span>${item.symbol}</span>
-                </button>`;
+                html += `<button type="button" onclick="selectModalSuggestion('${item.symbol}')" class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-bold transition flex justify-between items-center hover:bg-slate-800 text-slate-300"><span>${item.symbol}</span></button>`;
             });
             suggestBox.innerHTML = html;
             suggestBox.classList.remove('hidden');
@@ -600,9 +541,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     function handleModalSearchKeyDown(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            if (currentModalSuggestions.length > 0) {
-                selectModalSuggestion(currentModalSuggestions[0].symbol);
-            }
+            if (currentModalSuggestions.length > 0) selectModalSuggestion(currentModalSuggestions[0].symbol);
         }
     }
 
@@ -619,10 +558,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             modalSuggest.classList.add('hidden');
         }
     });
-
-    // ══════════════════════════════════════════════════
-    // SIMULATOR DCA
-    // ══════════════════════════════════════════════════
 
     function calculateModalSimulation() {
         let p0 = parseCleanNumber(document.getElementById('modal-sim-initial').value);
@@ -645,7 +580,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     // ══════════════════════════════════════════════════
     // CHART
     // ══════════════════════════════════════════════════
-
     function navigateSymbol(direction) {
         const symbols = screenerResults.map(s => s.symbol).sort();
         const currentIndex = symbols.indexOf(currentSymbol);
@@ -818,12 +752,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         currentSymbolHistory = null;
     }
 
-    // (Tiếp: openChartModal, renderChartInstance, calculateMA/RSI/VolumeMA, refreshPrices, refreshSinglePrice — xem TIN 5C)
-    
-    // ══════════════════════════════════════════════════
-    // OPEN CHART MODAL
-    // ══════════════════════════════════════════════════
-
     async function openChartModal(symbol) {
         currentSymbol = symbol;
         currentInterval = 'D1';
@@ -849,17 +777,11 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (!res.ok) throw new Error("Không tìm thấy file");
             currentSymbolHistory = await res.json();
 
-            // Normalize history: giá ×1000 nếu < 1000, volume giữ nguyên
             if (currentSymbolHistory.history_d1) {
                 currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
                     .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
                     .map(bar => ({
-                        time: bar.time,
-                        open: bar.open * 1000,
-                        high: bar.high * 1000,
-                        low: bar.low * 1000,
-                        close: bar.close * 1000,
-                        volume: bar.volume
+                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
                     }));
             } else {
                 currentSymbolHistory.history_d1 = [];
@@ -869,9 +791,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1
                     .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
                     .map(bar => ({
-                        time: bar.time,
-                        open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000,
-                        volume: bar.volume
+                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
                     }));
             }
 
@@ -879,13 +799,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 currentSymbolHistory.history_mn = currentSymbolHistory.history_mn
                     .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
                     .map(bar => ({
-                        time: bar.time,
-                        open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000,
-                        volume: bar.volume
+                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
                     }));
             }
 
-            // Nến Live API: giá ×1000, volume giữ nguyên
             let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
             const tradingDate = item && item.trading_date ? item.trading_date : null;
 
@@ -898,12 +815,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (itemOpen > 0 && itemOpen < 1000) itemOpen *= 1000;
             if (itemHigh > 0 && itemHigh < 1000) itemHigh *= 1000;
             if (itemLow > 0 && itemLow < 1000) itemLow *= 1000;
-            // Volume không nhân
 
             if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
                 const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
                 const effectiveDate = tradingDate || lastBar.time;
-
                 const existingBar = currentSymbolHistory.history_d1.find(b => b.time === effectiveDate);
 
                 if (existingBar) {
@@ -922,16 +837,9 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                         const hasValidOHLC = itemOpen > 0 && itemHigh > 0 && itemLow > 0;
                         if (hasValidOHLC) {
                             let liveVolume = itemVolume;
-                            if (!liveVolume || liveVolume < 1000) {
-                                liveVolume = lastBar.volume;
-                            }
+                            if (!liveVolume || liveVolume < 1000) liveVolume = lastBar.volume;
                             currentSymbolHistory.history_d1.push({
-                                time: effectiveDate,
-                                open: itemOpen,
-                                high: itemHigh,
-                                low: itemLow,
-                                close: currentPrice,
-                                volume: liveVolume
+                                time: effectiveDate, open: itemOpen, high: itemHigh, low: itemLow, close: currentPrice, volume: liveVolume
                             });
                         }
                     }
@@ -939,7 +847,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             }
 
             currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
-
             renderChartInstance(currentSymbolHistory);
 
         } catch (err) {
@@ -949,10 +856,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             document.getElementById('chart-loading').classList.add('hidden');
         }
     }
-
-    // ══════════════════════════════════════════════════
-    // INDICATOR HELPERS
-    // ══════════════════════════════════════════════════
 
     function calculateMA(data, period) {
         let result = [];
@@ -998,16 +901,11 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         return result;
     }
 
-    // ══════════════════════════════════════════════════
-    // RENDER CHART
-    // ══════════════════════════════════════════════════
-
     function renderChartInstance(historyDataObj) {
         const container = document.getElementById('tv-chart-container');
         container.innerHTML = '';
         const LC = window.LightweightCharts;
         if (!LC) return;
-
         const width = container.clientWidth || 600;
         const height = container.clientHeight || 380;
         const hasRSI = activeIndicators.RSI;
@@ -1020,9 +918,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         });
 
         candleSeriesInstance = chartInstance.addSeries(LC.CandlestickSeries, {
-            upColor: '#10b981', downColor: '#f43f5e',
-            borderUpColor: '#10b981', borderDownColor: '#f43f5e',
-            wickUpColor: '#10b981', wickDownColor: '#f43f5e',
+            upColor: '#10b981', downColor: '#f43f5e', borderUpColor: '#10b981', borderDownColor: '#f43f5e', wickUpColor: '#10b981', wickDownColor: '#f43f5e',
         }, 0);
 
         volumeSeriesInstance = chartInstance.addSeries(LC.HistogramSeries, {
@@ -1044,23 +940,16 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
 
         if (maxVol > 0) {
             volumeSeriesInstance.applyOptions({
-                autoscaleInfoProvider: () => ({
-                    priceRange: {
-                        minValue: 0,
-                        maxValue: maxVol * 1.2
-                    }
-                })
+                autoscaleInfoProvider: () => ({ priceRange: { minValue: 0, maxValue: maxVol * 1.2 } })
             });
         }
 
         if (chartData && chartData.length > 0) {
             candleSeriesInstance.setData(chartData);
             volumeSeriesInstance.setData(chartData.map(row => ({
-                time: row.time, value: row.volume,
-                color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
+                time: row.time, value: row.volume, color: row.close >= row.open ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'
             })));
 
-            // Quarter boxes + lines
             const details = quarterlyMeanDetails[currentSymbol];
             if (details) {
                 function getQuarterBoxInfo(quarterStr, allBars) {
@@ -1076,10 +965,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     });
                     if (quarterBars.length === 0) return null;
                     let qHigh = -Infinity, qLow = Infinity;
-                    quarterBars.forEach(b => {
-                        if (b.high > qHigh) qHigh = b.high;
-                        if (b.low < qLow) qLow = b.low;
-                    });
+                    quarterBars.forEach(b => { if (b.high > qHigh) qHigh = b.high; if (b.low < qLow) qLow = b.low; });
                     return { high: qHigh, low: qLow, data: quarterBars.map(row => ({ time: row.time, value: qHigh, baseValue: qLow })) };
                 }
 
@@ -1087,18 +973,14 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     const startBoxInfo = getQuarterBoxInfo(details.start_quarter, chartData);
                     if (startBoxInfo && startBoxInfo.data.length > 0) {
                         const startBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
-                            baseValue: { type: 'price', price: startBoxInfo.low },
-                            topFillColor1: 'rgba(59, 130, 246, 0.45)', topFillColor2: 'rgba(59, 130, 246, 0.15)',
-                            topLineColor: '#2563eb', bottomLineColor: '#2563eb', lineWidth: 2
+                            baseValue: { type: 'price', price: startBoxInfo.low }, topFillColor1: 'rgba(59, 130, 246, 0.45)', topFillColor2: 'rgba(59, 130, 246, 0.15)', topLineColor: '#2563eb', bottomLineColor: '#2563eb', lineWidth: 2
                         }, 0);
                         startBoxSeries.setData(startBoxInfo.data);
                     }
                     const endBoxInfo = getQuarterBoxInfo(details.end_quarter, chartData);
                     if (endBoxInfo && endBoxInfo.data.length > 0) {
                         const endBoxSeries = chartInstance.addSeries(LC.BaselineSeries, {
-                            baseValue: { type: 'price', price: endBoxInfo.low },
-                            topFillColor1: 'rgba(16, 185, 129, 0.45)', topFillColor2: 'rgba(16, 185, 129, 0.15)',
-                            topLineColor: '#059669', bottomLineColor: '#059669', lineWidth: 2
+                            baseValue: { type: 'price', price: endBoxInfo.low }, topFillColor1: 'rgba(16, 185, 129, 0.45)', topFillColor2: 'rgba(16, 185, 129, 0.15)', topLineColor: '#059669', bottomLineColor: '#059669', lineWidth: 2
                         }, 0);
                         endBoxSeries.setData(endBoxInfo.data);
                     }
@@ -1109,25 +991,15 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     if (startPrice > 0 && startPrice < 1000) startPrice = startPrice * 1000;
                     let endPrice = details.end_price_mean;
                     if (endPrice > 0 && endPrice < 1000) endPrice = endPrice * 1000;
-
-                    candleSeriesInstance.createPriceLine({
-                        price: startPrice, color: '#f97316', lineWidth: 2,
-                        lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true,
-                        title: `Q.Đầu 5Y (${details.start_quarter}): ${formatNumber(startPrice)}`
-                    });
-                    candleSeriesInstance.createPriceLine({
-                        price: endPrice, color: '#10b981', lineWidth: 2,
-                        lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true,
-                        title: `Q.Cuối (${details.end_quarter}): ${formatNumber(endPrice)}`
-                    });
+                    candleSeriesInstance.createPriceLine({ price: startPrice, color: '#f97316', lineWidth: 2, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: `Q.Đầu 5Y (${details.start_quarter}): ${formatNumber(startPrice)}` });
+                    candleSeriesInstance.createPriceLine({ price: endPrice, color: '#10b981', lineWidth: 2, lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true, title: `Q.Cuối (${details.end_quarter}): ${formatNumber(endPrice)}` });
                 }
             }
 
-            // Indicators
             if (activeIndicators.MA20) chartInstance.addSeries(LC.LineSeries, { color: '#3b82f6', lineWidth: 1 }, 0).setData(calculateMA(chartData, 20));
             if (activeIndicators.MA50) chartInstance.addSeries(LC.LineSeries, { color: '#eab308', lineWidth: 1 }, 0).setData(calculateMA(chartData, 50));
             if (activeIndicators.VOLMA) chartInstance.addSeries(LC.LineSeries, { color: '#f97316', lineWidth: 1, priceScaleId: 'volumeScale' }, 0).setData(calculateVolumeMA(chartData, 20));
-
+            
             if (hasRSI) {
                 const rsiSeries = chartInstance.addSeries(LC.LineSeries, { color: '#a855f7', lineWidth: 1.5 }, 1);
                 rsiSeries.createPriceLine({ price: 70, color: '#ef5350', lineWidth: 1, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true });
@@ -1135,12 +1007,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 rsiSeries.setData(calculateRSI(chartData, 14));
             }
 
-            // Legend
             const legendTime = document.getElementById('legend-time');
             const legendClose = document.getElementById('legend-close');
             const legendChange = document.getElementById('legend-change');
             const legendVol = document.getElementById('legend-vol');
-
             const latestBar = chartData[chartData.length - 1];
             if (latestBar) updateLegend(latestBar, chartData);
 
@@ -1163,104 +1033,67 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     if (latestBar) updateLegend(latestBar, chartData);
                 } else {
                     const dataPoint = param.seriesData.get(candleSeriesInstance);
-                    if (dataPoint) {
-                        updateLegend({
-                            time: param.time,
-                            close: dataPoint.close,
-                            volume: param.seriesData.get(volumeSeriesInstance)?.value || 0
-                        }, chartData);
-                    }
+                    if (dataPoint) updateLegend({ time: param.time, close: dataPoint.close, volume: param.seriesData.get(volumeSeriesInstance)?.value || 0 }, chartData);
                 }
             });
 
             setTimeout(() => {
                 const totalBars = chartData.length;
                 let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
-                if (totalBars > visibleBarsCount) {
-                    chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
-                } else {
-                    chartInstance.timeScale().fitContent();
-                }
+                if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
+                else chartInstance.timeScale().fitContent();
             }, 50);
         }
     }
 
     // ══════════════════════════════════════════════════
-    // REFRESH GIÁ — TOÀN BỘ
+    // REFRESH GIÁ
     // ══════════════════════════════════════════════════
-
     let isRefreshingAll = false;
-
     async function refreshPrices() {
-        if (isRefreshingAll || isRefreshingSingle) {
-            addLog(`Hệ thống đang bận, vui lòng đợi tiến trình hiện tại xong!`, 'warning');
-            return;
-        }
+        if (isRefreshingAll || isRefreshingSingle) { addLog(`Hệ thống đang bận, vui lòng đợi tiến trình hiện tại xong!`, 'warning'); return; }
         isRefreshingAll = true;
-
         const icon = document.getElementById('refresh-icon');
         const headerBtn = icon ? icon.closest('button') : null;
         if (icon) icon.classList.add('spinner');
         if (headerBtn) headerBtn.disabled = true;
-
-        document.querySelectorAll('[data-refresh-single]').forEach(btn => {
-            btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed');
-        });
-
+        document.querySelectorAll('[data-refresh-single]').forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
         showLogConsole();
         document.getElementById('log-content').innerHTML = '';
         updateProgress(0, 1);
-
         const symbols = screenerResults.map(item => item.symbol);
         if (symbols.length === 0) {
             addLog(`Danh sách trống, không có gì để cập nhật.`, 'warning');
             isRefreshingAll = false;
             if (icon) icon.classList.remove('spinner');
             if (headerBtn) headerBtn.disabled = false;
-            document.querySelectorAll('[data-refresh-single]').forEach(btn => {
-                btn.disabled = false;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-            });
+            document.querySelectorAll('[data-refresh-single]').forEach(btn => { btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed'); });
             return;
         }
-
         addLog(`Bắt đầu lấy giá cho ${symbols.length} mã...`, 'processing');
         updateProgress(0, symbols.length);
-
         try {
             const chunkSize = 20;
             const chunks = [];
-            for (let i = 0; i < symbols.length; i += chunkSize) {
-                chunks.push(symbols.slice(i, i + chunkSize));
-            }
-
+            for (let i = 0; i < symbols.length; i += chunkSize) { chunks.push(symbols.slice(i, i + chunkSize)); }
             let updatedCount = 0;
             let processedCount = 0;
             let lastUpdateTime = "";
-
             await Promise.all(chunks.map(async (chunk) => {
                 const symQuery = chunk.join(',');
                 try {
                     const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symQuery}`);
-
                     if (res.ok) {
                         const data = await res.json();
                         lastUpdateTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
-
                         chunk.forEach(sym => {
                             if (data.updated_data && data.updated_data[sym] !== undefined) {
                                 const price = data.updated_data[sym];
                                 const item = screenerResults.find(s => s.symbol === sym);
-                                if (item) {
-                                    item.close_price = price;
-                                    item.updated_at = lastUpdateTime;
-                                }
+                                if (item) { item.close_price = price; item.updated_at = lastUpdateTime; }
                                 addLog(`${sym}: ${formatPrice(price)} đ`, 'success');
                                 updatedCount++;
-                            } else {
-                                addLog(`${sym}: Không lấy được giá`, 'error');
-                            }
+                            } else { addLog(`${sym}: Không lấy được giá`, 'error'); }
                             processedCount++;
                             updateProgress(processedCount, symbols.length);
                         });
@@ -1279,16 +1112,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     });
                 }
             }));
-
             renderCards();
-
-            if (lastUpdateTime) {
-                document.getElementById('header-last-update').innerText = lastUpdateTime + " (Toàn bộ)";
-            }
-
+            if (lastUpdateTime) { document.getElementById('header-last-update').innerText = lastUpdateTime + " (Toàn bộ)"; }
             addLog(`Hoàn tất toàn bộ! Đã cập nhật ${updatedCount}/${symbols.length} mã.`, 'success');
             updateProgress(symbols.length, symbols.length);
-
         } catch (err) {
             console.error(err);
             addLog(`Lỗi nghiêm trọng khi gọi API.`, 'error');
@@ -1296,47 +1123,25 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             isRefreshingAll = false;
             if (icon) icon.classList.remove('spinner');
             if (headerBtn) headerBtn.disabled = false;
-
-            document.querySelectorAll('[data-refresh-single]').forEach(btn => {
-                btn.disabled = false;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-            });
-
-            setTimeout(() => {
-                if (!isLogMinimized) hideLogConsole();
-            }, 3000);
+            document.querySelectorAll('[data-refresh-single]').forEach(btn => { btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed'); });
+            setTimeout(() => { if (!isLogMinimized) hideLogConsole(); }, 3000);
         }
     }
 
-    // ══════════════════════════════════════════════════
-    // REFRESH GIÁ — 1 MÃ
-    // ══════════════════════════════════════════════════
-
     let isRefreshingSingle = false;
-
     async function refreshSinglePrice(symbol, btnElement) {
-        if (isRefreshingAll || isRefreshingSingle) {
-            addLog(`Hệ thống đang bận, đợi xíu nhé!`, 'warning');
-            return;
-        }
+        if (isRefreshingAll || isRefreshingSingle) { addLog(`Hệ thống đang bận, đợi xíu nhé!`, 'warning'); return; }
         if (btnElement.disabled) return;
-
         isRefreshingSingle = true;
         btnElement.disabled = true;
         const icon = btnElement.querySelector('i');
         if (icon) icon.classList.add('spinner');
-
         const headerBtn = document.getElementById('refresh-icon')?.closest('button');
-        if (headerBtn) {
-            headerBtn.disabled = true;
-            headerBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        }
-
+        if (headerBtn) { headerBtn.disabled = true; headerBtn.classList.add('opacity-50', 'cursor-not-allowed'); }
         showLogConsole();
         document.getElementById('log-content').innerHTML = '';
         updateProgress(0, 1);
         addLog(`Bắt đầu lấy giá cho ${symbol}...`, 'processing');
-
         try {
             const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symbol}`);
             if (res.ok) {
@@ -1344,10 +1149,8 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 if (data.updated_data && data.updated_data[symbol] !== undefined) {
                     const newPrice = data.updated_data[symbol];
                     const newTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
-
                     const item = screenerResults.find(s => s.symbol === symbol);
                     if (item) { item.close_price = newPrice; item.updated_at = newTime; }
-
                     const card = btnElement.closest('.bg-slate-900');
                     if (card) {
                         const priceEl = card.querySelector('.text-emerald-400.leading-tight');
@@ -1359,37 +1162,23 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                         const timeEl = card.querySelector('.fa-clock').parentElement;
                         if (timeEl) timeEl.innerHTML = `<i class="fa-regular fa-clock mr-0.5"></i>${newTime}`;
                     }
-
                     addLog(`${symbol}: ${formatPrice(newPrice)} đ`, 'success');
                 } else {
                     addLog(`${symbol}: Không lấy được giá`, 'error');
                 }
-            } else {
-                addLog(`${symbol}: Lỗi server (${res.status})`, 'error');
-            }
-        } catch (err) {
-            addLog(`${symbol}: Lỗi kết nối mạng`, 'error');
-        } finally {
+            } else { addLog(`${symbol}: Lỗi server (${res.status})`, 'error'); }
+        } catch (err) { addLog(`${symbol}: Lỗi kết nối mạng`, 'error'); }
+        finally {
             updateProgress(1, 1);
             isRefreshingSingle = false;
             btnElement.disabled = false;
             if (icon) icon.classList.remove('spinner');
-
-            if (headerBtn) {
-                headerBtn.disabled = false;
-                headerBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            }
-
+            if (headerBtn) { headerBtn.disabled = false; headerBtn.classList.remove('opacity-50', 'cursor-not-allowed'); }
             setTimeout(() => { if (!isLogMinimized) hideLogConsole(); }, 2000);
         }
     }
 
-    // ══════════════════════════════════════════════════
-    // EVENT LISTENERS
-    // ══════════════════════════════════════════════════
-
     document.getElementById('search-input').addEventListener('input', renderCards);
     document.getElementById('sector-filter').addEventListener('change', renderCards);
     document.getElementById('ranking-filter').addEventListener('change', renderCards);
-
-"""
+    """
