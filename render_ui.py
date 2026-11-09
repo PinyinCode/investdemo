@@ -982,12 +982,19 @@ def generate_html():
             "slate":   { bg: "bg-slate-700/40",   border: "border-slate-600/50",   text: "text-slate-300",   icon: "fa-eye" },
         };
 
-        function formatNumber(num) {
+        // CHỈ DÙNG CHO GIÁ: Nhân 1000 để hiển thị đúng VNĐ (VD 11.9 -> 11.900)
+        function formatPrice(num) {
             if (num === undefined || num === null || num === 0) return '—';
-            // CHỈ NHÂN 1000 ĐỂ HIỂN THỊ (VD: 11.9 -> 11.900)
             let val = num * 1000;
             return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
+        
+        // DÙNG CHO CÁC CHỈ SỐ KHÁC & VOLUME: Không nhân 1000
+        function formatNumber(num) {
+            if (num === undefined || num === null || num === 0) return '—';
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        
         function formatPercent(num) {
             if (num === undefined || num === null) return '—';
             return num.toFixed(1) + '%';
@@ -1055,14 +1062,12 @@ def generate_html():
                     console.warn("Không lấy được giờ cập nhật từ API:", e);
                 }
 
-                // 1. Lấy dữ liệu tĩnh từ data.json
                 let rawStockData = {};
                 try {
                     const dataRes = await fetch('data.json?t=' + new Date().getTime());
                     if (dataRes.ok) rawStockData = await dataRes.json();
                 } catch (e) {}
 
-                // 2. Lấy dữ liệu giá realtime mới nhất từ MongoDB qua API
                 let mongoPrices = {};
                 try {
                     const mongoRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
@@ -1094,10 +1099,6 @@ def generate_html():
                         debt_to_equity: extraData.debt_to_equity !== undefined ? extraData.debt_to_equity : (item.debt_to_equity || 0),
                         gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                         net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
-                        
-                        // =========================================================
-                        // ƯU TIÊN API TRƯỚC, NẾU API KHÔNG CÓ MỚI FALLBACK VỀ JSON CŨ
-                        // =========================================================
                         
                         close_price: liveData.close_price !== undefined ? liveData.close_price : (liveData.close !== undefined ? liveData.close : (extraData.close !== undefined ? extraData.close : (item.close_price || 0))),
                         updated_at: liveData.updated_at || extraData.updated_at || "Chưa rõ",
@@ -1308,7 +1309,6 @@ def generate_html():
                         
                         if (res.ok) {
                             const data = await res.json();
-                            // LÀM SẠCH CHUỖI THỜI GIAN
                             lastUpdateTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
                             
                             chunk.forEach(sym => {
@@ -1319,7 +1319,7 @@ def generate_html():
                                         item.close_price = price;
                                         item.updated_at = lastUpdateTime; 
                                     }
-                                    addLog(`${sym}: ${formatNumber(price)} đ`, 'success');
+                                    addLog(`${sym}: ${formatPrice(price)} đ`, 'success');
                                     updatedCount++;
                                 } else {
                                     addLog(`${sym}: Không lấy được giá`, 'error');
@@ -1402,7 +1402,6 @@ def generate_html():
                     const data = await res.json();
                     if (data.updated_data && data.updated_data[symbol] !== undefined) {
                         const newPrice = data.updated_data[symbol];
-                        // LÀM SẠCH CHUỖI THỜI GIAN
                         const newTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
                         
                         const item = screenerResults.find(s => s.symbol === symbol);
@@ -1412,7 +1411,7 @@ def generate_html():
                         if (card) {
                             const priceEl = card.querySelector('.text-emerald-400.leading-tight');
                             if (priceEl) {
-                                priceEl.innerText = formatNumber(newPrice);
+                                priceEl.innerText = formatPrice(newPrice);
                                 priceEl.classList.add('text-white', 'bg-emerald-500');
                                 setTimeout(() => priceEl.classList.remove('text-white', 'bg-emerald-500'), 500);
                             }
@@ -1420,7 +1419,7 @@ def generate_html():
                             if (timeEl) timeEl.innerHTML = `<i class="fa-regular fa-clock mr-0.5"></i>${newTime}`;
                         }
                         
-                        addLog(`${symbol}: ${formatNumber(newPrice)} đ`, 'success');
+                        addLog(`${symbol}: ${formatPrice(newPrice)} đ`, 'success');
                     } else {
                         addLog(`${symbol}: Không lấy được giá`, 'error');
                     }
@@ -1459,7 +1458,6 @@ def generate_html():
                 let matchSector = (selectedSector === "ALL") ? true : (item.sector === selectedSector);
                 let matchWatchlist = !isWatchlistOnly || userWatchlist.has(item.symbol);
                 
-                // Lọc mã đột biến (Giá ±3% VÀ KL >= 120%)
                 const pct = item.price_change_percent || 0;
                 const vol = item.volume_percent || 0;
                 const isShock = ((pct >= 3.0) || (pct <= -3.0)) && (vol >= 120.0);
@@ -1561,7 +1559,6 @@ def generate_html():
                     cheapBadgeHtml = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Doanh nghiệp định giá rẻ"><i class="fa-solid fa-gem text-[8px]"></i> Định giá rẻ</span>`;
                 }
 
-                // TẠO NHÃN ĐỘT BIẾN KL VÀ BIÊN ĐỘ (GIỐNG ĐIỀU KIỆN TELEGRAM)
                 let shockBadgeHtml = "";
                 const pctChange = item.price_change_percent || 0;
                 const isPriceShock = (pctChange >= 3.0) || (pctChange <= -3.0);
@@ -1572,6 +1569,7 @@ def generate_html():
                     const colorClass = isUp ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" : "bg-rose-500/20 text-rose-300 border-rose-500/40";
                     const iconClass = isUp ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
                     
+                    // SỬ DỤNG Math.round THAY VÌ formatNumber ĐỂ TRÁNH LỖI NHÂN 1000
                     shockBadgeHtml = `<span class="${colorClass} border text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1" title="Dòng tiền ${isUp ? 'MUA VÀO' : 'BÁN RÒNG'}">
                         <i class="fa-solid ${iconClass}"></i> Vol: ${Math.round(item.volume_percent)}%
                     </span>`;
@@ -1619,7 +1617,6 @@ def generate_html():
                 card.className = `relative bg-slate-900 rounded-xl border ${borderColor} ${cardGlow} p-4 shadow-lg hover:bg-slate-800/80 transition w-full flex flex-col justify-between mt-2 cursor-pointer`;
                 card.onclick = () => openChartModal(item.symbol);
 
-                // TẠO HTML HIỂN THỊ % VÀ MŨI TÊN
                 let priceChangeHtml = '';
                 if (item.price_change_available) {
                     const pct = item.price_change_percent || 0;
@@ -1655,13 +1652,10 @@ def generate_html():
                                 </div>
                             </div>
                             <div class="text-right flex flex-col items-end shrink-0 ml-2 gap-1">
-                                <!-- HIỂN THỊ GIÁ VÀ PHẦN TRĂM KÈM MŨI TÊN -->
                                 <div class="flex flex-col items-end leading-tight">
-                                    <span class="block text-lg font-bold text-emerald-400">${formatNumber(item.close_price)}</span>
-                                    
+                                    <span class="block text-lg font-bold text-emerald-400">${formatPrice(item.close_price)}</span>
                                     ${priceChangeHtml}
                                 </div>
-                                
                                 ${verdictBadgeHtml}
                                 ${cheapBadgeHtml}
                             </div>
@@ -1677,10 +1671,10 @@ def generate_html():
                         ${(item.fair_value_low > 0 && item.fair_value_high > 0) ? `
                         <div class="flex items-center justify-between text-[10px] bg-slate-950/40 px-2 py-1 rounded border border-slate-800/60 mb-1">
                             <span class="text-slate-400"><i class="fa-solid fa-crosshairs text-emerald-400 mr-1"></i>Mua ≤</span>
-                            <span class="font-bold text-emerald-300">${formatNumber(item.fair_value_low)}</span>
+                            <span class="font-bold text-emerald-300">${formatPrice(item.fair_value_low)}</span>
                             <span class="text-slate-500">|</span>
                             <span class="text-slate-400">Fair</span>
-                            <span class="font-bold text-indigo-300">${formatNumber(item.fair_value_high)}</span>
+                            <span class="font-bold text-indigo-300">${formatPrice(item.fair_value_high)}</span>
                         </div>` : ''}
                     </div>
                     ${scoreHtml}
@@ -1698,7 +1692,6 @@ def generate_html():
             if (!term) {
                 suggestBox.classList.add('hidden');
                 
-                // NẾU XÓA HẾT CHỮ THÌ RESET VỀ MẶC ĐỊNH
                 document.getElementById('sector-filter').value = "ALL";
                 document.getElementById('ranking-filter').value = "FINAL_BUY_ONLY";
                 document.getElementById('shock-filter').checked = false;
@@ -1740,14 +1733,11 @@ def generate_html():
             document.getElementById('search-input').value = symbol;
             document.getElementById('search-suggestions').classList.add('hidden');
             
-            // TỰ ĐỘNG CHỌN NGÀNH VÀ CHẾ ĐỘ XEM THEO MÃ
             const item = screenerResults.find(s => s.symbol === symbol);
             if (item) {
-                // 1. Tự động chọn ngành
                 const sectorSelect = document.getElementById('sector-filter');
                 sectorSelect.value = item.sector || "ALL";
                 
-                // 2. Tự động chọn chế độ xem (nếu đang ở chế độ mặc định thì đổi sang Toàn thị trường)
                 const rankingSelect = document.getElementById('ranking-filter');
                 if (rankingSelect.value === 'FINAL_BUY_ONLY' && !item.final_decision.includes("MUA")) {
                     rankingSelect.value = 'FINAL_DECISION_SORT';
@@ -1757,7 +1747,6 @@ def generate_html():
             renderCards();
         }
 
-        // Đóng gợi ý khi click ra ngoài
         window.addEventListener('click', (e) => {
             const searchBox = document.getElementById('search-input');
             const searchSuggest = document.getElementById('search-suggestions');
@@ -1808,10 +1797,9 @@ def generate_html():
         function selectModalSuggestion(symbol) {
             document.getElementById('modal-search-suggestions').classList.add('hidden');
             document.getElementById('modal-symbol-input').value = symbol;
-            openModal(symbol); // Load lại thông tin mã mới
+            openModal(symbol); 
         }
 
-        // Đóng modal gợi ý khi click ngoài
         window.addEventListener('click', (e) => {
             const modalSearchBox = document.getElementById('modal-symbol-input');
             const modalSuggest = document.getElementById('modal-search-suggestions');
@@ -1820,20 +1808,15 @@ def generate_html():
             }
         });
 
-        // ================== CHART DROPDOWN SEARCH SUGGESTIONS ==================
-        let currentChartSuggestions = [];
         function handleDropdownSearchKeyDown(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                // Lấy danh sách đang hiển thị
                 const firstBtn = document.querySelector('#dropdown-symbol-list button');
                 if (firstBtn) {
                     firstBtn.click();
                 }
             }
         }
-
-        // =======================================================
 
         function switchAiTab(tabName) {
             currentActiveTab = tabName;
@@ -1858,7 +1841,7 @@ def generate_html():
             switchAiTab(currentActiveTab);
             document.getElementById('modal-symbol-input').value = item.symbol;
             document.getElementById('modal-sector').innerText = `Ngành: ${SECTOR_NAMES[item.sector] || item.sector}`;
-            document.getElementById('modal-price').innerText = formatNumber(item.close_price || item.close);
+            document.getElementById('modal-price').innerText = formatPrice(item.close_price || item.close);
             document.getElementById('modal-company-name').innerText = item.company_name || '—';
             updateModalWatchlistBtn(item.symbol);
 
@@ -1876,7 +1859,6 @@ def generate_html():
             document.getElementById('modal-roa').innerText = item.roa ? formatPercent(item.roa) : '—';
             document.getElementById('modal-div').innerText = item.dividend_yield ? item.dividend_yield + '%' : '—';
 
-            // --- HIỂN THỊ SỐ LƯỢNG CỔ PHIẾU VÀ VỐN HÓA ---
             const shares = item.total_shares || 0;
             if (shares > 0) {
                 document.getElementById('modal-shares').innerText = (shares / 1_000_000).toLocaleString('vi-VN', {maximumFractionDigits: 1}) + ' Tr';
@@ -1974,15 +1956,15 @@ def generate_html():
                             <div class="grid grid-cols-3 gap-2 text-center">
                                 <div class="bg-slate-950/60 p-2 rounded border border-slate-800">
                                     <span class="text-[10px] text-slate-400 block">Giá hiện tại</span>
-                                    <span class="text-sm font-bold text-white">${formatNumber(closeNow)}</span>
+                                    <span class="text-sm font-bold text-white">${formatPrice(closeNow)}</span>
                                 </div>
                                 <div class="bg-emerald-500/10 p-2 rounded border border-emerald-500/30">
                                     <span class="text-[10px] text-emerald-400 block">Vùng mua (fair_low)</span>
-                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatNumber(fairLow)}</span>
+                                    <span class="text-sm font-bold text-emerald-300">≤ ${formatPrice(fairLow)}</span>
                                 </div>
                                 <div class="bg-indigo-500/10 p-2 rounded border border-indigo-500/30">
                                     <span class="text-[10px] text-indigo-400 block">Fair value (fair_high)</span>
-                                    <span class="text-sm font-bold text-indigo-300">${formatNumber(fairHigh)}</span>
+                                    <span class="text-sm font-bold text-indigo-300">${formatPrice(fairHigh)}</span>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/60">
@@ -2023,7 +2005,6 @@ def generate_html():
             document.getElementById('modal-outlook').innerText = item.outlook || "Chưa có đánh giá triển vọng và định giá.";
             document.getElementById('modal-macro').innerText = item.macro_view || "Chưa có góc nhìn vĩ mô.";
             
-            // CẬP NHẬT 2 MỐC THỜI GIAN KHÁC NHAU TRONG MODAL AI
             document.getElementById('modal-time').innerText = `AI phân tích lúc: ${item.ai_updated_at || 'Chưa chạy AI'}`;
             document.getElementById('modal-price-time').innerText = `Giá cập nhật lúc: ${item.updated_at || 'Chưa cập nhật'}`;
 
@@ -2036,8 +2017,8 @@ def generate_html():
             }
             const details = quarterlyMeanDetails[symbol];
             if (details) {
-                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatNumber(details.start_price_mean)} đ`;
-                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatNumber(details.end_price_mean)} đ`;
+                document.getElementById('sim-start-quarter-info').innerText = `${details.start_quarter}: ${formatPrice(details.start_price_mean)} đ`;
+                document.getElementById('sim-end-quarter-info').innerText = `${details.end_quarter}: ${formatPrice(details.end_price_mean)} đ`;
             } else {
                 document.getElementById('sim-start-quarter-info').innerText = "Không có dữ liệu";
                 document.getElementById('sim-end-quarter-info').innerText = "Không có dữ liệu";
@@ -2274,30 +2255,47 @@ def generate_html():
             document.getElementById('chart-loading').classList.remove('hidden');
             
             try {
-                // 1. Tải dữ liệu lịch sử
                 const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
                 if (!res.ok) throw new Error("Không tìm thấy file");
                 currentSymbolHistory = await res.json();
 
-                // 2. LÀM SẠCH DỮ LIỆU (Lọc nến rác, KHÔNG nhân 1000 vì dữ liệu đã đồng bộ Nghìn đồng)
+                // CHỈ NHÂN 1000 CHO HISTORY KHI ĐỌC FILE
                 if (currentSymbolHistory.history_d1) {
                     currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
-                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0);
+                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
+                        .map(bar => ({
+                            time: bar.time,
+                            open: bar.open * 1000,
+                            high: bar.high * 1000,
+                            low: bar.low * 1000,
+                            close: bar.close * 1000,
+                            volume: bar.volume // Volume KHÔNG NHÂN
+                        }));
                 } else {
                     currentSymbolHistory.history_d1 = [];
                 }
 
                 if (currentSymbolHistory.history_w1) {
                     currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1
-                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0);
+                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
+                        .map(bar => ({
+                            time: bar.time, 
+                            open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, 
+                            volume: bar.volume // Volume KHÔNG NHÂN
+                        }));
                 }
                 
                 if (currentSymbolHistory.history_mn) {
                     currentSymbolHistory.history_mn = currentSymbolHistory.history_mn
-                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0);
+                        .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
+                        .map(bar => ({
+                            time: bar.time, 
+                            open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, 
+                            volume: bar.volume // Volume KHÔNG NHÂN
+                        }));
                 }
 
-                // 3. Cập nhật giá mới nhất vào nến cuối cùng (Không nhân 1000)
+                // Nến Live API (Nhân 1000 cho Giá)
                 let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
                 const tradingDate = item && item.trading_date ? item.trading_date : null;
 
@@ -2306,7 +2304,11 @@ def generate_html():
                 let itemLow = item.low || 0;
                 let itemVolume = item.volume || 0;
                 
-                // BỎ HOÀN TOÀN LOGIC NHÂN 1000 CHO NẾN LIVE
+                if (currentPrice > 0) currentPrice *= 1000;
+                if (itemOpen > 0) itemOpen *= 1000;
+                if (itemHigh > 0) itemHigh *= 1000;
+                if (itemLow > 0) itemLow *= 1000;
+                // Volume KHÔNG NHÂN
 
                 if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
                     const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
@@ -2315,13 +2317,11 @@ def generate_html():
                     const existingBar = currentSymbolHistory.history_d1.find(b => b.time === effectiveDate);
 
                     if (existingBar) {
-                        // Ghi đè nến cuối nếu trùng ngày
                         existingBar.close = currentPrice;
                         if (itemHigh > 0) existingBar.high = Math.max(existingBar.high, itemHigh);
                         if (itemLow > 0)  existingBar.low  = Math.min(existingBar.low, itemLow);
                         if (itemVolume > 0) existingBar.volume = itemVolume;
                     } else {
-                        // TÍNH KL TRUNG BÌNH 20 PHIÊN TỪ HISTORY
                         const recentBars = currentSymbolHistory.history_d1.slice(-20);
                         let sumVol = 0;
                         recentBars.forEach(b => { sumVol += (b.volume || 0); });
@@ -2342,17 +2342,15 @@ def generate_html():
                                     high: itemHigh,
                                     low: itemLow,
                                     close: currentPrice,
-                                    volume: liveVolume
+                                    volume: liveVolume // KHÔNG NHÂN
                                 });
                             }
                         }
                     }
                 }
 
-                // 4. Sắp xếp lại mảng
                 currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
 
-                // 5. Vẽ biểu đồ
                 renderChartInstance(currentSymbolHistory);
                 
             } catch (err) {
@@ -2429,29 +2427,13 @@ def generate_html():
                 priceFormat: { type: 'volume' }, priceScaleId: 'volumeScale'
             }, 0);
             
-            // BẢO VỆ TRỤC TUNG: Không cho Volume tràn xuống phần giá âm
             chartInstance.priceScale('volumeScale').applyOptions({ scaleMargins: { top: 0.8, bottom: 0.05 } });
 
-            let rawChartData = [];
-            if (currentInterval === 'D1') rawChartData = historyDataObj.history_d1 || [];
-            else if (currentInterval === 'W1') rawChartData = historyDataObj.history_w1 || [];
-            else if (currentInterval === 'MN') rawChartData = historyDataObj.history_mn || [];
+            let chartData = [];
+            if (currentInterval === 'D1') chartData = historyDataObj.history_d1 || [];
+            else if (currentInterval === 'W1') chartData = historyDataObj.history_w1 || [];
+            else if (currentInterval === 'MN') chartData = historyDataObj.history_mn || [];
 
-            // =========================================================
-            // KHI VẼ NẾN: NHÂN 1000 ĐỂ HIỂN THỊ ĐÚNG ĐƠN VỊ VNĐ TRÊN ĐỒ THỊ
-            // =========================================================
-            const chartData = rawChartData.map(bar => ({
-                time: bar.time,
-                open: bar.open * 1000,
-                high: bar.high * 1000,
-                low: bar.low * 1000,
-                close: bar.close * 1000,
-                volume: bar.volume
-            }));
-
-            // =========================================================
-            // GHIM TRỤC VOLUME THEO NẾN LỚN NHẤT TRONG 20 PHIÊN
-            // =========================================================
             let maxVol = 0;
             const recentBars = chartData.slice(-20);
             recentBars.forEach(bar => {
@@ -2463,7 +2445,7 @@ def generate_html():
                     autoscaleInfoProvider: () => ({
                         priceRange: {
                             minValue: 0,
-                            maxValue: maxVol * 1.2 // Cộng 20% để cột không chạm nóc
+                            maxValue: maxVol * 1.2
                         }
                     })
                 });
@@ -2521,12 +2503,12 @@ def generate_html():
                         candleSeriesInstance.createPriceLine({
                             price: details.start_price_mean * 1000, color: '#f97316', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true,
-                            title: `Q.Đầu 5Y (${details.start_quarter}): ${formatNumber(details.start_price_mean)}`
+                            title: `Q.Đầu 5Y (${details.start_quarter}): ${formatPrice(details.start_price_mean)}`
                         });
                         candleSeriesInstance.createPriceLine({
                             price: details.end_price_mean * 1000, color: '#10b981', lineWidth: 2,
                             lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true,
-                            title: `Q.Cuối (${details.end_quarter}): ${formatNumber(details.end_price_mean)}`
+                            title: `Q.Cuối (${details.end_quarter}): ${formatPrice(details.end_price_mean)}`
                         });
                     }
                 }
@@ -2547,7 +2529,7 @@ def generate_html():
                 if (latestBar) updateLegend(latestBar, chartData);
                 function updateLegend(bar, dataArr) {
                     legendTime.innerText = bar.time;
-                    legendClose.innerText = formatNumber(bar.close / 1000); // Chia lại 1000 để formatNumber tự nhân lên hiển thị chuẩn
+                    legendClose.innerText = formatPrice(bar.close / 1000); // bar.close đã *1000 rồi, giờ chia lại để formatPrice tự nhân
                     const index = dataArr.findIndex(item => item.time === bar.time);
                     let changePct = 0;
                     if (index > 0 && dataArr[index - 1].close > 0) {
@@ -2556,7 +2538,7 @@ def generate_html():
                     legendChange.innerText = `(${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%)`;
                     legendChange.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
                     legendClose.className = `font-bold ${changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-                    legendVol.innerText = formatNumber(bar.volume);
+                    legendVol.innerText = formatNumber(bar.volume); // Volume không nhân 1000
                 }
                 chartInstance.subscribeCrosshairMove(param => {
                     if (!param.point || !param.time) { if (latestBar) updateLegend(latestBar, chartData); }
