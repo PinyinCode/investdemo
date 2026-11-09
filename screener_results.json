@@ -362,7 +362,7 @@
         "symbol": "VGC",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 39900.0,
+        "close_price": 39350.0,
         "pe": 9.97,
         "pb": 2.02,
         "ps": 0.0,
@@ -401,7 +401,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 40/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Tổng Công ty Viglacera - Công ty Cổ phần",
         "market_cap": 0.0,
-        "total_shares": 448350000
+        "total_shares": 448350000,
+        "price_change_percent": -1.38,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 37.13,
+        "amplitude_percent": 2.11
     },
     {
         "symbol": "REE",
@@ -2665,7 +2671,7 @@
         "symbol": "TCX",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 29000.0,
+        "close_price": 28500.0,
         "pe": 15.52,
         "pb": 2.04,
         "ps": 0.0,
@@ -2704,7 +2710,13 @@
         "final_decision_reason": "Giá 29,000 cao hơn fair_high 24,444. Doanh nghiệp tốt (PTCB 23/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Công ty Cổ phần Chứng khoán Kỹ Thương",
         "market_cap": 0.0,
-        "total_shares": 3329339823
+        "total_shares": 3329339823,
+        "price_change_percent": -1.72,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 7.43,
+        "amplitude_percent": 3.6
     },
     {
         "symbol": "DPM",
