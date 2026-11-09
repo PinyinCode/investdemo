@@ -32,7 +32,11 @@ def build_admin_modal_html():
                     </table>
                 </div>
             </div>
-            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center">
+                <!-- NÚT ĐĂNG XUẤT ĐẶT TRONG ADMIN PANEL -->
+                <button type="button" onclick="auth.signOut()" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất tài khoản
+                </button>
                 <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
             </div>
         </div>
