@@ -805,11 +805,11 @@
         "end_price_mean": 13.51
     },
     "VNM": {
-        "annual_rate_percent": -2.72,
+        "annual_rate_percent": -2.71,
         "start_quarter": "2021Q4",
-        "start_price_mean": 65.99,
+        "start_price_mean": 65.92,
         "end_quarter": "2026Q4",
-        "end_price_mean": 57.65
+        "end_price_mean": 57.62
     },
     "VOS": {
         "annual_rate_percent": -8.0,
