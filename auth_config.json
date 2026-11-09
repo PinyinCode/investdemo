@@ -3,8 +3,8 @@
     "bank_config": {
         "bank_id": "MB",
         "bank_name": "MB Bank",
-        "account_no": "0123456789",
-        "account_name": "NGUYEN VAN A"
+        "account_no": "8875578668",
+        "account_name": "HOANG VAN LUONG"
     },
     "packages": [
         {
@@ -22,7 +22,7 @@
             "id": "forever",
             "label": "Vĩnh Viễn (VIP)",
             "amount": 1000000,
-            "save": "Dùng mãi mãi"
+            "save": "PREMIUM"
         }
     ]
 }
