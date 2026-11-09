@@ -48,7 +48,7 @@
         "symbol": "GMD",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "MARITIME",
-        "close_price": 52800.0,
+        "close_price": 52700.0,
         "pe": 12.72,
         "pb": 2.42,
         "ps": 0.0,
@@ -87,7 +87,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 45/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần Tập đoàn Gemadept",
         "market_cap": 0.0,
-        "total_shares": 649337392
+        "total_shares": 649337392,
+        "price_change_percent": -0.19,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 47.5,
+        "amplitude_percent": 2.47
     },
     {
         "symbol": "DCM",
@@ -452,7 +458,7 @@
         "symbol": "BID",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 31950.0,
+        "close_price": 32049.999999999996,
         "pe": 7.18,
         "pb": 1.26,
         "ps": 0.0,
@@ -490,13 +496,19 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 40/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Ngân hàng Thương mại Cổ phần Đầu tư và Phát triển Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 7778229473
+        "total_shares": 7778229473,
+        "price_change_percent": 0.31,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 6.28,
+        "amplitude_percent": 1.4
     },
     {
         "symbol": "MBB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 19250.0,
+        "close_price": 19300.0,
         "pe": 5.96,
         "pb": 1.23,
         "ps": 0.0,
@@ -534,7 +546,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 13.4%) + PTCB 40/50 + PTKT 10/20 + Định giá 30/30 + Tổng 80đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Quân đội",
         "market_cap": 0.0,
-        "total_shares": 9263249895
+        "total_shares": 9263249895,
+        "price_change_percent": 0.26,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 8.69,
+        "amplitude_percent": 1.82
     },
     {
         "symbol": "HAG",
@@ -854,7 +872,7 @@
         "symbol": "PVT",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "MARITIME",
-        "close_price": 20550.0,
+        "close_price": 20600.0,
         "pe": 6.9,
         "pb": 1.08,
         "ps": 0.0,
@@ -893,13 +911,19 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 35/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Tổng Công ty Cổ phần Vận tải Dầu khí",
         "market_cap": 0.0,
-        "total_shares": 516918938
+        "total_shares": 516918938,
+        "price_change_percent": 0.24,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 4.98,
+        "amplitude_percent": 2.43
     },
     {
         "symbol": "PAN",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 16900.0,
+        "close_price": 17100.0,
         "pe": 3.44,
         "pb": 0.76,
         "ps": 0.0,
@@ -938,7 +962,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 120.1%) + PTCB 35/50 + PTKT 10/20 + Định giá 30/30 + Tổng 75đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Tập đoàn PAN",
         "market_cap": 0.0,
-        "total_shares": 258072996
+        "total_shares": 258072996,
+        "price_change_percent": 1.18,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 44.98,
+        "amplitude_percent": 1.78
     },
     {
         "symbol": "TCB",
@@ -988,7 +1018,7 @@
         "symbol": "VPB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 22050.0,
+        "close_price": 22250.0,
         "pe": 7.07,
         "pb": 1.18,
         "ps": 0.0,
@@ -1026,7 +1056,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 33/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Ngân hàng Thương mại Cổ phần Việt Nam Thịnh Vượng",
         "market_cap": 0.0,
-        "total_shares": 10000000000
+        "total_shares": 10000000000,
+        "price_change_percent": 0.91,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 12.2,
+        "amplitude_percent": 3.39
     },
     {
         "symbol": "SHB",
@@ -1877,7 +1913,13 @@
         "final_decision_reason": "CFO âm (-30 tỷ) trong khi LNST dương (1,843 tỷ) — lợi nhuận không có tiền mặt thật.",
         "company_name": "Tổng Công ty Phát triển Đô thị Kinh Bắc - CTCP",
         "market_cap": 0.0,
-        "total_shares": 941754759
+        "total_shares": 941754759,
+        "price_change_percent": 0.0,
+        "price_change_available": true,
+        "price_arrow": "—",
+        "price_color": "slate",
+        "volume_percent": 59.77,
+        "amplitude_percent": 1.48
     },
     {
         "symbol": "ANV",
@@ -1973,7 +2015,7 @@
         "symbol": "PLX",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "PETROLEUM",
-        "close_price": 33350.0,
+        "close_price": 33050.0,
         "pe": 11.03,
         "pb": 1.52,
         "ps": 0.0,
@@ -2012,7 +2054,13 @@
         "final_decision_reason": "CFO âm (-3,432 tỷ) trong khi LNST dương (4,438 tỷ) — lợi nhuận không có tiền mặt thật.",
         "company_name": "Tập đoàn Xăng dầu Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 1293878081
+        "total_shares": 1293878081,
+        "price_change_percent": -0.9,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 4.39,
+        "amplitude_percent": 2.84
     },
     {
         "symbol": "SAB",
