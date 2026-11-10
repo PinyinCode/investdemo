@@ -658,11 +658,11 @@
         "end_price_mean": 18.48
     },
     "TAL": {
-        "annual_rate_percent": 20.14,
+        "annual_rate_percent": 20.12,
         "start_quarter": "2024Q1",
         "start_price_mean": 13.47,
         "end_quarter": "2026Q4",
-        "end_price_mean": 22.21
+        "end_price_mean": 22.2
     },
     "TCB": {
         "annual_rate_percent": 7.12,
@@ -721,11 +721,11 @@
         "end_price_mean": 56.01
     },
     "VCG": {
-        "annual_rate_percent": -11.59,
+        "annual_rate_percent": -11.58,
         "start_quarter": "2021Q4",
         "start_price_mean": 26.92,
         "end_quarter": "2026Q4",
-        "end_price_mean": 14.74
+        "end_price_mean": 14.75
     },
     "VCI": {
         "annual_rate_percent": -8.6,
