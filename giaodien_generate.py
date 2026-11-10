@@ -64,11 +64,9 @@ def generate_html():
     print("🚀 GIAODIEN_GENERATE — ASSEMBLE PIPELINE")
     print("=" * 60)
 
-    # 1. Bỏ qua simulator (đã được chạy ở workflow khác)
     print("\n📊 [1/6] Bỏ qua simulator, sử dụng dữ liệu JSON có sẵn...")
     print("     ✅ Sẵn sàng đọc dữ liệu từ file.")
 
-    # 2. Đọc data
     print("\n📂 [2/6] Đọc data...")
     cheap_stocks_groups = load_cheap_stocks_data()
     cheap_symbols_set = set()
@@ -82,19 +80,23 @@ def generate_html():
     firebase_config = get_firebase_config()
     auth_config = load_auth_config()
 
-    # Lấy danh sách Super Admin từ biến môi trường (cách nhau bởi dấu phẩy)
+    # Lấy danh sách Super Admin
     super_admins_raw = os.environ.get("SUPER_ADMINS", "")
     super_admins_list = [email.strip().lower() for email in super_admins_raw.split(",") if email.strip()]
-    print(f"     👑 Super Admins: {', '.join(super_admins_list) if super_admins_list else 'Chưa cấu hình (Rỗng)'}")
+    
+    # Lấy cấu hình Telegram
+    tg_token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    tg_chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    
+    print(f"     👑 Super Admins: {', '.join(super_admins_list) if super_admins_list else 'Chưa cấu hình'}")
+    print(f"     🤖 Telegram: {'Đã cấu hình' if tg_token and tg_chat_id else 'Chưa cấu hình'}")
 
-    # 3. Build CSS/HTML/JS
     print("\n🔧 [3/6] Build CSS/HTML/JS các module...")
     
     ui_css = build_ui_css()
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
-    # ĐẶT BUILD_AUTH_LITE_HTML Ở ĐẦU TIÊN (Đã gộp cả Admin Modal vào auth)
     body_parts = [
         build_auth_lite_html(auth_config),
         build_screener_html(),
@@ -115,13 +117,11 @@ def generate_html():
         cheap_stocks_groups=cheap_stocks_groups,
     )
 
-    # Làm sạch config để tránh lỗi authDomain
     firebase_config_clean = _json_blob(firebase_config)
     cheap_groups_clean = _json_blob(cheap_stocks_groups)
     cheap_symbols_clean = _json_blob(sorted(cheap_symbols_set))
     super_admins_clean = _json_blob(super_admins_list)
 
-    # Khởi tạo JS
     full_js = "\n\n".join([
         f"/* ══ CONFIG ══ */\n"
         f"const PRICE_API_URL = {json.dumps(PRICE_API_URL)};\n"
@@ -129,6 +129,8 @@ def generate_html():
         f"const cheapStocksGroups = {cheap_groups_clean};\n"
         f"const cheapSymbolsSet = new Set({cheap_symbols_clean});\n"
         f"const SUPER_ADMINS = {super_admins_clean};\n" 
+        f"const TELEGRAM_BOT_TOKEN = {json.dumps(tg_token)};\n"
+        f"const TELEGRAM_CHAT_ID = {json.dumps(tg_chat_id)};\n"
         f"if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);\n"
         f"window.auth = firebase.auth();\n"
         f"window.db = firebase.firestore();",
@@ -138,15 +140,12 @@ def generate_html():
         f"/* ══ CORE JS ══ */\n{core_js}",
     ])
 
-    # 4. Ghép HTML shell
     print("\n🏗️  [4/6] Ghép HTML shell...")
     html_output = build_html_shell(css=full_css, body=full_body, js=full_js)
 
-    # 5. Chèn auth JS
     print("\n🔐 [5/6] Inject auth-lite JS...")
     html_output = html_output.replace("</body>", f"\n<!-- AUTH LITE JS -->\n{auth_js}\n</body>")
 
-    # 6. Ghi file
     print("\n💾 [6/6] Ghi index.html...")
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_output)
