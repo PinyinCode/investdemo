@@ -20,6 +20,9 @@ CHEAP_STOCKS_FILE = "cheap_stocks.json"
 AUTH_CONFIG_FILE = "auth_config.json"
 PRICE_API_URL = "https://quant-price-api.onrender.com"
 
+# Số điện thoại Zalo Admin
+ZALO_PHONE = "0528484668"
+
 def get_firebase_config():
     raw = os.environ.get("FIREBASE_CONFIG", "").strip()
     if not raw:
@@ -97,12 +100,27 @@ def generate_html():
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
+    # Tạo nút Zalo nổi
+    zalo_button_html = f"""
+    <!-- NÚT LIÊN HỆ ZALO NỔI -->
+    <div id="zaloFloatWrap" style="position:fixed; right:20px; bottom:80px; z-index:9999; display:flex; flex-direction:column; align-items:flex-end;">
+        <a href="https://zalo.me/{ZALO_PHONE}" target="_blank" rel="noopener noreferrer" 
+           style="display:flex; align-items:center; gap:8px; padding:10px 16px; border-radius:50px; background:linear-gradient(135deg, #0068ff, #0052cc); color:#fff; text-decoration:none; font-weight:700; font-size:14px; box-shadow:0 8px 24px rgba(0,104,255,.45); border:2px solid #fff; transition:all 0.3s ease;"
+           onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+            <i class="fa-solid fa-comment-dots" style="font-size:20px;"></i> 
+            <span class="hidden md:inline">Liên hệ Admin (Zalo)</span>
+        </a>
+    </div>
+    """
+
     body_parts = [
         build_auth_lite_html(auth_config),
         build_screener_html(),
         build_ai_modal_html(),
         build_chart_modal_html(),
         build_log_console_html(),
+        zalo_button_html, # <-- Chèn nút Zalo vào đây
     ]
     full_body = "\n\n".join(body_parts)
 
