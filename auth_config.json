@@ -1,5 +1,5 @@
 {
-    "trial_days": 7,
+    "trial_days": 3,
     "bank_config": {
         "bank_id": "MB",
         "bank_name": "MB Bank",
@@ -10,19 +10,19 @@
         {
             "id": "1m",
             "label": "Gói 1 Tháng",
-            "amount": 50000
+            "amount": 200000
         },
         {
-            "id": "6m",
-            "label": "Gói 6 Tháng",
-            "amount": 250000,
-            "save": "Tiết kiệm 50k"
+            "id": "1y",
+            "label": "Gói 1 Năm",
+            "amount": 2000000,
+            "save": "Tiết kiệm 17%"
         },
         {
-            "id": "forever",
-            "label": "Vĩnh Viễn (VIP)",
-            "amount": 1000000,
-            "save": "PREMIUM"
+            "id": "premium",
+            "label": "Gói Premium (Vĩnh Viễn)",
+            "amount": 5000000,
+            "save": "VIP TRỌN ĐỜI"
         }
     ]
 }
