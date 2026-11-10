@@ -11,7 +11,7 @@ def build_auth_lite_css():
             position: fixed !important; 
             inset: 0 !important; 
             width: 100% !important; 
-            height: 100% !important; /* Dùng 100% thay vì 100vh để fix lỗi thanh địa chỉ mobile */
+            height: 100% !important; 
             z-index: 99999999 !important; 
             background: #0f172a !important; 
             display: flex !important; 
@@ -200,7 +200,7 @@ def build_auth_lite_js(config):
     trial_days = config.get("trial_days", 7)
     bank_config_js = json.dumps(config.get("bank_config", {}), ensure_ascii=False)
     
-    # Sử dụng .replace() thay vì f-string để tránh lỗi cú pháp Python với dấu ngoặc nhọn của JS
+    # Sử dụng .replace() thay vì f-string để tránh lỗi cú pháp Python
     js_template = r"""
     <script>
     (function() {
@@ -224,14 +224,16 @@ def build_auth_lite_js(config):
             window.scrollTo(0, 0); // Ép cuộn lên đầu
 
             var authOverlay = document.getElementById('authOverlay');
-            if (authOverlay) authOverlay.classList.remove('hidden');
+            if (authOverlay) {
+                authOverlay.classList.remove('hidden');
+                authOverlay.style.display = 'flex';
+            }
             
             // Đóng modal admin và xóa cưỡng chế để không bị kẹt màn hình mờ
             var adminModal = document.getElementById('admin-modal');
             if (adminModal) {
                 adminModal.classList.add('hidden');
                 adminModal.style.display = 'none';
-                setTimeout(function(){ adminModal.style.display = ''; }, 300);
             }
             
             var renewal = document.getElementById('renewalModal');
@@ -255,21 +257,49 @@ def build_auth_lite_js(config):
                 var adminModal = document.getElementById('admin-modal');
                 
                 if (user) {
-                    if (authOverlay) authOverlay.classList.add('hidden');
+                    // 1. Đăng nhập thành công -> Cưỡng chế ẩn lớp đăng nhập
+                    if (authOverlay) {
+                        authOverlay.classList.add('hidden');
+                        authOverlay.style.display = 'none'; 
+                    }
                     
+                    // 2. Cưỡng chế ẩn modal admin (để không bị đen màn hình)
+                    if (adminModal) {
+                        adminModal.classList.add('hidden');
+                        adminModal.style.display = 'none';
+                    }
+
+                    // 🌟 3. QUAN TRỌNG: GỠ BỎ CLASS KHÓA MÀN HÌNH ĐEN
+                    document.body.classList.remove('auth-locked');
+                    
+                    // 4. Kiểm tra quyền
                     await checkUserPermission(user);
+                    
                     if (typeof window.onAuthReady === 'function') {
-                        try { await window.onAuthReady(user); } catch(e) { console.warn(e); }
+                        try { 
+                            await window.onAuthReady(user); 
+                        } catch(e) { 
+                            console.warn("Lỗi trong onAuthReady:", e); 
+                        }
                     }
                 } else {
-                    if (authOverlay) authOverlay.classList.remove('hidden');
+                    // 1. Đăng xuất -> Hiện lại lớp đăng nhập
+                    if (authOverlay) {
+                        authOverlay.classList.remove('hidden');
+                        authOverlay.style.display = 'flex'; 
+                    }
+                    
+                    // 2. Ẩn modal admin
                     if (adminModal) {
                         adminModal.classList.add('hidden');
                         adminModal.style.display = 'none';
                     }
                     
+                    // 3. Reset danh sách admin
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
+                    
+                    // 4. Đóng modal gia hạn nếu có
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
