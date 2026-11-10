@@ -182,7 +182,7 @@
         "end_price_mean": 9.72
     },
     "DPM": {
-        "annual_rate_percent": 2.45,
+        "annual_rate_percent": 2.46,
         "start_quarter": "2021Q4",
         "start_price_mean": 18.68,
         "end_quarter": "2026Q4",
@@ -294,11 +294,11 @@
         "end_price_mean": 49.77
     },
     "HCM": {
-        "annual_rate_percent": 4.63,
+        "annual_rate_percent": 4.62,
         "start_quarter": "2021Q4",
         "start_price_mean": 18.92,
         "end_quarter": "2026Q4",
-        "end_price_mean": 23.6
+        "end_price_mean": 23.59
     },
     "HDB": {
         "annual_rate_percent": 19.35,
