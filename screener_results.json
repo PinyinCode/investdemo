@@ -496,7 +496,7 @@
         "symbol": "MBB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 19350.0,
+        "close_price": 19400.0,
         "pe": 5.97,
         "pb": 1.24,
         "ps": 0.0,
@@ -534,13 +534,19 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 13.6%) + PTCB 40/50 + PTKT 10/20 + Định giá 30/30 + Tổng 80đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Quân đội",
         "market_cap": 0.0,
-        "total_shares": 9263249895
+        "total_shares": 9263249895,
+        "price_change_percent": 0.52,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 6.51,
+        "amplitude_percent": 1.03
     },
     {
         "symbol": "HAG",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 13700.0,
+        "close_price": 13750.0,
         "pe": 5.23,
         "pb": 1.09,
         "ps": 0.0,
@@ -579,7 +585,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 48.6%) + PTCB 38/50 + PTKT 12/20 + Định giá 30/30 + Tổng 80đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Hoàng Anh Gia Lai",
         "market_cap": 0.0,
-        "total_shares": 1267467947
+        "total_shares": 1267467947,
+        "price_change_percent": 0.73,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 8.61,
+        "amplitude_percent": 0.73
     },
     {
         "symbol": "FRT",
