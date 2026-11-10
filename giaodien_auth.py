@@ -129,6 +129,18 @@ def build_auth_lite_css():
         .bank-row span:first-child { color: #94a3b8; }
         .bank-row span:last-child { font-weight: 700; color: #fff; }
         .code-highlight { color: #10b981 !important; font-family: monospace; font-size: 1.1rem; letter-spacing: 1px; background: rgba(16,185,129,0.1); padding: 2px 8px; border-radius: 4px; }
+        
+        /* Hiệu ứng mở rộng thẻ User */
+        .user-card-action {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .user-card-action.expanded {
+            max-height: 150px;
+            opacity: 1;
+        }
     </style>
     """
 
@@ -295,11 +307,11 @@ def build_auth_lite_html(config):
                 <button onclick="switchAdminTab('renewals')" id="tabBtnRenewals" class="py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition">Duyệt Gia hạn (<span id="pendingCount">0</span>)</button>
             </div>
 
-            <div id="adminTabsContent" class="p-5 overflow-y-auto space-y-4 flex-grow hidden">
+            <div id="adminTabsContent" class="p-5 overflow-y-auto flex-grow hidden">
                 <!-- TAB USERS -->
-                <div id="adminTabUsers" class="overflow-x-auto">
+                <div id="adminTabUsers" class="flex flex-col h-full">
                     <!-- THANH THỐNG KÊ -->
-                    <div class="mb-3 flex gap-2 text-[11px] font-bold">
+                    <div class="mb-3 flex gap-2 text-[11px] font-bold shrink-0">
                         <div class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 flex-1 text-center">
                             <span class="text-slate-400">Tổng User:</span> <span id="admin-stat-user" class="text-emerald-400 ml-1">0</span>
                         </div>
@@ -308,25 +320,17 @@ def build_auth_lite_html(config):
                         </div>
                     </div>
 
-                    <div class="mb-3 relative">
+                    <div class="mb-3 relative shrink-0">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                             <i class="fa-solid fa-magnifying-glass text-xs"></i>
                         </span>
                         <input type="text" id="admin-search-input" oninput="renderAdminUsersList()" placeholder="Tìm kiếm Email hoặc Tên..." class="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500 transition">
                     </div>
-                    <table class="w-full text-left text-xs">
-                        <thead>
-                          <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
-                           <th class="p-3">Email / Tên</th>
-                           <th class="p-3">Hạn sử dụng</th>
-                           <th class="p-3">Quyền</th>
-                           <th class="p-3 text-right">Sửa</th>
-                          </tr>
-                         </thead>
-                        <tbody id="admin-users-list" class="divide-y divide-slate-800">
-                            <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
-                        </tbody>
-                    </table>
+                    
+                    <!-- DANH SÁCH DẠNG THẺ (CARD) -->
+                    <div id="admin-users-list" class="space-y-2 overflow-y-auto pr-1 pb-4">
+                        <div class="p-4 text-center text-slate-500 text-xs">Đang tải danh sách...</div>
+                    </div>
                 </div>
 
                 <!-- TAB RENEWALS -->
@@ -347,7 +351,7 @@ def build_auth_lite_html(config):
                 </div>
             </div>
 
-            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center mt-auto">
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center mt-auto shrink-0">
                 <button type="button" onclick="triggerSignOut()" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
                     <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
                 </button>
@@ -551,7 +555,7 @@ def build_auth_lite_js(config):
                     if (statusMsg) statusMsg.classList.add('hidden');
                     
                     var adminList = document.getElementById('admin-users-list');
-                    if (adminList) adminList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
+                    if (adminList) adminList.innerHTML = `<div class="p-4 text-center text-slate-500 text-xs">Chưa đăng nhập...</div>`;
                     selectedPkgId = null;
                 }
             });
@@ -943,7 +947,7 @@ def build_auth_lite_js(config):
 
             async function loadAdminUsers() {
                 var listEl = document.getElementById('admin-users-list');
-                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải danh sách...</td></tr>`;
+                listEl.innerHTML = `<div class="p-4 text-center text-slate-500 text-xs"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải danh sách...</div>`;
 
                 try {
                     var snapshot = await window.db.collection('allowed_users').get();
@@ -965,7 +969,7 @@ def build_auth_lite_js(config):
                     renderAdminUsersList();
 
                 } catch (err) {
-                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Không có quyền truy cập.</td></tr>`;
+                    listEl.innerHTML = `<div class="p-4 text-center text-rose-400 text-xs">Không có quyền truy cập.</div>`;
                 }
             }
 
@@ -992,56 +996,95 @@ def build_auth_lite_js(config):
 
                 listEl.innerHTML = '';
                 if (filtered.length === 0) {
-                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Không tìm thấy người dùng nào.</td></tr>`;
+                    listEl.innerHTML = `<div class="p-4 text-center text-slate-400 text-xs">Không tìm thấy người dùng nào.</div>`;
                     return;
                 }
 
-                filtered.forEach(function(data) {
+                filtered.forEach(function(data, index) {
                     var dateStr = '—';
                     var expDateObj = parseDate(data.expiresAt);
-                    
-                    if (expDateObj) {
-                        dateStr = expDateObj.toLocaleDateString('vi-VN');
-                    } else if (data.expiresAt) {
-                        dateStr = '<span class="text-rose-400 text-[10px]">Lỗi data</span>';
-                    }
-
-                    var tr = document.createElement('tr');
-                    tr.className = "hover:bg-slate-800/50 transition";
+                    if (expDateObj) dateStr = expDateObj.toLocaleDateString('vi-VN');
                     
                     var safeEmail = escapeHTML(data.email || data.id);
                     var role = data.role || 'user';
                     
                     var roleBadge = '';
-                    if (role === 'super_admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">Super</span>';
-                    else if (role === 'admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Admin</span>';
-                    else roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300">User</span>';
+                    if (role === 'super_admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">Super</span>';
+                    else if (role === 'admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Admin</span>';
+                    else roleBadge = '<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-slate-800 text-slate-300">User</span>';
                     
-                    var roleBtn = '';
-                    if (currentUserRole === 'super_admin' && safeEmail !== window.auth.currentUser.email) {
-                        if (role === 'user') {
-                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'admin')" class="ml-1 px-1.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded text-[9px] font-bold border border-amber-500/30 transition" title="Cấp quyền Admin"><i class="fa-solid fa-arrow-up"></i></button>`;
-                        } else if (role === 'admin') {
-                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'user')" class="ml-1 px-1.5 py-1 bg-slate-700/50 hover:bg-slate-700 text-slate-300 rounded text-[9px] font-bold border border-slate-600 transition" title="Thu hồi quyền Admin"><i class="fa-solid fa-arrow-down"></i></button>`;
-                        }
-                    }
+                    // Tạo ID duy nhất cho thẻ để bung/thu gọn
+                    var actionId = `user-action-${index}`;
 
-                    tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white truncate max-w-[120px]" title="${safeEmail}">${safeEmail}</td>
-                        <td class="p-3 text-slate-300">${dateStr}</td>
-                        <td class="p-3"><div class="flex items-center">${roleBadge} ${roleBtn}</div></td>
-                        <td class="p-3 text-right">
-                            <button onclick="openHistoryModal('${safeEmail}')" class="p-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 rounded border border-slate-600 transition mr-1" title="Xem lịch sử nạp tiền">
-                                <i class="fa-solid fa-clock-rotate-left text-[11px]"></i>
+                    var div = document.createElement('div');
+                    div.className = "bg-slate-800/40 border border-slate-700/60 rounded-xl overflow-hidden transition-all duration-200";
+                    
+                    div.innerHTML = `
+                        <!-- PHẦN HEADER CỦA THẺ (LUÔN HIỂN THỊ) -->
+                        <div onclick="toggleUserCard('${actionId}')" class="p-3 flex items-center justify-between cursor-pointer hover:bg-slate-800/80 transition select-none">
+                            <div class="flex-1 min-w-0 pr-2">
+                                <div class="text-xs font-bold text-white truncate">${safeEmail}</div>
+                                <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
+                                    <span><i class="fa-regular fa-calendar mr-1"></i>${dateStr}</span>
+                                    ${roleBadge}
+                                </div>
+                            </div>
+                            <!-- Mũi tên chỉ dẫn -->
+                            <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-200" id="icon-${actionId}"></i>
+                        </div>
+
+                        <!-- PHẦN THAO TÁC (ẨN/HIỆN KHI CLICK) -->
+                        <div id="${actionId}" class="hidden bg-slate-900/60 border-t border-slate-700/50 p-2 grid grid-cols-3 gap-2">
+                            
+                            <!-- Nút Lịch sử -->
+                            <button onclick="openHistoryModal('${safeEmail}'); event.stopPropagation();" class="flex flex-col items-center justify-center py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-600 transition">
+                                <i class="fa-solid fa-clock-rotate-left text-sm mb-1"></i>
+                                <span class="text-[10px] font-semibold">Lịch sử</span>
                             </button>
-                            <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}')" class="p-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 rounded border border-indigo-500/30 transition" title="Sửa hạn sử dụng">
-                                <i class="fa-solid fa-pen-to-square text-[11px]"></i>
+
+                            <!-- Nút Sửa ngày -->
+                            <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}'); event.stopPropagation();" class="flex flex-col items-center justify-center py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 rounded-lg border border-indigo-500/30 transition">
+                                <i class="fa-solid fa-pen-to-square text-sm mb-1"></i>
+                                <span class="text-[10px] font-semibold">Sửa hạn</span>
                             </button>
-                        </td>
+
+                            <!-- Nút Cấp/Thu quyền -->
+                            ${currentUserRole === 'super_admin' && safeEmail !== window.auth.currentUser.email ? (
+                                role === 'user' 
+                                ? `<button onclick="changeRole('${safeEmail}', 'admin'); event.stopPropagation();" class="flex flex-col items-center justify-center py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 rounded-lg border border-amber-500/30 transition">
+                                    <i class="fa-solid fa-arrow-up text-sm mb-1"></i>
+                                    <span class="text-[10px] font-semibold">Lên Admin</span>
+                                   </button>`
+                                : `<button onclick="changeRole('${safeEmail}', 'user'); event.stopPropagation();" class="flex flex-col items-center justify-center py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 rounded-lg border border-rose-500/30 transition">
+                                    <i class="fa-solid fa-arrow-down text-sm mb-1"></i>
+                                    <span class="text-[10px] font-semibold">Xuống User</span>
+                                   </button>`
+                            ) : (
+                                `<button disabled class="flex flex-col items-center justify-center py-2 bg-slate-800/50 text-slate-600 rounded-lg border border-slate-700/50 cursor-not-allowed">
+                                    <i class="fa-solid fa-lock text-sm mb-1"></i>
+                                    <span class="text-[10px] font-semibold">Không quyền</span>
+                                 </button>`
+                            )}
+                        </div>
                     `;
-                    listEl.appendChild(tr);
+                    listEl.appendChild(div);
                 });
             }
+
+            // Hàm xử lý bung/thu gọn thẻ
+            window.toggleUserCard = function(actionId) {
+                var actionDiv = document.getElementById(actionId);
+                var icon = document.getElementById('icon-' + actionId);
+                if (!actionDiv || !icon) return;
+
+                if (actionDiv.classList.contains('hidden')) {
+                    actionDiv.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)'; // Xoay mũi tên lên
+                } else {
+                    actionDiv.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)'; // Xoay mũi tên xuống
+                }
+            };
 
             window.changeRole = async function(email, newRole) {
                 if (currentUserRole !== 'super_admin') return alert("Bạn không có quyền thực hiện thao tác này!");
