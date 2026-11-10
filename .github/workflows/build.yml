@@ -37,12 +37,20 @@ jobs:
       - name: Build HTML
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          SUPER_ADMINS: ${{ secrets.SUPER_ADMINS }} # <-- ĐÃ THÊM DÒNG NÀY
         run: |
           echo "🚀 Bắt đầu build..."
           if [ -z "$FIREBASE_CONFIG" ]; then
             echo "❌ LỖI: Chưa cài đặt secret FIREBASE_CONFIG trên GitHub!"
             exit 1
           fi
+          
+          if [ -z "$SUPER_ADMINS" ]; then
+            echo "⚠️ CẢNH BÁO: Chưa cài đặt secret SUPER_ADMINS. Sẽ không có ai là Super Admin."
+          else
+            echo "👑 Đã nhận diện Super Admin: $SUPER_ADMINS"
+          fi
+          
           python giaodien_main.py
           echo "✅ Build thành công!"
 
