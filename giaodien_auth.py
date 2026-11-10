@@ -42,14 +42,12 @@ def build_auth_lite_css():
             text-align: center; 
             color: #f1f5f9; 
             box-sizing: border-box;
-            margin: auto !important; /* Đảm bảo căn giữa tuyệt đối trong flex container */
+            margin: auto !important; 
             transform: scale(1);
             transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        #authOverlay.hidden .auth-box {
-            transform: scale(0.95);
-        }
+        #authOverlay.hidden .auth-box { transform: scale(0.95); }
         
         .auth-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff; letter-spacing: -0.025em; }
         .auth-sub { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.75rem; line-height: 1.5; }
@@ -121,22 +119,16 @@ def build_auth_lite_html(config):
     packages_html = ""
     for p in packages:
         save_badge = f'<span style="background:#10b981;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;">{p["save"]}</span>' if p.get("save") else ""
+        # Đã thêm data-days vào thẻ để JS có thể lấy số ngày chính xác
         packages_html += f"""
-        <div onclick="selectPackage('{p['id']}', {p['amount']}, '{p['label']}')" class="package-item" id="pkg_{p['id']}">
+        <div onclick="selectPackage('{p['id']}', {p['amount']}, '{p['label']}', {p.get('days', 30)})" class="package-item" id="pkg_{p['id']}">
             <div><div style="font-weight:bold; color:#fff; font-size:0.9rem;">{p['label']} {save_badge}</div></div>
             <div style="color:#10b981; font-weight:bold;">{p['amount']:,}đ</div>
         </div>
         """
     return f"""
-    <!-- HIỂN THỊ HẠN DÙNG KÈM NÚT GIA HẠN CHỦ ĐỘNG CHO USER -->
-    <div id="userExpireBadge" style="display:none; align-items: center; gap: 8px; font-size: 0.75rem;">
-        <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 10px; border-radius: 6px; font-weight: bold;">
-            <i class="fa-solid fa-clock"></i> <span id="expireDateText">Đang tải hạn dùng...</span>
-        </span>
-        <button onclick="openUserRenewalModal()" style="background: #10b981; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s;" title="Gia hạn tài khoản">
-            <i class="fa-solid fa-plus-circle"></i> Gia hạn
-        </button>
-    </div>
+    <!-- Thẻ ẩn lưu hạn dùng để JS dễ dàng đọc/cập nhật -->
+    <span id="hiddenExpireDate" style="display:none;">Đang tải...</span>
 
     <!-- MODAL ĐĂNG NHẬP PHỦ KÍN 100% -->
     <div id="authOverlay">
@@ -182,7 +174,7 @@ def build_auth_lite_html(config):
     <!-- MODAL GIA HẠN / NẠP TIỀN -->
     <div id="renewalModal">
         <div class="renewal-box">
-            <button class="auth-close" onclick="triggerSignOut()" title="Đăng xuất" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
+            <button class="auth-close" onclick="closeUserRenewalModal()" title="Đóng" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
             <div class="renewal-icon"><i class="fa-solid fa-clock"></i></div>
             <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
             <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng hệ thống.</p>
@@ -200,8 +192,7 @@ def build_auth_lite_html(config):
                 <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung.</p>
             </div>
             <div style="display:flex; gap:10px; margin-top:1rem;">
-                <button class="auth-btn outline" onclick="triggerSignOut()">Đăng xuất</button>
-                <button class="auth-btn" id="btnConfirmPay" style="display:none;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
+                <button class="auth-btn" id="btnConfirmPay" style="display:none; background:#10b981;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
             </div>
         </div>
     </div>
@@ -219,6 +210,7 @@ def build_auth_lite_js(config):
         var BANK_CONFIG = {bank_config_js};
         var selectedPkgId = null;
         var selectedAmount = 0;
+        var selectedDays = 30;
         
         function waitAuth(cb) {{
             var t = setInterval(function() {{
@@ -234,17 +226,11 @@ def build_auth_lite_js(config):
             if (authOverlay) authOverlay.classList.remove('hidden');
             document.body.classList.add('auth-locked');
 
-            var renewal = document.getElementById('renewalModal');
-            if (renewal) renewal.classList.remove('show');
-            
             var adminModal = document.getElementById('admin-modal');
             if (adminModal) adminModal.classList.add('hidden');
-
-            var expireBadge = document.getElementById('userExpireBadge');
-            if (expireBadge) expireBadge.style.display = 'none';
-
-            var adminList = document.getElementById('admin-users-list');
-            if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
+            
+            var renewal = document.getElementById('renewalModal');
+            if (renewal) renewal.classList.remove('show');
 
             try {{
                 if (window.auth) {{
@@ -262,12 +248,10 @@ def build_auth_lite_js(config):
             auth.onAuthStateChanged(async function(user) {{
                 var authOverlay = document.getElementById('authOverlay');
                 var adminModal = document.getElementById('admin-modal');
-                var expireBadge = document.getElementById('userExpireBadge');
                 
                 if (user) {{
                     if (authOverlay) authOverlay.classList.add('hidden');
                     document.body.classList.remove('auth-locked');
-                    if (expireBadge) expireBadge.style.display = 'inline-flex';
                     
                     await checkUserPermission(user);
                     if (typeof window.onAuthReady === 'function') {{
@@ -276,7 +260,6 @@ def build_auth_lite_js(config):
                 }} else {{
                     if (authOverlay) authOverlay.classList.remove('hidden');
                     document.body.classList.add('auth-locked');
-                    if (expireBadge) expireBadge.style.display = 'none';
                     if (adminModal) adminModal.classList.add('hidden');
                     
                     var adminList = document.getElementById('admin-users-list');
@@ -336,7 +319,8 @@ def build_auth_lite_js(config):
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
-                sessionStorage.getItem('asked_pwd_' + user.email, '1');
+                // Đã sửa lỗi: dùng setItem thay vì getItem
+                sessionStorage.setItem('asked_pwd_' + user.email, '1'); 
                 document.getElementById('setPwdModal').style.display = 'flex';
             }}
 
@@ -393,10 +377,11 @@ def build_auth_lite_js(config):
                 }} catch(e) {{ console.warn('Lỗi check quyền:', e); }}
             }}
 
+            // Cập nhật text vào thẻ ẩn
             function updateExpireUI(expDate) {{
-                var txt = document.getElementById('expireDateText');
+                var txt = document.getElementById('hiddenExpireDate');
                 if (txt) {{
-                    txt.innerText = 'Hạn dùng: ' + expDate.toLocaleDateString('vi-VN');
+                    txt.innerText = expDate.toLocaleDateString('vi-VN');
                 }}
             }}
 
@@ -413,9 +398,16 @@ def build_auth_lite_js(config):
                 }}
             }};
 
-            window.selectPackage = function(id, amount, label) {{
+            window.closeUserRenewalModal = function() {{
+                var renewal = document.getElementById('renewalModal');
+                if (renewal) renewal.classList.remove('show');
+            }};
+
+            window.selectPackage = function(id, amount, label, days) {{
                 selectedPkgId = id;
                 selectedAmount = amount;
+                selectedDays = days || 30; // Lưu số ngày để gửi lên server
+                
                 document.querySelectorAll('.package-item').forEach(function(el) {{ el.classList.remove('active'); }});
                 var el = document.getElementById('pkg_' + id);
                 if (el) el.classList.add('active');
@@ -438,6 +430,7 @@ def build_auth_lite_js(config):
                         email: auth.currentUser.email,
                         packageId: selectedPkgId,
                         amount: selectedAmount,
+                        days: selectedDays, // Gửi kèm số ngày để admin duyệt chuẩn xác
                         code: document.getElementById('payCode').innerText,
                         status: 'pending',
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
