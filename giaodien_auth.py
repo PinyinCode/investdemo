@@ -216,32 +216,41 @@ def build_auth_lite_html(config):
                 <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Hệ thống Đầu tư Chứng khoán</p>
             </div>
 
-            <!-- THÔNG BÁO TRẠNG THÁI -->
+            <!-- THÔNG BÁO TRẠNG THÁI HẾT HẠN -->
             <div id="renewalStatusMsg" class="bg-rose-500/10 border border-rose-500/30 rounded-xl p-3 mb-4 text-center hidden">
                 <h4 class="text-sm font-bold text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Tài khoản đã hết hạn!</h4>
                 <p class="text-[11px] text-slate-300 mt-1">Vui lòng gia hạn để tiếp tục sử dụng hệ thống.</p>
             </div>
 
-            <div class="renewal-icon mx-auto"><i class="fa-solid fa-clock"></i></div>
-            <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
-            <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng các tính năng phân tích và lọc cổ phiếu AI.</p>
-            
-            <div style="text-align:left; margin-bottom:10px; font-weight:bold; color:#94a3b8; font-size:0.8rem;">CHỌN GÓI GIA HẠN:</div>
-            <div style="max-height:200px; overflow-y:auto; padding-right:5px;" id="packageList">{packages_html}</div>
-            
-            <div id="qrCodeWrap" style="display:none; margin-top:1rem;">
-                <img id="qrImage" src="" style="width:200px; height:200px; margin:0 auto 10px; border-radius:12px; border:2px solid #334155; background:#fff; padding: 5px;">
-                <div class="bank-info">
-                    <div class="bank-row"><span>Ngân hàng:</span> <span>{bank.get('bank_name', 'MB Bank')}</span></div>
-                    <div class="bank-row"><span>Số TK:</span> <span>{bank.get('account_no', '0123456789')}</span></div>
-                    <div class="bank-row"><span>Chủ TK:</span> <span>{bank.get('account_name', 'NGUYEN VAN A')}</span></div>
-                    <div class="bank-row"><span>Số tiền:</span> <span id="payAmount" class="code-highlight">0 VNĐ</span></div>
-                    <div class="bank-row"><span>Nội dung:</span> <span id="payCode" class="code-highlight">---</span></div>
-                </div>
-                <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung để hệ thống tự động duyệt.</p>
+            <!-- THÔNG BÁO CHỜ DUYỆT (Dành cho User) -->
+            <div id="pendingRequestBox" class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 mb-4 text-center hidden">
+                <h4 class="text-sm font-bold text-amber-400"><i class="fa-solid fa-clock mr-1"></i> Yêu cầu đang chờ duyệt!</h4>
+                <p class="text-[11px] text-slate-300 mt-1">Bạn đã gửi yêu cầu thanh toán. Vui lòng đợi Admin xác nhận.</p>
+                <button onclick="cancelMyRenewal()" class="mt-2 px-3 py-1 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded text-xs font-semibold transition">Hủy yêu cầu này</button>
             </div>
-            <div style="display:flex; gap:10px; margin-top:1rem;">
-                <button class="auth-btn" id="btnConfirmPay" style="display:none; background:#10b981;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
+
+            <div id="renewalOptionsBox">
+                <div class="renewal-icon mx-auto"><i class="fa-solid fa-clock"></i></div>
+                <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
+                <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng các tính năng phân tích và lọc cổ phiếu AI.</p>
+                
+                <div style="text-align:left; margin-bottom:10px; font-weight:bold; color:#94a3b8; font-size:0.8rem;">CHỌN GÓI GIA HẠN:</div>
+                <div style="max-height:200px; overflow-y:auto; padding-right:5px;" id="packageList">{packages_html}</div>
+                
+                <div id="qrCodeWrap" style="display:none; margin-top:1rem;">
+                    <img id="qrImage" src="" style="width:200px; height:200px; margin:0 auto 10px; border-radius:12px; border:2px solid #334155; background:#fff; padding: 5px;">
+                    <div class="bank-info">
+                        <div class="bank-row"><span>Ngân hàng:</span> <span>{bank.get('bank_name', 'MB Bank')}</span></div>
+                        <div class="bank-row"><span>Số TK:</span> <span>{bank.get('account_no', '0123456789')}</span></div>
+                        <div class="bank-row"><span>Chủ TK:</span> <span>{bank.get('account_name', 'NGUYEN VAN A')}</span></div>
+                        <div class="bank-row"><span>Số tiền:</span> <span id="payAmount" class="code-highlight">0 VNĐ</span></div>
+                        <div class="bank-row"><span>Nội dung:</span> <span id="payCode" class="code-highlight">---</span></div>
+                    </div>
+                    <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung để hệ thống tự động duyệt.</p>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:1rem;">
+                    <button class="auth-btn" id="btnConfirmPay" style="display:none; background:#10b981;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
+                </div>
             </div>
         </div>
     </div>
@@ -323,7 +332,7 @@ def build_auth_lite_html(config):
                            <th class="p-3">Email</th>
                            <th class="p-3">Gói / Số tiền</th>
                            <th class="p-3">Mã CK</th>
-                           <th class="p-3">Thao tác</th>
+                           <th class="p-3 text-center">Thao tác</th>
                           </tr>
                          </thead>
                         <tbody id="admin-renewals-list" class="divide-y divide-slate-800">
@@ -470,6 +479,7 @@ def build_auth_lite_js(config):
                         
                         // Hiển thị thông báo lý do
                         if (statusMsg) statusMsg.classList.remove('hidden');
+                        checkMyPendingRequest(); // Kiểm tra xem có lệnh chờ nào không
                     } else {
                         // Còn hạn: Ẩn màn hình đen, mở khóa body
                         document.body.classList.remove('auth-locked'); 
@@ -542,7 +552,6 @@ def build_auth_lite_js(config):
                 
                 try {
                     await auth.signInWithEmailAndPassword(email, pwd);
-                    // Sẽ tự động nhảy vào onAuthStateChanged ở trên để reset nút
                 } catch(e) {
                     var errMsg = e.message;
                     if (e.code === 'auth/user-not-found') errMsg = 'Tài khoản chưa tồn tại. Vui lòng đăng nhập bằng Google hoặc bấm "Tạo tài khoản".';
@@ -646,8 +655,10 @@ def build_auth_lite_js(config):
                     var btnPay = document.getElementById('btnConfirmPay');
                     if (btnPay) btnPay.style.display = 'none';
                     
-                    // Nếu người dùng chủ động mở, ẩn thông báo hết hạn (vì họ đang dùng bình thường)
                     if (statusMsg) statusMsg.classList.add('hidden');
+                    
+                    // KIỂM TRA XEM CÓ LỆNH ĐANG CHỜ KHÔNG
+                    checkMyPendingRequest();
                 }
             };
 
@@ -673,13 +684,68 @@ def build_auth_lite_js(config):
                 document.getElementById('btnConfirmPay').style.display = 'flex';
             };
 
+            // HÀM KIỂM TRA VÀ HIỂN THỊ LỆNH ĐANG CHỜ (Dành cho User)
+            async function checkMyPendingRequest() {
+                if (!auth.currentUser) return;
+                var pendingBox = document.getElementById('pendingRequestBox');
+                var optionsBox = document.getElementById('renewalOptionsBox');
+                
+                try {
+                    var snap = await db.collection('renewal_requests')
+                        .where('email', '==', auth.currentUser.email)
+                        .where('status', '==', 'pending')
+                        .get();
+                        
+                    if (!snap.empty) {
+                        // Có lệnh đang chờ -> Hiện box thông báo, ẩn phần chọn gói
+                        if (pendingBox) pendingBox.classList.remove('hidden');
+                        if (optionsBox) optionsBox.classList.add('hidden');
+                        window.myPendingReqId = snap.docs[0].id;
+                    } else {
+                        // Không có lệnh -> Hiện bình thường
+                        if (pendingBox) pendingBox.classList.add('hidden');
+                        if (optionsBox) optionsBox.classList.remove('hidden');
+                        window.myPendingReqId = null;
+                    }
+                } catch(e) { console.warn('Lỗi check pending:', e); }
+            }
+
+            // HÀM HỦY LỆNH CỦA USER
+            window.cancelMyRenewal = async function() {
+                if (!window.myPendingReqId) return;
+                if (!confirm("Bạn có chắc muốn hủy yêu cầu gia hạn này?")) return;
+                try {
+                    await db.collection('renewal_requests').doc(window.myPendingReqId).delete();
+                    alert('Đã hủy yêu cầu thành công. Bạn có thể tạo lệnh mới.');
+                    checkMyPendingRequest();
+                } catch(e) {
+                    alert('Lỗi hủy yêu cầu: ' + e.message);
+                }
+            };
+
             window.confirmPayment = async function() {
                 if (!selectedPkgId) return;
                 if (!auth.currentUser) return alert('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại.');
+                
                 var btn = document.getElementById('btnConfirmPay');
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang kiểm tra...';
+                
                 try {
+                    // KIỂM TRA XEM CÓ LỆNH NÀO ĐANG CHỜ KHÔNG
+                    var existingReq = await db.collection('renewal_requests')
+                        .where('email', '==', auth.currentUser.email)
+                        .where('status', '==', 'pending')
+                        .get();
+                        
+                    if (!existingReq.empty) {
+                        alert('Bạn đã có một yêu cầu đang chờ duyệt! Vui lòng đợi Admin xác nhận hoặc Hủy yêu cầu cũ trước khi tạo lệnh mới.');
+                        checkMyPendingRequest(); // Cập nhật lại giao diện
+                        return; 
+                    }
+
+                    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
                     var payCode = document.getElementById('payCode').innerText;
+                    
                     await db.collection('renewal_requests').add({
                         email: auth.currentUser.email,
                         packageId: selectedPkgId,
@@ -699,9 +765,8 @@ def build_auth_lite_js(config):
                     sendTelegramMessage(msg);
 
                     alert('Đã gửi yêu cầu! Vui lòng đợi Admin xác nhận.');
-                    btn.innerText = 'Đã gửi thành công';
-                    btn.style.background = '#059669';
-                    selectedPkgId = null;
+                    checkMyPendingRequest();
+                    
                 } catch(e) {
                     alert('Lỗi gửi yêu cầu: ' + e.message);
                     btn.disabled = false; btn.innerText = 'Tôi đã chuyển khoản';
@@ -1006,8 +1071,11 @@ def build_auth_lite_js(config):
                             <td class="p-3 font-semibold text-white">${safeEmail}</td>
                             <td class="p-3 text-emerald-400 font-bold">${data.packageId} (${data.amount ? data.amount.toLocaleString() : 0}đ)</td>
                             <td class="p-3 font-mono text-amber-300">${data.code}</td>
-                            <td class="p-3">
-                                <button onclick="approveRenewal('${doc.id}', '${data.email}', '${data.packageId}', ${data.days || 30})" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[11px] font-bold transition">Duyệt</button>
+                            <td class="p-3 text-center">
+                                <div class="flex items-center justify-center gap-1">
+                                    <button onclick="approveRenewal('${doc.id}', '${data.email}', '${data.packageId}', ${data.days || 30})" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[11px] font-bold transition" title="Duyệt yêu cầu">Duyệt</button>
+                                    <button onclick="deleteRenewal('${doc.id}')" class="px-2 py-1 bg-rose-500/20 hover:bg-rose-500/40 text-rose-400 border border-rose-500/30 rounded text-[11px] font-bold transition" title="Xóa yêu cầu"><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
                             </td>
                         `;
                         listEl.appendChild(tr);
@@ -1044,6 +1112,17 @@ def build_auth_lite_js(config):
                     loadAdminRenewals();
                 } catch (e) {
                     alert('Lỗi duyệt: ' + e.message);
+                }
+            };
+
+            window.deleteRenewal = async function(reqId) {
+                if (!confirm("Bạn có chắc chắn muốn xóa yêu cầu này không?")) return;
+                try {
+                    await window.db.collection('renewal_requests').doc(reqId).delete();
+                    alert('✅ Đã xóa yêu cầu thành công!');
+                    loadAdminRenewals();
+                } catch (e) {
+                    alert('Lỗi xóa yêu cầu: ' + e.message);
                 }
             };
 
