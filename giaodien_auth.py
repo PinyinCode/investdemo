@@ -129,18 +129,6 @@ def build_auth_lite_css():
         .bank-row span:first-child { color: #94a3b8; }
         .bank-row span:last-child { font-weight: 700; color: #fff; }
         .code-highlight { color: #10b981 !important; font-family: monospace; font-size: 1.1rem; letter-spacing: 1px; background: rgba(16,185,129,0.1); padding: 2px 8px; border-radius: 4px; }
-        
-        /* Hiệu ứng mở rộng thẻ User */
-        .user-card-action {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-        .user-card-action.expanded {
-            max-height: 150px;
-            opacity: 1;
-        }
     </style>
     """
 
@@ -311,14 +299,16 @@ def build_auth_lite_html(config):
             <div id="adminTabsContent" class="p-5 overflow-y-auto flex-grow hidden">
                 <!-- TAB USERS -->
                 <div id="adminTabUsers" class="flex flex-col h-full">
-                    <!-- THANH THỐNG KÊ -->
-                    <div class="mb-3 flex gap-2 text-[11px] font-bold shrink-0">
-                        <div class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 flex-1 text-center">
-                            <span class="text-slate-400">Tổng User:</span> <span id="admin-stat-user" class="text-emerald-400 ml-1">0</span>
-                        </div>
-                        <div class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 flex-1 text-center">
-                            <span class="text-slate-400">Tổng Admin:</span> <span id="admin-stat-admin" class="text-amber-400 ml-1">0</span>
-                        </div>
+                    <!-- THANH CHUYỂN TAB CON & THỐNG KÊ -->
+                    <div class="flex gap-2 mb-3 shrink-0">
+                        <button onclick="filterUserRole('user')" id="btn-sub-tab-user" class="flex-1 py-2 bg-emerald-600 text-white rounded-lg border border-emerald-500 text-xs font-bold transition flex flex-col items-center justify-center">
+                            <span>Người dùng</span>
+                            <span class="text-[14px] font-black" id="admin-stat-user">0</span>
+                        </button>
+                        <button onclick="filterUserRole('admin')" id="btn-sub-tab-admin" class="flex-1 py-2 bg-slate-800 text-slate-400 hover:text-white rounded-lg border border-slate-700 text-xs font-bold transition flex flex-col items-center justify-center">
+                            <span>Admin</span>
+                            <span class="text-[14px] font-black" id="admin-stat-admin">0</span>
+                        </button>
                     </div>
 
                     <div class="mb-3 relative shrink-0">
@@ -990,6 +980,7 @@ def build_auth_lite_js(config):
 
             var adminAllUsers = []; 
             var editingUserEmail = ""; 
+            var currentSubTabRole = 'user'; // Mặc định xem tab User trước
 
             async function loadAdminUsers() {
                 var listEl = document.getElementById('admin-users-list');
@@ -1019,16 +1010,29 @@ def build_auth_lite_js(config):
                 }
             }
 
+            // Hàm chuyển đổi sub-tab (User / Admin)
+            window.filterUserRole = function(role) {
+                currentSubTabRole = role;
+                
+                var btnUser = document.getElementById('btn-sub-tab-user');
+                var btnAdmin = document.getElementById('btn-sub-tab-admin');
+                
+                if (role === 'user') {
+                    btnUser.className = "flex-1 py-2 bg-emerald-600 text-white rounded-lg border border-emerald-500 text-xs font-bold transition flex flex-col items-center justify-center";
+                    btnAdmin.className = "flex-1 py-2 bg-slate-800 text-slate-400 hover:text-white rounded-lg border border-slate-700 text-xs font-bold transition flex flex-col items-center justify-center";
+                } else {
+                    btnAdmin.className = "flex-1 py-2 bg-emerald-600 text-white rounded-lg border border-emerald-500 text-xs font-bold transition flex flex-col items-center justify-center";
+                    btnUser.className = "flex-1 py-2 bg-slate-800 text-slate-400 hover:text-white rounded-lg border border-slate-700 text-xs font-bold transition flex flex-col items-center justify-center";
+                }
+                
+                renderAdminUsersList();
+            };
+
             window.renderAdminUsersList = function() {
                 var listEl = document.getElementById('admin-users-list');
                 var keyword = (document.getElementById('admin-search-input').value || '').toLowerCase().trim();
                 
-                var filtered = adminAllUsers.filter(function(u) {
-                    var email = (u.email || u.id).toLowerCase();
-                    var name = (u.name || u.displayName || '').toLowerCase();
-                    return email.includes(keyword) || name.includes(keyword);
-                });
-
+                // Đếm tổng số lượng
                 var totalUsers = 0;
                 var totalAdmins = 0;
                 adminAllUsers.forEach(function(u) {
@@ -1039,6 +1043,21 @@ def build_auth_lite_js(config):
                 
                 if(document.getElementById('admin-stat-user')) document.getElementById('admin-stat-user').innerText = totalUsers;
                 if(document.getElementById('admin-stat-admin')) document.getElementById('admin-stat-admin').innerText = totalAdmins;
+
+                // Lọc dữ liệu theo sub-tab và tìm kiếm
+                var filtered = adminAllUsers.filter(function(u) {
+                    var role = u.role || 'user';
+                    var isAdmin = (role === 'admin' || role === 'super_admin');
+                    
+                    // Lọc theo tab (User / Admin)
+                    if (currentSubTabRole === 'user' && isAdmin) return false;
+                    if (currentSubTabRole === 'admin' && !isAdmin) return false;
+
+                    // Lọc theo từ khóa
+                    var email = (u.email || u.id).toLowerCase();
+                    var name = (u.name || u.displayName || '').toLowerCase();
+                    return email.includes(keyword) || name.includes(keyword);
+                });
 
                 listEl.innerHTML = '';
                 if (filtered.length === 0) {
