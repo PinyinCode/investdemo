@@ -777,76 +777,99 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (!res.ok) throw new Error("Không tìm thấy file");
             currentSymbolHistory = await res.json();
 
+            // Hàm phụ trợ chuẩn hóa thời gian về YYYY-MM-DD
+            const normalizeTime = (timeStr) => {
+                if (!timeStr) return null;
+                if (typeof timeStr === 'number') {
+                    const d = new Date(timeStr * 1000);
+                    return d.toISOString().split('T')[0];
+                }
+                // Nếu có kèm giờ phút, cắt bỏ
+                return timeStr.toString().split(' ')[0].split('T')[0];
+            };
+
+            // 1. Chuẩn hóa dữ liệu D1 (Ngày)
             if (currentSymbolHistory.history_d1) {
                 currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
-                    .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
+                    .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
                     .map(bar => ({
-                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
+                        time: normalizeTime(bar.time), 
+                        open: bar.open * 1000, high: bar.high * 1000, 
+                        low: bar.low * 1000, close: bar.close * 1000, 
+                        volume: bar.volume
                     }));
             } else {
                 currentSymbolHistory.history_d1 = [];
             }
 
+            // 2. Chuẩn hóa dữ liệu W1 (Tuần)
             if (currentSymbolHistory.history_w1) {
                 currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1
-                    .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
+                    .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
                     .map(bar => ({
-                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
+                        time: normalizeTime(bar.time), 
+                        open: bar.open * 1000, high: bar.high * 1000, 
+                        low: bar.low * 1000, close: bar.close * 1000, 
+                        volume: bar.volume
                     }));
             }
 
+            // 3. Chuẩn hóa dữ liệu MN (Tháng)
             if (currentSymbolHistory.history_mn) {
                 currentSymbolHistory.history_mn = currentSymbolHistory.history_mn
-                    .filter(bar => bar.time && bar.open > 0 && bar.high > 0 && bar.low > 0 && bar.close > 0)
+                    .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
                     .map(bar => ({
-                        time: bar.time, open: bar.open * 1000, high: bar.high * 1000, low: bar.low * 1000, close: bar.close * 1000, volume: bar.volume
+                        time: normalizeTime(bar.time), 
+                        open: bar.open * 1000, high: bar.high * 1000, 
+                        low: bar.low * 1000, close: bar.close * 1000, 
+                        volume: bar.volume
                     }));
             }
 
+            // 4. Xử lý nến Live (Ngày hôm nay) từ API
             let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
-            const tradingDate = item && item.trading_date ? item.trading_date : null;
+            const tradingDate = item && item.trading_date ? normalizeTime(item.trading_date) : null;
 
-            let itemOpen = item.open || 0;
-            let itemHigh = item.high || 0;
-            let itemLow = item.low || 0;
+            let itemOpen = (item.open || 0) * 1000;
+            let itemHigh = (item.high || 0) * 1000;
+            let itemLow = (item.low || 0) * 1000;
             let itemVolume = item.volume || 0;
-
+            
+            // Xử lý giá nếu API trả về chưa nhân 1000
             if (currentPrice > 0 && currentPrice < 1000) currentPrice *= 1000;
             if (itemOpen > 0 && itemOpen < 1000) itemOpen *= 1000;
             if (itemHigh > 0 && itemHigh < 1000) itemHigh *= 1000;
             if (itemLow > 0 && itemLow < 1000) itemLow *= 1000;
 
-            if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
-                const lastBar = currentSymbolHistory.history_d1[currentSymbolHistory.history_d1.length - 1];
-                const effectiveDate = tradingDate || lastBar.time;
-                const existingBar = currentSymbolHistory.history_d1.find(b => b.time === effectiveDate);
+            if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0 && tradingDate) {
+                const existingBarIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === tradingDate);
 
-                if (existingBar) {
-                    existingBar.close = currentPrice;
-                    if (itemHigh > 0) existingBar.high = Math.max(existingBar.high, itemHigh);
-                    if (itemLow > 0)  existingBar.low  = Math.min(existingBar.low, itemLow);
-                    if (itemVolume > 0) existingBar.volume = itemVolume;
+                if (existingBarIndex !== -1) {
+                    // Nếu nến hôm nay đã có trong history (có thể do file json đã cập nhật), chỉ cập nhật giá đóng cửa
+                    currentSymbolHistory.history_d1[existingBarIndex].close = currentPrice;
+                    if (itemHigh > 0) currentSymbolHistory.history_d1[existingBarIndex].high = Math.max(currentSymbolHistory.history_d1[existingBarIndex].high, itemHigh);
+                    if (itemLow > 0)  currentSymbolHistory.history_d1[existingBarIndex].low  = Math.min(currentSymbolHistory.history_d1[existingBarIndex].low, itemLow);
+                    if (itemVolume > 0) currentSymbolHistory.history_d1[existingBarIndex].volume = itemVolume;
                 } else {
-                    const recentBars = currentSymbolHistory.history_d1.slice(-20);
-                    let sumVol = 0;
-                    recentBars.forEach(b => { sumVol += (b.volume || 0); });
-                    const avgVol20 = recentBars.length > 0 ? (sumVol / recentBars.length) : 0;
-                    const isVolumeEnough = avgVol20 > 0 ? (itemVolume >= avgVol20 * 0.2) : true;
-
-                    if (isVolumeEnough) {
-                        const hasValidOHLC = itemOpen > 0 && itemHigh > 0 && itemLow > 0;
-                        if (hasValidOHLC) {
-                            let liveVolume = itemVolume;
-                            if (!liveVolume || liveVolume < 1000) liveVolume = lastBar.volume;
-                            currentSymbolHistory.history_d1.push({
-                                time: effectiveDate, open: itemOpen, high: itemHigh, low: itemLow, close: currentPrice, volume: liveVolume
-                            });
-                        }
+                    // Nếu chưa có, tạo nến mới chèn vào
+                    const hasValidOHLC = itemOpen > 0 && itemHigh > 0 && itemLow > 0;
+                    if (hasValidOHLC) {
+                        currentSymbolHistory.history_d1.push({
+                            time: tradingDate, 
+                            open: itemOpen, high: itemHigh, low: itemLow, close: currentPrice, 
+                            volume: itemVolume > 0 ? itemVolume : (currentSymbolHistory.history_d1.at(-1)?.volume || 0)
+                        });
                     }
                 }
             }
 
+            // 5. SẮP XẾP LẠI VÀ LỌC TRÙNG (Cực kỳ quan trọng để chart không bị lỗi)
             currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
+            currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter((v, i, a) => a.findIndex(t => t.time === v.time) === i);
+
+            // Debug: In ra console để bạn kiểm tra (nếu cần)
+            console.log("Nến cuối cùng chuẩn bị vẽ:", currentSymbolHistory.history_d1.at(-1));
+
             renderChartInstance(currentSymbolHistory);
 
         } catch (err) {
@@ -856,7 +879,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             document.getElementById('chart-loading').classList.add('hidden');
         }
     }
-
     function calculateMA(data, period) {
         let result = [];
         for (let i = 0; i < data.length; i++) {
