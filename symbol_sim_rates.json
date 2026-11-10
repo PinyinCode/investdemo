@@ -12,7 +12,7 @@
         "annual_rate_percent": -17.79
     },
     "BAF": {
-        "annual_rate_percent": 21.85
+        "annual_rate_percent": 21.86
     },
     "BCM": {
         "annual_rate_percent": -6.8
@@ -99,10 +99,10 @@
         "annual_rate_percent": 5.25
     },
     "FRT": {
-        "annual_rate_percent": 37.0
+        "annual_rate_percent": 37.01
     },
     "FTS": {
-        "annual_rate_percent": -6.44
+        "annual_rate_percent": -6.45
     },
     "GAS": {
         "annual_rate_percent": 3.23
@@ -129,10 +129,10 @@
         "annual_rate_percent": 4.63
     },
     "HDB": {
-        "annual_rate_percent": 19.34
+        "annual_rate_percent": 19.35
     },
     "HDG": {
-        "annual_rate_percent": -12.49
+        "annual_rate_percent": -12.5
     },
     "HHV": {
         "annual_rate_percent": -12.15
@@ -144,7 +144,7 @@
         "annual_rate_percent": -14.25
     },
     "HT1": {
-        "annual_rate_percent": -10.26
+        "annual_rate_percent": -10.25
     },
     "HVN": {
         "annual_rate_percent": 2.24
@@ -198,13 +198,13 @@
         "annual_rate_percent": 13.67
     },
     "NKG": {
-        "annual_rate_percent": -14.32
+        "annual_rate_percent": -14.33
     },
     "NLG": {
         "annual_rate_percent": -15.34
     },
     "NT2": {
-        "annual_rate_percent": 4.44
+        "annual_rate_percent": 4.46
     },
     "NTC": {
         "annual_rate_percent": -3.79
@@ -240,7 +240,7 @@
         "annual_rate_percent": -0.47
     },
     "PVD": {
-        "annual_rate_percent": 7.34
+        "annual_rate_percent": 7.33
     },
     "PVS": {
         "annual_rate_percent": 10.66
@@ -270,7 +270,7 @@
         "annual_rate_percent": 12.95
     },
     "SSB": {
-        "annual_rate_percent": -3.14
+        "annual_rate_percent": -3.13
     },
     "SSI": {
         "annual_rate_percent": -4.37
@@ -333,7 +333,7 @@
         "annual_rate_percent": -0.74
     },
     "VIC": {
-        "annual_rate_percent": 36.74
+        "annual_rate_percent": 36.75
     },
     "VIX": {
         "annual_rate_percent": 0.72
@@ -360,7 +360,7 @@
         "annual_rate_percent": 7.48
     },
     "VPL": {
-        "annual_rate_percent": -6.02
+        "annual_rate_percent": -5.99
     },
     "VPX": {
         "annual_rate_percent": -23.83
