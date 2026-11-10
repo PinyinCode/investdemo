@@ -22,7 +22,16 @@ def build_screener_html():
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-wide text-white">Pro Quant Screener</h1>
-                    <p class="text-[10px] text-slate-400">Hệ thống chấm điểm đặc thù theo Nhóm ngành | <span class="text-emerald-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>Cập nhật giá: <span id="header-last-update">Đang tải...</span></span></p>
+                    <p class="text-[10px] text-slate-400 flex items-center gap-1.5 mt-0.5">
+                        <span>Hệ thống chấm điểm đặc thù</span>
+                        <span class="text-slate-600">|</span>
+                        <span class="flex items-center gap-1.5 font-semibold">
+                            <!-- Chấm tròn trạng thái API -->
+                            <span id="api-status-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                            <!-- Text hiển thị số ms -->
+                            <span id="api-status-text" class="text-amber-400">Đang kết nối API...</span>
+                        </span>
+                    </p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
