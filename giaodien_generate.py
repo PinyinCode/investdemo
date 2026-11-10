@@ -13,8 +13,6 @@ from giaodien_log_console import build_log_console_html
 
 from giaodien_auth import build_auth_lite_css, build_auth_lite_html, build_auth_lite_js
 from giaodien_core_js import build_core_js
-# Đã xóa import simulator vì không chạy ở bước này nữa
-# from simulator import run_complex_backtest_simulation
 
 OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
@@ -68,7 +66,6 @@ def generate_html():
 
     # 1. Bỏ qua simulator (đã được chạy ở workflow khác)
     print("\n📊 [1/6] Bỏ qua simulator, sử dụng dữ liệu JSON có sẵn...")
-    # run_complex_backtest_simulation()
     print("     ✅ Sẵn sàng đọc dữ liệu từ file.")
 
     # 2. Đọc data
@@ -84,6 +81,11 @@ def generate_html():
 
     firebase_config = get_firebase_config()
     auth_config = load_auth_config()
+
+    # Lấy danh sách Super Admin từ biến môi trường (cách nhau bởi dấu phẩy)
+    super_admins_raw = os.environ.get("SUPER_ADMINS", "")
+    super_admins_list = [email.strip().lower() for email in super_admins_raw.split(",") if email.strip()]
+    print(f"     👑 Super Admins: {', '.join(super_admins_list) if super_admins_list else 'Chưa cấu hình'}")
 
     # 3. Build CSS/HTML/JS
     print("\n🔧 [3/6] Build CSS/HTML/JS các module...")
@@ -117,15 +119,16 @@ def generate_html():
     firebase_config_clean = _json_blob(firebase_config)
     cheap_groups_clean = _json_blob(cheap_stocks_groups)
     cheap_symbols_clean = _json_blob(sorted(cheap_symbols_set))
+    super_admins_clean = _json_blob(super_admins_list)
 
-    # Đã xóa dòng document.body.classList.add('auth-locked'); 
-    # và xóa dòng admin_js ra khỏi full_js vì đã gộp vào auth
+    # Khởi tạo JS
     full_js = "\n\n".join([
         f"/* ══ CONFIG ══ */\n"
         f"const PRICE_API_URL = {json.dumps(PRICE_API_URL)};\n"
         f"const firebaseConfig = {firebase_config_clean};\n"
         f"const cheapStocksGroups = {cheap_groups_clean};\n"
         f"const cheapSymbolsSet = new Set({cheap_symbols_clean});\n"
+        f"const SUPER_ADMINS = {super_admins_clean};\n" 
         f"if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);\n"
         f"window.auth = firebase.auth();\n"
         f"window.db = firebase.firestore();",
