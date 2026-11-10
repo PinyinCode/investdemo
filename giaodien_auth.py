@@ -200,26 +200,27 @@ def build_auth_lite_js(config):
     trial_days = config.get("trial_days", 7)
     bank_config_js = json.dumps(config.get("bank_config", {}), ensure_ascii=False)
     
-    return f"""
+    # Sử dụng .replace() thay vì f-string để tránh lỗi cú pháp Python với dấu ngoặc nhọn của JS
+    js_template = r"""
     <script>
-    (function() {{
+    (function() {
         'use strict';
-        var TRIAL_DAYS = {trial_days};
-        var BANK_CONFIG = {bank_config_js};
+        var TRIAL_DAYS = __TRIAL_DAYS__;
+        var BANK_CONFIG = __BANK_CONFIG__;
         var selectedPkgId = null;
         var selectedAmount = 0;
         var selectedDays = 30;
         
-        function waitAuth(cb) {{
-            var t = setInterval(function() {{
-                if (typeof firebase !== 'undefined' && typeof window.auth !== 'undefined' && typeof window.db !== 'undefined') {{
+        function waitAuth(cb) {
+            var t = setInterval(function() {
+                if (typeof firebase !== 'undefined' && typeof window.auth !== 'undefined' && typeof window.db !== 'undefined') {
                     clearInterval(t); cb();
-                }}
-            }}, 200);
-        }}
+                }
+            }, 200);
+        }
 
         // HÀM ĐĂNG XUẤT AN TOÀN - CHỐNG LỆCH MODAL TRÊN MOBILE VÀ KẸT MÀN HÌNH MỜ
-        window.triggerSignOut = async function() {{
+        window.triggerSignOut = async function() {
             window.scrollTo(0, 0); // Ép cuộn lên đầu
 
             var authOverlay = document.getElementById('authOverlay');
@@ -230,68 +231,68 @@ def build_auth_lite_js(config):
             if (adminModal) {
                 adminModal.classList.add('hidden');
                 adminModal.style.display = 'none';
-                setTimeout(function(){{ adminModal.style.display = ''; }}, 300);
+                setTimeout(function(){ adminModal.style.display = ''; }, 300);
             }
             
             var renewal = document.getElementById('renewalModal');
             if (renewal) renewal.classList.remove('show');
 
-            try {{
-                if (window.auth) {{
+            try {
+                if (window.auth) {
                     await window.auth.signOut();
-                }}
-            }} catch(e) {{
+                }
+            } catch(e) {
                 console.warn('SignOut error:', e);
-            }}
-        }};
+            }
+        };
 
-        waitAuth(function() {{
+        waitAuth(function() {
             var auth = window.auth;
             var db = window.db;
 
-            auth.onAuthStateChanged(async function(user) {{
+            auth.onAuthStateChanged(async function(user) {
                 var authOverlay = document.getElementById('authOverlay');
                 var adminModal = document.getElementById('admin-modal');
                 
-                if (user) {{
+                if (user) {
                     if (authOverlay) authOverlay.classList.add('hidden');
                     
                     await checkUserPermission(user);
-                    if (typeof window.onAuthReady === 'function') {{
-                        try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn(e); }}
-                    }}
-                }} else {{
+                    if (typeof window.onAuthReady === 'function') {
+                        try { await window.onAuthReady(user); } catch(e) { console.warn(e); }
+                    }
+                } else {
                     if (authOverlay) authOverlay.classList.remove('hidden');
-                    if (adminModal) {{
+                    if (adminModal) {
                         adminModal.classList.add('hidden');
                         adminModal.style.display = 'none';
-                    }}
+                    }
                     
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
-                }}
-            }});
+                }
+            });
 
-            document.getElementById('btnGoogleLogin').addEventListener('click', async function() {{
+            document.getElementById('btnGoogleLogin').addEventListener('click', async function() {
                 var provider = new firebase.auth.GoogleAuthProvider();
-                try {{
+                try {
                     var res = await auth.signInWithPopup(provider);
                     if (res.user) checkAskPassword(res.user);
-                }} catch(e) {{ showMsg('loginMsg', 'Lỗi Google: ' + e.message, 'error'); }}
-            }});
+                } catch(e) { showMsg('loginMsg', 'Lỗi Google: ' + e.message, 'error'); }
+            });
 
             var loginForm = document.getElementById('emailLoginForm');
             var emailInput = document.getElementById('loginEmail');
             
-            emailInput.addEventListener('blur', function() {{
+            emailInput.addEventListener('blur', function() {
                 var v = this.value.trim().toLowerCase();
                 if (v && v.indexOf('@') === -1) this.value = v + '@gmail.com';
-            }});
+            });
 
-            loginForm.addEventListener('submit', async function(e) {{
+            loginForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 var email = emailInput.value.trim();
                 var pwd = document.getElementById('loginPassword').value;
@@ -307,9 +308,9 @@ def build_auth_lite_js(config):
                 btn.disabled = true; 
                 btnSpan.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang kết nối...';
                 
-                try {{
+                try {
                     await auth.signInWithEmailAndPassword(email, pwd);
-                }} catch(e) {{
+                } catch(e) {
                     var errMsg = e.message;
                     if (e.code === 'auth/user-not-found') errMsg = 'Tài khoản chưa tồn tại. Vui lòng đăng nhập bằng Google hoặc bấm "Tạo tài khoản".';
                     if (e.code === 'auth/wrong-password') errMsg = 'Sai mật khẩu. Vui lòng kiểm tra lại.';
@@ -317,119 +318,119 @@ def build_auth_lite_js(config):
                     showMsg('loginMsg', 'Lỗi: ' + errMsg, 'error');
                     btn.disabled = false; 
                     btnSpan.innerHTML = 'Đăng nhập';
-                }}
-            }});
+                }
+            });
 
-            function checkAskPassword(user) {{
+            function checkAskPassword(user) {
                 if (!user || !user.email) return;
-                var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
+                var hasPwd = user.providerData.some(function(p) { return p.providerId === 'password'; });
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
                 sessionStorage.setItem('asked_pwd_' + user.email, '1'); 
                 document.getElementById('setPwdModal').style.display = 'flex';
-            }}
+            }
 
-            document.getElementById('btnSkipPwd').addEventListener('click', function() {{
+            document.getElementById('btnSkipPwd').addEventListener('click', function() {
                 document.getElementById('setPwdModal').style.display = 'none';
-            }});
+            });
 
-            document.getElementById('btnSavePwd').addEventListener('click', async function() {{
+            document.getElementById('btnSavePwd').addEventListener('click', async function() {
                 var p1 = document.getElementById('newPwd1').value;
                 var p2 = document.getElementById('newPwd2').value;
                 if (p1.length < 6) return showMsg('setPwdMsg', 'Mật khẩu phải từ 6 ký tự.', 'error');
                 if (p1 !== p2) return showMsg('setPwdMsg', 'Mật khẩu nhập lại không khớp.', 'error');
                 
                 var btn = this; btn.disabled = true; btn.innerText = 'Đang lưu...';
-                try {{
+                try {
                     var user = auth.currentUser;
                     var cred = firebase.auth.EmailAuthProvider.credential(user.email, p1);
                     await user.linkWithCredential(cred);
                     showMsg('setPwdMsg', '✅ Tạo mật khẩu thành công!', 'success');
-                    setTimeout(function() {{ document.getElementById('setPwdModal').style.display = 'none'; }}, 1500);
-                }} catch(e) {{
+                    setTimeout(function() { document.getElementById('setPwdModal').style.display = 'none'; }, 1500);
+                } catch(e) {
                     showMsg('setPwdMsg', 'Lỗi: ' + e.message, 'error');
                     btn.disabled = false; btn.innerText = 'Lưu mật khẩu';
-                }}
-            }});
+                }
+            });
 
-            async function checkUserPermission(user) {{
+            async function checkUserPermission(user) {
                 var email = user.email.toLowerCase();
-                try {{
+                try {
                     var doc = await db.collection('allowed_users').doc(email).get();
-                    if (!doc.exists) {{
+                    if (!doc.exists) {
                         var expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + TRIAL_DAYS);
-                        await db.collection('allowed_users').doc(email).set({{
+                        await db.collection('allowed_users').doc(email).set({
                             email: email, role: 'user', expiresAt: expireDate.toISOString()
-                        }});
+                        });
                         updateExpireUI(expireDate);
-                    }} else {{
+                    } else {
                         var data = doc.data();
-                        if (data.expiresAt) {{
+                        if (data.expiresAt) {
                             var exp = new Date(data.expiresAt);
                             updateExpireUI(exp);
                             
-                            if (data.role !== 'admin' && new Date() > exp) {{
+                            if (data.role !== 'admin' && new Date() > exp) {
                                 document.getElementById('renewalModal').classList.add('show');
                                 var authOverlay = document.getElementById('authOverlay');
                                 if (authOverlay) authOverlay.classList.add('hidden');
-                            }} else {{
+                            } else {
                                 var renewal = document.getElementById('renewalModal');
                                 if (renewal) renewal.classList.remove('show');
-                            }}
-                        }}
-                    }}
-                }} catch(e) {{ console.warn('Lỗi check quyền:', e); }}
-            }}
+                            }
+                        }
+                    }
+                } catch(e) { console.warn('Lỗi check quyền:', e); }
+            }
 
-            function updateExpireUI(expDate) {{
+            function updateExpireUI(expDate) {
                 var txt = document.getElementById('hiddenExpireDate');
-                if (txt) {{
+                if (txt) {
                     txt.innerText = expDate.toLocaleDateString('vi-VN');
-                }}
-            }}
+                }
+            }
 
-            window.openUserRenewalModal = function() {{
+            window.openUserRenewalModal = function() {
                 var renewal = document.getElementById('renewalModal');
-                if (renewal) {{
+                if (renewal) {
                     renewal.classList.add('show');
                     selectedPkgId = null;
-                    document.querySelectorAll('.package-item').forEach(function(el) {{ el.classList.remove('active'); }});
+                    document.querySelectorAll('.package-item').forEach(function(el) { el.classList.remove('active'); });
                     var qrWrap = document.getElementById('qrCodeWrap');
                     if (qrWrap) qrWrap.style.display = 'none';
                     var btnPay = document.getElementById('btnConfirmPay');
                     if (btnPay) btnPay.style.display = 'none';
-                }}
-            }};
+                }
+            };
 
-            window.closeUserRenewalModal = function() {{
+            window.closeUserRenewalModal = function() {
                 var renewal = document.getElementById('renewalModal');
                 if (renewal) renewal.classList.remove('show');
-            }};
+            };
 
-            window.selectPackage = function(id, amount, label, days) {{
+            window.selectPackage = function(id, amount, label, days) {
                 selectedPkgId = id;
                 selectedAmount = amount;
                 selectedDays = days || 30;
                 
-                document.querySelectorAll('.package-item').forEach(function(el) {{ el.classList.remove('active'); }});
+                document.querySelectorAll('.package-item').forEach(function(el) { el.classList.remove('active'); });
                 var el = document.getElementById('pkg_' + id);
                 if (el) el.classList.add('active');
                 document.getElementById('qrCodeWrap').style.display = 'block';
                 document.getElementById('payAmount').innerText = amount.toLocaleString('vi-VN') + ' VNĐ';
                 var code = 'NAP' + Math.floor(100000 + Math.random() * 900000);
                 document.getElementById('payCode').innerText = code;
-                var qrUrl = `https://img.vietqr.io/image/${{BANK_CONFIG.bank_id}}-${{BANK_CONFIG.account_no}}-compact2.png?amount=${{amount}}&addInfo=${{code}}&accountName=${{encodeURIComponent(BANK_CONFIG.account_name)}}`;
+                var qrUrl = `https://img.vietqr.io/image/${BANK_CONFIG.bank_id}-${BANK_CONFIG.account_no}-compact2.png?amount=${amount}&addInfo=${code}&accountName=${encodeURIComponent(BANK_CONFIG.account_name)}`;
                 document.getElementById('qrImage').src = qrUrl;
                 document.getElementById('btnConfirmPay').style.display = 'flex';
-            }};
+            };
 
-            window.confirmPayment = async function() {{
+            window.confirmPayment = async function() {
                 if (!selectedPkgId) return;
                 if (!auth.currentUser) return alert('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại.');
                 var btn = document.getElementById('btnConfirmPay');
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
-                try {{
-                    await db.collection('renewal_requests').add({{
+                try {
+                    await db.collection('renewal_requests').add({
                         email: auth.currentUser.email,
                         packageId: selectedPkgId,
                         amount: selectedAmount,
@@ -437,34 +438,40 @@ def build_auth_lite_js(config):
                         code: document.getElementById('payCode').innerText,
                         status: 'pending',
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }});
+                    });
                     alert('Đã gửi yêu cầu! Vui lòng đợi Admin xác nhận.');
                     btn.innerText = 'Đã gửi thành công';
                     btn.style.background = '#059669';
                     selectedPkgId = null;
-                }} catch(e) {{
+                } catch(e) {
                     alert('Lỗi gửi yêu cầu: ' + e.message);
                     btn.disabled = false; btn.innerText = 'Tôi đã chuyển khoản';
-                }}
-            }};
+                }
+            };
 
-            window.showRegisterForm = function() {{ alert('Vui lòng đăng nhập bằng Google để tạo tài khoản tự động!'); }};
-            window.forgotPassword = async function() {{
+            window.showRegisterForm = function() { alert('Vui lòng đăng nhập bằng Google để tạo tài khoản tự động!'); };
+            window.forgotPassword = async function() {
                 var email = document.getElementById('loginEmail').value.trim();
                 if (!email) return showMsg('loginMsg', 'Nhập email để lấy lại mật khẩu.', 'error');
-                try {{
+                try {
                     await auth.sendPasswordResetEmail(email);
                     showMsg('loginMsg', '✅ Đã gửi link khôi phục vào email!', 'success');
-                }} catch(e) {{ showMsg('loginMsg', 'Lỗi: ' + e.message, 'error'); }}
-            }};
+                } catch(e) { showMsg('loginMsg', 'Lỗi: ' + e.message, 'error'); }
+            };
             
-            function showMsg(id, text, type) {{
+            function showMsg(id, text, type) {
                 var el = document.getElementById(id);
                 if(!el) return;
                 el.className = 'auth-msg show ' + (type || 'error');
                 el.innerHTML = text;
-            }}
-        }});
-    }})();
+            }
+        });
+    })();
     </script>
     """
+    
+    # Thay thế các biến vào template
+    js_template = js_template.replace('__TRIAL_DAYS__', str(trial_days))
+    js_template = js_template.replace('__BANK_CONFIG__', bank_config_js)
+    
+    return js_template
