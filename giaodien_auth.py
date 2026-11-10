@@ -218,16 +218,20 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
-        // HÀM ĐĂNG XUẤT AN TOÀN - CHỐNG LỆCH MODAL TRÊN MOBILE
+        // HÀM ĐĂNG XUẤT AN TOÀN - CHỐNG LỆCH MODAL TRÊN MOBILE VÀ KẸT MÀN HÌNH MỜ
         window.triggerSignOut = async function() {{
-            // Ép cuộn trang về đầu để modal luôn hiện ngay ngắn
-            window.scrollTo(0, 0);
+            window.scrollTo(0, 0); // Ép cuộn lên đầu
 
             var authOverlay = document.getElementById('authOverlay');
             if (authOverlay) authOverlay.classList.remove('hidden');
             
+            // Đóng modal admin và xóa cưỡng chế để không bị kẹt màn hình mờ
             var adminModal = document.getElementById('admin-modal');
-            if (adminModal) adminModal.classList.add('hidden');
+            if (adminModal) {
+                adminModal.classList.add('hidden');
+                adminModal.style.display = 'none';
+                setTimeout(function(){{ adminModal.style.display = ''; }}, 300);
+            }
             
             var renewal = document.getElementById('renewalModal');
             if (renewal) renewal.classList.remove('show');
@@ -258,7 +262,10 @@ def build_auth_lite_js(config):
                     }}
                 }} else {{
                     if (authOverlay) authOverlay.classList.remove('hidden');
-                    if (adminModal) adminModal.classList.add('hidden');
+                    if (adminModal) {{
+                        adminModal.classList.add('hidden');
+                        adminModal.style.display = 'none';
+                    }}
                     
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
@@ -317,7 +324,6 @@ def build_auth_lite_js(config):
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
-                // Đã sửa lỗi: dùng setItem thay vì getItem
                 sessionStorage.setItem('asked_pwd_' + user.email, '1'); 
                 document.getElementById('setPwdModal').style.display = 'flex';
             }}
@@ -375,7 +381,6 @@ def build_auth_lite_js(config):
                 }} catch(e) {{ console.warn('Lỗi check quyền:', e); }}
             }}
 
-            // Cập nhật text vào thẻ ẩn
             function updateExpireUI(expDate) {{
                 var txt = document.getElementById('hiddenExpireDate');
                 if (txt) {{
@@ -428,7 +433,7 @@ def build_auth_lite_js(config):
                         email: auth.currentUser.email,
                         packageId: selectedPkgId,
                         amount: selectedAmount,
-                        days: selectedDays, // Gửi kèm số ngày để admin duyệt chuẩn xác
+                        days: selectedDays,
                         code: document.getElementById('payCode').innerText,
                         status: 'pending',
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
