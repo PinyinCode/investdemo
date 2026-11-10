@@ -6,12 +6,14 @@ import json
 def build_auth_lite_css():
     return r"""
     <style>
-        /* 1. NỀN ĐEN ĐẶC PHỦ KÍN 100% MÀN HÌNH - CĂN GIỮA TUYỆT ĐỐI TRÊN MỌI THIẾT BỊ */
+        /* 1. NỀN ĐEN ĐẶC PHỦ KÍN MÀN HÌNH - KHÔNG KHÓA CUỘN BÊN DƯỚI */
         #authOverlay { 
             position: fixed !important; 
-            inset: 0 !important; 
-            width: 100% !important; 
-            height: 100% !important; 
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important; 
+            height: 100vh !important; 
+            height: 100dvh !important; /* Dùng dvh để fix lỗi thanh địa chỉ mobile ẩn hiện */
             z-index: 99999999 !important; 
             background: #0f172a !important; 
             display: flex !important; 
@@ -22,6 +24,7 @@ def build_auth_lite_css():
             opacity: 1;
             visibility: visible;
             transition: opacity 0.25s ease, visibility 0.25s ease;
+            overflow: hidden !important; /* Thao tác cuộn sẽ xuyên xuống body bên dưới */
         }
         #authOverlay.hidden { 
             opacity: 0 !important;
@@ -29,7 +32,7 @@ def build_auth_lite_css():
             pointer-events: none !important;
         }
 
-        /* 2. HỘP ĐĂNG NHẬP LUÔN NẰM CHÍNH GIỮA CẢ PC VÀ MOBILE */
+        /* 2. HỘP ĐĂNG NHẬP LUÔN NẰM CHÍNH GIỮA */
         .auth-box { 
             background: linear-gradient(145deg, #1e293b, #0f172a); 
             border: 1px solid rgba(51, 65, 85, 0.8); 
@@ -219,7 +222,7 @@ def build_auth_lite_js(config):
             }, 200);
         }
 
-        // HÀM ĐĂNG XUẤT AN TOÀN - CHỐNG LỆCH MODAL TRÊN MOBILE VÀ KẸT MÀN HÌNH MỜ
+        // HÀM ĐĂNG XUẤT AN TOÀN 
         window.triggerSignOut = async function() {
             window.scrollTo(0, 0); // Ép cuộn lên đầu
 
@@ -229,7 +232,7 @@ def build_auth_lite_js(config):
                 authOverlay.style.display = 'flex';
             }
             
-            // Đóng modal admin và xóa cưỡng chế để không bị kẹt màn hình mờ
+            // Đóng modal admin
             var adminModal = document.getElementById('admin-modal');
             if (adminModal) {
                 adminModal.classList.add('hidden');
@@ -257,49 +260,44 @@ def build_auth_lite_js(config):
                 var adminModal = document.getElementById('admin-modal');
                 
                 if (user) {
-                    // 1. Đăng nhập thành công -> Cưỡng chế ẩn lớp đăng nhập
+                    // ĐÃ ĐĂNG NHẬP
                     if (authOverlay) {
                         authOverlay.classList.add('hidden');
                         authOverlay.style.display = 'none'; 
                     }
-                    
-                    // 2. Cưỡng chế ẩn modal admin (để không bị đen màn hình)
                     if (adminModal) {
                         adminModal.classList.add('hidden');
                         adminModal.style.display = 'none';
                     }
 
-                    // 🌟 3. QUAN TRỌNG: GỠ BỎ CLASS KHÓA MÀN HÌNH ĐEN
+                    // Gỡ bỏ khóa màn hình nếu có (từ code cũ)
                     document.body.classList.remove('auth-locked');
+                    document.body.style.overflow = '';
                     
-                    // 4. Kiểm tra quyền
                     await checkUserPermission(user);
                     
                     if (typeof window.onAuthReady === 'function') {
-                        try { 
-                            await window.onAuthReady(user); 
-                        } catch(e) { 
-                            console.warn("Lỗi trong onAuthReady:", e); 
-                        }
+                        try { await window.onAuthReady(user); } catch(e) { console.warn(e); }
                     }
                 } else {
-                    // 1. Đăng xuất -> Hiện lại lớp đăng nhập
+                    // CHƯA ĐĂNG NHẬP / ĐĂNG XUẤT
+                    // Không khóa body, cho phép cuộn bên dưới
+                    document.body.classList.remove('auth-locked');
+                    document.body.style.overflow = '';
+
                     if (authOverlay) {
                         authOverlay.classList.remove('hidden');
                         authOverlay.style.display = 'flex'; 
                     }
                     
-                    // 2. Ẩn modal admin
                     if (adminModal) {
                         adminModal.classList.add('hidden');
                         adminModal.style.display = 'none';
                     }
                     
-                    // 3. Reset danh sách admin
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
                     
-                    // 4. Đóng modal gia hạn nếu có
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
