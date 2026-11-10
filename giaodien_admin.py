@@ -113,25 +113,27 @@ def build_admin_js():
         }
     }
 
-    // Hàm mở modal chung
+    // Hàm mở modal chung (Bọc try/catch để chống kẹt màn hình mờ)
     async function openAdminModal() {
         if (!window.auth || !window.auth.currentUser) return;
         
-        document.getElementById('admin-modal').classList.remove('hidden');
-        
-        // 1. Điền thông tin User
-        const email = window.auth.currentUser.email;
-        document.getElementById('modalUserEmail').innerText = email;
-        
-        const expText = document.getElementById('hiddenExpireDate');
-        document.getElementById('modalExpireDate').innerText = expText ? expText.innerText : 'Đang tải...';
-
-        // Lấy thẻ chứa nút Gia hạn (nằm cạnh thông tin email)
-        const renewBtn = document.querySelector('button[onclick="openUserRenewalModal()"]');
-
-        // 2. Kiểm tra quyền Admin để hiện Tabs
         try {
-            if (!window.db) return;
+            const modal = document.getElementById('admin-modal');
+            modal.style.display = 'flex'; // Cưỡng chế hiển thị
+            modal.classList.remove('hidden');
+            
+            // 1. Điền thông tin User
+            const email = window.auth.currentUser.email;
+            document.getElementById('modalUserEmail').innerText = email;
+            
+            const expText = document.getElementById('hiddenExpireDate');
+            document.getElementById('modalExpireDate').innerText = expText ? expText.innerText : 'Đang tải...';
+
+            const renewBtn = document.querySelector('button[onclick="openUserRenewalModal()"]');
+
+            // 2. Kiểm tra quyền Admin
+            if (!window.db) throw new Error("Firebase DB chưa sẵn sàng");
+            
             const doc = await window.db.collection('allowed_users').doc(email.toLowerCase()).get();
             const isAdmin = doc.exists && doc.data().role === 'admin';
             
@@ -143,7 +145,7 @@ def build_admin_js():
                 tabsContent.classList.remove('hidden');
                 document.getElementById('modalTitle').innerText = "Quản Trị Hệ Thống (Admin)";
                 
-                // ẨN NÚT GIA HẠN VỚI ADMIN VÀ ĐỔI TEXT HẠN DÙNG
+                // ẨN NÚT GIA HẠN VỚI ADMIN
                 if (renewBtn) renewBtn.style.display = 'none';
                 document.getElementById('modalExpireDate').innerText = "Vô hạn (Admin)";
                 
@@ -157,12 +159,19 @@ def build_admin_js():
                 if (renewBtn) renewBtn.style.display = 'flex';
             }
         } catch (e) {
-            console.warn("Không thể check quyền admin", e);
+            console.warn("Lỗi mở modal:", e);
+            alert("Không thể tải thông tin. Vui lòng thử lại!");
+            closeAdminModal(); // Tự động đóng nếu có lỗi để tránh bị mờ màn hình
         }
     }
 
     function closeAdminModal() {
-        document.getElementById('admin-modal').classList.add('hidden');
+        const modal = document.getElementById('admin-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.style.display = 'none'; // Cưỡng chế ẩn
+            setTimeout(() => { modal.style.display = ''; }, 300);
+        }
     }
 
     // Hàm escape HTML chống XSS
@@ -185,7 +194,7 @@ def build_admin_js():
                 return;
             }
 
-            // 1. Chuyển dữ liệu thành mảng để dễ sắp xếp
+            // Chuyển dữ liệu thành mảng để sắp xếp
             let users = [];
             snapshot.forEach(doc => {
                 let data = doc.data();
@@ -193,14 +202,14 @@ def build_admin_js():
                 users.push(data);
             });
 
-            // 2. Sắp xếp: Ai có hạn sử dụng xa nhất (lớn nhất) thì lên đầu
+            // Sắp xếp: Ai có hạn sử dụng xa nhất (lớn nhất) thì lên đầu
             users.sort((a, b) => {
                 let dateA = a.expiresAt ? new Date(a.expiresAt).getTime() : 0;
                 let dateB = b.expiresAt ? new Date(b.expiresAt).getTime() : 0;
                 return dateB - dateA; // Giảm dần
             });
 
-            // 3. Render ra bảng
+            // Render ra bảng
             users.forEach(data => {
                 let dateStr = '—';
                 if (data.expiresAt) {
@@ -216,7 +225,6 @@ def build_admin_js():
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/50 transition";
                 
-                // Áp dụng escapeHTML chống XSS
                 const safeEmail = escapeHTML(data.email || data.id);
                 const role = data.role || 'user';
                 
@@ -248,7 +256,6 @@ def build_admin_js():
                 const data = doc.data();
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/50 transition";
-                // Áp dụng escapeHTML chống XSS
                 const safeEmail = escapeHTML(data.email);
                 tr.innerHTML = `
                     <td class="p-3 font-semibold text-white">${safeEmail}</td>
@@ -265,7 +272,7 @@ def build_admin_js():
         }
     }
 
-    // Sử dụng số ngày (days) truyền vào thay vì đoán qua tên gói
+    // Duyệt gia hạn dùng số ngày truyền vào
     async function approveRenewal(reqId, email, packageId, daysToAdd) {
         if (!confirm(`Xác nhận duyệt gia hạn cho ${email} (${packageId})?`)) return;
         try {
