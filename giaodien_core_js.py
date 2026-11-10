@@ -178,16 +178,11 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     }
 
     // ══════════════════════════════════════════════════
-    // LOAD DATA & PING CHECK
+    // LOAD DATA
     // ══════════════════════════════════════════════════
     async function loadData(showSpinner = false) {
         const icon = document.getElementById('refresh-icon');
         if (showSpinner && icon) icon.classList.add('spinner');
-        
-        // Setup UI elements cho status
-        const statusDot = document.getElementById('api-status-dot');
-        const statusText = document.getElementById('api-status-text');
-
         try {
             const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                 fetch('screener_results.json?t=' + new Date().getTime()),
@@ -207,34 +202,12 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
 
             let mongoPrices = {};
             try {
-                // ĐO THỜI GIAN PHẢN HỒI API
-                const startPing = performance.now();
                 const mongoRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
-                const endPing = performance.now();
-                const pingMs = Math.round(endPing - startPing);
-
                 if (mongoRes.ok) {
                     const mongoJson = await mongoRes.json();
                     mongoPrices = mongoJson.data || {};
-                    
-                    // CẬP NHẬT UI: ONLINE
-                    if (statusDot && statusText) {
-                        statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
-                        statusText.innerText = `API: ${pingMs} ms`;
-                        statusText.className = 'text-emerald-400 font-semibold';
-                    }
-                } else {
-                    throw new Error("API Error");
                 }
-            } catch (e) { 
-                console.warn("Không lấy được giá từ MongoDB:", e); 
-                // CẬP NHẬT UI: OFFLINE
-                if (statusDot && statusText) {
-                    statusDot.className = 'w-2 h-2 rounded-full bg-rose-500';
-                    statusText.innerText = `API: Mất kết nối`;
-                    statusText.className = 'text-rose-400 font-semibold';
-                }
-            }
+            } catch (e) { console.warn("Không lấy được giá từ MongoDB:", e); }
 
             screenerResults = screenerData.map(item => {
                 const sym = item.symbol;
@@ -1161,8 +1134,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             }));
             renderCards();
             if (lastUpdateTime) { 
-                const cleanTime = lastUpdateTime.replace(/\s*\(.*?\)\s*/g, '').trim();
-                // document.getElementById('header-last-update').innerText = cleanTime; // Bỏ dòng này vì đã đổi thành status API
+                // const cleanTime = lastUpdateTime.replace(/\s*\(.*?\)\s*/g, '').trim();
             }
             addLog(`Hoàn tất toàn bộ! Đã cập nhật ${updatedCount}/${symbols.length} mã.`, 'success');
             updateProgress(symbols.length, symbols.length);
