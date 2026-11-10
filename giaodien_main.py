@@ -3,20 +3,19 @@
 
 import os
 import sys
-import json
 import traceback
 from datetime import datetime
 
 REQUIRED_FILES = [
     ("giaodien_generate.py",    "File assemble chính"),
-    ("giaodien_auth.py",        "Module auth (login + QR gia hạn)"),
+    ("giaodien_auth.py",        "Module auth (login + Admin/User)"),
     ("giaodien_ui.py",          "CSS/JS base + HTML shell"),
     ("giaodien_screener.py",    "Header + bộ lọc + card"),
     ("giaodien_ai_modal.py",    "Modal AI + DCA simulator"),
     ("giaodien_chart_modal.py", "Modal biểu đồ"),
     ("giaodien_log_console.py", "Khung log nổi"),
     ("giaodien_core_js.py",     "Core JS logic"),
-    ("simulator.py",            "Backtest simulator"),
+    # Đã bỏ simulator.py khỏi danh sách bắt buộc vì chạy ở workflow khác
     ("lightweight-charts.js",   "Thư viện biểu đồ (JS)"),
 ]
 
@@ -50,7 +49,10 @@ def run_pipeline():
     try:
         from giaodien_generate import generate_html
         generate_html()
-        print("\n✅ HOÀN TẤT")
+        
+        # Tính toán thời gian chạy
+        elapsed = (datetime.now() - started_at).total_seconds()
+        print(f"\n✅ HOÀN TẤT TRONG {elapsed:.2f} GIÂY")
     except Exception as e:
         print(f"\n❌ Lỗi render: {e}")
         traceback.print_exc()
