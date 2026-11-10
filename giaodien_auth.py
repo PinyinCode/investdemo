@@ -266,6 +266,16 @@ def build_auth_lite_html(config):
             <div id="adminTabsContent" class="p-5 overflow-y-auto space-y-4 flex-grow hidden">
                 <!-- TAB USERS -->
                 <div id="adminTabUsers" class="overflow-x-auto">
+                    <!-- THANH THỐNG KÊ -->
+                    <div class="mb-3 flex gap-2 text-[11px] font-bold">
+                        <div class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 flex-1 text-center">
+                            <span class="text-slate-400">Tổng User:</span> <span id="admin-stat-user" class="text-emerald-400 ml-1">0</span>
+                        </div>
+                        <div class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 flex-1 text-center">
+                            <span class="text-slate-400">Tổng Admin:</span> <span id="admin-stat-admin" class="text-amber-400 ml-1">0</span>
+                        </div>
+                    </div>
+
                     <div class="mb-3 relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                             <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -278,7 +288,7 @@ def build_auth_lite_html(config):
                            <th class="p-3">Email / Tên</th>
                            <th class="p-3">Hạn sử dụng</th>
                            <th class="p-3">Quyền</th>
-                           <th class="p-3 text-right">Thao tác</th>
+                           <th class="p-3 text-right">Sửa</th>
                           </tr>
                          </thead>
                         <tbody id="admin-users-list" class="divide-y divide-slate-800">
@@ -350,9 +360,8 @@ def build_auth_lite_js(config):
         var selectedPkgId = null;
         var selectedAmount = 0;
         var selectedDays = 30;
-        var currentUserRole = "user"; // Quyền của người đang đăng nhập hiện tại
+        var currentUserRole = "user";
         
-        // HÀM PARSE DATE AN TOÀN
         function parseDate(val) {
             if (!val) return null;
             if (typeof val.toDate === 'function') return val.toDate();
@@ -520,24 +529,41 @@ def build_auth_lite_js(config):
                 var email = user.email.toLowerCase();
                 try {
                     var doc = await db.collection('allowed_users').doc(email).get();
+                    
+                    // Kiểm tra xem email này có nằm trong danh sách SUPER_ADMINS không
+                    var isSuperAdmin = typeof SUPER_ADMINS !== 'undefined' && SUPER_ADMINS.includes(email);
+
                     if (!doc.exists) {
                         var expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + TRIAL_DAYS);
                         await db.collection('allowed_users').doc(email).set({
-                            email: email, role: 'user', expiresAt: expireDate.toISOString()
+                            email: email, 
+                            role: isSuperAdmin ? 'super_admin' : 'user', 
+                            expiresAt: expireDate.toISOString()
                         });
                         updateExpireUI(expireDate);
-                        currentUserRole = "user";
+                        currentUserRole = isSuperAdmin ? 'super_admin' : 'user';
                         return false; 
                     } else {
                         var data = doc.data();
-                        currentUserRole = data.role || "user"; // Lưu lại quyền
+                        var currentRole = data.role || "user";
+                        
+                        // TỰ ĐỘNG ĐỒNG BỘ QUYỀN SUPER ADMIN TỪ BIẾN MÔI TRƯỜNG
+                        if (isSuperAdmin && currentRole !== 'super_admin') {
+                            await db.collection('allowed_users').doc(email).update({ role: 'super_admin' });
+                            currentRole = 'super_admin';
+                        } else if (!isSuperAdmin && currentRole === 'super_admin') {
+                            await db.collection('allowed_users').doc(email).update({ role: 'admin' });
+                            currentRole = 'admin';
+                        }
+                        
+                        currentUserRole = currentRole;
                         var expDateObj = parseDate(data.expiresAt);
                         
                         if (expDateObj) {
                             updateExpireUI(expDateObj);
-                            if (currentUserRole !== 'admin' && currentUserRole !== 'super_admin' && new Date() > expDateObj) {
-                                return true; // Hết hạn
+                            if (currentRole !== 'admin' && currentRole !== 'super_admin' && new Date() > expDateObj) {
+                                return true;
                             }
                         }
                     }
@@ -755,6 +781,17 @@ def build_auth_lite_js(config):
                     return email.includes(keyword) || name.includes(keyword);
                 });
 
+                var totalUsers = 0;
+                var totalAdmins = 0;
+                adminAllUsers.forEach(function(u) {
+                    var r = u.role || 'user';
+                    if (r === 'user') totalUsers++;
+                    else if (r === 'admin' || r === 'super_admin') totalAdmins++;
+                });
+                
+                if(document.getElementById('admin-stat-user')) document.getElementById('admin-stat-user').innerText = totalUsers;
+                if(document.getElementById('admin-stat-admin')) document.getElementById('admin-stat-admin').innerText = totalAdmins;
+
                 listEl.innerHTML = '';
                 if (filtered.length === 0) {
                     listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Không tìm thấy người dùng nào.</td></tr>`;
@@ -776,28 +813,28 @@ def build_auth_lite_js(config):
                     
                     var safeEmail = escapeHTML(data.email || data.id);
                     var role = data.role || 'user';
+                    
                     var roleBadge = '';
-                    if (role === 'super_admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">Super Admin</span>';
+                    if (role === 'super_admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">Super</span>';
                     else if (role === 'admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Admin</span>';
                     else roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300">User</span>';
                     
-                    // Chỉ Super Admin mới được thấy nút đổi quyền
                     var roleBtn = '';
                     if (currentUserRole === 'super_admin' && safeEmail !== window.auth.currentUser.email) {
                         if (role === 'user') {
-                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'admin')" class="ml-2 px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded text-[9px] font-bold border border-amber-500/30 transition">Cấp Admin</button>`;
+                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'admin')" class="ml-1 px-1.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded text-[9px] font-bold border border-amber-500/30 transition" title="Cấp quyền Admin"><i class="fa-solid fa-arrow-up"></i></button>`;
                         } else if (role === 'admin') {
-                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'user')" class="ml-2 px-2 py-1 bg-slate-700/50 hover:bg-slate-700 text-slate-300 rounded text-[9px] font-bold border border-slate-600 transition">Hạ User</button>`;
+                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'user')" class="ml-1 px-1.5 py-1 bg-slate-700/50 hover:bg-slate-700 text-slate-300 rounded text-[9px] font-bold border border-slate-600 transition" title="Thu hồi quyền Admin"><i class="fa-solid fa-arrow-down"></i></button>`;
                         }
                     }
 
                     tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white">${safeEmail}</td>
+                        <td class="p-3 font-semibold text-white truncate max-w-[120px]" title="${safeEmail}">${safeEmail}</td>
                         <td class="p-3 text-slate-300">${dateStr}</td>
-                        <td class="p-3">${roleBadge} ${roleBtn}</td>
+                        <td class="p-3"><div class="flex items-center">${roleBadge} ${roleBtn}</div></td>
                         <td class="p-3 text-right">
-                            <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}')" class="px-2 py-1 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 rounded text-[10px] font-bold border border-indigo-500/30 transition">
-                                <i class="fa-solid fa-pen-to-square"></i> Sửa hạn
+                            <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}')" class="p-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 rounded border border-indigo-500/30 transition" title="Sửa hạn sử dụng">
+                                <i class="fa-solid fa-pen-to-square text-[11px]"></i>
                             </button>
                         </td>
                     `;
@@ -805,7 +842,6 @@ def build_auth_lite_js(config):
                 });
             }
 
-            // HÀM ĐỔI QUYỀN (CHỈ SUPER ADMIN MỚI GỌI ĐƯỢC)
             window.changeRole = async function(email, newRole) {
                 if (currentUserRole !== 'super_admin') return alert("Bạn không có quyền thực hiện thao tác này!");
                 if (!confirm(`Đổi quyền của ${email} thành ${newRole.toUpperCase()}?`)) return;
@@ -880,7 +916,6 @@ def build_auth_lite_js(config):
                 }
             };
 
-            // RENEWALS (DUYỆT GIA HẠN)
             async function loadAdminRenewals() {
                 var listEl = document.getElementById('admin-renewals-list');
                 listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải yêu cầu...</td></tr>`;
