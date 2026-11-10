@@ -20,12 +20,6 @@ CHEAP_STOCKS_FILE = "cheap_stocks.json"
 AUTH_CONFIG_FILE = "auth_config.json"
 PRICE_API_URL = "https://quant-price-api.onrender.com"
 
-# ═══════════════════════════════════════════════════════════════════
-# 👑 DANH SÁCH SUPER ADMIN MẶC ĐỊNH
-# Bạn hãy sửa email ở đây (nếu nhiều người thì cách nhau bằng dấu phẩy)
-# ═══════════════════════════════════════════════════════════════════
-DEFAULT_SUPER_ADMINS = "hoanginvest199@gmail.com"
-
 def get_firebase_config():
     raw = os.environ.get("FIREBASE_CONFIG", "").strip()
     if not raw:
@@ -88,10 +82,10 @@ def generate_html():
     firebase_config = get_firebase_config()
     auth_config = load_auth_config()
 
-    # Lấy danh sách Super Admin: Ưu tiên biến môi trường, nếu không có thì dùng danh sách mặc định
-    super_admins_raw = os.environ.get("SUPER_ADMINS", DEFAULT_SUPER_ADMINS)
+    # Lấy danh sách Super Admin từ biến môi trường (cách nhau bởi dấu phẩy)
+    super_admins_raw = os.environ.get("SUPER_ADMINS", "")
     super_admins_list = [email.strip().lower() for email in super_admins_raw.split(",") if email.strip()]
-    print(f"     👑 Super Admins: {', '.join(super_admins_list) if super_admins_list else 'Chưa cấu hình'}")
+    print(f"     👑 Super Admins: {', '.join(super_admins_list) if super_admins_list else 'Chưa cấu hình (Rỗng)'}")
 
     # 3. Build CSS/HTML/JS
     print("\n🔧 [3/6] Build CSS/HTML/JS các module...")
