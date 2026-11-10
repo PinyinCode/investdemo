@@ -899,7 +899,7 @@
         "symbol": "TCB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 21850.0,
+        "close_price": 22000.0,
         "pe": 8.02,
         "pb": 1.23,
         "ps": 0.0,
@@ -937,13 +937,19 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 9.3%) + PTCB 33/50 + PTKT 12/20 + Định giá 30/30 + Tổng 75đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 7086240414
+        "total_shares": 7086240414,
+        "price_change_percent": 1.85,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 6.45,
+        "amplitude_percent": 1.84
     },
     {
         "symbol": "VPB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 22300.0,
+        "close_price": 22550.0,
         "pe": 7.14,
         "pb": 1.19,
         "ps": 0.0,
@@ -981,7 +987,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 33/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Ngân hàng Thương mại Cổ phần Việt Nam Thịnh Vượng",
         "market_cap": 0.0,
-        "total_shares": 10000000000
+        "total_shares": 10000000000,
+        "price_change_percent": 1.35,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 9.32,
+        "amplitude_percent": 1.57
     },
     {
         "symbol": "SHB",
@@ -1210,7 +1222,7 @@
         "symbol": "BWE",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 42000.0,
+        "close_price": 42800.0,
         "pe": 8.74,
         "pb": 1.4,
         "ps": 0.0,
@@ -1249,7 +1261,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 30/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
         "market_cap": 0.0,
-        "total_shares": 219928644
+        "total_shares": 219928644,
+        "price_change_percent": 0.0,
+        "price_change_available": true,
+        "price_arrow": "—",
+        "price_color": "slate",
+        "volume_percent": 105.8,
+        "amplitude_percent": 2.14
     },
     {
         "symbol": "TCH",
@@ -1615,7 +1633,7 @@
         "symbol": "CTG",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 31650.0,
+        "close_price": 31900.0,
         "pe": 5.78,
         "pb": 1.19,
         "ps": 0.0,
@@ -1653,7 +1671,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 22/50 < 30.",
         "company_name": "Ngân hàng Thương mại Cổ phần Công thương Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 7766944637
+        "total_shares": 7766944637,
+        "price_change_percent": 0.79,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 10.8,
+        "amplitude_percent": 0.94
     },
     {
         "symbol": "SJS",
@@ -1704,7 +1728,7 @@
         "symbol": "MSB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 16200.0,
+        "close_price": 16350.000000000002,
         "pe": 9.74,
         "pb": 1.3,
         "ps": 0.0,
@@ -1742,7 +1766,13 @@
         "final_decision_reason": "Giá 16,200 đã vượt xa fair_high 12,363 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Ngân hàng Thương mại Cổ phần Hàng Hải Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 3744000000
+        "total_shares": 3744000000,
+        "price_change_percent": 0.31,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 8.04,
+        "amplitude_percent": 2.15
     },
     {
         "symbol": "VCB",
