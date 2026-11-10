@@ -1203,4 +1203,5 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     document.getElementById('search-input').addEventListener('input', renderCards);
     document.getElementById('sector-filter').addEventListener('change', renderCards);
     document.getElementById('ranking-filter').addEventListener('change', renderCards);
+    loadData(true);
     """
