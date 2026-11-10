@@ -540,7 +540,7 @@
         "symbol": "HAG",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 13700.0,
+        "close_price": 13750.0,
         "pe": 5.23,
         "pb": 1.09,
         "ps": 0.0,
@@ -579,7 +579,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 48.6%) + PTCB 38/50 + PTKT 12/20 + Định giá 30/30 + Tổng 80đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Hoàng Anh Gia Lai",
         "market_cap": 0.0,
-        "total_shares": 1267467947
+        "total_shares": 1267467947,
+        "price_change_percent": 0.73,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 8.61,
+        "amplitude_percent": 0.73
     },
     {
         "symbol": "FRT",
