@@ -15,7 +15,6 @@ REQUIRED_FILES = [
     ("giaodien_ai_modal.py",    "Modal AI + DCA simulator"),
     ("giaodien_chart_modal.py", "Modal biểu đồ"),
     ("giaodien_log_console.py", "Khung log nổi"),
-    ("giaodien_admin.py",       "Modal admin panel"),
     ("giaodien_core_js.py",     "Core JS logic"),
     ("simulator.py",            "Backtest simulator"),
     ("lightweight-charts.js",   "Thư viện biểu đồ (JS)"),
