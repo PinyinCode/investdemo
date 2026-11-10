@@ -594,30 +594,45 @@ def build_auth_lite_js(config):
                     var email = window.auth.currentUser.email;
                     document.getElementById('modalUserEmail').innerText = email;
                     
-                    var expText = document.getElementById('hiddenExpireDate');
-                    document.getElementById('modalExpireDate').innerText = expText ? expText.innerText : 'Đang tải...';
-
                     var renewBtn = document.querySelector('button[onclick="openUserRenewalModal()"]');
 
                     if (!window.db) throw new Error("Firebase DB chưa sẵn sàng");
+                    
                     var doc = await window.db.collection('allowed_users').doc(email.toLowerCase()).get();
-                    var isAdmin = doc.exists && doc.data().role === 'admin';
                     
-                    var tabsWrapper = document.getElementById('adminTabsWrapper');
-                    var tabsContent = document.getElementById('adminTabsContent');
-                    
-                    if (isAdmin) {
-                        tabsWrapper.classList.remove('hidden');
-                        tabsContent.classList.remove('hidden');
-                        document.getElementById('modalTitle').innerText = "Quản Trị Hệ Thống (Admin)";
-                        if (renewBtn) renewBtn.style.display = 'none';
-                        document.getElementById('modalExpireDate').innerText = "Vô hạn (Admin)";
-                        switchAdminTab('users');
-                    } else {
-                        tabsWrapper.classList.add('hidden');
-                        tabsContent.classList.add('hidden');
-                        document.getElementById('modalTitle').innerText = "Tài khoản của tôi";
-                        if (renewBtn) renewBtn.style.display = 'flex';
+                    if (doc.exists) {
+                        var data = doc.data();
+                        var isAdmin = data.role === 'admin';
+                        
+                        var tabsWrapper = document.getElementById('adminTabsWrapper');
+                        var tabsContent = document.getElementById('adminTabsContent');
+                        
+                        if (isAdmin) {
+                            tabsWrapper.classList.remove('hidden');
+                            tabsContent.classList.remove('hidden');
+                            document.getElementById('modalTitle').innerText = "Quản Trị Hệ Thống (Admin)";
+                            if (renewBtn) renewBtn.style.display = 'none';
+                            document.getElementById('modalExpireDate').innerText = "Vô hạn (Admin)";
+                            switchAdminTab('users');
+                        } else {
+                            tabsWrapper.classList.add('hidden');
+                            tabsContent.classList.add('hidden');
+                            document.getElementById('modalTitle').innerText = "Tài khoản của tôi";
+                            if (renewBtn) renewBtn.style.display = 'flex';
+                            
+                            // XỬ LÝ NGÀY THÁNG AN TOÀN
+                            var expDateText = "Chưa cập nhật";
+                            if (data.expiresAt) {
+                                var d = new Date(data.expiresAt);
+                                if (typeof data.expiresAt.toDate === 'function') {
+                                    d = data.expiresAt.toDate();
+                                }
+                                if (!isNaN(d.getTime())) {
+                                    expDateText = d.toLocaleDateString('vi-VN');
+                                }
+                            }
+                            document.getElementById('modalExpireDate').innerText = expDateText;
+                        }
                     }
                 } catch (e) {
                     console.warn("Lỗi mở modal:", e);
