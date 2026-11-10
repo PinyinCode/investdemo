@@ -113,7 +113,7 @@ def build_admin_js():
         }
     }
 
-    // Hàm mở modal chung (thay thế openAdminModal cũ)
+    // Hàm mở modal chung
     async function openAdminModal() {
         if (!window.auth || !window.auth.currentUser) return;
         
@@ -124,7 +124,10 @@ def build_admin_js():
         document.getElementById('modalUserEmail').innerText = email;
         
         const expText = document.getElementById('hiddenExpireDate');
-        document.getElementById('modalExpireDate').innerText = expText ? expText.innerText : 'Chưa rõ';
+        document.getElementById('modalExpireDate').innerText = expText ? expText.innerText : 'Đang tải...';
+
+        // Lấy thẻ chứa nút Gia hạn (nằm cạnh thông tin email)
+        const renewBtn = document.querySelector('button[onclick="openUserRenewalModal()"]');
 
         // 2. Kiểm tra quyền Admin để hiện Tabs
         try {
@@ -139,11 +142,19 @@ def build_admin_js():
                 tabsWrapper.classList.remove('hidden');
                 tabsContent.classList.remove('hidden');
                 document.getElementById('modalTitle').innerText = "Quản Trị Hệ Thống (Admin)";
+                
+                // ẨN NÚT GIA HẠN VỚI ADMIN VÀ ĐỔI TEXT HẠN DÙNG
+                if (renewBtn) renewBtn.style.display = 'none';
+                document.getElementById('modalExpireDate').innerText = "Vô hạn (Admin)";
+                
                 switchAdminTab('users'); // Load tab users mặc định
             } else {
                 tabsWrapper.classList.add('hidden');
                 tabsContent.classList.add('hidden');
                 document.getElementById('modalTitle').innerText = "Tài khoản của tôi";
+                
+                // HIỆN LẠI NÚT GIA HẠN VỚI USER
+                if (renewBtn) renewBtn.style.display = 'flex';
             }
         } catch (e) {
             console.warn("Không thể check quyền admin", e);
@@ -173,17 +184,46 @@ def build_admin_js():
                 listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
                 return;
             }
+
+            // 1. Chuyển dữ liệu thành mảng để dễ sắp xếp
+            let users = [];
             snapshot.forEach(doc => {
-                const data = doc.data();
-                const expDate = data.expiresAt ? new Date(data.expiresAt) : null;
+                let data = doc.data();
+                data.id = doc.id;
+                users.push(data);
+            });
+
+            // 2. Sắp xếp: Ai có hạn sử dụng xa nhất (lớn nhất) thì lên đầu
+            users.sort((a, b) => {
+                let dateA = a.expiresAt ? new Date(a.expiresAt).getTime() : 0;
+                let dateB = b.expiresAt ? new Date(b.expiresAt).getTime() : 0;
+                return dateB - dateA; // Giảm dần
+            });
+
+            // 3. Render ra bảng
+            users.forEach(data => {
+                let dateStr = '—';
+                if (data.expiresAt) {
+                    let d = new Date(data.expiresAt);
+                    // Kiểm tra nếu ngày hợp lệ thì mới format
+                    if (!isNaN(d.getTime())) {
+                        dateStr = d.toLocaleDateString('vi-VN');
+                    } else {
+                        dateStr = '<span class="text-rose-400 text-[10px]">Lỗi data</span>';
+                    }
+                }
+
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/50 transition";
-                // Áp dụng escapeHTML cho email chống XSS
-                const safeEmail = escapeHTML(data.email || doc.id);
+                
+                // Áp dụng escapeHTML chống XSS
+                const safeEmail = escapeHTML(data.email || data.id);
+                const role = data.role || 'user';
+                
                 tr.innerHTML = `
                     <td class="p-3 font-semibold text-white">${safeEmail}</td>
-                    <td class="p-3 text-slate-300">${expDate ? expDate.toLocaleDateString('vi-VN') : '—'}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
+                    <td class="p-3 text-slate-300">${dateStr}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${role}</span></td>
                 `;
                 listEl.appendChild(tr);
             });
