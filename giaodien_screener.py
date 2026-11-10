@@ -31,9 +31,13 @@ def build_screener_html():
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới giá</span>
                 </button>
                 
-                <!-- NÚT QUẢN LÝ TÀI KHOẢN / ADMIN (Luôn hiển thị) -->
-                <button type="button" onclick="openAdminModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-amber-500/50 text-amber-400 rounded-lg text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-amber-900/20" title="Quản lý tài khoản">
-                    <i class="fa-solid fa-user-shield text-lg"></i>
+                <!-- NÚT QUẢN LÝ TÀI KHOẢN / ADMIN (CÓ AVATAR) -->
+                <button type="button" onclick="openAdminModal()" class="w-9 h-9 rounded-lg bg-slate-800 border border-amber-500/50 flex items-center justify-center overflow-hidden relative group transition hover:border-amber-400 shadow-lg shadow-amber-900/20" title="Quản lý tài khoản">
+                    <!-- Icon mặc định (sẽ bị ẩn đi nếu có avatar) -->
+                    <i class="fa-solid fa-user-shield text-amber-400 text-lg" id="header-user-icon"></i>
+                    
+                    <!-- Thẻ img chứa Avatar (mặc định ẩn) -->
+                    <img id="header-user-avatar" src="" class="w-full h-full object-cover hidden absolute inset-0">
                 </button>
             </div>
         </div>
