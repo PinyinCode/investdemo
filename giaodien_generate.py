@@ -107,28 +107,35 @@ def generate_html():
         .zalo-fab-wrapper {{
             position: fixed; right: 20px; bottom: 80px; z-index: 9999;
             display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+            transition: left 0.3s ease, top 0.3s ease, right 0.3s ease, bottom 0.3s ease;
         }}
         
-        /* Nút tròn nhỏ hơn, có hiệu ứng rung */
         .zalo-fab-btn {{
             width: 54px; height: 54px; border-radius: 50%;
             background: linear-gradient(135deg, #0068ff, #0052cc);
             color: #fff; display: flex; align-items: center; justify-content: center;
-            font-size: 26px; cursor: pointer; border: 3px solid #fff;
+            font-size: 26px; cursor: grab; border: 3px solid #fff;
             box-shadow: 0 6px 20px rgba(0, 104, 255, 0.4);
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             position: relative;
-            /* Hiệu ứng rung (shake) + Phồng (bounce) liên tục */
             animation: zaloShake 3s infinite ease-in-out;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }}
+        
+        .zalo-fab-btn:active {{
+            cursor: grabbing;
+            transform: scale(0.95) !important;
+            animation: none;
         }}
         
         .zalo-fab-btn:hover {{
             transform: scale(1.1) !important;
             box-shadow: 0 10px 28px rgba(0, 104, 255, 0.6);
-            animation: none; /* Dừng rung khi hover để dễ bấm */
+            animation: none;
         }}
         
-        /* Keyframes tạo hiệu ứng rung lắc giật giật */
         @keyframes zaloShake {{
             0%, 100% {{ transform: scale(1) rotate(0); }}
             5%, 15% {{ transform: scale(1.05) rotate(-10deg); }}
@@ -174,7 +181,7 @@ def generate_html():
     </style>
 
     <!-- HTML NÚT ZALO -->
-    <div class="zalo-fab-wrapper">
+    <div class="zalo-fab-wrapper" id="zaloFabWrapper">
         <div class="zalo-popup" id="zaloPopup">
             <div class="zalo-popup-header">
                 <div class="zalo-avatar"><i class="fa-solid fa-headset"></i></div>
@@ -193,15 +200,121 @@ def generate_html():
         </div>
     </div>
 
-    <!-- SCRIPT XỬ LÝ BẤM -->
+    <!-- SCRIPT XỬ LÝ KÉO THẢ VÀ BẤM -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {{
+            var wrapper = document.getElementById('zaloFabWrapper');
             var zaloBtn = document.getElementById('zaloFabBtn');
             var zaloPopup = document.getElementById('zaloPopup');
 
+            // --- HÀM RESET VỀ MẶC ĐỊNH (Góc dưới phải) ---
+            function resetPosition() {{
+                wrapper.style.left = 'auto';
+                wrapper.style.top = 'auto';
+                wrapper.style.right = '20px';
+                // Trên mobile để bottom 20px, trên PC để 80px
+                if (window.innerWidth <= 768) {{
+                    wrapper.style.bottom = '20px';
+                }} else {{
+                    wrapper.style.bottom = '80px';
+                }}
+            }}
+
+            // Gọi reset ngay khi vừa load trang
+            resetPosition();
+
+            // Tự động reset khi xoay màn hình điện thoại hoặc thay đổi kích thước cửa sổ
+            window.addEventListener('resize', function() {{
+                resetPosition();
+            }});
+
+            // --- LOGIC KÉO THẢ ---
+            var isDragging = false;
+            var hasMoved = false;
+            var startX, startY, initialX, initialY;
+
+            function dragStart(e) {{
+                if (e.type === 'mousedown') {{
+                    startX = e.clientX; startY = e.clientY;
+                }} else if (e.type === 'touchstart') {{
+                    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+                }}
+                
+                var rect = wrapper.getBoundingClientRect();
+                initialX = rect.left;
+                initialY = rect.top;
+                isDragging = true;
+                hasMoved = false;
+                
+                // Khi bắt đầu kéo, chuyển from right/bottom sang left/top để dễ tính toán
+                wrapper.style.right = 'auto';
+                wrapper.style.bottom = 'auto';
+                wrapper.style.left = initialX + 'px';
+                wrapper.style.top = initialY + 'px';
+                wrapper.style.transition = 'none';
+                
+                document.addEventListener('mousemove', dragMove);
+                document.addEventListener('touchmove', dragMove, {{ passive: false }});
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchend', dragEnd);
+            }}
+
+            function dragMove(e) {{
+                if (!isDragging) return;
+                var currentX, currentY;
+                
+                if (e.type === 'mousemove') {{
+                    currentX = e.clientX; currentY = e.clientY;
+                }} else if (e.type === 'touchmove') {{
+                    currentX = e.touches[0].clientX; currentY = e.touches[0].clientY;
+                    if (e.cancelable) e.preventDefault(); // Ngăn cuộn trang
+                }}
+
+                var dx = currentX - startX;
+                var dy = currentY - startY;
+
+                if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {{
+                    hasMoved = true;
+                    zaloPopup.classList.remove('show'); // Ẩn popup nếu đang kéo
+                }}
+
+                if (hasMoved) {{
+                    // Giới hạn không cho kéo ra ngoài màn hình
+                    var newX = Math.max(0, Math.min(initialX + dx, window.innerWidth - wrapper.offsetWidth));
+                    var newY = Math.max(0, Math.min(initialY + dy, window.innerHeight - wrapper.offsetHeight));
+                    
+                    wrapper.style.left = newX + 'px';
+                    wrapper.style.top = newY + 'px';
+                }}
+            }}
+
+            function dragEnd(e) {{
+                if (!isDragging) return;
+                isDragging = false;
+                wrapper.style.transition = 'left 0.3s ease, top 0.3s ease, right 0.3s ease, bottom 0.3s ease';
+                
+                document.removeEventListener('mousemove', dragMove);
+                document.removeEventListener('touchmove', dragMove);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchend', dragEnd);
+
+                if (hasMoved) {{
+                    // Chặn sự kiện click giả sau khi kéo
+                    zaloBtn.addEventListener('click', function(e) {{
+                        e.stopPropagation(); e.preventDefault();
+                    }}, {{ once: true, capture: true }});
+                }}
+            }}
+
+            zaloBtn.addEventListener('mousedown', dragStart);
+            zaloBtn.addEventListener('touchstart', dragStart, {{ passive: true }});
+
+            // --- LOGIC BẤM MỞ POPUP ---
             zaloBtn.addEventListener('click', function(e) {{
                 e.stopPropagation();
-                zaloPopup.classList.toggle('show');
+                if (!hasMoved) {{
+                    zaloPopup.classList.toggle('show');
+                }}
             }});
 
             document.addEventListener('click', function(e) {{
