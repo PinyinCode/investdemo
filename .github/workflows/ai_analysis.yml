@@ -1,4 +1,4 @@
-name: 3. Run AI Deep Analysis
+name: 2. Run AI Deep Analysis
 
 on:
   schedule:
