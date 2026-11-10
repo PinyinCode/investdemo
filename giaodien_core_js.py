@@ -55,7 +55,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
 
     window.onAuthReady = async function(user) {
         currentUser = user;
-        window.currentUser = user; // BẮT BUỘC CHO MODULE CHAT
         await loadUserWatchlist(user.uid);
         try {
             const doc = await window.db.collection('allowed_users').doc(user.email.toLowerCase()).get();
@@ -69,7 +68,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
 
     window.onAuthLogout = function() {
         currentUser = null;
-        window.currentUser = null; // BẮT BUỘC CHO MODULE CHAT
         userWatchlist = new Set();
     };
 
@@ -1104,6 +1102,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                                 if (item) { 
                                     item.close_price = price; 
                                     
+                                    // KHÔNG CẬP NHẬT THỜI GIAN NẾU ĐÃ CHỐT SỔ
                                     if (!item.is_locked) {
                                         if (mongoPrices[sym] && mongoPrices[sym].updated_at) {
                                             item.updated_at = mongoPrices[sym].updated_at;
