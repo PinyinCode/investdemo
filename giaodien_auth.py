@@ -251,16 +251,24 @@ def build_auth_lite_html(config):
             <div id="adminTabsContent" class="p-5 overflow-y-auto space-y-4 flex-grow hidden">
                 <!-- TAB USERS -->
                 <div id="adminTabUsers" class="overflow-x-auto">
+                    <!-- Ô TÌM KIẾM ADMIN -->
+                    <div class="mb-3 relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                        </span>
+                        <input type="text" id="admin-search-input" oninput="renderAdminUsersList()" placeholder="Tìm kiếm Email hoặc Tên..." class="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500 transition">
+                    </div>
                     <table class="w-full text-left text-xs">
                         <thead>
                           <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
-                           <th class="p-3">Email</th>
+                           <th class="p-3">Email / Tên</th>
                            <th class="p-3">Hạn sử dụng</th>
                            <th class="p-3">Quyền</th>
+                           <th class="p-3 text-right">Thao tác</th>
                           </tr>
                          </thead>
                         <tbody id="admin-users-list" class="divide-y divide-slate-800">
-                            <tr><td colspan="3" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
+                            <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải danh sách...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -289,6 +297,28 @@ def build_auth_lite_html(config):
                     <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
                 </button>
                 <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SỬA HẠN DÙNG (ADMIN) -->
+    <div id="editExpireModal" class="fixed inset-0 z-[10000000] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-2xl shadow-2xl p-5">
+            <h3 class="text-sm font-bold text-white mb-2">Điều chỉnh hạn sử dụng</h3>
+            <p class="text-xs text-slate-400 mb-4 truncate" id="edit-expire-email">---</p>
+            
+            <label class="block text-[11px] font-bold text-slate-400 mb-1">Chọn ngày hết hạn mới:</label>
+            <input type="date" id="edit-expire-date" class="w-full p-2 mb-4 bg-slate-950 border border-slate-700 rounded-lg text-sm text-emerald-400 font-bold focus:outline-none focus:border-emerald-500 [color-scheme:dark]">
+            
+            <div class="flex gap-2 mb-5">
+                <button onclick="quickAddDays(30)" class="flex-1 py-1 bg-slate-800 hover:bg-slate-700 text-xs text-white rounded border border-slate-600 transition">+30 Ngày</button>
+                <button onclick="quickAddDays(90)" class="flex-1 py-1 bg-slate-800 hover:bg-slate-700 text-xs text-white rounded border border-slate-600 transition">+90 Ngày</button>
+                <button onclick="quickAddDays(365)" class="flex-1 py-1 bg-slate-800 hover:bg-slate-700 text-xs text-white rounded border border-slate-600 transition">+1 Năm</button>
+            </div>
+            
+            <div class="flex justify-end gap-2">
+                <button onclick="closeEditExpireModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Hủy</button>
+                <button id="btn-save-expire" onclick="saveNewExpireDate()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shadow">Lưu thay đổi</button>
             </div>
         </div>
     </div>
@@ -379,7 +409,7 @@ def build_auth_lite_js(config):
                     }
                     
                     var adminList = document.getElementById('admin-users-list');
-                    if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
+                    if (adminList) adminList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
                     
                     var renewal = document.getElementById('renewalModal');
                     if (renewal) renewal.classList.remove('show');
@@ -661,60 +691,159 @@ def build_auth_lite_js(config):
                 });
             }
 
+            // --- BIẾN TOÀN CỤC CHO ADMIN ---
+            var adminAllUsers = []; // Lưu danh sách gốc
+            var editingUserEmail = ""; // Lưu email đang sửa
+
             async function loadAdminUsers() {
                 var listEl = document.getElementById('admin-users-list');
-                listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải danh sách...</td></tr>`;
+                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải danh sách...</td></tr>`;
 
                 try {
                     var snapshot = await window.db.collection('allowed_users').get();
-                    listEl.innerHTML = '';
-                    if (snapshot.empty) {
-                        listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Chưa có người dùng nào.</td></tr>`;
-                        return;
-                    }
-
-                    var users = [];
+                    adminAllUsers = [];
                     snapshot.forEach(function(doc) {
                         var data = doc.data();
                         data.id = doc.id;
-                        users.push(data);
+                        adminAllUsers.push(data);
                     });
 
                     // Sắp xếp ngày giảm dần
-                    users.sort(function(a, b) {
+                    adminAllUsers.sort(function(a, b) {
                         var dateA = parseDate(a.expiresAt) ? parseDate(a.expiresAt).getTime() : 0;
                         var dateB = parseDate(b.expiresAt) ? parseDate(b.expiresAt).getTime() : 0;
                         return dateB - dateA;
                     });
 
-                    users.forEach(function(data) {
-                        var dateStr = '—';
-                        var expDateObj = parseDate(data.expiresAt);
-                        
-                        if (expDateObj) {
-                            dateStr = expDateObj.toLocaleDateString('vi-VN');
-                        } else if (data.expiresAt) {
-                            dateStr = '<span class="text-rose-400 text-[10px]">Lỗi data</span>';
-                        }
+                    // Reset ô tìm kiếm và render
+                    var searchInput = document.getElementById('admin-search-input');
+                    if (searchInput) searchInput.value = '';
+                    renderAdminUsersList();
 
-                        var tr = document.createElement('tr');
-                        tr.className = "hover:bg-slate-800/50 transition";
-                        
-                        var safeEmail = escapeHTML(data.email || data.id);
-                        var role = data.role || 'user';
-                        
-                        tr.innerHTML = `
-                            <td class="p-3 font-semibold text-white">${safeEmail}</td>
-                            <td class="p-3 text-slate-300">${dateStr}</td>
-                            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${role}</span></td>
-                        `;
-                        listEl.appendChild(tr);
-                    });
                 } catch (err) {
-                    listEl.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-rose-400">Không có quyền truy cập.</td></tr>`;
+                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Không có quyền truy cập.</td></tr>`;
                 }
             }
 
+            // Hàm render danh sách (Hỗ trợ tìm kiếm)
+            window.renderAdminUsersList = function() {
+                var listEl = document.getElementById('admin-users-list');
+                var keyword = (document.getElementById('admin-search-input').value || '').toLowerCase().trim();
+                
+                var filtered = adminAllUsers.filter(function(u) {
+                    var email = (u.email || u.id).toLowerCase();
+                    var name = (u.name || u.displayName || '').toLowerCase();
+                    return email.includes(keyword) || name.includes(keyword);
+                });
+
+                listEl.innerHTML = '';
+                if (filtered.length === 0) {
+                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Không tìm thấy người dùng nào.</td></tr>`;
+                    return;
+                }
+
+                filtered.forEach(function(data) {
+                    var dateStr = '—';
+                    var expDateObj = parseDate(data.expiresAt);
+                    
+                    if (expDateObj) {
+                        dateStr = expDateObj.toLocaleDateString('vi-VN');
+                    } else if (data.expiresAt) {
+                        dateStr = '<span class="text-rose-400 text-[10px]">Lỗi data</span>';
+                    }
+
+                    var tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-800/50 transition";
+                    
+                    var safeEmail = escapeHTML(data.email || data.id);
+                    var role = data.role || 'user';
+                    
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-white">${safeEmail}</td>
+                        <td class="p-3 text-slate-300">${dateStr}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${role}</span></td>
+                        <td class="p-3 text-right">
+                            <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}')" class="px-2 py-1 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 rounded text-[10px] font-bold border border-indigo-500/30 transition">
+                                <i class="fa-solid fa-pen-to-square"></i> Sửa hạn
+                            </button>
+                        </td>
+                    `;
+                    listEl.appendChild(tr);
+                });
+            }
+
+            // --- LOGIC SỬA NGÀY ---
+            window.openEditExpireModal = function(email, currentExpireIso) {
+                editingUserEmail = email;
+                document.getElementById('edit-expire-email').innerText = email;
+                
+                var dateInput = document.getElementById('edit-expire-date');
+                var d = parseDate(currentExpireIso);
+                if (d) {
+                    // Chuyển sang định dạng YYYY-MM-DD cho thẻ input
+                    var yyyy = d.getFullYear();
+                    var mm = String(d.getMonth() + 1).padStart(2, '0');
+                    var dd = String(d.getDate()).padStart(2, '0');
+                    dateInput.value = `${yyyy}-${mm}-${dd}`;
+                } else {
+                    dateInput.value = ''; // Xóa trắng nếu lỗi
+                }
+                
+                document.getElementById('editExpireModal').classList.remove('hidden');
+            };
+
+            window.closeEditExpireModal = function() {
+                document.getElementById('editExpireModal').classList.add('hidden');
+                editingUserEmail = "";
+            };
+
+            window.quickAddDays = function(days) {
+                var dateInput = document.getElementById('edit-expire-date');
+                var d = new Date();
+                
+                // Nếu ô input đang có ngày hợp lệ, thì cộng dồn vào ngày đó
+                if (dateInput.value) {
+                    var currentVal = new Date(dateInput.value);
+                    if (!isNaN(currentVal.getTime())) d = currentVal;
+                }
+                
+                d.setDate(d.getDate() + days);
+                
+                var yyyy = d.getFullYear();
+                var mm = String(d.getMonth() + 1).padStart(2, '0');
+                var dd = String(d.getDate()).padStart(2, '0');
+                dateInput.value = `${yyyy}-${mm}-${dd}`;
+            };
+
+            window.saveNewExpireDate = async function() {
+                if (!editingUserEmail) return;
+                var dateVal = document.getElementById('edit-expire-date').value;
+                if (!dateVal) return alert("Vui lòng chọn ngày!");
+
+                var btn = document.getElementById('btn-save-expire');
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang lưu...';
+
+                try {
+                    // Chuyển đổi ngày (thêm giờ 23:59:59 để có hiệu lực đến hết ngày)
+                    var newDate = new Date(dateVal + 'T23:59:59');
+                    var isoString = newDate.toISOString();
+
+                    await window.db.collection('allowed_users').doc(editingUserEmail.toLowerCase()).update({
+                        expiresAt: isoString
+                    });
+
+                    alert('✅ Đã cập nhật hạn sử dụng!');
+                    closeEditExpireModal();
+                    loadAdminUsers(); // Tải lại bảng
+                } catch (e) {
+                    alert('Lỗi lưu ngày: ' + e.message);
+                    btn.disabled = false; btn.innerText = 'Lưu thay đổi';
+                }
+            };
+
+            // ══════════════════════════════════════════════════
+            // RENEWALS (DUYỆT GIA HẠN)
+            // ══════════════════════════════════════════════════
             async function loadAdminRenewals() {
                 var listEl = document.getElementById('admin-renewals-list');
                 listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải yêu cầu...</td></tr>`;
