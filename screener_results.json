@@ -2602,7 +2602,7 @@
         "symbol": "PNJ",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 14300.0,
+        "close_price": 14700.0,
         "pe": 4.3,
         "pb": 0.55,
         "ps": 0.0,
@@ -2641,7 +2641,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
         "market_cap": 0.0,
-        "total_shares": 511891518
+        "total_shares": 511891518,
+        "price_change_percent": 3.52,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 15.8,
+        "amplitude_percent": 10.42
     },
     {
         "symbol": "VHC",
