@@ -26,11 +26,14 @@ def build_screener_html():
                 </div>
             </div>
             <div class="flex items-center gap-2">
+                <!-- Nút Làm mới giá -->
                 <button type="button" onclick="refreshPrices()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 text-white rounded-lg text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-600/20" title="Cập nhật toàn bộ giá realtime">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i> <span class="hidden md:inline">Làm mới giá</span>
                 </button>
-                <button type="button" id="btn-admin-panel" onclick="openAdminModal()" class="px-3 py-2 bg-amber-600/20 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold transition hidden items-center gap-1.5">
-                    <i class="fa-solid fa-user-shield"></i> <span class="hidden md:inline">Admin</span>
+                
+                <!-- NÚT QUẢN LÝ TÀI KHOẢN / ADMIN (Luôn hiển thị) -->
+                <button type="button" onclick="openAdminModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-amber-500/50 text-amber-400 rounded-lg text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-amber-900/20" title="Quản lý tài khoản">
+                    <i class="fa-solid fa-user-shield text-lg"></i>
                 </button>
             </div>
         </div>
