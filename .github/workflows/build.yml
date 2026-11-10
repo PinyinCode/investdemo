@@ -5,13 +5,11 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
-# Cấp quyền cho GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Tự động hủy các luồng cũ đang chạy dở để nhường chỗ cho luồng mới nhất
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -37,7 +35,9 @@ jobs:
       - name: Build HTML
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-          SUPER_ADMINS: ${{ secrets.SUPER_ADMINS }} # <-- ĐÃ THÊM DÒNG NÀY
+          SUPER_ADMINS: ${{ secrets.SUPER_ADMINS }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}   # <-- THÊM DÒNG NÀY
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}       # <-- THÊM DÒNG NÀY
         run: |
           echo "🚀 Bắt đầu build..."
           if [ -z "$FIREBASE_CONFIG" ]; then
@@ -45,10 +45,8 @@ jobs:
             exit 1
           fi
           
-          if [ -z "$SUPER_ADMINS" ]; then
-            echo "⚠️ CẢNH BÁO: Chưa cài đặt secret SUPER_ADMINS. Sẽ không có ai là Super Admin."
-          else
-            echo "👑 Đã nhận diện Super Admin: $SUPER_ADMINS"
+          if [ -z "$TELEGRAM_BOT_TOKEN" ]; then
+            echo "⚠️ CẢNH BÁO: Chưa cài đặt secret TELEGRAM_BOT_TOKEN."
           fi
           
           python giaodien_main.py
@@ -56,24 +54,16 @@ jobs:
 
       - name: Prepare for Pages
         run: |
-          # Tạo thư mục _site để chứa các file cần deploy
           mkdir -p _site
-          
-          # Copy file HTML chính
           cp index.html _site/
-          
-          # Copy các file dữ liệu JSON, JS, CSS nếu có
           for f in data.json screener_results.json cheap_stocks.json \
                    symbol_sim_rates.json quarterly_mean_details.json \
                    last_update.json lightweight-charts.js vn100_full_info.json; do
             [ -f "$f" ] && cp "$f" _site/
           done
-          
-          # Copy thư mục history (chứa dữ liệu biểu đồ)
           if [ -d "history" ]; then
             cp -r history _site/
           fi
-          
           echo "📁 Danh sách file chuẩn bị deploy:"
           ls -la _site/
 
