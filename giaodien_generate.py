@@ -108,27 +108,35 @@ def generate_html():
             position: fixed; right: 20px; bottom: 80px; z-index: 9999;
             display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
         }}
+        
+        /* Nút tròn nhỏ hơn, có hiệu ứng rung */
         .zalo-fab-btn {{
-            width: 60px; height: 60px; border-radius: 50%;
+            width: 54px; height: 54px; border-radius: 50%;
             background: linear-gradient(135deg, #0068ff, #0052cc);
             color: #fff; display: flex; align-items: center; justify-content: center;
-            font-size: 32px; cursor: pointer; border: 3px solid #fff;
-            box-shadow: 0 8px 24px rgba(0, 104, 255, 0.4);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 26px; cursor: pointer; border: 3px solid #fff;
+            box-shadow: 0 6px 20px rgba(0, 104, 255, 0.4);
+            transition: all 0.3s ease;
             position: relative;
+            /* Hiệu ứng rung (shake) + Phồng (bounce) liên tục */
+            animation: zaloShake 3s infinite ease-in-out;
         }}
+        
         .zalo-fab-btn:hover {{
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 12px 32px rgba(0, 104, 255, 0.6);
+            transform: scale(1.1) !important;
+            box-shadow: 0 10px 28px rgba(0, 104, 255, 0.6);
+            animation: none; /* Dừng rung khi hover để dễ bấm */
         }}
-        .zalo-fab-btn::after {{
-            content: ''; position: absolute; inset: -4px; border-radius: 50%;
-            border: 2px solid rgba(0, 104, 255, 0.4); opacity: 0;
-            animation: zaloPulse 2s infinite;
-        }}
-        @keyframes zaloPulse {{
-            0% {{ transform: scale(1); opacity: 1; }}
-            100% {{ transform: scale(1.4); opacity: 0; }}
+        
+        /* Keyframes tạo hiệu ứng rung lắc giật giật */
+        @keyframes zaloShake {{
+            0%, 100% {{ transform: scale(1) rotate(0); }}
+            5%, 15% {{ transform: scale(1.05) rotate(-10deg); }}
+            10%, 20% {{ transform: scale(1.05) rotate(10deg); }}
+            25% {{ transform: scale(1.02) rotate(-5deg); }}
+            30% {{ transform: scale(1) rotate(0); }}
+            50% {{ transform: scale(1.08) rotate(0); }}
+            70% {{ transform: scale(1) rotate(0); }}
         }}
 
         .zalo-popup {{
@@ -160,7 +168,7 @@ def generate_html():
         
         @media (max-width: 768px) {{
             .zalo-fab-wrapper {{ bottom: 20px; right: 20px; }}
-            .zalo-fab-btn {{ width: 54px; height: 54px; font-size: 28px; }}
+            .zalo-fab-btn {{ width: 48px; height: 48px; font-size: 22px; border-width: 2px; }}
             .zalo-popup {{ width: 240px; }}
         }}
     </style>
@@ -192,11 +200,10 @@ def generate_html():
             var zaloPopup = document.getElementById('zaloPopup');
 
             zaloBtn.addEventListener('click', function(e) {{
-                e.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
+                e.stopPropagation();
                 zaloPopup.classList.toggle('show');
             }});
 
-            // Bấm ra ngoài thì tự động đóng bảng thông tin
             document.addEventListener('click', function(e) {{
                 if (zaloPopup.classList.contains('show') && !zaloPopup.contains(e.target) && e.target !== zaloBtn) {{
                     zaloPopup.classList.remove('show');
