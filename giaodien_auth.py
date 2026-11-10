@@ -234,7 +234,7 @@ def build_auth_lite_html(config):
                 <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
                 <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng các tính năng phân tích và lọc cổ phiếu AI.</p>
                 
-                <div style="text-align:left; margin-bottom:10px; font-weight:bold; color:#94a3b8; font-size:0.8rem;">CHỌN GÓI GIA HẠN:</div>
+                <div id="packageTitle" style="text-align:left; margin-bottom:10px; font-weight:bold; color:#94a3b8; font-size:0.8rem;">CHỌN GÓI GIA HẠN:</div>
                 <div style="max-height:200px; overflow-y:auto; padding-right:5px;" id="packageList">{packages_html}</div>
                 
                 <div id="qrCodeWrap" style="display:none; margin-top:1rem;">
@@ -726,7 +726,10 @@ def build_auth_lite_js(config):
             async function checkMyPendingRequest() {
                 if (!auth.currentUser) return;
                 var pendingBox = document.getElementById('pendingRequestBox');
-                var optionsBox = document.getElementById('renewalOptionsBox');
+                var pkgList = document.getElementById('packageList');
+                var qrWrap = document.getElementById('qrCodeWrap');
+                var btnConfirm = document.getElementById('btnConfirmPay');
+                var titleEl = document.getElementById('packageTitle');
                 
                 try {
                     var snap = await db.collection('renewal_requests')
@@ -735,15 +738,38 @@ def build_auth_lite_js(config):
                         .get();
                         
                     if (!snap.empty) {
-                        // Có lệnh đang chờ -> Hiện box thông báo, ẩn phần chọn gói
-                        if (pendingBox) pendingBox.classList.remove('hidden');
-                        if (optionsBox) optionsBox.classList.add('hidden');
+                        var reqData = snap.docs[0].data();
                         window.myPendingReqId = snap.docs[0].id;
+                        
+                        // 1. Hiện box thông báo chờ
+                        if (pendingBox) pendingBox.classList.remove('hidden');
+                        
+                        // 2. Ẩn danh sách gói và nút xác nhận
+                        if (pkgList) pkgList.classList.add('hidden');
+                        if (btnConfirm) btnConfirm.style.display = 'none';
+                        
+                        // 3. HIỂN THỊ LẠI MÃ QR VÀ THÔNG TIN CỦA LỆNH ĐANG CHỜ
+                        if (qrWrap) {
+                            qrWrap.style.display = 'block';
+                            document.getElementById('payAmount').innerText = reqData.amount.toLocaleString('vi-VN') + ' VNĐ';
+                            document.getElementById('payCode').innerText = reqData.code;
+                            
+                            var qrUrl = `https://img.vietqr.io/image/${BANK_CONFIG.bank_id}-${BANK_CONFIG.account_no}-compact2.png?amount=${reqData.amount}&addInfo=${reqData.code}&accountName=${encodeURIComponent(BANK_CONFIG.account_name)}`;
+                            document.getElementById('qrImage').src = qrUrl;
+                        }
+                        
+                        // 4. Đổi tiêu đề để user biết đây là gói đã chọn
+                        if (titleEl) titleEl.innerHTML = `GÓI ĐÃ CHỌN: <span class="text-emerald-400">${reqData.packageId.toUpperCase()}</span>`;
+
                     } else {
-                        // Không có lệnh -> Hiện bình thường
+                        // Không có lệnh -> Reset giao diện về bình thường
                         if (pendingBox) pendingBox.classList.add('hidden');
-                        if (optionsBox) optionsBox.classList.remove('hidden');
+                        if (pkgList) pkgList.classList.remove('hidden');
+                        if (qrWrap) qrWrap.style.display = 'none';
+                        if (btnConfirm) btnConfirm.style.display = 'none';
                         window.myPendingReqId = null;
+                        
+                        if (titleEl) titleEl.innerHTML = `CHỌN GÓI GIA HẠN:`;
                     }
                 } catch(e) { console.warn('Lỗi check pending:', e); }
             }
