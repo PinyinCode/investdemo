@@ -13,7 +13,8 @@ from giaodien_log_console import build_log_console_html
 
 from giaodien_auth import build_auth_lite_css, build_auth_lite_html, build_auth_lite_js
 from giaodien_core_js import build_core_js
-from simulator import run_complex_backtest_simulation
+# Đã xóa import simulator vì không chạy ở bước này nữa
+# from simulator import run_complex_backtest_simulation
 
 OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
@@ -65,10 +66,10 @@ def generate_html():
     print("🚀 GIAODIEN_GENERATE — ASSEMBLE PIPELINE")
     print("=" * 60)
 
-    # 1. Chạy simulator
-    print("\n📊 [1/6] Chạy simulator backtest...")
-    run_complex_backtest_simulation()
-    print("     ✅ Đã tính xong lãi suất lịch sử cho các mã.")
+    # 1. Bỏ qua simulator (đã được chạy ở workflow khác)
+    print("\n📊 [1/6] Bỏ qua simulator, sử dụng dữ liệu JSON có sẵn...")
+    # run_complex_backtest_simulation()
+    print("     ✅ Sẵn sàng đọc dữ liệu từ file.")
 
     # 2. Đọc data
     print("\n📂 [2/6] Đọc data...")
