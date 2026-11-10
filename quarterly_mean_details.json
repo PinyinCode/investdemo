@@ -91,11 +91,11 @@
         "end_price_mean": 11.02
     },
     "CII": {
-        "annual_rate_percent": -12.66,
+        "annual_rate_percent": -12.67,
         "start_quarter": "2021Q4",
         "start_price_mean": 25.21,
         "end_quarter": "2026Q4",
-        "end_price_mean": 13.01
+        "end_price_mean": 13.0
     },
     "CMG": {
         "annual_rate_percent": -6.36,
@@ -116,7 +116,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 55.58,
         "end_quarter": "2026Q4",
-        "end_price_mean": 64.47
+        "end_price_mean": 64.46
     },
     "CTG": {
         "annual_rate_percent": 9.18,
@@ -249,7 +249,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 66.4,
         "end_quarter": "2026Q4",
-        "end_price_mean": 77.57
+        "end_price_mean": 77.55
     },
     "GEE": {
         "annual_rate_percent": 38.75,
@@ -322,7 +322,7 @@
         "end_price_mean": 9.3
     },
     "HPG": {
-        "annual_rate_percent": -3.46,
+        "annual_rate_percent": -3.47,
         "start_quarter": "2021Q4",
         "start_price_mean": 24.72,
         "end_quarter": "2026Q4",
@@ -441,11 +441,11 @@
         "end_price_mean": 32.98
     },
     "MSN": {
-        "annual_rate_percent": -11.32,
+        "annual_rate_percent": -11.31,
         "start_quarter": "2021Q4",
         "start_price_mean": 130.0,
         "end_quarter": "2026Q4",
-        "end_price_mean": 72.26
+        "end_price_mean": 72.29
     },
     "MWG": {
         "annual_rate_percent": 3.22,
@@ -637,7 +637,7 @@
         "end_price_mean": 16.01
     },
     "SSI": {
-        "annual_rate_percent": -4.37,
+        "annual_rate_percent": -4.36,
         "start_quarter": "2021Q4",
         "start_price_mean": 24.48,
         "end_quarter": "2026Q4",
@@ -732,7 +732,7 @@
         "start_quarter": "2021Q4",
         "start_price_mean": 29.7,
         "end_quarter": "2026Q4",
-        "end_price_mean": 19.14
+        "end_price_mean": 19.13
     },
     "VCK": {
         "annual_rate_percent": -15.79,
