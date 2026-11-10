@@ -12,7 +12,7 @@ def build_auth_lite_css():
             top: 0 !important; left: 0 !important;
             width: 100vw !important; 
             height: 100vh !important; 
-            height: 100dvh !important; /* Fix lỗi thanh địa chỉ mobile */
+            height: 100dvh !important; 
             z-index: 99999999 !important; 
             background: #0f172a !important; 
             display: flex !important; 
@@ -29,14 +29,14 @@ def build_auth_lite_css():
             opacity: 0 !important;
             visibility: hidden !important;
             pointer-events: none !important;
-            display: none !important; /* Xóa hẳn khỏi DOM */
+            display: none !important; 
         }
 
-        /* 2. KHÓA CỨNG BODY (LAYER 2) - CHẶN CUỘN TRANG WEB BÊN DƯỚI */
+        /* 2. KHÓA CỨNG BODY (LAYER 2) */
         body.auth-locked {
             overflow: hidden !important;
             height: 100vh !important;
-            touch-action: none !important; /* Chặn vuốt cảm ứng trên Mobile */
+            touch-action: none !important; 
             position: fixed !important;
             width: 100% !important;
         }
@@ -107,9 +107,17 @@ def build_auth_lite_css():
         .auth-msg.error { background: rgba(244,63,94,.12); color: #fda4af; border: 1px solid rgba(244,63,94,.25); }
         .auth-msg.success { background: rgba(16,185,129,.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,.25); }
 
-        /* MODAL GIA HẠN */
-        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; overflow-y: auto; }
+        /* 4. MODAL GIA HẠN (VÁ LỖ HỔNG BẰNG NỀN ĐEN ĐẶC) */
+        #renewalModal { 
+            position: fixed; inset: 0; z-index: 10000001; 
+            background: #0f172a !important; 
+            backdrop-filter: blur(12px);
+            display: none; align-items: center; justify-content: center; 
+            padding: 1rem; font-family: system-ui, -apple-system, sans-serif; 
+            overflow-y: auto; 
+        }
         #renewalModal.show { display: flex; }
+        
         .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); margin: auto; max-height: 95vh; overflow-y: auto; }
         .renewal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(244,63,94,0.15); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; border: 2px solid rgba(244,63,94,0.3); }
         .package-item { border: 1px solid #475569; border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; text-align: left; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; background: #0f172a; }
@@ -187,11 +195,22 @@ def build_auth_lite_html(config):
     <div id="renewalModal">
         <div class="renewal-box">
             <button class="auth-close" onclick="closeUserRenewalModal()" title="Đóng" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
-            <div class="renewal-icon"><i class="fa-solid fa-clock"></i></div>
+            
+            <div class="flex flex-col items-center justify-center mb-4">
+                <div class="bg-emerald-600 text-white p-3 rounded-xl shadow-lg shadow-emerald-500/30 mb-2">
+                    <i class="fa-solid fa-scale-balanced text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-black text-white tracking-wide">PRO QUANT SCREENER</h3>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Hệ thống Đầu tư Chứng khoán</p>
+            </div>
+
+            <div class="renewal-icon mx-auto"><i class="fa-solid fa-clock"></i></div>
             <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
-            <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng hệ thống.</p>
+            <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng các tính năng phân tích và lọc cổ phiếu AI.</p>
+            
             <div style="text-align:left; margin-bottom:10px; font-weight:bold; color:#94a3b8; font-size:0.8rem;">CHỌN GÓI GIA HẠN:</div>
             <div style="max-height:200px; overflow-y:auto; padding-right:5px;" id="packageList">{packages_html}</div>
+            
             <div id="qrCodeWrap" style="display:none; margin-top:1rem;">
                 <img id="qrImage" src="" style="width:200px; height:200px; margin:0 auto 10px; border-radius:12px; border:2px solid #334155; background:#fff; padding: 5px;">
                 <div class="bank-info">
@@ -201,7 +220,7 @@ def build_auth_lite_html(config):
                     <div class="bank-row"><span>Số tiền:</span> <span id="payAmount" class="code-highlight">0 VNĐ</span></div>
                     <div class="bank-row"><span>Nội dung:</span> <span id="payCode" class="code-highlight">---</span></div>
                 </div>
-                <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung.</p>
+                <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung để hệ thống tự động duyệt.</p>
             </div>
             <div style="display:flex; gap:10px; margin-top:1rem;">
                 <button class="auth-btn" id="btnConfirmPay" style="display:none; background:#10b981;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
@@ -215,7 +234,6 @@ def build_auth_lite_html(config):
     <div id="admin-modal" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             
-            <!-- HEADER MODAL -->
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
                 <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-circle-user text-emerald-400 text-lg"></i>
@@ -226,7 +244,6 @@ def build_auth_lite_html(config):
                 </button>
             </div>
 
-            <!-- THÔNG TIN USER -->
             <div class="p-5 bg-slate-800/50 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
                     <div class="text-[11px] text-slate-400 mb-1 uppercase tracking-wider font-semibold">Email đăng nhập</div>
@@ -241,17 +258,14 @@ def build_auth_lite_html(config):
                 </button>
             </div>
 
-            <!-- TABS (ADMIN ONLY) -->
             <div id="adminTabsWrapper" class="flex border-b border-slate-800 bg-slate-950 px-5 gap-4 hidden">
                 <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition">Quản lý Người dùng</button>
                 <button onclick="switchAdminTab('renewals')" id="tabBtnRenewals" class="py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition">Duyệt Gia hạn (<span id="pendingCount">0</span>)</button>
             </div>
 
-            <!-- NỘI DUNG TABS -->
             <div id="adminTabsContent" class="p-5 overflow-y-auto space-y-4 flex-grow hidden">
                 <!-- TAB USERS -->
                 <div id="adminTabUsers" class="overflow-x-auto">
-                    <!-- Ô TÌM KIẾM ADMIN -->
                     <div class="mb-3 relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                             <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -291,7 +305,6 @@ def build_auth_lite_html(config):
                 </div>
             </div>
 
-            <!-- FOOTER MODAL -->
             <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center mt-auto">
                 <button type="button" onclick="triggerSignOut()" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
                     <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
@@ -337,16 +350,17 @@ def build_auth_lite_js(config):
         var selectedPkgId = null;
         var selectedAmount = 0;
         var selectedDays = 30;
+        var currentUserRole = "user"; // Quyền của người đang đăng nhập hiện tại
         
-        // HÀM PARSE DATE AN TOÀN (Xử lý mọi định dạng ngày tháng)
+        // HÀM PARSE DATE AN TOÀN
         function parseDate(val) {
             if (!val) return null;
-            if (typeof val.toDate === 'function') return val.toDate(); // Firebase Timestamp
+            if (typeof val.toDate === 'function') return val.toDate();
             if (typeof val === 'object' && val.seconds !== undefined) {
-                return new Date(val.seconds * 1000); // Object thô của Firestore
+                return new Date(val.seconds * 1000);
             }
             var d = new Date(val);
-            return isNaN(d.getTime()) ? null : d; // Chuỗi ISO
+            return isNaN(d.getTime()) ? null : d;
         }
         
         function waitAuth(cb) {
@@ -357,7 +371,6 @@ def build_auth_lite_js(config):
             }, 200);
         }
 
-        // ĐĂNG XUẤT
         window.triggerSignOut = async function() {
             window.scrollTo(0, 0);
             var adminModal = document.getElementById('admin-modal');
@@ -375,49 +388,58 @@ def build_auth_lite_js(config):
             var auth = window.auth;
             var db = window.db;
 
-            // XỬ LÝ LỚP (LAYER) ĐĂNG NHẬP
             auth.onAuthStateChanged(async function(user) {
                 var authOverlay = document.getElementById('authOverlay');
                 var adminModal = document.getElementById('admin-modal');
+                var renewalModal = document.getElementById('renewalModal');
                 
                 if (user) {
-                    // ĐÃ ĐĂNG NHẬP: MỞ KHÓA BODY, ẨN MODAL
-                    document.body.classList.remove('auth-locked'); 
-                    if (authOverlay) {
-                        authOverlay.classList.add('hidden');
-                        authOverlay.style.display = 'none'; 
-                    }
-                    if (adminModal) {
-                        adminModal.classList.add('hidden');
-                        adminModal.style.display = 'none';
-                    }
+                    var isExpired = await checkUserPermission(user);
                     
-                    await checkUserPermission(user);
-                    if (typeof window.onAuthReady === 'function') {
-                        try { await window.onAuthReady(user); } catch(e) { console.warn(e); }
+                    if (isExpired) {
+                        if (authOverlay) {
+                            authOverlay.classList.remove('hidden');
+                            authOverlay.style.display = 'flex';
+                            authOverlay.style.opacity = '0.3';
+                        }
+                        document.body.classList.add('auth-locked');
+                        if (renewalModal) renewalModal.classList.add('show');
+                        if (adminModal) adminModal.classList.add('hidden');
+                    } else {
+                        document.body.classList.remove('auth-locked'); 
+                        if (authOverlay) {
+                            authOverlay.classList.add('hidden');
+                            authOverlay.style.display = 'none'; 
+                        }
+                        if (adminModal) {
+                            adminModal.classList.add('hidden');
+                            adminModal.style.display = 'none';
+                        }
+                        
+                        if (typeof window.onAuthReady === 'function') {
+                            try { await window.onAuthReady(user); } catch(e) { console.warn(e); }
+                        }
                     }
                 } else {
-                    // CHƯA ĐĂNG NHẬP: KHÓA BODY, HIỆN MODAL
+                    currentUserRole = "user";
                     document.body.classList.add('auth-locked');
                     if (authOverlay) {
                         authOverlay.classList.remove('hidden');
                         authOverlay.style.display = 'flex'; 
+                        authOverlay.style.opacity = '1';
                     }
                     if (adminModal) {
                         adminModal.classList.add('hidden');
                         adminModal.style.display = 'none';
                     }
+                    if (renewalModal) renewalModal.classList.remove('show');
                     
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
-                    
-                    var renewal = document.getElementById('renewalModal');
-                    if (renewal) renewal.classList.remove('show');
                     selectedPkgId = null;
                 }
             });
 
-            // SỰ KIỆN ĐĂNG NHẬP
             document.getElementById('btnGoogleLogin').addEventListener('click', async function() {
                 var provider = new firebase.auth.GoogleAuthProvider();
                 try {
@@ -505,25 +527,22 @@ def build_auth_lite_js(config):
                             email: email, role: 'user', expiresAt: expireDate.toISOString()
                         });
                         updateExpireUI(expireDate);
+                        currentUserRole = "user";
+                        return false; 
                     } else {
                         var data = doc.data();
+                        currentUserRole = data.role || "user"; // Lưu lại quyền
                         var expDateObj = parseDate(data.expiresAt);
                         
                         if (expDateObj) {
                             updateExpireUI(expDateObj);
-                            
-                            // Kiểm tra hết hạn chính xác
-                            if (data.role !== 'admin' && new Date() > expDateObj) {
-                                document.getElementById('renewalModal').classList.add('show');
-                                var authOverlay = document.getElementById('authOverlay');
-                                if (authOverlay) authOverlay.classList.add('hidden');
-                            } else {
-                                var renewal = document.getElementById('renewalModal');
-                                if (renewal) renewal.classList.remove('show');
+                            if (currentUserRole !== 'admin' && currentUserRole !== 'super_admin' && new Date() > expDateObj) {
+                                return true; // Hết hạn
                             }
                         }
                     }
                 } catch(e) { console.warn('Lỗi check quyền:', e); }
+                return false;
             }
 
             function updateExpireUI(expDate) {
@@ -531,7 +550,6 @@ def build_auth_lite_js(config):
                 if (txt) txt.innerText = expDate.toLocaleDateString('vi-VN');
             }
 
-            // GIA HẠN
             window.openUserRenewalModal = function() {
                 var renewal = document.getElementById('renewalModal');
                 if (renewal) {
@@ -603,7 +621,7 @@ def build_auth_lite_js(config):
             };
 
             // ══════════════════════════════════════════════════
-            // ADMIN PANEL JS (GỘP CHUNG)
+            // ADMIN PANEL JS
             // ══════════════════════════════════════════════════
             
             window.switchAdminTab = function(tab) {
@@ -645,7 +663,8 @@ def build_auth_lite_js(config):
                     
                     if (doc.exists) {
                         var data = doc.data();
-                        var isAdmin = data.role === 'admin';
+                        var role = data.role || 'user';
+                        var isAdmin = (role === 'admin' || role === 'super_admin');
                         
                         var tabsWrapper = document.getElementById('adminTabsWrapper');
                         var tabsContent = document.getElementById('adminTabsContent');
@@ -653,9 +672,14 @@ def build_auth_lite_js(config):
                         if (isAdmin) {
                             tabsWrapper.classList.remove('hidden');
                             tabsContent.classList.remove('hidden');
-                            document.getElementById('modalTitle').innerText = "Quản Trị Hệ Thống (Admin)";
+                            
+                            var titleStr = "Quản Trị Hệ Thống";
+                            if (role === 'super_admin') titleStr = "Super Admin (Toàn quyền)";
+                            else if (role === 'admin') titleStr = "Quản Trị Viên (Admin)";
+                            
+                            document.getElementById('modalTitle').innerText = titleStr;
                             if (renewBtn) renewBtn.style.display = 'none';
-                            document.getElementById('modalExpireDate').innerText = "Vô hạn (Admin)";
+                            document.getElementById('modalExpireDate').innerText = "Vô hạn (" + role + ")";
                             switchAdminTab('users');
                         } else {
                             tabsWrapper.classList.add('hidden');
@@ -663,7 +687,6 @@ def build_auth_lite_js(config):
                             document.getElementById('modalTitle').innerText = "Tài khoản của tôi";
                             if (renewBtn) renewBtn.style.display = 'flex';
                             
-                            // XỬ LÝ NGÀY THÁNG AN TOÀN
                             var expDateObj = parseDate(data.expiresAt);
                             document.getElementById('modalExpireDate').innerText = expDateObj ? expDateObj.toLocaleDateString('vi-VN') : 'Chưa cập nhật';
                         }
@@ -691,9 +714,8 @@ def build_auth_lite_js(config):
                 });
             }
 
-            // --- BIẾN TOÀN CỤC CHO ADMIN ---
-            var adminAllUsers = []; // Lưu danh sách gốc
-            var editingUserEmail = ""; // Lưu email đang sửa
+            var adminAllUsers = []; 
+            var editingUserEmail = ""; 
 
             async function loadAdminUsers() {
                 var listEl = document.getElementById('admin-users-list');
@@ -708,14 +730,12 @@ def build_auth_lite_js(config):
                         adminAllUsers.push(data);
                     });
 
-                    // Sắp xếp ngày giảm dần
                     adminAllUsers.sort(function(a, b) {
                         var dateA = parseDate(a.expiresAt) ? parseDate(a.expiresAt).getTime() : 0;
                         var dateB = parseDate(b.expiresAt) ? parseDate(b.expiresAt).getTime() : 0;
                         return dateB - dateA;
                     });
 
-                    // Reset ô tìm kiếm và render
                     var searchInput = document.getElementById('admin-search-input');
                     if (searchInput) searchInput.value = '';
                     renderAdminUsersList();
@@ -725,7 +745,6 @@ def build_auth_lite_js(config):
                 }
             }
 
-            // Hàm render danh sách (Hỗ trợ tìm kiếm)
             window.renderAdminUsersList = function() {
                 var listEl = document.getElementById('admin-users-list');
                 var keyword = (document.getElementById('admin-search-input').value || '').toLowerCase().trim();
@@ -757,11 +776,25 @@ def build_auth_lite_js(config):
                     
                     var safeEmail = escapeHTML(data.email || data.id);
                     var role = data.role || 'user';
+                    var roleBadge = '';
+                    if (role === 'super_admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">Super Admin</span>';
+                    else if (role === 'admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Admin</span>';
+                    else roleBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300">User</span>';
                     
+                    // Chỉ Super Admin mới được thấy nút đổi quyền
+                    var roleBtn = '';
+                    if (currentUserRole === 'super_admin' && safeEmail !== window.auth.currentUser.email) {
+                        if (role === 'user') {
+                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'admin')" class="ml-2 px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded text-[9px] font-bold border border-amber-500/30 transition">Cấp Admin</button>`;
+                        } else if (role === 'admin') {
+                            roleBtn = `<button onclick="changeRole('${safeEmail}', 'user')" class="ml-2 px-2 py-1 bg-slate-700/50 hover:bg-slate-700 text-slate-300 rounded text-[9px] font-bold border border-slate-600 transition">Hạ User</button>`;
+                        }
+                    }
+
                     tr.innerHTML = `
                         <td class="p-3 font-semibold text-white">${safeEmail}</td>
                         <td class="p-3 text-slate-300">${dateStr}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${role}</span></td>
+                        <td class="p-3">${roleBadge} ${roleBtn}</td>
                         <td class="p-3 text-right">
                             <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}')" class="px-2 py-1 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 rounded text-[10px] font-bold border border-indigo-500/30 transition">
                                 <i class="fa-solid fa-pen-to-square"></i> Sửa hạn
@@ -772,7 +805,19 @@ def build_auth_lite_js(config):
                 });
             }
 
-            // --- LOGIC SỬA NGÀY ---
+            // HÀM ĐỔI QUYỀN (CHỈ SUPER ADMIN MỚI GỌI ĐƯỢC)
+            window.changeRole = async function(email, newRole) {
+                if (currentUserRole !== 'super_admin') return alert("Bạn không có quyền thực hiện thao tác này!");
+                if (!confirm(`Đổi quyền của ${email} thành ${newRole.toUpperCase()}?`)) return;
+                try {
+                    await window.db.collection('allowed_users').doc(email.toLowerCase()).update({ role: newRole });
+                    alert(`✅ Đã đổi quyền thành ${newRole.toUpperCase()}`);
+                    loadAdminUsers();
+                } catch(e) {
+                    alert("Lỗi đổi quyền: " + e.message);
+                }
+            };
+
             window.openEditExpireModal = function(email, currentExpireIso) {
                 editingUserEmail = email;
                 document.getElementById('edit-expire-email').innerText = email;
@@ -780,13 +825,12 @@ def build_auth_lite_js(config):
                 var dateInput = document.getElementById('edit-expire-date');
                 var d = parseDate(currentExpireIso);
                 if (d) {
-                    // Chuyển sang định dạng YYYY-MM-DD cho thẻ input
                     var yyyy = d.getFullYear();
                     var mm = String(d.getMonth() + 1).padStart(2, '0');
                     var dd = String(d.getDate()).padStart(2, '0');
                     dateInput.value = `${yyyy}-${mm}-${dd}`;
                 } else {
-                    dateInput.value = ''; // Xóa trắng nếu lỗi
+                    dateInput.value = ''; 
                 }
                 
                 document.getElementById('editExpireModal').classList.remove('hidden');
@@ -800,15 +844,11 @@ def build_auth_lite_js(config):
             window.quickAddDays = function(days) {
                 var dateInput = document.getElementById('edit-expire-date');
                 var d = new Date();
-                
-                // Nếu ô input đang có ngày hợp lệ, thì cộng dồn vào ngày đó
                 if (dateInput.value) {
                     var currentVal = new Date(dateInput.value);
                     if (!isNaN(currentVal.getTime())) d = currentVal;
                 }
-                
                 d.setDate(d.getDate() + days);
-                
                 var yyyy = d.getFullYear();
                 var mm = String(d.getMonth() + 1).padStart(2, '0');
                 var dd = String(d.getDate()).padStart(2, '0');
@@ -824,7 +864,6 @@ def build_auth_lite_js(config):
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang lưu...';
 
                 try {
-                    // Chuyển đổi ngày (thêm giờ 23:59:59 để có hiệu lực đến hết ngày)
                     var newDate = new Date(dateVal + 'T23:59:59');
                     var isoString = newDate.toISOString();
 
@@ -834,16 +873,14 @@ def build_auth_lite_js(config):
 
                     alert('✅ Đã cập nhật hạn sử dụng!');
                     closeEditExpireModal();
-                    loadAdminUsers(); // Tải lại bảng
+                    loadAdminUsers();
                 } catch (e) {
                     alert('Lỗi lưu ngày: ' + e.message);
                     btn.disabled = false; btn.innerText = 'Lưu thay đổi';
                 }
             };
 
-            // ══════════════════════════════════════════════════
             // RENEWALS (DUYỆT GIA HẠN)
-            // ══════════════════════════════════════════════════
             async function loadAdminRenewals() {
                 var listEl = document.getElementById('admin-renewals-list');
                 listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải yêu cầu...</td></tr>`;
