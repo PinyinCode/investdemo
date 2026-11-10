@@ -153,15 +153,27 @@ def build_auth_lite_html(config):
     <!-- ========================================== -->
     <div id="authOverlay">
         <div class="auth-box">
-            <div class="auth-title">Đăng nhập hệ thống</div>
-            <div class="auth-sub">Sử dụng tài khoản để truy cập Pro Quant Screener</div>
+            <!-- LOGO & TIÊU ĐỀ -->
+            <div class="flex flex-col items-center justify-center mb-5">
+                <div class="bg-emerald-600 text-white p-3 rounded-xl shadow-lg shadow-emerald-500/30 mb-3">
+                    <i class="fa-solid fa-scale-balanced text-2xl"></i>
+                </div>
+                <h1 class="text-xl font-black text-white tracking-wide">PRO QUANT SCREENER</h1>
+                <p class="text-[11px] text-emerald-400 font-semibold tracking-widest uppercase mt-1">Hệ thống AI Thị trường Chứng khoán</p>
+            </div>
+
+            <!-- ƯU ĐÃI DÙNG THỬ -->
+            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 mb-6 flex flex-col items-center justify-center gap-1">
+                <span class="text-xs font-bold text-emerald-300"><i class="fa-solid fa-gift mr-1.5"></i> Tặng 3 ngày dùng thử miễn phí!</span>
+                <span class="text-[10px] text-slate-400">Trải nghiệm toàn bộ tính năng khi đăng nhập bằng Google.</span>
+            </div>
             
-            <button class="btn-google" id="btnGoogleLogin">
+            <button class="btn-google shadow-emerald-500/20 shadow-md" id="btnGoogleLogin">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20">
                 Đăng nhập bằng Google
             </button>
             
-            <div class="auth-divider">HOẶC</div>
+            <div class="auth-divider">HOẶC ĐĂNG NHẬP BẰNG EMAIL</div>
             
             <form id="emailLoginForm">
                 <input type="text" id="loginEmail" class="auth-input" placeholder="Email (VD: abc@gmail.com)" autocomplete="email">
@@ -170,7 +182,7 @@ def build_auth_lite_html(config):
                 <button type="submit" class="auth-btn" id="btnEmailLogin" style="margin-top:1rem;">
                     <i class="fa-solid fa-sign-in-alt"></i> <span>Đăng nhập</span>
                 </button>
-                <div style="display:flex; justify-content:space-between; margin-top:0.5rem;">
+                <div style="display:flex; justify-content:space-between; margin-top:0.75rem;">
                     <button type="button" class="auth-link" onclick="forgotPassword()">Quên mật khẩu?</button>
                     <button type="button" class="auth-link" onclick="showRegisterForm()">Tạo tài khoản</button>
                 </div>
@@ -378,6 +390,25 @@ def build_auth_lite_js(config):
                     clearInterval(t); cb();
                 }
             }, 200);
+        }
+
+        // HÀM GỬI THÔNG BÁO TELEGRAM
+        async function sendTelegramMessage(message) {
+            if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return; 
+            try {
+                var url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (err) {
+                console.warn('Lỗi gửi Telegram:', err);
+            }
         }
 
         window.triggerSignOut = async function() {
@@ -617,15 +648,26 @@ def build_auth_lite_js(config):
                 var btn = document.getElementById('btnConfirmPay');
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
                 try {
+                    var payCode = document.getElementById('payCode').innerText;
                     await db.collection('renewal_requests').add({
                         email: auth.currentUser.email,
                         packageId: selectedPkgId,
                         amount: selectedAmount,
                         days: selectedDays,
-                        code: document.getElementById('payCode').innerText,
+                        code: payCode,
                         status: 'pending',
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
+
+                    // GỬI TELEGRAM CHO ADMIN
+                    var msg = `🔔 <b>CÓ YÊU CẦU GIA HẠN MỚI</b>\n\n`
+                            + `👤 Email: <code>${auth.currentUser.email}</code>\n`
+                            + `📦 Gói: ${selectedPkgId}\n`
+                            + `💰 Số tiền: ${selectedAmount.toLocaleString('vi-VN')} VNĐ\n`
+                            + `🔑 Mã CK: <code>${payCode}</code>\n\n`
+                            + `👉 Vào Web để kiểm tra và duyệt!`;
+                    sendTelegramMessage(msg);
+
                     alert('Đã gửi yêu cầu! Vui lòng đợi Admin xác nhận.');
                     btn.innerText = 'Đã gửi thành công';
                     btn.style.background = '#059669';
@@ -963,6 +1005,14 @@ def build_auth_lite_js(config):
 
                     await userRef.set({ expiresAt: newExp.toISOString() }, { merge: true });
                     await window.db.collection('renewal_requests').doc(reqId).update({ status: 'approved' });
+
+                    // GỬI TELEGRAM CHO ADMIN (XÁC NHẬN)
+                    var msg = `✅ <b>ĐÃ DUYỆT GIA HẠN THÀNH CÔNG</b>\n\n`
+                            + `👤 Tài khoản: <code>${email}</code>\n`
+                            + `📦 Gói: ${packageId}\n`
+                            + `📅 Hạn mới: ${newExp.toLocaleDateString('vi-VN')}\n\n`
+                            + `Hệ thống đã tự động cập nhật quyền truy cập.`;
+                    sendTelegramMessage(msg);
 
                     alert('✅ Đã duyệt gia hạn thành công!');
                     loadAdminRenewals();
