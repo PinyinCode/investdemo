@@ -260,7 +260,6 @@ body.has-floating-group #chatFloatWrap{bottom:calc(16px + env(safe-area-inset-bo
 }
 """
 
-
 def build_chat_html():
     return r"""
 <div class="chat-modal" id="chatModal">
