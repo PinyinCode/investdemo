@@ -217,11 +217,11 @@
         "end_price_mean": 16.47
     },
     "EVF": {
-        "annual_rate_percent": -4.13,
+        "annual_rate_percent": -4.11,
         "start_quarter": "2021Q4",
         "start_price_mean": 14.26,
         "end_quarter": "2026Q4",
-        "end_price_mean": 11.6
+        "end_price_mean": 11.61
     },
     "FPT": {
         "annual_rate_percent": 5.24,
@@ -546,11 +546,11 @@
         "end_price_mean": 35.09
     },
     "PNJ": {
-        "annual_rate_percent": -17.07,
+        "annual_rate_percent": -17.06,
         "start_quarter": "2021Q4",
         "start_price_mean": 44.76,
         "end_quarter": "2026Q4",
-        "end_price_mean": 17.92
+        "end_price_mean": 17.94
     },
     "POW": {
         "annual_rate_percent": -0.48,
