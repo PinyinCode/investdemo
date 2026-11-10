@@ -100,18 +100,110 @@ def generate_html():
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
-    # Tạo nút Zalo nổi
+    # Tạo nút Zalo nổi & Hộp thông tin (FAB)
     zalo_button_html = f"""
-    <!-- NÚT LIÊN HỆ ZALO NỔI -->
-    <div id="zaloFloatWrap" style="position:fixed; right:20px; bottom:80px; z-index:9999; display:flex; flex-direction:column; align-items:flex-end;">
-        <a href="https://zalo.me/{ZALO_PHONE}" target="_blank" rel="noopener noreferrer" 
-           style="display:flex; align-items:center; gap:8px; padding:10px 16px; border-radius:50px; background:linear-gradient(135deg, #0068ff, #0052cc); color:#fff; text-decoration:none; font-weight:700; font-size:14px; box-shadow:0 8px 24px rgba(0,104,255,.45); border:2px solid #fff; transition:all 0.3s ease;"
-           onmouseover="this.style.transform='scale(1.05)'" 
-           onmouseout="this.style.transform='scale(1)'">
-            <i class="fa-solid fa-comment-dots" style="font-size:20px;"></i> 
-            <span class="hidden md:inline">Liên hệ Admin (Zalo)</span>
-        </a>
+    <!-- CSS CHO NÚT ZALO -->
+    <style>
+        .zalo-fab-wrapper {{
+            position: fixed; right: 20px; bottom: 80px; z-index: 9999;
+            display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+        }}
+        .zalo-fab-btn {{
+            width: 60px; height: 60px; border-radius: 50%;
+            background: linear-gradient(135deg, #0068ff, #0052cc);
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; cursor: pointer; border: 3px solid #fff;
+            box-shadow: 0 8px 24px rgba(0, 104, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }}
+        .zalo-fab-btn:hover {{
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 12px 32px rgba(0, 104, 255, 0.6);
+        }}
+        .zalo-fab-btn::after {{
+            content: ''; position: absolute; inset: -4px; border-radius: 50%;
+            border: 2px solid rgba(0, 104, 255, 0.4); opacity: 0;
+            animation: zaloPulse 2s infinite;
+        }}
+        @keyframes zaloPulse {{
+            0% {{ transform: scale(1); opacity: 1; }}
+            100% {{ transform: scale(1.4); opacity: 0; }}
+        }}
+
+        .zalo-popup {{
+            background: #fff; border-radius: 16px; padding: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #e2e8f0;
+            width: 260px; display: none; flex-direction: column; gap: 12px;
+            transform-origin: bottom right; animation: popupIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }}
+        @keyframes popupIn {{
+            from {{ opacity: 0; transform: scale(0.8) translateY(20px); }}
+            to {{ opacity: 1; transform: scale(1) translateY(0); }}
+        }}
+        .zalo-popup.show {{ display: flex; }}
+        
+        .zalo-popup-header {{ display: flex; align-items: center; gap: 12px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 12px; }}
+        .zalo-avatar {{ width: 44px; height: 44px; border-radius: 50%; background: #0068ff; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; }}
+        .zalo-info-title {{ font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }}
+        .zalo-info-sub {{ font-size: 13px; color: #64748b; }}
+        
+        .zalo-action-btn {{
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #0068ff, #0052cc); color: #fff;
+            text-decoration: none; font-weight: 700; font-size: 14px;
+            padding: 12px; border-radius: 12px; transition: all 0.2s;
+        }}
+        .zalo-action-btn:hover {{
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,104,255,0.3);
+        }}
+        
+        @media (max-width: 768px) {{
+            .zalo-fab-wrapper {{ bottom: 20px; right: 20px; }}
+            .zalo-fab-btn {{ width: 54px; height: 54px; font-size: 28px; }}
+            .zalo-popup {{ width: 240px; }}
+        }}
+    </style>
+
+    <!-- HTML NÚT ZALO -->
+    <div class="zalo-fab-wrapper">
+        <div class="zalo-popup" id="zaloPopup">
+            <div class="zalo-popup-header">
+                <div class="zalo-avatar"><i class="fa-solid fa-headset"></i></div>
+                <div>
+                    <div class="zalo-info-title">Hỗ trợ Admin</div>
+                    <div class="zalo-info-sub">SĐT: {ZALO_PHONE}</div>
+                </div>
+            </div>
+            <a href="https://zalo.me/{ZALO_PHONE}" target="_blank" rel="noopener noreferrer" class="zalo-action-btn">
+                <i class="fa-solid fa-paper-plane"></i> Nhắn tin qua Zalo
+            </a>
+        </div>
+        
+        <div class="zalo-fab-btn" id="zaloFabBtn" title="Liên hệ Admin">
+            <i class="fa-solid fa-comment-dots"></i>
+        </div>
     </div>
+
+    <!-- SCRIPT XỬ LÝ BẤM -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {{
+            var zaloBtn = document.getElementById('zaloFabBtn');
+            var zaloPopup = document.getElementById('zaloPopup');
+
+            zaloBtn.addEventListener('click', function(e) {{
+                e.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
+                zaloPopup.classList.toggle('show');
+            }});
+
+            // Bấm ra ngoài thì tự động đóng bảng thông tin
+            document.addEventListener('click', function(e) {{
+                if (zaloPopup.classList.contains('show') && !zaloPopup.contains(e.target) && e.target !== zaloBtn) {{
+                    zaloPopup.classList.remove('show');
+                }}
+            }});
+        }});
+    </script>
     """
 
     body_parts = [
@@ -120,7 +212,7 @@ def generate_html():
         build_ai_modal_html(),
         build_chart_modal_html(),
         build_log_console_html(),
-        zalo_button_html, # <-- Chèn nút Zalo vào đây
+        zalo_button_html, # Chèn nút Zalo vào đây
     ]
     full_body = "\n\n".join(body_parts)
 
