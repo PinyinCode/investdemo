@@ -42,13 +42,19 @@
         "final_decision_reason": "Giá 57,900 đã vượt xa fair_high 45,381 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Sữa Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 2089955445
+        "total_shares": 2089955445,
+        "price_change_percent": 1.76,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 15.7,
+        "amplitude_percent": 1.39
     },
     {
         "symbol": "HPG",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 21400.0,
+        "close_price": 21250.0,
         "pe": 6.43,
         "pb": 1.19,
         "ps": 0.0,
@@ -87,13 +93,19 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 18.6%) + PTCB 45/50 + PTKT 14/20 + Định giá 30/30 + Tổng 89đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Tập đoàn Hòa Phát",
         "market_cap": 0.0,
-        "total_shares": 8442964520
+        "total_shares": 8442964520,
+        "price_change_percent": 1.67,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 8.45,
+        "amplitude_percent": 2.12
     },
     {
         "symbol": "GMD",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "MARITIME",
-        "close_price": 52700.0,
+        "close_price": 53500.0,
         "pe": 12.7,
         "pb": 2.41,
         "ps": 0.0,
@@ -132,13 +144,19 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 45/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần Tập đoàn Gemadept",
         "market_cap": 0.0,
-        "total_shares": 649337392
+        "total_shares": 649337392,
+        "price_change_percent": 1.52,
+        "price_change_available": true,
+        "price_arrow": "▲",
+        "price_color": "emerald",
+        "volume_percent": 8.96,
+        "amplitude_percent": 3.21
     },
     {
         "symbol": "DCM",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 30600.0,
+        "close_price": 30100.0,
         "pe": 6.02,
         "pb": 1.38,
         "ps": 0.0,
@@ -177,7 +195,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 15.7%) + PTCB 45/50 + PTKT 12/20 + Định giá 30/30 + Tổng 87đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần - Tổng Công ty Phân bón Dầu Khí Cà Mau",
         "market_cap": 0.0,
-        "total_shares": 529400000
+        "total_shares": 529400000,
+        "price_change_percent": -2.59,
+        "price_change_available": true,
+        "price_arrow": "▼",
+        "price_color": "rose",
+        "volume_percent": 22.81,
+        "amplitude_percent": 3.55
     },
     {
         "symbol": "PHR",
