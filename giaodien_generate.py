@@ -93,12 +93,17 @@ def generate_html():
 
     print("\n🔧 [2/6] Build CSS/HTML/JS các module...")
     
-    # 1. CSS
-    ui_css = build_ui_css()
-    auth_css = build_auth_lite_css()
-    admin_chat_css = build_admin_chat_css()
-    chat_css = build_chat_css()
+    # 1. CSS (Chỉ lấy nội dung, không lấy thẻ <style>)
+    # Sử dụng hàm replace để đề phòng các module cũ vẫn còn sót thẻ <style>
+    def clean_css(css_str):
+        return css_str.replace("<style>", "").replace("</style>", "").strip()
+
+    ui_css = clean_css(build_ui_css())
+    auth_css = clean_css(build_auth_lite_css())
+    admin_chat_css = clean_css(build_admin_chat_css())
+    chat_css = clean_css(build_chat_css())
     
+    # Gộp tất cả CSS
     full_css = "\n".join([
         "/* ===== UI BASE ===== */", ui_css, 
         "/* ===== AUTH LITE ===== */", auth_css,
@@ -107,7 +112,6 @@ def generate_html():
     ])
     
     # 2. HTML
-    # Lưu ý: Truyền Quota & Online vào auth config để build_auth_lite_html chèn vào tab Admin
     auth_config["quota_html"] = build_quota_html()
     auth_config["online_html"] = build_online_section_html()
 
