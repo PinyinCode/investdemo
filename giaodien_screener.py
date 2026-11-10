@@ -13,6 +13,19 @@ Gồm:
 
 def build_screener_html():
     return r"""
+    <!-- Thêm CSS cho hiệu ứng nhấp nháy (nếu file UI chưa có) -->
+    <style>
+        @keyframes api-pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .api-dot-online {
+            background-color: #10b981; /* Xanh lá */
+            animation: api-pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+    </style>
+
     <!-- HEADER -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
@@ -27,7 +40,7 @@ def build_screener_html():
                         <span class="text-slate-600">|</span>
                         <span class="flex items-center gap-1.5 font-semibold">
                             <!-- Chấm tròn trạng thái API -->
-                            <span id="api-status-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                            <span id="api-status-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
                             <!-- Text hiển thị số ms -->
                             <span id="api-status-text" class="text-amber-400">Đang kết nối API...</span>
                         </span>
@@ -42,10 +55,7 @@ def build_screener_html():
                 
                 <!-- NÚT QUẢN LÝ TÀI KHOẢN / ADMIN (CÓ AVATAR) -->
                 <button type="button" onclick="openAdminModal()" class="w-9 h-9 rounded-lg bg-slate-800 border border-amber-500/50 flex items-center justify-center overflow-hidden relative group transition hover:border-amber-400 shadow-lg shadow-amber-900/20" title="Quản lý tài khoản">
-                    <!-- Icon mặc định (sẽ bị ẩn đi nếu có avatar) -->
                     <i class="fa-solid fa-user-shield text-amber-400 text-lg" id="header-user-icon"></i>
-                    
-                    <!-- Thẻ img chứa Avatar (mặc định ẩn) -->
                     <img id="header-user-avatar" src="" class="w-full h-full object-cover hidden absolute inset-0">
                 </button>
             </div>
@@ -53,11 +63,9 @@ def build_screener_html():
     </header>
 
     <main class="max-w-7xl mx-auto px-2 md:px-4 py-4">
-
         <!-- BỘ LỌC -->
         <div class="bg-slate-900 p-2 md:p-3 rounded-xl border border-slate-800 shadow-sm mb-4 space-y-2">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3">
-
                 <!-- Ô TÌM KIẾM MÃ (CÓ GỢI Ý) -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2 md:pl-3 text-slate-400">
@@ -230,6 +238,40 @@ def build_screener_js():
             searchSuggest.classList.add('hidden');
         }
     });
+
+    // ══════════════════════════════════════════════════
+    // PING LIÊN TỤC ĐỂ ĐO TỐC ĐỘ API (REALTIME)
+    // ══════════════════════════════════════════════════
+    async function checkApiPing() {
+        const dot = document.getElementById('api-status-dot');
+        const text = document.getElementById('api-status-text');
+        if (!dot || !text) return;
+
+        try {
+            const startPing = performance.now();
+            const res = await fetch(`${PRICE_API_URL}/api/data?t=${new Date().getTime()}`);
+            const endPing = performance.now();
+            const pingMs = Math.round(endPing - startPing);
+
+            if (res.ok) {
+                // Có mạng: Chấm xanh nhấp nháy
+                dot.className = 'w-2.5 h-2.5 rounded-full api-dot-online';
+                text.innerText = `API: ${pingMs} ms`;
+                text.className = 'text-emerald-400 font-semibold';
+            } else {
+                throw new Error("API Error");
+            }
+        } catch (e) {
+            // Mất mạng: Chấm đỏ đứng im
+            dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
+            text.innerText = 'API: Mất kết nối';
+            text.className = 'text-rose-400 font-semibold';
+        }
+    }
+
+    // Chạy ping lần đầu ngay khi tải trang, sau đó 5s/lần
+    checkApiPing();
+    setInterval(checkApiPing, 5000);
 
     // ══════════════════════════════════════════════════
     // RENDER CARDS
