@@ -274,7 +274,8 @@ def build_auth_lite_html(config):
         <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-3" id="modal-header-title">
+                    <!-- Avatar sẽ được JS chèn vào đây -->
                     <i class="fa-solid fa-circle-user text-emerald-400 text-lg"></i>
                     <h3 class="text-sm font-bold text-white" id="modalTitle">Tài khoản của tôi</h3>
                 </div>
@@ -499,6 +500,51 @@ def build_auth_lite_js(config):
                 var renewalModal = document.getElementById('renewalModal');
                 var statusMsg = document.getElementById('renewalStatusMsg');
                 
+                // ==========================================
+                // CẬP NHẬT AVATAR LÊN HEADER VÀ MODAL
+                // ==========================================
+                var iconEl = document.getElementById('header-user-icon');
+                var imgEl = document.getElementById('header-user-avatar');
+                var modalHeaderTitle = document.getElementById('modal-header-title');
+                
+                if (user) {
+                    if (imgEl && iconEl) {
+                        if (user.photoURL) {
+                            imgEl.src = user.photoURL;
+                            imgEl.classList.remove('hidden');
+                            iconEl.classList.add('hidden');
+                        } else {
+                            imgEl.classList.add('hidden');
+                            iconEl.classList.remove('hidden');
+                        }
+                    }
+                    
+                    if (modalHeaderTitle) {
+                        var avatarHtml = user.photoURL 
+                            ? `<img src="${user.photoURL}" class="w-8 h-8 rounded-full border border-slate-600 object-cover">` 
+                            : `<div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400"><i class="fa-solid fa-user"></i></div>`;
+                        
+                        // Nếu có thẻ img cũ thì thay thế, nếu chưa có thì tạo mới
+                        var existingAvatar = document.getElementById('modal-avatar-img');
+                        if (!existingAvatar) {
+                            modalHeaderTitle.insertAdjacentHTML('afterbegin', `<div id="modal-avatar-img">${avatarHtml}</div>`);
+                        } else {
+                            existingAvatar.innerHTML = avatarHtml;
+                        }
+                    }
+                } else {
+                    // Chưa đăng nhập -> Trả lại icon mặc định
+                    if (imgEl && iconEl) {
+                        imgEl.classList.add('hidden');
+                        iconEl.classList.remove('hidden');
+                    }
+                    if (modalHeaderTitle) {
+                        var existingAvatar = document.getElementById('modal-avatar-img');
+                        if (existingAvatar) existingAvatar.remove();
+                    }
+                }
+                // ==========================================
+
                 // RESET NÚT ĐĂNG NHẬP KHI CÓ SỰ KIỆN MỚI
                 if (btnEmailLogin) {
                     btnEmailLogin.disabled = false;
