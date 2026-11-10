@@ -1,12 +1,10 @@
-name: 2. Run Quant Screener
+name: 2. Run Quant Screener & Simulator
 
 on:
   push:
     paths:
       - 'last_update.json'             
       - 'history/**'                   
-      - 'symbol_sim_rates.json'        
-      - 'quarterly_mean_details.json'  
   workflow_dispatch:                   
 
 permissions:
@@ -18,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  screener:
+  data_pipeline:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -36,20 +34,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas numpy requests
 
-      - name: Run Advanced Quant Screener
+      - name: 1. Run Advanced Quant Screener
         run: python advanced_screener.py
+        
+      - name: 2. Run Simulator (Calculate historical CAGR)
+        run: python simulator.py
 
-      - name: Commit and push screener results
+      - name: 3. Commit and push all data results
         run: |
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "action@github.com"
           
+          # Thêm TẤT CẢ các file kết quả (bao gồm cả screener và simulator)
+          # Nếu simulator của bạn sinh ra file nào khác, hãy thêm vào đây
           git add screener_results.json screener_summary.csv data.json
+          git add symbol_sim_rates.json quarterly_mean_details.json
           
-          # Nếu không có thay đổi thì bỏ qua
+          # Nếu không có thay đổi nào thì bỏ qua để tránh commit rác
           git diff --quiet && git diff --staged --quiet && echo "No changes to commit" && exit 0
           
-          git commit -m "📊 [Screener] Cập nhật kết quả định lượng mới [$(date +'%Y-%m-%d')]"
+          git commit -m "📊 [Data] Cập nhật Screener & Simulator [$(date +'%Y-%m-%d %H:%M')]"
           
           git pull --rebase origin main || echo "No rebase needed or handled"
           
