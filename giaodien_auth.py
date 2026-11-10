@@ -216,6 +216,12 @@ def build_auth_lite_html(config):
                 <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Hệ thống Đầu tư Chứng khoán</p>
             </div>
 
+            <!-- THÔNG BÁO TRẠNG THÁI -->
+            <div id="renewalStatusMsg" class="bg-rose-500/10 border border-rose-500/30 rounded-xl p-3 mb-4 text-center hidden">
+                <h4 class="text-sm font-bold text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Tài khoản đã hết hạn!</h4>
+                <p class="text-[11px] text-slate-300 mt-1">Vui lòng gia hạn để tiếp tục sử dụng hệ thống.</p>
+            </div>
+
             <div class="renewal-icon mx-auto"><i class="fa-solid fa-clock"></i></div>
             <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
             <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng các tính năng phân tích và lọc cổ phiếu AI.</p>
@@ -428,24 +434,44 @@ def build_auth_lite_js(config):
             var auth = window.auth;
             var db = window.db;
 
+            // Reset trạng thái nút đăng nhập mỗi khi đổi trạng thái Auth
+            var btnEmailLogin = document.getElementById('btnEmailLogin');
+            if (btnEmailLogin) {
+                var btnSpan = btnEmailLogin.querySelector('span');
+                btnEmailLogin.disabled = false;
+                if(btnSpan) btnSpan.innerHTML = 'Đăng nhập';
+            }
+
             auth.onAuthStateChanged(async function(user) {
                 var authOverlay = document.getElementById('authOverlay');
                 var adminModal = document.getElementById('admin-modal');
                 var renewalModal = document.getElementById('renewalModal');
+                var statusMsg = document.getElementById('renewalStatusMsg');
                 
+                // RESET NÚT ĐĂNG NHẬP KHI CÓ SỰ KIỆN MỚI
+                if (btnEmailLogin) {
+                    btnEmailLogin.disabled = false;
+                    if(btnSpan) btnSpan.innerHTML = 'Đăng nhập';
+                }
+
                 if (user) {
                     var isExpired = await checkUserPermission(user);
                     
                     if (isExpired) {
+                        // Hết hạn: Hiện lớp đen, hiện modal, và hiện thông báo lỗi
                         if (authOverlay) {
                             authOverlay.classList.remove('hidden');
                             authOverlay.style.display = 'flex';
-                            authOverlay.style.opacity = '0.3';
+                            authOverlay.style.opacity = '1';
                         }
                         document.body.classList.add('auth-locked');
                         if (renewalModal) renewalModal.classList.add('show');
                         if (adminModal) adminModal.classList.add('hidden');
+                        
+                        // Hiển thị thông báo lý do
+                        if (statusMsg) statusMsg.classList.remove('hidden');
                     } else {
+                        // Còn hạn: Ẩn màn hình đen, mở khóa body
                         document.body.classList.remove('auth-locked'); 
                         if (authOverlay) {
                             authOverlay.classList.add('hidden');
@@ -455,6 +481,7 @@ def build_auth_lite_js(config):
                             adminModal.classList.add('hidden');
                             adminModal.style.display = 'none';
                         }
+                        if (statusMsg) statusMsg.classList.add('hidden');
                         
                         if (typeof window.onAuthReady === 'function') {
                             try { await window.onAuthReady(user); } catch(e) { console.warn(e); }
@@ -473,6 +500,7 @@ def build_auth_lite_js(config):
                         adminModal.style.display = 'none';
                     }
                     if (renewalModal) renewalModal.classList.remove('show');
+                    if (statusMsg) statusMsg.classList.add('hidden');
                     
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
@@ -514,6 +542,7 @@ def build_auth_lite_js(config):
                 
                 try {
                     await auth.signInWithEmailAndPassword(email, pwd);
+                    // Sẽ tự động nhảy vào onAuthStateChanged ở trên để reset nút
                 } catch(e) {
                     var errMsg = e.message;
                     if (e.code === 'auth/user-not-found') errMsg = 'Tài khoản chưa tồn tại. Vui lòng đăng nhập bằng Google hoặc bấm "Tạo tài khoản".';
@@ -561,7 +590,6 @@ def build_auth_lite_js(config):
                 try {
                     var doc = await db.collection('allowed_users').doc(email).get();
                     
-                    // Kiểm tra xem email này có nằm trong danh sách SUPER_ADMINS không
                     var isSuperAdmin = typeof SUPER_ADMINS !== 'undefined' && SUPER_ADMINS.includes(email);
 
                     if (!doc.exists) {
@@ -579,7 +607,6 @@ def build_auth_lite_js(config):
                         var data = doc.data();
                         var currentRole = data.role || "user";
                         
-                        // TỰ ĐỘNG ĐỒNG BỘ QUYỀN SUPER ADMIN TỪ BIẾN MÔI TRƯỜNG
                         if (isSuperAdmin && currentRole !== 'super_admin') {
                             await db.collection('allowed_users').doc(email).update({ role: 'super_admin' });
                             currentRole = 'super_admin';
@@ -609,6 +636,7 @@ def build_auth_lite_js(config):
 
             window.openUserRenewalModal = function() {
                 var renewal = document.getElementById('renewalModal');
+                var statusMsg = document.getElementById('renewalStatusMsg');
                 if (renewal) {
                     renewal.classList.add('show');
                     selectedPkgId = null;
@@ -617,6 +645,9 @@ def build_auth_lite_js(config):
                     if (qrWrap) qrWrap.style.display = 'none';
                     var btnPay = document.getElementById('btnConfirmPay');
                     if (btnPay) btnPay.style.display = 'none';
+                    
+                    // Nếu người dùng chủ động mở, ẩn thông báo hết hạn (vì họ đang dùng bình thường)
+                    if (statusMsg) statusMsg.classList.add('hidden');
                 }
             };
 
@@ -659,7 +690,6 @@ def build_auth_lite_js(config):
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
 
-                    // GỬI TELEGRAM CHO ADMIN
                     var msg = `🔔 <b>CÓ YÊU CẦU GIA HẠN MỚI</b>\n\n`
                             + `👤 Email: <code>${auth.currentUser.email}</code>\n`
                             + `📦 Gói: ${selectedPkgId}\n`
@@ -688,10 +718,7 @@ def build_auth_lite_js(config):
                 } catch(e) { showMsg('loginMsg', 'Lỗi: ' + e.message, 'error'); }
             };
 
-            // ══════════════════════════════════════════════════
             // ADMIN PANEL JS
-            // ══════════════════════════════════════════════════
-            
             window.switchAdminTab = function(tab) {
                 var usersTab = document.getElementById('adminTabUsers');
                 var renewalsTab = document.getElementById('adminTabRenewals');
@@ -1006,7 +1033,6 @@ def build_auth_lite_js(config):
                     await userRef.set({ expiresAt: newExp.toISOString() }, { merge: true });
                     await window.db.collection('renewal_requests').doc(reqId).update({ status: 'approved' });
 
-                    // GỬI TELEGRAM CHO ADMIN (XÁC NHẬN)
                     var msg = `✅ <b>ĐÃ DUYỆT GIA HẠN THÀNH CÔNG</b>\n\n`
                             + `👤 Tài khoản: <code>${email}</code>\n`
                             + `📦 Gói: ${packageId}\n`
