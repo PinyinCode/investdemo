@@ -735,11 +735,11 @@
         "end_price_mean": 19.13
     },
     "VCK": {
-        "annual_rate_percent": -15.79,
+        "annual_rate_percent": -15.77,
         "start_quarter": "2025Q4",
         "start_price_mean": 31.67,
         "end_quarter": "2026Q4",
-        "end_price_mean": 27.64
+        "end_price_mean": 27.65
     },
     "VDP": {
         "annual_rate_percent": 12.3,
