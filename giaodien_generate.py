@@ -14,6 +14,14 @@ from giaodien_log_console import build_log_console_html
 from giaodien_auth import build_auth_lite_css, build_auth_lite_html, build_auth_lite_js
 from giaodien_core_js import build_core_js
 
+# ══ IMPORT MODULE MỚI ══
+from giaodien_admin_chat import build_admin_chat_css, build_admin_chat_html, build_admin_chat_js
+from giaodien_chat_support import (
+    build_chat_css, build_chat_html, build_chat_js, 
+    build_quota_html, build_online_section_html, 
+    build_quota_js, build_quota_init_js, build_telegram_notify_js
+)
+
 OUTPUT_HTML = "index.html"
 LAST_UPDATE_FILE = "last_update.json"
 CHEAP_STOCKS_FILE = "cheap_stocks.json"
@@ -64,10 +72,7 @@ def generate_html():
     print("🚀 GIAODIEN_GENERATE — ASSEMBLE PIPELINE")
     print("=" * 60)
 
-    print("\n📊 [1/6] Bỏ qua simulator, sử dụng dữ liệu JSON có sẵn...")
-    print("     ✅ Sẵn sàng đọc dữ liệu từ file.")
-
-    print("\n📂 [2/6] Đọc data...")
+    print("\n📂 [1/6] Đọc data...")
     cheap_stocks_groups = load_cheap_stocks_data()
     cheap_symbols_set = set()
     for _sector_key, symbols_list in cheap_stocks_groups.items():
@@ -80,36 +85,53 @@ def generate_html():
     firebase_config = get_firebase_config()
     auth_config = load_auth_config()
 
-    # Lấy danh sách Super Admin
     super_admins_raw = os.environ.get("SUPER_ADMINS", "")
     super_admins_list = [email.strip().lower() for email in super_admins_raw.split(",") if email.strip()]
     
-    # Lấy cấu hình Telegram
     tg_token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
     tg_chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
-    
-    print(f"     👑 Super Admins: {', '.join(super_admins_list) if super_admins_list else 'Chưa cấu hình'}")
-    print(f"     🤖 Telegram: {'Đã cấu hình' if tg_token and tg_chat_id else 'Chưa cấu hình'}")
 
-    print("\n🔧 [3/6] Build CSS/HTML/JS các module...")
+    print("\n🔧 [2/6] Build CSS/HTML/JS các module...")
     
+    # 1. CSS
     ui_css = build_ui_css()
     auth_css = build_auth_lite_css()
-    full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
+    admin_chat_css = build_admin_chat_css()
+    chat_css = build_chat_css()
     
+    full_css = "\n".join([
+        "/* ===== UI BASE ===== */", ui_css, 
+        "/* ===== AUTH LITE ===== */", auth_css,
+        "/* ===== ADMIN CHAT ===== */", admin_chat_css,
+        "/* ===== CHAT SUPPORT ===== */", chat_css
+    ])
+    
+    # 2. HTML
+    # Lưu ý: Truyền Quota & Online vào auth config để build_auth_lite_html chèn vào tab Admin
+    auth_config["quota_html"] = build_quota_html()
+    auth_config["online_html"] = build_online_section_html()
+
     body_parts = [
         build_auth_lite_html(auth_config),
         build_screener_html(),
         build_ai_modal_html(),
         build_chart_modal_html(),
         build_log_console_html(),
+        build_admin_chat_html(),
+        build_chat_html(),
     ]
     full_body = "\n\n".join(body_parts)
 
+    # 3. JS
     ui_js = build_ui_js()
     auth_js = build_auth_lite_js(auth_config)
     screener_js = build_screener_js()
-    
+    admin_chat_js = build_admin_chat_js()
+    chat_js = build_chat_js()
+    quota_js = build_quota_js()
+    quota_init_js = build_quota_init_js()
+    tg_notify_js = build_telegram_notify_js()
+
     core_js = build_core_js(
         price_api_url=PRICE_API_URL,
         firebase_config=firebase_config,
@@ -138,6 +160,11 @@ def generate_html():
         f"/* ══ UI BASE JS ══ */\n{ui_js}",
         f"/* ══ SCREENER JS ══ */\n{screener_js}",
         f"/* ══ CORE JS ══ */\n{core_js}",
+        f"/* ══ ADMIN CHAT JS ══ */\n{admin_chat_js}",
+        f"/* ══ CHAT SUPPORT JS ══ */\n{chat_js}",
+        f"/* ══ QUOTA JS ══ */\n{quota_js}",
+        f"/* ══ QUOTA INIT JS ══ */\n{quota_init_js}",
+        f"/* ══ TELEGRAM NOTIFY JS ══ */\n{tg_notify_js}",
     ])
 
     print("\n🏗️  [4/6] Ghép HTML shell...")
