@@ -10,7 +10,7 @@ from giaodien_screener import build_screener_html, build_screener_js
 from giaodien_ai_modal import build_ai_modal_html
 from giaodien_chart_modal import build_chart_modal_html
 from giaodien_log_console import build_log_console_html
-from giaodien_admin import build_admin_modal_html, build_admin_js
+
 from giaodien_auth import build_auth_lite_css, build_auth_lite_html, build_auth_lite_js
 from giaodien_core_js import build_core_js
 from simulator import run_complex_backtest_simulation
