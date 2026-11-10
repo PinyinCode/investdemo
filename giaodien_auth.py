@@ -262,8 +262,7 @@ def build_auth_lite_html(config):
         <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
-                <div class="flex items-center space-x-3" id="modal-header-title">
-                    <!-- Avatar sẽ được JS chèn vào đây -->
+                <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-circle-user text-emerald-400 text-lg"></i>
                     <h3 class="text-sm font-bold text-white" id="modalTitle">Tài khoản của tôi</h3>
                 </div>
@@ -272,7 +271,7 @@ def build_auth_lite_html(config):
                 </button>
             </div>
 
-            <div class="p-5 bg-slate-800/50 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="p-5 bg-slate-800/50 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <div class="text-[11px] text-slate-400 mb-1 uppercase tracking-wider font-semibold">Email đăng nhập</div>
                     <div class="text-sm font-bold text-white" id="modalUserEmail">---</div>
@@ -280,12 +279,20 @@ def build_auth_lite_html(config):
                         <i class="fa-solid fa-clock text-emerald-500"></i> Hạn sử dụng: 
                         <span class="text-emerald-400 font-bold" id="modalExpireDate">Đang tải...</span>
                     </div>
+
+                    <!-- THÔNG TIN LIÊN HỆ ADMIN -->
+                    <div class="mt-3 pt-3 border-t border-slate-700/50">
+                        <div class="text-[11px] text-slate-400 mb-1 uppercase tracking-wider font-semibold">Hỗ trợ trực tuyến</div>
+                        <a href="https://zalo.me/0528484668" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition shadow-lg shadow-blue-900/50">
+                            <i class="fa-solid fa-comment-dots"></i> Zalo: 0528484668
+                        </a>
+                    </div>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <button onclick="openUserRenewalModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/50">
+                <div class="flex flex-col gap-2 w-full sm:w-auto">
+                    <button onclick="openUserRenewalModal()" class="w-full sm:w-auto px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/50">
                         <i class="fa-solid fa-plus-circle"></i> Gia hạn tài khoản
                     </button>
-                    <button onclick="openHistoryModal(window.auth.currentUser.email)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
+                    <button onclick="openHistoryModal(window.auth.currentUser.email)" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-clock-rotate-left"></i> Lịch sử
                     </button>
                 </div>
@@ -440,7 +447,6 @@ def build_auth_lite_js(config):
             }, 200);
         }
 
-        // HÀM GỬI THÔNG BÁO TELEGRAM
         async function sendTelegramMessage(message) {
             if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return; 
             try {
@@ -476,7 +482,6 @@ def build_auth_lite_js(config):
             var auth = window.auth;
             var db = window.db;
 
-            // Reset trạng thái nút đăng nhập mỗi khi đổi trạng thái Auth
             var btnEmailLogin = document.getElementById('btnEmailLogin');
             if (btnEmailLogin) {
                 var btnSpan = btnEmailLogin.querySelector('span');
@@ -490,52 +495,6 @@ def build_auth_lite_js(config):
                 var renewalModal = document.getElementById('renewalModal');
                 var statusMsg = document.getElementById('renewalStatusMsg');
                 
-                // ==========================================
-                // CẬP NHẬT AVATAR LÊN HEADER VÀ MODAL
-                // ==========================================
-                var iconEl = document.getElementById('header-user-icon');
-                var imgEl = document.getElementById('header-user-avatar');
-                var modalHeaderTitle = document.getElementById('modal-header-title');
-                
-                if (user) {
-                    if (imgEl && iconEl) {
-                        if (user.photoURL) {
-                            imgEl.src = user.photoURL;
-                            imgEl.classList.remove('hidden');
-                            iconEl.classList.add('hidden');
-                        } else {
-                            imgEl.classList.add('hidden');
-                            iconEl.classList.remove('hidden');
-                        }
-                    }
-                    
-                    if (modalHeaderTitle) {
-                        var avatarHtml = user.photoURL 
-                            ? `<img src="${user.photoURL}" class="w-8 h-8 rounded-full border border-slate-600 object-cover">` 
-                            : `<div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400"><i class="fa-solid fa-user"></i></div>`;
-                        
-                        // Nếu có thẻ img cũ thì thay thế, nếu chưa có thì tạo mới
-                        var existingAvatar = document.getElementById('modal-avatar-img');
-                        if (!existingAvatar) {
-                            modalHeaderTitle.insertAdjacentHTML('afterbegin', `<div id="modal-avatar-img">${avatarHtml}</div>`);
-                        } else {
-                            existingAvatar.innerHTML = avatarHtml;
-                        }
-                    }
-                } else {
-                    // Chưa đăng nhập -> Trả lại icon mặc định
-                    if (imgEl && iconEl) {
-                        imgEl.classList.add('hidden');
-                        iconEl.classList.remove('hidden');
-                    }
-                    if (modalHeaderTitle) {
-                        var existingAvatar = document.getElementById('modal-avatar-img');
-                        if (existingAvatar) existingAvatar.remove();
-                    }
-                }
-                // ==========================================
-
-                // RESET NÚT ĐĂNG NHẬP KHI CÓ SỰ KIỆN MỚI
                 if (btnEmailLogin) {
                     btnEmailLogin.disabled = false;
                     if(btnSpan) btnSpan.innerHTML = 'Đăng nhập';
@@ -545,7 +504,6 @@ def build_auth_lite_js(config):
                     var isExpired = await checkUserPermission(user);
                     
                     if (isExpired) {
-                        // Hết hạn: Hiện lớp đen, hiện modal, và hiện thông báo lỗi
                         if (authOverlay) {
                             authOverlay.classList.remove('hidden');
                             authOverlay.style.display = 'flex';
@@ -555,11 +513,9 @@ def build_auth_lite_js(config):
                         if (renewalModal) renewalModal.classList.add('show');
                         if (adminModal) adminModal.classList.add('hidden');
                         
-                        // Hiển thị thông báo lý do
                         if (statusMsg) statusMsg.classList.remove('hidden');
-                        checkMyPendingRequest(); // Kiểm tra xem có lệnh chờ nào không
+                        checkMyPendingRequest();
                     } else {
-                        // Còn hạn: Ẩn màn hình đen, mở khóa body
                         document.body.classList.remove('auth-locked'); 
                         if (authOverlay) {
                             authOverlay.classList.add('hidden');
@@ -703,6 +659,15 @@ def build_auth_lite_js(config):
                         }
                         
                         currentUserRole = currentRole;
+                        
+                        if (currentRole === 'admin' || currentRole === 'super_admin') {
+                            var btnChat = document.getElementById('btn-admin-chat-header');
+                            if (btnChat) {
+                                btnChat.classList.remove('hidden');
+                                btnChat.classList.add('flex');
+                            }
+                        }
+
                         var expDateObj = parseDate(data.expiresAt);
                         
                         if (expDateObj) {
@@ -734,8 +699,6 @@ def build_auth_lite_js(config):
                     if (btnPay) btnPay.style.display = 'none';
                     
                     if (statusMsg) statusMsg.classList.add('hidden');
-                    
-                    // KIỂM TRA XEM CÓ LỆNH ĐANG CHỜ KHÔNG
                     checkMyPendingRequest();
                 }
             };
@@ -762,7 +725,6 @@ def build_auth_lite_js(config):
                 document.getElementById('btnConfirmPay').style.display = 'flex';
             };
 
-            // HÀM KIỂM TRA VÀ HIỂN THỊ LỆNH ĐANG CHỜ (Dành cho User)
             async function checkMyPendingRequest() {
                 if (!auth.currentUser) return;
                 var pendingBox = document.getElementById('pendingRequestBox');
@@ -781,14 +743,10 @@ def build_auth_lite_js(config):
                         var reqData = snap.docs[0].data();
                         window.myPendingReqId = snap.docs[0].id;
                         
-                        // 1. Hiện box thông báo chờ
                         if (pendingBox) pendingBox.classList.remove('hidden');
-                        
-                        // 2. Ẩn danh sách gói và nút xác nhận
                         if (pkgList) pkgList.classList.add('hidden');
                         if (btnConfirm) btnConfirm.style.display = 'none';
                         
-                        // 3. HIỂN THỊ LẠI MÃ QR VÀ THÔNG TIN CỦA LỆNH ĐANG CHỜ
                         if (qrWrap) {
                             qrWrap.style.display = 'block';
                             document.getElementById('payAmount').innerText = reqData.amount.toLocaleString('vi-VN') + ' VNĐ';
@@ -798,11 +756,9 @@ def build_auth_lite_js(config):
                             document.getElementById('qrImage').src = qrUrl;
                         }
                         
-                        // 4. Đổi tiêu đề để user biết đây là gói đã chọn
                         if (titleEl) titleEl.innerHTML = `GÓI ĐÃ CHỌN: <span class="text-emerald-400">${reqData.packageId.toUpperCase()}</span>`;
 
                     } else {
-                        // Không có lệnh -> Reset giao diện về bình thường
                         if (pendingBox) pendingBox.classList.add('hidden');
                         if (pkgList) pkgList.classList.remove('hidden');
                         if (qrWrap) qrWrap.style.display = 'none';
@@ -814,7 +770,6 @@ def build_auth_lite_js(config):
                 } catch(e) { console.warn('Lỗi check pending:', e); }
             }
 
-            // HÀM HỦY LỆNH CỦA USER
             window.cancelMyRenewal = async function() {
                 if (!window.myPendingReqId) return;
                 if (!confirm("Bạn có chắc muốn hủy yêu cầu gia hạn này?")) return;
@@ -835,7 +790,6 @@ def build_auth_lite_js(config):
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang kiểm tra...';
                 
                 try {
-                    // KIỂM TRA XEM CÓ LỆNH NÀO ĐANG CHỜ KHÔNG
                     var existingReq = await db.collection('renewal_requests')
                         .where('email', '==', auth.currentUser.email)
                         .where('status', '==', 'pending')
@@ -843,7 +797,7 @@ def build_auth_lite_js(config):
                         
                     if (!existingReq.empty) {
                         alert('Bạn đã có một yêu cầu đang chờ duyệt! Vui lòng đợi Admin xác nhận hoặc Hủy yêu cầu cũ trước khi tạo lệnh mới.');
-                        checkMyPendingRequest(); // Cập nhật lại giao diện
+                        checkMyPendingRequest();
                         return; 
                     }
 
@@ -887,7 +841,6 @@ def build_auth_lite_js(config):
                 } catch(e) { showMsg('loginMsg', 'Lỗi: ' + e.message, 'error'); }
             };
 
-            // ADMIN PANEL JS
             window.switchAdminTab = function(tab) {
                 var usersTab = document.getElementById('adminTabUsers');
                 var renewalsTab = document.getElementById('adminTabRenewals');
@@ -980,7 +933,7 @@ def build_auth_lite_js(config):
 
             var adminAllUsers = []; 
             var editingUserEmail = ""; 
-            var currentSubTabRole = 'user'; // Mặc định xem tab User trước
+            var currentSubTabRole = 'user';
 
             async function loadAdminUsers() {
                 var listEl = document.getElementById('admin-users-list');
@@ -1010,7 +963,6 @@ def build_auth_lite_js(config):
                 }
             }
 
-            // Hàm chuyển đổi sub-tab (User / Admin)
             window.filterUserRole = function(role) {
                 currentSubTabRole = role;
                 
@@ -1032,7 +984,6 @@ def build_auth_lite_js(config):
                 var listEl = document.getElementById('admin-users-list');
                 var keyword = (document.getElementById('admin-search-input').value || '').toLowerCase().trim();
                 
-                // Đếm tổng số lượng
                 var totalUsers = 0;
                 var totalAdmins = 0;
                 adminAllUsers.forEach(function(u) {
@@ -1044,16 +995,13 @@ def build_auth_lite_js(config):
                 if(document.getElementById('admin-stat-user')) document.getElementById('admin-stat-user').innerText = totalUsers;
                 if(document.getElementById('admin-stat-admin')) document.getElementById('admin-stat-admin').innerText = totalAdmins;
 
-                // Lọc dữ liệu theo sub-tab và tìm kiếm
                 var filtered = adminAllUsers.filter(function(u) {
                     var role = u.role || 'user';
                     var isAdmin = (role === 'admin' || role === 'super_admin');
                     
-                    // Lọc theo tab (User / Admin)
                     if (currentSubTabRole === 'user' && isAdmin) return false;
                     if (currentSubTabRole === 'admin' && !isAdmin) return false;
 
-                    // Lọc theo từ khóa
                     var email = (u.email || u.id).toLowerCase();
                     var name = (u.name || u.displayName || '').toLowerCase();
                     return email.includes(keyword) || name.includes(keyword);
@@ -1078,14 +1026,12 @@ def build_auth_lite_js(config):
                     else if (role === 'admin') roleBadge = '<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Admin</span>';
                     else roleBadge = '<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-slate-800 text-slate-300">User</span>';
                     
-                    // Tạo ID duy nhất cho thẻ để bung/thu gọn
                     var actionId = `user-action-${index}`;
 
                     var div = document.createElement('div');
                     div.className = "bg-slate-800/40 border border-slate-700/60 rounded-xl overflow-hidden transition-all duration-200";
                     
                     div.innerHTML = `
-                        <!-- PHẦN HEADER CỦA THẺ (LUÔN HIỂN THỊ) -->
                         <div onclick="toggleUserCard('${actionId}')" class="p-3 flex items-center justify-between cursor-pointer hover:bg-slate-800/80 transition select-none">
                             <div class="flex-1 min-w-0 pr-2">
                                 <div class="text-xs font-bold text-white truncate">${safeEmail}</div>
@@ -1094,26 +1040,21 @@ def build_auth_lite_js(config):
                                     ${roleBadge}
                                 </div>
                             </div>
-                            <!-- Mũi tên chỉ dẫn -->
                             <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-200" id="icon-${actionId}"></i>
                         </div>
 
-                        <!-- PHẦN THAO TÁC (ẨN/HIỆN KHI CLICK) -->
                         <div id="${actionId}" class="hidden bg-slate-900/60 border-t border-slate-700/50 p-2 grid grid-cols-3 gap-2">
                             
-                            <!-- Nút Lịch sử -->
                             <button onclick="openHistoryModal('${safeEmail}'); event.stopPropagation();" class="flex flex-col items-center justify-center py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-600 transition">
                                 <i class="fa-solid fa-clock-rotate-left text-sm mb-1"></i>
                                 <span class="text-[10px] font-semibold">Lịch sử</span>
                             </button>
 
-                            <!-- Nút Sửa ngày -->
                             <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}'); event.stopPropagation();" class="flex flex-col items-center justify-center py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 rounded-lg border border-indigo-500/30 transition">
                                 <i class="fa-solid fa-pen-to-square text-sm mb-1"></i>
                                 <span class="text-[10px] font-semibold">Sửa hạn</span>
                             </button>
 
-                            <!-- Nút Cấp/Thu quyền -->
                             ${currentUserRole === 'super_admin' && safeEmail !== window.auth.currentUser.email ? (
                                 role === 'user' 
                                 ? `<button onclick="changeRole('${safeEmail}', 'admin'); event.stopPropagation();" class="flex flex-col items-center justify-center py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 rounded-lg border border-amber-500/30 transition">
@@ -1136,7 +1077,6 @@ def build_auth_lite_js(config):
                 });
             }
 
-            // Hàm xử lý bung/thu gọn thẻ
             window.toggleUserCard = function(actionId) {
                 var actionDiv = document.getElementById(actionId);
                 var icon = document.getElementById('icon-' + actionId);
@@ -1144,10 +1084,10 @@ def build_auth_lite_js(config):
 
                 if (actionDiv.classList.contains('hidden')) {
                     actionDiv.classList.remove('hidden');
-                    icon.style.transform = 'rotate(180deg)'; // Xoay mũi tên lên
+                    icon.style.transform = 'rotate(180deg)';
                 } else {
                     actionDiv.classList.add('hidden');
-                    icon.style.transform = 'rotate(0deg)'; // Xoay mũi tên xuống
+                    icon.style.transform = 'rotate(0deg)';
                 }
             };
 
@@ -1301,7 +1241,6 @@ def build_auth_lite_js(config):
                 }
             };
 
-            // --- LỊCH SỬ GIAO DỊCH ---
             window.openHistoryModal = async function(email) {
                 document.getElementById('historyEmailText').innerText = "Tài khoản: " + email;
                 document.getElementById('historyModal').classList.remove('hidden');
