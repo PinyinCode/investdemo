@@ -10,8 +10,8 @@ def build_auth_lite_css():
         #authOverlay { 
             position: fixed !important; 
             inset: 0 !important; 
-            width: 100vw !important; 
-            height: 100vh !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Dùng 100% thay vì 100vh để fix lỗi thanh địa chỉ mobile */
             z-index: 99999999 !important; 
             background: #0f172a !important; 
             display: flex !important; 
@@ -19,7 +19,6 @@ def build_auth_lite_css():
             justify-content: center !important; 
             padding: 1rem !important; 
             box-sizing: border-box !important;
-            overflow-y: auto !important;
             opacity: 1;
             visibility: visible;
             transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -119,7 +118,6 @@ def build_auth_lite_html(config):
     packages_html = ""
     for p in packages:
         save_badge = f'<span style="background:#10b981;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;">{p["save"]}</span>' if p.get("save") else ""
-        # Đã thêm data-days vào thẻ để JS có thể lấy số ngày chính xác
         packages_html += f"""
         <div onclick="selectPackage('{p['id']}', {p['amount']}, '{p['label']}', {p.get('days', 30)})" class="package-item" id="pkg_{p['id']}">
             <div><div style="font-weight:bold; color:#fff; font-size:0.9rem;">{p['label']} {save_badge}</div></div>
@@ -220,12 +218,14 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
-        // HÀM ĐĂNG XUẤT AN TOÀN - KHÓA CỨNG TRANG NGAY LẬP TỨC
+        // HÀM ĐĂNG XUẤT AN TOÀN - CHỐNG LỆCH MODAL TRÊN MOBILE
         window.triggerSignOut = async function() {{
+            // Ép cuộn trang về đầu để modal luôn hiện ngay ngắn
+            window.scrollTo(0, 0);
+
             var authOverlay = document.getElementById('authOverlay');
             if (authOverlay) authOverlay.classList.remove('hidden');
-            document.body.classList.add('auth-locked');
-
+            
             var adminModal = document.getElementById('admin-modal');
             if (adminModal) adminModal.classList.add('hidden');
             
@@ -251,7 +251,6 @@ def build_auth_lite_js(config):
                 
                 if (user) {{
                     if (authOverlay) authOverlay.classList.add('hidden');
-                    document.body.classList.remove('auth-locked');
                     
                     await checkUserPermission(user);
                     if (typeof window.onAuthReady === 'function') {{
@@ -259,7 +258,6 @@ def build_auth_lite_js(config):
                     }}
                 }} else {{
                     if (authOverlay) authOverlay.classList.remove('hidden');
-                    document.body.classList.add('auth-locked');
                     if (adminModal) adminModal.classList.add('hidden');
                     
                     var adminList = document.getElementById('admin-users-list');
@@ -406,7 +404,7 @@ def build_auth_lite_js(config):
             window.selectPackage = function(id, amount, label, days) {{
                 selectedPkgId = id;
                 selectedAmount = amount;
-                selectedDays = days || 30; // Lưu số ngày để gửi lên server
+                selectedDays = days || 30;
                 
                 document.querySelectorAll('.package-item').forEach(function(el) {{ el.classList.remove('active'); }});
                 var el = document.getElementById('pkg_' + id);
