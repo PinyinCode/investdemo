@@ -178,11 +178,16 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     }
 
     // ══════════════════════════════════════════════════
-    // LOAD DATA
+    // LOAD DATA & PING CHECK
     // ══════════════════════════════════════════════════
     async function loadData(showSpinner = false) {
         const icon = document.getElementById('refresh-icon');
         if (showSpinner && icon) icon.classList.add('spinner');
+        
+        // Setup UI elements cho status
+        const statusDot = document.getElementById('api-status-dot');
+        const statusText = document.getElementById('api-status-text');
+
         try {
             const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                 fetch('screener_results.json?t=' + new Date().getTime()),
@@ -194,16 +199,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (ratesRes.ok) symbolSimRates = await ratesRes.json();
             if (detailsRes.ok) quarterlyMeanDetails = await detailsRes.json();
 
-            try {
-                const timeRes = await fetch(`${PRICE_API_URL}/api/last-update?t=` + new Date().getTime());
-                if (timeRes.ok) {
-                    const timeData = await timeRes.json();
-                    if (timeData.last_update && timeData.last_update !== "Chưa có dữ liệu") {
-                        document.getElementById('header-last-update').innerText = timeData.last_update;
-                    }
-                }
-            } catch (e) { console.warn("Không lấy được giờ cập nhật:", e); }
-
             let rawStockData = {};
             try {
                 const dataRes = await fetch('data.json?t=' + new Date().getTime());
@@ -212,12 +207,34 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
 
             let mongoPrices = {};
             try {
+                // ĐO THỜI GIAN PHẢN HỒI API
+                const startPing = performance.now();
                 const mongoRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
+                const endPing = performance.now();
+                const pingMs = Math.round(endPing - startPing);
+
                 if (mongoRes.ok) {
                     const mongoJson = await mongoRes.json();
                     mongoPrices = mongoJson.data || {};
+                    
+                    // CẬP NHẬT UI: ONLINE
+                    if (statusDot && statusText) {
+                        statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                        statusText.innerText = `API: ${pingMs} ms`;
+                        statusText.className = 'text-emerald-400 font-semibold';
+                    }
+                } else {
+                    throw new Error("API Error");
                 }
-            } catch (e) { console.warn("Không lấy được giá từ MongoDB:", e); }
+            } catch (e) { 
+                console.warn("Không lấy được giá từ MongoDB:", e); 
+                // CẬP NHẬT UI: OFFLINE
+                if (statusDot && statusText) {
+                    statusDot.className = 'w-2 h-2 rounded-full bg-rose-500';
+                    statusText.innerText = `API: Mất kết nối`;
+                    statusText.className = 'text-rose-400 font-semibold';
+                }
+            }
 
             screenerResults = screenerData.map(item => {
                 const sym = item.symbol;
@@ -777,18 +794,15 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (!res.ok) throw new Error("Không tìm thấy file");
             currentSymbolHistory = await res.json();
 
-            // Hàm phụ trợ chuẩn hóa thời gian về YYYY-MM-DD
             const normalizeTime = (timeStr) => {
                 if (!timeStr) return null;
                 if (typeof timeStr === 'number') {
                     const d = new Date(timeStr * 1000);
                     return d.toISOString().split('T')[0];
                 }
-                // Nếu có kèm giờ phút, cắt bỏ
                 return timeStr.toString().split(' ')[0].split('T')[0];
             };
 
-            // 1. Chuẩn hóa dữ liệu D1 (Ngày)
             if (currentSymbolHistory.history_d1) {
                 currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
                     .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
@@ -802,7 +816,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 currentSymbolHistory.history_d1 = [];
             }
 
-            // 2. Chuẩn hóa dữ liệu W1 (Tuần)
             if (currentSymbolHistory.history_w1) {
                 currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1
                     .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
@@ -814,7 +827,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     }));
             }
 
-            // 3. Chuẩn hóa dữ liệu MN (Tháng)
             if (currentSymbolHistory.history_mn) {
                 currentSymbolHistory.history_mn = currentSymbolHistory.history_mn
                     .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
@@ -826,7 +838,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     }));
             }
 
-            // 4. Xử lý nến Live (Ngày hôm nay) từ API
             let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
             const tradingDate = item && item.trading_date ? normalizeTime(item.trading_date) : null;
 
@@ -835,7 +846,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             let itemLow = (item.low || 0) * 1000;
             let itemVolume = item.volume || 0;
             
-            // Xử lý giá nếu API trả về chưa nhân 1000
             if (currentPrice > 0 && currentPrice < 1000) currentPrice *= 1000;
             if (itemOpen > 0 && itemOpen < 1000) itemOpen *= 1000;
             if (itemHigh > 0 && itemHigh < 1000) itemHigh *= 1000;
@@ -845,13 +855,11 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 const existingBarIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === tradingDate);
 
                 if (existingBarIndex !== -1) {
-                    // Nếu nến hôm nay đã có trong history (có thể do file json đã cập nhật), chỉ cập nhật giá đóng cửa
                     currentSymbolHistory.history_d1[existingBarIndex].close = currentPrice;
                     if (itemHigh > 0) currentSymbolHistory.history_d1[existingBarIndex].high = Math.max(currentSymbolHistory.history_d1[existingBarIndex].high, itemHigh);
                     if (itemLow > 0)  currentSymbolHistory.history_d1[existingBarIndex].low  = Math.min(currentSymbolHistory.history_d1[existingBarIndex].low, itemLow);
                     if (itemVolume > 0) currentSymbolHistory.history_d1[existingBarIndex].volume = itemVolume;
                 } else {
-                    // Nếu chưa có, tạo nến mới chèn vào
                     const hasValidOHLC = itemOpen > 0 && itemHigh > 0 && itemLow > 0;
                     if (hasValidOHLC) {
                         currentSymbolHistory.history_d1.push({
@@ -863,11 +871,9 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 }
             }
 
-            // 5. SẮP XẾP LẠI VÀ LỌC TRÙNG (Cực kỳ quan trọng để chart không bị lỗi)
             currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
             currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter((v, i, a) => a.findIndex(t => t.time === v.time) === i);
 
-            // Debug: In ra console để bạn kiểm tra (nếu cần)
             console.log("Nến cuối cùng chuẩn bị vẽ:", currentSymbolHistory.history_d1.at(-1));
 
             renderChartInstance(currentSymbolHistory);
@@ -1108,11 +1114,30 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     if (res.ok) {
                         const data = await res.json();
                         lastUpdateTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
+                        
+                        const dataRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
+                        let mongoPrices = {};
+                        if (dataRes.ok) {
+                            const mongoJson = await dataRes.json();
+                            mongoPrices = mongoJson.data || {};
+                        }
+
                         chunk.forEach(sym => {
                             if (data.updated_data && data.updated_data[sym] !== undefined) {
                                 const price = data.updated_data[sym];
                                 const item = screenerResults.find(s => s.symbol === sym);
-                                if (item) { item.close_price = price; item.updated_at = lastUpdateTime; }
+                                if (item) { 
+                                    item.close_price = price; 
+                                    
+                                    // KHÔNG CẬP NHẬT THỜI GIAN NẾU ĐÃ CHỐT SỔ
+                                    if (!item.is_locked) {
+                                        if (mongoPrices[sym] && mongoPrices[sym].updated_at) {
+                                            item.updated_at = mongoPrices[sym].updated_at;
+                                        } else {
+                                            item.updated_at = lastUpdateTime;
+                                        }
+                                    }
+                                }
                                 addLog(`${sym}: ${formatPrice(price)} đ`, 'success');
                                 updatedCount++;
                             } else { addLog(`${sym}: Không lấy được giá`, 'error'); }
@@ -1135,7 +1160,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 }
             }));
             renderCards();
-            if (lastUpdateTime) { document.getElementById('header-last-update').innerText = lastUpdateTime + " (Toàn bộ)"; }
+            if (lastUpdateTime) { 
+                const cleanTime = lastUpdateTime.replace(/\s*\(.*?\)\s*/g, '').trim();
+                // document.getElementById('header-last-update').innerText = cleanTime; // Bỏ dòng này vì đã đổi thành status API
+            }
             addLog(`Hoàn tất toàn bộ! Đã cập nhật ${updatedCount}/${symbols.length} mã.`, 'success');
             updateProgress(symbols.length, symbols.length);
         } catch (err) {
@@ -1170,9 +1198,24 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 const data = await res.json();
                 if (data.updated_data && data.updated_data[symbol] !== undefined) {
                     const newPrice = data.updated_data[symbol];
-                    const newTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
+                    
+                    const dataRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
+                    let mongoPrices = {};
+                    if (dataRes.ok) {
+                        const mongoJson = await dataRes.json();
+                        mongoPrices = mongoJson.data || {};
+                    }
+
                     const item = screenerResults.find(s => s.symbol === symbol);
-                    if (item) { item.close_price = newPrice; item.updated_at = newTime; }
+                    if (item) { 
+                        item.close_price = newPrice; 
+                        if (!item.is_locked) {
+                            if (mongoPrices[symbol] && mongoPrices[symbol].updated_at) {
+                                item.updated_at = mongoPrices[symbol].updated_at;
+                            }
+                        }
+                    }
+
                     const card = btnElement.closest('.bg-slate-900');
                     if (card) {
                         const priceEl = card.querySelector('.text-emerald-400.leading-tight');
@@ -1182,7 +1225,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                             setTimeout(() => priceEl.classList.remove('text-white', 'bg-emerald-500'), 500);
                         }
                         const timeEl = card.querySelector('.fa-clock').parentElement;
-                        if (timeEl) timeEl.innerHTML = `<i class="fa-regular fa-clock mr-0.5"></i>${newTime}`;
+                        if (timeEl) {
+                            const displayTime = (item && item.updated_at) ? item.updated_at : lastUpdateTime;
+                            timeEl.innerHTML = `<i class="fa-regular fa-clock mr-0.5"></i>${displayTime}`;
+                        }
                     }
                     addLog(`${symbol}: ${formatPrice(newPrice)} đ`, 'success');
                 } else {
