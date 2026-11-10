@@ -11,7 +11,7 @@ def build_auth_lite_css():
             position: fixed !important; 
             inset: 0 !important; 
             width: 100vw !important; 
-            height: 100dvh !important; 
+            height: 100vh !important; 
             z-index: 99999999 !important; 
             background: #0f172a !important; 
             display: flex !important; 
@@ -20,7 +20,6 @@ def build_auth_lite_css():
             padding: 1rem !important; 
             box-sizing: border-box !important;
             overflow-y: auto !important;
-            -webkit-overflow-scrolling: touch !important;
             opacity: 1;
             visibility: visible;
             transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -43,7 +42,7 @@ def build_auth_lite_css():
             text-align: center; 
             color: #f1f5f9; 
             box-sizing: border-box;
-            margin: auto !important; 
+            margin: auto !important; /* Đảm bảo căn giữa tuyệt đối trong flex container */
             transform: scale(1);
             transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -99,13 +98,8 @@ def build_auth_lite_css():
         .auth-msg.error { background: rgba(244,63,94,.12); color: #fda4af; border: 1px solid rgba(244,63,94,.25); }
         .auth-msg.success { background: rgba(16,185,129,.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,.25); }
 
-        /* MODAL QUẢN LÝ TÀI KHOẢN (USER ACCOUNT MODAL) */
-        #userAccountModal { position: fixed; inset: 0; z-index: 10000000; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; }
-        #userAccountModal.show { display: flex; }
-        .account-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 400px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); }
-
         /* MODAL GIA HẠN */
-        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        #renewalModal { position: fixed; inset: 0; z-index: 10000001; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; overflow-y: auto; }
         #renewalModal.show { display: flex; }
         .renewal-box { background: #1e293b; border: 1px solid #334155; border-radius: 20px; width: 100%; max-width: 450px; padding: 2rem; text-align: center; position: relative; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8); margin: auto; max-height: 95vh; overflow-y: auto; }
         .renewal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(244,63,94,0.15); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; border: 2px solid rgba(244,63,94,0.3); }
@@ -134,39 +128,14 @@ def build_auth_lite_html(config):
         </div>
         """
     return f"""
-    <!-- NÚT MỞ MODAL QUẢN LÝ TÀI KHOẢN (Gắn ẩn ở header, JS sẽ điều khiển hiển thị) -->
-    <div id="userExpireBadge" style="display:none;">
-        <button onclick="openUserAccountModal()" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 5px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; transition: 0.2s;" title="Quản lý tài khoản">
-            <i class="fa-solid fa-user-gear"></i> Tài khoản của tôi
+    <!-- HIỂN THỊ HẠN DÙNG KÈM NÚT GIA HẠN CHỦ ĐỘNG CHO USER -->
+    <div id="userExpireBadge" style="display:none; align-items: center; gap: 8px; font-size: 0.75rem;">
+        <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 10px; border-radius: 6px; font-weight: bold;">
+            <i class="fa-solid fa-clock"></i> <span id="expireDateText">Đang tải hạn dùng...</span>
+        </span>
+        <button onclick="openUserRenewalModal()" style="background: #10b981; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s;" title="Gia hạn tài khoản">
+            <i class="fa-solid fa-plus-circle"></i> Gia hạn
         </button>
-    </div>
-
-    <!-- MODAL QUẢN LÝ TÀI KHOẢN RIÊNG CHO USER -->
-    <div id="userAccountModal">
-        <div class="account-box">
-            <button onclick="closeUserAccountModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer;" title="Đóng">✕</button>
-            <div style="width:56px; height:56px; border-radius:50%; background:rgba(16,185,129,0.15); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 1rem; border:2px solid rgba(16,185,129,0.3);">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <h3 class="auth-title" style="margin-bottom:0.25rem;">Thông tin tài khoản</h3>
-            <div id="userAccountEmail" style="font-size:0.85rem; color:#94a3b8; margin-bottom:1.5rem; word-break:break-all;">Đang tải...</div>
-            
-            <div style="background:#0f172a; border:1px solid #334155; border-radius:12px; padding:1rem; margin-bottom:1.5rem; text-align:left;">
-                <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem;">
-                    <span style="color:#94a3b8;"><i class="fa-solid fa-clock"></i> Hạn sử dụng:</span>
-                    <span id="expireDateText" style="font-weight:bold; color:#34d399;">Đang tải...</span>
-                </div>
-            </div>
-
-            <div style="display:flex; flex-direction:column; gap:0.75rem;">
-                <button onclick="openUserRenewalModalFromAccount()" class="auth-btn">
-                    <i class="fa-solid fa-plus-circle"></i> Gia hạn / Nạp tiền
-                </button>
-                <button onclick="triggerSignOut()" style="background:rgba(244,63,94,0.15); color:#f43f5e; border:1px solid rgba(244,63,94,0.3); padding:0.85rem; border-radius:12px; font-weight:bold; font-size:0.9rem; cursor:pointer; width:100%; transition:0.2s;">
-                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
-                </button>
-            </div>
-        </div>
     </div>
 
     <!-- MODAL ĐĂNG NHẬP PHỦ KÍN 100% -->
@@ -213,7 +182,7 @@ def build_auth_lite_html(config):
     <!-- MODAL GIA HẠN / NẠP TIỀN -->
     <div id="renewalModal">
         <div class="renewal-box">
-            <button class="auth-close" onclick="closeRenewalModal()" title="Đóng" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
+            <button class="auth-close" onclick="triggerSignOut()" title="Đăng xuất" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;">✕</button>
             <div class="renewal-icon"><i class="fa-solid fa-clock"></i></div>
             <h2 class="auth-title" style="color:#10b981;">Gia hạn tài khoản</h2>
             <p class="auth-sub">Chọn gói gia hạn để tiếp tục sử dụng hệ thống.</p>
@@ -231,7 +200,7 @@ def build_auth_lite_html(config):
                 <p style="font-size:0.75rem; color:#f59e0b; text-align:left; margin-bottom:10px;"><i class="fa-solid fa-info-circle"></i> Vui lòng chuyển khoản đúng nội dung.</p>
             </div>
             <div style="display:flex; gap:10px; margin-top:1rem;">
-                <button class="auth-btn outline" onclick="closeRenewalModal()" style="background:#334155;">Đóng</button>
+                <button class="auth-btn outline" onclick="triggerSignOut()">Đăng xuất</button>
                 <button class="auth-btn" id="btnConfirmPay" style="display:none;" onclick="confirmPayment()">Tôi đã chuyển khoản</button>
             </div>
         </div>
@@ -259,13 +228,11 @@ def build_auth_lite_js(config):
             }}, 200);
         }}
 
-        // HÀM ĐĂNG XUẤT AN TOÀN
+        // HÀM ĐĂNG XUẤT AN TOÀN - KHÓA CỨNG TRANG NGAY LẬP TỨC
         window.triggerSignOut = async function() {{
             var authOverlay = document.getElementById('authOverlay');
             if (authOverlay) authOverlay.classList.remove('hidden');
-
-            var accountModal = document.getElementById('userAccountModal');
-            if (accountModal) accountModal.classList.remove('show');
+            document.body.classList.add('auth-locked');
 
             var renewal = document.getElementById('renewalModal');
             if (renewal) renewal.classList.remove('show');
@@ -299,23 +266,19 @@ def build_auth_lite_js(config):
                 
                 if (user) {{
                     if (authOverlay) authOverlay.classList.add('hidden');
-                    if (expireBadge) expireBadge.style.display = 'inline-block';
+                    document.body.classList.remove('auth-locked');
+                    if (expireBadge) expireBadge.style.display = 'inline-flex';
                     
-                    var emailEl = document.getElementById('userAccountEmail');
-                    if (emailEl) emailEl.innerText = user.email;
-
                     await checkUserPermission(user);
                     if (typeof window.onAuthReady === 'function') {{
                         try {{ await window.onAuthReady(user); }} catch(e) {{ console.warn(e); }}
                     }}
                 }} else {{
                     if (authOverlay) authOverlay.classList.remove('hidden');
+                    document.body.classList.add('auth-locked');
                     if (expireBadge) expireBadge.style.display = 'none';
                     if (adminModal) adminModal.classList.add('hidden');
                     
-                    var accountModal = document.getElementById('userAccountModal');
-                    if (accountModal) accountModal.classList.remove('show');
-
                     var adminList = document.getElementById('admin-users-list');
                     if (adminList) adminList.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500">Chưa đăng nhập...</td></tr>`;
                     var renewal = document.getElementById('renewalModal');
@@ -373,7 +336,7 @@ def build_auth_lite_js(config):
                 if (!user || !user.email) return;
                 var hasPwd = user.providerData.some(function(p) {{ return p.providerId === 'password'; }});
                 if (hasPwd || sessionStorage.getItem('asked_pwd_' + user.email)) return;
-                sessionStorage.setItem('asked_pwd_' + user.email, '1');
+                sessionStorage.getItem('asked_pwd_' + user.email, '1');
                 document.getElementById('setPwdModal').style.display = 'flex';
             }}
 
@@ -433,23 +396,11 @@ def build_auth_lite_js(config):
             function updateExpireUI(expDate) {{
                 var txt = document.getElementById('expireDateText');
                 if (txt) {{
-                    txt.innerText = expDate.toLocaleDateString('vi-VN');
+                    txt.innerText = 'Hạn dùng: ' + expDate.toLocaleDateString('vi-VN');
                 }}
             }}
 
-            // QUẢN LÝ MODAL TÀI KHOẢN CÁ NHÂN
-            window.openUserAccountModal = function() {{
-                var modal = document.getElementById('userAccountModal');
-                if (modal) modal.classList.add('show');
-            }};
-
-            window.closeUserAccountModal = function() {{
-                var modal = document.getElementById('userAccountModal');
-                if (modal) modal.classList.remove('show');
-            }};
-
-            window.openUserRenewalModalFromAccount = function() {{
-                closeUserAccountModal();
+            window.openUserRenewalModal = function() {{
                 var renewal = document.getElementById('renewalModal');
                 if (renewal) {{
                     renewal.classList.add('show');
@@ -460,11 +411,6 @@ def build_auth_lite_js(config):
                     var btnPay = document.getElementById('btnConfirmPay');
                     if (btnPay) btnPay.style.display = 'none';
                 }}
-            }};
-
-            window.closeRenewalModal = function() {{
-                var renewal = document.getElementById('renewalModal');
-                if (renewal) renewal.classList.remove('show');
             }};
 
             window.selectPackage = function(id, amount, label) {{
