@@ -1,4 +1,4 @@
-name: 2. Run Quant Screener & Simulator
+name: 1. Run Quant Screener & Simulator
 
 on:
   push:
