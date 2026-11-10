@@ -94,7 +94,7 @@ def generate_html():
     # ĐẶT BUILD_AUTH_LITE_HTML Ở ĐẦU TIÊN ĐỂ LUÔN ƯU TIÊN VỀ MẶT DOM
     body_parts = [
         build_auth_lite_html(auth_config),
-        build_admin_modal_html(),
+        
         build_screener_html(),
         build_ai_modal_html(),
         build_chart_modal_html(),
@@ -105,7 +105,7 @@ def generate_html():
     ui_js = build_ui_js()
     auth_js = build_auth_lite_js(auth_config)
     screener_js = build_screener_js()
-    admin_js = build_admin_js()
+    
     core_js = build_core_js(
         price_api_url=PRICE_API_URL,
         firebase_config=firebase_config,
