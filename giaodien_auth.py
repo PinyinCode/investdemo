@@ -287,7 +287,7 @@ def build_auth_lite_js(config):
 
                     if (authOverlay) {
                         authOverlay.classList.remove('hidden');
-                        authOverlay.style.display = 'flex'; 
+                        authOverlay.style.display = ''; // XÓA INLINE STYLE ĐỂ CSS TỰ ĐỘNG HIỂN THỊ FLEX
                     }
                     
                     if (adminModal) {
