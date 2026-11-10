@@ -183,7 +183,7 @@
         "annual_rate_percent": 22.0
     },
     "MSB": {
-        "annual_rate_percent": 7.68
+        "annual_rate_percent": 7.69
     },
     "MSH": {
         "annual_rate_percent": 3.73
@@ -294,7 +294,7 @@
         "annual_rate_percent": -3.19
     },
     "TCX": {
-        "annual_rate_percent": -11.49
+        "annual_rate_percent": -11.52
     },
     "TID": {
         "annual_rate_percent": -17.91
@@ -336,7 +336,7 @@
         "annual_rate_percent": 36.75
     },
     "VIX": {
-        "annual_rate_percent": 0.72
+        "annual_rate_percent": 0.71
     },
     "VJC": {
         "annual_rate_percent": 6.38
@@ -357,7 +357,7 @@
         "annual_rate_percent": -50.0
     },
     "VPI": {
-        "annual_rate_percent": 7.48
+        "annual_rate_percent": 7.5
     },
     "VPL": {
         "annual_rate_percent": -5.99

@@ -427,7 +427,7 @@
         "end_price_mean": 138.11
     },
     "MSB": {
-        "annual_rate_percent": 7.68,
+        "annual_rate_percent": 7.69,
         "start_quarter": "2021Q4",
         "start_price_mean": 10.63,
         "end_quarter": "2026Q4",
@@ -686,11 +686,11 @@
         "end_price_mean": 11.71
     },
     "TCX": {
-        "annual_rate_percent": -11.49,
+        "annual_rate_percent": -11.52,
         "start_quarter": "2025Q4",
         "start_price_mean": 31.48,
         "end_quarter": "2026Q4",
-        "end_price_mean": 28.05
+        "end_price_mean": 28.04
     },
     "TID": {
         "annual_rate_percent": -17.91,
@@ -784,7 +784,7 @@
         "end_price_mean": 229.38
     },
     "VIX": {
-        "annual_rate_percent": 0.72,
+        "annual_rate_percent": 0.71,
         "start_quarter": "2021Q4",
         "start_price_mean": 11.77,
         "end_quarter": "2026Q4",
@@ -833,11 +833,11 @@
         "end_price_mean": 1.1
     },
     "VPI": {
-        "annual_rate_percent": 7.48,
+        "annual_rate_percent": 7.5,
         "start_quarter": "2021Q4",
         "start_price_mean": 35.99,
         "end_quarter": "2026Q4",
-        "end_price_mean": 51.21
+        "end_price_mean": 51.26
     },
     "VPL": {
         "annual_rate_percent": -5.99,
