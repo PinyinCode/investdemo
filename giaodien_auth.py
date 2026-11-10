@@ -280,9 +280,14 @@ def build_auth_lite_html(config):
                         <span class="text-emerald-400 font-bold" id="modalExpireDate">Đang tải...</span>
                     </div>
                 </div>
-                <button onclick="openUserRenewalModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-emerald-900/50">
-                    <i class="fa-solid fa-plus-circle"></i> Gia hạn tài khoản
-                </button>
+                <div class="flex flex-col gap-2">
+                    <button onclick="openUserRenewalModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/50">
+                        <i class="fa-solid fa-plus-circle"></i> Gia hạn tài khoản
+                    </button>
+                    <button onclick="openHistoryModal(window.auth.currentUser.email)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Lịch sử
+                    </button>
+                </div>
             </div>
 
             <div id="adminTabsWrapper" class="flex border-b border-slate-800 bg-slate-950 px-5 gap-4 hidden">
@@ -347,6 +352,39 @@ def build_auth_lite_html(config):
                     <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
                 </button>
                 <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LỊCH SỬ GIA HẠN -->
+    <div id="historyModal" class="fixed inset-0 z-[10000002] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85dvh]">
+            <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
+                <div>
+                    <h3 class="text-sm font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-emerald-400 mr-1.5"></i> Lịch sử giao dịch</h3>
+                    <p class="text-[11px] text-slate-400 mt-0.5" id="historyEmailText">---</p>
+                </div>
+                <button type="button" onclick="closeHistoryModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-4 overflow-y-auto flex-grow">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                      <tr class="border-b border-slate-800 text-slate-400 bg-slate-950">
+                       <th class="p-2">Ngày tạo</th>
+                       <th class="p-2">Gói / Số tiền</th>
+                       <th class="p-2">Mã CK</th>
+                       <th class="p-2">Trạng thái</th>
+                      </tr>
+                     </thead>
+                    <tbody id="history-list" class="divide-y divide-slate-800">
+                        <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải dữ liệu...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 text-right">
+                <button type="button" onclick="closeHistoryModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
             </div>
         </div>
     </div>
@@ -967,6 +1005,9 @@ def build_auth_lite_js(config):
                         <td class="p-3 text-slate-300">${dateStr}</td>
                         <td class="p-3"><div class="flex items-center">${roleBadge} ${roleBtn}</div></td>
                         <td class="p-3 text-right">
+                            <button onclick="openHistoryModal('${safeEmail}')" class="p-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 rounded border border-slate-600 transition mr-1" title="Xem lịch sử nạp tiền">
+                                <i class="fa-solid fa-clock-rotate-left text-[11px]"></i>
+                            </button>
                             <button onclick="openEditExpireModal('${safeEmail}', '${data.expiresAt || ''}')" class="p-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 rounded border border-indigo-500/30 transition" title="Sửa hạn sử dụng">
                                 <i class="fa-solid fa-pen-to-square text-[11px]"></i>
                             </button>
@@ -1124,6 +1165,72 @@ def build_auth_lite_js(config):
                 } catch (e) {
                     alert('Lỗi xóa yêu cầu: ' + e.message);
                 }
+            };
+
+            // --- LỊCH SỬ GIAO DỊCH ---
+            window.openHistoryModal = async function(email) {
+                document.getElementById('historyEmailText').innerText = "Tài khoản: " + email;
+                document.getElementById('historyModal').classList.remove('hidden');
+                
+                var listEl = document.getElementById('history-list');
+                listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Đang tải lịch sử...</td></tr>`;
+                
+                try {
+                    var snapshot = await window.db.collection('renewal_requests')
+                        .where('email', '==', email.toLowerCase())
+                        .get();
+                        
+                    if (snapshot.empty) {
+                        listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Chưa có giao dịch nào.</td></tr>`;
+                        return;
+                    }
+                    
+                    var history = [];
+                    snapshot.forEach(function(doc) {
+                        var data = doc.data();
+                        data.id = doc.id;
+                        history.push(data);
+                    });
+                    
+                    history.sort(function(a, b) {
+                        var dateA = a.createdAt ? parseDate(a.createdAt).getTime() : 0;
+                        var dateB = b.createdAt ? parseDate(b.createdAt).getTime() : 0;
+                        return dateB - dateA;
+                    });
+                    
+                    listEl.innerHTML = '';
+                    history.forEach(function(data) {
+                        var dateStr = '—';
+                        if (data.createdAt) {
+                            var d = parseDate(data.createdAt);
+                            if (d) {
+                                dateStr = d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'});
+                            }
+                        }
+                        
+                        var statusStr = '';
+                        if (data.status === 'pending') statusStr = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Chờ duyệt</span>';
+                        else if (data.status === 'approved') statusStr = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Thành công</span>';
+                        else statusStr = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700">${data.status}</span>`;
+                        
+                        var tr = document.createElement('tr');
+                        tr.className = "hover:bg-slate-800/50 transition";
+                        tr.innerHTML = `
+                            <td class="p-2 text-slate-300">${dateStr}</td>
+                            <td class="p-2 text-emerald-400 font-bold">${data.packageId} (${data.amount ? data.amount.toLocaleString() : 0}đ)</td>
+                            <td class="p-2 font-mono text-amber-300">${data.code}</td>
+                            <td class="p-2">${statusStr}</td>
+                        `;
+                        listEl.appendChild(tr);
+                    });
+                    
+                } catch(e) {
+                    listEl.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-rose-400">Lỗi tải lịch sử: ${e.message}</td></tr>`;
+                }
+            };
+
+            window.closeHistoryModal = function() {
+                document.getElementById('historyModal').classList.add('hidden');
             };
 
             function showMsg(id, text, type) {
