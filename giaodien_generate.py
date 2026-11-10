@@ -91,10 +91,9 @@ def generate_html():
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
-    # ĐẶT BUILD_AUTH_LITE_HTML Ở ĐẦU TIÊN ĐỂ LUÔN ƯU TIÊN VỀ MẶT DOM
+    # ĐẶT BUILD_AUTH_LITE_HTML Ở ĐẦU TIÊN (Đã gộp cả Admin Modal vào auth)
     body_parts = [
         build_auth_lite_html(auth_config),
-        
         build_screener_html(),
         build_ai_modal_html(),
         build_chart_modal_html(),
@@ -118,6 +117,8 @@ def generate_html():
     cheap_groups_clean = _json_blob(cheap_stocks_groups)
     cheap_symbols_clean = _json_blob(sorted(cheap_symbols_set))
 
+    # Đã xóa dòng document.body.classList.add('auth-locked'); 
+    # và xóa dòng admin_js ra khỏi full_js vì đã gộp vào auth
     full_js = "\n\n".join([
         f"/* ══ CONFIG ══ */\n"
         f"const PRICE_API_URL = {json.dumps(PRICE_API_URL)};\n"
@@ -126,13 +127,10 @@ def generate_html():
         f"const cheapSymbolsSet = new Set({cheap_symbols_clean});\n"
         f"if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);\n"
         f"window.auth = firebase.auth();\n"
-        f"window.db = firebase.firestore();\n"
-        f"// 🔴 ÉP KHÓA CỨNG NGAY LẬP TỨC KHI VỪA TẢI TRANG ĐỂ CHỐNG LỘ NỘI DUNG\n"
-        f"document.body.classList.add('auth-locked');",
+        f"window.db = firebase.firestore();",
 
         f"/* ══ UI BASE JS ══ */\n{ui_js}",
         f"/* ══ SCREENER JS ══ */\n{screener_js}",
-        f"/* ══ ADMIN JS ══ */\n{admin_js}",
         f"/* ══ CORE JS ══ */\n{core_js}",
     ])
 
