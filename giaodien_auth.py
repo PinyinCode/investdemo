@@ -308,6 +308,17 @@ def build_auth_lite_js(config):
         var selectedAmount = 0;
         var selectedDays = 30;
         
+        // HÀM PARSE DATE AN TOÀN (Xử lý mọi định dạng ngày tháng)
+        function parseDate(val) {
+            if (!val) return null;
+            if (typeof val.toDate === 'function') return val.toDate(); // Firebase Timestamp
+            if (typeof val === 'object' && val.seconds !== undefined) {
+                return new Date(val.seconds * 1000); // Object thô của Firestore
+            }
+            var d = new Date(val);
+            return isNaN(d.getTime()) ? null : d; // Chuỗi ISO
+        }
+        
         function waitAuth(cb) {
             var t = setInterval(function() {
                 if (typeof firebase !== 'undefined' && typeof window.auth !== 'undefined' && typeof window.db !== 'undefined') {
@@ -466,11 +477,13 @@ def build_auth_lite_js(config):
                         updateExpireUI(expireDate);
                     } else {
                         var data = doc.data();
-                        if (data.expiresAt) {
-                            var exp = new Date(data.expiresAt);
-                            updateExpireUI(exp);
+                        var expDateObj = parseDate(data.expiresAt);
+                        
+                        if (expDateObj) {
+                            updateExpireUI(expDateObj);
                             
-                            if (data.role !== 'admin' && new Date() > exp) {
+                            // Kiểm tra hết hạn chính xác
+                            if (data.role !== 'admin' && new Date() > expDateObj) {
                                 document.getElementById('renewalModal').classList.add('show');
                                 var authOverlay = document.getElementById('authOverlay');
                                 if (authOverlay) authOverlay.classList.add('hidden');
@@ -621,17 +634,8 @@ def build_auth_lite_js(config):
                             if (renewBtn) renewBtn.style.display = 'flex';
                             
                             // XỬ LÝ NGÀY THÁNG AN TOÀN
-                            var expDateText = "Chưa cập nhật";
-                            if (data.expiresAt) {
-                                var d = new Date(data.expiresAt);
-                                if (typeof data.expiresAt.toDate === 'function') {
-                                    d = data.expiresAt.toDate();
-                                }
-                                if (!isNaN(d.getTime())) {
-                                    expDateText = d.toLocaleDateString('vi-VN');
-                                }
-                            }
-                            document.getElementById('modalExpireDate').innerText = expDateText;
+                            var expDateObj = parseDate(data.expiresAt);
+                            document.getElementById('modalExpireDate').innerText = expDateObj ? expDateObj.toLocaleDateString('vi-VN') : 'Chưa cập nhật';
                         }
                     }
                 } catch (e) {
@@ -676,21 +680,21 @@ def build_auth_lite_js(config):
                         users.push(data);
                     });
 
+                    // Sắp xếp ngày giảm dần
                     users.sort(function(a, b) {
-                        var dateA = a.expiresAt ? new Date(a.expiresAt).getTime() : 0;
-                        var dateB = b.expiresAt ? new Date(b.expiresAt).getTime() : 0;
+                        var dateA = parseDate(a.expiresAt) ? parseDate(a.expiresAt).getTime() : 0;
+                        var dateB = parseDate(b.expiresAt) ? parseDate(b.expiresAt).getTime() : 0;
                         return dateB - dateA;
                     });
 
                     users.forEach(function(data) {
                         var dateStr = '—';
-                        if (data.expiresAt) {
-                            var d = new Date(data.expiresAt);
-                            if (!isNaN(d.getTime())) {
-                                dateStr = d.toLocaleDateString('vi-VN');
-                            } else {
-                                dateStr = '<span class="text-rose-400 text-[10px]">Lỗi data</span>';
-                            }
+                        var expDateObj = parseDate(data.expiresAt);
+                        
+                        if (expDateObj) {
+                            dateStr = expDateObj.toLocaleDateString('vi-VN');
+                        } else if (data.expiresAt) {
+                            dateStr = '<span class="text-rose-400 text-[10px]">Lỗi data</span>';
                         }
 
                         var tr = document.createElement('tr');
@@ -751,7 +755,7 @@ def build_auth_lite_js(config):
                     
                     var newExp = new Date();
                     if (userDoc.exists && userDoc.data().expiresAt) {
-                        var currentExp = new Date(userDoc.data().expiresAt);
+                        var currentExp = parseDate(userDoc.data().expiresAt);
                         if (currentExp > newExp) newExp = currentExp;
                     }
                     newExp.setDate(newExp.getDate() + (daysToAdd || 30));
