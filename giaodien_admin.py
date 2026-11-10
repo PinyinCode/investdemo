@@ -1,29 +1,46 @@
 # -*- coding: utf-8 -*-
-"""giaodien_admin.py — Modal admin panel."""
-
+"""giaodien_admin.py — Modal admin panel & User Profile."""
 
 def build_admin_modal_html():
     return r"""
-    <!-- MODAL ADMIN -->
-    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
+    <!-- MODAL CHUNG: USER PROFILE + ADMIN PANEL -->
+    <div id="admin-modal" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-4">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
+            
+            <!-- HEADER MODAL -->
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-user-shield text-amber-400"></i>
-                    <h3 class="text-sm font-bold text-white">Quản Trị Hệ Thống (Admin Panel)</h3>
+                    <i class="fa-solid fa-circle-user text-emerald-400 text-lg"></i>
+                    <h3 class="text-sm font-bold text-white" id="modalTitle">Tài khoản của tôi</h3>
                 </div>
                 <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            
-            <!-- TAB SWITCHER -->
-            <div class="flex border-b border-slate-800 bg-slate-950 px-5 gap-4">
+
+            <!-- PHẦN THÔNG TIN USER -->
+            <div class="p-5 bg-slate-800/50 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <div class="text-[11px] text-slate-400 mb-1 uppercase tracking-wider font-semibold">Email đăng nhập</div>
+                    <div class="text-sm font-bold text-white" id="modalUserEmail">---</div>
+                    <div class="text-xs text-slate-400 mt-2">
+                        <i class="fa-solid fa-clock text-emerald-500"></i> Hạn sử dụng: 
+                        <span class="text-emerald-400 font-bold" id="modalExpireDate">Đang tải...</span>
+                    </div>
+                </div>
+                <button onclick="openUserRenewalModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-emerald-900/50">
+                    <i class="fa-solid fa-plus-circle"></i> Gia hạn tài khoản
+                </button>
+            </div>
+
+            <!-- TAB SWITCHER (Chỉ hiện nếu là Admin) -->
+            <div id="adminTabsWrapper" class="flex border-b border-slate-800 bg-slate-950 px-5 gap-4 hidden">
                 <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition">Quản lý Người dùng</button>
                 <button onclick="switchAdminTab('renewals')" id="tabBtnRenewals" class="py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition">Duyệt Gia hạn (<span id="pendingCount">0</span>)</button>
             </div>
 
-            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+            <!-- NỘI DUNG TAB (Chỉ hiện nếu là Admin) -->
+            <div id="adminTabsContent" class="p-5 overflow-y-auto space-y-4 flex-grow hidden">
                 <!-- TAB 1: USERS -->
                 <div id="adminTabUsers" class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
@@ -58,9 +75,10 @@ def build_admin_modal_html():
                 </div>
             </div>
 
-            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center">
+            <!-- FOOTER MODAL -->
+            <div class="bg-slate-950 px-5 py-3 border-t border-slate-800 flex justify-between items-center mt-auto">
                 <button type="button" onclick="triggerSignOut()" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
-                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất tài khoản
+                    <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
                 </button>
                 <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold">Đóng</button>
             </div>
@@ -68,11 +86,10 @@ def build_admin_modal_html():
     </div>
     """
 
-
 def build_admin_js():
     return r"""
     // ══════════════════════════════════════════════════
-    // ADMIN PANEL & RENEWALS JS
+    // ADMIN PANEL & USER PROFILE JS
     // ══════════════════════════════════════════════════
 
     function switchAdminTab(tab) {
@@ -96,13 +113,53 @@ def build_admin_js():
         }
     }
 
+    // Hàm mở modal chung (thay thế openAdminModal cũ)
     async function openAdminModal() {
+        if (!window.auth || !window.auth.currentUser) return;
+        
         document.getElementById('admin-modal').classList.remove('hidden');
-        switchAdminTab('users');
+        
+        // 1. Điền thông tin User
+        const email = window.auth.currentUser.email;
+        document.getElementById('modalUserEmail').innerText = email;
+        
+        const expText = document.getElementById('hiddenExpireDate');
+        document.getElementById('modalExpireDate').innerText = expText ? expText.innerText : 'Chưa rõ';
+
+        // 2. Kiểm tra quyền Admin để hiện Tabs
+        try {
+            if (!window.db) return;
+            const doc = await window.db.collection('allowed_users').doc(email.toLowerCase()).get();
+            const isAdmin = doc.exists && doc.data().role === 'admin';
+            
+            const tabsWrapper = document.getElementById('adminTabsWrapper');
+            const tabsContent = document.getElementById('adminTabsContent');
+            
+            if (isAdmin) {
+                tabsWrapper.classList.remove('hidden');
+                tabsContent.classList.remove('hidden');
+                document.getElementById('modalTitle').innerText = "Quản Trị Hệ Thống (Admin)";
+                switchAdminTab('users'); // Load tab users mặc định
+            } else {
+                tabsWrapper.classList.add('hidden');
+                tabsContent.classList.add('hidden');
+                document.getElementById('modalTitle').innerText = "Tài khoản của tôi";
+            }
+        } catch (e) {
+            console.warn("Không thể check quyền admin", e);
+        }
     }
 
     function closeAdminModal() {
         document.getElementById('admin-modal').classList.add('hidden');
+    }
+
+    // Hàm escape HTML chống XSS
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>"']/g, function(m) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+        });
     }
 
     async function loadAdminUsers() {
@@ -121,8 +178,10 @@ def build_admin_js():
                 const expDate = data.expiresAt ? new Date(data.expiresAt) : null;
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/50 transition";
+                // Áp dụng escapeHTML cho email chống XSS
+                const safeEmail = escapeHTML(data.email || doc.id);
                 tr.innerHTML = `
-                    <td class="p-3 font-semibold text-white">${data.email || doc.id}</td>
+                    <td class="p-3 font-semibold text-white">${safeEmail}</td>
                     <td class="p-3 text-slate-300">${expDate ? expDate.toLocaleDateString('vi-VN') : '—'}</td>
                     <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${data.role === 'admin' ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-300'}">${data.role || 'user'}</span></td>
                 `;
@@ -149,12 +208,14 @@ def build_admin_js():
                 const data = doc.data();
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-800/50 transition";
+                // Áp dụng escapeHTML chống XSS
+                const safeEmail = escapeHTML(data.email);
                 tr.innerHTML = `
-                    <td class="p-3 font-semibold text-white">${data.email}</td>
+                    <td class="p-3 font-semibold text-white">${safeEmail}</td>
                     <td class="p-3 text-emerald-400 font-bold">${data.packageId} (${data.amount?.toLocaleString()}đ)</td>
                     <td class="p-3 font-mono text-amber-300">${data.code}</td>
                     <td class="p-3">
-                        <button onclick="approveRenewal('${doc.id}', '${data.email}', '${data.packageId}')" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[11px] font-bold transition">Duyệt</button>
+                        <button onclick="approveRenewal('${doc.id}', '${data.email}', '${data.packageId}', ${data.days || 30})" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[11px] font-bold transition">Duyệt</button>
                     </td>
                 `;
                 listEl.appendChild(tr);
@@ -164,13 +225,10 @@ def build_admin_js():
         }
     }
 
-    async function approveRenewal(reqId, email, packageId) {
+    // Sử dụng số ngày (days) truyền vào thay vì đoán qua tên gói
+    async function approveRenewal(reqId, email, packageId, daysToAdd) {
         if (!confirm(`Xác nhận duyệt gia hạn cho ${email} (${packageId})?`)) return;
         try {
-            let daysToAdd = 30;
-            if (packageId.includes('3th')) daysToAdd = 90;
-            if (packageId.includes('1nam') || packageId.includes('year')) daysToAdd = 365;
-
             const userRef = window.db.collection('allowed_users').doc(email.toLowerCase());
             const userDoc = await userRef.get();
             
@@ -179,7 +237,7 @@ def build_admin_js():
                 let currentExp = new Date(userDoc.data().expiresAt);
                 if (currentExp > newExp) newExp = currentExp;
             }
-            newExp.setDate(newExp.getDate() + daysToAdd);
+            newExp.setDate(newExp.getDate() + (daysToAdd || 30));
 
             await userRef.set({ expiresAt: newExp.toISOString() }, { merge: true });
             await window.db.collection('renewal_requests').doc(reqId).update({ status: 'approved' });
