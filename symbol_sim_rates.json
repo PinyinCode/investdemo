@@ -3,7 +3,7 @@
         "annual_rate_percent": 9.1
     },
     "ANV": {
-        "annual_rate_percent": 3.13
+        "annual_rate_percent": 3.17
     },
     "APH": {
         "annual_rate_percent": -26.25
@@ -12,61 +12,61 @@
         "annual_rate_percent": -17.79
     },
     "BAF": {
-        "annual_rate_percent": 21.83
+        "annual_rate_percent": 21.85
     },
     "BCM": {
-        "annual_rate_percent": -6.76
+        "annual_rate_percent": -6.8
     },
     "BID": {
-        "annual_rate_percent": 7.56
+        "annual_rate_percent": 7.52
     },
     "BMP": {
-        "annual_rate_percent": 30.86
+        "annual_rate_percent": 30.9
     },
     "BSI": {
-        "annual_rate_percent": -2.23
+        "annual_rate_percent": -2.19
     },
     "BSR": {
-        "annual_rate_percent": 18.38
+        "annual_rate_percent": 18.35
     },
     "BVH": {
-        "annual_rate_percent": 6.28
+        "annual_rate_percent": 6.25
     },
     "BWE": {
-        "annual_rate_percent": 3.67
+        "annual_rate_percent": 3.66
     },
     "CEO": {
         "annual_rate_percent": -16.79
     },
     "CII": {
-        "annual_rate_percent": -12.61
+        "annual_rate_percent": -12.66
     },
     "CMG": {
-        "annual_rate_percent": -6.31
+        "annual_rate_percent": -6.35
     },
     "CSM": {
         "annual_rate_percent": -7.62
     },
     "CTD": {
-        "annual_rate_percent": 3.06
+        "annual_rate_percent": 3.08
     },
     "CTG": {
-        "annual_rate_percent": 9.15
+        "annual_rate_percent": 9.18
     },
     "CTR": {
-        "annual_rate_percent": 4.95
+        "annual_rate_percent": 4.93
     },
     "CTS": {
-        "annual_rate_percent": 5.28
+        "annual_rate_percent": 5.29
     },
     "DBC": {
-        "annual_rate_percent": -7.53
+        "annual_rate_percent": -7.56
     },
     "DCM": {
-        "annual_rate_percent": 4.35
+        "annual_rate_percent": 4.27
     },
     "DGW": {
-        "annual_rate_percent": -2.12
+        "annual_rate_percent": -2.25
     },
     "DHC": {
         "annual_rate_percent": -3.45
@@ -75,76 +75,76 @@
         "annual_rate_percent": 1.54
     },
     "DIG": {
-        "annual_rate_percent": -28.71
+        "annual_rate_percent": -28.76
     },
     "DPM": {
-        "annual_rate_percent": 2.49
+        "annual_rate_percent": 2.45
     },
     "DRC": {
         "annual_rate_percent": -14.47
     },
     "DSE": {
-        "annual_rate_percent": -4.17
+        "annual_rate_percent": -4.2
     },
     "DXG": {
-        "annual_rate_percent": -14.03
+        "annual_rate_percent": -14.04
     },
     "EIB": {
-        "annual_rate_percent": -2.15
+        "annual_rate_percent": -2.21
     },
     "EVF": {
-        "annual_rate_percent": -4.11
+        "annual_rate_percent": -4.13
     },
     "FPT": {
-        "annual_rate_percent": 5.31
+        "annual_rate_percent": 5.25
     },
     "FRT": {
-        "annual_rate_percent": 37.16
+        "annual_rate_percent": 37.0
     },
     "FTS": {
-        "annual_rate_percent": -6.54
+        "annual_rate_percent": -6.44
     },
     "GAS": {
-        "annual_rate_percent": 3.18
+        "annual_rate_percent": 3.23
     },
     "GEE": {
-        "annual_rate_percent": 38.81
+        "annual_rate_percent": 38.75
     },
     "GEX": {
-        "annual_rate_percent": -1.76
+        "annual_rate_percent": -1.87
     },
     "GMD": {
-        "annual_rate_percent": 17.33
+        "annual_rate_percent": 17.39
     },
     "GVR": {
-        "annual_rate_percent": -2.49
+        "annual_rate_percent": -2.77
     },
     "HAG": {
-        "annual_rate_percent": 7.27
+        "annual_rate_percent": 7.04
     },
     "HAH": {
         "annual_rate_percent": 19.41
     },
     "HCM": {
-        "annual_rate_percent": 4.65
+        "annual_rate_percent": 4.63
     },
     "HDB": {
-        "annual_rate_percent": 19.37
+        "annual_rate_percent": 19.34
     },
     "HDG": {
-        "annual_rate_percent": -12.5
+        "annual_rate_percent": -12.49
     },
     "HHV": {
-        "annual_rate_percent": -12.12
+        "annual_rate_percent": -12.15
     },
     "HPG": {
-        "annual_rate_percent": -3.57
+        "annual_rate_percent": -3.46
     },
     "HSG": {
-        "annual_rate_percent": -14.35
+        "annual_rate_percent": -14.25
     },
     "HT1": {
-        "annual_rate_percent": -10.24
+        "annual_rate_percent": -10.26
     },
     "HVN": {
         "annual_rate_percent": 2.24
@@ -156,22 +156,22 @@
         "annual_rate_percent": 3.52
     },
     "KBC": {
-        "annual_rate_percent": -8.5
+        "annual_rate_percent": -8.51
     },
     "KDC": {
-        "annual_rate_percent": -1.04
+        "annual_rate_percent": -1.03
     },
     "KDH": {
-        "annual_rate_percent": -14.41
+        "annual_rate_percent": -14.34
     },
     "KOS": {
-        "annual_rate_percent": -25.95
+        "annual_rate_percent": -26.22
     },
     "LIG": {
         "annual_rate_percent": -29.99
     },
     "LPB": {
-        "annual_rate_percent": 31.13
+        "annual_rate_percent": 31.12
     },
     "MBB": {
         "annual_rate_percent": 13.72
@@ -180,121 +180,121 @@
         "annual_rate_percent": 0.33
     },
     "MCH": {
-        "annual_rate_percent": 22.01
+        "annual_rate_percent": 22.0
     },
     "MSB": {
-        "annual_rate_percent": 7.65
+        "annual_rate_percent": 7.68
     },
     "MSH": {
         "annual_rate_percent": 3.73
     },
     "MSN": {
-        "annual_rate_percent": -11.28
+        "annual_rate_percent": -11.32
     },
     "MWG": {
-        "annual_rate_percent": 3.25
+        "annual_rate_percent": 3.22
     },
     "NAB": {
-        "annual_rate_percent": 13.65
+        "annual_rate_percent": 13.67
     },
     "NKG": {
-        "annual_rate_percent": -14.49
+        "annual_rate_percent": -14.32
     },
     "NLG": {
         "annual_rate_percent": -15.34
     },
     "NT2": {
-        "annual_rate_percent": 4.46
+        "annual_rate_percent": 4.44
     },
     "NTC": {
         "annual_rate_percent": -3.79
     },
     "NVL": {
-        "annual_rate_percent": -33.55
+        "annual_rate_percent": -33.59
     },
     "OCB": {
-        "annual_rate_percent": -2.2
+        "annual_rate_percent": -2.15
     },
     "ORS": {
         "annual_rate_percent": -8.86
     },
     "PAN": {
-        "annual_rate_percent": -8.74
+        "annual_rate_percent": -8.8
     },
     "PC1": {
-        "annual_rate_percent": -2.78
+        "annual_rate_percent": -2.79
     },
     "PDR": {
         "annual_rate_percent": -28.19
     },
     "PHR": {
-        "annual_rate_percent": 1.06
+        "annual_rate_percent": 0.99
     },
     "PLX": {
-        "annual_rate_percent": -5.76
+        "annual_rate_percent": -5.81
     },
     "PNJ": {
-        "annual_rate_percent": -16.97
+        "annual_rate_percent": -17.07
     },
     "POW": {
-        "annual_rate_percent": -0.39
+        "annual_rate_percent": -0.47
     },
     "PVD": {
-        "annual_rate_percent": 7.33
+        "annual_rate_percent": 7.34
     },
     "PVS": {
         "annual_rate_percent": 10.66
     },
     "PVT": {
-        "annual_rate_percent": 9.69
+        "annual_rate_percent": 9.65
     },
     "REE": {
-        "annual_rate_percent": 7.65
+        "annual_rate_percent": 7.71
     },
     "SAB": {
-        "annual_rate_percent": -5.94
+        "annual_rate_percent": -5.89
     },
     "SBA": {
         "annual_rate_percent": 12.8
     },
     "SBT": {
-        "annual_rate_percent": 4.03
+        "annual_rate_percent": 4.01
     },
     "SHB": {
-        "annual_rate_percent": -2.74
+        "annual_rate_percent": -2.71
     },
     "SIP": {
-        "annual_rate_percent": 0.76
+        "annual_rate_percent": 0.79
     },
     "SJS": {
-        "annual_rate_percent": 12.98
+        "annual_rate_percent": 12.93
     },
     "SSB": {
-        "annual_rate_percent": -3.06
+        "annual_rate_percent": -3.14
     },
     "SSI": {
-        "annual_rate_percent": -4.33
+        "annual_rate_percent": -4.37
     },
     "STB": {
-        "annual_rate_percent": 18.72
+        "annual_rate_percent": 18.76
     },
     "SZC": {
         "annual_rate_percent": -13.02
     },
     "TAL": {
-        "annual_rate_percent": 20.0
+        "annual_rate_percent": 20.14
     },
     "TCB": {
-        "annual_rate_percent": 7.1
+        "annual_rate_percent": 7.11
     },
     "TCD": {
         "annual_rate_percent": -45.54
     },
     "TCH": {
-        "annual_rate_percent": -3.18
+        "annual_rate_percent": -3.19
     },
     "TCX": {
-        "annual_rate_percent": -11.62
+        "annual_rate_percent": -11.49
     },
     "TID": {
         "annual_rate_percent": -17.91
@@ -303,78 +303,78 @@
         "annual_rate_percent": 13.81
     },
     "TPB": {
-        "annual_rate_percent": -2.94
+        "annual_rate_percent": -2.97
     },
     "VCB": {
-        "annual_rate_percent": 5.57
+        "annual_rate_percent": 5.54
     },
     "VCG": {
-        "annual_rate_percent": -11.55
+        "annual_rate_percent": -11.59
     },
     "VCI": {
-        "annual_rate_percent": -8.61
+        "annual_rate_percent": -8.6
     },
     "VCK": {
-        "annual_rate_percent": -15.9
+        "annual_rate_percent": -15.79
     },
     "VDP": {
         "annual_rate_percent": 12.3
     },
     "VGC": {
-        "annual_rate_percent": 1.22
+        "annual_rate_percent": 1.11
     },
     "VHC": {
-        "annual_rate_percent": 2.05
+        "annual_rate_percent": 2.06
     },
     "VHM": {
-        "annual_rate_percent": 10.7
+        "annual_rate_percent": 10.69
     },
     "VIB": {
-        "annual_rate_percent": -0.7
+        "annual_rate_percent": -0.74
     },
     "VIC": {
-        "annual_rate_percent": 36.7
+        "annual_rate_percent": 36.74
     },
     "VIX": {
-        "annual_rate_percent": 0.69
+        "annual_rate_percent": 0.72
     },
     "VJC": {
-        "annual_rate_percent": 6.32
+        "annual_rate_percent": 6.38
     },
     "VND": {
-        "annual_rate_percent": -11.53
+        "annual_rate_percent": -11.52
     },
     "VNM": {
-        "annual_rate_percent": -2.71
+        "annual_rate_percent": -2.69
     },
     "VOS": {
         "annual_rate_percent": -8.0
     },
     "VPB": {
-        "annual_rate_percent": 7.48
+        "annual_rate_percent": 7.47
     },
     "VPG": {
         "annual_rate_percent": -50.0
     },
     "VPI": {
-        "annual_rate_percent": 9.59
+        "annual_rate_percent": 7.48
     },
     "VPL": {
-        "annual_rate_percent": -6.26
+        "annual_rate_percent": -6.02
     },
     "VPX": {
-        "annual_rate_percent": -23.81
+        "annual_rate_percent": -23.83
     },
     "VRE": {
-        "annual_rate_percent": -4.28
+        "annual_rate_percent": -4.27
     },
     "VSC": {
-        "annual_rate_percent": -5.12
+        "annual_rate_percent": -5.09
     },
     "VTO": {
         "annual_rate_percent": 5.28
     },
     "VTP": {
-        "annual_rate_percent": 5.17
+        "annual_rate_percent": 5.18
     }
 }
