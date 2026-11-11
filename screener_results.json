@@ -3122,7 +3122,7 @@
         "symbol": "NDN",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 7700.0,
+        "close_price": 7600.0,
         "pe": 13.14,
         "pb": 0.46,
         "ps": 0.0,
@@ -3158,7 +3158,8 @@
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "PTCB chỉ 11/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
+        "final_decision_reason": "PTCB chỉ 11/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
+        "price_change_percent": 0.0
     },
     {
         "symbol": "GEE",
