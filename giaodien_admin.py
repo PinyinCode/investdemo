@@ -24,7 +24,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         body {{ background-color: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }}
         .spinner {{ animation: spin 1s linear infinite; }}
         @keyframes spin {{ 100% {{ transform: rotate(360deg); }} }}
-        ::-webkit-scrollbar {{ width: 8px; }}
+        ::-webkit-scrollbar {{ width: 8px; height: 8px; }}
         ::-webkit-scrollbar-track {{ background: #1e293b; }}
         ::-webkit-scrollbar-thumb {{ background: #475569; border-radius: 4px; }}
         ::-webkit-scrollbar-thumb:hover {{ background: #64748b; }}
@@ -49,7 +49,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
     </div>
 
     <!-- Bảng điều khiển chính -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         
         <!-- Cột 1: Cấu hình API -->
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
@@ -76,9 +76,9 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
             </button>
         </div>
 
-        <!-- Cột 3: Cào dữ liệu -->
+        <!-- Cột 3: Cào dữ liệu chung -->
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg md:col-span-2">
-            <h2 class="text-lg font-bold text-purple-400 mb-4"><i class="fa-solid fa-download mr-2"></i>Cào Dữ Liệu</h2>
+            <h2 class="text-lg font-bold text-purple-400 mb-4"><i class="fa-solid fa-download mr-2"></i>Cào Dữ Liệu Hàng Loạt</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <button onclick="callApi('/api/force-history')" class="p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-chart-line text-emerald-400 text-xl"></i> Cào Nến 30 Ngày
@@ -112,6 +112,42 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         </div>
     </div>
 
+    <!-- BẢNG DANH SÁCH MÃ VÀ TRẠNG THÁI BCTC -->
+    <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-lg overflow-hidden flex flex-col">
+        <div class="p-4 border-b border-slate-700 flex flex-wrap justify-between items-center gap-4 bg-slate-800/80">
+            <div>
+                <h2 class="text-lg font-bold text-emerald-400"><i class="fa-solid fa-list-check mr-2"></i>Danh sách mã & Trạng thái BCTC</h2>
+                <p class="text-xs text-slate-400 mt-1">Tick chọn các mã bên dưới để cào BCTC riêng lẻ.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSelectAll()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded text-xs font-bold transition">
+                    Chọn tất cả / Bỏ chọn
+                </button>
+                <button onclick="crawlSelectedBctc()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-bold transition shadow-lg shadow-amber-900/50">
+                    <i class="fa-solid fa-file-import mr-1"></i> Cào BCTC Mã Đã Chọn
+                </button>
+            </div>
+        </div>
+        
+        <div class="overflow-x-auto max-h-[500px]">
+            <table class="w-full text-left text-sm whitespace-nowrap">
+                <thead class="bg-slate-900 sticky top-0 z-10 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-700">
+                    <tr>
+                        <th class="px-4 py-3 text-center w-12"><input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()" class="w-4 h-4 cursor-pointer"></th>
+                        <th class="px-4 py-3">Mã CK</th>
+                        <th class="px-4 py-3">Trạng thái</th>
+                        <th class="px-4 py-3">Kỳ BCTC Mới Nhất</th>
+                        <th class="px-4 py-3">Cập nhật lúc</th>
+                        <th class="px-4 py-3 text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="bctc-table-body" class="divide-y divide-slate-700/50">
+                    <tr><td colspan="6" class="text-center py-6 text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải danh sách...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Bảng Log (Console) -->
     <div class="mt-8 bg-black rounded-xl border border-slate-700 p-4 h-64 overflow-y-auto font-mono text-xs" id="console-log">
         <div class="text-slate-500">// Hệ thống log sẽ hiển thị ở đây...</div>
@@ -130,6 +166,8 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         }}
         const auth = firebase.auth();
         const db = firebase.firestore();
+
+        let currentDataList = []; // Biến lưu danh sách mã hiện tại
 
         // ══════════════════════════════════════════════════
         // HÀM LOG RA CONSOLE
@@ -150,7 +188,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         }}
 
         // ══════════════════════════════════════════════════
-        // KIỂM TRA QUYỀN ADMIN
+        // AUTH HOOKS
         // ══════════════════════════════════════════════════
         auth.onAuthStateChanged(async (user) => {{
             if (!user) {{
@@ -165,6 +203,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 log("Đăng nhập thành công với quyền Super Admin.", "success");
                 checkStatus();
                 loadSavedKey();
+                loadBctcStatus(); // Tải danh sách BCTC
                 return;
             }}
 
@@ -174,6 +213,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                     log("Đăng nhập thành công với quyền Admin (Firestore).", "success");
                     checkStatus();
                     loadSavedKey();
+                    loadBctcStatus(); // Tải danh sách BCTC
                 }} else {{
                     document.body.innerHTML = `<div class="flex h-screen items-center justify-center text-rose-500 text-2xl font-bold"><i class="fa-solid fa-ban mr-2"></i> TRUY CẬP BỊ TỪ CHỐI</div>`;
                 }}
@@ -187,7 +227,148 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         }}
 
         // ══════════════════════════════════════════════════
-        // CÁC HÀM GỌI API SERVER
+        // LOAD DANH SÁCH BCTC
+        // ══════════════════════════════════════════════════
+        async function loadBctcStatus() {{
+            const tbody = document.getElementById('bctc-table-body');
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-500"><i class="fa-solid fa-spinner spinner mr-2"></i> Đang tải danh sách...</td></tr>`;
+            
+            try {{
+                const res = await fetch(`${{PRICE_API_URL}}/api/bctc-status?t=` + new Date().getTime());
+                const json = await res.json();
+                
+                if (json.status === 'success') {{
+                    currentDataList = json.data;
+                    renderBctcTable();
+                    log(`Đã tải danh sách BCTC của ${{currentDataList.length}} mã.`, "success");
+                }} else {{
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-rose-500">Lỗi tải dữ liệu: ${{json.message}}</td></tr>`;
+                }}
+            }} catch (e) {{
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-rose-500">Lỗi kết nối Server API.</td></tr>`;
+                log(`Lỗi tải BCTC: ${{e.message}}`, "error");
+            }}
+        }}
+
+        function renderBctcTable() {{
+            const tbody = document.getElementById('bctc-table-body');
+            tbody.innerHTML = '';
+            
+            if (currentDataList.length === 0) {{
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-500">Không có mã nào.</td></tr>`;
+                return;
+            }}
+
+            currentDataList.forEach((item, index) => {{
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-700/30 transition';
+                
+                // Xác định màu trạng thái
+                let badgeHtml = '';
+                if (item.has_bctc) {{
+                    // Kiểm tra xem BCTC có cũ hơn 45 ngày không (dựa vào chuỗi DD/MM/YYYY)
+                    let isOld = false;
+                    try {{
+                        const parts = item.updated_at.split(' ')[0].split('/');
+                        const updateDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                        const diffDays = (new Date() - updateDate) / (1000 * 60 * 60 * 24);
+                        if (diffDays > 45) isOld = true;
+                    }} catch(e) {{}}
+
+                    if (isOld) {{
+                        badgeHtml = `<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-1 rounded text-[10px] font-bold">Cũ (>45 ngày)</span>`;
+                    }} else {{
+                        badgeHtml = `<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded text-[10px] font-bold">Đã có</span>`;
+                    }}
+                }} else {{
+                    badgeHtml = `<span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-1 rounded text-[10px] font-bold">Chưa cào</span>`;
+                }}
+
+                tr.innerHTML = `
+                    <td class="px-4 py-2 text-center">
+                        <input type="checkbox" class="bctc-checkbox w-4 h-4 cursor-pointer" data-symbol="${{item.symbol}}" onchange="updateSelectedCount()">
+                    </td>
+                    <td class="px-4 py-2 font-bold text-white">${{item.symbol}}</td>
+                    <td class="px-4 py-2">${{badgeHtml}}</td>
+                    <td class="px-4 py-2 text-slate-300 font-mono">${{item.latest_period}}</td>
+                    <td class="px-4 py-2 text-slate-400 text-xs">${{item.updated_at}}</td>
+                    <td class="px-4 py-2 text-center">
+                        <button onclick="crawlSingleBctc('${{item.symbol}}')" class="px-2 py-1 bg-slate-700 hover:bg-slate-600 rounded text-xs transition" title="Cào lại mã này">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }});
+        }}
+
+        // Chọn / Bỏ chọn tất cả
+        function toggleSelectAll() {{
+            const mainCheckbox = document.getElementById('selectAllCheckbox');
+            // Nếu đang được check thì bỏ check, và ngược lại
+            const isChecked = mainCheckbox.checked;
+            const checkboxes = document.querySelectorAll('.bctc-checkbox');
+            checkboxes.forEach(cb => cb.checked = !isChecked);
+            mainCheckbox.checked = !isChecked;
+            updateSelectedCount();
+        }}
+
+        function updateSelectedCount() {{
+            const checked = document.querySelectorAll('.bctc-checkbox:checked');
+            const count = checked.length;
+            // Có thể thêm hiển thị số lượng đã chọn nếu muốn
+        }}
+
+        // ══════════════════════════════════════════════════
+        // CÀO BCTC (CHỌN LỌC)
+        // ══════════════════════════════════════════════════
+        async function crawlSelectedBctc() {{
+            const checked = document.querySelectorAll('.bctc-checkbox:checked');
+            if (checked.length === 0) {{
+                alert("Vui lòng tick chọn ít nhất 1 mã!");
+                return;
+            }}
+            
+            const symbols = Array.from(checked).map(cb => cb.dataset.symbol).join(',');
+            
+            if (!confirm(`Bạn có chắc muốn cào BCTC cho ${{checked.length}} mã đã chọn?\\nDanh sách: ${{symbols}}`)) return;
+            
+            log(`Đang kích hoạt cào BCTC cho ${{checked.length}} mã...`, "warning");
+            try {{
+                const res = await fetch(`${{PRICE_API_URL}}/api/force-bctc?symbols=${{symbols}}`);
+                const data = await res.json();
+                if (data.status === 'success') {{
+                    log(`✅ ${{data.message}}`, "success");
+                    // Đợi 2s rồi load lại bảng để cập nhật trạng thái (dù có thể chưa cào xong, nhưng để check lại)
+                    setTimeout(loadBctcStatus, 3000);
+                }} else {{
+                    log(`❌ Lỗi từ Server: ${{data.message}}`, "error");
+                }}
+            }} catch (e) {{
+                log(`❌ Lỗi kết nối mạng: ${{e.message}}`, "error");
+            }}
+        }}
+
+        async function crawlSingleBctc(symbol) {{
+            if (!confirm(`Bạn có chắc muốn cào lại BCTC cho mã ${{symbol}}?`)) return;
+            
+            log(`Đang kích hoạt cào BCTC cho ${{symbol}}...`, "warning");
+            try {{
+                const res = await fetch(`${{PRICE_API_URL}}/api/force-bctc?symbols=${{symbol}}`);
+                const data = await res.json();
+                if (data.status === 'success') {{
+                    log(`✅ ${{data.message}}`, "success");
+                    setTimeout(loadBctcStatus, 3000);
+                }} else {{
+                    log(`❌ Lỗi từ Server: ${{data.message}}`, "error");
+                }}
+            }} catch (e) {{
+                log(`❌ Lỗi kết nối mạng: ${{e.message}}`, "error");
+            }}
+        }}
+
+        // ══════════════════════════════════════════════════
+        // CÁC HÀM GỌI API CHUNG
         // ══════════════════════════════════════════════════
         async function checkStatus() {{
             try {{
@@ -216,6 +397,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 if (data.status === 'success') {{
                     log(`✅ Thành công: ${{data.message}}`, "success");
                     checkStatus();
+                    if (endpoint.includes('bctc')) setTimeout(loadBctcStatus, 3000);
                 }} else {{
                     log(`❌ Lỗi từ Server: ${{data.message}}`, "error");
                 }}
