@@ -28,6 +28,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         ::-webkit-scrollbar-track {{ background: #1e293b; }}
         ::-webkit-scrollbar-thumb {{ background: #475569; border-radius: 4px; }}
         ::-webkit-scrollbar-thumb:hover {{ background: #64748b; }}
+        .btn-disabled {{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }}
     </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen">
@@ -80,16 +81,16 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg md:col-span-2">
             <h2 class="text-lg font-bold text-purple-400 mb-4"><i class="fa-solid fa-download mr-2"></i>Cào Dữ Liệu Hàng Loạt</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <button onclick="callApi('/api/force-history')" class="p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
+                <button onclick="callApi('/api/force-history')" id="btn-history" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-chart-line text-emerald-400 text-xl"></i> Cào Nến 30 Ngày
                 </button>
-                <button onclick="callApi('/api/crawl-full-history')" class="p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
+                <button onclick="callApi('/api/crawl-full-history')" id="btn-full-history" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-clock-rotate-left text-emerald-400 text-xl"></i> Cào Full 10 Năm Nến
                 </button>
-                <button onclick="callApi('/api/force-bctc?limit=15')" class="p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
+                <button onclick="callApi('/api/force-bctc?limit=15')" id="btn-bctc-batch" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-file-invoice-dollar text-amber-400 text-xl"></i> Cào BCTC (Nhóm 15)
                 </button>
-                <button onclick="callApi('/api/crawl-full-bctc')" class="p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
+                <button onclick="callApi('/api/crawl-full-bctc')" id="btn-full-bctc" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-database text-amber-400 text-xl"></i> Cào Full BCTC
                 </button>
             </div>
@@ -99,12 +100,12 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg md:col-span-2">
             <h2 class="text-lg font-bold text-rose-400 mb-4"><i class="fa-solid fa-brain mr-2"></i>Chấm điểm & Phân tích AI</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <button onclick="callApi('/api/force-screener')" class="p-4 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2">
+                <button onclick="callApi('/api/force-screener')" id="btn-screener" class="action-btn p-4 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-calculator"></i> Chấm điểm lại toàn bộ (Screener)
                 </button>
                 <div class="flex gap-2">
                     <input type="text" id="ai-symbol-input" placeholder="Nhập mã để test AI..." class="flex-1 bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-fuchsia-500 uppercase">
-                    <button onclick="runAI()" class="px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-500 rounded-lg text-sm font-bold transition whitespace-nowrap">
+                    <button onclick="runAI()" id="btn-ai" class="action-btn px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-500 rounded-lg text-sm font-bold transition whitespace-nowrap">
                         <i class="fa-solid fa-robot mr-1"></i> Chạy AI
                     </button>
                 </div>
@@ -114,22 +115,30 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
 
     <!-- BẢNG DANH SÁCH MÃ VÀ TRẠNG THÁI BCTC -->
     <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-lg overflow-hidden flex flex-col">
+        
+        <!-- Thanh công cụ (Search & Filter) -->
         <div class="p-4 border-b border-slate-700 flex flex-wrap justify-between items-center gap-4 bg-slate-800/80">
             <div>
                 <h2 class="text-lg font-bold text-emerald-400"><i class="fa-solid fa-list-check mr-2"></i>Danh sách mã & Trạng thái BCTC</h2>
                 <p class="text-xs text-slate-400 mt-1">Tick chọn các mã bên dưới để cào BCTC riêng lẻ.</p>
             </div>
-            <div class="flex items-center gap-3">
-                <button onclick="toggleSelectAll()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded text-xs font-bold transition">
-                    Chọn tất cả / Bỏ chọn
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Ô tìm kiếm -->
+                <div class="relative">
+                    <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="search-bctc-input" oninput="filterBctcTable()" placeholder="Tìm mã..." class="bg-slate-900 border border-slate-600 rounded-lg pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-emerald-500">
+                </div>
+                <button onclick="selectMissingBctc()" class="px-3 py-2 bg-rose-600/80 hover:bg-rose-600 rounded text-xs font-bold transition shadow-lg shadow-rose-900/50">
+                    <i class="fa-solid fa-filter-circle-xmark mr-1"></i> Chọn mã chưa cào
                 </button>
-                <button onclick="crawlSelectedBctc()" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-bold transition shadow-lg shadow-amber-900/50">
-                    <i class="fa-solid fa-file-import mr-1"></i> Cào BCTC Mã Đã Chọn
+                <button onclick="crawlSelectedBctc()" id="btn-crawl-bctc" class="action-btn px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-bold transition shadow-lg shadow-amber-900/50">
+                    <i class="fa-solid fa-file-import mr-1"></i> Cào BCTC Đã Chọn
                 </button>
             </div>
         </div>
         
-        <div class="overflow-x-auto max-h-[500px]">
+        <!-- Bảng dữ liệu -->
+        <div class="overflow-x-auto max-h-[600px]">
             <table class="w-full text-left text-sm whitespace-nowrap">
                 <thead class="bg-slate-900 sticky top-0 z-10 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-700">
                     <tr>
@@ -167,7 +176,9 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        let currentDataList = []; // Biến lưu danh sách mã hiện tại
+        let currentDataList = []; 
+        let filteredDataList = []; 
+        let isServerBusy = false; 
 
         // ══════════════════════════════════════════════════
         // HÀM LOG RA CONSOLE
@@ -203,7 +214,8 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 log("Đăng nhập thành công với quyền Super Admin.", "success");
                 checkStatus();
                 loadSavedKey();
-                loadBctcStatus(); // Tải danh sách BCTC
+                loadBctcStatus(); 
+                setInterval(checkStatus, 10000);
                 return;
             }}
 
@@ -213,7 +225,8 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                     log("Đăng nhập thành công với quyền Admin (Firestore).", "success");
                     checkStatus();
                     loadSavedKey();
-                    loadBctcStatus(); // Tải danh sách BCTC
+                    loadBctcStatus(); 
+                    setInterval(checkStatus, 10000);
                 }} else {{
                     document.body.innerHTML = `<div class="flex h-screen items-center justify-center text-rose-500 text-2xl font-bold"><i class="fa-solid fa-ban mr-2"></i> TRUY CẬP BỊ TỪ CHỐI</div>`;
                 }}
@@ -239,7 +252,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 
                 if (json.status === 'success') {{
                     currentDataList = json.data;
-                    renderBctcTable();
+                    filterBctcTable();
                     log(`Đã tải danh sách BCTC của ${{currentDataList.length}} mã.`, "success");
                 }} else {{
                     tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-rose-500">Lỗi tải dữ liệu: ${{json.message}}</td></tr>`;
@@ -250,23 +263,31 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
             }}
         }}
 
+        function filterBctcTable() {{
+            const keyword = document.getElementById('search-bctc-input').value.trim().toUpperCase();
+            if (!keyword) {{
+                filteredDataList = [...currentDataList];
+            }} else {{
+                filteredDataList = currentDataList.filter(item => item.symbol.includes(keyword));
+            }}
+            renderBctcTable();
+        }}
+
         function renderBctcTable() {{
             const tbody = document.getElementById('bctc-table-body');
             tbody.innerHTML = '';
             
-            if (currentDataList.length === 0) {{
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-500">Không có mã nào.</td></tr>`;
+            if (filteredDataList.length === 0) {{
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-500">Không có mã nào phù hợp.</td></tr>`;
                 return;
             }}
 
-            currentDataList.forEach((item, index) => {{
+            filteredDataList.forEach((item, index) => {{
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-700/30 transition';
                 
-                // Xác định màu trạng thái
                 let badgeHtml = '';
                 if (item.has_bctc) {{
-                    // Kiểm tra xem BCTC có cũ hơn 45 ngày không (dựa vào chuỗi DD/MM/YYYY)
                     let isOld = false;
                     try {{
                         const parts = item.updated_at.split(' ')[0].split('/');
@@ -286,7 +307,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
 
                 tr.innerHTML = `
                     <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="bctc-checkbox w-4 h-4 cursor-pointer" data-symbol="${{item.symbol}}" onchange="updateSelectedCount()">
+                        <input type="checkbox" class="bctc-checkbox w-4 h-4 cursor-pointer" data-symbol="${{item.symbol}}" data-has-bctc="${{item.has_bctc}}" onchange="updateSelectedCount()">
                     </td>
                     <td class="px-4 py-2 font-bold text-white">${{item.symbol}}</td>
                     <td class="px-4 py-2">${{badgeHtml}}</td>
@@ -302,10 +323,8 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
             }});
         }}
 
-        // Chọn / Bỏ chọn tất cả
         function toggleSelectAll() {{
             const mainCheckbox = document.getElementById('selectAllCheckbox');
-            // Nếu đang được check thì bỏ check, và ngược lại
             const isChecked = mainCheckbox.checked;
             const checkboxes = document.querySelectorAll('.bctc-checkbox');
             checkboxes.forEach(cb => cb.checked = !isChecked);
@@ -313,16 +332,38 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
             updateSelectedCount();
         }}
 
+        function selectMissingBctc() {{
+            const checkboxes = document.querySelectorAll('.bctc-checkbox');
+            checkboxes.forEach(cb => {{
+                if (cb.getAttribute('data-has-bctc') === 'false') {{
+                    cb.checked = true;
+                }} else {{
+                    cb.checked = false;
+                }}
+            }});
+            document.getElementById('selectAllCheckbox').checked = false;
+            updateSelectedCount();
+        }}
+
         function updateSelectedCount() {{
             const checked = document.querySelectorAll('.bctc-checkbox:checked');
-            const count = checked.length;
-            // Có thể thêm hiển thị số lượng đã chọn nếu muốn
+            const btn = document.getElementById('btn-crawl-bctc');
+            if (checked.length > 0) {{
+                btn.innerHTML = `<i class="fa-solid fa-file-import mr-1"></i> Cào ${{checked.length}} mã đã chọn`;
+            }} else {{
+                btn.innerHTML = `<i class="fa-solid fa-file-import mr-1"></i> Cào BCTC Đã Chọn`;
+            }}
         }}
 
         // ══════════════════════════════════════════════════
         // CÀO BCTC (CHỌN LỌC)
         // ══════════════════════════════════════════════════
         async function crawlSelectedBctc() {{
+            if (isServerBusy) {{
+                alert("Server đang bận xử lý tiến trình khác, vui lòng đợi!");
+                return;
+            }}
+
             const checked = document.querySelectorAll('.bctc-checkbox:checked');
             if (checked.length === 0) {{
                 alert("Vui lòng tick chọn ít nhất 1 mã!");
@@ -334,37 +375,75 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
             if (!confirm(`Bạn có chắc muốn cào BCTC cho ${{checked.length}} mã đã chọn?\\nDanh sách: ${{symbols}}`)) return;
             
             log(`Đang kích hoạt cào BCTC cho ${{checked.length}} mã...`, "warning");
+            toggleAllButtons(false, "Đang xử lý...");
+
             try {{
                 const res = await fetch(`${{PRICE_API_URL}}/api/force-bctc?symbols=${{symbols}}`);
                 const data = await res.json();
                 if (data.status === 'success') {{
                     log(`✅ ${{data.message}}`, "success");
-                    // Đợi 2s rồi load lại bảng để cập nhật trạng thái (dù có thể chưa cào xong, nhưng để check lại)
-                    setTimeout(loadBctcStatus, 3000);
+                    setTimeout(() => {{
+                        loadBctcStatus();
+                        checkStatus();
+                    }}, 5000);
                 }} else {{
                     log(`❌ Lỗi từ Server: ${{data.message}}`, "error");
+                    toggleAllButtons(true);
                 }}
             }} catch (e) {{
                 log(`❌ Lỗi kết nối mạng: ${{e.message}}`, "error");
+                toggleAllButtons(true);
             }}
         }}
 
         async function crawlSingleBctc(symbol) {{
+            if (isServerBusy) {{
+                alert("Server đang bận xử lý tiến trình khác, vui lòng đợi!");
+                return;
+            }}
             if (!confirm(`Bạn có chắc muốn cào lại BCTC cho mã ${{symbol}}?`)) return;
             
             log(`Đang kích hoạt cào BCTC cho ${{symbol}}...`, "warning");
+            toggleAllButtons(false, "Đang xử lý...");
+            
             try {{
                 const res = await fetch(`${{PRICE_API_URL}}/api/force-bctc?symbols=${{symbol}}`);
                 const data = await res.json();
                 if (data.status === 'success') {{
                     log(`✅ ${{data.message}}`, "success");
-                    setTimeout(loadBctcStatus, 3000);
+                    setTimeout(() => {{
+                        loadBctcStatus();
+                        checkStatus();
+                    }}, 5000);
                 }} else {{
                     log(`❌ Lỗi từ Server: ${{data.message}}`, "error");
+                    toggleAllButtons(true);
                 }}
             }} catch (e) {{
                 log(`❌ Lỗi kết nối mạng: ${{e.message}}`, "error");
+                toggleAllButtons(true);
             }}
+        }}
+
+        // Hàm bật/tắt TẤT CẢ các nút thao tác (trừ nút checkStatus)
+        function toggleAllButtons(enable, text = null) {{
+            const btns = document.querySelectorAll('.action-btn');
+            btns.forEach(btn => {{
+                if (enable) {{
+                    btn.classList.remove('btn-disabled');
+                    // Khôi phục text ban đầu (cần lưu text gốc)
+                    if (btn.id === 'btn-crawl-bctc') updateSelectedCount();
+                    else if (btn.id === 'btn-screener') btn.innerHTML = '<i class="fa-solid fa-calculator"></i> Chấm điểm lại toàn bộ (Screener)';
+                    else if (btn.id === 'btn-ai') btn.innerHTML = '<i class="fa-solid fa-robot mr-1"></i> Chạy AI';
+                    else if (btn.id === 'btn-history') btn.innerHTML = '<i class="fa-solid fa-chart-line text-emerald-400 text-xl"></i> Cào Nến 30 Ngày';
+                    else if (btn.id === 'btn-full-history') btn.innerHTML = '<i class="fa-solid fa-clock-rotate-left text-emerald-400 text-xl"></i> Cào Full 10 Năm Nến';
+                    else if (btn.id === 'btn-bctc-batch') btn.innerHTML = '<i class="fa-solid fa-file-invoice-dollar text-amber-400 text-xl"></i> Cào BCTC (Nhóm 15)';
+                    else if (btn.id === 'btn-full-bctc') btn.innerHTML = '<i class="fa-solid fa-database text-amber-400 text-xl"></i> Cào Full BCTC';
+                }} else {{
+                    btn.classList.add('btn-disabled');
+                    if (btn.id === 'btn-crawl-bctc') btn.innerHTML = `<i class="fa-solid fa-spinner spinner mr-1"></i> ${{text || 'Đang xử lý...'}}`;
+                }}
+            }});
         }}
 
         // ══════════════════════════════════════════════════
@@ -375,12 +454,18 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 const res = await fetch(`${{PRICE_API_URL}}/api/status`);
                 const data = await res.json();
                 const el = document.getElementById('crawl-status');
+                
+                // Nếu server đang cào HOẶC đang chấm điểm (nếu có API check), ta cứ dựa vào is_crawling
                 if (data.is_crawling) {{
-                    el.innerText = "ĐANG CÀO REAL-TIME";
+                    el.innerText = "ĐANG XỬ LÝ (BẬN)";
                     el.className = "font-bold text-amber-400 animate-pulse";
+                    isServerBusy = true;
+                    toggleAllButtons(false, "Server đang bận...");
                 }} else {{
                     el.innerText = "SẴN SÀNG";
                     el.className = "font-bold text-emerald-400";
+                    isServerBusy = false;
+                    toggleAllButtons(true);
                 }}
             }} catch (e) {{
                 document.getElementById('crawl-status').innerText = "MẤT KẾT NỐI";
@@ -390,27 +475,46 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         }}
 
         async function callApi(endpoint) {{
+            if (isServerBusy) {{
+                alert("Server đang bận xử lý tiến trình khác, vui lòng đợi!");
+                return;
+            }}
+            
             log(`Đang gửi yêu cầu tới: ${{endpoint}}...`, "warning");
+            toggleAllButtons(false, "Đang chạy...");
+            
             try {{
                 const res = await fetch(`${{PRICE_API_URL}}${{endpoint}}`);
                 const data = await res.json();
                 if (data.status === 'success') {{
                     log(`✅ Thành công: ${{data.message}}`, "success");
-                    checkStatus();
-                    if (endpoint.includes('bctc')) setTimeout(loadBctcStatus, 3000);
+                    // Tự động bật lại nút sau 2 giây nếu là lệnh chạy nhanh
+                    setTimeout(() => {{
+                        checkStatus();
+                        if (endpoint.includes('bctc')) loadBctcStatus();
+                    }}, 2000);
                 }} else {{
                     log(`❌ Lỗi từ Server: ${{data.message}}`, "error");
+                    toggleAllButtons(true); // Mở khóa nếu lỗi ngay
                 }}
             }} catch (e) {{
                 log(`❌ Lỗi kết nối mạng: ${{e.message}}`, "error");
+                toggleAllButtons(true);
             }}
         }}
 
         async function runAI() {{
+            if (isServerBusy) {{
+                alert("Server đang bận xử lý tiến trình khác, vui lòng đợi!");
+                return;
+            }}
+            
             const symbol = document.getElementById('ai-symbol-input').value.trim().toUpperCase();
             if (!symbol) {{ alert("Vui lòng nhập mã cổ phiếu!"); return; }}
             
             log(`Đang gọi AI phân tích mã ${{symbol}} (Có thể mất 10-20s)...`, "warning");
+            toggleAllButtons(false, "AI đang chạy...");
+            
             try {{
                 const res = await fetch(`${{PRICE_API_URL}}/api/ai-analyze?symbol=${{symbol}}`);
                 const data = await res.json();
@@ -423,6 +527,8 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 }}
             }} catch (e) {{
                 log(`❌ Lỗi kết nối: ${{e.message}}`, "error");
+            }} finally {{
+                toggleAllButtons(true);
             }}
         }}
 
