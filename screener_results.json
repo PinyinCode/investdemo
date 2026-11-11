@@ -3982,7 +3982,14 @@
         "company_name": "Công ty Cổ phần Chứng khoán Vietcap",
         "market_cap": 0.0,
         "total_shares": 1152231925,
-        "price_change_percent": 1.0
+        "price_change_percent": 1.0,
+        "ai_bctc": "Chưa xác định. Các chỉ số sinh lời (ROE, ROA, LNST) và dòng tiền (CFO) đều ghi nhận bằng 0, không đủ dữ liệu để đánh giá hiệu quả hoạt động kinh doanh thực tế.",
+        "ai_catalyst": "Phụ thuộc hoàn toàn vào thanh khoản thị trường và mặt bằng lãi suất. Hiện tại chưa có động lực nội tại do thiếu vắng thông tin tài chính và các chỉ số định giá cơ bản.",
+        "ai_risks": "Rủi ro thanh khoản thị trường suy giảm, thiếu minh bạch thông tin tài chính (P/E, P/B bằng 0), rủi ro từ hoạt động cho vay margin nếu thị trường chung biến động xấu.",
+        "ai_outlook": "Tiêu cực. Điểm đánh giá chỉ 25/100 phản ánh nội tại yếu kém hoặc thiếu hụt dữ liệu nghiêm trọng. Nhà đầu tư cần chờ đợi BCTC mới nhất để có bức tranh rõ ràng hơn về tăng trưởng LNST YoY.",
+        "ai_recommendation": "TRÁNH — Tỷ trọng 0%",
+        "ai_macro_view": "Ngành chứng khoán đang chịu áp lực khi thanh khoản thị trường chung ở mức thấp và dòng tiền đầu cơ chưa quay trở lại mạnh mẽ. Các yếu tố vĩ mô chưa tạo đủ xung lực để thúc đẩy nhóm ngành này bứt phá.",
+        "ai_updated_at": "11/11/2026 23:47:49"
     },
     {
         "symbol": "FTS",
