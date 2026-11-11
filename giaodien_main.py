@@ -15,6 +15,7 @@ REQUIRED_FILES = [
     ("giaodien_chart_modal.py", "Modal biểu đồ"),
     ("giaodien_log_console.py", "Khung log nổi"),
     ("giaodien_core_js.py",     "Core JS logic"),
+    ("giaodien_admin.py",       "Module giao diện Super Admin"), # THÊM DÒNG NÀY
     # Đã bỏ simulator.py khỏi danh sách bắt buộc vì chạy ở workflow khác
     ("lightweight-charts.js",   "Thư viện biểu đồ (JS)"),
 ]
