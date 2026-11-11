@@ -3,7 +3,7 @@
         "symbol": "HPG",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 21350.0,
+        "close_price": 21400.0,
         "pe": 6.43,
         "pb": 1.19,
         "ps": 0.0,
@@ -42,14 +42,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 18.6%) + PTCB 45/50 + PTKT 14/20 + Định giá 30/30 + Tổng 89đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Tập đoàn Hòa Phát",
         "market_cap": 0.0,
-        "total_shares": 8442964520,
-        "price_change_percent": 0.47
+        "total_shares": 8442964520
     },
     {
         "symbol": "GMD",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "MARITIME",
-        "close_price": 53600.0,
+        "close_price": 52700.0,
         "pe": 12.7,
         "pb": 2.41,
         "ps": 0.0,
@@ -88,14 +87,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 45/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần Tập đoàn Gemadept",
         "market_cap": 0.0,
-        "total_shares": 649337392,
-        "price_change_percent": 0.19
+        "total_shares": 649337392
     },
     {
         "symbol": "VNM",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 54500.0,
+        "close_price": 57900.0,
         "pe": 10.43,
         "pb": 3.45,
         "ps": 0.0,
@@ -134,14 +132,13 @@
         "final_decision_reason": "Giá 57,900 đã vượt xa fair_high 45,381 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Sữa Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 2089955445,
-        "price_change_percent": -5.87
+        "total_shares": 2089955445
     },
     {
         "symbol": "PHR",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 29600.0,
+        "close_price": 29650.0,
         "pe": 6.56,
         "pb": 1.49,
         "ps": 0.0,
@@ -180,14 +177,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 6.2%) + PTCB 45/50 + PTKT 10/20 + Định giá 30/30 + Tổng 85đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Cao su Phước Hòa",
         "market_cap": 0.0,
-        "total_shares": 243897799,
-        "price_change_percent": -0.17
+        "total_shares": 243897799
     },
     {
         "symbol": "BSR",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "PETROLEUM",
-        "close_price": 25300.0,
+        "close_price": 25550.0,
         "pe": 4.65,
         "pb": 1.56,
         "ps": 0.0,
@@ -226,14 +222,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 24.3%) + PTCB 45/50 + PTKT 10/20 + Định giá 30/30 + Tổng 85đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần - Tổng Công ty Lọc Hoá dầu Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 5007299686,
-        "price_change_percent": -0.59
+        "total_shares": 5007299686
     },
     {
         "symbol": "DCM",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 30000.0,
+        "close_price": 30600.0,
         "pe": 6.02,
         "pb": 1.38,
         "ps": 0.0,
@@ -272,14 +267,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 15.7%) + PTCB 45/50 + PTKT 10/20 + Định giá 30/30 + Tổng 85đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần - Tổng Công ty Phân bón Dầu Khí Cà Mau",
         "market_cap": 0.0,
-        "total_shares": 529400000,
-        "price_change_percent": -0.33
+        "total_shares": 529400000
     },
     {
         "symbol": "HDB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 22500.0,
+        "close_price": 22250.0,
         "pe": 7.48,
         "pb": 1.61,
         "ps": 0.0,
@@ -317,8 +311,7 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 17.8%) + PTCB 40/50 + PTKT 14/20 + Định giá 30/30 + Tổng 84đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Phát Triển Thành phố Hồ Chí Minh",
         "market_cap": 0.0,
-        "total_shares": 6506859219,
-        "price_change_percent": 0.0
+        "total_shares": 6506859219
     },
     {
         "symbol": "VRE",
@@ -363,14 +356,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 13.4%) + PTCB 40/50 + PTKT 12/20 + Định giá 30/30 + Tổng 82đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Vincom Retail",
         "market_cap": 0.0,
-        "total_shares": 2328818410,
-        "price_change_percent": 0.0
+        "total_shares": 2328818410
     },
     {
         "symbol": "VGC",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 40650.0,
+        "close_price": 39900.0,
         "pe": 9.83,
         "pb": 1.99,
         "ps": 0.0,
@@ -409,14 +401,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 40/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Tổng Công ty Viglacera - Công ty Cổ phần",
         "market_cap": 0.0,
-        "total_shares": 448350000,
-        "price_change_percent": 0.12
+        "total_shares": 448350000
     },
     {
         "symbol": "REE",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 48100.0,
+        "close_price": 47650.0,
         "pe": 10.69,
         "pb": 1.31,
         "ps": 0.0,
@@ -455,14 +446,13 @@
         "final_decision_reason": "Giá 47,650 cao hơn fair_high 46,559. Doanh nghiệp tốt (PTCB 35/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Công ty Cổ phần Cơ điện Lạnh",
         "market_cap": 0.0,
-        "total_shares": 623399036,
-        "price_change_percent": 0.84
+        "total_shares": 623399036
     },
     {
         "symbol": "BID",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 32450.000000000004,
+        "close_price": 32250.0,
         "pe": 7.2,
         "pb": 1.26,
         "ps": 0.0,
@@ -500,14 +490,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 40/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Ngân hàng Thương mại Cổ phần Đầu tư và Phát triển Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 7778229473,
-        "price_change_percent": 0.78
+        "total_shares": 7778229473
     },
     {
         "symbol": "MBB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 19400.0,
+        "close_price": 19350.0,
         "pe": 5.97,
         "pb": 1.24,
         "ps": 0.0,
@@ -545,8 +534,7 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 13.6%) + PTCB 40/50 + PTKT 10/20 + Định giá 30/30 + Tổng 80đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Quân đội",
         "market_cap": 0.0,
-        "total_shares": 9263249895,
-        "price_change_percent": 0.0
+        "total_shares": 9263249895
     },
     {
         "symbol": "HAG",
@@ -591,14 +579,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 48.6%) + PTCB 38/50 + PTKT 12/20 + Định giá 30/30 + Tổng 80đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Hoàng Anh Gia Lai",
         "market_cap": 0.0,
-        "total_shares": 1267467947,
-        "price_change_percent": -0.36
+        "total_shares": 1267467947
     },
     {
         "symbol": "FRT",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 148000.0,
+        "close_price": 144900.0,
         "pe": 18.79,
         "pb": 4.87,
         "ps": 0.0,
@@ -637,14 +624,13 @@
         "final_decision_reason": "Giá 144,900 đã vượt xa fair_high 71,041 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Bán lẻ Kỹ thuật số FPT",
         "market_cap": 0.0,
-        "total_shares": 178815054,
-        "price_change_percent": 1.09
+        "total_shares": 178815054
     },
     {
         "symbol": "TPB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 13100.0,
+        "close_price": 12700.0,
         "pe": 4.74,
         "pb": 0.85,
         "ps": 0.0,
@@ -682,14 +668,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 63.1%) + PTCB 33/50 + PTKT 15/20 + Định giá 30/30 + Tổng 78đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Tiên Phong",
         "market_cap": 0.0,
-        "total_shares": 3190134896,
-        "price_change_percent": 3.15
+        "total_shares": 3190134896
     },
     {
         "symbol": "MWG",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 73700.0,
+        "close_price": 73800.0,
         "pe": 9.54,
         "pb": 2.33,
         "ps": 0.0,
@@ -728,14 +713,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 35/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần Đầu tư Thế Giới Di Động",
         "market_cap": 0.0,
-        "total_shares": 1477035294,
-        "price_change_percent": -0.41
+        "total_shares": 1477035294
     },
     {
         "symbol": "MSN",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 71800.0,
+        "close_price": 71700.0,
         "pe": 11.53,
         "pb": 2.51,
         "ps": 0.0,
@@ -774,14 +758,13 @@
         "final_decision_reason": "Giá 71,700 cao hơn fair_high 63,121. Doanh nghiệp tốt (PTCB 35/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Công ty Cổ phần Tập đoàn Masan",
         "market_cap": 0.0,
-        "total_shares": 1460374611,
-        "price_change_percent": -1.1
+        "total_shares": 1460374611
     },
     {
         "symbol": "GAS",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 74400.0,
+        "close_price": 73600.0,
         "pe": 11.95,
         "pb": 2.41,
         "ps": 0.0,
@@ -820,14 +803,13 @@
         "final_decision_reason": "Giá 73,600 đã vượt xa fair_high 55,360 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Tổng Công ty Khí Việt Nam - Công ty Cổ phần",
         "market_cap": 0.0,
-        "total_shares": 2412949756,
-        "price_change_percent": 1.78
+        "total_shares": 2412949756
     },
     {
         "symbol": "PVT",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "MARITIME",
-        "close_price": 20950.0,
+        "close_price": 20550.0,
         "pe": 6.92,
         "pb": 1.08,
         "ps": 0.0,
@@ -866,14 +848,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 35/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Tổng Công ty Cổ phần Vận tải Dầu khí",
         "market_cap": 0.0,
-        "total_shares": 516918938,
-        "price_change_percent": 2.2
+        "total_shares": 516918938
     },
     {
         "symbol": "PAN",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 17400.0,
+        "close_price": 17250.0,
         "pe": 3.48,
         "pb": 0.77,
         "ps": 0.0,
@@ -912,8 +893,7 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 116.5%) + PTCB 35/50 + PTKT 10/20 + Định giá 30/30 + Tổng 75đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Tập đoàn PAN",
         "market_cap": 0.0,
-        "total_shares": 258072996,
-        "price_change_percent": 0.87
+        "total_shares": 258072996
     },
     {
         "symbol": "TCB",
@@ -957,8 +937,7 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 9.3%) + PTCB 33/50 + PTKT 12/20 + Định giá 30/30 + Tổng 75đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 7086240414,
-        "price_change_percent": -0.68
+        "total_shares": 7086240414
     },
     {
         "symbol": "VPB",
@@ -1002,14 +981,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 33/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Ngân hàng Thương mại Cổ phần Việt Nam Thịnh Vượng",
         "market_cap": 0.0,
-        "total_shares": 10000000000,
-        "price_change_percent": 0.0
+        "total_shares": 10000000000
     },
     {
         "symbol": "SHB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 11150.0,
+        "close_price": 10800.0,
         "pe": 3.83,
         "pb": 0.66,
         "ps": 0.0,
@@ -1047,14 +1025,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 76.0%) + PTCB 32/50 + PTKT 13/20 + Định giá 30/30 + Tổng 75đ. Có thể giải ngân từng phần.",
         "company_name": "Ngân hàng Thương mại Cổ phần Sài Gòn – Hà Nội",
         "market_cap": 0.0,
-        "total_shares": 4594200024,
-        "price_change_percent": 3.24
+        "total_shares": 4594200024
     },
     {
         "symbol": "NT2",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 23500.0,
+        "close_price": 22250.0,
         "pe": 4.4,
         "pb": 1.25,
         "ps": 0.0,
@@ -1093,14 +1070,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 72.1%) + PTCB 30/50 + PTKT 14/20 + Định giá 30/30 + Tổng 74đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Điện lực Dầu khí Nhơn Trạch 2",
         "market_cap": 0.0,
-        "total_shares": 287876029,
-        "price_change_percent": 3.07
+        "total_shares": 287876029
     },
     {
         "symbol": "MCH",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 124400.0,
+        "close_price": 128300.0,
         "pe": 22.7,
         "pb": 9.1,
         "ps": 0.0,
@@ -1139,14 +1115,13 @@
         "final_decision_reason": "Giá 128,300 đã vượt xa fair_high 41,960 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Hàng Tiêu Dùng MaSan",
         "market_cap": 0.0,
-        "total_shares": 1307404949,
-        "price_change_percent": -2.58
+        "total_shares": 1307404949
     },
     {
         "symbol": "ACB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 20600.0,
+        "close_price": 20550.0,
         "pe": 7.39,
         "pb": 1.14,
         "ps": 0.0,
@@ -1184,14 +1159,13 @@
         "final_decision_reason": "Giá 20,550 cao hơn fair_high 20,492. Doanh nghiệp tốt (PTCB 33/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Ngân hàng Thương mại Cổ phần Á Châu",
         "market_cap": 0.0,
-        "total_shares": 5804421957,
-        "price_change_percent": 0.24
+        "total_shares": 5804421957
     },
     {
         "symbol": "POW",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 12700.0,
+        "close_price": 12550.0,
         "pe": 6.47,
         "pb": 0.89,
         "ps": 0.0,
@@ -1230,14 +1204,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 22.2%) + PTCB 30/50 + PTKT 13/20 + Định giá 30/30 + Tổng 73đ. Có thể giải ngân từng phần.",
         "company_name": "Tổng Công ty Điện lực Dầu khí Việt Nam - CTCP",
         "market_cap": 0.0,
-        "total_shares": 3067845688,
-        "price_change_percent": 1.6
+        "total_shares": 3067845688
     },
     {
         "symbol": "BWE",
         "sector": "DIEN_NUOC_HA_TANG",
         "sub_sector": "DIEN_NUOC_HA_TANG",
-        "close_price": 42350.0,
+        "close_price": 42000.0,
         "pe": 8.74,
         "pb": 1.4,
         "ps": 0.0,
@@ -1276,14 +1249,13 @@
         "final_decision_reason": "Doanh nghiệp tốt (PTCB 30/50, Định giá 30/30) nhưng giá chưa rẻ. Chờ điều chỉnh về fair_low mới mua.",
         "company_name": "Công ty Cổ phần - Tổng công ty Nước - Môi trường Bình Dương",
         "market_cap": 0.0,
-        "total_shares": 219928644,
-        "price_change_percent": -1.05
+        "total_shares": 219928644
     },
     {
         "symbol": "TCH",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 13600.0,
+        "close_price": 13450.0,
         "pe": 16.7,
         "pb": 1.09,
         "ps": 0.0,
@@ -1322,14 +1294,13 @@
         "final_decision_reason": "Giá 13,450 cao hơn fair_high 12,710. Doanh nghiệp tốt (PTCB 28/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Công ty Cổ phần Đầu tư Dịch vụ Tài chính Hoàng Huy",
         "market_cap": 0.0,
-        "total_shares": 1003312808,
-        "price_change_percent": 0.0
+        "total_shares": 1003312808
     },
     {
         "symbol": "VHM",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 62500.0,
+        "close_price": 61900.0,
         "pe": 5.02,
         "pb": 1.73,
         "ps": 0.0,
@@ -1369,14 +1340,13 @@
         "final_decision_reason": "ĐỦ 4 YẾU TỐ: Vùng mua (CK 11.3%) + PTCB 40/50 + PTKT 12/20 + Định giá 18/30 + Tổng 70đ. Có thể giải ngân từng phần.",
         "company_name": "Công ty Cổ phần Vinhomes",
         "market_cap": 0.0,
-        "total_shares": 8214824008,
-        "price_change_percent": 0.81
+        "total_shares": 8214824008
     },
     {
         "symbol": "DGW",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 39200.0,
+        "close_price": 39500.0,
         "pe": 9.06,
         "pb": 2.74,
         "ps": 0.0,
@@ -1415,14 +1385,13 @@
         "final_decision_reason": "Giá 39,500 cao hơn fair_high 37,229. Doanh nghiệp tốt (PTCB 30/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Công ty Cổ phần Thế Giới Số",
         "market_cap": 0.0,
-        "total_shares": 223520169,
-        "price_change_percent": -0.88
+        "total_shares": 223520169
     },
     {
         "symbol": "VIB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 14050.0,
+        "close_price": 14000.0,
         "pe": 6.69,
         "pb": 1.04,
         "ps": 0.0,
@@ -1460,14 +1429,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HỢP LÝ - CHỜ ĐIỀU CHỈNH), PTCB 25/50 < 30.",
         "company_name": "Ngân hàng Thương mại Cổ phần Quốc tế Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 3735386252,
-        "price_change_percent": 0.36
+        "total_shares": 3735386252
     },
     {
         "symbol": "NAB",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 12800.0,
+        "close_price": 12700.0,
         "pe": 5.52,
         "pb": 0.97,
         "ps": 0.0,
@@ -1506,14 +1474,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 25/50 < 30.",
         "company_name": "Ngân hàng Thương mại Cổ phần Nam Á",
         "market_cap": 0.0,
-        "total_shares": 2058822282,
-        "price_change_percent": 0.79
+        "total_shares": 2058822282
     },
     {
         "symbol": "CTR",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 63200.0,
+        "close_price": 64200.0,
         "pe": 12.24,
         "pb": 3.63,
         "ps": 0.0,
@@ -1552,14 +1519,13 @@
         "final_decision_reason": "Giá 64,200 đã vượt xa fair_high 45,585 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Tổng Công ty Cổ phần Công trình Viettel",
         "market_cap": 0.0,
-        "total_shares": 128109533,
-        "price_change_percent": -1.1
+        "total_shares": 128109533
     },
     {
         "symbol": "KDH",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 15500.0,
+        "close_price": 15850.0,
         "pe": 11.04,
         "pb": 1.0,
         "ps": 0.0,
@@ -1599,14 +1565,13 @@
         "final_decision_reason": "PTCB chỉ 18/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Đầu tư và Kinh doanh nhà Khang Điền",
         "market_cap": 0.0,
-        "total_shares": 1245297704,
-        "price_change_percent": -2.52
+        "total_shares": 1245297704
     },
     {
         "symbol": "FPT",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 50900.0,
+        "close_price": 51600.0,
         "pe": 9.35,
         "pb": 2.24,
         "ps": 0.0,
@@ -1645,14 +1610,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HỢP LÝ - CHỜ ĐIỀU CHỈNH), PTCB 27/50 < 30.",
         "company_name": "Công ty Cổ phần FPT",
         "market_cap": 0.0,
-        "total_shares": 1885727648,
-        "price_change_percent": 0.0
+        "total_shares": 1885727648
     },
     {
         "symbol": "HT1",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 12950.0,
+        "close_price": 12850.0,
         "pe": 12.15,
         "pb": 0.95,
         "ps": 0.0,
@@ -1691,14 +1655,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 25/50 < 30.",
         "company_name": "Công ty Cổ phần Xi măng VICEM Hà Tiên",
         "market_cap": 0.0,
-        "total_shares": 381589911,
-        "price_change_percent": 0.39
+        "total_shares": 381589911
     },
     {
         "symbol": "CTG",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 31800.0,
+        "close_price": 31650.0,
         "pe": 5.78,
         "pb": 1.19,
         "ps": 0.0,
@@ -1736,14 +1699,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 22/50 < 30.",
         "company_name": "Ngân hàng Thương mại Cổ phần Công thương Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 7766944637,
-        "price_change_percent": -0.31
+        "total_shares": 7766944637
     },
     {
         "symbol": "MSB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 16350.000000000002,
+        "close_price": 16200.0,
         "pe": 9.74,
         "pb": 1.3,
         "ps": 0.0,
@@ -1781,14 +1743,13 @@
         "final_decision_reason": "Giá 16,200 đã vượt xa fair_high 12,363 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Ngân hàng Thương mại Cổ phần Hàng Hải Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 3744000000,
-        "price_change_percent": 0.0
+        "total_shares": 3744000000
     },
     {
         "symbol": "VCB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 54200.0,
+        "close_price": 54000.0,
         "pe": 10.75,
         "pb": 1.77,
         "ps": 0.0,
@@ -1826,8 +1787,7 @@
         "final_decision_reason": "Giá 54,000 đã vượt xa fair_high 42,365 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Ngân hàng Thương mại Cổ phần Ngoại thương Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 8355675094,
-        "price_change_percent": 0.37
+        "total_shares": 8355675094
     },
     {
         "symbol": "PC1",
@@ -1873,14 +1833,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 23/50 < 30.",
         "company_name": "Công ty Cổ phần Tập đoàn PC1",
         "market_cap": 0.0,
-        "total_shares": 411285343,
-        "price_change_percent": 0.3
+        "total_shares": 411285343
     },
     {
         "symbol": "KBC",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 27200.0,
+        "close_price": 27150.0,
         "pe": 14.5,
         "pb": 0.98,
         "ps": 0.0,
@@ -1919,14 +1878,13 @@
         "final_decision_reason": "CFO âm (-30 tỷ) trong khi LNST dương (1,843 tỷ) — lợi nhuận không có tiền mặt thật.",
         "company_name": "Tổng Công ty Phát triển Đô thị Kinh Bắc - CTCP",
         "market_cap": 0.0,
-        "total_shares": 941754759,
-        "price_change_percent": 0.0
+        "total_shares": 941754759
     },
     {
         "symbol": "HHV",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "CONSTRUCTION",
-        "close_price": 9880.0,
+        "close_price": 9650.0,
         "pe": 7.95,
         "pb": 0.47,
         "ps": 0.0,
@@ -1965,14 +1923,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Giao thông Đèo Cả",
         "market_cap": 0.0,
-        "total_shares": 574511888,
-        "price_change_percent": 0.0
+        "total_shares": 574511888
     },
     {
         "symbol": "SJS",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 54000.0,
+        "close_price": 54100.0,
         "pe": 9.92,
         "pb": 3.3,
         "ps": 0.0,
@@ -2011,14 +1968,13 @@
         "final_decision_reason": "Giá 54,100 đã vượt xa fair_high 44,799 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần SJ Group",
         "market_cap": 0.0,
-        "total_shares": 297474828,
-        "price_change_percent": -2.0
+        "total_shares": 297474828
     },
     {
         "symbol": "GVR",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 29400.0,
+        "close_price": 29650.0,
         "pe": 16.67,
         "pb": 1.84,
         "ps": 0.0,
@@ -2057,14 +2013,13 @@
         "final_decision_reason": "Giá 29,650 đã vượt xa fair_high 19,646 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Tập đoàn Công nghiệp Cao su Việt Nam - Công ty Cổ phần",
         "market_cap": 0.0,
-        "total_shares": 4000000000,
-        "price_change_percent": -0.84
+        "total_shares": 4000000000
     },
     {
         "symbol": "ANV",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "AGRI",
-        "close_price": 17650.0,
+        "close_price": 17450.0,
         "pe": 5.89,
         "pb": 1.14,
         "ps": 0.0,
@@ -2103,14 +2058,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: PTCB 20/50 < 30.",
         "company_name": "Công ty Cổ phần Nam Việt",
         "market_cap": 0.0,
-        "total_shares": 266667500,
-        "price_change_percent": 1.15
+        "total_shares": 266667500
     },
     {
         "symbol": "PLX",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "PETROLEUM",
-        "close_price": 32850.0,
+        "close_price": 33050.0,
         "pe": 10.93,
         "pb": 1.5,
         "ps": 0.0,
@@ -2149,14 +2103,13 @@
         "final_decision_reason": "CFO âm (-3,432 tỷ) trong khi LNST dương (4,438 tỷ) — lợi nhuận không có tiền mặt thật.",
         "company_name": "Tập đoàn Xăng dầu Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 1293878081,
-        "price_change_percent": 0.15
+        "total_shares": 1293878081
     },
     {
         "symbol": "SAB",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 43350.0,
+        "close_price": 43200.0,
         "pe": 11.81,
         "pb": 2.64,
         "ps": 0.0,
@@ -2195,14 +2148,13 @@
         "final_decision_reason": "Giá 43,200 cao hơn fair_high 36,518. Doanh nghiệp tốt (PTCB 20/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Tổng Công ty Cổ phần Bia - Rượu - Nước Giải khát Sài Gòn",
         "market_cap": 0.0,
-        "total_shares": 1282562372,
-        "price_change_percent": 1.05
+        "total_shares": 1282562372
     },
     {
         "symbol": "HDG",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 16500.0,
+        "close_price": 16950.0,
         "pe": 8.1,
         "pb": 0.92,
         "ps": 0.0,
@@ -2241,14 +2193,13 @@
         "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HỢP LÝ - CHỜ ĐIỀU CHỈNH), PTCB 20/50 < 30.",
         "company_name": "Công ty Cổ phần Tập đoàn Hà Đô",
         "market_cap": 0.0,
-        "total_shares": 406957333,
-        "price_change_percent": -1.2
+        "total_shares": 406957333
     },
     {
         "symbol": "BMP",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "CONSTRUCTION",
-        "close_price": 130500.0,
+        "close_price": 138400.0,
         "pe": 9.02,
         "pb": 3.56,
         "ps": 0.0,
@@ -2287,14 +2238,13 @@
         "final_decision_reason": "Giá 138,400 cao hơn fair_high 115,656. Doanh nghiệp tốt (PTCB 20/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Công ty Cổ phần Nhựa Bình Minh",
         "market_cap": 0.0,
-        "total_shares": 81860938,
-        "price_change_percent": -5.3
+        "total_shares": 81860938
     },
     {
         "symbol": "KDC",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 50300.0,
+        "close_price": 50200.0,
         "pe": 19.11,
         "pb": 2.48,
         "ps": 0.0,
@@ -2333,8 +2283,7 @@
         "final_decision_reason": "Giá 50,200 đã vượt xa fair_high 31,963 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Tập đoàn KIDO",
         "market_cap": 0.0,
-        "total_shares": 289806316,
-        "price_change_percent": 0.4
+        "total_shares": 289806316
     },
     {
         "symbol": "OCB",
@@ -2378,14 +2327,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Ngân hàng Thương mại Cổ phần Phương Đông",
         "market_cap": 0.0,
-        "total_shares": 3062510126,
-        "price_change_percent": 0.47
+        "total_shares": 3062510126
     },
     {
         "symbol": "PDR",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 11800.0,
+        "close_price": 11850.0,
         "pe": 21.56,
         "pb": 0.92,
         "ps": 0.0,
@@ -2425,14 +2373,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Phát triển Bất động sản Phát Đạt",
         "market_cap": 0.0,
-        "total_shares": 997809379,
-        "price_change_percent": -0.84
+        "total_shares": 997809379
     },
     {
         "symbol": "LPB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 36200.0,
+        "close_price": 35900.0,
         "pe": 8.62,
         "pb": 2.24,
         "ps": 0.0,
@@ -2470,14 +2417,13 @@
         "final_decision_reason": "Giá 35,900 cao hơn fair_high 34,393. Doanh nghiệp tốt (PTCB 40/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Ngân hàng Thương mại Cổ phần Lộc Phát Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 2987282100,
-        "price_change_percent": 0.28
+        "total_shares": 2987282100
     },
     {
         "symbol": "VIC",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 245200.0,
+        "close_price": 238500.0,
         "pe": 41.99,
         "pb": 9.35,
         "ps": 0.0,
@@ -2517,14 +2463,13 @@
         "final_decision_reason": "Giá 238,500 đã vượt xa fair_high 56,596 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Tập đoàn Vingroup - Công ty CP",
         "market_cap": 0.0,
-        "total_shares": 7762186429,
-        "price_change_percent": 1.32
+        "total_shares": 7762186429
     },
     {
         "symbol": "BVH",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "INSURANCE",
-        "close_price": 64700.0,
+        "close_price": 62800.0,
         "pe": 13.93,
         "pb": 1.8,
         "ps": 0.0,
@@ -2562,14 +2507,13 @@
         "final_decision_reason": "PTCB chỉ 18/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Tập đoàn Bảo Việt",
         "market_cap": 0.0,
-        "total_shares": 742322764,
-        "price_change_percent": 0.62
+        "total_shares": 742322764
     },
     {
         "symbol": "DIG",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 10500.0,
+        "close_price": 10600.0,
         "pe": 13.89,
         "pb": 0.87,
         "ps": 0.0,
@@ -2608,14 +2552,13 @@
         "final_decision_reason": "PTCB chỉ 13/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Tổng Công ty Cổ phần Đầu tư Phát triển Xây dựng",
         "market_cap": 0.0,
-        "total_shares": 844192763,
-        "price_change_percent": -1.41
+        "total_shares": 844192763
     },
     {
         "symbol": "EVF",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 11900.0,
+        "close_price": 11700.0,
         "pe": 8.8,
         "pb": 0.82,
         "ps": 0.0,
@@ -2655,14 +2598,13 @@
         "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Tài chính Tổng hợp Cổ phần Điện Lực",
         "market_cap": 0.0,
-        "total_shares": 760565802,
-        "price_change_percent": -0.83
+        "total_shares": 760565802
     },
     {
         "symbol": "SSB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 15100.0,
+        "close_price": 14950.0,
         "pe": 15.76,
         "pb": 1.19,
         "ps": 0.0,
@@ -2700,14 +2642,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Ngân hàng Thương mại Cổ phần Đông Nam Á",
         "market_cap": 0.0,
-        "total_shares": 3428800000,
-        "price_change_percent": 0.0
+        "total_shares": 3428800000
     },
     {
         "symbol": "PNJ",
         "sector": "CONG_NGHE_BAN_LE",
         "sub_sector": "CONG_NGHE_BAN_LE",
-        "close_price": 14550.0,
+        "close_price": 14300.0,
         "pe": 4.3,
         "pb": 0.55,
         "ps": 0.0,
@@ -2746,14 +2687,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
         "market_cap": 0.0,
-        "total_shares": 511891518,
-        "price_change_percent": -1.02
+        "total_shares": 511891518
     },
     {
         "symbol": "VHC",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "AGRI",
-        "close_price": 49550.0,
+        "close_price": 49700.0,
         "pe": 8.3,
         "pb": 1.06,
         "ps": 0.0,
@@ -2792,14 +2732,13 @@
         "final_decision_reason": "PTCB chỉ 10/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Vĩnh Hoàn",
         "market_cap": 0.0,
-        "total_shares": 209453159,
-        "price_change_percent": -0.7
+        "total_shares": 209453159
     },
     {
         "symbol": "DBC",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "AGRI",
-        "close_price": 16200.0,
+        "close_price": 16100.0,
         "pe": 6.9,
         "pb": 0.8,
         "ps": 0.0,
@@ -2839,14 +2778,13 @@
         "final_decision_reason": "PTCB chỉ 10/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Tập đoàn Dabaco Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 431046499,
-        "price_change_percent": 0.0
+        "total_shares": 431046499
     },
     {
         "symbol": "TCX",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 28800.0,
+        "close_price": 29150.0,
         "pe": 15.25,
         "pb": 2.0,
         "ps": 0.0,
@@ -2885,14 +2823,13 @@
         "final_decision_reason": "Giá 29,150 cao hơn fair_high 24,750. Doanh nghiệp tốt (PTCB 23/50) nhưng định giá đã đắt, chờ điều chỉnh.",
         "company_name": "Công ty Cổ phần Chứng khoán Kỹ Thương",
         "market_cap": 0.0,
-        "total_shares": 3329339823,
-        "price_change_percent": -0.17
+        "total_shares": 3329339823
     },
     {
         "symbol": "NLG",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 23900.0,
+        "close_price": 23250.0,
         "pe": 17.73,
         "pb": 0.86,
         "ps": 0.0,
@@ -2931,8 +2868,7 @@
         "final_decision_reason": "PTCB chỉ 10/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Đầu tư Nam Long",
         "market_cap": 0.0,
-        "total_shares": 485097383,
-        "price_change_percent": 1.7
+        "total_shares": 485097383
     },
     {
         "symbol": "DPM",
@@ -2977,14 +2913,13 @@
         "final_decision_reason": "PTCB chỉ 12/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Tổng Công ty Phân bón và Hóa chất Dầu khí - Công ty Cổ phần",
         "market_cap": 0.0,
-        "total_shares": 679990761,
-        "price_change_percent": -0.26
+        "total_shares": 679990761
     },
     {
         "symbol": "DXG",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 11300.0,
+        "close_price": 11350.0,
         "pe": 121.2,
         "pb": 0.97,
         "ps": 0.0,
@@ -3023,14 +2958,13 @@
         "final_decision_reason": "PTCB chỉ 10/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Bluemarq Group",
         "market_cap": 0.0,
-        "total_shares": 1269852451,
-        "price_change_percent": -0.88
+        "total_shares": 1269852451
     },
     {
         "symbol": "BCM",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 38450.0,
+        "close_price": 38300.0,
         "pe": 19.99,
         "pb": 1.74,
         "ps": 0.0,
@@ -3069,14 +3003,13 @@
         "final_decision_reason": "CFO âm (-451 tỷ) trong khi LNST dương (2,134 tỷ) — lợi nhuận không có tiền mặt thật.",
         "company_name": "Tập đoàn Đầu tư và Phát triển Công nghiệp Becamex - CTCP",
         "market_cap": 0.0,
-        "total_shares": 1035000000,
-        "price_change_percent": 0.26
+        "total_shares": 1035000000
     },
     {
         "symbol": "CMG",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 17600.0,
+        "close_price": 17700.0,
         "pe": 10.4,
         "pb": 1.21,
         "ps": 0.0,
@@ -3115,14 +3048,13 @@
         "final_decision_reason": "PTCB chỉ 11/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Tập đoàn Công nghệ CMC",
         "market_cap": 0.0,
-        "total_shares": 232954608,
-        "price_change_percent": 0.0
+        "total_shares": 232954608
     },
     {
         "symbol": "NDN",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 7600.0,
+        "close_price": 7700.0,
         "pe": 13.14,
         "pb": 0.46,
         "ps": 0.0,
@@ -3158,8 +3090,7 @@
         "valuation_verdict": "RẺ - TRONG VÙNG MUA",
         "final_decision": "❌ TRÁNH",
         "final_decision_color": "rose",
-        "final_decision_reason": "PTCB chỉ 11/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
-        "price_change_percent": 0.0
+        "final_decision_reason": "PTCB chỉ 11/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ."
     },
     {
         "symbol": "GEE",
@@ -3205,8 +3136,7 @@
         "final_decision_reason": "Giá 64,000 đã vượt xa fair_high 35,020 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Công nghiệp Gelex",
         "market_cap": 0.0,
-        "total_shares": 640499211,
-        "price_change_percent": 0.0
+        "total_shares": 640499211
     },
     {
         "symbol": "VCK",
@@ -3251,14 +3181,13 @@
         "final_decision_reason": "Giá 28,450 đã vượt xa fair_high 22,894 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Công ty Cổ phần Chứng Khoán VPS",
         "market_cap": 0.0,
-        "total_shares": 2434919704,
-        "price_change_percent": -0.52
+        "total_shares": 2434919704
     },
     {
         "symbol": "VIX",
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
-        "close_price": 13300.0,
+        "close_price": 13450.0,
         "pe": 19.97,
         "pb": 1.02,
         "ps": 0.0,
@@ -3296,14 +3225,13 @@
         "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán VIX",
         "market_cap": 0.0,
-        "total_shares": 2572788533,
-        "price_change_percent": -0.75
+        "total_shares": 2572788533
     },
     {
         "symbol": "NKG",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 12300.0,
+        "close_price": 12350.0,
         "pe": 24.79,
         "pb": 0.78,
         "ps": 0.0,
@@ -3342,8 +3270,7 @@
         "final_decision_reason": "Chưa đủ điều kiện: giá chưa vào vùng mua (HỢP LÝ - CHỜ ĐIỀU CHỈNH), PTCB 26/50 < 30, Định giá 8/30 < 18.",
         "company_name": "Công ty Cổ phần Thép Nam Kim",
         "market_cap": 0.0,
-        "total_shares": 492323961,
-        "price_change_percent": 1.65
+        "total_shares": 492323961
     },
     {
         "symbol": "SIP",
@@ -3388,14 +3315,13 @@
         "final_decision_reason": "PTCB chỉ 3/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Đầu tư Sài Gòn VRG",
         "market_cap": 0.0,
-        "total_shares": 242112943,
-        "price_change_percent": 0.4
+        "total_shares": 242112943
     },
     {
         "symbol": "EIB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 16400.0,
+        "close_price": 16350.0,
         "pe": 158.34,
         "pb": 1.14,
         "ps": 0.0,
@@ -3433,14 +3359,13 @@
         "final_decision_reason": "PTCB chỉ 5/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Ngân hàng Thương mại Cổ phần Xuất nhập khẩu Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 1868810607,
-        "price_change_percent": 0.31
+        "total_shares": 1868810607
     },
     {
         "symbol": "VTP",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 46200.0,
+        "close_price": 46100.0,
         "pe": 24.95,
         "pb": 3.86,
         "ps": 0.0,
@@ -3479,8 +3404,7 @@
         "final_decision_reason": "Giá 46,100 đã vượt xa fair_high 22,194 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Tổng Công ty Cổ phần Bưu chính Viettel",
         "market_cap": 0.0,
-        "total_shares": 201885171,
-        "price_change_percent": 0.22
+        "total_shares": 201885171
     },
     {
         "symbol": "SSI",
@@ -3524,14 +3448,13 @@
         "final_decision_reason": "PTCB chỉ 16/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán SSI",
         "market_cap": 0.0,
-        "total_shares": 3003293801,
-        "price_change_percent": -0.48
+        "total_shares": 3003293801
     },
     {
         "symbol": "VCG",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "CONSTRUCTION",
-        "close_price": 15550.0,
+        "close_price": 15200.0,
         "pe": 9.34,
         "pb": 0.9,
         "ps": 0.0,
@@ -3570,14 +3493,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Tổng Công ty Cổ phần Xuất nhập khẩu và Xây dựng Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 698176245,
-        "price_change_percent": 0.97
+        "total_shares": 698176245
     },
     {
         "symbol": "CTD",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "CONSTRUCTION",
-        "close_price": 71000.0,
+        "close_price": 71600.0,
         "pe": 9.87,
         "pb": 0.79,
         "ps": 0.0,
@@ -3616,14 +3538,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Xây dựng Coteccons",
         "market_cap": 0.0,
-        "total_shares": 114026467,
-        "price_change_percent": -0.56
+        "total_shares": 114026467
     },
     {
         "symbol": "STB",
         "sector": "NGAN_HANG",
         "sub_sector": "NGAN_HANG",
-        "close_price": 68500.0,
+        "close_price": 70400.0,
         "pe": 84.66,
         "pb": 2.01,
         "ps": 0.0,
@@ -3661,14 +3582,13 @@
         "final_decision_reason": "Giá 70,400 đã vượt xa fair_high 5,979 quá nhiều. Định giá quá đắt so với giá trị thực.",
         "company_name": "Ngân hàng Thương mại Cổ phần Sài Gòn Tài Lộc",
         "market_cap": 0.0,
-        "total_shares": 1885215716,
-        "price_change_percent": -1.72
+        "total_shares": 1885215716
     },
     {
         "symbol": "VPX",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 23150.0,
+        "close_price": 23400.0,
         "pe": 11.37,
         "pb": 1.19,
         "ps": 0.0,
@@ -3707,8 +3627,7 @@
         "final_decision_reason": "PTCB chỉ 3/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán VPBank",
         "market_cap": 0.0,
-        "total_shares": 1875000000,
-        "price_change_percent": -0.64
+        "total_shares": 1875000000
     },
     {
         "symbol": "NVL",
@@ -3753,14 +3672,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Tập đoàn Đầu tư Địa ốc No Va",
         "market_cap": 0.0,
-        "total_shares": 2403805052,
-        "price_change_percent": 0.0
+        "total_shares": 2403805052
     },
     {
         "symbol": "TAL",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 23950.0,
+        "close_price": 24200.0,
         "pe": 13.92,
         "pb": 2.07,
         "ps": 0.0,
@@ -3799,8 +3717,7 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công Ty Cổ Phần Đầu Tư Bất Động Sản Taseco",
         "market_cap": 0.0,
-        "total_shares": 503999708,
-        "price_change_percent": 0.21
+        "total_shares": 503999708
     },
     {
         "symbol": "VND",
@@ -3846,14 +3763,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán VNDIRECT",
         "market_cap": 0.0,
-        "total_shares": 1522299908,
-        "price_change_percent": 0.0
+        "total_shares": 1522299908
     },
     {
         "symbol": "VPL",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 94000.0,
+        "close_price": 92800.0,
         "pe": 49.8,
         "pb": 3.79,
         "ps": 0.0,
@@ -3892,14 +3808,13 @@
         "final_decision_reason": "PTCB chỉ 18/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Vinpearl",
         "market_cap": 0.0,
-        "total_shares": 1793300377,
-        "price_change_percent": 0.21
+        "total_shares": 1793300377
     },
     {
         "symbol": "BSI",
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
-        "close_price": 29100.0,
+        "close_price": 29250.0,
         "pe": 16.38,
         "pb": 1.32,
         "ps": 0.0,
@@ -3937,14 +3852,13 @@
         "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán BIDV",
         "market_cap": 0.0,
-        "total_shares": 269901549,
-        "price_change_percent": 1.04
+        "total_shares": 269901549
     },
     {
         "symbol": "VCI",
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
-        "close_price": 20200.0,
+        "close_price": 20150.0,
         "pe": 16.19,
         "pb": 1.34,
         "ps": 0.0,
@@ -3982,14 +3896,13 @@
         "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán Vietcap",
         "market_cap": 0.0,
-        "total_shares": 1152231925,
-        "price_change_percent": 1.0
+        "total_shares": 1152231925
     },
     {
         "symbol": "FTS",
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
-        "close_price": 19800.0,
+        "close_price": 20300.0,
         "pe": 18.21,
         "pb": 1.64,
         "ps": 0.0,
@@ -4027,14 +3940,13 @@
         "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán FPT",
         "market_cap": 0.0,
-        "total_shares": 381145750,
-        "price_change_percent": -1.0
+        "total_shares": 381145750
     },
     {
         "symbol": "HSG",
         "sector": "NGUYEN_VAT_LIEU_CHU_KY",
         "sub_sector": "NGUYEN_VAT_LIEU_CHU_KY",
-        "close_price": 11050.0,
+        "close_price": 10950.0,
         "pe": 14.12,
         "pb": 0.74,
         "ps": 0.0,
@@ -4074,14 +3986,13 @@
         "final_decision_reason": "PTCB chỉ 6/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Tập đoàn Hoa Sen",
         "market_cap": 0.0,
-        "total_shares": 807262704,
-        "price_change_percent": 1.38
+        "total_shares": 807262704
     },
     {
         "symbol": "GEX",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "CONSTRUCTION",
-        "close_price": 22350.0,
+        "close_price": 22300.0,
         "pe": 28.81,
         "pb": 1.43,
         "ps": 0.0,
@@ -4120,14 +4031,13 @@
         "final_decision_reason": "PTCB chỉ 15/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Tập đoàn Gelex",
         "market_cap": 0.0,
-        "total_shares": 1308471358,
-        "price_change_percent": 0.45
+        "total_shares": 1308471358
     },
     {
         "symbol": "VSC",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 13800.0,
+        "close_price": 13650.0,
         "pe": 19.54,
         "pb": 0.89,
         "ps": 0.0,
@@ -4166,14 +4076,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Container Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 374370362,
-        "price_change_percent": 1.85
+        "total_shares": 374370362
     },
     {
         "symbol": "PVD",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "PETROLEUM",
-        "close_price": 16350.000000000002,
+        "close_price": 16900.0,
         "pe": 17.63,
         "pb": 0.93,
         "ps": 0.0,
@@ -4212,14 +4121,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Tổng Công ty Cổ phần Khoan và Dịch vụ khoan Dầu khí",
         "market_cap": 0.0,
-        "total_shares": 928158191,
-        "price_change_percent": -2.1
+        "total_shares": 928158191
     },
     {
         "symbol": "CTS",
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
-        "close_price": 23200.0,
+        "close_price": 23450.0,
         "pe": 56.33,
         "pb": 2.2,
         "ps": 0.0,
@@ -4257,14 +4165,13 @@
         "final_decision_reason": "PTCB chỉ 5/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán Vietinbank",
         "market_cap": 0.0,
-        "total_shares": 272244939,
-        "price_change_percent": 0.65
+        "total_shares": 272244939
     },
     {
         "symbol": "HCM",
         "sector": "CHUNG_KHOAN",
         "sub_sector": "CHUNG_KHOAN",
-        "close_price": 23200.0,
+        "close_price": 23650.0,
         "pe": 27.03,
         "pb": 2.2,
         "ps": 0.0,
@@ -4302,14 +4209,13 @@
         "final_decision_reason": "PTCB chỉ 8/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán Thành phố Hồ Chí Minh",
         "market_cap": 0.0,
-        "total_shares": 1372786256,
-        "price_change_percent": -1.07
+        "total_shares": 1372786256
     },
     {
         "symbol": "VPI",
         "sector": "BAT_DONG_SAN",
         "sub_sector": "BAT_DONG_SAN",
-        "close_price": 57900.0,
+        "close_price": 55000.0,
         "pe": 69.13,
         "pb": 3.89,
         "ps": 0.0,
@@ -4348,14 +4254,13 @@
         "final_decision_reason": "PTCB chỉ 5/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Phát triển Bất động sản Văn Phú",
         "market_cap": 0.0,
-        "total_shares": 352054374,
-        "price_change_percent": 2.66
+        "total_shares": 352054374
     },
     {
         "symbol": "KOS",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 3610.0,
+        "close_price": 3340.0,
         "pe": 44.86,
         "pb": 0.32,
         "ps": 0.0,
@@ -4395,14 +4300,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần KOSY",
         "market_cap": 0.0,
-        "total_shares": 216481335,
-        "price_change_percent": 6.18
+        "total_shares": 216481335
     },
     {
         "symbol": "VJC",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "AVIATION",
-        "close_price": 136500.0,
+        "close_price": 136300.0,
         "pe": 46.93,
         "pb": 3.9,
         "ps": 0.0,
@@ -4441,14 +4345,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Hàng không Vietjet",
         "market_cap": 0.0,
-        "total_shares": 769092961,
-        "price_change_percent": 0.07
+        "total_shares": 769092961
     },
     {
         "symbol": "BAF",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 30950.0,
+        "close_price": 30750.0,
         "pe": 135.92,
         "pb": 2.51,
         "ps": 0.0,
@@ -4488,14 +4391,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Nông nghiệp BAF Việt Nam",
         "market_cap": 0.0,
-        "total_shares": 364824906,
-        "price_change_percent": 0.0
+        "total_shares": 364824906
     },
     {
         "symbol": "CII",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
-        "close_price": 14150.0,
+        "close_price": 14300.0,
         "pe": 87.47,
         "pb": 0.95,
         "ps": 0.0,
@@ -4534,8 +4436,7 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh",
         "market_cap": 0.0,
-        "total_shares": 671985291,
-        "price_change_percent": 0.35
+        "total_shares": 671985291
     },
     {
         "symbol": "DSE",
@@ -4580,14 +4481,13 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Chứng khoán DNSE",
         "market_cap": 0.0,
-        "total_shares": 428249806,
-        "price_change_percent": 0.0
+        "total_shares": 428249806
     },
     {
         "symbol": "SBT",
         "sector": "SAN_XUAT_TIEU_DUNG_PHONG_THU",
         "sub_sector": "AGRI",
-        "close_price": 21100.0,
+        "close_price": 20950.0,
         "pe": 24.7,
         "pb": 1.58,
         "ps": 0.0,
@@ -4626,7 +4526,6 @@
         "final_decision_reason": "PTCB chỉ 0/50 — doanh nghiệp yếu về cơ bản. Không mua dù giá rẻ.",
         "company_name": "Công ty Cổ phần Thành Thành Công - Biên Hòa",
         "market_cap": 0.0,
-        "total_shares": 934634155,
-        "price_change_percent": 0.0
+        "total_shares": 934634155
     }
 ]
