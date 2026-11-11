@@ -178,17 +178,20 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     }
 
     // ══════════════════════════════════════════════════
-    // LOAD DATA
+    // LOAD DATA (TỐI ƯU CHỐNG TREO KHI MẤT KẾT NỐI API)
     // ══════════════════════════════════════════════════
     async function loadData(showSpinner = false) {
         const icon = document.getElementById('refresh-icon');
         if (showSpinner && icon) icon.classList.add('spinner');
+        
         try {
+            // 1. Tải dữ liệu tĩnh (Bắt buộc phải có)
             const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                 fetch('screener_results.json?t=' + new Date().getTime()),
                 fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
                 fetch('quarterly_mean_details.json?t=' + new Date().getTime()).catch(() => ({ ok: false }))
             ]);
+            
             if (!screenerRes.ok) throw new Error('Không thể tải screener_results.json');
             let screenerData = await screenerRes.json();
             if (ratesRes.ok) symbolSimRates = await ratesRes.json();
@@ -198,21 +201,34 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             try {
                 const dataRes = await fetch('data.json?t=' + new Date().getTime());
                 if (dataRes.ok) rawStockData = await dataRes.json();
-            } catch (e) {}
+            } catch (e) { console.warn("Không tải được data.json tĩnh"); }
 
+            // 2. Tải giá realtime từ MongoDB (CÓ TIMEOUT ĐỂ CHỐNG TREO)
             let mongoPrices = {};
             try {
-                const mongoRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
+                // Tạo bộ đếm thời gian, nếu quá 4 giây không phản hồi thì hủy (Abort)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 4000); // 4 giây
+
+                const mongoRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime(), { 
+                    signal: controller.signal 
+                });
+                clearTimeout(timeoutId);
+
                 if (mongoRes.ok) {
                     const mongoJson = await mongoRes.json();
                     mongoPrices = mongoJson.data || {};
                 }
-            } catch (e) { console.warn("Không lấy được giá từ MongoDB:", e); }
+            } catch (e) { 
+                console.warn("⚠️ Không lấy được giá từ MongoDB (Server đang ngủ hoặc mất mạng). Dùng dữ liệu tĩnh.", e); 
+            }
 
+            // 3. Hợp nhất dữ liệu
             screenerResults = screenerData.map(item => {
                 const sym = item.symbol;
                 const extraData = rawStockData[sym] || {};
-                const liveData = mongoPrices[sym] || {};
+                const liveData = mongoPrices[sym] || {}; // Nếu API lỗi, liveData sẽ là {}
+                
                 let finalClosePrice = item.close_price || 0;
                 if (liveData.close_price !== undefined) finalClosePrice = liveData.close_price;
                 else if (liveData.close !== undefined) finalClosePrice = liveData.close;
@@ -234,7 +250,8 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                     net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
                     close_price: finalClosePrice,
-                    updated_at: liveData.updated_at || extraData.updated_at || "Chưa rõ",
+                    // Nếu mất kết nối, lấy thời gian tĩnh từ file JSON
+                    updated_at: liveData.updated_at || extraData.updated_at || item.updated_at || "Chưa rõ", 
                     open: liveData.open !== undefined ? liveData.open : null,
                     high: liveData.high !== undefined ? liveData.high : null,
                     low: liveData.low !== undefined ? liveData.low : null,
@@ -269,6 +286,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             });
             renderCards();
         } catch (error) {
+            console.error("Lỗi tải dữ liệu:", error);
             const container = document.getElementById('stock-container');
             if (container && showSpinner) {
                 container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
@@ -1048,7 +1066,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     }
 
     // ══════════════════════════════════════════════════
-    // REFRESH GIÁ
+    // REFRESH GIÁ (CÓ TIMEOUT)
     // ══════════════════════════════════════════════════
     let isRefreshingAll = false;
     async function refreshPrices() {
@@ -1083,12 +1101,24 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             await Promise.all(chunks.map(async (chunk) => {
                 const symQuery = chunk.join(',');
                 try {
-                    const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symQuery}`);
+                    // Thêm Timeout 5 giây cho API Sync
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                    const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symQuery}`, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+
                     if (res.ok) {
                         const data = await res.json();
                         lastUpdateTime = data.updated_at.replace(/\s*\(.*?\)\s*/g, '').trim();
                         
-                        const dataRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
+                        // Thêm Timeout 5 giây cho API Data
+                        const dataController = new AbortController();
+                        const dataTimeoutId = setTimeout(() => dataController.abort(), 5000);
+                        
+                        const dataRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime(), { signal: dataController.signal });
+                        clearTimeout(dataTimeoutId);
+
                         let mongoPrices = {};
                         if (dataRes.ok) {
                             const mongoJson = await dataRes.json();
@@ -1125,17 +1155,15 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                         });
                     }
                 } catch (err) {
+                    const isTimeout = err.name === 'AbortError';
                     chunk.forEach(sym => {
-                        addLog(`${sym}: Lỗi kết nối mạng`, 'error');
+                        addLog(`${sym}: ${isTimeout ? 'Server quá tải/Không phản hồi' : 'Lỗi kết nối mạng'}`, 'error');
                         processedCount++;
                         updateProgress(processedCount, symbols.length);
                     });
                 }
             }));
             renderCards();
-            if (lastUpdateTime) { 
-                // const cleanTime = lastUpdateTime.replace(/\s*\(.*?\)\s*/g, '').trim();
-            }
             addLog(`Hoàn tất toàn bộ! Đã cập nhật ${updatedCount}/${symbols.length} mã.`, 'success');
             updateProgress(symbols.length, symbols.length);
         } catch (err) {
@@ -1165,13 +1193,23 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         updateProgress(0, 1);
         addLog(`Bắt đầu lấy giá cho ${symbol}...`, 'processing');
         try {
-            const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symbol}`);
+            // Timeout cho sync
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            const res = await fetch(`${PRICE_API_URL}/api/sync?symbols=${symbol}`, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
             if (res.ok) {
                 const data = await res.json();
                 if (data.updated_data && data.updated_data[symbol] !== undefined) {
                     const newPrice = data.updated_data[symbol];
                     
-                    const dataRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime());
+                    // Timeout cho data
+                    const dataController = new AbortController();
+                    const dataTimeoutId = setTimeout(() => dataController.abort(), 5000);
+                    const dataRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime(), { signal: dataController.signal });
+                    clearTimeout(dataTimeoutId);
+
                     let mongoPrices = {};
                     if (dataRes.ok) {
                         const mongoJson = await dataRes.json();
@@ -1207,7 +1245,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     addLog(`${symbol}: Không lấy được giá`, 'error');
                 }
             } else { addLog(`${symbol}: Lỗi server (${res.status})`, 'error'); }
-        } catch (err) { addLog(`${symbol}: Lỗi kết nối mạng`, 'error'); }
+        } catch (err) { 
+            const isTimeout = err.name === 'AbortError';
+            addLog(`${symbol}: ${isTimeout ? 'Server quá tải' : 'Lỗi kết nối mạng'}`, 'error'); 
+        }
         finally {
             updateProgress(1, 1);
             isRefreshingSingle = false;
