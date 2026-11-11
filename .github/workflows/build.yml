@@ -36,8 +36,8 @@ jobs:
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           SUPER_ADMINS: ${{ secrets.SUPER_ADMINS }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}   # <-- THÊM DÒNG NÀY
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}       # <-- THÊM DÒNG NÀY
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           echo "🚀 Bắt đầu build..."
           if [ -z "$FIREBASE_CONFIG" ]; then
@@ -55,15 +55,25 @@ jobs:
       - name: Prepare for Pages
         run: |
           mkdir -p _site
+          
+          # 1. Copy các file HTML (BỔ SUNG ADMIN.HTML)
           cp index.html _site/
+          if [ -f "admin.html" ]; then
+            cp admin.html _site/
+          fi
+          
+          # 2. Copy các file JSON và JS
           for f in data.json screener_results.json cheap_stocks.json \
                    symbol_sim_rates.json quarterly_mean_details.json \
                    last_update.json lightweight-charts.js vn100_full_info.json; do
             [ -f "$f" ] && cp "$f" _site/
           done
+          
+          # 3. Copy thư mục history (nếu có)
           if [ -d "history" ]; then
             cp -r history _site/
           fi
+          
           echo "📁 Danh sách file chuẩn bị deploy:"
           ls -la _site/
 
