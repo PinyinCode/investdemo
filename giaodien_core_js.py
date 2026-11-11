@@ -178,14 +178,14 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     }
 
     // ══════════════════════════════════════════════════
-    // LOAD DATA (TỐI ƯU CHỐNG TREO KHI MẤT KẾT NỐI API)
+    // LOAD DATA (ƯU TIÊN MONGODB, FALLBACK JSON TĨNH)
     // ══════════════════════════════════════════════════
     async function loadData(showSpinner = false) {
         const icon = document.getElementById('refresh-icon');
         if (showSpinner && icon) icon.classList.add('spinner');
         
         try {
-            // 1. Tải dữ liệu tĩnh (Bắt buộc phải có)
+            // 1. Tải dữ liệu tĩnh (Bắt buộc phải có để làm fallback)
             const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                 fetch('screener_results.json?t=' + new Date().getTime()),
                 fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
@@ -203,32 +203,44 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 if (dataRes.ok) rawStockData = await dataRes.json();
             } catch (e) { console.warn("Không tải được data.json tĩnh"); }
 
-            // 2. Tải giá realtime từ MongoDB (CÓ TIMEOUT ĐỂ CHỐNG TREO)
+            // 2. Tải dữ liệu CHẤM ĐIỂM MỚI NHẤT từ API MongoDB
+            let mongoScreener = [];
             let mongoPrices = {};
             try {
-                // Tạo bộ đếm thời gian, nếu quá 4 giây không phản hồi thì hủy (Abort)
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 4000); // 4 giây
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // Đợi tối đa 5s
 
-                const mongoRes = await fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime(), { 
-                    signal: controller.signal 
-                });
+                // Lấy cả dữ liệu chấm điểm và dữ liệu giá realtime từ MongoDB
+                const [mongoScreenerRes, mongoDataRes] = await Promise.all([
+                    fetch(`${PRICE_API_URL}/api/screener?t=` + new Date().getTime(), { signal: controller.signal }),
+                    fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime(), { signal: controller.signal })
+                ]);
                 clearTimeout(timeoutId);
 
-                if (mongoRes.ok) {
-                    const mongoJson = await mongoRes.json();
-                    mongoPrices = mongoJson.data || {};
+                if (mongoScreenerRes.ok) {
+                    const mJson = await mongoScreenerRes.json();
+                    mongoScreener = mJson.data || [];
+                }
+                if (mongoDataRes.ok) {
+                    const mJson = await mongoDataRes.json();
+                    mongoPrices = mJson.data || {};
                 }
             } catch (e) { 
-                console.warn("⚠️ Không lấy được giá từ MongoDB (Server đang ngủ hoặc mất mạng). Dùng dữ liệu tĩnh.", e); 
+                console.warn("⚠️ Không lấy được dữ liệu từ MongoDB. Dùng dữ liệu tĩnh (Github).", e); 
             }
 
-            // 3. Hợp nhất dữ liệu
+            // 3. Hợp nhất dữ liệu: Ưu tiên MongoDB, sau đó đến JSON tĩnh
+            // Tạo Map từ MongoDB để dễ tra cứu
+            const mongoScreenerMap = {};
+            mongoScreener.forEach(item => { mongoScreenerMap[item.symbol] = item; });
+
             screenerResults = screenerData.map(item => {
                 const sym = item.symbol;
                 const extraData = rawStockData[sym] || {};
-                const liveData = mongoPrices[sym] || {}; // Nếu API lỗi, liveData sẽ là {}
+                const liveData = mongoPrices[sym] || {}; 
+                const mongoSI = mongoScreenerMap[sym] || {}; // Dữ liệu chấm điểm từ Mongo
                 
+                // --- GIÁ ---
                 let finalClosePrice = item.close_price || 0;
                 if (liveData.close_price !== undefined) finalClosePrice = liveData.close_price;
                 else if (liveData.close !== undefined) finalClosePrice = liveData.close;
@@ -249,8 +261,8 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     debt_to_equity: extraData.debt_to_equity !== undefined ? extraData.debt_to_equity : (item.debt_to_equity || 0),
                     gross_margin: extraData.gross_margin !== undefined ? extraData.gross_margin : (item.gross_margin || 0),
                     net_profit_ttm: extraData.net_profit_ttm !== undefined ? extraData.net_profit_ttm : (item.net_profit_ttm || 0),
+                    
                     close_price: finalClosePrice,
-                    // Nếu mất kết nối, lấy thời gian tĩnh từ file JSON
                     updated_at: liveData.updated_at || extraData.updated_at || item.updated_at || "Chưa rõ", 
                     open: liveData.open !== undefined ? liveData.open : null,
                     high: liveData.high !== undefined ? liveData.high : null,
@@ -264,24 +276,44 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     price_color: liveData.price_color && liveData.price_change_available ? liveData.price_color : (item.price_color || "slate"),
                     volume_percent: liveData.volume_percent !== undefined ? liveData.volume_percent : (item.volume_percent || 0),
                     amplitude_percent: liveData.amplitude_percent !== undefined ? liveData.amplitude_percent : (item.amplitude_percent || 0),
-                    bctc: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
-                    bctc_evaluation: extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
-                    outlook: extraData.outlook !== undefined ? extraData.outlook : item.outlook,
-                    ai_recommendation: extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation,
-                    ai_price_zone: extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone,
-                    macro_view: extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view,
-                    ai_updated_at: extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at,
-                    ai_source: extraData.ai_source !== undefined ? extraData.ai_source : (item.ai_source || ""),
-                    fair_value_low: extraData.fair_value_low !== undefined ? extraData.fair_value_low : (item.fair_value_low || 0),
-                    fair_value_high: extraData.fair_value_high !== undefined ? extraData.fair_value_high : (item.fair_value_high || 0),
-                    valuation_verdict: extraData.valuation_verdict !== undefined ? extraData.valuation_verdict : (item.valuation_verdict || ""),
-                    discount_to_fair_pct: extraData.discount_to_fair_pct !== undefined ? extraData.discount_to_fair_pct : (item.discount_to_fair_pct || 0),
-                    margin_of_safety_pct: extraData.margin_of_safety_pct !== undefined ? extraData.margin_of_safety_pct : (item.margin_of_safety_pct || 0),
-                    fair_value_rationale: extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || ""),
-                    sub_sector: extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || ""),
-                    final_decision: item.final_decision !== undefined ? item.final_decision : (extraData.final_decision || ""),
-                    final_decision_color: item.final_decision_color !== undefined ? item.final_decision_color : (extraData.final_decision_color || "slate"),
-                    final_decision_reason: item.final_decision_reason !== undefined ? item.final_decision_reason : (extraData.final_decision_reason || ""),
+                    
+                    // ƯU TIÊN DỮ LIỆU TỪ MONGO (mongoSI) NẾU CÓ
+                    bctc: mongoSI.bctc_evaluation || mongoSI.bctc || extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
+                    bctc_evaluation: mongoSI.bctc_evaluation || mongoSI.bctc || extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
+                    outlook: mongoSI.outlook !== undefined ? mongoSI.outlook : (extraData.outlook !== undefined ? extraData.outlook : item.outlook),
+                    ai_recommendation: mongoSI.ai_recommendation !== undefined ? mongoSI.ai_recommendation : (extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation),
+                    ai_price_zone: mongoSI.ai_price_zone !== undefined ? mongoSI.ai_price_zone : (extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone),
+                    macro_view: mongoSI.macro_view !== undefined ? mongoSI.macro_view : (extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view),
+                    ai_updated_at: mongoSI.ai_updated_at !== undefined ? mongoSI.ai_updated_at : (extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at),
+                    ai_source: mongoSI.ai_source !== undefined ? mongoSI.ai_source : (extraData.ai_source !== undefined ? extraData.ai_source : (item.ai_source || "")),
+                    
+                    // CÁC CHỈ SỐ TÍNH TOÁN
+                    fair_value_low: mongoSI.fair_value_low !== undefined ? mongoSI.fair_value_low : (extraData.fair_value_low !== undefined ? extraData.fair_value_low : (item.fair_value_low || 0)),
+                    fair_value_high: mongoSI.fair_value_high !== undefined ? mongoSI.fair_value_high : (extraData.fair_value_high !== undefined ? extraData.fair_value_high : (item.fair_value_high || 0)),
+                    valuation_verdict: mongoSI.valuation_verdict !== undefined ? mongoSI.valuation_verdict : (extraData.valuation_verdict !== undefined ? extraData.valuation_verdict : (item.valuation_verdict || "")),
+                    discount_to_fair_pct: mongoSI.discount_to_fair_pct !== undefined ? mongoSI.discount_to_fair_pct : (extraData.discount_to_fair_pct !== undefined ? extraData.discount_to_fair_pct : (item.discount_to_fair_pct || 0)),
+                    margin_of_safety_pct: mongoSI.margin_of_safety_pct !== undefined ? mongoSI.margin_of_safety_pct : (extraData.margin_of_safety_pct !== undefined ? extraData.margin_of_safety_pct : (item.margin_of_safety_pct || 0)),
+                    fair_value_rationale: mongoSI.fair_value_rationale !== undefined ? mongoSI.fair_value_rationale : (extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || "")),
+                    sub_sector: mongoSI.sub_sector !== undefined ? mongoSI.sub_sector : (extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || "")),
+                    
+                    // ĐIỂM SỐ VÀ QUYẾT ĐỊNH
+                    final_decision: mongoSI.final_decision !== undefined ? mongoSI.final_decision : (item.final_decision !== undefined ? item.final_decision : (extraData.final_decision || "")),
+                    final_decision_color: mongoSI.final_decision_color !== undefined ? mongoSI.final_decision_color : (item.final_decision_color !== undefined ? item.final_decision_color : (extraData.final_decision_color || "slate")),
+                    final_decision_reason: mongoSI.final_decision_reason !== undefined ? mongoSI.final_decision_reason : (item.final_decision_reason !== undefined ? item.final_decision_reason : (extraData.final_decision_reason || "")),
+                    fundamental_score: mongoSI.fundamental_score !== undefined ? mongoSI.fundamental_score : (item.fundamental_score || 0),
+                    valuation_score: mongoSI.valuation_score !== undefined ? mongoSI.valuation_score : (item.valuation_score || 0),
+                    technical_score: mongoSI.technical_score !== undefined ? mongoSI.technical_score : (item.technical_score || 0),
+                    total_score: mongoSI.total_score !== undefined ? mongoSI.total_score : (item.total_score || 0),
+                    potential_zone: mongoSI.potential_zone !== undefined ? mongoSI.potential_zone : (item.potential_zone || ""),
+                    pattern: mongoSI.pattern !== undefined ? mongoSI.pattern : (item.pattern || ""),
+                    technical_status: mongoSI.technical_status !== undefined ? mongoSI.technical_status : (item.technical_status || ""),
+                    
+                    // DỮ LIỆU TÍNH CAGR 5 NĂM (Từ file tĩnh hoặc Mongo nếu có)
+                    sim_annual_rate: mongoSI.sim_annual_rate !== undefined ? mongoSI.sim_annual_rate : (item.sim_annual_rate || 15),
+                    sim_start_quarter: mongoSI.sim_start_quarter !== undefined ? mongoSI.sim_start_quarter : (item.sim_start_quarter || ""),
+                    sim_start_price: mongoSI.sim_start_price !== undefined ? mongoSI.sim_start_price : (item.sim_start_price || 0),
+                    sim_end_quarter: mongoSI.sim_end_quarter !== undefined ? mongoSI.sim_end_quarter : (item.sim_end_quarter || ""),
+                    sim_end_price: mongoSI.sim_end_price !== undefined ? mongoSI.sim_end_price : (item.sim_end_price || 0)
                 };
             });
             renderCards();
@@ -289,7 +321,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             console.error("Lỗi tải dữ liệu:", error);
             const container = document.getElementById('stock-container');
             if (container && showSpinner) {
-                container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc data.json!</div>`;
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-rose-400 font-semibold bg-rose-500/10 rounded-xl border border-rose-500/30">⚠️ Chưa có file screener_results.json hoặc lỗi kết nối API!</div>`;
             }
         } finally {
             if (showSpinner && icon) icon.classList.remove('spinner');
