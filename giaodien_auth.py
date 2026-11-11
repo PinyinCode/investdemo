@@ -262,8 +262,12 @@ def build_auth_lite_html(config):
         <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh]">
             
             <div class="bg-slate-950 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-circle-user text-emerald-400 text-lg"></i>
+                <div class="flex items-center space-x-3">
+                    <!-- AVATAR ICON -->
+                    <div class="relative w-8 h-8 rounded-full border border-emerald-500/50 flex items-center justify-center bg-slate-800 overflow-hidden shrink-0" id="modal-header-avatar">
+                        <i class="fa-solid fa-circle-user text-emerald-400 text-lg" id="modal-header-icon"></i>
+                        <img id="modal-header-img" src="" class="w-full h-full object-cover hidden absolute inset-0">
+                    </div>
                     <h3 class="text-sm font-bold text-white" id="modalTitle">Tài khoản của tôi</h3>
                 </div>
                 <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
@@ -508,6 +512,51 @@ def build_auth_lite_js(config):
                     btnEmailLogin.disabled = false;
                     if(btnSpan) btnSpan.innerHTML = 'Đăng nhập';
                 }
+
+                // ==========================================
+                // CẬP NHẬT AVATAR LÊN HEADER VÀ MODAL
+                // ==========================================
+                var iconEl = document.getElementById('header-user-icon');
+                var imgEl = document.getElementById('header-user-avatar');
+                
+                var modalIcon = document.getElementById('modal-header-icon');
+                var modalImg = document.getElementById('modal-header-img');
+
+                if (user) {
+                    // Header Avatar
+                    if (imgEl && iconEl) {
+                        if (user.photoURL) {
+                            imgEl.src = user.photoURL;
+                            imgEl.classList.remove('hidden');
+                            iconEl.classList.add('hidden');
+                        } else {
+                            imgEl.classList.add('hidden');
+                            iconEl.classList.remove('hidden');
+                        }
+                    }
+                    // Modal Avatar
+                    if (modalImg && modalIcon) {
+                        if (user.photoURL) {
+                            modalImg.src = user.photoURL;
+                            modalImg.classList.remove('hidden');
+                            modalIcon.classList.add('hidden');
+                        } else {
+                            modalImg.classList.add('hidden');
+                            modalIcon.classList.remove('hidden');
+                        }
+                    }
+                } else {
+                    // Chưa đăng nhập -> Trả lại icon mặc định
+                    if (imgEl && iconEl) {
+                        imgEl.classList.add('hidden');
+                        iconEl.classList.remove('hidden');
+                    }
+                    if (modalImg && modalIcon) {
+                        modalImg.classList.add('hidden');
+                        modalIcon.classList.remove('hidden');
+                    }
+                }
+                // ==========================================
 
                 if (user) {
                     var isExpired = await checkUserPermission(user);
