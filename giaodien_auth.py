@@ -271,29 +271,38 @@ def build_auth_lite_html(config):
                 </button>
             </div>
 
-            <div class="p-5 bg-slate-800/50 border-b border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <div class="text-[11px] text-slate-400 mb-1 uppercase tracking-wider font-semibold">Email đăng nhập</div>
-                    <div class="text-sm font-bold text-white" id="modalUserEmail">---</div>
-                    <div class="text-xs text-slate-400 mt-2">
-                        <i class="fa-solid fa-clock text-emerald-500"></i> Hạn sử dụng: 
-                        <span class="text-emerald-400 font-bold" id="modalExpireDate">Đang tải...</span>
+            <!-- HEADER TÀI KHOẢN TỐI ƯU DIỆN TÍCH -->
+            <div class="p-4 bg-slate-800/40 border-b border-slate-700 flex flex-col gap-3">
+                
+                <!-- Hàng 1: Email và Hạn sử dụng -->
+                <div class="flex justify-between items-start">
+                    <div class="min-w-0 pr-2 flex-1">
+                        <div class="text-[10px] text-slate-400 mb-0.5 uppercase tracking-wider font-semibold">Email đăng nhập</div>
+                        <div class="text-sm font-bold text-white truncate" id="modalUserEmail">---</div>
                     </div>
-
-                    <!-- THÔNG TIN LIÊN HỆ ADMIN -->
-                    <div class="mt-3 pt-3 border-t border-slate-700/50">
-                        <div class="text-[11px] text-slate-400 mb-1 uppercase tracking-wider font-semibold">Hỗ trợ trực tuyến</div>
-                        <a href="https://zalo.me/0528484668" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition shadow-lg shadow-blue-900/50">
-                            <i class="fa-solid fa-comment-dots"></i> Zalo: 0528484668
-                        </a>
+                    
+                    <!-- Khối Hạn sử dụng (Sẽ bị ẩn nếu là Admin) -->
+                    <div class="text-right shrink-0" id="expire-container">
+                        <div class="text-[10px] text-slate-400 mb-0.5 uppercase tracking-wider font-semibold">Hạn sử dụng</div>
+                        <div class="text-xs font-bold text-emerald-400" id="modalExpireDate">Đang tải...</div>
                     </div>
                 </div>
-                <div class="flex flex-col gap-2 w-full sm:w-auto">
-                    <button onclick="openUserRenewalModal()" class="w-full sm:w-auto px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/50">
-                        <i class="fa-solid fa-plus-circle"></i> Gia hạn tài khoản
-                    </button>
-                    <button onclick="openHistoryModal(window.auth.currentUser.email)" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
+
+                <!-- Hàng 2: Các nút chức năng (Ngang hàng, nhỏ gọn) -->
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                    <!-- Nút Hỗ trợ (Mở thẳng Zalo) -->
+                    <a href="https://zalo.me/0528484668" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[90px] py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-[11px] font-bold transition flex items-center justify-center gap-1.5 shadow-md">
+                        <i class="fa-solid fa-headset"></i> Hỗ trợ
+                    </a>
+                    
+                    <!-- Lịch sử -->
+                    <button onclick="openHistoryModal(window.auth.currentUser.email)" class="flex-1 min-w-[100px] py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 rounded-lg text-[11px] font-bold transition flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-clock-rotate-left"></i> Lịch sử
+                    </button>
+
+                    <!-- Gia hạn (Ẩn nếu là Admin) -->
+                    <button onclick="openUserRenewalModal()" id="btn-renew-user" class="flex-1 min-w-[100px] py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[11px] font-bold transition flex items-center justify-center gap-1.5 shadow-md">
+                        <i class="fa-solid fa-plus-circle"></i> Gia hạn
                     </button>
                 </div>
             </div>
@@ -872,7 +881,8 @@ def build_auth_lite_js(config):
                     var email = window.auth.currentUser.email;
                     document.getElementById('modalUserEmail').innerText = email;
                     
-                    var renewBtn = document.querySelector('button[onclick="openUserRenewalModal()"]');
+                    var renewBtn = document.getElementById('btn-renew-user');
+                    var expireContainer = document.getElementById('expire-container');
 
                     if (!window.db) throw new Error("Firebase DB chưa sẵn sàng");
                     
@@ -895,14 +905,20 @@ def build_auth_lite_js(config):
                             else if (role === 'admin') titleStr = "Quản Trị Viên (Admin)";
                             
                             document.getElementById('modalTitle').innerText = titleStr;
+                            
+                            // Ẩn nút Gia hạn và khối Hạn sử dụng
                             if (renewBtn) renewBtn.style.display = 'none';
-                            document.getElementById('modalExpireDate').innerText = "Vô hạn (" + role + ")";
+                            if (expireContainer) expireContainer.style.display = 'none';
+                            
                             switchAdminTab('users');
                         } else {
                             tabsWrapper.classList.add('hidden');
                             tabsContent.classList.add('hidden');
                             document.getElementById('modalTitle').innerText = "Tài khoản của tôi";
+                            
+                            // Hiện nút Gia hạn và khối Hạn sử dụng
                             if (renewBtn) renewBtn.style.display = 'flex';
+                            if (expireContainer) expireContainer.style.display = 'block';
                             
                             var expDateObj = parseDate(data.expiresAt);
                             document.getElementById('modalExpireDate').innerText = expDateObj ? expDateObj.toLocaleDateString('vi-VN') : 'Chưa cập nhật';
