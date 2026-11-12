@@ -80,7 +80,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         <!-- Cột 3: Cào dữ liệu chung -->
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg md:col-span-2">
             <h2 class="text-lg font-bold text-purple-400 mb-4"><i class="fa-solid fa-download mr-2"></i>Cào Dữ Liệu Hàng Loạt</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
                 <button onclick="callApi('/api/force-history')" id="btn-history" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-chart-line text-emerald-400 text-xl"></i> Cào Nến 30 Ngày
                 </button>
@@ -92,6 +92,10 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 </button>
                 <button onclick="callApi('/api/crawl-full-bctc')" id="btn-full-bctc" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-database text-amber-400 text-xl"></i> Cào Full BCTC
+                </button>
+                <!-- NÚT MỚI ĐƯỢC THÊM VÀO ĐÂY -->
+                <button onclick="callApi('/api/crawl-ratios')" id="btn-ratios" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
+                    <i class="fa-solid fa-percent text-cyan-400 text-xl"></i> Cào Chỉ Số (P/E, ROE)
                 </button>
             </div>
         </div>
@@ -439,6 +443,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                     else if (btn.id === 'btn-full-history') btn.innerHTML = '<i class="fa-solid fa-clock-rotate-left text-emerald-400 text-xl"></i> Cào Full 10 Năm Nến';
                     else if (btn.id === 'btn-bctc-batch') btn.innerHTML = '<i class="fa-solid fa-file-invoice-dollar text-amber-400 text-xl"></i> Cào BCTC (Nhóm 15)';
                     else if (btn.id === 'btn-full-bctc') btn.innerHTML = '<i class="fa-solid fa-database text-amber-400 text-xl"></i> Cào Full BCTC';
+                    else if (btn.id === 'btn-ratios') btn.innerHTML = '<i class="fa-solid fa-percent text-cyan-400 text-xl"></i> Cào Chỉ Số (P/E, ROE)';
                 }} else {{
                     btn.classList.add('btn-disabled');
                     if (btn.id === 'btn-crawl-bctc') btn.innerHTML = `<i class="fa-solid fa-spinner spinner mr-1"></i> ${{text || 'Đang xử lý...'}}`;
