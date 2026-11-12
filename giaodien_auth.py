@@ -132,7 +132,7 @@ def build_auth_lite_css():
     </style>
     """
 
-def build_auth_lite_html(config):
+def build_auth_lite_html(config, admin_tools_html=""):
     bank = config.get("bank_config", {})
     packages = config.get("packages", [])
     packages_html = ""
@@ -314,6 +314,7 @@ def build_auth_lite_html(config):
             <div id="adminTabsWrapper" class="flex border-b border-slate-800 bg-slate-950 px-5 gap-4 hidden">
                 <button onclick="switchAdminTab('users')" id="tabBtnUsers" class="py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition">Quản lý Người dùng</button>
                 <button onclick="switchAdminTab('renewals')" id="tabBtnRenewals" class="py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition">Duyệt Gia hạn (<span id="pendingCount">0</span>)</button>
+                <button onclick="switchAdminTab('tools')" id="tabBtnTools" class="py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition hidden"><i class="fa-solid fa-gears mr-1"></i>Công cụ Admin</button>
             </div>
 
             <div id="adminTabsContent" class="p-5 overflow-y-auto flex-grow hidden">
@@ -359,6 +360,11 @@ def build_auth_lite_html(config):
                             <tr><td colspan="4" class="p-4 text-center text-slate-500">Đang tải yêu cầu...</td></tr>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- TAB TOOLS (MỚI) -->
+                <div id="adminTabTools" class="hidden">
+                    {admin_tools_html}
                 </div>
             </div>
 
@@ -902,21 +908,31 @@ def build_auth_lite_js(config):
             window.switchAdminTab = function(tab) {
                 var usersTab = document.getElementById('adminTabUsers');
                 var renewalsTab = document.getElementById('adminTabRenewals');
+                var toolsTab = document.getElementById('adminTabTools');
                 var btnUsers = document.getElementById('tabBtnUsers');
                 var btnRenewals = document.getElementById('tabBtnRenewals');
+                var btnTools = document.getElementById('tabBtnTools');
 
+                // Ẩn tất cả
+                if (usersTab) usersTab.classList.add('hidden');
+                if (renewalsTab) renewalsTab.classList.add('hidden');
+                if (toolsTab) toolsTab.classList.add('hidden');
+                if (btnUsers) btnUsers.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition";
+                if (btnRenewals) btnRenewals.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition";
+                if (btnTools) btnTools.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition hidden";
+
+                // Hiện tab được chọn
                 if (tab === 'users') {
-                    usersTab.classList.remove('hidden');
-                    renewalsTab.classList.add('hidden');
-                    btnUsers.className = "py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition";
-                    btnRenewals.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition";
+                    if (usersTab) usersTab.classList.remove('hidden');
+                    if (btnUsers) btnUsers.className = "py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition";
                     loadAdminUsers();
-                } else {
-                    usersTab.classList.add('hidden');
-                    renewalsTab.classList.remove('hidden');
-                    btnRenewals.className = "py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition";
-                    btnUsers.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition";
+                } else if (tab === 'renewals') {
+                    if (renewalsTab) renewalsTab.classList.remove('hidden');
+                    if (btnRenewals) btnRenewals.className = "py-3 text-xs font-bold text-emerald-400 border-b-2 border-emerald-400 transition";
                     loadAdminRenewals();
+                } else if (tab === 'tools' && btnTools) {
+                    if (toolsTab) toolsTab.classList.remove('hidden');
+                    btnTools.className = "py-3 text-xs font-bold text-rose-400 border-b-2 border-rose-400 transition";
                 }
             };
 
@@ -958,6 +974,16 @@ def build_auth_lite_js(config):
                             // Ẩn nút Gia hạn và khối Hạn sử dụng
                             if (renewBtn) renewBtn.style.display = 'none';
                             if (expireContainer) expireContainer.style.display = 'none';
+                            
+                            // CHỈ SUPER ADMIN MỚI THẤY TAB CÔNG CỤ ADMIN
+                            var btnTools = document.getElementById('tabBtnTools');
+                            if (btnTools) {
+                                if (role === 'super_admin') {
+                                    btnTools.classList.remove('hidden');
+                                } else {
+                                    btnTools.classList.add('hidden');
+                                }
+                            }
                             
                             switchAdminTab('users');
                         } else {
