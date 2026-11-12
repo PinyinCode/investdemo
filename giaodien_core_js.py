@@ -1433,23 +1433,35 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     document.getElementById('ranking-filter').addEventListener('change', renderCards);
     // ==================== HÀM XỬ LÝ NÚT CHẤM ĐIỂM & AI (TỪ MODAL) ====================
     
+    // ==================== HÀM XỬ LÝ NÚT CHẤM ĐIỂM & AI (CÓ COOLDOWN CHỐNG SPAM) ====================
+    
+    let isRescoring = false;
+    let isAIAnalyzing = false;
+
     async function triggerRescore() {
         if (!currentSymbol) return;
+        if (isRescoring) {
+            alert("Vui lòng đợi tiến trình chấm điểm hiện tại hoàn tất!");
+            return;
+        }
+
         const btn = document.getElementById('btn-modal-rescore');
         const icon = btn.querySelector('i');
         
-        if (!confirm(`Chấm điểm lại mã ${currentSymbol}?\n(Quá trình có thể mất 10-30 giây do phải cào dữ liệu mới)`)) return;
+        if (!confirm(`Chấm điểm lại mã ${currentSymbol}?\n(Quá trình có thể mất 10-30 giây)`)) return;
         
+        // Bắt đầu khóa nút
+        isRescoring = true;
         btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
         icon.className = "fa-solid fa-spinner spinner";
         
         try {
-            // Gọi API force-screener (Server hiện tại chạy toàn bộ, không có API riêng 1 mã)
             const res = await fetch(`${PRICE_API_URL}/api/force-screener`);
             const data = await res.json();
             
             if (data.status === 'success') {
-                alert(`✅ Đã kích hoạt chấm điểm lại toàn bộ thị trường. Vui lòng đợi 1-2 phút rồi mở lại mã ${currentSymbol}.`);
+                alert(`✅ Đã kích hoạt chấm điểm lại. Vui lòng đợi 1-2 phút rồi mở lại mã ${currentSymbol}.`);
                 closeModal();
             } else {
                 alert(`❌ Lỗi: ${data.message}`);
@@ -1457,30 +1469,41 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         } catch (e) {
             alert(`❌ Lỗi kết nối: ${e.message}`);
         } finally {
-            btn.disabled = false;
-            icon.className = "fa-solid fa-calculator";
+            // Mở khóa nút sau 30 giây (Cooldown)
+            setTimeout(() => {
+                isRescoring = false;
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                icon.className = "fa-solid fa-calculator";
+            }, 30000); 
         }
     }
 
     async function triggerAIAnalyze() {
         if (!currentSymbol) return;
+        if (isAIAnalyzing) {
+            alert("Vui lòng đợi tiến trình AI hiện tại hoàn tất!");
+            return;
+        }
+
         const btn = document.getElementById('btn-modal-ai');
         const icon = btn.querySelector('i');
         
         if (!confirm(`Chạy AI phân tích cho mã ${currentSymbol}?\n(Quá trình có thể mất 10-20 giây)`)) return;
         
+        // Bắt đầu khóa nút
+        isAIAnalyzing = true;
         btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
         icon.className = "fa-solid fa-spinner spinner";
         
         try {
-            // Gọi API ai-analyze cho mã cụ thể (API này chỉ đọc từ DB theo logic mới)
             const res = await fetch(`${PRICE_API_URL}/api/ai-analyze?symbol=${currentSymbol}`);
             const data = await res.json();
             
             if (data.status === 'success') {
-                alert(`✅ AI đã phân tích xong mã ${currentSymbol}! Đang tải lại dữ liệu...`);
-                // Tải lại modal để hiển thị nội dung AI mới
-                openModal(currentSymbol);
+                alert(`✅ AI đã phân tích xong mã ${currentSymbol}!`);
+                openModal(currentSymbol); // Tải lại modal để hiển thị nội dung mới
             } else if (data.status === 'warning') {
                 alert(`⚠️ ${data.message}`);
             } else {
@@ -1489,8 +1512,13 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         } catch (e) {
             alert(`❌ Lỗi kết nối: ${e.message}`);
         } finally {
-            btn.disabled = false;
-            icon.className = "fa-solid fa-robot";
+            // Mở khóa nút sau 30 giây (Cooldown)
+            setTimeout(() => {
+                isAIAnalyzing = false;
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                icon.className = "fa-solid fa-robot";
+            }, 30000); 
         }
     }
     loadData(true);
