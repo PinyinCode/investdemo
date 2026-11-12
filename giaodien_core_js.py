@@ -12,7 +12,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     // ══════════════════════════════════════════════════
     // STATE
     // ══════════════════════════════════════════════════
-    const ADMIN_KEY = "quant2026_bimat_nhe"; // Mật khẩu Admin (phải giống trên Render)
+    const ADMIN_KEY = "959214"; // Mật khẩu Admin (phải giống trên Render)
     let screenerResults = [];
     let symbolSimRates = {};
     let quarterlyMeanDetails = {};
