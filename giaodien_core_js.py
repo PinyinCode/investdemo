@@ -198,7 +198,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         if (showSpinner && icon) icon.classList.add('spinner');
         
         try {
-            // 1. Tải dữ liệu tĩnh (Bắt buộc phải có để làm fallback)
+            // 1. Tải dữ liệu tĩnh
             const [screenerRes, ratesRes, detailsRes] = await Promise.all([
                 fetch('screener_results.json?t=' + new Date().getTime()),
                 fetch('symbol_sim_rates.json?t=' + new Date().getTime()).catch(() => ({ ok: false })),
@@ -216,14 +216,13 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 if (dataRes.ok) rawStockData = await dataRes.json();
             } catch (e) { console.warn("Không tải được data.json tĩnh"); }
 
-            // 2. Tải dữ liệu CHẤM ĐIỂM MỚI NHẤT từ API MongoDB
+            // 2. Tải dữ liệu từ MongoDB
             let mongoScreener = [];
             let mongoPrices = {};
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000); // Đợi tối đa 5s
+                const timeoutId = setTimeout(() => controller.abort(), 5000); 
 
-                // Lấy cả dữ liệu chấm điểm và dữ liệu giá realtime từ MongoDB
                 const [mongoScreenerRes, mongoDataRes] = await Promise.all([
                     fetch(`${PRICE_API_URL}/api/screener?t=` + new Date().getTime(), { signal: controller.signal }),
                     fetch(`${PRICE_API_URL}/api/data?t=` + new Date().getTime(), { signal: controller.signal })
@@ -242,11 +241,16 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 console.warn("⚠️ Không lấy được dữ liệu từ MongoDB. Dùng dữ liệu tĩnh (Github).", e); 
             }
 
-            // 3. Hợp nhất dữ liệu: Ưu tiên TUYỆT ĐỐI dữ liệu từ MongoDB
+            // 3. Hợp nhất dữ liệu
             const mongoScreenerMap = {};
-            mongoScreener.forEach(item => { mongoScreenerMap[item.symbol] = item; });
+            mongoScreener.forEach(item => { 
+                if (item && item.symbol) mongoScreenerMap[item.symbol] = item; 
+            });
 
-            screenerResults = screenerData.map(item => {
+            // Lọc bỏ các item lỗi để tránh crash
+            const validScreenerData = screenerData.filter(item => item && item.symbol);
+
+            screenerResults = validScreenerData.map(item => {
                 const sym = item.symbol;
                 const extraData = rawStockData[sym] || {};
                 const liveData = mongoPrices[sym] || {}; 
@@ -257,9 +261,15 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 else if (liveData.close !== undefined) finalClosePrice = liveData.close;
                 else if (extraData.close !== undefined) finalClosePrice = extraData.close;
 
-                // === BỔ SUNG: Kiểm tra xem MongoDB có dữ liệu không ===
-                // Nếu MongoDB có dữ liệu (từ AI hoặc Template), ta sẽ ưu tiên lấy nó.
                 const isMongoAI = (mongoSI.ai_source === "AI" || mongoSI.ai_source === "TEMPLATE");
+
+                // Hàm phụ lấy dữ liệu an toàn
+                const getVal = (mongoVal, extraVal, itemVal, defaultVal = "") => {
+                    if (isMongoAI && mongoVal !== undefined && mongoVal !== null) return mongoVal;
+                    if (extraVal !== undefined && extraVal !== null) return extraVal;
+                    if (itemVal !== undefined && itemVal !== null) return itemVal;
+                    return defaultVal;
+                };
 
                 return {
                     ...item,
@@ -292,41 +302,40 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     volume_percent: liveData.volume_percent !== undefined ? liveData.volume_percent : (item.volume_percent || 0),
                     amplitude_percent: liveData.amplitude_percent !== undefined ? liveData.amplitude_percent : (item.amplitude_percent || 0),
                     
-                    // === SỬA TẠI ĐÂY: Nếu isMongoAI = true, CHỈ lấy từ mongoSI ===
-                    bctc: isMongoAI ? (mongoSI.bctc_evaluation || mongoSI.bctc || "") : (extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || ""),
-                    bctc_evaluation: isMongoAI ? (mongoSI.bctc_evaluation || mongoSI.bctc || "") : (extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || ""),
-                    outlook: isMongoAI ? (mongoSI.outlook || "") : (extraData.outlook !== undefined ? extraData.outlook : item.outlook),
-                    ai_recommendation: isMongoAI ? (mongoSI.ai_recommendation || "") : (extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation),
-                    ai_price_zone: isMongoAI ? (mongoSI.ai_price_zone || "") : (extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone),
-                    macro_view: isMongoAI ? (mongoSI.macro_view || "") : (extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view),
-                    ai_updated_at: isMongoAI ? (mongoSI.ai_updated_at || "Chưa rõ") : (extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at),
-                    ai_source: isMongoAI ? (mongoSI.ai_source || "") : (extraData.ai_source !== undefined ? extraData.ai_source : (item.ai_source || "")),
-                    // ========================================================
+                    // Các trường AI được xử lý an toàn tuyệt đối
+                    bctc: getVal(mongoSI.bctc_evaluation || mongoSI.bctc, extraData.bctc_evaluation || extraData.bctc, item.bctc_evaluation || item.bctc),
+                    bctc_evaluation: getVal(mongoSI.bctc_evaluation || mongoSI.bctc, extraData.bctc_evaluation || extraData.bctc, item.bctc_evaluation || item.bctc),
+                    outlook: getVal(mongoSI.outlook, extraData.outlook, item.outlook),
+                    ai_recommendation: getVal(mongoSI.ai_recommendation, extraData.ai_recommendation, item.ai_recommendation),
+                    ai_price_zone: getVal(mongoSI.ai_price_zone, extraData.ai_price_zone, item.ai_price_zone),
+                    macro_view: getVal(mongoSI.macro_view, extraData.macro_view, item.macro_view),
+                    ai_updated_at: getVal(mongoSI.ai_updated_at, extraData.ai_updated_at, item.ai_updated_at, "Chưa rõ"),
+                    ai_source: getVal(mongoSI.ai_source, extraData.ai_source, item.ai_source, ""),
                     
-                    fair_value_low: mongoSI.fair_value_low !== undefined ? mongoSI.fair_value_low : (extraData.fair_value_low !== undefined ? extraData.fair_value_low : (item.fair_value_low || 0)),
-                    fair_value_high: mongoSI.fair_value_high !== undefined ? mongoSI.fair_value_high : (extraData.fair_value_high !== undefined ? extraData.fair_value_high : (item.fair_value_high || 0)),
-                    valuation_verdict: mongoSI.valuation_verdict !== undefined ? mongoSI.valuation_verdict : (extraData.valuation_verdict !== undefined ? extraData.valuation_verdict : (item.valuation_verdict || "")),
-                    discount_to_fair_pct: mongoSI.discount_to_fair_pct !== undefined ? mongoSI.discount_to_fair_pct : (extraData.discount_to_fair_pct !== undefined ? extraData.discount_to_fair_pct : (item.discount_to_fair_pct || 0)),
-                    margin_of_safety_pct: mongoSI.margin_of_safety_pct !== undefined ? mongoSI.margin_of_safety_pct : (extraData.margin_of_safety_pct !== undefined ? extraData.margin_of_safety_pct : (item.margin_of_safety_pct || 0)),
-                    fair_value_rationale: mongoSI.fair_value_rationale !== undefined ? mongoSI.fair_value_rationale : (extraData.fair_value_rationale !== undefined ? extraData.fair_value_rationale : (item.fair_value_rationale || "")),
-                    sub_sector: mongoSI.sub_sector !== undefined ? mongoSI.sub_sector : (extraData.sub_sector !== undefined ? extraData.sub_sector : (item.sub_sector || "")),
+                    fair_value_low: getVal(mongoSI.fair_value_low, extraData.fair_value_low, item.fair_value_low, 0),
+                    fair_value_high: getVal(mongoSI.fair_value_high, extraData.fair_value_high, item.fair_value_high, 0),
+                    valuation_verdict: getVal(mongoSI.valuation_verdict, extraData.valuation_verdict, item.valuation_verdict),
+                    discount_to_fair_pct: getVal(mongoSI.discount_to_fair_pct, extraData.discount_to_fair_pct, item.discount_to_fair_pct, 0),
+                    margin_of_safety_pct: getVal(mongoSI.margin_of_safety_pct, extraData.margin_of_safety_pct, item.margin_of_safety_pct, 0),
+                    fair_value_rationale: getVal(mongoSI.fair_value_rationale, extraData.fair_value_rationale, item.fair_value_rationale),
+                    sub_sector: getVal(mongoSI.sub_sector, extraData.sub_sector, item.sub_sector),
                     
-                    final_decision: mongoSI.final_decision !== undefined ? mongoSI.final_decision : (item.final_decision !== undefined ? item.final_decision : (extraData.final_decision || "")),
-                    final_decision_color: mongoSI.final_decision_color !== undefined ? mongoSI.final_decision_color : (item.final_decision_color !== undefined ? item.final_decision_color : (extraData.final_decision_color || "slate")),
-                    final_decision_reason: mongoSI.final_decision_reason !== undefined ? mongoSI.final_decision_reason : (item.final_decision_reason !== undefined ? item.final_decision_reason : (extraData.final_decision_reason || "")),
-                    fundamental_score: mongoSI.fundamental_score !== undefined ? mongoSI.fundamental_score : (item.fundamental_score || 0),
-                    valuation_score: mongoSI.valuation_score !== undefined ? mongoSI.valuation_score : (item.valuation_score || 0),
-                    technical_score: mongoSI.technical_score !== undefined ? mongoSI.technical_score : (item.technical_score || 0),
-                    total_score: mongoSI.total_score !== undefined ? mongoSI.total_score : (item.total_score || 0),
-                    potential_zone: mongoSI.potential_zone !== undefined ? mongoSI.potential_zone : (item.potential_zone || ""),
-                    pattern: mongoSI.pattern !== undefined ? mongoSI.pattern : (item.pattern || ""),
-                    technical_status: mongoSI.technical_status !== undefined ? mongoSI.technical_status : (item.technical_status || ""),
+                    final_decision: getVal(mongoSI.final_decision, extraData.final_decision, item.final_decision),
+                    final_decision_color: getVal(mongoSI.final_decision_color, extraData.final_decision_color, item.final_decision_color, "slate"),
+                    final_decision_reason: getVal(mongoSI.final_decision_reason, extraData.final_decision_reason, item.final_decision_reason),
+                    fundamental_score: getVal(mongoSI.fundamental_score, item.fundamental_score, 0),
+                    valuation_score: getVal(mongoSI.valuation_score, item.valuation_score, 0),
+                    technical_score: getVal(mongoSI.technical_score, item.technical_score, 0),
+                    total_score: getVal(mongoSI.total_score, item.total_score, 0),
+                    potential_zone: getVal(mongoSI.potential_zone, item.potential_zone),
+                    pattern: getVal(mongoSI.pattern, item.pattern),
+                    technical_status: getVal(mongoSI.technical_status, item.technical_status),
                     
-                    sim_annual_rate: mongoSI.sim_annual_rate !== undefined ? mongoSI.sim_annual_rate : (item.sim_annual_rate || 15),
-                    sim_start_quarter: mongoSI.sim_start_quarter !== undefined ? mongoSI.sim_start_quarter : (item.sim_start_quarter || ""),
-                    sim_start_price: mongoSI.sim_start_price !== undefined ? mongoSI.sim_start_price : (item.sim_start_price || 0),
-                    sim_end_quarter: mongoSI.sim_end_quarter !== undefined ? mongoSI.sim_end_quarter : (item.sim_end_quarter || ""),
-                    sim_end_price: mongoSI.sim_end_price !== undefined ? mongoSI.sim_end_price : (item.sim_end_price || 0)
+                    sim_annual_rate: getVal(mongoSI.sim_annual_rate, item.sim_annual_rate, 15),
+                    sim_start_quarter: getVal(mongoSI.sim_start_quarter, item.sim_start_quarter),
+                    sim_start_price: getVal(mongoSI.sim_start_price, item.sim_start_price, 0),
+                    sim_end_quarter: getVal(mongoSI.sim_end_quarter, item.sim_end_quarter),
+                    sim_end_price: getVal(mongoSI.sim_end_price, item.sim_end_price, 0)
                 };
             });
             renderCards();
