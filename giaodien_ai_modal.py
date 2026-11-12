@@ -33,7 +33,18 @@ def build_ai_modal_html():
                         <i class="fa-regular fa-bookmark"></i>
                     </button>
                 </div>
+                
                 <div class="flex items-center gap-2">
+                    <!-- NÚT CHẤM ĐIỂM LẠI (MỚI) -->
+                    <button type="button" onclick="triggerRescore()" id="btn-modal-rescore" class="px-2 py-1.5 bg-amber-600/20 hover:bg-amber-600/40 text-amber-400 border border-amber-500/30 rounded-lg text-xs font-bold transition" title="Chấm điểm lại mã này">
+                        <i class="fa-solid fa-calculator"></i>
+                    </button>
+                    
+                    <!-- NÚT PHÂN TÍCH AI (MỚI) -->
+                    <button type="button" onclick="triggerAIAnalyze()" id="btn-modal-ai" class="px-2 py-1.5 bg-fuchsia-600/20 hover:bg-fuchsia-600/40 text-fuchsia-400 border border-fuchsia-500/30 rounded-lg text-xs font-bold transition" title="Chạy AI phân tích lại mã này">
+                        <i class="fa-solid fa-robot"></i>
+                    </button>
+                    
                     <div class="text-right">
                         <span id="modal-price" class="text-sm md:text-base font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">--</span>
                         <p id="modal-sector" class="text-[9px] text-slate-400 mt-0.5 text-right">--</p>
