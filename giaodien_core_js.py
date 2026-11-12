@@ -879,7 +879,21 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             };
 
             let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
-            const tradingDate = item && item.trading_date ? normalizeTime(item.trading_date) : null;
+            
+            // SỬ DỤNG NGÀY TỪ UPDATED_AT THAY VÌ TRADING_DATE
+            let todayStr = null;
+            if (item && item.updated_at) {
+                // Lấy phần ngày từ chuỗi "12/11/2026 14:59:23" -> "2026-11-12"
+                const parts = item.updated_at.split(' ')[0].split('/');
+                if (parts.length === 3) {
+                    todayStr = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+                }
+            }
+            // Fallback nếu không parse được updated_at
+            if (!todayStr) {
+                const now = new Date();
+                todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            }
 
             let itemOpen = (item.open || 0) * 1000;
             let itemHigh = (item.high || 0) * 1000;
@@ -891,8 +905,8 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (itemHigh > 0 && itemHigh < 1000) itemHigh *= 1000;
             if (itemLow > 0 && itemLow < 1000) itemLow *= 1000;
 
-            if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0 && tradingDate) {
-                const existingBarIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === tradingDate);
+            if (currentPrice > 0 && currentSymbolHistory.history_d1.length > 0) {
+                const existingBarIndex = currentSymbolHistory.history_d1.findIndex(b => b.time === todayStr);
 
                 if (existingBarIndex !== -1) {
                     currentSymbolHistory.history_d1[existingBarIndex].close = currentPrice;
@@ -909,7 +923,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     finalLow = Math.min(finalLow, finalOpen, currentPrice);
 
                     currentSymbolHistory.history_d1.push({
-                        time: tradingDate, 
+                        time: todayStr, 
                         open: finalOpen, 
                         high: finalHigh, 
                         low: finalLow, 
@@ -1122,6 +1136,9 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 let visibleBarsCount = width > 1200 ? 120 : (width > 768 ? 90 : 50);
                 if (totalBars > visibleBarsCount) chartInstance.timeScale().setVisibleLogicalRange({ from: totalBars - visibleBarsCount, to: totalBars - 1 });
                 else chartInstance.timeScale().fitContent();
+                
+                // Đảm bảo Legend hiển thị đúng nến mới nhất khi mới mở
+                if (latestBar) updateLegend(latestBar, chartData);
             }, 50);
         }
     }
