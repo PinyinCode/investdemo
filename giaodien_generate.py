@@ -14,11 +14,10 @@ from giaodien_log_console import build_log_console_html
 from giaodien_auth import build_auth_lite_css, build_auth_lite_html, build_auth_lite_js
 from giaodien_core_js import build_core_js
 
-# THÊM IMPORT MODULE ADMIN MỚI
-from giaodien_admin import build_admin_html
+# IMPORT MODULE ADMIN (chỉ lấy nội dung tab, không build file riêng)
+from giaodien_admin import build_admin_tools_tab_html
 
 OUTPUT_HTML = "index.html"
-OUTPUT_ADMIN_HTML = "admin.html" # THÊM BIẾN LƯU TÊN FILE ADMIN
 LAST_UPDATE_FILE = "last_update.json"
 CHEAP_STOCKS_FILE = "cheap_stocks.json"
 AUTH_CONFIG_FILE = "auth_config.json"
@@ -99,8 +98,12 @@ def generate_html():
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
+    # ==== BUILD NỘI DUNG TAB CÔNG CỤ ADMIN ====
+    print("     🛠️  Đang build nội dung tab Công cụ Admin...")
+    admin_tools_html = build_admin_tools_tab_html(price_api_url=PRICE_API_URL)
+    
     body_parts = [
-        build_auth_lite_html(auth_config),
+        build_auth_lite_html(auth_config, admin_tools_html),  # Truyền thêm tham số
         build_screener_html(),
         build_ai_modal_html(),
         build_chart_modal_html(),
@@ -153,19 +156,6 @@ def generate_html():
         f.write(html_output)
 
     print(f"     ✅ index.html — {os.path.getsize(OUTPUT_HTML)/1024:.1f} KB")
-
-    # ==========================================
-    # THÊM ĐOẠN NÀY ĐỂ BUILD FILE ADMIN.HTML
-    # ==========================================
-    print("\n🛡️  [ADMIN] Build giao diện Super Admin...")
-    admin_html = build_admin_html(
-        price_api_url=PRICE_API_URL, 
-        firebase_config=firebase_config, 
-        super_admins_list=super_admins_list
-    )
-    with open(OUTPUT_ADMIN_HTML, "w", encoding="utf-8") as f:
-        f.write(admin_html)
-    print(f"     ✅ admin.html — {os.path.getsize(OUTPUT_ADMIN_HTML)/1024:.1f} KB")
 
     print("\n🎉 HOÀN TẤT\n")
 
