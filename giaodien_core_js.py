@@ -436,8 +436,11 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             }
         }
 
-        const fairLow = item.fair_value_low || 0;
-        const fairHigh = item.fair_value_high || 0;
+        let fairLow = item.fair_value_low || 0;
+        let fairHigh = item.fair_value_high || 0;
+        // BỔ SUNG: Quy đổi fair_low và fair_high từ Nghìn VNĐ sang VNĐ để khớp với giá hiện tại
+        if (fairLow > 0 && fairLow < 1000) fairLow *= 1000;
+        if (fairHigh > 0 && fairHigh < 1000) fairHigh *= 1000;
         const verdict = item.valuation_verdict || "";
         const discountPct = item.discount_to_fair_pct || 0;
         const mosPct = item.margin_of_safety_pct || 0;
