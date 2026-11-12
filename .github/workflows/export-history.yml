@@ -1,0 +1,47 @@
+name: Export History from MongoDB
+
+on:
+  schedule:
+    # Chạy tự động lúc 1:00 sáng UTC mỗi ngày
+    - cron: '0 1 * * *'
+  workflow_dispatch: # Cho phép bạn bấm nút "Run workflow" bằng tay trên GitHub
+
+jobs:
+  export-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pymongo
+
+      - name: Run MongoDB Export Script
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          DB_NAME: "quant_db"
+          COLLECTION_NAME: "history_data"
+        run: python scripts/mongo_export.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/history_export.json
+          # Chỉ commit nếu file có sự thay đổi (tránh lỗi workflow báo đỏ khi không có data mới)
+          if git diff --staged --quiet; then
+            echo "Không có dữ liệu mới để commit."
+          else
+            git commit -m "Auto-export MongoDB history: $(date +'%Y-%m-%d')"
+            git push
+          fi
