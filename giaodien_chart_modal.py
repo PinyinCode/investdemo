@@ -74,6 +74,9 @@ def build_chart_modal_html():
 
                 <!-- BUTTONS TOP RIGHT -->
                 <div class="absolute top-2 right-2 z-10 flex items-center gap-1.5 bg-slate-950/35 backdrop-blur-sm p-1 rounded-xl border border-slate-800/40 shadow-lg">
+                    <button type="button" onclick="refreshChart()" id="chart-refresh-btn" class="text-slate-300 hover:text-emerald-400 p-1.5 rounded-lg bg-slate-900/40 transition" title="Làm mới dữ liệu đồ thị">
+                        <i class="fa-solid fa-rotate text-xs"></i>
+                    </button>
                     <button type="button" onclick="toggleFullscreen()" id="fullscreen-btn" class="text-slate-300 hover:text-white p-1.5 rounded-lg bg-slate-900/40 transition" title="Phóng to / Thu nhỏ"><i class="fa-solid fa-expand text-xs"></i></button>
                     <button type="button" onclick="closeChartModal()" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg bg-slate-900/40 transition" title="Đóng"><i class="fa-solid fa-xmark text-xs"></i></button>
                 </div>
