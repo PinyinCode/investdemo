@@ -44,11 +44,6 @@ jobs:
             echo "❌ LỖI: Chưa cài đặt secret FIREBASE_CONFIG trên GitHub!"
             exit 1
           fi
-          
-          if [ -z "$TELEGRAM_BOT_TOKEN" ]; then
-            echo "⚠️ CẢNH BÁO: Chưa cài đặt secret TELEGRAM_BOT_TOKEN."
-          fi
-          
           python giaodien_main.py
           echo "✅ Build thành công!"
 
@@ -56,10 +51,12 @@ jobs:
         run: |
           mkdir -p _site
           
-          # 1. Copy file HTML chính (admin.html đã được tích hợp vào index.html)
+          # 1. Copy file HTML chính
           cp index.html _site/
           
-          # 2. Copy các file JSON và JS
+          # 2. Copy TOÀN BỘ file JSON/JS cần thiết (ĐÃ GIỮ LẠI FALLBACK)
+          # - data.json: Fallback cho bảng giá chính (nếu API Render ngủ đông)
+          # - screener_results.json: Fallback cho điểm số & dữ liệu chấm điểm
           for f in data.json screener_results.json cheap_stocks.json \
                    symbol_sim_rates.json quarterly_mean_details.json \
                    last_update.json lightweight-charts.js vn100_full_info.json \
@@ -67,10 +64,11 @@ jobs:
             [ -f "$f" ] && cp "$f" _site/
           done
           
-          # 3. Copy thư mục history (nếu có)
-          if [ -d "history" ]; then
-            cp -r history _site/
-          fi
+          # 3. BỎ QUA thư mục history/ (Vì đồ thị mới đã đọc từ API /api/history)
+          # Tuy nhiên, nếu bạn muốn giữ lại để làm fallback cho đồ thị, hãy bỏ comment 3 dòng dưới:
+          # if [ -d "history" ]; then
+          #   cp -r history _site/
+          # fi
           
           echo "📁 Danh sách file chuẩn bị deploy:"
           ls -la _site/
@@ -81,5 +79,5 @@ jobs:
           path: '_site'
 
       - name: Deploy to GitHub Pages
-        id: deployment
+        id: deploy
         uses: actions/deploy-pages@v4
