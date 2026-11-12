@@ -12,6 +12,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     // ══════════════════════════════════════════════════
     // STATE
     // ══════════════════════════════════════════════════
+    const ADMIN_KEY = "quant2026_bimat_nhe"; // Mật khẩu Admin (phải giống trên Render)
     let screenerResults = [];
     let symbolSimRates = {};
     let quarterlyMeanDetails = {};
@@ -59,9 +60,20 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         await loadUserWatchlist(user.uid);
         try {
             const doc = await window.db.collection('allowed_users').doc(user.email.toLowerCase()).get();
-            if (doc.exists && doc.data().role === 'admin') {
-                const adminBtn = document.getElementById('btn-admin-panel');
-                if (adminBtn) { adminBtn.classList.remove('hidden'); adminBtn.classList.add('flex'); }
+            if (doc.exists) {
+                const role = doc.data().role;
+                // Nếu là admin hoặc super_admin thì hiện nút Admin Panel
+                if (role === 'admin' || role === 'super_admin') {
+                    const adminBtn = document.getElementById('btn-admin-panel');
+                    if (adminBtn) { adminBtn.classList.remove('hidden'); adminBtn.classList.add('flex'); }
+                }
+                // CHỈ Super Admin mới thấy 2 nút chạy AI và Chấm điểm
+                if (role === 'super_admin') {
+                    const btnRescore = document.getElementById('btn-modal-rescore');
+                    const btnAI = document.getElementById('btn-modal-ai');
+                    if (btnRescore) btnRescore.classList.remove('hidden');
+                    if (btnAI) btnAI.classList.remove('hidden');
+                }
             }
         } catch (e) { console.warn('Không kiểm tra được role:', e); }
         if (typeof loadData === 'function') loadData(true);
@@ -1460,7 +1472,8 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         icon.className = "fa-solid fa-spinner spinner";
         
         try {
-            const res = await fetch(`${PRICE_API_URL}/api/force-screener`);
+            // THÊM &key=${ADMIN_KEY} VÀO LINK
+            const res = await fetch(`${PRICE_API_URL}/api/force-screener?key=${ADMIN_KEY}`);
             const data = await res.json();
             
             if (data.status === 'success') {
@@ -1492,7 +1505,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         const btn = document.getElementById('btn-modal-ai');
         const icon = btn.querySelector('i');
         
-        if (!confirm(`Chạy AI phân tích cho mã ${currentSymbol}?\n(Quá trình có thể mất 10-20 giây)`)) return;
+        if (!confirm(`Chạy AI phân tích cho mã ${currentSymbol}?\n(Quá trình có thể mất 40-50 giây)`)) return;
         
         // Bắt đầu khóa nút
         isAIAnalyzing = true;
@@ -1501,23 +1514,24 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         icon.className = "fa-solid fa-spinner spinner";
         
         try {
-            // SỬA TẠI ĐÂY: Đổi sang API Admin (force-ai-single) để ra lệnh cho server gọi AI
-            const res = await fetch(`${PRICE_API_URL}/api/admin/force-ai-single?symbol=${currentSymbol}`);
+            // SỬA TẠI ĐÂY: Thêm &key=${ADMIN_KEY} vào link
+            const res = await fetch(`${PRICE_API_URL}/api/admin/force-ai-single?symbol=${currentSymbol}&key=${ADMIN_KEY}`);
             const data = await res.json();
             
             if (data.status === 'success') {
-                alert(`✅ Đã gửi lệnh chạy AI cho mã ${currentSymbol}.\nHệ thống đang xử lý, vui lòng đợi khoảng 10-15 giây...`);
+                alert(`✅ Đã gửi lệnh chạy AI cho mã ${currentSymbol}.\nHệ thống đang xử lý, vui lòng đợi khoảng 45 giây...`);
                 
-                // Đợi 12 giây cho AI viết xong, sau đó tự động tải lại modal để hiển thị
-                setTimeout(() => {
+                // Tăng thời gian chờ lên 45 giây cho AI viết xong
+                setTimeout(async () => {
                     isAIAnalyzing = false;
                     btn.disabled = false;
                     btn.classList.remove('opacity-50', 'cursor-not-allowed');
                     icon.className = "fa-solid fa-robot";
                     
-                    // Tải lại nội dung modal để lấy bài phân tích mới
+                    // Tải lại toàn bộ dữ liệu từ DB trước khi mở modal để lấy thông tin mới nhất
+                    await loadData(false); 
                     openModal(currentSymbol); 
-                }, 12000);
+                }, 45000);
 
             } else {
                 alert(`❌ Lỗi kích hoạt AI: ${data.message || 'Không rõ nguyên nhân'}`);
