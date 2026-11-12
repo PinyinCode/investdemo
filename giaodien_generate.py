@@ -14,7 +14,7 @@ from giaodien_log_console import build_log_console_html
 from giaodien_auth import build_auth_lite_css, build_auth_lite_html, build_auth_lite_js
 from giaodien_core_js import build_core_js
 
-# IMPORT MODULE ADMIN (chỉ lấy nội dung tab, không build file riêng)
+# IMPORT MODULE ADMIN
 from giaodien_admin import build_admin_tools_tab_html
 
 OUTPUT_HTML = "index.html"
@@ -83,6 +83,7 @@ def generate_html():
     firebase_config = get_firebase_config()
     auth_config = load_auth_config()
 
+    # === KHÔI PHỤC ĐỌC SUPER_ADMINS TỪ SECRET ===
     super_admins_raw = os.environ.get("SUPER_ADMINS", "")
     super_admins_list = [email.strip().lower() for email in super_admins_raw.split(",") if email.strip()]
     
@@ -98,12 +99,12 @@ def generate_html():
     auth_css = build_auth_lite_css()
     full_css = "\n".join(["/* ===== UI BASE ===== */", ui_css, "/* ===== AUTH LITE ===== */", auth_css])
     
-    # ==== BUILD NỘI DUNG TAB CÔNG CỤ ADMIN ====
+    # === BUILD NỘI DUNG TAB CÔNG CỤ ADMIN ===
     print("     🛠️  Đang build nội dung tab Công cụ Admin...")
     admin_tools_html = build_admin_tools_tab_html(price_api_url=PRICE_API_URL)
     
     body_parts = [
-        build_auth_lite_html(auth_config, admin_tools_html),  # Truyền thêm tham số
+        build_auth_lite_html(auth_config, admin_tools_html),  # Truyền admin_tools_html
         build_screener_html(),
         build_ai_modal_html(),
         build_chart_modal_html(),
@@ -125,6 +126,8 @@ def generate_html():
     firebase_config_clean = _json_blob(firebase_config)
     cheap_groups_clean = _json_blob(cheap_stocks_groups)
     cheap_symbols_clean = _json_blob(sorted(cheap_symbols_set))
+    
+    # === ĐẢM BẢO TRUYỀN SUPER_ADMINS VÀO JS ===
     super_admins_clean = _json_blob(super_admins_list)
 
     full_js = "\n\n".join([
@@ -133,7 +136,7 @@ def generate_html():
         f"const firebaseConfig = {firebase_config_clean};\n"
         f"const cheapStocksGroups = {cheap_groups_clean};\n"
         f"const cheapSymbolsSet = new Set({cheap_symbols_clean});\n"
-        f"const SUPER_ADMINS = {super_admins_clean};\n" 
+        f"const SUPER_ADMINS = {super_admins_clean};\n"  # Quan trọng!
         f"const TELEGRAM_BOT_TOKEN = {json.dumps(tg_token)};\n"
         f"const TELEGRAM_CHAT_ID = {json.dumps(tg_chat_id)};\n"
         f"if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);\n"
