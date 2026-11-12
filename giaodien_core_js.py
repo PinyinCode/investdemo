@@ -1431,5 +1431,67 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     document.getElementById('search-input').addEventListener('input', renderCards);
     document.getElementById('sector-filter').addEventListener('change', renderCards);
     document.getElementById('ranking-filter').addEventListener('change', renderCards);
+    // ==================== HÀM XỬ LÝ NÚT CHẤM ĐIỂM & AI (TỪ MODAL) ====================
+    
+    async function triggerRescore() {
+        if (!currentSymbol) return;
+        const btn = document.getElementById('btn-modal-rescore');
+        const icon = btn.querySelector('i');
+        
+        if (!confirm(`Chấm điểm lại mã ${currentSymbol}?\n(Quá trình có thể mất 10-30 giây do phải cào dữ liệu mới)`)) return;
+        
+        btn.disabled = true;
+        icon.className = "fa-solid fa-spinner spinner";
+        
+        try {
+            // Gọi API force-screener (Server hiện tại chạy toàn bộ, không có API riêng 1 mã)
+            const res = await fetch(`${PRICE_API_URL}/api/force-screener`);
+            const data = await res.json();
+            
+            if (data.status === 'success') {
+                alert(`✅ Đã kích hoạt chấm điểm lại toàn bộ thị trường. Vui lòng đợi 1-2 phút rồi mở lại mã ${currentSymbol}.`);
+                closeModal();
+            } else {
+                alert(`❌ Lỗi: ${data.message}`);
+            }
+        } catch (e) {
+            alert(`❌ Lỗi kết nối: ${e.message}`);
+        } finally {
+            btn.disabled = false;
+            icon.className = "fa-solid fa-calculator";
+        }
+    }
+
+    async function triggerAIAnalyze() {
+        if (!currentSymbol) return;
+        const btn = document.getElementById('btn-modal-ai');
+        const icon = btn.querySelector('i');
+        
+        if (!confirm(`Chạy AI phân tích cho mã ${currentSymbol}?\n(Quá trình có thể mất 10-20 giây)`)) return;
+        
+        btn.disabled = true;
+        icon.className = "fa-solid fa-spinner spinner";
+        
+        try {
+            // Gọi API ai-analyze cho mã cụ thể (API này chỉ đọc từ DB theo logic mới)
+            const res = await fetch(`${PRICE_API_URL}/api/ai-analyze?symbol=${currentSymbol}`);
+            const data = await res.json();
+            
+            if (data.status === 'success') {
+                alert(`✅ AI đã phân tích xong mã ${currentSymbol}! Đang tải lại dữ liệu...`);
+                // Tải lại modal để hiển thị nội dung AI mới
+                openModal(currentSymbol);
+            } else if (data.status === 'warning') {
+                alert(`⚠️ ${data.message}`);
+            } else {
+                alert(`❌ Lỗi AI: ${data.message}`);
+            }
+        } catch (e) {
+            alert(`❌ Lỗi kết nối: ${e.message}`);
+        } finally {
+            btn.disabled = false;
+            icon.className = "fa-solid fa-robot";
+        }
+    }
     loadData(true);
     """
