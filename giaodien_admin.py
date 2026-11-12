@@ -93,7 +93,6 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 <button onclick="callApi('/api/crawl-full-bctc')" id="btn-full-bctc" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-database text-amber-400 text-xl"></i> Cào Full BCTC
                 </button>
-                <!-- NÚT MỚI ĐƯỢC THÊM VÀO ĐÂY -->
                 <button onclick="callApi('/api/crawl-ratios')" id="btn-ratios" class="action-btn p-3 bg-slate-900 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold transition flex flex-col items-center gap-2">
                     <i class="fa-solid fa-percent text-cyan-400 text-xl"></i> Cào Chỉ Số (P/E, ROE)
                 </button>
@@ -103,7 +102,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         <!-- Cột 4: Chấm điểm & AI -->
         <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg md:col-span-2">
             <h2 class="text-lg font-bold text-rose-400 mb-4"><i class="fa-solid fa-brain mr-2"></i>Chấm điểm & Phân tích AI</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
                 <button onclick="callApi('/api/force-screener')" id="btn-screener" class="action-btn p-4 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-calculator"></i> Chấm điểm lại toàn bộ (Screener)
                 </button>
@@ -113,6 +112,16 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                         <i class="fa-solid fa-robot mr-1"></i> Chạy AI
                     </button>
                 </div>
+            </div>
+            
+            <!-- Nút điều khiển Cào Real-time -->
+            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-700">
+                <button onclick="callApi('/api/pause-crawl')" id="btn-pause" class="action-btn p-3 bg-red-900 hover:bg-red-800 border border-red-600 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-pause text-red-400"></i> Tạm Dừng Cào Tự Động
+                </button>
+                <button onclick="callApi('/api/resume-crawl')" id="btn-resume" class="action-btn p-3 bg-green-900 hover:bg-green-800 border border-green-600 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play text-green-400"></i> Tiếp Tục Cào Tự Động
+                </button>
             </div>
         </div>
     </div>
@@ -183,6 +192,7 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
         let currentDataList = []; 
         let filteredDataList = []; 
         let isServerBusy = false; 
+        let isPaused = false;
 
         // ══════════════════════════════════════════════════
         // HÀM LOG RA CONSOLE
@@ -444,6 +454,8 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                     else if (btn.id === 'btn-bctc-batch') btn.innerHTML = '<i class="fa-solid fa-file-invoice-dollar text-amber-400 text-xl"></i> Cào BCTC (Nhóm 15)';
                     else if (btn.id === 'btn-full-bctc') btn.innerHTML = '<i class="fa-solid fa-database text-amber-400 text-xl"></i> Cào Full BCTC';
                     else if (btn.id === 'btn-ratios') btn.innerHTML = '<i class="fa-solid fa-percent text-cyan-400 text-xl"></i> Cào Chỉ Số (P/E, ROE)';
+                    else if (btn.id === 'btn-pause') btn.innerHTML = '<i class="fa-solid fa-pause text-red-400"></i> Tạm Dừng Cào Tự Động';
+                    else if (btn.id === 'btn-resume') btn.innerHTML = '<i class="fa-solid fa-play text-green-400"></i> Tiếp Tục Cào Tự Động';
                 }} else {{
                     btn.classList.add('btn-disabled');
                     if (btn.id === 'btn-crawl-bctc') btn.innerHTML = `<i class="fa-solid fa-spinner spinner mr-1"></i> ${{text || 'Đang xử lý...'}}`;
@@ -460,12 +472,18 @@ def build_admin_html(price_api_url, firebase_config, super_admins_list):
                 const data = await res.json();
                 const el = document.getElementById('crawl-status');
                 
-                // Nếu server đang cào HOẶC đang chấm điểm (nếu có API check), ta cứ dựa vào is_crawling
+                isPaused = data.is_paused || false;
+
                 if (data.is_crawling) {{
                     el.innerText = "ĐANG XỬ LÝ (BẬN)";
                     el.className = "font-bold text-amber-400 animate-pulse";
                     isServerBusy = true;
                     toggleAllButtons(false, "Server đang bận...");
+                }} else if (isPaused) {{
+                    el.innerText = "ĐANG TẠM DỪNG";
+                    el.className = "font-bold text-rose-400";
+                    isServerBusy = false;
+                    toggleAllButtons(true);
                 }} else {{
                     el.innerText = "SẴN SÀNG";
                     el.className = "font-bold text-emerald-400";
