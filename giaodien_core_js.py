@@ -242,7 +242,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 console.warn("⚠️ Không lấy được dữ liệu từ MongoDB. Dùng dữ liệu tĩnh (Github).", e); 
             }
 
-            // 3. Hợp nhất dữ liệu: Ưu tiên MongoDB, sau đó đến JSON tĩnh
+            // 3. Hợp nhất dữ liệu: Ưu tiên TUYỆT ĐỐI dữ liệu từ MongoDB
             const mongoScreenerMap = {};
             mongoScreener.forEach(item => { mongoScreenerMap[item.symbol] = item; });
 
@@ -256,6 +256,10 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 if (liveData.close_price !== undefined) finalClosePrice = liveData.close_price;
                 else if (liveData.close !== undefined) finalClosePrice = liveData.close;
                 else if (extraData.close !== undefined) finalClosePrice = extraData.close;
+
+                // === BỔ SUNG: Kiểm tra xem MongoDB có dữ liệu không ===
+                // Nếu MongoDB có dữ liệu (từ AI hoặc Template), ta sẽ ưu tiên lấy nó.
+                const isMongoAI = (mongoSI.ai_source === "AI" || mongoSI.ai_source === "TEMPLATE");
 
                 return {
                     ...item,
@@ -288,14 +292,16 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     volume_percent: liveData.volume_percent !== undefined ? liveData.volume_percent : (item.volume_percent || 0),
                     amplitude_percent: liveData.amplitude_percent !== undefined ? liveData.amplitude_percent : (item.amplitude_percent || 0),
                     
-                    bctc: mongoSI.bctc_evaluation || mongoSI.bctc || extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
-                    bctc_evaluation: mongoSI.bctc_evaluation || mongoSI.bctc || extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || "",
-                    outlook: mongoSI.outlook !== undefined ? mongoSI.outlook : (extraData.outlook !== undefined ? extraData.outlook : item.outlook),
-                    ai_recommendation: mongoSI.ai_recommendation !== undefined ? mongoSI.ai_recommendation : (extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation),
-                    ai_price_zone: mongoSI.ai_price_zone !== undefined ? mongoSI.ai_price_zone : (extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone),
-                    macro_view: mongoSI.macro_view !== undefined ? mongoSI.macro_view : (extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view),
-                    ai_updated_at: mongoSI.ai_updated_at !== undefined ? mongoSI.ai_updated_at : (extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at),
-                    ai_source: mongoSI.ai_source !== undefined ? mongoSI.ai_source : (extraData.ai_source !== undefined ? extraData.ai_source : (item.ai_source || "")),
+                    // === SỬA TẠI ĐÂY: Nếu isMongoAI = true, CHỈ lấy từ mongoSI ===
+                    bctc: isMongoAI ? (mongoSI.bctc_evaluation || mongoSI.bctc || "") : (extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || ""),
+                    bctc_evaluation: isMongoAI ? (mongoSI.bctc_evaluation || mongoSI.bctc || "") : (extraData.bctc_evaluation || extraData.bctc || item.bctc_evaluation || item.bctc || ""),
+                    outlook: isMongoAI ? (mongoSI.outlook || "") : (extraData.outlook !== undefined ? extraData.outlook : item.outlook),
+                    ai_recommendation: isMongoAI ? (mongoSI.ai_recommendation || "") : (extraData.ai_recommendation !== undefined ? extraData.ai_recommendation : item.ai_recommendation),
+                    ai_price_zone: isMongoAI ? (mongoSI.ai_price_zone || "") : (extraData.ai_price_zone !== undefined ? extraData.ai_price_zone : item.ai_price_zone),
+                    macro_view: isMongoAI ? (mongoSI.macro_view || "") : (extraData.macro_view !== undefined ? extraData.macro_view : item.macro_view),
+                    ai_updated_at: isMongoAI ? (mongoSI.ai_updated_at || "Chưa rõ") : (extraData.ai_updated_at !== undefined ? extraData.ai_updated_at : item.ai_updated_at),
+                    ai_source: isMongoAI ? (mongoSI.ai_source || "") : (extraData.ai_source !== undefined ? extraData.ai_source : (item.ai_source || "")),
+                    // ========================================================
                     
                     fair_value_low: mongoSI.fair_value_low !== undefined ? mongoSI.fair_value_low : (extraData.fair_value_low !== undefined ? extraData.fair_value_low : (item.fair_value_low || 0)),
                     fair_value_high: mongoSI.fair_value_high !== undefined ? mongoSI.fair_value_high : (extraData.fair_value_high !== undefined ? extraData.fair_value_high : (item.fair_value_high || 0)),
@@ -334,25 +340,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             if (showSpinner && icon) icon.classList.remove('spinner');
         }
     }
-
-    // ══════════════════════════════════════════════════
-    // MODAL AI
-    // ══════════════════════════════════════════════════
-    function switchAiTab(tabName) {
-        currentActiveTab = tabName;
-        ['eval', 'simulator'].forEach(t => {
-            const contentEl = document.getElementById(`tab-content-${t}`);
-            const btnEl = document.getElementById(`tab-btn-${t}`);
-            if (contentEl) contentEl.classList.add('hidden');
-            if (btnEl) btnEl.className = "px-4 py-2 text-xs font-bold text-slate-400 hover:text-white transition";
-        });
-        const activeContent = document.getElementById(`tab-content-${tabName}`);
-        const activeBtn = document.getElementById(`tab-btn-${tabName}`);
-        if (activeContent) activeContent.classList.remove('hidden');
-        if (activeBtn) activeBtn.className = "px-4 py-2 text-xs font-bold text-emerald-400 border-b-2 border-emerald-500 transition";
-        if (tabName === 'simulator') calculateModalSimulation();
-    }
-
     function openModal(symbol) {
         currentSymbol = symbol;
         const item = screenerResults.find(s => s.symbol === symbol);
