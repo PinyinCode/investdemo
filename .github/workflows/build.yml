@@ -56,16 +56,14 @@ jobs:
         run: |
           mkdir -p _site
           
-          # 1. Copy các file HTML (BỔ SUNG ADMIN.HTML)
+          # 1. Copy file HTML chính (admin.html đã được tích hợp vào index.html)
           cp index.html _site/
-          if [ -f "admin.html" ]; then
-            cp admin.html _site/
-          fi
           
           # 2. Copy các file JSON và JS
           for f in data.json screener_results.json cheap_stocks.json \
                    symbol_sim_rates.json quarterly_mean_details.json \
-                   last_update.json lightweight-charts.js vn100_full_info.json; do
+                   last_update.json lightweight-charts.js vn100_full_info.json \
+                   auth_config.json; do
             [ -f "$f" ] && cp "$f" _site/
           done
           
