@@ -362,7 +362,7 @@ def build_auth_lite_html(config, admin_tools_html=""):
                     </table>
                 </div>
 
-                <!-- TAB TOOLS (MỚI) -->
+                <!-- TAB TOOLS -->
                 <div id="adminTabTools" class="hidden">
                     {admin_tools_html}
                 </div>
@@ -913,13 +913,15 @@ def build_auth_lite_js(config):
                 var btnRenewals = document.getElementById('tabBtnRenewals');
                 var btnTools = document.getElementById('tabBtnTools');
 
-                // Ẩn tất cả
+                // Ẩn nội dung tất cả các tab
                 if (usersTab) usersTab.classList.add('hidden');
                 if (renewalsTab) renewalsTab.classList.add('hidden');
                 if (toolsTab) toolsTab.classList.add('hidden');
+                
+                // Reset style các nút (KHÔNG thêm class hidden cho btnTools)
                 if (btnUsers) btnUsers.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition";
                 if (btnRenewals) btnRenewals.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition";
-                if (btnTools) btnTools.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition hidden";
+                if (btnTools) btnTools.className = "py-3 text-xs font-bold text-slate-400 border-b-2 border-transparent transition";
 
                 // Hiện tab được chọn
                 if (tab === 'users') {
@@ -1000,9 +1002,8 @@ def build_auth_lite_js(config):
                         }
                     }
                 } catch (e) {
-                    console.warn("Lỗi mở modal:", e);
-                    alert("Không thể tải thông tin. Vui lòng thử lại!");
-                    closeAdminModal(); 
+                    console.warn("Lỗi mở modal (có thể do mạng chập chờn):", e);
+                    // Đã bỏ alert và closeAdminModal để không làm gián đoạn người dùng
                 }
             };
 
