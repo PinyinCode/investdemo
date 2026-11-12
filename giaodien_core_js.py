@@ -25,6 +25,7 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
     let currentActiveTab = 'eval';
     let userWatchlist = new Set();
     let currentUser = null;
+    let chartAutoUpdateInterval = null; // Biến lưu bộ đếm tự động refresh đồ thị
 
     // ══════════════════════════════════════════════════
     // DICT STYLE
@@ -780,12 +781,6 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         if (!document.getElementById('chart-modal').classList.contains('hidden')) setTimeout(resizeChart, 300);
     });
 
-    function closeChartModal() {
-        document.getElementById('chart-modal').classList.add('hidden');
-        if (chartInstance) { chartInstance.remove(); chartInstance = null; }
-        currentSymbolHistory = null;
-    }
-
     // HÀM GỘP NẾN TUẦN/THÁNG TỪ NẾN NGÀY
     function aggregateCandles(d1Data, interval) {
         if (!d1Data || d1Data.length === 0) return [];
@@ -824,10 +819,86 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         return Object.values(grouped).sort((a, b) => a.time.localeCompare(b.time));
     }
 
-    async function openChartModal(symbol) {
+    // HÀM BẤM TAY REFRESH ĐỒ THỊ
+    function refreshChart() {
+        if (!currentSymbol) return;
+        const icon = document.querySelector('#chart-refresh-btn i');
+        if (icon) icon.classList.add('spinner');
+        openChartModal(currentSymbol, true); // true = không reset interval, không tạo bộ đếm mới
+    }
+
+    // HÀM TỰ ĐỘNG REFRESH 60S (CHỈ KHI ĐỦ ĐIỀU KIỆN)
+    function startChartAutoRefresh() {
+        // Xóa bộ đếm cũ nếu có để tránh chạy trùng
+        if (chartAutoUpdateInterval) {
+            clearInterval(chartAutoUpdateInterval);
+            chartAutoUpdateInterval = null;
+        }
+        
+        chartAutoUpdateInterval = setInterval(() => {
+            // 1. Điều kiện: Modal đang mở?
+            const isModalOpen = !document.getElementById('chart-modal').classList.contains('hidden');
+            if (!isModalOpen) {
+                clearInterval(chartAutoUpdateInterval);
+                chartAutoUpdateInterval = null;
+                return;
+            }
+
+            // 2. Điều kiện: Đang xem nến Ngày (D1)?
+            const isD1 = (currentInterval === 'D1');
+            if (!isD1) return;
+
+            // 3. Điều kiện: Đang trong giờ giao dịch (9h - 15h VN)?
+            const now = new Date();
+            const vnHour = (now.getUTCHours() + 7) % 24;
+            const vnDay = now.getDay(); // 0 = Chủ Nhật, 6 = Thứ 7
+            const isTradingTime = (vnHour >= 9 && vnHour < 15);
+            const isWeekend = (vnDay === 0 || vnDay === 6);
+
+            if (!isTradingTime || isWeekend) return;
+
+            // 4. Điều kiện: Hệ thống không đang bận cào giá
+            const isNotCrawling = !isRefreshingAll && !isRefreshingSingle;
+            if (!isNotCrawling) return;
+
+            // 5. Điều kiện: Phát hiện ngày Lễ (Mã đang xem không có biến động giá & Volume = 0)
+            const item = screenerResults.find(s => s.symbol === currentSymbol);
+            if (item) {
+                const isHoliday = (item.close_price === item.prev_close) && (!item.volume || item.volume === 0);
+                if (isHoliday) {
+                    console.log("[AUTO-CHART] Có vẻ hôm nay là ngày Lễ (giá không đổi, KL = 0). Tạm dừng auto-refresh.");
+                    return; // Bỏ qua lần refresh này
+                }
+            }
+
+            // Nếu vượt qua tất cả điều kiện -> Refresh
+            console.log("[AUTO-CHART] Đang trong phiên giao dịch. Tự động cập nhật đồ thị...");
+            refreshChart();
+            
+        }, 60000); // 60.000ms = 60 giây
+    }
+
+    function closeChartModal() {
+        document.getElementById('chart-modal').classList.add('hidden');
+        if (chartInstance) { chartInstance.remove(); chartInstance = null; }
+        currentSymbolHistory = null;
+        
+        // TẮT BỘ ĐẾM TỰ ĐỘNG KHI ĐÓNG ĐỒ THỊ
+        if (chartAutoUpdateInterval) {
+            clearInterval(chartAutoUpdateInterval);
+            chartAutoUpdateInterval = null;
+        }
+    }
+
+    async function openChartModal(symbol, isRefresh = false) {
         currentSymbol = symbol;
-        currentInterval = 'D1';
-        switchInterval('D1');
+        
+        // Chỉ reset interval khi mở mới (không phải refresh)
+        if (!isRefresh) {
+            currentInterval = 'D1';
+            switchInterval('D1');
+        }
+        
         document.getElementById('current-symbol-text').innerText = symbol;
         document.getElementById('symbol-dropdown').classList.add('hidden');
         document.getElementById('btn-view-ai').onclick = () => { closeChartModal(); openModal(symbol); };
@@ -943,14 +1014,27 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
             console.log("Nến cuối cùng chuẩn bị vẽ:", currentSymbolHistory.history_d1.at(-1));
 
             renderChartInstance(currentSymbolHistory);
+            
+            // KÍCH HOẠT TỰ ĐỘNG REFRESH (Chỉ khi mở mới, không phải khi bấm refresh tay)
+            if (!isRefresh) {
+                startChartAutoRefresh();
+            }
+            
+            // Tắt icon xoay của nút refresh
+            const refreshBtnIcon = document.querySelector('#chart-refresh-btn i');
+            if (refreshBtnIcon) refreshBtnIcon.classList.remove('spinner');
 
         } catch (err) {
             console.error("Lỗi tải biểu đồ:", err);
             document.getElementById('tv-chart-container').innerHTML = `<div class="flex items-center justify-center h-full text-rose-400 text-xs">Chưa có dữ liệu lịch sử cho mã này!</div>`;
+            // Tắt icon xoay của nút refresh
+            const refreshBtnIcon = document.querySelector('#chart-refresh-btn i');
+            if (refreshBtnIcon) refreshBtnIcon.classList.remove('spinner');
         } finally {
             document.getElementById('chart-loading').classList.add('hidden');
         }
     }
+    
     function calculateMA(data, period) {
         let result = [];
         for (let i = 0; i < data.length; i++) {
