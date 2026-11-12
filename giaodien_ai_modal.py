@@ -35,13 +35,13 @@ def build_ai_modal_html():
                 </div>
                 
                 <div class="flex items-center gap-2">
-                    <!-- NÚT CHẤM ĐIỂM LẠI (MỚI) -->
-                    <button type="button" onclick="triggerRescore()" id="btn-modal-rescore" class="px-2 py-1.5 bg-amber-600/20 hover:bg-amber-600/40 text-amber-400 border border-amber-500/30 rounded-lg text-xs font-bold transition" title="Chấm điểm lại mã này">
+                    <!-- NÚT CHẤM ĐIỂM LẠI (ĐÃ THÊM CLASS HIDDEN) -->
+                    <button type="button" onclick="triggerRescore()" id="btn-modal-rescore" class="hidden px-2 py-1.5 bg-amber-600/20 hover:bg-amber-600/40 text-amber-400 border border-amber-500/30 rounded-lg text-xs font-bold transition" title="Chấm điểm lại mã này">
                         <i class="fa-solid fa-calculator"></i>
                     </button>
                     
-                    <!-- NÚT PHÂN TÍCH AI (MỚI) -->
-                    <button type="button" onclick="triggerAIAnalyze()" id="btn-modal-ai" class="px-2 py-1.5 bg-fuchsia-600/20 hover:bg-fuchsia-600/40 text-fuchsia-400 border border-fuchsia-500/30 rounded-lg text-xs font-bold transition" title="Chạy AI phân tích lại mã này">
+                    <!-- NÚT PHÂN TÍCH AI (ĐÃ THÊM CLASS HIDDEN) -->
+                    <button type="button" onclick="triggerAIAnalyze()" id="btn-modal-ai" class="hidden px-2 py-1.5 bg-fuchsia-600/20 hover:bg-fuchsia-600/40 text-fuchsia-400 border border-fuchsia-500/30 rounded-lg text-xs font-bold transition" title="Chạy AI phân tích lại mã này">
                         <i class="fa-solid fa-robot"></i>
                     </button>
                     
