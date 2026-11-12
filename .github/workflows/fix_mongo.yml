@@ -1,0 +1,26 @@
+name: Fix MongoDB Prev Close
+
+on:
+  workflow_dispatch: # Cho phép bấm chạy bằng tay trên Github
+
+jobs:
+  fix-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pymongo
+
+      - name: Run fix script
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }} # Lấy từ Github Secrets
+        run: python fix_mongo_data.py
