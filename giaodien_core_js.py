@@ -786,6 +786,44 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         currentSymbolHistory = null;
     }
 
+    // HÀM GỘP NẾN TUẦN/THÁNG TỪ NẾN NGÀY
+    function aggregateCandles(d1Data, interval) {
+        if (!d1Data || d1Data.length === 0) return [];
+        if (interval === 'D1') return d1Data;
+
+        let grouped = {};
+        d1Data.forEach(bar => {
+            const date = new Date(bar.time);
+            let key;
+            if (interval === 'W1') {
+                const day = date.getDay();
+                const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+                const monday = new Date(date.setDate(diff));
+                key = monday.toISOString().split('T')[0];
+            } else { // MN
+                key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01`;
+            }
+
+            if (!grouped[key]) {
+                grouped[key] = {
+                    time: key,
+                    open: bar.open,
+                    high: bar.high,
+                    low: bar.low,
+                    close: bar.close,
+                    volume: bar.volume
+                };
+            } else {
+                grouped[key].high = Math.max(grouped[key].high, bar.high);
+                grouped[key].low = Math.min(grouped[key].low, bar.low);
+                grouped[key].close = bar.close;
+                grouped[key].volume += bar.volume;
+            }
+        });
+
+        return Object.values(grouped).sort((a, b) => a.time.localeCompare(b.time));
+    }
+
     async function openChartModal(symbol) {
         currentSymbol = symbol;
         currentInterval = 'D1';
@@ -807,9 +845,12 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
         document.getElementById('chart-loading').classList.remove('hidden');
 
         try {
-            const res = await fetch(`history/${symbol}.json?t=` + new Date().getTime());
-            if (!res.ok) throw new Error("Không tìm thấy file");
-            currentSymbolHistory = await res.json();
+            // GỌI API MONGODB THAY VÌ FILE GITHUB
+            const res = await fetch(`${PRICE_API_URL}/api/history?symbol=${symbol}&t=` + new Date().getTime());
+            if (!res.ok) throw new Error("Không lấy được dữ liệu lịch sử từ API");
+            
+            const apiData = await res.json();
+            if (apiData.status !== "success") throw new Error(apiData.message || "Lỗi API");
 
             const normalizeTime = (timeStr) => {
                 if (!timeStr) return null;
@@ -820,40 +861,22 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                 return timeStr.toString().split(' ')[0].split('T')[0];
             };
 
-            if (currentSymbolHistory.history_d1) {
-                currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1
-                    .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
-                    .map(bar => ({
-                        time: normalizeTime(bar.time), 
-                        open: bar.open * 1000, high: bar.high * 1000, 
-                        low: bar.low * 1000, close: bar.close * 1000, 
-                        volume: bar.volume
-                    }));
-            } else {
-                currentSymbolHistory.history_d1 = [];
-            }
+            // Chuẩn hóa dữ liệu nến ngày (nhân 1000 để đưa về đồng)
+            let normalizedD1 = (apiData.history_d1 || [])
+                .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
+                .map(bar => ({
+                    time: normalizeTime(bar.time), 
+                    open: bar.open * 1000, high: bar.high * 1000, 
+                    low: bar.low * 1000, close: bar.close * 1000, 
+                    volume: bar.volume
+                }));
 
-            if (currentSymbolHistory.history_w1) {
-                currentSymbolHistory.history_w1 = currentSymbolHistory.history_w1
-                    .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
-                    .map(bar => ({
-                        time: normalizeTime(bar.time), 
-                        open: bar.open * 1000, high: bar.high * 1000, 
-                        low: bar.low * 1000, close: bar.close * 1000, 
-                        volume: bar.volume
-                    }));
-            }
-
-            if (currentSymbolHistory.history_mn) {
-                currentSymbolHistory.history_mn = currentSymbolHistory.history_mn
-                    .filter(bar => bar.time && bar.open > 0 && bar.close > 0)
-                    .map(bar => ({
-                        time: normalizeTime(bar.time), 
-                        open: bar.open * 1000, high: bar.high * 1000, 
-                        low: bar.low * 1000, close: bar.close * 1000, 
-                        volume: bar.volume
-                    }));
-            }
+            // Tự động gộp Tuần và Tháng từ Dữ liệu Ngày
+            currentSymbolHistory = {
+                history_d1: normalizedD1,
+                history_w1: aggregateCandles(normalizedD1, 'W1'),
+                history_mn: aggregateCandles(normalizedD1, 'MN')
+            };
 
             let currentPrice = item ? (item.close_price !== undefined ? item.close_price : item.close) : 0;
             const tradingDate = item && item.trading_date ? normalizeTime(item.trading_date) : null;
@@ -877,19 +900,31 @@ def build_core_js(price_api_url, firebase_config, cheap_symbols, cheap_stocks_gr
                     if (itemLow > 0)  currentSymbolHistory.history_d1[existingBarIndex].low  = Math.min(currentSymbolHistory.history_d1[existingBarIndex].low, itemLow);
                     if (itemVolume > 0) currentSymbolHistory.history_d1[existingBarIndex].volume = itemVolume;
                 } else {
-                    const hasValidOHLC = itemOpen > 0 && itemHigh > 0 && itemLow > 0;
-                    if (hasValidOHLC) {
-                        currentSymbolHistory.history_d1.push({
-                            time: tradingDate, 
-                            open: itemOpen, high: itemHigh, low: itemLow, close: currentPrice, 
-                            volume: itemVolume > 0 ? itemVolume : (currentSymbolHistory.history_d1.at(-1)?.volume || 0)
-                        });
-                    }
+                    // Nới lỏng điều kiện: Nếu thiếu open/high/low, dùng giá close làm fallback
+                    let finalOpen = itemOpen > 0 ? itemOpen : currentPrice;
+                    let finalHigh = itemHigh > 0 ? itemHigh : currentPrice;
+                    let finalLow = itemLow > 0 ? itemLow : currentPrice;
+                    
+                    finalHigh = Math.max(finalHigh, finalOpen, currentPrice);
+                    finalLow = Math.min(finalLow, finalOpen, currentPrice);
+
+                    currentSymbolHistory.history_d1.push({
+                        time: tradingDate, 
+                        open: finalOpen, 
+                        high: finalHigh, 
+                        low: finalLow, 
+                        close: currentPrice, 
+                        volume: itemVolume > 0 ? itemVolume : (currentSymbolHistory.history_d1.at(-1)?.volume || 0)
+                    });
                 }
             }
 
             currentSymbolHistory.history_d1.sort((a, b) => a.time.localeCompare(b.time));
             currentSymbolHistory.history_d1 = currentSymbolHistory.history_d1.filter((v, i, a) => a.findIndex(t => t.time === v.time) === i);
+            
+            // Cập nhật lại W1/MN sau khi chèn nến realtime
+            currentSymbolHistory.history_w1 = aggregateCandles(currentSymbolHistory.history_d1, 'W1');
+            currentSymbolHistory.history_mn = aggregateCandles(currentSymbolHistory.history_d1, 'MN');
 
             console.log("Nến cuối cùng chuẩn bị vẽ:", currentSymbolHistory.history_d1.at(-1));
 
